@@ -1,0 +1,137 @@
+<section class="content-header">
+    <h1>
+        @TextosPaginas.Home_Atracao
+        <small>@TextosPaginas.Atracao_Manutencao</small>
+
+    </h1>
+    <ol class="breadcrumb">
+        
+        <li>@TextosPaginas.Home_Menu</li>
+        <li><a ui-sref="Atracao({filtro:itemAtracaoEdit.filtroConsulta})">@TextosPaginas.Home_Atracao</a></li>
+        <li class="active">@TextosPaginas.Atracao_Manutencao</li>
+    </ol>
+
+</section>
+<!-- Main content -->
+<section class="content" ng-init="itemAtracaoEdit.load()">
+    <!-- Default box -->
+    <!-- general form elements -->
+    <div class="box box-primary">
+        <div class="overlay" ng-show="itemAtracaoEdit.loading">
+            <i class="fa fa-refresh fa-spin text-gray"></i>
+        </div>
+
+        <form role="form" ng-submit="itemAtracaoEdit.save(form)" name="form" novalidate>
+            <div class="box-body">
+
+                 <div class="row" ng-show="itemAtracaoEdit.messages.length > 0">
+                     <div class="col-md-12">
+                         <div class="callout callout-danger">
+                             <h4>@TextosPaginas.Geral_ValidarErros</h4>
+                             <ul>
+                                 <li ng-repeat="erro in itemAtracaoEdit.messages">
+                                     <span ng-bind="erro.Mensagem"></span>
+                                 </li>
+                             </ul>
+
+                         </div>
+                     </div>
+
+                </div>
+                <div class="row">
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemAtracaoEdit.CamposInvalidos.IdentificadorAtracaoPai}">
+					<label>@TextosPaginas.Atracao_IdentificadorAtracaoPai</label>
+					<select ng-model="itemAtracaoEdit.itemAtracao" class="form-control" ng-options="obj.Nome for obj in itemAtracaoEdit.ListaAtracao track by obj.Identificador">
+						<option value="">@TextosPaginas.Selecione</option>
+					</select>
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemAtracaoEdit.CamposInvalidos.IdentificadorViagem}">
+					<label>@TextosPaginas.Atracao_IdentificadorViagem</label>
+					<select ng-model="itemAtracaoEdit.itemViagem" class="form-control" ng-options="obj.Nome for obj in itemAtracaoEdit.ListaViagem track by obj.Identificador">
+						<option value="">@TextosPaginas.Selecione</option>
+					</select>
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemAtracaoEdit.CamposInvalidos.IdentificadorCidade}">
+					<label>@TextosPaginas.Atracao_IdentificadorCidade</label>
+					<select ng-model="itemAtracaoEdit.itemCidade" class="form-control" ng-options="obj.Nome for obj in itemAtracaoEdit.ListaCidade track by obj.Identificador">
+						<option value="">@TextosPaginas.Selecione</option>
+					</select>
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemAtracaoEdit.CamposInvalidos.Nome}">
+					<label>@TextosPaginas.Atracao_Nome</label>
+					<input type="text" class="form-control" ng-model="itemAtracaoEdit.itemAtracao.Nome" maxlength="100"  empty-to-null >
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemAtracaoEdit.CamposInvalidos.CodigoPlace}">
+					<label>@TextosPaginas.Atracao_CodigoPlace</label>
+					<input type="text" class="form-control" ng-model="itemAtracaoEdit.itemAtracao.CodigoPlace" maxlength="50"  empty-to-null >
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemAtracaoEdit.CamposInvalidos.Latitude}">
+					<label>@TextosPaginas.Atracao_Latitude</label>
+					<input type="text" class="form-control" ng-model="itemAtracaoEdit.itemAtracao.Latitude"   empty-to-null decimal-input="{digits:8, integerDigits:4}">
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemAtracaoEdit.CamposInvalidos.Longitude}">
+					<label>@TextosPaginas.Atracao_Longitude</label>
+					<input type="text" class="form-control" ng-model="itemAtracaoEdit.itemAtracao.Longitude"   empty-to-null decimal-input="{digits:2, integerDigits:16}">
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemAtracaoEdit.CamposInvalidos.Chegada}">
+					<label>@TextosPaginas.Atracao_Chegada</label>
+<div class="dropdown">
+                                <a class="dropdown-toggle"  role="button" data-toggle="dropdown">
+                                    <div class="input-group">
+                                        <input date-input ng-model="itemAtracaoEdit.itemAtracao.Chegada" class="form-control"  input-mask="{mask: 'd/m/y'}" 
+                                               datapattern="dd/MM/yyyy">
+                                        <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </span>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    <datetimepicker data-ng-model="itemAtracaoEdit.itemAtracao.Chegada"                                                   
+                                                    data-datetimepicker-config="{  minView:'day' , langCode:itemAtracaoEdit.Idioma()  }" />
+                                </ul>
+                            </div>
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemAtracaoEdit.CamposInvalidos.Partida}">
+					<label>@TextosPaginas.Atracao_Partida</label>
+<div class="dropdown">
+                                <a class="dropdown-toggle"  role="button" data-toggle="dropdown">
+                                    <div class="input-group">
+                                        <input date-input ng-model="itemAtracaoEdit.itemAtracao.Partida" class="form-control"  input-mask="{mask: 'd/m/y'}" 
+                                               datapattern="dd/MM/yyyy">
+                                        <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </span>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    <datetimepicker data-ng-model="itemAtracaoEdit.itemAtracao.Partida"                                                   
+                                                    data-datetimepicker-config="{  minView:'day' , langCode:itemAtracaoEdit.Idioma()  }" />
+                                </ul>
+                            </div>
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemAtracaoEdit.CamposInvalidos.Tipo}">
+					<label>@TextosPaginas.Atracao_Tipo</label>
+					<input type="text" class="form-control" ng-model="itemAtracaoEdit.itemAtracao.Tipo" maxlength="50"  empty-to-null >
+					</div>
+                                   
+
+                </div>
+             
+            </div><!-- /.box-body -->
+            <div class="box-footer">
+                <button type="button" class="btn btn-primary " title="@TextosPaginas.Voltar" ui-sref="Atracao({filtro:itemAtracaoEdit.filtroConsulta})">
+                    <span class="fa fa-arrow-left" aria-hidden="true"></span>
+                </button>
+                <button type="submit" class="btn btn-primary  pull-right">
+                    <span class="fa fa-save" aria-hidden="true"></span> @TextosPaginas.Geral_Salvar
+                </button>
+
+            </div>
+        </form>
+    </div><!-- /.box -->
+
+
+
+
+
+</section><!-- /.content -->

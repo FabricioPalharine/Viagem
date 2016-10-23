@@ -1,0 +1,68 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+using Microsoft.Practices.EnterpriseLibrary.Validation.Validators;
+using CV.Model.Resource;
+
+namespace CV.Model
+{
+
+	[HasSelfValidation()]
+	public partial class Loja
+	{
+		public Loja ()
+		{
+		}
+
+			public int? Identificador { get; set; }
+
+			[NotNullValidator(MessageTemplateResourceName="Loja_IdentificadorViagem",MessageTemplateResourceType=typeof(MensagemModelo))]
+			public int? IdentificadorViagem { get; set; }
+
+			public string Nome { get; set; }
+			[SelfValidation]
+private void ValidarNome(Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResults results)
+{
+ if (Nome == null)
+  {
+      Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult result =
+            new Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult(Resource.MensagemModelo.Loja_Nome, this, "Nome", null, null);
+      results.AddResult(result);
+  }
+  else if (Nome.Length > 100)
+  {
+      Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult result =
+            new Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult(Resource.MensagemModelo.Loja_Nome_Tamanho, this, "Nome", null, null);
+      results.AddResult(result);
+  }
+}
+
+			[NotNullValidator(MessageTemplateResourceName="Loja_Latitude",MessageTemplateResourceType=typeof(MensagemModelo))]
+			public decimal? Latitude { get; set; }
+
+			[NotNullValidator(MessageTemplateResourceName="Loja_Longitude",MessageTemplateResourceType=typeof(MensagemModelo))]
+			public decimal? Longitude { get; set; }
+
+			[StringLengthValidator(50,MessageTemplateResourceName="Loja_CodigoPlace_Tamanho",MessageTemplateResourceType=typeof(MensagemModelo))]
+			public string CodigoPlace { get; set; }
+
+			[NotNullValidator(MessageTemplateResourceName="Loja_Data",MessageTemplateResourceType=typeof(MensagemModelo))]
+			public DateTime? Data { get; set; }
+
+			public IList<GastoCompra> Gastos { get; set; }
+
+			public Viagem ItemViagem { get; set; }
+
+			public int? IdentificadorAtracao { get; set; }
+
+			public Atracao ItemAtracao { get; set; }
+
+			public IList<AvaliacaoLoja> Avaliacoes { get; set; }
+		 public Loja Clone()
+		{
+			 return (Loja) this.MemberwiseClone();
+		}
+	}
+
+}

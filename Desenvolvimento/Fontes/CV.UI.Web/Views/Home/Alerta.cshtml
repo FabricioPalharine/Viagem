@@ -1,0 +1,5 @@
+<div class="alert  alert-dismissable fadeNG " ng-class="{'alert-success':errorManager.errorObject.type == 'success', 'alert-warning':errorManager.errorObject.type == 'warning', 'alert-info':errorManager.errorObject.type == 'info','alert-danger':errorManager.errorObject.type === 'error'}" ng-show="errorManager.show">
+    <button type="button" class="close" aria-hidden="true" ng-click="errorManager.close()">&times;</button>
+    <h4>	<i class="icon fa " ng-class="{'fa-check':errorManager.errorObject.type == 'success', 'fa-warning':errorManager.errorObject.type == 'warning', 'fa-info':errorManager.errorObject.type == 'info','fa-ban':errorManager.errorObject.type === 'error'}"></i> <span ng-bind="errorManager.errorObject.title"></span></h4>
+    <span ng-bind="errorManager.errorObject.message"></span>
+</div>

@@ -1,0 +1,808 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+		Microsoft ResX Schema
+
+		Version 1.3
+
+		The primary goals of this format is to allow a simple XML format 
+		that is mostly human readable. The generation and parsing of the 
+		various data types are done through the TypeConverter classes 
+		associated with the data types.
+
+		Example:
+
+		... ado.net/XML headers & schema ...
+		<resheader name="resmimetype">text/microsoft-resx</resheader>
+		<resheader name="version">1.3</resheader>
+		<resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+		<resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+		<data name="Name1">this is my long string</data>
+		<data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+		<data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+			[base64 mime encoded serialized .NET Framework object]
+		</data>
+		<data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+			[base64 mime encoded string representing a byte array form of the .NET Framework object]
+		</data>
+
+		There are any number of "resheader" rows that contain simple 
+		name/value pairs.
+
+		Each data row contains a name, and value. The row also contains a 
+		type or mimetype. Type corresponds to a .NET class that support 
+		text/value conversion through the TypeConverter architecture. 
+		Classes that don't support this are serialized and stored with the 
+		mimetype set.
+
+		The mimetype is used for serialized objects, and tells the 
+		ResXResourceReader how to depersist the object. This is currently not 
+		extensible. For a given mimetype the value must be set accordingly:
+
+		Note - application/x-microsoft.net.object.binary.base64 is the format 
+		that the ResXResourceWriter will generate, however the reader can 
+		read any of the formats listed below.
+
+		mimetype: application/x-microsoft.net.object.binary.base64
+		value   : The object must be serialized with 
+			: System.Serialization.Formatters.Binary.BinaryFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.soap.base64
+		value   : The object must be serialized with 
+			: System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.bytearray.base64
+		value   : The object must be serialized into a byte array 
+			: using a System.ComponentModel.TypeConverter
+			: and then encoded with base64 encoding.
+	-->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Home_Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="Home_Usuario" xml:space="preserve">
+    <value>Usuário</value>
+  </data>
+  <data name="Home_Reabastecimento" xml:space="preserve">
+    <value>Reabastecimento</value>
+  </data>
+  <data name="Home_Amigo" xml:space="preserve">
+    <value>Amigo</value>
+  </data>
+  <data name="Home_AporteDinheiro" xml:space="preserve">
+    <value>Aporte Dinheiro</value>
+  </data>
+  <data name="Home_Atracao" xml:space="preserve">
+    <value>Atração</value>
+  </data>
+  <data name="Home_CalendarioPrevisto" xml:space="preserve">
+    <value>Calendário Previsto</value>
+  </data>
+  <data name="Home_Carro" xml:space="preserve">
+    <value>Carro</value>
+  </data>
+  <data name="Home_Cidade" xml:space="preserve">
+    <value>Cidade</value>
+  </data>
+  <data name="Home_CidadeGrupo" xml:space="preserve">
+    <value>Grupo Cidade</value>
+  </data>
+  <data name="Home_Comentario" xml:space="preserve">
+    <value>Comentário</value>
+  </data>
+  <data name="Home_CotacaoMoeda" xml:space="preserve">
+    <value>Cotação Moeda</value>
+  </data>
+  <data name="Home_Foto" xml:space="preserve">
+    <value>Foto</value>
+  </data>
+  <data name="Home_Gasto" xml:space="preserve">
+    <value>Gasto</value>
+  </data>
+  <data name="Home_Hotel" xml:space="preserve">
+    <value>Hotel</value>
+  </data>
+  <data name="Home_ListaCompra" xml:space="preserve">
+    <value>Lista de Compra</value>
+  </data>
+  <data name="Home_Pais" xml:space="preserve">
+    <value>País</value>
+  </data>
+  <data name="Home_Posicao" xml:space="preserve">
+    <value>Posição</value>
+  </data>
+  <data name="Home_Loja" xml:space="preserve">
+    <value>Loja</value>
+  </data>
+  <data name="Home_Refeicao" xml:space="preserve">
+    <value>Refeição</value>
+  </data>
+  <data name="Home_RequisicaoAmizade" xml:space="preserve">
+    <value>Requisição Amizade</value>
+  </data>
+  <data name="Home_Sugestao" xml:space="preserve">
+    <value>Sugestão</value>
+  </data>
+  <data name="Home_Viagem" xml:space="preserve">
+    <value>Viagem</value>
+  </data>
+  <data name="Home_ViagemAerea" xml:space="preserve">
+    <value>Viagem Aérea</value>
+  </data>
+  <data name="Home_AlterarSenha" xml:space="preserve">
+    <value>Alterar Senha</value>
+  </data>
+  <data name="Adicionar" xml:space="preserve">
+    <value>Adicionar Novo</value>
+  </data>
+  <data name="Pesquisar" xml:space="preserve">
+    <value>Pesquisar</value>
+  </data>
+  <data name="Editar" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="Excluir" xml:space="preserve">
+    <value>Excluir</value>
+  </data>
+  <data name="Cancelar" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="Selecione" xml:space="preserve">
+    <value>Selecione</value>
+  </data>
+  <data name="Sim" xml:space="preserve">
+    <value>Sim</value>
+  </data>
+  <data name="Nao" xml:space="preserve">
+    <value>Não</value>
+  </data>
+  <data name="Todos" xml:space="preserve">
+    <value>Todos</value>
+  </data>
+  <data name="Voltar" xml:space="preserve">
+    <value>Voltar</value>
+  </data>
+  <data name="ConfirmaExclusao" xml:space="preserve">
+    <value>Tem certeza que deseja excluir esse registro?</value>
+  </data>
+  <data name="AlterarSenha_Titulo" xml:space="preserve">
+    <value>Alterar Senha</value>
+  </data>
+  <data name="Geral_ValidarErros" xml:space="preserve">
+    <value>Favor verificar os seguintes erros</value>
+  </data>
+  <data name="AlterarSenha_Nome" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="AlterarSenha_Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="AlterarSenha_Senha" xml:space="preserve">
+    <value>Senha Atual</value>
+  </data>
+  <data name="AlterarSenha_NovaSenha" xml:space="preserve">
+    <value>Nova Senha</value>
+  </data>
+  <data name="AlterarSenha_ConfirmarSenha" xml:space="preserve">
+    <value>Confirmar Senha</value>
+  </data>
+  <data name="Alterar" xml:space="preserve">
+    <value>Alterar</value>
+  </data>
+  <data name="Login_Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="Login_Senha" xml:space="preserve">
+    <value>Senha</value>
+  </data>
+  <data name="Login_Logar" xml:space="preserve">
+    <value>Logar</value>
+  </data>
+  <data name="TituloAplicacao" xml:space="preserve">
+    <value>CV</value>
+  </data>
+  <data name="TituloAplicacaoReduzido" xml:space="preserve">
+    <value>CV</value>
+  </data>
+  <data name="Sair" xml:space="preserve">
+    <value>Sair</value>
+  </data>
+  <data name="Home_Menu" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="UltimoAcesso" xml:space="preserve">
+    <value>Último Acesso: </value>
+  </data>
+  <data name="Geral_Salvar" xml:space="preserve">
+    <value>Salvar</value>
+  </data>
+  <data name="Usuario_Manutencao" xml:space="preserve">
+    <value>Manutenção</value>
+  </data>
+  <data name="Usuario_Identificador" xml:space="preserve">
+    <value>Identificador</value>
+  </data>
+  <data name="Usuario_EMail" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="Usuario_Nome" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="Usuario_Token" xml:space="preserve">
+    <value>Token</value>
+  </data>
+  <data name="Usuario_RefreshToken" xml:space="preserve">
+    <value>RefreshToken</value>
+  </data>
+  <data name="Usuario_DataToken" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="Usuario_Lifetime" xml:space="preserve">
+    <value>Lifetime</value>
+  </data>
+  <data name="Usuario_Codigo" xml:space="preserve">
+    <value>Codigo</value>
+  </data>
+  <data name="Reabastecimento_Manutencao" xml:space="preserve">
+    <value>Manutenção</value>
+  </data>
+  <data name="Reabastecimento_IdentificadorCarro" xml:space="preserve">
+    <value>Carro</value>
+  </data>
+  <data name="Reabastecimento_IdentificadorCidade" xml:space="preserve">
+    <value>Cidade</value>
+  </data>
+  <data name="Reabastecimento_Latitude" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
+  <data name="Reabastecimento_Longitude" xml:space="preserve">
+    <value>Longitude</value>
+  </data>
+  <data name="Reabastecimento_Litro" xml:space="preserve">
+    <value>Litro</value>
+  </data>
+  <data name="Reabastecimento_QuantidadeReabastecida" xml:space="preserve">
+    <value>Quantidade Reabastecida</value>
+  </data>
+  <data name="Amigo_Manutencao" xml:space="preserve">
+    <value>Manutenção</value>
+  </data>
+  <data name="Amigo_IdentificadorUsuario" xml:space="preserve">
+    <value>Usuário</value>
+  </data>
+  <data name="Amigo_IdentificadorAmigo" xml:space="preserve">
+    <value>Amigo</value>
+  </data>
+  <data name="Amigo_EMail" xml:space="preserve">
+    <value>E-Mail</value>
+  </data>
+  <data name="AporteDinheiro_Manutencao" xml:space="preserve">
+    <value>Manutenção</value>
+  </data>
+  <data name="AporteDinheiro_IdentificadorViagem" xml:space="preserve">
+    <value>Viagem</value>
+  </data>
+  <data name="AporteDinheiro_IdentificadorUsuario" xml:space="preserve">
+    <value>Usuário</value>
+  </data>
+  <data name="AporteDinheiro_Valor" xml:space="preserve">
+    <value>Valor</value>
+  </data>
+  <data name="AporteDinheiro_MoedaEstragengeira" xml:space="preserve">
+    <value>Moeda Estrangeira</value>
+  </data>
+  <data name="AporteDinheiro_Moeda" xml:space="preserve">
+    <value>Moeda</value>
+  </data>
+  <data name="AporteDinheiro_DataAporte" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="AporteDinheiro_Cotacao" xml:space="preserve">
+    <value>Cotação</value>
+  </data>
+  <data name="Atracao_Manutencao" xml:space="preserve">
+    <value>Manutenção</value>
+  </data>
+  <data name="Atracao_IdentificadorAtracaoPai" xml:space="preserve">
+    <value>Atração Pai</value>
+  </data>
+  <data name="Atracao_IdentificadorViagem" xml:space="preserve">
+    <value>Viagem</value>
+  </data>
+  <data name="Atracao_IdentificadorCidade" xml:space="preserve">
+    <value>Cidade</value>
+  </data>
+  <data name="Atracao_Nome" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="Atracao_CodigoPlace" xml:space="preserve">
+    <value>Código Google Place</value>
+  </data>
+  <data name="Atracao_Latitude" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
+  <data name="Atracao_Longitude" xml:space="preserve">
+    <value>Longitude</value>
+  </data>
+  <data name="Atracao_Chegada" xml:space="preserve">
+    <value>Chegada</value>
+  </data>
+  <data name="Atracao_Partida" xml:space="preserve">
+    <value>Partida</value>
+  </data>
+  <data name="Atracao_Tipo" xml:space="preserve">
+    <value>Tipo</value>
+  </data>
+  <data name="CalendarioPrevisto_Manutencao" xml:space="preserve">
+    <value>Manutenção</value>
+  </data>
+  <data name="CalendarioPrevisto_IdentificadorViagem" xml:space="preserve">
+    <value>Viagem</value>
+  </data>
+  <data name="CalendarioPrevisto_Data" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="CalendarioPrevisto_Inicio" xml:space="preserve">
+    <value>Início Previsto</value>
+  </data>
+  <data name="CalendarioPrevisto_Fim" xml:space="preserve">
+    <value>Fim Previsto</value>
+  </data>
+  <data name="CalendarioPrevisto_Nome" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="CalendarioPrevisto_Latitude" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
+  <data name="CalendarioPrevisto_Longitude" xml:space="preserve">
+    <value>Longitude</value>
+  </data>
+  <data name="CalendarioPrevisto_CodigoPlace" xml:space="preserve">
+    <value>Codigo Google Place</value>
+  </data>
+  <data name="CalendarioPrevisto_Tipo" xml:space="preserve">
+    <value>Tipo</value>
+  </data>
+  <data name="CalendarioPrevisto_Prioridade" xml:space="preserve">
+    <value>Prioridade</value>
+  </data>
+  <data name="Carro_Manutencao" xml:space="preserve">
+    <value>Manutenção</value>
+  </data>
+  <data name="Carro_IdentificadorViagem" xml:space="preserve">
+    <value>Viagem</value>
+  </data>
+  <data name="Carro_Locadora" xml:space="preserve">
+    <value>Locadora</value>
+  </data>
+  <data name="Carro_Modelo" xml:space="preserve">
+    <value>Modelo</value>
+  </data>
+  <data name="Carro_KM" xml:space="preserve">
+    <value>KM</value>
+  </data>
+  <data name="Carro_Alugado" xml:space="preserve">
+    <value>Alugado</value>
+  </data>
+  <data name="Cidade_Manutencao" xml:space="preserve">
+    <value>Manutenção</value>
+  </data>
+  <data name="Cidade_IdentificadorPais" xml:space="preserve">
+    <value>País</value>
+  </data>
+  <data name="Cidade_Nome" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="Cidade_Estado" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="CidadeGrupo_Manutencao" xml:space="preserve">
+    <value>Manutenção</value>
+  </data>
+  <data name="CidadeGrupo_IdentificadorViagem" xml:space="preserve">
+    <value>Viagem</value>
+  </data>
+  <data name="CidadeGrupo_IdentificadorCidadeFilha" xml:space="preserve">
+    <value>Cidade Filha</value>
+  </data>
+  <data name="CidadeGrupo_IdentificadorCidadePai" xml:space="preserve">
+    <value>Cidade Pai</value>
+  </data>
+  <data name="Comentario_Manutencao" xml:space="preserve">
+    <value>Manutenção</value>
+  </data>
+  <data name="Comentario_IdentificadorViagem" xml:space="preserve">
+    <value>Viagem</value>
+  </data>
+  <data name="Comentario_IdentificadorCidade" xml:space="preserve">
+    <value>Cidade</value>
+  </data>
+  <data name="Comentario_Latitude" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
+  <data name="Comentario_Longitude" xml:space="preserve">
+    <value>Longitude</value>
+  </data>
+  <data name="Comentario_Texto" xml:space="preserve">
+    <value>Texto</value>
+  </data>
+  <data name="CotacaoMoeda_Manutencao" xml:space="preserve">
+    <value>Manutenção</value>
+  </data>
+  <data name="CotacaoMoeda_Moeda" xml:space="preserve">
+    <value>Moeda</value>
+  </data>
+  <data name="CotacaoMoeda_DataCotacao" xml:space="preserve">
+    <value>Data Cotação</value>
+  </data>
+  <data name="CotacaoMoeda_ValorCotacao" xml:space="preserve">
+    <value>Cotação</value>
+  </data>
+  <data name="CotacaoMoeda_IdentificadorViagem" xml:space="preserve">
+    <value>Viagem</value>
+  </data>
+  <data name="Foto_Manutencao" xml:space="preserve">
+    <value>Manutenção</value>
+  </data>
+  <data name="Foto_IdentificadorViagem" xml:space="preserve">
+    <value>Viagem</value>
+  </data>
+  <data name="Foto_IdentificadorUsuario" xml:space="preserve">
+    <value>Usuário</value>
+  </data>
+  <data name="Foto_IdentificadorCidade" xml:space="preserve">
+    <value>Cidade</value>
+  </data>
+  <data name="Foto_Comentario" xml:space="preserve">
+    <value>Comentario</value>
+  </data>
+  <data name="Foto_Latitude" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
+  <data name="Foto_Longitude" xml:space="preserve">
+    <value>Longitude</value>
+  </data>
+  <data name="Foto_Data" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="Foto_LinkThumbnail" xml:space="preserve">
+    <value>Link Thumbnail</value>
+  </data>
+  <data name="Foto_LinkFoto" xml:space="preserve">
+    <value>Link Foto</value>
+  </data>
+  <data name="Foto_CodigoFoto" xml:space="preserve">
+    <value>Código</value>
+  </data>
+  <data name="Foto_Video" xml:space="preserve">
+    <value>Video</value>
+  </data>
+  <data name="Foto_TipoArquivo" xml:space="preserve">
+    <value>Tipo Arquivo</value>
+  </data>
+  <data name="Gasto_Manutencao" xml:space="preserve">
+    <value>Manutenção</value>
+  </data>
+  <data name="Gasto_IdentificadorViagem" xml:space="preserve">
+    <value>Viagem</value>
+  </data>
+  <data name="Gasto_IdentificadorUsuario" xml:space="preserve">
+    <value>Usuário</value>
+  </data>
+  <data name="Gasto_Descricao" xml:space="preserve">
+    <value>Descrição</value>
+  </data>
+  <data name="Gasto_Data" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="Gasto_Valor" xml:space="preserve">
+    <value>Valor</value>
+  </data>
+  <data name="Gasto_MoedaEstrageira" xml:space="preserve">
+    <value>Moeda Estrangeira</value>
+  </data>
+  <data name="Gasto_Especie" xml:space="preserve">
+    <value>Dinheiro</value>
+  </data>
+  <data name="Gasto_Moeda" xml:space="preserve">
+    <value>Moeda</value>
+  </data>
+  <data name="Gasto_DataPagamento" xml:space="preserve">
+    <value>DataPagamento</value>
+  </data>
+  <data name="Gasto_Dividido" xml:space="preserve">
+    <value>Dividido</value>
+  </data>
+  <data name="Gasto_ApenasBaixa" xml:space="preserve">
+    <value>Baixa Dinheiro</value>
+  </data>
+  <data name="Hotel_Manutencao" xml:space="preserve">
+    <value>Manutenção</value>
+  </data>
+  <data name="Hotel_IdentificadorViagem" xml:space="preserve">
+    <value>Viagem</value>
+  </data>
+  <data name="Hotel_IdentificadorCidade" xml:space="preserve">
+    <value>Cidade</value>
+  </data>
+  <data name="Hotel_Nome" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="Hotel_CodigoPlace" xml:space="preserve">
+    <value>Código Google Place</value>
+  </data>
+  <data name="Hotel_DataEntrada" xml:space="preserve">
+    <value>Data de Entrada</value>
+  </data>
+  <data name="Hotel_DataSaidia" xml:space="preserve">
+    <value>Data Saída</value>
+  </data>
+  <data name="Hotel_Longitude" xml:space="preserve">
+    <value>Longitude</value>
+  </data>
+  <data name="Hotel_Latitude" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
+  <data name="Hotel_EntradaPrevista" xml:space="preserve">
+    <value>Entrada Prevista</value>
+  </data>
+  <data name="Hotel_SaidaPrevista" xml:space="preserve">
+    <value>Saída Prevista</value>
+  </data>
+  <data name="ListaCompra_Manutencao" xml:space="preserve">
+    <value>Manutenção</value>
+  </data>
+  <data name="ListaCompra_IdentificadorViagem" xml:space="preserve">
+    <value>Viagem</value>
+  </data>
+  <data name="ListaCompra_IdentificadorUsuario" xml:space="preserve">
+    <value>Usuário</value>
+  </data>
+  <data name="ListaCompra_IdentificadorUsuarioPedido" xml:space="preserve">
+    <value>Usuário Pedido</value>
+  </data>
+  <data name="ListaCompra_Descricao" xml:space="preserve">
+    <value>Descrição</value>
+  </data>
+  <data name="ListaCompra_Marca" xml:space="preserve">
+    <value>Marca</value>
+  </data>
+  <data name="ListaCompra_ValorMaximo" xml:space="preserve">
+    <value>Valor Máximo</value>
+  </data>
+  <data name="ListaCompra_Moeda" xml:space="preserve">
+    <value>Moeda</value>
+  </data>
+  <data name="ListaCompra_Reembolsavel" xml:space="preserve">
+    <value>Reembolsavel</value>
+  </data>
+  <data name="ListaCompra_Comprado" xml:space="preserve">
+    <value>Comprado</value>
+  </data>
+  <data name="ListaCompra_Destinatario" xml:space="preserve">
+    <value>Destinatário</value>
+  </data>
+  <data name="Pais_Manutencao" xml:space="preserve">
+    <value>Manutenção</value>
+  </data>
+  <data name="Pais_Sigla" xml:space="preserve">
+    <value>Sigla</value>
+  </data>
+  <data name="Pais_Nome" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="Posicao_Manutencao" xml:space="preserve">
+    <value>Manutenção</value>
+  </data>
+  <data name="Posicao_IdentificadorViagem" xml:space="preserve">
+    <value>Viagem</value>
+  </data>
+  <data name="Posicao_IdentificadorUsuario" xml:space="preserve">
+    <value>Usuário</value>
+  </data>
+  <data name="Posicao_Latitude" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
+  <data name="Posicao_Longitude" xml:space="preserve">
+    <value>Longitude</value>
+  </data>
+  <data name="Posicao_DataGMT" xml:space="preserve">
+    <value>DataGMT</value>
+  </data>
+  <data name="Posicao_Velocidade" xml:space="preserve">
+    <value>Velocidade</value>
+  </data>
+  <data name="Posicao_DataLocal" xml:space="preserve">
+    <value>Data Local</value>
+  </data>
+  <data name="Loja_Manutencao" xml:space="preserve">
+    <value>Manutenção</value>
+  </data>
+  <data name="Loja_IdentificadorViagem" xml:space="preserve">
+    <value>Viagem</value>
+  </data>
+  <data name="Loja_Nome" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="Loja_Latitude" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
+  <data name="Loja_Longitude" xml:space="preserve">
+    <value>Longitude</value>
+  </data>
+  <data name="Loja_CodigoPlace" xml:space="preserve">
+    <value>Código Place</value>
+  </data>
+  <data name="Loja_Data" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="Loja_IdentificadorAtracao" xml:space="preserve">
+    <value>Atração</value>
+  </data>
+  <data name="Refeicao_Manutencao" xml:space="preserve">
+    <value>Manutenção</value>
+  </data>
+  <data name="Refeicao_IdentificadorViagem" xml:space="preserve">
+    <value>Viagem</value>
+  </data>
+  <data name="Refeicao_IdentificadorCidade" xml:space="preserve">
+    <value>Cidade</value>
+  </data>
+  <data name="Refeicao_Nome" xml:space="preserve">
+    <value>Restaurante</value>
+  </data>
+  <data name="Refeicao_CodigoPlace" xml:space="preserve">
+    <value>Código Place</value>
+  </data>
+  <data name="Refeicao_Data" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="Refeicao_Latitude" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
+  <data name="Refeicao_Longitude" xml:space="preserve">
+    <value>Longitude</value>
+  </data>
+  <data name="Refeicao_Tipo" xml:space="preserve">
+    <value>Tipo</value>
+  </data>
+  <data name="Refeicao_IdentificadorAtracao" xml:space="preserve">
+    <value>Atração</value>
+  </data>
+  <data name="RequisicaoAmizade_Manutencao" xml:space="preserve">
+    <value>Manutenção</value>
+  </data>
+  <data name="RequisicaoAmizade_IdentificadorUsuario" xml:space="preserve">
+    <value>Usuário</value>
+  </data>
+  <data name="RequisicaoAmizade_IdentificadorUsuarioRequisitado" xml:space="preserve">
+    <value>Usuario Requisitado</value>
+  </data>
+  <data name="RequisicaoAmizade_EMail" xml:space="preserve">
+    <value>EMail</value>
+  </data>
+  <data name="RequisicaoAmizade_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Sugestao_Manutencao" xml:space="preserve">
+    <value>Manutenção</value>
+  </data>
+  <data name="Sugestao_Local" xml:space="preserve">
+    <value>Local</value>
+  </data>
+  <data name="Sugestao_Latitude" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
+  <data name="Sugestao_Longitude" xml:space="preserve">
+    <value>Longitude</value>
+  </data>
+  <data name="Sugestao_Comentario" xml:space="preserve">
+    <value>Comentário</value>
+  </data>
+  <data name="Sugestao_IdentificadorViagem" xml:space="preserve">
+    <value>Viagem</value>
+  </data>
+  <data name="Sugestao_IdentificadorUsuario" xml:space="preserve">
+    <value>Usuário</value>
+  </data>
+  <data name="Sugestao_IdentificadorCidade" xml:space="preserve">
+    <value>Cidade</value>
+  </data>
+  <data name="Sugestao_Lida" xml:space="preserve">
+    <value>Lida</value>
+  </data>
+  <data name="Sugestao_Tipo" xml:space="preserve">
+    <value>Tipo</value>
+  </data>
+  <data name="Viagem_Manutencao" xml:space="preserve">
+    <value>Manutenção</value>
+  </data>
+  <data name="Viagem_IdentificadorUsuario" xml:space="preserve">
+    <value>Usuário</value>
+  </data>
+  <data name="Viagem_Nome" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="Viagem_DataInicio" xml:space="preserve">
+    <value>Data Início</value>
+  </data>
+  <data name="Viagem_DataFim" xml:space="preserve">
+    <value>Fim</value>
+  </data>
+  <data name="Viagem_Aberto" xml:space="preserve">
+    <value>Aberto</value>
+  </data>
+  <data name="Viagem_UnidadeMetrica" xml:space="preserve">
+    <value>Unidade Métrica</value>
+  </data>
+  <data name="Viagem_QuantidadeParticipantes" xml:space="preserve">
+    <value>Quantidade Participantes</value>
+  </data>
+  <data name="Viagem_PublicaGasto" xml:space="preserve">
+    <value>Gastos Públicos</value>
+  </data>
+  <data name="Viagem_PercentualIOF" xml:space="preserve">
+    <value>Percentual IOF</value>
+  </data>
+  <data name="Viagem_Moeda" xml:space="preserve">
+    <value>Moeda</value>
+  </data>
+  <data name="ViagemAerea_Manutencao" xml:space="preserve">
+    <value>Manutenção</value>
+  </data>
+  <data name="ViagemAerea_IdentificadorViagem" xml:space="preserve">
+    <value>Viagem</value>
+  </data>
+  <data name="ViagemAerea_CompanhiaAerea" xml:space="preserve">
+    <value>CompanhiaAerea</value>
+  </data>
+  <data name="ViagemAerea_DataPrevista" xml:space="preserve">
+    <value>DataPrevista</value>
+  </data>
+  <data name="ViagemAerea_DataInicio" xml:space="preserve">
+    <value>DataInicio</value>
+  </data>
+  <data name="ViagemAerea_DataFim" xml:space="preserve">
+    <value>DataFim</value>
+  </data>
+</root>

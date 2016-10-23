@@ -1,0 +1,526 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{776db3ee-39b2-484e-be17-ef4902ce8d2a}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CV.UI.Web</RootNamespace>
+    <AssemblyName>CV.UI.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\Componentes\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Channels" />
+    <Reference Include="System.Web.Cors">
+      <HintPath>..\Componentes\System.Web.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http.Cors">
+      <HintPath>..\Componentes\System.Web.Http.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\Componentes\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\Componentes\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\Componentes\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\Componentes\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\Componentes\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\Componentes\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\Componentes\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\Componentes\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\Componentes\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\Componentes\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\Componentes\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\Componentes\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\Componentes\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\Componentes\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\Componentes\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\Componentes\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\MVC\BaseController.cs" />
+    <Compile Include="Controllers\MVC\HomeController.cs" />
+    <Compile Include="Controllers\WebAPI\AcessoController.cs" />
+    <Compile Include="Controllers\WebAPI\BaseApiController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\BasicAuthMessageHandler.cs" />
+    <Compile Include="Helper\BindJson.cs" />
+    <Compile Include="Helper\ExtensionMethods.cs" />
+    <Compile Include="Helper\IProvidePrincipal.cs" />
+    <Compile Include="Helper\NoCacheAttribute.cs" />
+    <Compile Include="Helper\TokenPrincipal.cs" />
+    <Compile Include="Helper\ValidateTokenPrincipalProvider.cs" />
+    <Compile Include="Models\CriterioBusca.cs" />
+    <Compile Include="Models\ResultadoConsultaTipo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\TextosPaginas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TextosPaginas.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\MVC\SistemaController.cs" />
+    <Compile Include="Controllers\WebAPI\UsuarioController.cs" />
+    <Compile Include="Controllers\WebAPI\ReabastecimentoController.cs" />
+    <Compile Include="Controllers\WebAPI\AmigoController.cs" />
+    <Compile Include="Controllers\WebAPI\AporteDinheiroController.cs" />
+    <Compile Include="Controllers\WebAPI\AtracaoController.cs" />
+    <Compile Include="Controllers\WebAPI\CalendarioPrevistoController.cs" />
+    <Compile Include="Controllers\WebAPI\CarroController.cs" />
+    <Compile Include="Controllers\WebAPI\CidadeController.cs" />
+    <Compile Include="Controllers\WebAPI\CidadeGrupoController.cs" />
+    <Compile Include="Controllers\WebAPI\ComentarioController.cs" />
+    <Compile Include="Controllers\WebAPI\CotacaoMoedaController.cs" />
+    <Compile Include="Controllers\WebAPI\FotoController.cs" />
+    <Compile Include="Controllers\WebAPI\GastoController.cs" />
+    <Compile Include="Controllers\WebAPI\HotelController.cs" />
+    <Compile Include="Controllers\WebAPI\ListaCompraController.cs" />
+    <Compile Include="Controllers\WebAPI\PaisController.cs" />
+    <Compile Include="Controllers\WebAPI\PosicaoController.cs" />
+    <Compile Include="Controllers\WebAPI\LojaController.cs" />
+    <Compile Include="Controllers\WebAPI\RefeicaoController.cs" />
+    <Compile Include="Controllers\WebAPI\RequisicaoAmizadeController.cs" />
+    <Compile Include="Controllers\WebAPI\SugestaoController.cs" />
+    <Compile Include="Controllers\WebAPI\ViagemController.cs" />
+    <Compile Include="Controllers\WebAPI\ViagemAereaController.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Global.asax" />
+    <Content Include="Library\css\angular-multi-select-tree-0.1.0.css" />
+    <Content Include="Library\css\bootstrap-tagsinput.css" />
+    <Content Include="Library\css\bootstrap.css" />
+    <Content Include="Library\css\bootstrap.min.css" />
+    <Content Include="Library\css\datetimepicker.css" />
+    <Content Include="Library\css\famfamfam-flags.css" />
+    <Content Include="Library\css\famfamfam-flags.png" />
+    <Content Include="Library\css\font-awesome.css" />
+    <Content Include="Library\css\fullcalendar.css" />
+    <Content Include="Library\css\fullcalendar.min.css" />
+    <Content Include="Library\css\ivh-treeview-theme-basic.css" />
+    <Content Include="Library\css\ivh-treeview.min.css" />
+    <Content Include="Library\css\Site.css" />
+    <Content Include="Library\css\skins\skin-blue-light.css" />
+    <Content Include="Library\css\ui-grid.min.css" />
+    <Content Include="Library\fonts\fontawesome-webfont.svg" />
+    <Content Include="Library\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Library\fonts\ui-grid.svg" />
+    <Content Include="Library\Scripts\Angular\angular-animate.js" />
+    <Content Include="Library\Scripts\Angular\angular-animate.min.js" />
+    <Content Include="Library\Scripts\Angular\angular-aria.js" />
+    <Content Include="Library\Scripts\Angular\angular-aria.min.js" />
+    <Content Include="Library\Scripts\Angular\angular-cookies.js" />
+    <Content Include="Library\Scripts\Angular\angular-cookies.min.js" />
+    <Content Include="Library\Scripts\Angular\angular-csp.css" />
+    <Content Include="Library\Scripts\Angular\angular-file-saver.bundle.min.js" />
+    <Content Include="Library\Scripts\Angular\angular-loader.js" />
+    <Content Include="Library\Scripts\Angular\angular-loader.min.js" />
+    <Content Include="Library\Scripts\Angular\angular-message-format.js" />
+    <Content Include="Library\Scripts\Angular\angular-message-format.min.js" />
+    <Content Include="Library\Scripts\Angular\angular-messages.js" />
+    <Content Include="Library\Scripts\Angular\angular-messages.min.js" />
+    <Content Include="Library\Scripts\Angular\angular-mocks.js" />
+    <Content Include="Library\Scripts\Angular\angular-moment.min.js" />
+    <Content Include="Library\Scripts\Angular\angular-multi-select-tree-0.1.0.js" />
+    <Content Include="Library\Scripts\Angular\angular-multi-select-tree-0.1.0.tpl.js" />
+    <Content Include="Library\Scripts\Angular\angular-parse-ext.js" />
+    <Content Include="Library\Scripts\Angular\angular-parse-ext.min.js" />
+    <Content Include="Library\Scripts\Angular\angular-resource.js" />
+    <Content Include="Library\Scripts\Angular\angular-resource.min.js" />
+    <Content Include="Library\Scripts\Angular\angular-route.js" />
+    <Content Include="Library\Scripts\Angular\angular-route.min.js" />
+    <Content Include="Library\Scripts\Angular\angular-sanitize.js" />
+    <Content Include="Library\Scripts\Angular\angular-sanitize.min.js" />
+    <Content Include="Library\Scripts\Angular\angular-scenario.js" />
+    <Content Include="Library\Scripts\Angular\angular-touch.js" />
+    <Content Include="Library\Scripts\Angular\angular-touch.min.js" />
+    <Content Include="Library\Scripts\Angular\angular-translate.min.js" />
+    <Content Include="Library\Scripts\Angular\angular-ui-router.min.js" />
+    <Content Include="Library\Scripts\Angular\angular.js" />
+    <Content Include="Library\Scripts\Angular\angular.min.js" />
+    <Content Include="Library\Scripts\Angular\calendar.js" />
+    <Content Include="Library\Scripts\Angular\datetimepicker.js" />
+    <Content Include="Library\Scripts\Angular\ivh-treeview.min.js" />
+    <Content Include="Library\Scripts\Angular\moment-with-locales.min.js" />
+    <Content Include="Library\Scripts\Angular\ng-file-upload-all.min.js" />
+    <Content Include="Library\Scripts\Angular\ng-google-chart.js" />
+    <Content Include="Library\Scripts\Angular\ngContextMenu.js" />
+    <Content Include="Library\Scripts\Angular\ngInfiniteScroll.js" />
+    <Content Include="Library\Scripts\Angular\ocLazyLoad.min.js" />
+    <Content Include="Library\Scripts\Angular\ocLazyLoad.require.min.js" />
+    <Content Include="Library\Scripts\Angular\sortable.js" />
+    <Content Include="Library\Scripts\Angular\ui-bootstrap-1.3.2.min.js" />
+    <Content Include="Library\Scripts\Angular\ui-bootstrap-tpls.min.js" />
+    <Content Include="Library\Scripts\Angular\ui-grid.min.js" />
+    <Content Include="Library\Scripts\Angular\ui-scroll-grid.min.js" />
+    <Content Include="Library\Scripts\Angular\ui-scroll-jqlite.min.js" />
+    <Content Include="Library\Scripts\Angular\ui-scroll.min.js" />
+    <Content Include="Library\Scripts\app.js" />
+    <Content Include="Library\Scripts\App\app-module.js" />
+    <Content Include="Library\Scripts\App\app-route.js" />
+    <Content Include="Library\Scripts\App\Directive\emptyToNullDirective.js" />
+    <Content Include="Library\Scripts\App\Directive\error-manager-directive.js" />
+    <Content Include="Library\Scripts\App\Directive\inputMask-directive.js" />
+    <Content Include="Library\Scripts\App\Directive\on-long-press-directive.js" />
+    <Content Include="Library\Scripts\App\Directive\tradutor-directive.js" />
+    <Content Include="Library\Scripts\App\Directive\TreeViewDirective.js" />
+    <Content Include="Library\Scripts\App\error-factory.js" />
+    <Content Include="Library\Scripts\App\Home\home-controller.js" />
+    <Content Include="Library\Scripts\App\Home\home-module.js" />
+    <Content Include="Library\Scripts\App\Home\account-controler.js" />
+    <Content Include="Library\Scripts\App\Home\auth-factory.js" />
+    <Content Include="Library\Scripts\App\Home\login-controller.js" />
+    <Content Include="Library\Scripts\App\Home\home-routes.js" />
+    <Content Include="Library\Scripts\App\Home\alteraSenha-controller.js" />
+    <Content Include="Library\Scripts\Componentes\bootstrap.js" />
+    <Content Include="Library\Scripts\Componentes\bootstrap.min.js" />
+    <Content Include="Library\Scripts\Componentes\fullcalendar.js" />
+    <Content Include="Library\fonts\ui-grid.eot" />
+    <Content Include="Library\fonts\ui-grid.ttf" />
+    <Content Include="Library\fonts\ui-grid.woff" />
+    <None Include="Library\Scripts\Componentes\jquery-2.2.3.intellisense.js" />
+    <Content Include="Library\Scripts\Componentes\jquery-2.2.3.js" />
+    <Content Include="Library\Scripts\Componentes\jquery-2.2.3.min.js" />
+    <Content Include="Library\Scripts\Componentes\jquery-ui.min.js" />
+    <Content Include="Library\Scripts\Componentes\jquery.inputmask.date.extensions.js" />
+    <Content Include="Library\Scripts\Componentes\jquery.inputmask.extensions.js" />
+    <Content Include="Library\Scripts\Componentes\jquery.inputmask.js" />
+    <Content Include="Library\Scripts\Componentes\jquery.inputmask.numeric.extensions.js" />
+    <Content Include="Library\Scripts\Componentes\jquery.inputmask.phone.extensions.js" />
+    <Content Include="Library\Scripts\Componentes\jquery.inputmask.regex.extensions.js" />
+    <Content Include="Library\Scripts\Componentes\modernizr-2.6.2.js" />
+    <Content Include="Library\Scripts\Componentes\moment.min.js" />
+    <Content Include="Library\Scripts\Componentes\respond.js" />
+    <Content Include="Library\Scripts\Componentes\respond.min.js" />
+    <None Include="Library\Scripts\_references.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\AlterarSenha.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\Dashboard.cshtml" />
+    <Content Include="Views\Home\Alerta.cshtml" />
+    <Content Include="Library\Scripts\App\Sistema\Sistema-module.js" />
+    <Content Include="Library\Scripts\App\Sistema\Usuario\Usuario-factory.js" />
+    <Content Include="Library\Scripts\App\Sistema\Usuario\Usuario-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Usuario\Usuario-edit-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Reabastecimento\Reabastecimento-factory.js" />
+    <Content Include="Library\Scripts\App\Sistema\Reabastecimento\Reabastecimento-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Reabastecimento\Reabastecimento-edit-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Amigo\Amigo-factory.js" />
+    <Content Include="Library\Scripts\App\Sistema\Amigo\Amigo-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Amigo\Amigo-edit-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\AporteDinheiro\AporteDinheiro-factory.js" />
+    <Content Include="Library\Scripts\App\Sistema\AporteDinheiro\AporteDinheiro-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\AporteDinheiro\AporteDinheiro-edit-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Atracao\Atracao-factory.js" />
+    <Content Include="Library\Scripts\App\Sistema\Atracao\Atracao-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Atracao\Atracao-edit-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\CalendarioPrevisto\CalendarioPrevisto-factory.js" />
+    <Content Include="Library\Scripts\App\Sistema\CalendarioPrevisto\CalendarioPrevisto-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\CalendarioPrevisto\CalendarioPrevisto-edit-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Carro\Carro-factory.js" />
+    <Content Include="Library\Scripts\App\Sistema\Carro\Carro-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Carro\Carro-edit-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Cidade\Cidade-factory.js" />
+    <Content Include="Library\Scripts\App\Sistema\Cidade\Cidade-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Cidade\Cidade-edit-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\CidadeGrupo\CidadeGrupo-factory.js" />
+    <Content Include="Library\Scripts\App\Sistema\CidadeGrupo\CidadeGrupo-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\CidadeGrupo\CidadeGrupo-edit-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Comentario\Comentario-factory.js" />
+    <Content Include="Library\Scripts\App\Sistema\Comentario\Comentario-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Comentario\Comentario-edit-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\CotacaoMoeda\CotacaoMoeda-factory.js" />
+    <Content Include="Library\Scripts\App\Sistema\CotacaoMoeda\CotacaoMoeda-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\CotacaoMoeda\CotacaoMoeda-edit-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Foto\Foto-factory.js" />
+    <Content Include="Library\Scripts\App\Sistema\Foto\Foto-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Foto\Foto-edit-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Gasto\Gasto-factory.js" />
+    <Content Include="Library\Scripts\App\Sistema\Gasto\Gasto-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Gasto\Gasto-edit-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Hotel\Hotel-factory.js" />
+    <Content Include="Library\Scripts\App\Sistema\Hotel\Hotel-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Hotel\Hotel-edit-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\ListaCompra\ListaCompra-factory.js" />
+    <Content Include="Library\Scripts\App\Sistema\ListaCompra\ListaCompra-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\ListaCompra\ListaCompra-edit-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Pais\Pais-factory.js" />
+    <Content Include="Library\Scripts\App\Sistema\Pais\Pais-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Pais\Pais-edit-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Posicao\Posicao-factory.js" />
+    <Content Include="Library\Scripts\App\Sistema\Posicao\Posicao-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Posicao\Posicao-edit-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Loja\Loja-factory.js" />
+    <Content Include="Library\Scripts\App\Sistema\Loja\Loja-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Loja\Loja-edit-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Refeicao\Refeicao-factory.js" />
+    <Content Include="Library\Scripts\App\Sistema\Refeicao\Refeicao-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Refeicao\Refeicao-edit-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\RequisicaoAmizade\RequisicaoAmizade-factory.js" />
+    <Content Include="Library\Scripts\App\Sistema\RequisicaoAmizade\RequisicaoAmizade-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\RequisicaoAmizade\RequisicaoAmizade-edit-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Sugestao\Sugestao-factory.js" />
+    <Content Include="Library\Scripts\App\Sistema\Sugestao\Sugestao-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Sugestao\Sugestao-edit-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Viagem\Viagem-factory.js" />
+    <Content Include="Library\Scripts\App\Sistema\Viagem\Viagem-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Viagem\Viagem-edit-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\ViagemAerea\ViagemAerea-factory.js" />
+    <Content Include="Library\Scripts\App\Sistema\ViagemAerea\ViagemAerea-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\ViagemAerea\ViagemAerea-edit-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Sistema-routes.js" />
+    <Content Include="Views\Sistema\Usuario.cshtml" />
+    <Content Include="Views\Sistema\UsuarioEdicao.cshtml" />
+    <Content Include="Views\Sistema\Reabastecimento.cshtml" />
+    <Content Include="Views\Sistema\ReabastecimentoEdicao.cshtml" />
+    <Content Include="Views\Sistema\Amigo.cshtml" />
+    <Content Include="Views\Sistema\AmigoEdicao.cshtml" />
+    <Content Include="Views\Sistema\AporteDinheiro.cshtml" />
+    <Content Include="Views\Sistema\AporteDinheiroEdicao.cshtml" />
+    <Content Include="Views\Sistema\Atracao.cshtml" />
+    <Content Include="Views\Sistema\AtracaoEdicao.cshtml" />
+    <Content Include="Views\Sistema\CalendarioPrevisto.cshtml" />
+    <Content Include="Views\Sistema\CalendarioPrevistoEdicao.cshtml" />
+    <Content Include="Views\Sistema\Carro.cshtml" />
+    <Content Include="Views\Sistema\CarroEdicao.cshtml" />
+    <Content Include="Views\Sistema\Cidade.cshtml" />
+    <Content Include="Views\Sistema\CidadeEdicao.cshtml" />
+    <Content Include="Views\Sistema\CidadeGrupo.cshtml" />
+    <Content Include="Views\Sistema\CidadeGrupoEdicao.cshtml" />
+    <Content Include="Views\Sistema\Comentario.cshtml" />
+    <Content Include="Views\Sistema\ComentarioEdicao.cshtml" />
+    <Content Include="Views\Sistema\CotacaoMoeda.cshtml" />
+    <Content Include="Views\Sistema\CotacaoMoedaEdicao.cshtml" />
+    <Content Include="Views\Sistema\Foto.cshtml" />
+    <Content Include="Views\Sistema\FotoEdicao.cshtml" />
+    <Content Include="Views\Sistema\Gasto.cshtml" />
+    <Content Include="Views\Sistema\GastoEdicao.cshtml" />
+    <Content Include="Views\Sistema\Hotel.cshtml" />
+    <Content Include="Views\Sistema\HotelEdicao.cshtml" />
+    <Content Include="Views\Sistema\ListaCompra.cshtml" />
+    <Content Include="Views\Sistema\ListaCompraEdicao.cshtml" />
+    <Content Include="Views\Sistema\Pais.cshtml" />
+    <Content Include="Views\Sistema\PaisEdicao.cshtml" />
+    <Content Include="Views\Sistema\Posicao.cshtml" />
+    <Content Include="Views\Sistema\PosicaoEdicao.cshtml" />
+    <Content Include="Views\Sistema\Loja.cshtml" />
+    <Content Include="Views\Sistema\LojaEdicao.cshtml" />
+    <Content Include="Views\Sistema\Refeicao.cshtml" />
+    <Content Include="Views\Sistema\RefeicaoEdicao.cshtml" />
+    <Content Include="Views\Sistema\RequisicaoAmizade.cshtml" />
+    <Content Include="Views\Sistema\RequisicaoAmizadeEdicao.cshtml" />
+    <Content Include="Views\Sistema\Sugestao.cshtml" />
+    <Content Include="Views\Sistema\SugestaoEdicao.cshtml" />
+    <Content Include="Views\Sistema\Viagem.cshtml" />
+    <Content Include="Views\Sistema\ViagemEdicao.cshtml" />
+    <Content Include="Views\Sistema\ViagemAerea.cshtml" />
+    <Content Include="Views\Sistema\ViagemAereaEdicao.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Library\fonts\fontawesome-webfont.eot" />
+    <Content Include="Library\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Library\fonts\fontawesome-webfont.woff" />
+    <Content Include="Library\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Library\fonts\FontAwesome.otf" />
+    <Content Include="Library\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Library\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Library\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Library\Scripts\Angular\angular-animate.min.js.map" />
+    <Content Include="Library\Scripts\Angular\angular-aria.min.js.map" />
+    <Content Include="Library\Scripts\Angular\angular-cookies.min.js.map" />
+    <Content Include="Library\Scripts\Angular\angular-loader.min.js.map" />
+    <Content Include="Library\Scripts\Angular\angular-message-format.min.js.map" />
+    <Content Include="Library\Scripts\Angular\angular-messages.min.js.map" />
+    <Content Include="Library\Scripts\Angular\angular-parse-ext.min.js.map" />
+    <Content Include="Library\Scripts\Angular\angular-resource.min.js.map" />
+    <Content Include="Library\Scripts\Angular\angular-route.min.js.map" />
+    <Content Include="Library\Scripts\Angular\angular-sanitize.min.js.map" />
+    <Content Include="Library\Scripts\Angular\angular-touch.min.js.map" />
+    <Content Include="Library\Scripts\Angular\angular.min.js.map" />
+    <Content Include="Library\Scripts\Angular\errors.json" />
+    <Content Include="Library\Scripts\Angular\version.json" />
+    <Content Include="Library\Scripts\Componentes\jquery-2.2.3.min.map" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\TextosPaginas.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TextosPaginas.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CV.Business\CV.Business.csproj">
+      <Project>{045facca-dde4-4e15-9dd9-cf5e704f08b0}</Project>
+      <Name>CV.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CV.Model\CV.Model.csproj">
+      <Project>{bb9c58e3-7915-430a-9669-64cae7881c6d}</Project>
+      <Name>CV.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ItemGroup>
+    <None Include="$(CscToolPath)\*">
+      <Link>roslyn\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <PropertyGroup Condition="'$(UseSharedCompilation)' != 'true'">
+    <CscToolPath>$(MSBuildBinPath)</CscToolPath>
+    <CscToolExe>csc.exe</CscToolExe>
+  </PropertyGroup>
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>3787</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

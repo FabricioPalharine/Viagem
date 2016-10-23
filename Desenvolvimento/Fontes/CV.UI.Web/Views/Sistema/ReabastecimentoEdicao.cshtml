@@ -1,0 +1,90 @@
+<section class="content-header">
+    <h1>
+        @TextosPaginas.Home_Reabastecimento
+        <small>@TextosPaginas.Reabastecimento_Manutencao</small>
+
+    </h1>
+    <ol class="breadcrumb">
+        
+        <li>@TextosPaginas.Home_Menu</li>
+        <li><a ui-sref="Reabastecimento({filtro:itemReabastecimentoEdit.filtroConsulta})">@TextosPaginas.Home_Reabastecimento</a></li>
+        <li class="active">@TextosPaginas.Reabastecimento_Manutencao</li>
+    </ol>
+
+</section>
+<!-- Main content -->
+<section class="content" ng-init="itemReabastecimentoEdit.load()">
+    <!-- Default box -->
+    <!-- general form elements -->
+    <div class="box box-primary">
+        <div class="overlay" ng-show="itemReabastecimentoEdit.loading">
+            <i class="fa fa-refresh fa-spin text-gray"></i>
+        </div>
+
+        <form role="form" ng-submit="itemReabastecimentoEdit.save(form)" name="form" novalidate>
+            <div class="box-body">
+
+                 <div class="row" ng-show="itemReabastecimentoEdit.messages.length > 0">
+                     <div class="col-md-12">
+                         <div class="callout callout-danger">
+                             <h4>@TextosPaginas.Geral_ValidarErros</h4>
+                             <ul>
+                                 <li ng-repeat="erro in itemReabastecimentoEdit.messages">
+                                     <span ng-bind="erro.Mensagem"></span>
+                                 </li>
+                             </ul>
+
+                         </div>
+                     </div>
+
+                </div>
+                <div class="row">
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemReabastecimentoEdit.CamposInvalidos.IdentificadorCarro}">
+					<label>@TextosPaginas.Reabastecimento_IdentificadorCarro</label>
+					<select ng-model="itemReabastecimentoEdit.itemCarro" class="form-control" ng-options="obj.Locadora for obj in itemReabastecimentoEdit.ListaCarro track by obj.Identificador">
+						<option value="">@TextosPaginas.Selecione</option>
+					</select>
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemReabastecimentoEdit.CamposInvalidos.IdentificadorCidade}">
+					<label>@TextosPaginas.Reabastecimento_IdentificadorCidade</label>
+					<select ng-model="itemReabastecimentoEdit.itemCidade" class="form-control" ng-options="obj.Nome for obj in itemReabastecimentoEdit.ListaCidade track by obj.Identificador">
+						<option value="">@TextosPaginas.Selecione</option>
+					</select>
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemReabastecimentoEdit.CamposInvalidos.Latitude}">
+					<label>@TextosPaginas.Reabastecimento_Latitude</label>
+					<input type="text" class="form-control" ng-model="itemReabastecimentoEdit.itemReabastecimento.Latitude"   empty-to-null decimal-input="{digits:8, integerDigits:4}">
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemReabastecimentoEdit.CamposInvalidos.Longitude}">
+					<label>@TextosPaginas.Reabastecimento_Longitude</label>
+					<input type="text" class="form-control" ng-model="itemReabastecimentoEdit.itemReabastecimento.Longitude"   empty-to-null decimal-input="{digits:8, integerDigits:4}">
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemReabastecimentoEdit.CamposInvalidos.Litro}">
+					<label><input type="checkbox" ng-model="itemReabastecimentoEdit.itemReabastecimento.Litro" >@TextosPaginas.Reabastecimento_Litro</label>
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemReabastecimentoEdit.CamposInvalidos.QuantidadeReabastecida}">
+					<label>@TextosPaginas.Reabastecimento_QuantidadeReabastecida</label>
+					<input type="text" class="form-control" ng-model="itemReabastecimentoEdit.itemReabastecimento.QuantidadeReabastecida"   empty-to-null decimal-input="{digits:2, integerDigits:4}">
+					</div>
+                                   
+
+                </div>
+             
+            </div><!-- /.box-body -->
+            <div class="box-footer">
+                <button type="button" class="btn btn-primary " title="@TextosPaginas.Voltar" ui-sref="Reabastecimento({filtro:itemReabastecimentoEdit.filtroConsulta})">
+                    <span class="fa fa-arrow-left" aria-hidden="true"></span>
+                </button>
+                <button type="submit" class="btn btn-primary  pull-right">
+                    <span class="fa fa-save" aria-hidden="true"></span> @TextosPaginas.Geral_Salvar
+                </button>
+
+            </div>
+        </form>
+    </div><!-- /.box -->
+
+
+
+
+
+</section><!-- /.content -->

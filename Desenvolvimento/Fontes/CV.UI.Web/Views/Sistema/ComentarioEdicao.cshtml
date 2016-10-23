@@ -1,0 +1,87 @@
+<section class="content-header">
+    <h1>
+        @TextosPaginas.Home_Comentario
+        <small>@TextosPaginas.Comentario_Manutencao</small>
+
+    </h1>
+    <ol class="breadcrumb">
+        
+        <li>@TextosPaginas.Home_Menu</li>
+        <li><a ui-sref="Comentario({filtro:itemComentarioEdit.filtroConsulta})">@TextosPaginas.Home_Comentario</a></li>
+        <li class="active">@TextosPaginas.Comentario_Manutencao</li>
+    </ol>
+
+</section>
+<!-- Main content -->
+<section class="content" ng-init="itemComentarioEdit.load()">
+    <!-- Default box -->
+    <!-- general form elements -->
+    <div class="box box-primary">
+        <div class="overlay" ng-show="itemComentarioEdit.loading">
+            <i class="fa fa-refresh fa-spin text-gray"></i>
+        </div>
+
+        <form role="form" ng-submit="itemComentarioEdit.save(form)" name="form" novalidate>
+            <div class="box-body">
+
+                 <div class="row" ng-show="itemComentarioEdit.messages.length > 0">
+                     <div class="col-md-12">
+                         <div class="callout callout-danger">
+                             <h4>@TextosPaginas.Geral_ValidarErros</h4>
+                             <ul>
+                                 <li ng-repeat="erro in itemComentarioEdit.messages">
+                                     <span ng-bind="erro.Mensagem"></span>
+                                 </li>
+                             </ul>
+
+                         </div>
+                     </div>
+
+                </div>
+                <div class="row">
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemComentarioEdit.CamposInvalidos.IdentificadorViagem}">
+					<label>@TextosPaginas.Comentario_IdentificadorViagem</label>
+					<select ng-model="itemComentarioEdit.itemViagem" class="form-control" ng-options="obj.Nome for obj in itemComentarioEdit.ListaViagem track by obj.Identificador">
+						<option value="">@TextosPaginas.Selecione</option>
+					</select>
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemComentarioEdit.CamposInvalidos.IdentificadorCidade}">
+					<label>@TextosPaginas.Comentario_IdentificadorCidade</label>
+					<select ng-model="itemComentarioEdit.itemCidade" class="form-control" ng-options="obj.Nome for obj in itemComentarioEdit.ListaCidade track by obj.Identificador">
+						<option value="">@TextosPaginas.Selecione</option>
+					</select>
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemComentarioEdit.CamposInvalidos.Latitude}">
+					<label>@TextosPaginas.Comentario_Latitude</label>
+					<input type="text" class="form-control" ng-model="itemComentarioEdit.itemComentario.Latitude"   empty-to-null decimal-input="{digits:8, integerDigits:4}">
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemComentarioEdit.CamposInvalidos.Longitude}">
+					<label>@TextosPaginas.Comentario_Longitude</label>
+					<input type="text" class="form-control" ng-model="itemComentarioEdit.itemComentario.Longitude"   empty-to-null decimal-input="{digits:8, integerDigits:4}">
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemComentarioEdit.CamposInvalidos.Texto}">
+					<label>@TextosPaginas.Comentario_Texto</label>
+					<input type="text" class="form-control" ng-model="itemComentarioEdit.itemComentario.Texto" maxlength="50"  empty-to-null >
+					</div>
+                                   
+
+                </div>
+             
+            </div><!-- /.box-body -->
+            <div class="box-footer">
+                <button type="button" class="btn btn-primary " title="@TextosPaginas.Voltar" ui-sref="Comentario({filtro:itemComentarioEdit.filtroConsulta})">
+                    <span class="fa fa-arrow-left" aria-hidden="true"></span>
+                </button>
+                <button type="submit" class="btn btn-primary  pull-right">
+                    <span class="fa fa-save" aria-hidden="true"></span> @TextosPaginas.Geral_Salvar
+                </button>
+
+            </div>
+        </form>
+    </div><!-- /.box -->
+
+
+
+
+
+</section><!-- /.content -->

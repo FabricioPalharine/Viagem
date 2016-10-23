@@ -1,0 +1,73 @@
+<section class="content-header">
+    <h1>
+        @TextosPaginas.AlterarSenha_Titulo
+
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#/home"><i class="fa fa-dashboard"></i> @TextosPaginas.Home_Dashboard</a></li>
+        <li class="active">@TextosPaginas.Home_AlterarSenha</li>
+    </ol>
+
+</section>
+
+<section class="content">
+    <!-- Default box -->
+    <!-- general form elements -->
+    <div class="box box-primary">
+        <div class="overlay" ng-show="alteraSenha.loading">
+            <i class="fa fa-refresh fa-spin text-gray"></i>
+        </div>
+
+        <form role="form" ng-submit="alteraSenha.save(form)" name="form" novalidate>
+            <div class="box-body">
+                <div class="row" ng-show="alteraSenha.messages.length > 0">
+                    <div class="col-md-12">
+                        <div class="callout callout-danger">
+                            <h4>@TextosPaginas.Geral_ValidarErros</h4>
+                            <ul>
+                                <li ng-repeat="erro in alteraSenha.messages">
+                                    <span ng-bind="erro.Mensagem"></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6" >
+                        <label for="txtNome">@TextosPaginas.AlterarSenha_Nome</label>
+                        <input type="text" class="form-control" name="txtNome" id="txtNome" ng-model="alteraSenha.loggedUser.NomeUsuario" disabled>
+                    
+                    </div>
+                    <div class="form-group  col-md-6" >
+                        <label for="txtLogin">@TextosPaginas.AlterarSenha_Login</label>
+                        <input class="form-control" id="txtLogin" name="txtLogin"ng-model="alteraSenha.loggedUser.LoginUsuario" disabled>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6" ng-class="{ 'has-error': alteraSenha.CamposInvalidos.Senha }">
+                        <label for="txtSenha">@TextosPaginas.AlterarSenha_Senha</label>
+                        <input type="password" class="form-control" name="txtSenha" id="txtSenha" ng-model="alteraSenha.senha"  >
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6" ng-class="{ 'has-error': alteraSenha.CamposInvalidos.NovaSenha }">
+                        <label for="txtNovaSenha">@TextosPaginas.AlterarSenha_NovaSenha</label>
+                        <input type="password" class="form-control" name="txtNovaSenha" id="txtNovaSenha" ng-model="alteraSenha.novasenha">
+
+                    </div>
+                    <div class="form-group col-md-6" ng-class="{ 'has-error': alteraSenha.CamposInvalidos.ConfirmarSenha }">
+                        <label for="txtConfirmarSenha">@TextosPaginas.AlterarSenha_ConfirmarSenha</label>
+                        <input type="password" class="form-control" name="txtConfirmarSenha" id="txtConfirmarSenha" ng-model="alteraSenha.confirmarsenha">
+
+                    </div>
+                </div>
+            </div>
+            <div class="box-footer">              
+                <button type="submit" class="btn btn-primary  pull-right">
+                    <span class="fa fa-cloud-upload" aria-hidden="true"></span> @TextosPaginas.Alterar
+                </button>
+            </div>
+        </form>
+</div>
+</section>

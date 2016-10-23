@@ -1,0 +1,466 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+		Microsoft ResX Schema
+
+		Version 1.3
+
+		The primary goals of this format is to allow a simple XML format 
+		that is mostly human readable. The generation and parsing of the 
+		various data types are done through the TypeConverter classes 
+		associated with the data types.
+
+		Example:
+
+		... ado.net/XML headers & schema ...
+		<resheader name="resmimetype">text/microsoft-resx</resheader>
+		<resheader name="version">1.3</resheader>
+		<resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+		<resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+		<data name="Name1">this is my long string</data>
+		<data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+		<data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+			[base64 mime encoded serialized .NET Framework object]
+		</data>
+		<data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+			[base64 mime encoded string representing a byte array form of the .NET Framework object]
+		</data>
+
+		There are any number of "resheader" rows that contain simple 
+		name/value pairs.
+
+		Each data row contains a name, and value. The row also contains a 
+		type or mimetype. Type corresponds to a .NET class that support 
+		text/value conversion through the TypeConverter architecture. 
+		Classes that don't support this are serialized and stored with the 
+		mimetype set.
+
+		The mimetype is used for serialized objects, and tells the 
+		ResXResourceReader how to depersist the object. This is currently not 
+		extensible. For a given mimetype the value must be set accordingly:
+
+		Note - application/x-microsoft.net.object.binary.base64 is the format 
+		that the ResXResourceWriter will generate, however the reader can 
+		read any of the formats listed below.
+
+		mimetype: application/x-microsoft.net.object.binary.base64
+		value   : The object must be serialized with 
+			: System.Serialization.Formatters.Binary.BinaryFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.soap.base64
+		value   : The object must be serialized with 
+			: System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.bytearray.base64
+		value   : The object must be serialized into a byte array 
+			: using a System.ComponentModel.TypeConverter
+			: and then encoded with base64 encoding.
+	-->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Viagem_SalvarAluguelGasto_OK" xml:space="preserve">
+    <value>Gravação de AluguelGasto foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirAluguelGasto_OK" xml:space="preserve">
+    <value>Exclusão de AluguelGasto foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarReabastecimento_OK" xml:space="preserve">
+    <value>Gravação de AluguelReabastecimento foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirReabastecimento_OK" xml:space="preserve">
+    <value>Exclusão de AluguelReabastecimento foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarAmigo_OK" xml:space="preserve">
+    <value>Gravação de Amigo foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirAmigo_OK" xml:space="preserve">
+    <value>Exclusão de Amigo foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarAporteDinheiro_OK" xml:space="preserve">
+    <value>Gravação de AporteDinheiro foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirAporteDinheiro_OK" xml:space="preserve">
+    <value>Exclusão de AporteDinheiro foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarAtracao_OK" xml:space="preserve">
+    <value>Gravação de Atracao foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirAtracao_OK" xml:space="preserve">
+    <value>Exclusão de Atracao foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarAvaliacaoAerea_OK" xml:space="preserve">
+    <value>Gravação de AvaliacaoAerea foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirAvaliacaoAerea_OK" xml:space="preserve">
+    <value>Exclusão de AvaliacaoAerea foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarAvaliacaoAluguel_OK" xml:space="preserve">
+    <value>Gravação de AvaliacaoAluguel foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirAvaliacaoAluguel_OK" xml:space="preserve">
+    <value>Exclusão de AvaliacaoAluguel foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarAvaliacaoAtracao_OK" xml:space="preserve">
+    <value>Gravação de AvaliacaoAtracao foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirAvaliacaoAtracao_OK" xml:space="preserve">
+    <value>Exclusão de AvaliacaoAtracao foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarCalendarioPrevisto_OK" xml:space="preserve">
+    <value>Gravação de CalendarioPrevisto foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirCalendarioPrevisto_OK" xml:space="preserve">
+    <value>Exclusão de CalendarioPrevisto foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarCarro_OK" xml:space="preserve">
+    <value>Gravação de Carro foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirCarro_OK" xml:space="preserve">
+    <value>Exclusão de Carro foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarCarroEvento_OK" xml:space="preserve">
+    <value>Gravação de CarroEvento foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirCarroEvento_OK" xml:space="preserve">
+    <value>Exclusão de CarroEvento foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarCidade_OK" xml:space="preserve">
+    <value>Gravação de Cidade foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirCidade_OK" xml:space="preserve">
+    <value>Exclusão de Cidade foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarCidadeGrupo_OK" xml:space="preserve">
+    <value>Gravação de CidadeGrupo foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirCidadeGrupo_OK" xml:space="preserve">
+    <value>Exclusão de CidadeGrupo foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarComentario_OK" xml:space="preserve">
+    <value>Gravação de Comentario foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirComentario_OK" xml:space="preserve">
+    <value>Exclusão de Comentario foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarCotacaoMoeda_OK" xml:space="preserve">
+    <value>Gravação de CotacaoMoeda foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirCotacaoMoeda_OK" xml:space="preserve">
+    <value>Exclusão de CotacaoMoeda foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarFoto_OK" xml:space="preserve">
+    <value>Gravação de Foto foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirFoto_OK" xml:space="preserve">
+    <value>Exclusão de Foto foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarFotoAtracao_OK" xml:space="preserve">
+    <value>Gravação de FotoAtracao foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirFotoAtracao_OK" xml:space="preserve">
+    <value>Exclusão de FotoAtracao foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarFotoHotel_OK" xml:space="preserve">
+    <value>Gravação de FotoHotel foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirFotoHotel_OK" xml:space="preserve">
+    <value>Exclusão de FotoHotel foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarFotoItemCompra_OK" xml:space="preserve">
+    <value>Gravação de FotoItemCompra foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirFotoItemCompra_OK" xml:space="preserve">
+    <value>Exclusão de FotoItemCompra foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarFotoRefeicao_OK" xml:space="preserve">
+    <value>Gravação de FotoRefeicao foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirFotoRefeicao_OK" xml:space="preserve">
+    <value>Exclusão de FotoRefeicao foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarGasto_OK" xml:space="preserve">
+    <value>Gravação de Gasto foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirGasto_OK" xml:space="preserve">
+    <value>Exclusão de Gasto foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarGastoCompra_OK" xml:space="preserve">
+    <value>Gravação de GastoCompra foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirGastoCompra_OK" xml:space="preserve">
+    <value>Exclusão de GastoCompra foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarGastoHotel_OK" xml:space="preserve">
+    <value>Gravação de GastoHotel foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirGastoHotel_OK" xml:space="preserve">
+    <value>Exclusão de GastoHotel foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarGastoPosicao_OK" xml:space="preserve">
+    <value>Gravação de GastoPosicao foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirGastoPosicao_OK" xml:space="preserve">
+    <value>Exclusão de GastoPosicao foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarGastoRefeicao_OK" xml:space="preserve">
+    <value>Gravação de GastoRefeicao foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirGastoRefeicao_OK" xml:space="preserve">
+    <value>Exclusão de GastoRefeicao foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarGastoViagemAerea_OK" xml:space="preserve">
+    <value>Gravação de GastoViagemAerea foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirGastoViagemAerea_OK" xml:space="preserve">
+    <value>Exclusão de GastoViagemAerea foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarHotel_OK" xml:space="preserve">
+    <value>Gravação de Hotel foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirHotel_OK" xml:space="preserve">
+    <value>Exclusão de Hotel foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarHotelAvaliacao_OK" xml:space="preserve">
+    <value>Gravação de HotelAvaliacao foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirHotelAvaliacao_OK" xml:space="preserve">
+    <value>Exclusão de HotelAvaliacao foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarItemCompra_OK" xml:space="preserve">
+    <value>Gravação de ItemCompra foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirItemCompra_OK" xml:space="preserve">
+    <value>Exclusão de ItemCompra foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarListaCompra_OK" xml:space="preserve">
+    <value>Gravação de ListaCompra foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirListaCompra_OK" xml:space="preserve">
+    <value>Exclusão de ListaCompra foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarLoja_OK" xml:space="preserve">
+    <value>Gravação de Loja foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirLoja_OK" xml:space="preserve">
+    <value>Exclusão de Loja foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarPais_OK" xml:space="preserve">
+    <value>Gravação de Pais foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirPais_OK" xml:space="preserve">
+    <value>Exclusão de Pais foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarParticipanteViagem_OK" xml:space="preserve">
+    <value>Gravação de ParticipanteViagem foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirParticipanteViagem_OK" xml:space="preserve">
+    <value>Exclusão de ParticipanteViagem foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarPosicao_OK" xml:space="preserve">
+    <value>Gravação de Posicao foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirPosicao_OK" xml:space="preserve">
+    <value>Exclusão de Posicao foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarReabastecimentoGasto_OK" xml:space="preserve">
+    <value>Gravação de ReabastecimentoGasto foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirReabastecimentoGasto_OK" xml:space="preserve">
+    <value>Exclusão de ReabastecimentoGasto foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarRefeicao_OK" xml:space="preserve">
+    <value>Gravação de Refeicao foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirRefeicao_OK" xml:space="preserve">
+    <value>Exclusão de Refeicao foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarRequisicaoAmizade_OK" xml:space="preserve">
+    <value>Gravação de RequisicaoAmizade foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirRequisicaoAmizade_OK" xml:space="preserve">
+    <value>Exclusão de RequisicaoAmizade foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarSugestao_OK" xml:space="preserve">
+    <value>Gravação de Sugestao foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirSugestao_OK" xml:space="preserve">
+    <value>Exclusão de Sugestao foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarUsuario_OK" xml:space="preserve">
+    <value>Gravação de Usuario foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirUsuario_OK" xml:space="preserve">
+    <value>Exclusão de Usuario foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarViagem_OK" xml:space="preserve">
+    <value>Gravação de Viagem foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirViagem_OK" xml:space="preserve">
+    <value>Exclusão de Viagem foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarViagemAerea_OK" xml:space="preserve">
+    <value>Gravação de ViagemAerea foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirViagemAerea_OK" xml:space="preserve">
+    <value>Exclusão de ViagemAerea foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarViagemAereaAeroporto_OK" xml:space="preserve">
+    <value>Gravação de ViagemAereaAeroporto foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirViagemAereaAeroporto_OK" xml:space="preserve">
+    <value>Exclusão de ViagemAereaAeroporto foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarRefeicaoPedido_OK" xml:space="preserve">
+    <value>Gravação de RefeicaoPedido foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirRefeicaoPedido_OK" xml:space="preserve">
+    <value>Exclusão de RefeicaoPedido foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarAvaliacaoLoja_OK" xml:space="preserve">
+    <value>Gravação de AvaliacaoLoja foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirAvaliacaoLoja_OK" xml:space="preserve">
+    <value>Exclusão de AvaliacaoLoja foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarUsuarioGasto_OK" xml:space="preserve">
+    <value>Gravação de UsuarioGasto foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirUsuarioGasto_OK" xml:space="preserve">
+    <value>Exclusão de UsuarioGasto foi realizada com sucesso</value>
+  </data>
+  <data name="UsuarioSemPermissao" xml:space="preserve">
+    <value>O usuário {0}  não tem permissão Acesso ao Sistema.</value>
+  </data>
+  <data name="Excluir" xml:space="preserve">
+    <value>Realmente deseja excluir o registro selecionado?</value>
+  </data>
+  <data name="AcessoTelaNegado" xml:space="preserve">
+    <value>O usuário {0} não tem permissão de acesso a atividade {1}.</value>
+  </data>
+  <data name="ConfirmacaoAberturaTela" xml:space="preserve">
+    <value>A tela já se encontra aberta. Deseja fechá-la e abrir uma nova.</value>
+  </data>
+  <data name="NecessarioSelecionarItemGrid" xml:space="preserve">
+    <value>É necessário que haja uma linha selecionada no grid para executar essa ação.</value>
+  </data>
+  <data name="NomeSistema" xml:space="preserve">
+    <value>CV</value>
+  </data>
+  <data name="TituloErro" xml:space="preserve">
+    <value>Erro de Página</value>
+  </data>
+  <data name="DescricaoAmigavelErro" xml:space="preserve">
+    <value>Ocorreu um erro durante o processamento da requisição. Tentar novamente e caso não obtenha sucesso, entrar em contato com a área de suporte</value>
+  </data>
+  <data name="TituloPopupErro" xml:space="preserve">
+    <value>Erros Validação</value>
+  </data>
+  <data name="Tela_Usuario" xml:space="preserve">
+    <value>Usuário</value>
+  </data>
+  <data name="Tela_Reabastecimento" xml:space="preserve">
+    <value>Reabastecimento</value>
+  </data>
+  <data name="Tela_Amigo" xml:space="preserve">
+    <value>Amigo</value>
+  </data>
+  <data name="Tela_AporteDinheiro" xml:space="preserve">
+    <value>Aporte Dinheiro</value>
+  </data>
+  <data name="Tela_Atracao" xml:space="preserve">
+    <value>Atração</value>
+  </data>
+  <data name="Tela_CalendarioPrevisto" xml:space="preserve">
+    <value>Calendário Previsto</value>
+  </data>
+  <data name="Tela_Carro" xml:space="preserve">
+    <value>Carro</value>
+  </data>
+  <data name="Tela_Cidade" xml:space="preserve">
+    <value>Cidade</value>
+  </data>
+  <data name="Tela_CidadeGrupo" xml:space="preserve">
+    <value>Grupo Cidade</value>
+  </data>
+  <data name="Tela_Comentario" xml:space="preserve">
+    <value>Comentário</value>
+  </data>
+  <data name="Tela_CotacaoMoeda" xml:space="preserve">
+    <value>Cotação Moeda</value>
+  </data>
+  <data name="Tela_Foto" xml:space="preserve">
+    <value>Foto</value>
+  </data>
+  <data name="Tela_Gasto" xml:space="preserve">
+    <value>Gasto</value>
+  </data>
+  <data name="Tela_Hotel" xml:space="preserve">
+    <value>Hotel</value>
+  </data>
+  <data name="Tela_ListaCompra" xml:space="preserve">
+    <value>Lista de Compra</value>
+  </data>
+  <data name="Tela_Pais" xml:space="preserve">
+    <value>País</value>
+  </data>
+  <data name="Tela_Posicao" xml:space="preserve">
+    <value>Posição</value>
+  </data>
+  <data name="Tela_Loja" xml:space="preserve">
+    <value>Loja</value>
+  </data>
+  <data name="Tela_Refeicao" xml:space="preserve">
+    <value>Refeição</value>
+  </data>
+  <data name="Tela_RequisicaoAmizade" xml:space="preserve">
+    <value>Requisição Amizade</value>
+  </data>
+  <data name="Tela_Sugestao" xml:space="preserve">
+    <value>Sugestão</value>
+  </data>
+  <data name="Tela_Viagem" xml:space="preserve">
+    <value>Viagem</value>
+  </data>
+  <data name="Tela_ViagemAerea" xml:space="preserve">
+    <value>Viagem Aérea</value>
+  </data>
+</root>

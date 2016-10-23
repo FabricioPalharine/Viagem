@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5ED9C0DB-10BA-4F26-90C6-67F37F04A5A2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CV.Data</RootNamespace>
+    <AssemblyName>CV.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Componentes\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\Componentes\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="RepositoryBase.cs" />
+    <Compile Include="pRepositoryBase.cs" />
+    <Compile Include="EntityContext.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Configuration\AluguelGastoConfiguration.cs" />
+    <Compile Include="Configuration\pAluguelGastoConfiguration.cs" />
+    <Compile Include="Configuration\ReabastecimentoConfiguration.cs" />
+    <Compile Include="Configuration\pReabastecimentoConfiguration.cs" />
+    <Compile Include="Configuration\AmigoConfiguration.cs" />
+    <Compile Include="Configuration\pAmigoConfiguration.cs" />
+    <Compile Include="Configuration\AporteDinheiroConfiguration.cs" />
+    <Compile Include="Configuration\pAporteDinheiroConfiguration.cs" />
+    <Compile Include="Configuration\AtracaoConfiguration.cs" />
+    <Compile Include="Configuration\pAtracaoConfiguration.cs" />
+    <Compile Include="Configuration\AvaliacaoAereaConfiguration.cs" />
+    <Compile Include="Configuration\pAvaliacaoAereaConfiguration.cs" />
+    <Compile Include="Configuration\AvaliacaoAluguelConfiguration.cs" />
+    <Compile Include="Configuration\pAvaliacaoAluguelConfiguration.cs" />
+    <Compile Include="Configuration\AvaliacaoAtracaoConfiguration.cs" />
+    <Compile Include="Configuration\pAvaliacaoAtracaoConfiguration.cs" />
+    <Compile Include="Configuration\CalendarioPrevistoConfiguration.cs" />
+    <Compile Include="Configuration\pCalendarioPrevistoConfiguration.cs" />
+    <Compile Include="Configuration\CarroConfiguration.cs" />
+    <Compile Include="Configuration\pCarroConfiguration.cs" />
+    <Compile Include="Configuration\CarroEventoConfiguration.cs" />
+    <Compile Include="Configuration\pCarroEventoConfiguration.cs" />
+    <Compile Include="Configuration\CidadeConfiguration.cs" />
+    <Compile Include="Configuration\pCidadeConfiguration.cs" />
+    <Compile Include="Configuration\CidadeGrupoConfiguration.cs" />
+    <Compile Include="Configuration\pCidadeGrupoConfiguration.cs" />
+    <Compile Include="Configuration\ComentarioConfiguration.cs" />
+    <Compile Include="Configuration\pComentarioConfiguration.cs" />
+    <Compile Include="Configuration\CotacaoMoedaConfiguration.cs" />
+    <Compile Include="Configuration\pCotacaoMoedaConfiguration.cs" />
+    <Compile Include="Configuration\FotoConfiguration.cs" />
+    <Compile Include="Configuration\pFotoConfiguration.cs" />
+    <Compile Include="Configuration\FotoAtracaoConfiguration.cs" />
+    <Compile Include="Configuration\pFotoAtracaoConfiguration.cs" />
+    <Compile Include="Configuration\FotoHotelConfiguration.cs" />
+    <Compile Include="Configuration\pFotoHotelConfiguration.cs" />
+    <Compile Include="Configuration\FotoItemCompraConfiguration.cs" />
+    <Compile Include="Configuration\pFotoItemCompraConfiguration.cs" />
+    <Compile Include="Configuration\FotoRefeicaoConfiguration.cs" />
+    <Compile Include="Configuration\pFotoRefeicaoConfiguration.cs" />
+    <Compile Include="Configuration\GastoConfiguration.cs" />
+    <Compile Include="Configuration\pGastoConfiguration.cs" />
+    <Compile Include="Configuration\GastoCompraConfiguration.cs" />
+    <Compile Include="Configuration\pGastoCompraConfiguration.cs" />
+    <Compile Include="Configuration\GastoHotelConfiguration.cs" />
+    <Compile Include="Configuration\pGastoHotelConfiguration.cs" />
+    <Compile Include="Configuration\GastoPosicaoConfiguration.cs" />
+    <Compile Include="Configuration\pGastoPosicaoConfiguration.cs" />
+    <Compile Include="Configuration\GastoRefeicaoConfiguration.cs" />
+    <Compile Include="Configuration\pGastoRefeicaoConfiguration.cs" />
+    <Compile Include="Configuration\GastoViagemAereaConfiguration.cs" />
+    <Compile Include="Configuration\pGastoViagemAereaConfiguration.cs" />
+    <Compile Include="Configuration\HotelConfiguration.cs" />
+    <Compile Include="Configuration\pHotelConfiguration.cs" />
+    <Compile Include="Configuration\HotelAvaliacaoConfiguration.cs" />
+    <Compile Include="Configuration\pHotelAvaliacaoConfiguration.cs" />
+    <Compile Include="Configuration\ItemCompraConfiguration.cs" />
+    <Compile Include="Configuration\pItemCompraConfiguration.cs" />
+    <Compile Include="Configuration\ListaCompraConfiguration.cs" />
+    <Compile Include="Configuration\pListaCompraConfiguration.cs" />
+    <Compile Include="Configuration\LojaConfiguration.cs" />
+    <Compile Include="Configuration\pLojaConfiguration.cs" />
+    <Compile Include="Configuration\PaisConfiguration.cs" />
+    <Compile Include="Configuration\pPaisConfiguration.cs" />
+    <Compile Include="Configuration\ParticipanteViagemConfiguration.cs" />
+    <Compile Include="Configuration\pParticipanteViagemConfiguration.cs" />
+    <Compile Include="Configuration\PosicaoConfiguration.cs" />
+    <Compile Include="Configuration\pPosicaoConfiguration.cs" />
+    <Compile Include="Configuration\ReabastecimentoGastoConfiguration.cs" />
+    <Compile Include="Configuration\pReabastecimentoGastoConfiguration.cs" />
+    <Compile Include="Configuration\RefeicaoConfiguration.cs" />
+    <Compile Include="Configuration\pRefeicaoConfiguration.cs" />
+    <Compile Include="Configuration\RequisicaoAmizadeConfiguration.cs" />
+    <Compile Include="Configuration\pRequisicaoAmizadeConfiguration.cs" />
+    <Compile Include="Configuration\SugestaoConfiguration.cs" />
+    <Compile Include="Configuration\pSugestaoConfiguration.cs" />
+    <Compile Include="Configuration\UsuarioConfiguration.cs" />
+    <Compile Include="Configuration\pUsuarioConfiguration.cs" />
+    <Compile Include="Configuration\ViagemConfiguration.cs" />
+    <Compile Include="Configuration\pViagemConfiguration.cs" />
+    <Compile Include="Configuration\ViagemAereaConfiguration.cs" />
+    <Compile Include="Configuration\pViagemAereaConfiguration.cs" />
+    <Compile Include="Configuration\ViagemAereaAeroportoConfiguration.cs" />
+    <Compile Include="Configuration\pViagemAereaAeroportoConfiguration.cs" />
+    <Compile Include="Configuration\RefeicaoPedidoConfiguration.cs" />
+    <Compile Include="Configuration\pRefeicaoPedidoConfiguration.cs" />
+    <Compile Include="Configuration\AvaliacaoLojaConfiguration.cs" />
+    <Compile Include="Configuration\pAvaliacaoLojaConfiguration.cs" />
+    <Compile Include="Configuration\UsuarioGastoConfiguration.cs" />
+    <Compile Include="Configuration\pUsuarioGastoConfiguration.cs" />
+    <Compile Include="ViagemRepository.cs" />
+    <Compile Include="pViagemRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CV.Model\CV.Model.csproj">
+      <Project>{bb9c58e3-7915-430a-9669-64cae7881c6d}</Project>
+      <Name>CV.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

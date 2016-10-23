@@ -1,0 +1,79 @@
+<section class="content-header">
+    <h1>
+        @TextosPaginas.Home_Amigo
+        <small>@TextosPaginas.Amigo_Manutencao</small>
+
+    </h1>
+    <ol class="breadcrumb">
+        
+        <li>@TextosPaginas.Home_Menu</li>
+        <li><a ui-sref="Amigo({filtro:itemAmigoEdit.filtroConsulta})">@TextosPaginas.Home_Amigo</a></li>
+        <li class="active">@TextosPaginas.Amigo_Manutencao</li>
+    </ol>
+
+</section>
+<!-- Main content -->
+<section class="content" ng-init="itemAmigoEdit.load()">
+    <!-- Default box -->
+    <!-- general form elements -->
+    <div class="box box-primary">
+        <div class="overlay" ng-show="itemAmigoEdit.loading">
+            <i class="fa fa-refresh fa-spin text-gray"></i>
+        </div>
+
+        <form role="form" ng-submit="itemAmigoEdit.save(form)" name="form" novalidate>
+            <div class="box-body">
+
+                 <div class="row" ng-show="itemAmigoEdit.messages.length > 0">
+                     <div class="col-md-12">
+                         <div class="callout callout-danger">
+                             <h4>@TextosPaginas.Geral_ValidarErros</h4>
+                             <ul>
+                                 <li ng-repeat="erro in itemAmigoEdit.messages">
+                                     <span ng-bind="erro.Mensagem"></span>
+                                 </li>
+                             </ul>
+
+                         </div>
+                     </div>
+
+                </div>
+                <div class="row">
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemAmigoEdit.CamposInvalidos.IdentificadorUsuario}">
+					<label>@TextosPaginas.Amigo_IdentificadorUsuario</label>
+					<select ng-model="itemAmigoEdit.itemUsuario" class="form-control" ng-options="obj.EMail for obj in itemAmigoEdit.ListaUsuario track by obj.Identificador">
+						<option value="">@TextosPaginas.Selecione</option>
+					</select>
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemAmigoEdit.CamposInvalidos.IdentificadorAmigo}">
+					<label>@TextosPaginas.Amigo_IdentificadorAmigo</label>
+					<select ng-model="itemAmigoEdit.itemUsuario" class="form-control" ng-options="obj.EMail for obj in itemAmigoEdit.ListaUsuario track by obj.Identificador">
+						<option value="">@TextosPaginas.Selecione</option>
+					</select>
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemAmigoEdit.CamposInvalidos.EMail}">
+					<label>@TextosPaginas.Amigo_EMail</label>
+					<input type="text" class="form-control" ng-model="itemAmigoEdit.itemAmigo.EMail" maxlength="200"  empty-to-null >
+					</div>
+                                   
+
+                </div>
+             
+            </div><!-- /.box-body -->
+            <div class="box-footer">
+                <button type="button" class="btn btn-primary " title="@TextosPaginas.Voltar" ui-sref="Amigo({filtro:itemAmigoEdit.filtroConsulta})">
+                    <span class="fa fa-arrow-left" aria-hidden="true"></span>
+                </button>
+                <button type="submit" class="btn btn-primary  pull-right">
+                    <span class="fa fa-save" aria-hidden="true"></span> @TextosPaginas.Geral_Salvar
+                </button>
+
+            </div>
+        </form>
+    </div><!-- /.box -->
+
+
+
+
+
+</section><!-- /.content -->

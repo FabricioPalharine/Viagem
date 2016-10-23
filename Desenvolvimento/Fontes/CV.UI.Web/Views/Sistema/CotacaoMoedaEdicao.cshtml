@@ -1,0 +1,95 @@
+<section class="content-header">
+    <h1>
+        @TextosPaginas.Home_CotacaoMoeda
+        <small>@TextosPaginas.CotacaoMoeda_Manutencao</small>
+
+    </h1>
+    <ol class="breadcrumb">
+        
+        <li>@TextosPaginas.Home_Menu</li>
+        <li><a ui-sref="CotacaoMoeda({filtro:itemCotacaoMoedaEdit.filtroConsulta})">@TextosPaginas.Home_CotacaoMoeda</a></li>
+        <li class="active">@TextosPaginas.CotacaoMoeda_Manutencao</li>
+    </ol>
+
+</section>
+<!-- Main content -->
+<section class="content" ng-init="itemCotacaoMoedaEdit.load()">
+    <!-- Default box -->
+    <!-- general form elements -->
+    <div class="box box-primary">
+        <div class="overlay" ng-show="itemCotacaoMoedaEdit.loading">
+            <i class="fa fa-refresh fa-spin text-gray"></i>
+        </div>
+
+        <form role="form" ng-submit="itemCotacaoMoedaEdit.save(form)" name="form" novalidate>
+            <div class="box-body">
+
+                 <div class="row" ng-show="itemCotacaoMoedaEdit.messages.length > 0">
+                     <div class="col-md-12">
+                         <div class="callout callout-danger">
+                             <h4>@TextosPaginas.Geral_ValidarErros</h4>
+                             <ul>
+                                 <li ng-repeat="erro in itemCotacaoMoedaEdit.messages">
+                                     <span ng-bind="erro.Mensagem"></span>
+                                 </li>
+                             </ul>
+
+                         </div>
+                     </div>
+
+                </div>
+                <div class="row">
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemCotacaoMoedaEdit.CamposInvalidos.Moeda}">
+					<label>@TextosPaginas.CotacaoMoeda_Moeda</label>
+					<input type="text" class="form-control" ng-model="itemCotacaoMoedaEdit.itemCotacaoMoeda.Moeda" maxlength="7"  empty-to-null integer-input >
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemCotacaoMoedaEdit.CamposInvalidos.DataCotacao}">
+					<label>@TextosPaginas.CotacaoMoeda_DataCotacao</label>
+<div class="dropdown">
+                                <a class="dropdown-toggle"  role="button" data-toggle="dropdown">
+                                    <div class="input-group">
+                                        <input date-input ng-model="itemCotacaoMoedaEdit.itemCotacaoMoeda.DataCotacao" class="form-control"  input-mask="{mask: 'd/m/y'}" 
+                                               datapattern="dd/MM/yyyy">
+                                        <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </span>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    <datetimepicker data-ng-model="itemCotacaoMoedaEdit.itemCotacaoMoeda.DataCotacao"                                                   
+                                                    data-datetimepicker-config="{  minView:'day' , langCode:itemCotacaoMoedaEdit.Idioma()  }" />
+                                </ul>
+                            </div>
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemCotacaoMoedaEdit.CamposInvalidos.ValorCotacao}">
+					<label>@TextosPaginas.CotacaoMoeda_ValorCotacao</label>
+					<input type="text" class="form-control" ng-model="itemCotacaoMoedaEdit.itemCotacaoMoeda.ValorCotacao"   empty-to-null decimal-input="{digits:6, integerDigits:12}">
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemCotacaoMoedaEdit.CamposInvalidos.IdentificadorViagem}">
+					<label>@TextosPaginas.CotacaoMoeda_IdentificadorViagem</label>
+					<select ng-model="itemCotacaoMoedaEdit.itemViagem" class="form-control" ng-options="obj.Nome for obj in itemCotacaoMoedaEdit.ListaViagem track by obj.Identificador">
+						<option value="">@TextosPaginas.Selecione</option>
+					</select>
+					</div>
+                                   
+
+                </div>
+             
+            </div><!-- /.box-body -->
+            <div class="box-footer">
+                <button type="button" class="btn btn-primary " title="@TextosPaginas.Voltar" ui-sref="CotacaoMoeda({filtro:itemCotacaoMoedaEdit.filtroConsulta})">
+                    <span class="fa fa-arrow-left" aria-hidden="true"></span>
+                </button>
+                <button type="submit" class="btn btn-primary  pull-right">
+                    <span class="fa fa-save" aria-hidden="true"></span> @TextosPaginas.Geral_Salvar
+                </button>
+
+            </div>
+        </form>
+    </div><!-- /.box -->
+
+
+
+
+
+</section><!-- /.content -->

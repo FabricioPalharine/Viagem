@@ -1,0 +1,83 @@
+<section class="content-header">
+    <h1>
+        @TextosPaginas.Home_RequisicaoAmizade
+        <small>@TextosPaginas.RequisicaoAmizade_Manutencao</small>
+
+    </h1>
+    <ol class="breadcrumb">
+        
+        <li>@TextosPaginas.Home_Menu</li>
+        <li><a ui-sref="RequisicaoAmizade({filtro:itemRequisicaoAmizadeEdit.filtroConsulta})">@TextosPaginas.Home_RequisicaoAmizade</a></li>
+        <li class="active">@TextosPaginas.RequisicaoAmizade_Manutencao</li>
+    </ol>
+
+</section>
+<!-- Main content -->
+<section class="content" ng-init="itemRequisicaoAmizadeEdit.load()">
+    <!-- Default box -->
+    <!-- general form elements -->
+    <div class="box box-primary">
+        <div class="overlay" ng-show="itemRequisicaoAmizadeEdit.loading">
+            <i class="fa fa-refresh fa-spin text-gray"></i>
+        </div>
+
+        <form role="form" ng-submit="itemRequisicaoAmizadeEdit.save(form)" name="form" novalidate>
+            <div class="box-body">
+
+                 <div class="row" ng-show="itemRequisicaoAmizadeEdit.messages.length > 0">
+                     <div class="col-md-12">
+                         <div class="callout callout-danger">
+                             <h4>@TextosPaginas.Geral_ValidarErros</h4>
+                             <ul>
+                                 <li ng-repeat="erro in itemRequisicaoAmizadeEdit.messages">
+                                     <span ng-bind="erro.Mensagem"></span>
+                                 </li>
+                             </ul>
+
+                         </div>
+                     </div>
+
+                </div>
+                <div class="row">
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemRequisicaoAmizadeEdit.CamposInvalidos.IdentificadorUsuario}">
+					<label>@TextosPaginas.RequisicaoAmizade_IdentificadorUsuario</label>
+					<select ng-model="itemRequisicaoAmizadeEdit.itemUsuario" class="form-control" ng-options="obj.EMail for obj in itemRequisicaoAmizadeEdit.ListaUsuario track by obj.Identificador">
+						<option value="">@TextosPaginas.Selecione</option>
+					</select>
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemRequisicaoAmizadeEdit.CamposInvalidos.IdentificadorUsuarioRequisitado}">
+					<label>@TextosPaginas.RequisicaoAmizade_IdentificadorUsuarioRequisitado</label>
+					<select ng-model="itemRequisicaoAmizadeEdit.itemUsuario" class="form-control" ng-options="obj.EMail for obj in itemRequisicaoAmizadeEdit.ListaUsuario track by obj.Identificador">
+						<option value="">@TextosPaginas.Selecione</option>
+					</select>
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemRequisicaoAmizadeEdit.CamposInvalidos.EMail}">
+					<label>@TextosPaginas.RequisicaoAmizade_EMail</label>
+					<input type="text" class="form-control" ng-model="itemRequisicaoAmizadeEdit.itemRequisicaoAmizade.EMail" maxlength="200"  empty-to-null >
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemRequisicaoAmizadeEdit.CamposInvalidos.Status}">
+					<label>@TextosPaginas.RequisicaoAmizade_Status</label>
+					<input type="text" class="form-control" ng-model="itemRequisicaoAmizadeEdit.itemRequisicaoAmizade.Status" maxlength="7"  empty-to-null integer-input >
+					</div>
+                                   
+
+                </div>
+             
+            </div><!-- /.box-body -->
+            <div class="box-footer">
+                <button type="button" class="btn btn-primary " title="@TextosPaginas.Voltar" ui-sref="RequisicaoAmizade({filtro:itemRequisicaoAmizadeEdit.filtroConsulta})">
+                    <span class="fa fa-arrow-left" aria-hidden="true"></span>
+                </button>
+                <button type="submit" class="btn btn-primary  pull-right">
+                    <span class="fa fa-save" aria-hidden="true"></span> @TextosPaginas.Geral_Salvar
+                </button>
+
+            </div>
+        </form>
+    </div><!-- /.box -->
+
+
+
+
+
+</section><!-- /.content -->

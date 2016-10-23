@@ -1,0 +1,119 @@
+<section class="content-header">
+    <h1>
+        @TextosPaginas.Home_Refeicao
+        <small>@TextosPaginas.Refeicao_Manutencao</small>
+
+    </h1>
+    <ol class="breadcrumb">
+        
+        <li>@TextosPaginas.Home_Menu</li>
+        <li><a ui-sref="Refeicao({filtro:itemRefeicaoEdit.filtroConsulta})">@TextosPaginas.Home_Refeicao</a></li>
+        <li class="active">@TextosPaginas.Refeicao_Manutencao</li>
+    </ol>
+
+</section>
+<!-- Main content -->
+<section class="content" ng-init="itemRefeicaoEdit.load()">
+    <!-- Default box -->
+    <!-- general form elements -->
+    <div class="box box-primary">
+        <div class="overlay" ng-show="itemRefeicaoEdit.loading">
+            <i class="fa fa-refresh fa-spin text-gray"></i>
+        </div>
+
+        <form role="form" ng-submit="itemRefeicaoEdit.save(form)" name="form" novalidate>
+            <div class="box-body">
+
+                 <div class="row" ng-show="itemRefeicaoEdit.messages.length > 0">
+                     <div class="col-md-12">
+                         <div class="callout callout-danger">
+                             <h4>@TextosPaginas.Geral_ValidarErros</h4>
+                             <ul>
+                                 <li ng-repeat="erro in itemRefeicaoEdit.messages">
+                                     <span ng-bind="erro.Mensagem"></span>
+                                 </li>
+                             </ul>
+
+                         </div>
+                     </div>
+
+                </div>
+                <div class="row">
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemRefeicaoEdit.CamposInvalidos.IdentificadorViagem}">
+					<label>@TextosPaginas.Refeicao_IdentificadorViagem</label>
+					<select ng-model="itemRefeicaoEdit.itemViagem" class="form-control" ng-options="obj.Nome for obj in itemRefeicaoEdit.ListaViagem track by obj.Identificador">
+						<option value="">@TextosPaginas.Selecione</option>
+					</select>
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemRefeicaoEdit.CamposInvalidos.IdentificadorCidade}">
+					<label>@TextosPaginas.Refeicao_IdentificadorCidade</label>
+					<select ng-model="itemRefeicaoEdit.itemCidade" class="form-control" ng-options="obj.Nome for obj in itemRefeicaoEdit.ListaCidade track by obj.Identificador">
+						<option value="">@TextosPaginas.Selecione</option>
+					</select>
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemRefeicaoEdit.CamposInvalidos.Nome}">
+					<label>@TextosPaginas.Refeicao_Nome</label>
+					<input type="text" class="form-control" ng-model="itemRefeicaoEdit.itemRefeicao.Nome" maxlength="200"  empty-to-null >
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemRefeicaoEdit.CamposInvalidos.CodigoPlace}">
+					<label>@TextosPaginas.Refeicao_CodigoPlace</label>
+					<input type="text" class="form-control" ng-model="itemRefeicaoEdit.itemRefeicao.CodigoPlace" maxlength="50"  empty-to-null >
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemRefeicaoEdit.CamposInvalidos.Data}">
+					<label>@TextosPaginas.Refeicao_Data</label>
+<div class="dropdown">
+                                <a class="dropdown-toggle"  role="button" data-toggle="dropdown">
+                                    <div class="input-group">
+                                        <input date-input ng-model="itemRefeicaoEdit.itemRefeicao.Data" class="form-control"  input-mask="{mask: 'd/m/y'}" 
+                                               datapattern="dd/MM/yyyy">
+                                        <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </span>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    <datetimepicker data-ng-model="itemRefeicaoEdit.itemRefeicao.Data"                                                   
+                                                    data-datetimepicker-config="{  minView:'day' , langCode:itemRefeicaoEdit.Idioma()  }" />
+                                </ul>
+                            </div>
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemRefeicaoEdit.CamposInvalidos.Latitude}">
+					<label>@TextosPaginas.Refeicao_Latitude</label>
+					<input type="text" class="form-control" ng-model="itemRefeicaoEdit.itemRefeicao.Latitude"   empty-to-null decimal-input="{digits:8, integerDigits:4}">
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemRefeicaoEdit.CamposInvalidos.Longitude}">
+					<label>@TextosPaginas.Refeicao_Longitude</label>
+					<input type="text" class="form-control" ng-model="itemRefeicaoEdit.itemRefeicao.Longitude"   empty-to-null decimal-input="{digits:8, integerDigits:4}">
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemRefeicaoEdit.CamposInvalidos.Tipo}">
+					<label>@TextosPaginas.Refeicao_Tipo</label>
+					<input type="text" class="form-control" ng-model="itemRefeicaoEdit.itemRefeicao.Tipo" maxlength="50"  empty-to-null >
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemRefeicaoEdit.CamposInvalidos.IdentificadorAtracao}">
+					<label>@TextosPaginas.Refeicao_IdentificadorAtracao</label>
+					<select ng-model="itemRefeicaoEdit.itemAtracao" class="form-control" ng-options="obj.Nome for obj in itemRefeicaoEdit.ListaAtracao track by obj.Identificador">
+						<option value="">@TextosPaginas.Selecione</option>
+					</select>
+					</div>
+                                   
+
+                </div>
+             
+            </div><!-- /.box-body -->
+            <div class="box-footer">
+                <button type="button" class="btn btn-primary " title="@TextosPaginas.Voltar" ui-sref="Refeicao({filtro:itemRefeicaoEdit.filtroConsulta})">
+                    <span class="fa fa-arrow-left" aria-hidden="true"></span>
+                </button>
+                <button type="submit" class="btn btn-primary  pull-right">
+                    <span class="fa fa-save" aria-hidden="true"></span> @TextosPaginas.Geral_Salvar
+                </button>
+
+            </div>
+        </form>
+    </div><!-- /.box -->
+
+
+
+
+
+</section><!-- /.content -->

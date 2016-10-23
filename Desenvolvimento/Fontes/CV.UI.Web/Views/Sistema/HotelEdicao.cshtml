@@ -1,0 +1,163 @@
+<section class="content-header">
+    <h1>
+        @TextosPaginas.Home_Hotel
+        <small>@TextosPaginas.Hotel_Manutencao</small>
+
+    </h1>
+    <ol class="breadcrumb">
+        
+        <li>@TextosPaginas.Home_Menu</li>
+        <li><a ui-sref="Hotel({filtro:itemHotelEdit.filtroConsulta})">@TextosPaginas.Home_Hotel</a></li>
+        <li class="active">@TextosPaginas.Hotel_Manutencao</li>
+    </ol>
+
+</section>
+<!-- Main content -->
+<section class="content" ng-init="itemHotelEdit.load()">
+    <!-- Default box -->
+    <!-- general form elements -->
+    <div class="box box-primary">
+        <div class="overlay" ng-show="itemHotelEdit.loading">
+            <i class="fa fa-refresh fa-spin text-gray"></i>
+        </div>
+
+        <form role="form" ng-submit="itemHotelEdit.save(form)" name="form" novalidate>
+            <div class="box-body">
+
+                 <div class="row" ng-show="itemHotelEdit.messages.length > 0">
+                     <div class="col-md-12">
+                         <div class="callout callout-danger">
+                             <h4>@TextosPaginas.Geral_ValidarErros</h4>
+                             <ul>
+                                 <li ng-repeat="erro in itemHotelEdit.messages">
+                                     <span ng-bind="erro.Mensagem"></span>
+                                 </li>
+                             </ul>
+
+                         </div>
+                     </div>
+
+                </div>
+                <div class="row">
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemHotelEdit.CamposInvalidos.IdentificadorViagem}">
+					<label>@TextosPaginas.Hotel_IdentificadorViagem</label>
+					<select ng-model="itemHotelEdit.itemViagem" class="form-control" ng-options="obj.Nome for obj in itemHotelEdit.ListaViagem track by obj.Identificador">
+						<option value="">@TextosPaginas.Selecione</option>
+					</select>
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemHotelEdit.CamposInvalidos.IdentificadorCidade}">
+					<label>@TextosPaginas.Hotel_IdentificadorCidade</label>
+					<select ng-model="itemHotelEdit.itemCidade" class="form-control" ng-options="obj.Nome for obj in itemHotelEdit.ListaCidade track by obj.Identificador">
+						<option value="">@TextosPaginas.Selecione</option>
+					</select>
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemHotelEdit.CamposInvalidos.Nome}">
+					<label>@TextosPaginas.Hotel_Nome</label>
+					<input type="text" class="form-control" ng-model="itemHotelEdit.itemHotel.Nome" maxlength="200"  empty-to-null >
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemHotelEdit.CamposInvalidos.CodigoPlace}">
+					<label>@TextosPaginas.Hotel_CodigoPlace</label>
+					<input type="text" class="form-control" ng-model="itemHotelEdit.itemHotel.CodigoPlace" maxlength="50"  empty-to-null >
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemHotelEdit.CamposInvalidos.DataEntrada}">
+					<label>@TextosPaginas.Hotel_DataEntrada</label>
+<div class="dropdown">
+                                <a class="dropdown-toggle"  role="button" data-toggle="dropdown">
+                                    <div class="input-group">
+                                        <input date-input ng-model="itemHotelEdit.itemHotel.DataEntrada" class="form-control"  input-mask="{mask: 'd/m/y'}" 
+                                               datapattern="dd/MM/yyyy">
+                                        <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </span>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    <datetimepicker data-ng-model="itemHotelEdit.itemHotel.DataEntrada"                                                   
+                                                    data-datetimepicker-config="{  minView:'day' , langCode:itemHotelEdit.Idioma()  }" />
+                                </ul>
+                            </div>
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemHotelEdit.CamposInvalidos.DataSaidia}">
+					<label>@TextosPaginas.Hotel_DataSaidia</label>
+<div class="dropdown">
+                                <a class="dropdown-toggle"  role="button" data-toggle="dropdown">
+                                    <div class="input-group">
+                                        <input date-input ng-model="itemHotelEdit.itemHotel.DataSaidia" class="form-control"  input-mask="{mask: 'd/m/y'}" 
+                                               datapattern="dd/MM/yyyy">
+                                        <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </span>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    <datetimepicker data-ng-model="itemHotelEdit.itemHotel.DataSaidia"                                                   
+                                                    data-datetimepicker-config="{  minView:'day' , langCode:itemHotelEdit.Idioma()  }" />
+                                </ul>
+                            </div>
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemHotelEdit.CamposInvalidos.Longitude}">
+					<label>@TextosPaginas.Hotel_Longitude</label>
+					<input type="text" class="form-control" ng-model="itemHotelEdit.itemHotel.Longitude"   empty-to-null decimal-input="{digits:8, integerDigits:4}">
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemHotelEdit.CamposInvalidos.Latitude}">
+					<label>@TextosPaginas.Hotel_Latitude</label>
+					<input type="text" class="form-control" ng-model="itemHotelEdit.itemHotel.Latitude"   empty-to-null decimal-input="{digits:8, integerDigits:4}">
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemHotelEdit.CamposInvalidos.EntradaPrevista}">
+					<label>@TextosPaginas.Hotel_EntradaPrevista</label>
+<div class="dropdown">
+                                <a class="dropdown-toggle"  role="button" data-toggle="dropdown">
+                                    <div class="input-group">
+                                        <input date-input ng-model="itemHotelEdit.itemHotel.EntradaPrevista" class="form-control"  input-mask="{mask: 'd/m/y'}" 
+                                               datapattern="dd/MM/yyyy">
+                                        <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </span>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    <datetimepicker data-ng-model="itemHotelEdit.itemHotel.EntradaPrevista"                                                   
+                                                    data-datetimepicker-config="{  minView:'day' , langCode:itemHotelEdit.Idioma()  }" />
+                                </ul>
+                            </div>
+					</div>
+					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemHotelEdit.CamposInvalidos.SaidaPrevista}">
+					<label>@TextosPaginas.Hotel_SaidaPrevista</label>
+<div class="dropdown">
+                                <a class="dropdown-toggle"  role="button" data-toggle="dropdown">
+                                    <div class="input-group">
+                                        <input date-input ng-model="itemHotelEdit.itemHotel.SaidaPrevista" class="form-control"  input-mask="{mask: 'd/m/y'}" 
+                                               datapattern="dd/MM/yyyy">
+                                        <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </span>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    <datetimepicker data-ng-model="itemHotelEdit.itemHotel.SaidaPrevista"                                                   
+                                                    data-datetimepicker-config="{  minView:'day' , langCode:itemHotelEdit.Idioma()  }" />
+                                </ul>
+                            </div>
+					</div>
+                                   
+
+                </div>
+             
+            </div><!-- /.box-body -->
+            <div class="box-footer">
+                <button type="button" class="btn btn-primary " title="@TextosPaginas.Voltar" ui-sref="Hotel({filtro:itemHotelEdit.filtroConsulta})">
+                    <span class="fa fa-arrow-left" aria-hidden="true"></span>
+                </button>
+                <button type="submit" class="btn btn-primary  pull-right">
+                    <span class="fa fa-save" aria-hidden="true"></span> @TextosPaginas.Geral_Salvar
+                </button>
+
+            </div>
+        </form>
+    </div><!-- /.box -->
+
+
+
+
+
+</section><!-- /.content -->
