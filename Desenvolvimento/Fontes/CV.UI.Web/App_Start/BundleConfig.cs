@@ -18,7 +18,9 @@ namespace CV.UI.Web
                         "~/library/Scripts/Componentes/jquery.inputmask.date.extensions.js",
                         "~/library/Scripts/Componentes/jquery-ui.min.js",
                         "~/library/Scripts/angular/moment-with-locales.min.js",
-                        "~/library/Scripts/Componentes/fullcalendar.js"
+                        "~/library/Scripts/Componentes/jquery-ui.min.js",
+                        "~/library/Scripts/Componentes/jquery.signalR-2.0.0.js"
+
                         ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
@@ -29,8 +31,9 @@ namespace CV.UI.Web
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
                     "~/library/Scripts/app.js",
                     "~/library/Scripts/app/app-module.js",
-                    "~/library/Scripts/app/app-route.js",   
+                    "~/library/Scripts/app/app-route.js",
                     "~/library/Scripts/app/Home/home-module.js",
+                   "~/library/Scripts/app/Home/SignalR-factory.js",
                     "~/library/Scripts/app/Home/home-controller.js",
                     "~/library/Scripts/app/Home/home-routes.js",
                     "~/library/Scripts/app/Home/auth-factory.js",
@@ -38,7 +41,7 @@ namespace CV.UI.Web
                     "~/library/Scripts/app/Home/login-controller.js",                    
                     "~/library/Scripts/app/Home/alteraSenha-controller.js",     
                     "~/library/Scripts/app/Sistema/Sistema-module.js",
-"~/library/Scripts/app/Sistema/Sistema-routes.js",
+                    "~/library/Scripts/app/Sistema/Sistema-routes.js",
                     "~/library/Scripts/app/Directive/error-manager-directive.js",
                     "~/library/Scripts/app/error-factory.js",
                      "~/library/Scripts/app/Directive/tradutor-directive.js",

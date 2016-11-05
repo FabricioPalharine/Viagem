@@ -17,7 +17,6 @@ namespace CV.UI.Web
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-
             GlobalConfiguration.Configuration.MessageHandlers
                       .Add(new BasicAuthMessageHandler()
                       {

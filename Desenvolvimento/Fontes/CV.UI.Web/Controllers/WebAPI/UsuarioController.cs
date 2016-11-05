@@ -22,9 +22,9 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             ResultadoConsultaTipo<Usuario> resultado = new ResultadoConsultaTipo<Usuario>();
             ViagemBusiness biz = new ViagemBusiness();
-           
-            List<Usuario> _itens = biz.ListarUsuario().ToList();
-resultado.TotalRegistros = _itens.Count();
+
+            List<Usuario> _itens = biz.ListarUsuario_EMail(json.EMail).ToList();
+            resultado.TotalRegistros = _itens.Count();
             if (json.SortField != null && json.SortField.Any())
                 _itens = _itens.AsQueryable().OrderByField<Usuario>(json.SortField, json.SortOrder).ToList();
 

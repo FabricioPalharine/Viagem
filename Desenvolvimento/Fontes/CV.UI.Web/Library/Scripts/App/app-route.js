@@ -9,9 +9,9 @@
                 // Add authorization token to headers
                 request: function (config) {
                     config.headers = config.headers || {};
-                    if ($cookies.get('token')) {
+                    if (sessionStorage.getItem('token')) {
 
-                        config.headers.Authorization = 'Bearer ' + $cookies.get('token');
+                        config.headers.Authorization = 'Bearer ' + sessionStorage.getItem('token');
                         // console.log(config);
                     }
                     return config;
@@ -21,10 +21,10 @@
                 responseError: function (response) {
                     if (response.status === 401) {
                         $rootScope.isLogged = false;
-                        $location.path('/login');
+                        $location.path('/home');
                         $rootScope.$emit('logout');
                         // remove any stale tokens
-                        $cookies.remove('token');
+                        sessionStorage.removeItem('token');
                         return $q.reject(response);
                     }
                     else {
@@ -36,28 +36,31 @@
       .run(['$rootScope', '$location', '$state', 'Auth', function ($rootScope, $location, $state, Auth) {
           // Redirect to login if route requires auth and you're not logged in
           $rootScope.$on('$stateChangeStart', function (event, next) {
-              Auth.isLoggedInAsync(function (loggedIn) {
-                  // console.log('to aqui');
-                  //   console.log(next);
-                  // console.log(loggedIn);
-                  if (next.authenticate == true && !loggedIn) {
-                      //   console.log('manda pro login');
+              if (next.authenticate == true ) {
+                  Auth.isLoggedInAsync(function (loggedIn) {
+                      // console.log('to aqui');
+                      //   console.log(next);
+                      // console.log(loggedIn);
 
-                      event.preventDefault();
-                      $state.go('login');
+                      //   console.log('manda pro login');
+                      if (!loggedIn) {
+                          event.preventDefault();
+                          $state.go('home');
+                      }
                       // $location.path('/login');
-                  }
-                  //else {
-                  //    console.log('parei');
-                  //}
-              });
+
+                      //else {
+                      //    console.log('parei');
+                      //}
+                  })
+              };
 
           });
       }]);
 
     function config($urlRouterProvider, $httpProvider) {
         // console.log('manda pra home');
-        $urlRouterProvider.otherwise('/login');
+        $urlRouterProvider.otherwise('/home');
         $httpProvider.interceptors.push('authInterceptor');
 
 

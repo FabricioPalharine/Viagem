@@ -7,13 +7,7 @@
 
   function config($stateProvider) {
       $stateProvider
-            .state('login', {
-                url: '/login',
-                templateUrl: 'Home/Login',
-                controller: 'LoginCtrl',
-                controllerAs: 'login',
-                authenticate: false
-            })
+            
           .state('alterasenha', {
               url: '/alterasenha',
               templateUrl: 'Home/AlterarSenha',
@@ -35,7 +29,7 @@
             templateUrl: 'home/dashboard',
             controller: 'HomeCtrl',
             controllerAs: 'home',
-            authenticate: true,
+            authenticate: false,
             params: {
                 filtro: null
             },

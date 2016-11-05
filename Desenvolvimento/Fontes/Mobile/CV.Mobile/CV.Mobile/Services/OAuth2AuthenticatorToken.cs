@@ -1,0 +1,39 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Xamarin.Auth;
+
+namespace CV.Mobile.Services
+{
+    public class OAuth2AuthenticatorToken : OAuth2Authenticator
+    {
+        private Uri AuthorizeUrl;
+        private Uri RedirectUrl;
+        private string Scope;
+
+        public OAuth2AuthenticatorToken(string clientId, string clientSecret, string scope, Uri authorizeURL, Uri redirectUrl, Uri UserTokenURL) :
+            base(clientId, clientSecret, scope, authorizeURL, redirectUrl, UserTokenURL)
+        {
+            AuthorizeUrl = authorizeURL;
+            RedirectUrl = redirectUrl;
+            Scope = scope;
+        }
+
+        public override Task<Uri> GetInitialUrlAsync()
+        {
+            string uriString = string.Format(
+                "{0}?client_id={1}&redirect_uri={2}&response_type={3}&scope={4}&access_type=offline&approval_prompt=force",
+                this.AuthorizeUrl.AbsoluteUri,
+                Uri.EscapeDataString(this.ClientId),
+                Uri.EscapeDataString(this.RedirectUrl.AbsoluteUri),
+                "code",
+                Uri.EscapeDataString(this.Scope)
+            );
+
+            var url = new Uri(uriString);
+            return Task.FromResult(url);
+        }
+    }
+}

@@ -100,7 +100,9 @@ using(					ViagemRepository data = new ViagemRepository())
 			}
 				return RetornoAcao;
 			}
-			public void SalvarReabastecimento (Reabastecimento itemGravar)
+
+
+        public void SalvarReabastecimento (Reabastecimento itemGravar)
 			{
 				 LimparValidacao();
 				 ValidateService(itemGravar);
@@ -164,7 +166,10 @@ using(					ViagemRepository data = new ViagemRepository())
 			}
 				return RetornoAcao;
 			}
-			public void SalvarAmigo (Amigo itemGravar)
+
+     
+
+        public void SalvarAmigo (Amigo itemGravar)
 			{
 				 LimparValidacao();
 				 ValidateService(itemGravar);
@@ -2890,6 +2895,74 @@ using(					ViagemRepository data = new ViagemRepository())
 				 }
 				 }
 			}
-	}
+			public HotelEvento SelecionarHotelEvento (int? Identificador)
+			{
+				 LimparValidacao();
+HotelEvento RetornoAcao = null;
+				if (IsValid())
+				{
+using(					ViagemRepository data = new ViagemRepository())
+				 {
+					RetornoAcao = data.SelecionarHotelEvento(Identificador);
+				}
+			}
+				return RetornoAcao;
+			}
+			public IList<HotelEvento> ListarHotelEvento ()
+			{
+				 LimparValidacao();
+IList<HotelEvento> RetornoAcao = new List<HotelEvento>();
+				if (IsValid())
+				{
+using(					ViagemRepository data = new ViagemRepository())
+				 {
+					RetornoAcao = data.ListarHotelEvento();
+				}
+			}
+				return RetornoAcao;
+			}
+			public void SalvarHotelEvento (HotelEvento itemGravar)
+			{
+				 LimparValidacao();
+				 ValidateService(itemGravar);
+					ValidarRegrasNegocioHotelEvento(itemGravar);
+				 if (IsValid())
+				 {
+					using(ViagemRepository data = new ViagemRepository())
+				 {
+					data.SalvarHotelEvento(itemGravar);
+					Message msg = new Message();
+					msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_SalvarHotelEvento_OK") });
+					ServiceResult resultado = new ServiceResult();
+					resultado.Success = true;
+					resultado.Messages.Add(msg);
+					serviceResult.Add(resultado);
+				 }
+				 }
+			}
+
+        
+
+        public void ExcluirHotelEvento (HotelEvento itemGravar)
+			{
+				 LimparValidacao();
+				 ValidateService(itemGravar);
+					ValidarRegrasExclusaoHotelEvento(itemGravar);
+				 if (IsValid())
+				 {
+					using(ViagemRepository data = new ViagemRepository())
+				 {
+					data.ExcluirHotelEvento(itemGravar);
+					Message msg = new Message();
+					msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_ExcluirHotelEvento_OK") });
+					ServiceResult resultado = new ServiceResult();
+					resultado.Success = true;
+					resultado.Messages.Add(msg);
+					serviceResult.Add(resultado);
+				 }
+				 }
+			}
+       
+    }
 
 }

@@ -1,0 +1,10 @@
+﻿CREATE TABLE [dbo].[Amigo] (
+    [ID_AMIGO]         INT           IDENTITY (1, 1) NOT NULL,
+    [ID_USUARIO]       INT           NOT NULL,
+    [ID_USUARIO_AMIGO] INT           NULL,
+    [DS_EMAIL]         VARCHAR (200) NOT NULL,
+    CONSTRAINT [PK3] PRIMARY KEY NONCLUSTERED ([ID_AMIGO] ASC),
+    CONSTRAINT [RefUsuario3] FOREIGN KEY ([ID_USUARIO]) REFERENCES [dbo].[Usuario] ([ID_USUARIO]),
+    CONSTRAINT [RefUsuario4] FOREIGN KEY ([ID_USUARIO_AMIGO]) REFERENCES [dbo].[Usuario] ([ID_USUARIO])
+);
+

@@ -904,4 +904,25 @@
   <data name="UsuarioGasto_EMail_Tamanho" xml:space="preserve">
     <value>O tamanho do campo E-Mail excedeu o limite</value>
   </data>
+  <data name="Hotel_Raio" xml:space="preserve">
+    <value>O campo Raio é obrigatório</value>
+  </data>
+  <data name="HotelEvento_Identificador" xml:space="preserve">
+    <value>O campo Identificador é obrigatório</value>
+  </data>
+  <data name="HotelEvento_IdentificadorHotel" xml:space="preserve">
+    <value>O campo Hotel é obrigatório</value>
+  </data>
+  <data name="HotelEvento_DataEvento" xml:space="preserve">
+    <value>O campo DataEvento é obrigatório</value>
+  </data>
+  <data name="HotelEvento_Tipo" xml:space="preserve">
+    <value>O campo Tipo é obrigatório</value>
+  </data>
+  <data name="HotelEvento_DataAtualizacao" xml:space="preserve">
+    <value>O campo Data Atualização é obrigatório</value>
+  </data>
+  <data name="Sugestao_Status" xml:space="preserve">
+    <value>O campo Status é obrigatório</value>
+  </data>
 </root>

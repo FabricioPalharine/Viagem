@@ -22,9 +22,9 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             ResultadoConsultaTipo<RequisicaoAmizade> resultado = new ResultadoConsultaTipo<RequisicaoAmizade>();
             ViagemBusiness biz = new ViagemBusiness();
-           
-            List<RequisicaoAmizade> _itens = biz.ListarRequisicaoAmizade().ToList();
-resultado.TotalRegistros = _itens.Count();
+
+            List<RequisicaoAmizade> _itens = biz.ListarRequisicaoAmizade(d => d.IdentificadorUsuarioRequisitado == token.IdentificadorUsuario && d.Status < 2).ToList();
+            resultado.TotalRegistros = _itens.Count();
             if (json.SortField != null && json.SortField.Any())
                 _itens = _itens.AsQueryable().OrderByField<RequisicaoAmizade>(json.SortField, json.SortOrder).ToList();
 
@@ -39,19 +39,18 @@ resultado.TotalRegistros = _itens.Count();
         {
             ViagemBusiness biz = new ViagemBusiness();
             RequisicaoAmizade itemRequisicaoAmizade = biz.SelecionarRequisicaoAmizade(id);
-          
+
             return itemRequisicaoAmizade;
         }
         [Authorize]
         public ResultadoOperacao Post([FromBody] RequisicaoAmizade itemRequisicaoAmizade)
         {
             ViagemBusiness biz = new ViagemBusiness();
-                      biz.SalvarRequisicaoAmizade(itemRequisicaoAmizade);
+            biz.SalvarRequisicaoAmizadeAprovacao(itemRequisicaoAmizade);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
-            if (itemResultado.Sucesso)
-                itemResultado.IdentificadorRegistro = itemRequisicaoAmizade.Identificador;
+           
             return itemResultado;
         }
         [Authorize]

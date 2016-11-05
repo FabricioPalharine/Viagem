@@ -54,5 +54,16 @@ public List<MensagemErro> RetornarMensagens
             resultado.Messages.Add(msg);
             serviceResult.Add(resultado);
         }
-	}
+        public void AdicionaMensagemBusiness(string CodigoMensagem)
+        {
+            Message msg = new Message();
+            msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens(CodigoMensagem) });
+            ServiceResult resultado = new ServiceResult();
+            resultado.Success = true;
+
+            resultado.Messages.Add(msg);
+            serviceResult.Add(resultado);
+        }
+
+    }
 }

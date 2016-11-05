@@ -20,3 +20,13 @@ obj
 /Desenvolvimento/Fontes/CV.Business/bin/Debug
 /Desenvolvimento/Fontes/CV.Business/obj/Debug
 /Desenvolvimento/Fontes/CV.Data/obj/Debug
+/Desenvolvimento/Fontes/CV.Database/bin/Debug
+/Desenvolvimento/Fontes/Mobile/CV.Mobile/CV.Mobile/bin/Debug
+/Desenvolvimento/Fontes/Mobile/CV.Mobile/CV.Mobile/obj/Debug
+*.user
+/Desenvolvimento/Fontes/Mobile/CV.Mobile/CV.Mobile.Droid/bin/Debug
+/Desenvolvimento/Fontes/Mobile/CV.Mobile/CV.Mobile.Droid/obj/Debug
+/Desenvolvimento/Fontes/Mobile/CV.Mobile/CV.Mobile.iOS/bin/iPhone/Debug
+/Desenvolvimento/Fontes/Mobile/CV.Mobile/CV.Mobile.iOS/obj/iPhone/Debug
+/Desenvolvimento/Fontes/Mobile/packages
+/Desenvolvimento/Fontes/packages

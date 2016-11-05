@@ -52,8 +52,8 @@ private void ValidarLocal(Microsoft.Practices.EnterpriseLibrary.Validation.Valid
 			[NotNullValidator(MessageTemplateResourceName="Sugestao_IdentificadorCidade",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public int? IdentificadorCidade { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="Sugestao_Lida",MessageTemplateResourceType=typeof(MensagemModelo))]
-			public bool? Lida { get; set; }
+			[NotNullValidator(MessageTemplateResourceName="Sugestao_Status",MessageTemplateResourceType=typeof(MensagemModelo))]
+			public int? Status { get; set; }
 
 			public Cidade ItemCidade { get; set; }
 

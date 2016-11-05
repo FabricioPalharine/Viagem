@@ -26,7 +26,6 @@ namespace CV.Data.Configuration
 			this.Property(i => i.DataToken).HasColumnName("DT_TOKEN");
 			this.Property(i => i.Lifetime).HasColumnName("NR_TOKEN_LIFETIME");
 			this.Property(i => i.Codigo).HasColumnName("CD_USUARIO");
-			this.HasMany(i => i.Gastos).WithRequired().HasForeignKey(d=>d.IdentificadorUsuario);
 		MapearCamposManualmente();
 		}
 	}

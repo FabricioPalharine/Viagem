@@ -31,5 +31,18 @@ namespace CV.Model
     public MensagemErro[] Mensagens { get; set; }
     
     public string AuthenticationToken {get;set;}
-	}
+
+        public string Cultura { get; set; }
+
+        public List<Viagem> Viagens { get; set; }
+
+        public int? IdentificadorViagem { get; set; }
+        public string NomeViagem { get; set; }
+        public bool PermiteEdicao { get; set; }
+        public bool VerCustos { get; set; }
+
+        public string LinkFoto { get; set; }
+        public string CodigoGoogle { get; set; }
+
+    }
 }

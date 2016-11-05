@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.MenuInicialPage"
+             xmlns:controles="clr-namespace: CV.Mobile.Controls;assembly=CV.Mobile">
+  <Grid>
+    <Grid.Padding>
+      <OnPlatform x:TypeArguments="Thickness"
+                  Android="20,20,20,20"
+                  WinPhone="20,20,20,20"
+                  iOS="20,40,20,20" />
+    </Grid.Padding>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="1*" />
+      <RowDefinition Height="2*" />
+      <RowDefinition Height="2*" />
+      <RowDefinition Height="1*" />
+      <RowDefinition Height="1*" />
+
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="1*" />
+      <ColumnDefinition Width="1*" />
+    </Grid.ColumnDefinitions>
+    
+    <StackLayout HorizontalOptions="Fill" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+      <StackLayout IsVisible="{Binding ViagemSelecionada}" Orientation="Horizontal" >
+        <Label Text="Viagem Selecionada:" ></Label><Label Text="{Binding ItemViagem.Nome}" ></Label>
+      </StackLayout>
+      <controles:ImageButton
+          ImageHeightRequest="50"
+          ImageWidthRequest="50"
+          Orientation="ImageToLeft"
+          Source=""
+          Text="Selecionar Viagem"
+          Command="{Binding SelecionarViagemCommand}"
+          HorizontalOptions="Fill" VerticalOptions="Fill"
+    >
+    </controles:ImageButton>
+    </StackLayout>
+
+    <controles:ImageButton
+          ImageHeightRequest="50"
+          ImageWidthRequest="50"
+          Orientation="ImageOnTop"
+          Source=""
+          Text="Amigos"
+          Command="{Binding AbrirAmigosCommand}"
+          Grid.Row="1" Grid.Column="0"
+          HorizontalOptions="Fill" VerticalOptions="Fill"
+    >
+    </controles:ImageButton>
+    
+    <controles:ImageButton
+          ImageHeightRequest="50"
+          ImageWidthRequest="50"
+          Orientation="ImageOnTop"
+          Source=""
+          Text="Criar Viagem"
+          Command="{Binding CriarViagemCommand}"
+          Grid.Row="1" Grid.Column="1"
+          HorizontalOptions="Fill" VerticalOptions="Fill"
+    >
+    </controles:ImageButton>
+
+   <controles:ImageButton
+          ImageHeightRequest="50"
+          ImageWidthRequest="50"
+          Orientation="ImageOnTop"
+          Source=""
+          Text="Entrar Viagem"
+          Command="{Binding EntrarViagemCommand}"
+          Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+          HorizontalOptions="Fill" VerticalOptions="Fill"
+    >
+    </controles:ImageButton>
+    
+    <controles:ImageButton
+          ImageHeightRequest="50"
+          ImageWidthRequest="50"
+          Orientation="ImageOnTop"
+          Source=""
+          Text="Rankings"
+          Command="{Binding AbrirRankingCommand}"
+          Grid.Row="3" Grid.Column="0" Grid.RowSpan="2"
+          HorizontalOptions="Fill" VerticalOptions="Fill"
+    >
+    </controles:ImageButton>
+
+    
+    <controles:ImageButton
+          ImageHeightRequest="50"
+          ImageWidthRequest="50"
+          Orientation="ImageToLeft"
+          Source=""
+          Text="Configurações"
+          Command="{Binding AbrirConfiguracaoCommand}"
+          Grid.Row="3" Grid.Column="1"
+          HorizontalOptions="Fill" VerticalOptions="Fill"
+    >
+    </controles:ImageButton>
+
+    <controles:ImageButton
+          ImageHeightRequest="50"
+          ImageWidthRequest="50"
+          Orientation="ImageToLeft"
+          Source=""
+          Text="Log Out"
+          Command="{Binding DeslogarCommand}"
+          Grid.Row="4" Grid.Column="1"
+          HorizontalOptions="Fill" VerticalOptions="Fill"
+    >
+    </controles:ImageButton>
+  </Grid>
+</ContentPage>

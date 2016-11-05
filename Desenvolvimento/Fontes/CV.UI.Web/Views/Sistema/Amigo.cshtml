@@ -14,61 +14,67 @@
 <section class="content" ng-init="itemAmigo.load()">
     <!-- Default box -->
     <!-- general form elements -->
-    <div class="box box-primary">
-        <div class="overlay" ng-show="itemAmigo.loading">
-            <i class="fa fa-refresh fa-spin text-gray"></i>
-        </div>
 
-        <form role="form" ng-submit="itemAmigo.filtraDado()" >
-            <div class="box-body">
-                <div class="row">
-                    
+    <ul class="nav nav-tabs">
+        <li  ng-class="{'active': !itemAmigo.AbrirAprovacao}"><a data-toggle="tab" data-target="#anigos" style="cursor:pointer">@TextosPaginas.Menu_Amigos</a></li>
+        <li ng-class="{'active': itemAmigo.AbrirAprovacao}"><a data-toggle="tab" data-target="#requisicoes" style="cursor:pointer">@TextosPaginas.Menu_RequisicoesPendentes</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="anigos" class="tab-pane fade in " ng-class="{'active': !itemAmigo.AbrirAprovacao}">
+
+            <div class="box box-primary">
+                <div class="overlay" ng-show="itemAmigo.loading">
+                    <i class="fa fa-refresh fa-spin text-gray"></i>
+                </div>
+
+                <form role="form" ng-submit="itemAmigo.filtraDado()">
+                    <div class="box-body">
+                        <div class="row">
+
+
+                        </div>
+                    </div><!-- /.box-body -->
+                    <div class="box-footer">
+                        <a role="button" class="btn btn-primary " title="@TextosPaginas.Adicionar" ui-sref="AmigoEdicao({filtro:itemAmigo.filtroAtualizacao})" ng-if="itemAmigo.PermiteInclusao">
+                            <span class="fa fa-plus" aria-hidden="true"></span>
+                        </a>
+                      
+
+                    </div>
+                </form>
+            </div><!-- /.box -->
+
+
+
+            <div class="box">
+                <div class="overlay" ng-show="itemAmigo.loading">
+                    <i class="fa fa-refresh fa-spin text-gray"></i>
+                </div>
+                <div class="box-body table-responsive">
+                    <div class="gridStyle" ui-grid="itemAmigo.gridOptions" ui-grid-pagination></div>
 
 
                 </div>
-
-
-            </div><!-- /.box-body -->
-            <div class="box-footer">
-                <a role="button" class="btn btn-primary " title="@TextosPaginas.Adicionar" ui-sref="AmigoEdicao({filtro:itemAmigo.filtroAtualizacao})" ng-if="itemAmigo.PermiteInclusao">
-                    <span class="fa fa-plus" aria-hidden="true"></span>
-                </a>
-                <button type="submit" class="btn btn-primary  pull-right">
-                    <span class="fa fa-search" aria-hidden="true"></span> @TextosPaginas.Pesquisar
-                </button>
-
             </div>
-        </form>
-    </div><!-- /.box -->
-
-
-
-    <div class="box" >
-        <div class="overlay" ng-show="itemAmigo.loading">
-            <i class="fa fa-refresh fa-spin text-gray"></i>
         </div>
-        <div class="box-body table-responsive">
-            <div class="gridStyle" ui-grid="itemAmigo.gridOptions" ui-grid-pagination></div>
+        <div id="requisicoes" class="tab-pane fade in" ng-class="{'active': itemAmigo.AbrirAprovacao}">
+            <div class="box">
+                <div class="overlay" ng-show="itemAmigo.loadingAprovacao">
+                    <i class="fa fa-refresh fa-spin text-gray"></i>
+                </div>
+                <div class="box-body table-responsive">
+                    <div class="gridStyle" ui-grid="itemAmigo.gridOptionsAprovar" ui-grid-pagination></div>
 
 
+                </div>
+            </div>
         </div>
     </div>
 
-    <script type="text/ng-template" id="modal.html">
-
-        <div class="modal-body">
-            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="vmAction.edit(vmAction.item.Identificador)">@TextosPaginas.Editar</button>
-            <button type="button" class="btn btn-danger btn-lg btn-block" ng-click="vmAction.askDelete(vmAction.item, vmAction.indexForDelete)">@TextosPaginas.Excluir</button>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default btn-lg btn-block" ng-click="vmAction.close()">@TextosPaginas.Cancelar</button>
-        </div>
-    </script>
-
-
     <script type="text/ng-template" id="modalDelete.html">
         <div class="modal-header">
-            <span>@TextosPaginas.ConfirmaExclusao</span>
+            <span>{{vmDelete.MensagemConfirmacao}}</span>
         </div>
         <div class="modal-body">
             <button type="button" class="btn btn-info btn-lg btn-block" ng-click="vmDelete.delete()">@TextosPaginas.Sim</button>
@@ -103,12 +109,20 @@
     <script type="text/ng-template" id="BotoesGridTemplate.html">
 
         <div class="ngCellText hidden-xs">
-			<button type="button" ng-if="grid.appScope.PermiteAlteracao" class="btn btn-primary small" title="@TextosPaginas.Editar" ui-sref="AmigoEdicao({ id: {{COL_FIELD}},filtro:grid.appScope.filtroAtualizacao })"><span class="fa fa-pencil" aria-hidden="true"></span></button>
-			<button type="button" ng-if="grid.appScope.PermiteExclusao" class="btn btn-danger small" title="@TextosPaginas.Excluir" ng-click="grid.appScope.askDelete(row.entity, $index)"><span class="fa fa-trash" aria-hidden="true"></span></button>
+            <button type="button"  class="btn btn-success small" title="@TextosPaginas.Editar" ng-click="grid.appScope.modalPopupTriggerAprovacao(row.entity, $index,'@TextosPaginas.Amigo_ConfirmarAprovacao', grid.appScope.AprovarRequisicao)"><span class="fa fa-check" aria-hidden="true"></span></button>
+            <button type="button"  class="btn btn-danger small" title="@TextosPaginas.Excluir" ng-click="grid.appScope.modalPopupTriggerAprovacao(row.entity, $index,'@TextosPaginas.Amigo_ConfirmarReprovacao', grid.appScope.ReprovarRequisicao)"><span class="fa fa-close" aria-hidden="true"></span></button>
 
         </div>
 
 
     </script>
 
+    <script type="text/ng-template" id="CheckSeguidorTemplate.html">
+        <input type="checkbox" ng-checked="row.entity.Seguidor" class="checkbox" ng-click="grid.appScope.AlterarSeguidor(row.entity, $index)"/>
+    </script>
+
+    <script type="text/ng-template" id="CheckSeguidoTemplate.html">
+        <input type="checkbox" ng-checked="row.entity.Seguido" class="checkbox" ng-click="grid.appScope.AlterarSeguido(row.entity, $index)" />
+
+    </script>
 </section><!-- /.content -->

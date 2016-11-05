@@ -15,7 +15,6 @@ namespace CV.Model
 		{
 		}
 
-			[NotNullValidator(MessageTemplateResourceName="Usuario_Identificador",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public int? Identificador { get; set; }
 
 			public string EMail { get; set; }
@@ -113,8 +112,6 @@ private void ValidarCodigo(Microsoft.Practices.EnterpriseLibrary.Validation.Vali
       results.AddResult(result);
   }
 }
-
-			public IList<Gasto> Gastos { get; set; }
 		 public Usuario Clone()
 		{
 			 return (Usuario) this.MemberwiseClone();

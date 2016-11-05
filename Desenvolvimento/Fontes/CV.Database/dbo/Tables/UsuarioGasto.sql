@@ -1,0 +1,10 @@
+﻿CREATE TABLE [dbo].[UsuarioGasto] (
+    [ID_USUARIO_GASTO] INT           IDENTITY (1, 1) NOT NULL,
+    [DS_EMAIL]         VARCHAR (200) NOT NULL,
+    [ID_VIAGEM]        INT           NOT NULL,
+    [ID_USUARIO]       INT           NULL,
+    CONSTRAINT [PK50] PRIMARY KEY CLUSTERED ([ID_USUARIO_GASTO] ASC),
+    CONSTRAINT [RefUsuario99] FOREIGN KEY ([ID_USUARIO]) REFERENCES [dbo].[Usuario] ([ID_USUARIO]),
+    CONSTRAINT [RefViagem100] FOREIGN KEY ([ID_VIAGEM]) REFERENCES [dbo].[Viagem] ([ID_VIAGEM])
+);
+

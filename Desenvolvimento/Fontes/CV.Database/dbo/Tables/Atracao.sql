@@ -1,0 +1,18 @@
+﻿CREATE TABLE [dbo].[Atracao] (
+    [ID_ATRACAO]      INT             IDENTITY (1, 1) NOT NULL,
+    [ID_ATRACAO_PAI]  INT             NULL,
+    [ID_VIAGEM]       INT             NOT NULL,
+    [ID_CIDADE]       INT             NOT NULL,
+    [NM_ATRACAO]      VARCHAR (100)   NOT NULL,
+    [CD_PLACE]        VARCHAR (50)    NULL,
+    [NR_LATITUDE]     NUMERIC (12, 8) NOT NULL,
+    [NR_LONGITUDE]    NUMERIC (18, 2) NOT NULL,
+    [DT_CHEGADA]      DATETIME        NULL,
+    [DT_PARTIDA]      DATETIME        NULL,
+    [DS_TIPO_ATRACAO] VARCHAR (50)    NULL,
+    CONSTRAINT [PK39] PRIMARY KEY NONCLUSTERED ([ID_ATRACAO] ASC),
+    CONSTRAINT [RefAtracao72] FOREIGN KEY ([ID_ATRACAO_PAI]) REFERENCES [dbo].[Atracao] ([ID_ATRACAO]),
+    CONSTRAINT [RefCidade66] FOREIGN KEY ([ID_CIDADE]) REFERENCES [dbo].[Cidade] ([ID_CIDADE]),
+    CONSTRAINT [RefViagem65] FOREIGN KEY ([ID_VIAGEM]) REFERENCES [dbo].[Viagem] ([ID_VIAGEM])
+);
+

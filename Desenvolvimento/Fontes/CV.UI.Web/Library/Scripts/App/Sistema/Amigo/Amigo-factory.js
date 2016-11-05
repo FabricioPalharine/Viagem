@@ -36,6 +36,22 @@
               },
             //  transformResponse: parseArray,
               isArray: false
+          },
+          save:
+          {
+              method: 'POST',
+              params:
+                  {
+                      controller: 'Post'
+                  }
+          },
+          RequisicaoAmizade:
+          {
+              method: 'POST',
+              params:
+                  {
+                      controller: 'AjustarAmigo'
+                  }
           }
          
 

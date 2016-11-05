@@ -1321,6 +1321,15 @@ namespace CV.Model.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O campo Raio é obrigatório.
+        /// </summary>
+        public static string Hotel_Raio {
+            get {
+                return ResourceManager.GetString("Hotel_Raio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O campo Saída Prevista é obrigatório.
         /// </summary>
         public static string Hotel_SaidaPrevista {
@@ -1362,6 +1371,51 @@ namespace CV.Model.Resource {
         public static string HotelAvaliacao_Nota {
             get {
                 return ResourceManager.GetString("HotelAvaliacao_Nota", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo Data Atualização é obrigatório.
+        /// </summary>
+        public static string HotelEvento_DataAtualizacao {
+            get {
+                return ResourceManager.GetString("HotelEvento_DataAtualizacao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo DataEvento é obrigatório.
+        /// </summary>
+        public static string HotelEvento_DataEvento {
+            get {
+                return ResourceManager.GetString("HotelEvento_DataEvento", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo Identificador é obrigatório.
+        /// </summary>
+        public static string HotelEvento_Identificador {
+            get {
+                return ResourceManager.GetString("HotelEvento_Identificador", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo Hotel é obrigatório.
+        /// </summary>
+        public static string HotelEvento_IdentificadorHotel {
+            get {
+                return ResourceManager.GetString("HotelEvento_IdentificadorHotel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo Tipo é obrigatório.
+        /// </summary>
+        public static string HotelEvento_Tipo {
+            get {
+                return ResourceManager.GetString("HotelEvento_Tipo", resourceCulture);
             }
         }
         
@@ -2109,6 +2163,15 @@ namespace CV.Model.Resource {
         public static string Sugestao_Longitude {
             get {
                 return ResourceManager.GetString("Sugestao_Longitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo Status é obrigatório.
+        /// </summary>
+        public static string Sugestao_Status {
+            get {
+                return ResourceManager.GetString("Sugestao_Status", resourceCulture);
             }
         }
         

@@ -10,25 +10,31 @@
      */
     angular
       .module('home')
-      .controller('AccountCtrl',['Auth', '$state', '$rootScope', AccountCtrl]);
+      .controller('AccountCtrl',['Auth', '$state', '$rootScope','SignalR', AccountCtrl]);
 
-    function AccountCtrl(Auth, $state, $rootScope) {
+    function AccountCtrl(Auth, $state, $rootScope, SignalR) {
         var vm = this;
+        vm.alertas = [];
+        vm.totalAlertas = 0;
         // console.log(vm.permissoes);
-
-
         $rootScope.$on('loggin', function (event) {
             //console.log(' pegou evento');
             vm.user = Auth.currentUser;
-            vm.permissoes = {
-               
-            };
-            vm.verificarPermissoes();
+            Auth.CarregarAlertas(function (data) {
+                for (var i=0;i<data.length;i++)
+                {
+                    vm.alertas.push(data[i]);
+                }
+                vm.totalAlertas = vm.alertas.length;
+            });
         });
 
         vm.load = function () {
             vm.user = Auth.currentUser;
-
+            SignalR.EnviarAlertaRequisicao(function (user) {
+                vm.alertas.push(user);
+                vm.totalAlertas++;
+            });
             //console.log(vm.permissoes);
         };
         vm.logout = function () {
@@ -36,23 +42,18 @@
            
         };
 
-        vm.alterarSenha = function () {
-            $state.go('alterasenha');
+        vm.SelecionarViagem = function (IdentificadorViagem) {
+            Auth.SelecionarViagem(IdentificadorViagem);
         };
 
-        vm.verificarPermissoes = function () {
-          
-            $(Auth.currentUser.access).each(function (i, item) {
-                //  console.log('foreach');
-                //  console.log(item);
+        vm.AbrirAlerta = function(IdentificadorAlerta, TipoAlerta)
+        {
+            if (TipoAlerta == 1)
+            {
+                $state.go('Amigo', { AbrirAprovacao: true });
 
-
-
-
-            });
-            //angular.forEach(Auth.currentUser.access, function (value, key) {
-
-            //});
-        };
+            }
+        }
+        
     }
 }());

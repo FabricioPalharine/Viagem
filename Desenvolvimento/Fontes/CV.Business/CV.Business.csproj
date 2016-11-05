@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{045facca-dde4-4e15-9dd9-cf5e704f08b0}</ProjectGuid>
+    <ProjectGuid>{045FACCA-DDE4-4E15-9DD9-CF5E704F08B0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CV.Business</RootNamespace>
@@ -56,6 +56,9 @@
     </Reference>
     <Reference Include="InterfacesGerenciadorEmail">
       <HintPath>..\Componentes\InterfacesGerenciadorEmail.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\Componentes\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

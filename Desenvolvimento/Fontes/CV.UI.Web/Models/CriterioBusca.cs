@@ -12,5 +12,6 @@ namespace CV.UI.Web.Models
         public int? Count { get; set; }
         public string[] SortField { get; set; }
         public string[] SortOrder { get; set; }
+        public string EMail { get; set; }
     }
 }

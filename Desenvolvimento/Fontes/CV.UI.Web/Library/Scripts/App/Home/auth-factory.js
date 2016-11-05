@@ -10,130 +10,34 @@
      */
     angular
       .module('home')
-      .factory('Auth',['$location', '$rootScope', '$http', '$cookies', '$q', '$translate', '$state', Auth]);
+      .factory('Auth',['$location', '$rootScope', '$http', '$cookies', '$q', '$translate', '$state','SignalR', Auth]);
 
-    function Auth($location, $rootScope, $http, $cookies, $q, $translate, $state) {
+    function Auth($location, $rootScope, $http, $cookies, $q, $translate, $state,SignalR) {
         var AuthBase = {};
         AuthBase.someValue = 'Auth';
         $rootScope.isLogged = false;
         AuthBase.currentUser = {};
         
-
+        AuthBase.apiKey = 'AIzaSyAlUpOpwZWS_ZGlMAtB6lY76oy1QBWk97g';
+        AuthBase.clientId = '210037759249.apps.googleusercontent.com';
+        AuthBase.scopes = 'profile https://picasaweb.google.com/data/';
+        AuthBase.auth2 = null;
+       
 
         $rootScope.$on('logout', function (event) {
             AuthBase.currentUser = {};
         });
 
-        AuthBase.AlterarSenha = function (user, callback) {
-            var cb = callback || angular.noop;
-            var deferred = $q.defer();
-
-            $http.post('./api/Acesso/AlterarSenha', {                
-                Login: user.login,
-                Senha: user.senha,
-                NovaSenha: user.novasenha,
-                ConfirmarSenha: user.confirmarsenha
-            }).
-            success(function (data) {
-                if (data.Sucesso == true) {
-                 
-                }
-
-                deferred.resolve(data);
-                return cb();
-            }).
-            error(function (err) {
-                deferred.reject(err);
-                return cb(err);
-            });
-
-            return deferred.promise;
-        }
-
-        AuthBase.login = function (user, callback) {
-            // console.log('tenta logar');
-            var cb = callback || angular.noop;
-            var deferred = $q.defer();
-
-            $http.post('./api/Acesso/Autenticar', {
-                CodigoEmpresa: user.codigoEmpresa,
-                Login: user.login,
-                Senha: user.senha
-            }).
-            success(function (data) {
-                //   console.log(data);
-                if (data.Sucesso == true) {
-                    $cookies.put('token', data.AuthenticationToken);
-                    //  console.log($cookies.get('token'));
-                    AuthBase.currentUser = data;
-                   // $translate.use(data.Cultura.toLowerCase());                    
-                    AuthBase.retornarAcessos(function (data) {
-                        // console.log('chama o login');
-                        // console.log(data);
-                        AuthBase.currentUser.access = data;
-                        $rootScope.$emit('loggin');
-                        $state.go('home');
-                    });
-                    $rootScope.isLogged = true;
-
-                }
-
-                deferred.resolve(data);
-                return cb();
-            }).
-            error(function (err) {
-                this.logout();
-                deferred.reject(err);
-                return cb(err);
-            }.bind(this));
-
-            return deferred.promise;
-        };
-
-        AuthBase.CheckToken = function ( callback) {
-            // console.log('tenta logar');
-            var cb = callback || angular.noop;
-            var deferred = $q.defer();
-
-            $http.post('./api/Acesso/VerificarLogado', {
-
-            }).
-            success(function (data) {
-                //   console.log(data);
-                if (data.Sucesso == true) {
-                    AuthBase.currentUser = data;
-		     $translate.use(data.Cultura.toLowerCase());
-                    AuthBase.retornarAcessos(function (data) {
-                        // console.log('chama o login');
-                        // console.log(data);
-                        AuthBase.currentUser.access = data;
-                        
-                        $rootScope.$emit('loggin');
-
-                    });
-                }
-                return cb(data.Sucesso);
-            }).
-            error(function (err) {               
-                return cb(false);
-            });
-
-        };
+       
 
         AuthBase.logout = function () {
+            SignalR.DesconectarUsuario(AuthBase.currentUser.Codigo);
+            sessionStorage.removeItem('token');
+            AuthBase.currentUser = {};           
+            $rootScope.isLogged = false;
+            AuthBase.auth2.signOut();
 
-            var deferred = $q.defer();
-            $http.get('./api/Acesso/Logoff', {
-            }).
-           success(function (data) {               
-               $cookies.remove('token');
-               AuthBase.currentUser = {};
-               $state.go('login');
-              
-           }).
-              error(function (err) {
-                
-              });
+            $state.go('home');
         };
 
         AuthBase.isLoggedIn = function () {
@@ -154,7 +58,7 @@
                 $rootScope.isLogged = true;
                 cb(true);
             } else {
-                AuthBase.CheckToken(function(retorno)
+                AuthBase.CheckLoginValido(function (retorno)
                 {
                     $rootScope.isLogged = retorno;
                     cb(retorno);
@@ -168,7 +72,7 @@
         };
 
         AuthBase.getToken = function () {
-            return $cookies.get('token');
+            return sessionStorage.getItem('token');
         };
 
         AuthBase.retornarAcessos = function (cb) {
@@ -194,7 +98,197 @@
 
         };
 
+        AuthBase.init = function () {
+            SignalR.startHub();
+            gapi.load('client:auth2', AuthBase.initAuth);
+        };
 
+        AuthBase.initAuth = function () {
+            gapi.client.setApiKey(AuthBase.apiKey);
+            gapi.auth2.init({
+                client_id: AuthBase.clientId,
+                scope: AuthBase.scopes
+            }).then(function () {
+                AuthBase.auth2 = gapi.auth2.getAuthInstance();
+
+                // Listen for sign-in state changes.
+                //AuthBase.auth2.isSignedIn.listen(AuthBase.updateSigninStatus);
+
+                
+                // Handle the initial sign-in state.
+                //AuthBase.updateSigninStatus(AuthBase.auth2.isSignedIn.get());
+
+
+            });
+        };
+
+        AuthBase.CheckLoginValido = function (callback) {
+
+            if (AuthBase.auth2 == null) {
+                gapi.load('client:auth2',function()
+                {
+                    gapi.client.setApiKey(AuthBase.apiKey);
+                    gapi.auth2.init({
+                        client_id: AuthBase.clientId,
+                        scope: AuthBase.scopes
+                    }).then(function () {
+                        AuthBase.auth2 = gapi.auth2.getAuthInstance();
+
+                        // Listen for sign-in state changes.
+                        //AuthBase.auth2.isSignedIn.listen(AuthBase.updateSigninStatus);
+                        AuthBase.VerificarLoginValido(callback);
+
+                    })
+                });
+            }
+            else {
+                AuthBase.VerificarLoginValido(callback);
+            }
+        };
+
+        AuthBase.VerificarLoginValido = function (callback) {
+            if (AuthBase.auth2.isSignedIn.get()) {
+                var User = AuthBase.auth2.currentUser.get();
+                var DadosRetorno = User.getAuthResponse();
+
+                $http.post('./api/Acesso/ValidarUsuario', {
+                    Codigo: User.getId(),
+                    IdentificadorViagem: $cookies.get('IdentificadorViagem')
+                }).
+               success(function (data) {
+                   //   console.log(data);
+                   if (data.Sucesso == true) {
+                       sessionStorage.setItem('token', data.AuthenticationToken);
+                       AuthBase.currentUser =
+                        {
+                            Codigo: data.Codigo,
+                            Nome: User.getBasicProfile().getName(),
+                            ImageURL: User.getBasicProfile().getImageUrl(),
+                            Mail: User.getBasicProfile().getEmail(),
+                            Sucesso: true,
+                            PrimeiroNome: User.getBasicProfile().getGivenName(),
+                            Viagens: data.Viagens,
+                            IdentificadorViagem: data.IdentificadorViagem,
+                            NomeViagem: data.NomeViagem,
+                            PermiteEdicao: data.PermiteEdicao,
+                            VerCustos: data.VerCustos
+                        };
+                       SignalR.ConectarUsuario(data.Codigo);
+
+                       if (data.IdentificadorViagem)
+                       {
+                           var expireDate = new Date();
+                           expireDate.setDate(expireDate.getDate() + 30);
+                           // Setting a cookie
+                           $cookies.put('IdentificadorViagem', data.IdentificadorViagem, { 'expires': expireDate });
+                           SignalR.ConectarViagem(data.IdentificadorViagem, data.PermiteEdicao);
+
+                       }
+                       $translate.use(data.Cultura.toLowerCase());
+
+                       callback(true);
+
+                   }
+               });
+
+            }
+        };
+               
+
+        AuthBase.updateSigninStatus = function (isSignedIn) {
+            if (!isSignedIn) {
+            }
+        };
+
+        AuthBase.GetOfflineAcess = function (callback) {
+            AuthBase.auth2.grantOfflineAccess({ 'redirect_uri': 'postmessage', 'scope': AuthBase.scopes, 'approval_prompt': 'force' }).then(function (resp) {
+                var auth_code = resp.code;
+                AuthBase.auth2.signIn().then(function (resp2) {
+                    var User = AuthBase.auth2.currentUser.get();
+                    var DadosRetorno = User.getAuthResponse();
+                    var Nome = User.getBasicProfile().getName();
+                    var Mail = User.getBasicProfile().getEmail();
+                    var ImageURL = User.getBasicProfile().getImageUrl();
+                    var PrimeiroNome = User.getBasicProfile().getGivenName();
+                    $http.post('./api/Acesso/LoginGoogle', {
+                        CodigoValidacao: auth_code,
+                        Nome: User.getBasicProfile().getName(),
+                        EMail: User.getBasicProfile().getEmail(),
+                        Codigo: User.getId(),
+                        IdentificadorViagem: $cookies.get('IdentificadorViagem')
+                    }).
+                       success(function (data) {
+                           //   console.log(data);
+                           if (data.Sucesso == true) {
+                               sessionStorage.setItem('token', data.AuthenticationToken);
+                               AuthBase.currentUser =
+                                {
+                                    Codigo: data.Codigo,
+                                    Nome: Nome,
+                                    ImageURL: ImageURL,
+                                    Mail: Mail,
+                                    Sucesso: true,
+                                    PrimeiroNome: PrimeiroNome,
+                                    Viagens: data.Viagens,
+                                    IdentificadorViagem: data.IdentificadorViagem,
+                                    NomeViagem: data.NomeViagem,
+                                    PermiteEdicao: data.PermiteEdicao,
+                                    VerCustos: data.VerCustos
+                                };
+                               SignalR.ConectarUsuario(data.Codigo);
+
+                               if (data.IdentificadorViagem) {
+                                   SignalR.ConectarViagem(data.IdentificadorViagem, data.PermiteEdicao);
+
+                                   var expireDate = new Date();
+                                   expireDate.setDate(expireDate.getDate() + 30);
+                                   // Setting a cookie
+                                   $cookies.put('IdentificadorViagem', data.IdentificadorViagem, { 'expires': expireDate });
+                               }
+                               $translate.use(data.Cultura.toLowerCase());
+
+
+                               $rootScope.$emit('loggin');
+                               $state.go('home');
+
+                               $rootScope.isLogged = true;
+
+                           }
+                           callback(data);
+                       });
+                });
+                
+            });
+        }
+
+        AuthBase.SelecionarViagem = function (IdentificadorViagem) {
+            $http.post('./api/Acesso/SelecionarViagem', {
+                IdentificadorViagem: $cookies.get('IdentificadorViagem')
+            }).
+              success(function (data) {
+                  sessionStorage.setItem('token', data.AuthenticationToken);
+                 
+                  AuthBase.currentUser.IdentificadorViagem = data.IdentificadorViagem;
+                  AuthBase.currentUser.NomeViagem = data.NomeViagem;
+                  AuthBase.currentUser.PermiteEdicao = data.PermiteEdicao;
+                  AuthBase.currentUser.VerCustos = data.VerCustos;
+
+                  SignalR.ConectarViagem(data.IdentificadorViagem, data.PermiteEdicao);
+                  var expireDate = new Date();
+                  expireDate.setDate(expireDate.getDate() + 30);
+                  // Setting a cookie
+                  $cookies.put('IdentificadorViagem', data.IdentificadorViagem, { 'expires': expireDate });
+              });
+        };
+
+        AuthBase.CarregarAlertas = function (callback) {
+            $http.get('./api/Acesso/CarregarAlertas').
+              success(function (data) {
+                  callback(data);
+              });
+        };
+
+        AuthBase.init();
         return AuthBase;
     }
 }());

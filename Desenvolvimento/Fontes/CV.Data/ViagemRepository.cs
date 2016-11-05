@@ -1323,7 +1323,6 @@ namespace CV.Data
 				if (itemBase == null)
 				{
 				itemBase = Context.Usuarios.Create();
-				itemBase.Identificador = itemGravar.Identificador;
  			Context.Entry<Usuario>(itemBase).State = System.Data.Entity.EntityState.Added;
 				}
  			AtualizarPropriedades<Usuario>(itemBase, itemGravar);
@@ -1539,6 +1538,40 @@ namespace CV.Data
 				UsuarioGasto itemExcluir =  Context.UsuarioGastos
 			.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
 						Context.Entry<UsuarioGasto>(itemExcluir).State = EntityState.Deleted;
+				Context.SaveChanges();
+			}
+			public HotelEvento SelecionarHotelEvento (int? Identificador)
+			{
+			IQueryable<HotelEvento> query =	 Context.HotelEventos
+;
+					if (Identificador.HasValue)
+					query = query.Where(d=>d.Identificador == Identificador);
+					return query.FirstOrDefault();
+			}
+			public IList<HotelEvento> ListarHotelEvento ()
+			{
+			IQueryable<HotelEvento> query =	 Context.HotelEventos
+;
+				return query.ToList();
+			}
+			public void SalvarHotelEvento (HotelEvento itemGravar)
+			{
+				HotelEvento itemBase =  Context.HotelEventos
+				.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
+				if (itemBase == null)
+				{
+				itemBase = Context.HotelEventos.Create();
+ 			Context.Entry<HotelEvento>(itemBase).State = System.Data.Entity.EntityState.Added;
+				}
+ 			AtualizarPropriedades<HotelEvento>(itemBase, itemGravar);
+			Context.SaveChanges();
+				itemGravar.Identificador = itemBase.Identificador;
+			}
+			public void ExcluirHotelEvento (HotelEvento itemGravar)
+			{
+				HotelEvento itemExcluir =  Context.HotelEventos
+			.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
+						Context.Entry<HotelEvento>(itemExcluir).State = EntityState.Deleted;
 				Context.SaveChanges();
 			}
 	}

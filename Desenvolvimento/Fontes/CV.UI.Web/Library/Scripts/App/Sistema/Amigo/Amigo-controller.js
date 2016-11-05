@@ -2,12 +2,14 @@
 	'use strict';
 	angular
 		.module('Sistema')
-		.controller('AmigoCtrl',['$uibModal', 'Error', '$timeout', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', '$window', 'i18nService','Usuario','Amigo', AmigoCtrl]);
+		.controller('AmigoCtrl', ['$uibModal', 'Error', '$timeout', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', '$window', 'i18nService', 'uiGridConstants', 'Usuario', 'Amigo','RequisicaoAmizade','SignalR', AmigoCtrl]);
 
-	function AmigoCtrl($uibModal,  Error, $timeout, $state, $translate, $scope, Auth, $rootScope, $stateParams, $window, i18nService,Usuario,Amigo) {
+	function AmigoCtrl($uibModal, Error, $timeout, $state, $translate, $scope, Auth, $rootScope, $stateParams, $window, i18nService, uiGridConstants, Usuario, Amigo, RequisicaoAmizade,SignalR) {
 		var vm = this;
 		vm.filtro = {  Index: 0, Count: 0 };
-		vm.filtroAtualizacao = {  Index: 0, Count: 0 };
+		vm.filtroAtualizacao = { Index: 0, Count: 0 };
+		vm.filtroAtualizacaoAprovacao = { Index: 0, Count: 0 };
+		vm.loadingAprovacao = false;
 		vm.loading = false;
 		vm.showModal = false;
 		vm.modalAcao = function () {;
@@ -19,9 +21,12 @@
 		vm.PermiteExclusao = true;
 		vm.ListaDados = [];
 		vm.gridApi = null;
-
+		vm.gridApiAprovacao = null;
+		vm.ListaRequisicao = [];
+		vm.AbrirAprovacao = false;
 		vm.load = function () {
-			vm.loading = true;
+		    vm.loading = true;
+		    vm.loadingAprovacao = true;
 			vm.verificarPermissoes();
 
 			var param = $stateParams;
@@ -32,93 +37,97 @@
 				vm.pagingOptions.currentPage = (vm.filtroAtualizacao.Index / vm.pagingOptions.pageSize) + 1;
 
 			}
+			if (param.AbrirAprovacao)
+			    vm.AbrirAprovacao = true;
 			vm.CarregarDadosWebApi(vm.pagingOptions.pageSize, vm.pagingOptions.currentPage);
-		};
-		vm.delete = function (itemForDelete, indexForDelete, callback) {
-			vm.loading = true;
-			Amigo.delete({ id: itemForDelete.Identificador }, function (data) {
-				callback(data);
-				if (data.Sucesso) {
-					vm.CarregarDadosWebApi(vm.pagingOptions.pageSize, vm.pagingOptions.currentPage);
-					Error.showError('success', $translate.instant("Sucesso"), data.Mensagens[0].Mensagem, true);
-				}
-				else {
-					var Mensagens = new Array();
-					$(data.Mensagens).each(function (j, jitem) {
-						Mensagens.push(jitem.Mensagem);
-					});
-				Error.showError('warning', $translate.instant("Alerta"), Mensagens.join("<br/>"), true);
-				}
-				vm.loading = false;
-			},
-			function (err) {
-				$uibModalInstance.close();
-				Error.showError('error', 'Ops!', $translate.instant("ErroExcluir"), true);
-				vm.loading = false;
-			})
+			vm.CarregarDadosWebApiAprovacao(vm.pagingOptionsAprovacao.pageSize, vm.pagingOptionsAprovacao.currentPage);
 		};
 
-        vm.actionModal = function (item, indexForDelete) {
-            $uibModal.open({
-                templateUrl: 'modal.html',
-                controller: ['$uibModalInstance', 'item', 'index', vm.ActionModalCtrl],
-                controllerAs: 'vmAction',
-                resolve: {
-                    item: function () { return item; },
-                    index: function () { return indexForDelete; }
-                }
+        vm.modalPopupTrigger = function (itemForDelete, indexForDelete, Mensagem, callback) {
+            vm.askDelete(itemForDelete, indexForDelete, Mensagem)
+          .then(function (data) {
+              callback(data);
+          })
+          .then(null, function (reason) {
+              vm.CarregarDadosWebApi(vm.pagingOptions.pageSize, vm.pagingOptions.currentPage);
+          });
+        };
+
+        vm.AprovarRequisicao = function (itemRequisicao) {
+            itemRequisicao.Status = 2;
+            RequisicaoAmizade.save(itemRequisicao, function (data) {
+                var Mensagens = new Array();
+                $(data.Mensagens).each(function (j, jitem) {
+                    Mensagens.push(jitem.Mensagem);
+                });
+                Error.showError('success', $translate.instant("Alerta"), Mensagens.join("<br/>"), true);
+                vm.CarregarDadosWebApi(vm.pagingOptions.pageSize, vm.pagingOptions.currentPage);
+                vm.CarregarDadosWebApiAprovacao(vm.pagingOptionsAprovacao.pageSize, vm.pagingOptionsAprovacao.currentPage);
+
+            }, function (err) {
+                vm.loading = false;
+                Error.showError('error', 'Ops!', $translate.instant('ErroRequisicao'), true);
             });
         };
-        vm.ActionModalCtrl = function ($uibModalInstance, item, index) {
-            var vmAction = this;
-            vmAction.item = item;
-            vmAction.indexForDelete = index;
-            // console.log(itens);
-            vmAction.close = function () {
-                $uibModalInstance.close();
-            }
-            vmAction.edit = function (idToEdit) {
-                $uibModalInstance.close();
-                $state.go('AmigoEdicao', { id: idToEdit, filtro: vm.filtroAtualizacao });
-            };
 
-            vmAction.askDelete = function (itemForDelete, indexForDelete) {
-                vm.askDelete(itemForDelete, indexForDelete);
-                $uibModalInstance.close();
-            };
+        vm.ReprovarRequisicao = function (itemRequisicao) {
+            itemRequisicao.Status = 3;
+            RequisicaoAmizade.save(itemRequisicao, function (data) {
+                var Mensagens = new Array();
+                $(data.Mensagens).each(function (j, jitem) {
+                    Mensagens.push(jitem.Mensagem);
+                });
+                Error.showError('success', $translate.instant("Alerta"), Mensagens.join("<br/>"), true);
+                vm.CarregarDadosWebApiAprovacao(vm.pagingOptionsAprovacao.pageSize, vm.pagingOptionsAprovacao.currentPage);
+            }, function (err) {
+                vm.loading = false;
+                Error.showError('error', 'Ops!', $translate.instant('ErroRequisicao'), true);
+            });
+        };
 
-        }
+        vm.modalPopupTriggerAprovacao = function (itemForDelete, indexForDelete, Mensagem, callback) {
+            vm.askDelete(itemForDelete, indexForDelete, Mensagem)
+          .then(function (data) {
+              callback(data);
+          })
+          .then(null, function (reason) {
+              vm.CarregarDadosWebApiAprovacao(vm.pagingOptions.pageSize, vm.pagingOptions.currentPage);
+          });
+        };
 
-        vm.askDelete = function (itemForDelete, indexForDelete) {
+        vm.askDelete = function (itemForDelete, indexForDelete,Mensagem) {
             // $uibModalInstance.close();
-            $uibModal.open({
+            var modal = $uibModal.open({
                 templateUrl: 'modalDelete.html',
-                controller: ['$uibModalInstance', 'item', 'index', vm.DeleteModalCtrl],
+                controller: ['$uibModalInstance', 'item', 'index','MensagemConfirmacao', vm.DeleteModalCtrl],
                 controllerAs: 'vmDelete',
                 resolve: {
                     item: function () { return itemForDelete; },
-                    index: function () { return indexForDelete; }
+                    index: function () { return indexForDelete; },
+                    MensagemConfirmacao: function () { return Mensagem; },
                 }
             });
+
+            return modal.result;
         };
 
-        vm.DeleteModalCtrl = function ($uibModalInstance, itemForDelete, indexForDelete) {
+        vm.DeleteModalCtrl = function ($uibModalInstance, itemForDelete, indexForDelete, MensagemConfirmacao) {
             var vmDelete = this;
+            vmDelete.MensagemConfirmacao = MensagemConfirmacao;
             vmDelete.itemForDelete = itemForDelete;
 
             vmDelete.close = function () {
-                $uibModalInstance.close();
+                $uibModalInstance.dismiss();
             };
 
             vmDelete.back = function () {
-                $uibModalInstance.close();
+                $uibModalInstance.dismiss();
                 vm.actionModal();
             };
 
             vmDelete.delete = function () {
-                vm.delete(vmDelete.itemForDelete, indexForDelete, function () {
-                    $uibModalInstance.close();
-                });
+
+                $uibModalInstance.close(vmDelete.itemForDelete);
             };
         };
 
@@ -170,10 +179,34 @@
             directions: []
         };
 
+
+        vm.totalServerItemsAprovacao = 0;
+        vm.pagingOptionsAprovacao = {
+            pageSize: 20,
+            currentPage: 1,
+            fields: [],
+            directions: []
+        };
+
         vm.AjustarDadosPagina = function (data) {
             // var pagedData = data.slice((page - 1) * pageSize, page * pageSize);
-            vm.ListaDados = data.Lista;
+            vm.ListaDados = [];
+ 
+            $timeout(function () {
+                vm.ListaDados = data.Lista;
+            },5);
             vm.gridOptions.totalItems = data.TotalRegistros;
+            vm.gridApi.grid.refresh();
+            if (!$scope.$$phase) {
+                $scope.$apply();
+            }
+        };
+
+        vm.AjustarDadosPaginaAprovacao = function (data) {
+            // var pagedData = data.slice((page - 1) * pageSize, page * pageSize);
+            vm.ListaRequisicao = data.Lista;
+
+            vm.gridOptionsAprovar.totalItems = data.TotalRegistros;
             if (!$scope.$$phase) {
                 $scope.$apply();
             }
@@ -186,13 +219,35 @@
                 return "pt";
         };
 //
+        vm.CarregarDadosWebApiAprovacao = function (pageSize, page) {
+            vm.loadingAprovacao = true;
+            vm.filtroAtualizacaoAprovacao.Index = (page - 1) * pageSize;
+            vm.filtroAtualizacaoAprovacao.Count = pageSize;
+
+            vm.filtroAtualizacaoAprovacao.SortField = vm.pagingOptionsAprovacao.fields;
+            vm.filtroAtualizacaoAprovacao.SortOrder = vm.pagingOptionsAprovacao.directions;
+
+         
+
+            RequisicaoAmizade.list({ json: JSON.stringify(vm.filtroAtualizacaoAprovacao) }, function (data) {
+                vm.AjustarDadosPaginaAprovacao(data);               
+               
+                vm.loadingAprovacao = false;
+            }, function (err) {
+
+                Error.showError('error', 'Ops!', $translate.instant('ErroRequisicao'), true);
+                
+                vm.loadingAprovacao = false;
+            });
+        };
+
         vm.CarregarDadosWebApi = function (pageSize, page) {
             vm.loading = true;
             vm.filtroAtualizacao.Index = (page - 1) * pageSize;
             vm.filtroAtualizacao.Count = pageSize;
 
-            vm.filtroAtualizacao.SortField =vm.pagingOptions.fields;
-            vm.filtroAtualizacao.SortOrder =vm.pagingOptions.directions;
+            vm.filtroAtualizacao.SortField = vm.pagingOptions.fields;
+            vm.filtroAtualizacao.SortOrder = vm.pagingOptions.directions;
 
             vm.CamposInvalidos = {};
             vm.messages = [];
@@ -205,23 +260,85 @@
                     vm.verificaCampoInvalido();
                 }
 
-               
+
                 vm.loading = false;
             }, function (err) {
                 vm.loading = false;
                 Error.showError('error', 'Ops!', $translate.instant('ErroRequisicao'), true);
-                
+
                 vm.loading = false;
             });
         };
-//
+	    //
+
+        vm.gravarAlteracaoAmigo = function (itemAmigo) {
+            vm.loading = true;
+            Amigo.RequisicaoAmizade(itemAmigo, function (data) {
+                var Mensagens = new Array();
+                $(data.Mensagens).each(function (j, jitem) {
+                    Mensagens.push(jitem.Mensagem);
+                });
+                Error.showError('success', $translate.instant("Alerta"), Mensagens.join("<br/>"), true);
+                vm.CarregarDadosWebApi(vm.pagingOptions.pageSize, vm.pagingOptions.currentPage);
+                if (itemAmigo.Acao == 3)
+                {
+                    SignalR.RequisitarAmizade(itemAmigo.IdentificadorUsuario, data.IdentificadorRegistro);
+                }
+            }, function (err) {
+                vm.loading = false;
+                Error.showError('error', 'Ops!', $translate.instant('ErroRequisicao'), true);
+            });
+        };
+
+        vm.AlterarSeguidor = function (amigo, indice) {
+            var funcRetorno = null;
+            var Mensagem = "";
+            if (amigo.Seguidor) {
+                Mensagem = $translate.instant('Amigo_MensagemRemoverSeguidor');
+                funcRetorno = function (itemAmigo) {
+                    itemAmigo.Acao = 2;
+                    vm.gravarAlteracaoAmigo(itemAmigo);
+                };
+            }
+            else {
+                Mensagem = $translate.instant('Amigo_MensagemAdicionarSeguidor');
+                funcRetorno = function (itemAmigo) {
+                    itemAmigo.Acao = 1;
+                    vm.gravarAlteracaoAmigo(itemAmigo);
+                };
+            }
+            vm.modalPopupTrigger(amigo, indice, Mensagem, funcRetorno);
+        };
+
+        vm.AlterarSeguido = function (amigo, indice) {
+            var funcRetorno = null;
+            var Mensagem = "";
+            if (amigo.Seguido) {
+                Mensagem = $translate.instant('Amigo_MensagemRemoverSeguido');
+                funcRetorno = function (itemAmigo) {
+                    itemAmigo.Acao = 4;
+                    vm.gravarAlteracaoAmigo(itemAmigo);
+                };
+            }
+            else {
+                Mensagem = $translate.instant('Amigo_MensagemAdicionarSeguido');
+                funcRetorno = function (itemAmigo) {
+                    itemAmigo.Acao = 3;
+                    vm.gravarAlteracaoAmigo(itemAmigo);
+                };
+            }
+            vm.modalPopupTrigger(amigo, indice, Mensagem, funcRetorno);
+        };
+
         vm.gridOptions = {
             data: 'itemAmigo.ListaDados',           
             			columnDefs: [
-				{field:'Identificador',  displayName: '', cellTemplate: "BotoesGridTemplate.html",  width: 60,},
-				{field:'IdentificadorUsuario', displayName: $translate.instant('Amigo_IdentificadorUsuario'),},
-				{field:'IdentificadorAmigo', displayName: $translate.instant('Amigo_IdentificadorAmigo'),},
-				{field:'EMail', displayName: $translate.instant('Amigo_EMail'),},
+				{field:'Nome', displayName: $translate.instant('Amigo_Nome'),},
+				{
+				    field: 'EMail', displayName: $translate.instant('Amigo_EMail'),
+				},
+                { field: 'Seguidor', displayName: $translate.instant('Amigo_Seguidor'), cellTemplate: "CheckSeguidorTemplate.html", width: 120, },
+                { field: 'Seguido', displayName: $translate.instant('Amigo_Seguido'), cellTemplate: "CheckSeguidoTemplate.html", width: 120, },
 			],
 
             enablePagination: true,
@@ -238,7 +355,6 @@
                 }
                 vm.gridApi = grid;
                 var screenSizes = $.AdminLTE.options.screenSizes;
-                vm.gridOptions.columnDefs[0].visible = $(window).width() > (screenSizes.sm - 1);
                 grid.core.on.sortChanged($scope, function (grid, sortColumns) {
                     vm.pagingOptions.fields = [];
                     vm.pagingOptions.directions = [];
@@ -259,7 +375,53 @@
             paginationTemplate: "NewFooterTemplate.html",
             appScopeProvider: vm,
             totalItems: vm.totalServerItems,
-            rowTemplate: "<div on-long-press=\"grid.appScope.actionModal(row.entity, $index)\" ng-repeat=\"(colRenderIndex, col) in colContainer.renderedColumns track by col.uid\" ui-grid-one-bind-id-grid=\"rowRenderIndex + '-' + col.uid + '-cell'\" class=\"ui-grid-cell\" ng-class=\"{ 'ui-grid-row-header-cell': col.isRowHeader }\" role=\"{{col.isRowHeader ? 'rowheader' : 'gridcell'}}\" ui-grid-cell></div>" 
+        };
+
+
+        vm.gridOptionsAprovar = {
+            data: 'itemAmigo.ListaRequisicao',
+            columnDefs: [
+                { field: 'Identificador', displayName: '', cellTemplate: "BotoesGridTemplate.html", width: 60, },
+                { field: 'ItemUsuario.Nome', displayName: $translate.instant('Amigo_Nome'), },
+                {
+                    field: 'ItemUsuario.EMail', displayName: $translate.instant('Amigo_EMail'),
+                },
+            ],
+
+            enablePagination: true,
+            showGridFooter: false,
+            enableRowSelection: false,
+            multiSelect: false,
+            paginationPageSizes: [20],
+            enableHorizontalScrollbar: 0,
+            enableVerticalScrollbar: 1,
+            onRegisterApi: function (grid) {
+                if (Auth.currentUser && Auth.currentUser.Cultura) {
+                    var cultura = Auth.currentUser.Cultura.toLowerCase().substr(0, 2);
+                    i18nService.setCurrentLang(cultura)
+                }
+                vm.gridApiAprovacao = grid;
+                var screenSizes = $.AdminLTE.options.screenSizes;
+                grid.core.on.sortChanged($scope, function (grid, sortColumns) {
+                    vm.pagingOptionsAprovacao.fields = [];
+                    vm.pagingOptionsAprovacao.directions = [];
+                    angular.forEach(sortColumns, function (c) {
+                        vm.pagingOptionsAprovacao.fields.push(c.field);
+                        vm.pagingOptionsAprovacao.directions.push(c.sort.direction);
+                    });
+                    vm.CarregarDadosWebApiAprovacao(vm.pagingOptionsAprovacao.pageSize, vm.pagingOptionsAprovacao.currentPage);
+                });
+                grid.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
+                    vm.pagingOptionsAprovacao.currentPage = newPage;
+                    vm.CarregarDadosWebApiAprovacao(pageSize, newPage);
+                });
+            },
+            useExternalPagination: true,
+            useExternalSorting: true,
+            pagination: vm.pagingOptionsAprovacao,
+            paginationTemplate: "NewFooterTemplate.html",
+            appScopeProvider: vm,
+            totalItems: vm.totalServerItemsAprovacao,
         };
 	}
 }());

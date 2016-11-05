@@ -65,6 +65,7 @@ using CV.Model;
 		public DbSet<RefeicaoPedido> RefeicaoPedidos { get; set; }
 		public DbSet<AvaliacaoLoja> AvaliacaoLojas { get; set; }
 		public DbSet<UsuarioGasto> UsuarioGastos { get; set; }
+		public DbSet<HotelEvento> HotelEventos { get; set; }
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
 
@@ -115,6 +116,7 @@ using CV.Model;
 			modelBuilder.Configurations.Add(new RefeicaoPedidoConfiguration());
 			modelBuilder.Configurations.Add(new AvaliacaoLojaConfiguration());
 			modelBuilder.Configurations.Add(new UsuarioGastoConfiguration());
+			modelBuilder.Configurations.Add(new HotelEventoConfiguration());
 			base.OnModelCreating(modelBuilder);
 		}		
 	}

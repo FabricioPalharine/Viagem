@@ -1,0 +1,5 @@
+D:\Desenvolvimento\ViagemNew\Desenvolvimento\Fontes\CV.Database\bin\Debug\CV.Database.dacpac
+D:\Desenvolvimento\ViagemNew\Desenvolvimento\Fontes\CV.Database\bin\Debug\CV.Database.dll
+D:\Desenvolvimento\ViagemNew\Desenvolvimento\Fontes\CV.Database\bin\Debug\CV.Database.pdb
+D:\Desenvolvimento\ViagemNew\Desenvolvimento\Fontes\CV.Database\obj\Debug\CV.Database.dll
+D:\Desenvolvimento\ViagemNew\Desenvolvimento\Fontes\CV.Database\obj\Debug\CV.Database.pdb

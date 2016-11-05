@@ -1,4 +1,4 @@
-using  CV.Business;
+using CV.Business;
 using CV.Model;
 using System;
 using System.Collections.Generic;
@@ -9,108 +9,103 @@ using System.Web;
 using System.Web.Http;
 using System.ServiceModel.Channels;
 using CV.Model.Dominio;
+using Newtonsoft.Json;
 
 namespace CV.UI.Web.Controllers.WebAPI
 {
     public class AcessoController : BaseApiController
     {
-        [ActionName("Autenticar")]
-        [HttpPost]
-        public UsuarioLogado Autenticar([FromBody] PocoLogin itemLogin)
+       
+        [ActionName("ValidarUsuario")]
+        public UsuarioLogado ValidarUsuario([FromBody] PocoLogin itemLogin)
         {
-            //GerenciadorAcessoBusiness biz = new GerenciadorAcessoBusiness();
-            //string IP = GetClientIp();
-            //string nomeMaquina = string.Empty;
-            //string ipMaquina = string.Empty;
-            //try
-            //{
-            //    nomeMaquina = (Dns.GetHostEntry(IP).HostName);
-            //}
-            //catch
-            //{
-            //    nomeMaquina = IP;
-            //}
-            //return biz.ExecutarLoginUsuario(itemLogin, IP, nomeMaquina, System.Threading.Thread.CurrentThread.CurrentCulture.Name);
-
-            AuthenticationToken token = new AuthenticationToken();
-            token.Cultura = "pt-br";
-            token.IdentificadorLogAcesso = 1;
-            token.IdentificadorUsuario = 1;
-            string Texto = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(token);
-            Texto = Business.Library.UtilitarioBusiness.Criptografa(Texto);
-            return new UsuarioLogado() {AuthenticationToken = Texto, Sucesso = true, Ativo = true, Codigo = 1, DataHoraAcesso = DateTime.Now, Login = itemLogin.Login, Nome = "Teste", UltimoAcesso = DateTime.Now.AddDays(-1), LogAcesso = 1 } ;
-        }
-
-
-
-        [ActionName("RetornarAcessos")]
-        [Authorize]
-        [HttpGet]
-        public int[] RetornarAcessos()
-        {
-
-        //GerenciadorAcessoBusiness biz = new GerenciadorAcessoBusiness();
-        //return biz.ListarAcessosUsuario(token.IdentificadorUsuario).ToArray();
-        return new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26 };
-
-        }
-
-        [ActionName("AlterarSenha")]
-        [Authorize]
-        [HttpPost]
-        public ResultadoOperacao AlterarSenha([FromBody] PocoLogin itemLogin)
-        {
-
-        //GerenciadorAcessoBusiness biz = new GerenciadorAcessoBusiness();
-        //biz.AdicionaLogChamada(token.IdentificadorUsuario, (Funcionalidade.AlterarSenha), (int)(enumTipoAcao.Alterar), true);
-
-        //return biz.AlterarSenhaUsuario(token, itemLogin);
-        return new ResultadoOperacao() { Sucesso = true, Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Senha Alterada com Sucesso" } } };
-    }
-
-
-
-        [ActionName("Logoff")]
-        [HttpGet]
-        [Authorize]
-        public void Logoff()
-        {
-            //GerenciadorAcessoBusiness biz = new GerenciadorAcessoBusiness();
-            //biz.DesconectarSessao(token);
-        }
-
-        [ActionName("VerificarLogado")]
-        [HttpPost]
-        [Authorize]
-        public UsuarioLogado VerificarLogado()
-        {
-            //GerenciadorAcessoBusiness biz = new GerenciadorAcessoBusiness();
-            //token.Cultura = System.Threading.Thread.CurrentThread.CurrentCulture.Name;
-            //return biz.RetornarUsuarioToken(token);
-            return new UsuarioLogado() { Sucesso = true, Ativo = true, Codigo = 1, DataHoraAcesso = DateTime.Now, Login = "teste", Nome = "Teste", UltimoAcesso = DateTime.Now.AddDays(-1), LogAcesso = 1 };
-        }
-
-        private string GetClientIp(HttpRequestMessage request = null)
-        {
-            request = request ?? Request;
-
-            if (request.Properties.ContainsKey("MS_HttpContext"))
+            ViagemBusiness biz = new ViagemBusiness();
+            var ItemUsuario = biz.ListarUsuario(d => d.Codigo == itemLogin.Codigo).FirstOrDefault();
+            UsuarioLogado itemResultado = new UsuarioLogado();
+            if (ItemUsuario != null && !string.IsNullOrEmpty(ItemUsuario.RefreshToken) )
             {
-                return ((HttpContextWrapper)request.Properties["MS_HttpContext"]).Request.UserHostAddress;
+                itemResultado.Nome = ItemUsuario.Nome;
+                itemResultado.Sucesso = true;
+                itemResultado.Codigo = ItemUsuario.Identificador.GetValueOrDefault();
+                itemResultado.Cultura = "pt-br";
+               
+                biz.CarregarViagem(itemResultado, itemLogin.IdentificadorViagem);
+
+                AuthenticationToken token = new AuthenticationToken();
+                token.Cultura = "pt-br";
+                token.Token = ItemUsuario.Token;
+                token.IdentificadorUsuario = ItemUsuario.Identificador.GetValueOrDefault();
+                token.IdentificadorViagem = itemResultado.IdentificadorViagem;
+                string Texto = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(token);
+                Texto = Business.Library.UtilitarioBusiness.Criptografa(Texto);
+                itemResultado.AuthenticationToken = Texto;
             }
-            else if (request.Properties.ContainsKey(RemoteEndpointMessageProperty.Name))
+            return itemResultado;
+        }
+
+        [ActionName("LoginGoogle")]
+        [HttpPost]
+        public UsuarioLogado LoginGoogle([FromBody] PocoLogin itemLogin)
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            UsuarioLogado itemResultado = biz.LogarUsuarioGoogle(itemLogin, biz);
+            return itemResultado;
+        }
+
+    
+        [ActionName("SelecionarViagem")]
+        [Authorize]
+        [HttpPost]
+        public UsuarioLogado SelecionarViagem(PocoLogin itemLogin)
+        {
+            UsuarioLogado itemResultado = new UsuarioLogado();
+            ViagemBusiness biz = new ViagemBusiness();
+            var itemViagem = biz.SelecionarViagem_IdentificadorUsuario_IdentficadorViagem(token.IdentificadorUsuario, itemLogin.IdentificadorViagem);
+            if (itemViagem != null)
             {
-                RemoteEndpointMessageProperty prop = (RemoteEndpointMessageProperty)this.Request.Properties[RemoteEndpointMessageProperty.Name];
-                return prop.Address;
-            }
-            else if (HttpContext.Current != null)
-            {
-                return HttpContext.Current.Request.UserHostAddress;
+                token.IdentificadorViagem = itemLogin.IdentificadorViagem;
+                itemResultado.IdentificadorViagem = itemLogin.IdentificadorViagem;
+                itemResultado.NomeViagem = itemViagem.Nome;
+                itemResultado.PermiteEdicao = itemViagem.IdentificadorUsuario == itemResultado.Codigo || biz.ListarParticipanteViagem(d => d.IdentificadorUsuario == itemResultado.Codigo && d.IdentificadorViagem == itemLogin.IdentificadorViagem).Any();
+                itemResultado.VerCustos = itemResultado.PermiteEdicao || biz.ListarUsuarioGasto(d => d.IdentificadorUsuario == itemResultado.Codigo && d.IdentificadorViagem == itemLogin.IdentificadorViagem).Any();
             }
             else
             {
-                return null;
+                token.IdentificadorViagem = null;
+                
             }
+            token.IdentificadorViagem = itemLogin.IdentificadorViagem;
+            string Texto = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(token);
+            Texto = Business.Library.UtilitarioBusiness.Criptografa(Texto);
+            itemResultado.AuthenticationToken = Texto;
+
+            return itemResultado;
+        }
+
+
+        [ActionName("LoginAplicativo")]
+        [HttpPost]
+        public UsuarioLogado LoginAplicativo([FromBody] DadosGoogleToken itemLogin)
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            return biz.LoginAplicativo(itemLogin);
+        }
+
+        [ActionName("CarregarDadosAplicativo")]
+        [HttpPost]
+        public UsuarioLogado CarregarDadosAplicativo([FromBody] UsuarioLogado itemLogin)
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            return biz.CarregarDadosAplicativo(itemLogin);
+        }
+
+        [ActionName("CarregarAlertas")]
+        [Authorize]
+        [HttpGet]
+        public List<AlertaUsuario> CarregarAlertasUsuario()
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            return biz.CarregarAlertasUsuario(token);
         }
     }
 }

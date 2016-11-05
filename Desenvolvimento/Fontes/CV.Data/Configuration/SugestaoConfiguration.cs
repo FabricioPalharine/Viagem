@@ -26,7 +26,7 @@ namespace CV.Data.Configuration
 			this.Property(i => i.IdentificadorViagem).HasColumnName("ID_VIAGEM");
 			this.Property(i => i.IdentificadorUsuario).HasColumnName("ID_USUARIO");
 			this.Property(i => i.IdentificadorCidade).HasColumnName("ID_CIDADE");
-			this.Property(i => i.Lida).HasColumnName("FL_LIDA");
+			this.Property(i => i.Status).HasColumnName("CD_STATUS");
 			this.HasRequired(i => i.ItemCidade).WithMany().HasForeignKey(d=>d.IdentificadorCidade);
 			this.HasRequired(i => i.ItemUsuario).WithMany().HasForeignKey(d=>d.IdentificadorUsuario);
 			this.HasRequired(i => i.ItemViagem).WithMany().HasForeignKey(d=>d.IdentificadorViagem);

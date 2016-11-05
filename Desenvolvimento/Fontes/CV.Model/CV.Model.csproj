@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>bb9c58e3-7915-430a-9669-64cae7881c6d</ProjectGuid>
+    <ProjectGuid>{BB9C58E3-7915-430A-9669-64CAE7881C6D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CV.Model</RootNamespace>
@@ -52,6 +52,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlertaUsuario.cs" />
+    <Compile Include="ConsultaAmigo.cs" />
+    <Compile Include="ConsultaSolicitacao.cs" />
+    <Compile Include="DadosGoogleToken.cs" />
     <Compile Include="Results\Message.cs" />
     <Compile Include="Results\ServiceResult.cs" />
     <Compile Include="Dominio\enumTipoAcao.cs" />
@@ -164,6 +168,8 @@
     <Compile Include="pAvaliacaoLoja.cs" />
     <Compile Include="UsuarioGasto.cs" />
     <Compile Include="pUsuarioGasto.cs" />
+    <Compile Include="HotelEvento.cs" />
+    <Compile Include="pHotelEvento.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resource\MensagemModelo.resx">

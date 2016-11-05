@@ -149,6 +149,8 @@
     <Compile Include="Configuration\pUsuarioGastoConfiguration.cs" />
     <Compile Include="ViagemRepository.cs" />
     <Compile Include="pViagemRepository.cs" />
+    <Compile Include="Configuration\HotelEventoConfiguration.cs" />
+    <Compile Include="Configuration\pHotelEventoConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CV.Model\CV.Model.csproj">
