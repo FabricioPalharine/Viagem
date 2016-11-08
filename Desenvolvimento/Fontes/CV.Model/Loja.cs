@@ -59,6 +59,10 @@ private void ValidarNome(Microsoft.Practices.EnterpriseLibrary.Validation.Valida
 			public Atracao ItemAtracao { get; set; }
 
 			public IList<AvaliacaoLoja> Avaliacoes { get; set; }
+
+			public DateTime? DataAtualizacao { get; set; }
+
+			public DateTime? DataExclusao { get; set; }
 		 public Loja Clone()
 		{
 			 return (Loja) this.MemberwiseClone();

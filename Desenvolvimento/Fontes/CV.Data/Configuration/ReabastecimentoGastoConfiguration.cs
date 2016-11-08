@@ -23,6 +23,8 @@ namespace CV.Data.Configuration
 			this.Property(i => i.IdentificadorReabastecimento).HasColumnName("ID_ALUGUEL_REABASTECIMENTO");
 			this.HasRequired(i => i.ItemReabastecimento).WithMany().HasForeignKey(d=>d.IdentificadorReabastecimento);
 			this.HasRequired(i => i.ItemGasto).WithMany().HasForeignKey(d=>d.IdentificadorGasto);
+			this.Property(i => i.DataAtualizacao).HasColumnName("DT_ATUALIZACAO");
+			this.Property(i => i.DataExclusao).HasColumnName("DT_EXCLUSAO");
 		MapearCamposManualmente();
 		}
 	}

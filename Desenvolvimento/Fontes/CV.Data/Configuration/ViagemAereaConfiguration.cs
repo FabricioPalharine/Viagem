@@ -28,6 +28,8 @@ namespace CV.Data.Configuration
 			this.HasMany(i => i.Gastos).WithRequired().HasForeignKey(d=>d.IdentificadorViagemAerea);
 			this.HasMany(i => i.Aeroportos).WithRequired().HasForeignKey(d=>d.IdentificadorViagemAerea);
 			this.HasMany(i => i.Avaliacoes).WithRequired().HasForeignKey(d=>d.IdentificadorViagemAerea);
+			this.Property(i => i.DataAtualizacao).HasColumnName("DT_ATUALIZACAO");
+			this.Property(i => i.DataExclusao).HasColumnName("DT_EXCLUSAO");
 		MapearCamposManualmente();
 		}
 	}

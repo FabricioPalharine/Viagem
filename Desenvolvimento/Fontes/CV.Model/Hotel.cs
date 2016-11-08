@@ -74,6 +74,10 @@ private void ValidarNome(Microsoft.Practices.EnterpriseLibrary.Validation.Valida
 
 			[NotNullValidator(MessageTemplateResourceName="Hotel_Raio",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public int? Raio { get; set; }
+
+			public DateTime? DataAtualizacao { get; set; }
+
+			public DateTime? DataExclusao { get; set; }
 		 public Hotel Clone()
 		{
 			 return (Hotel) this.MemberwiseClone();

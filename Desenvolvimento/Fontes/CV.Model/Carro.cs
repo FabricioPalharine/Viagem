@@ -56,6 +56,10 @@ private void ValidarModelo(Microsoft.Practices.EnterpriseLibrary.Validation.Vali
 			public IList<CarroEvento> Eventos { get; set; }
 
 			public Viagem ItemViagem { get; set; }
+
+			public DateTime? DataAtualizacao { get; set; }
+
+			public DateTime? DataExclusao { get; set; }
 		 public Carro Clone()
 		{
 			 return (Carro) this.MemberwiseClone();

@@ -173,6 +173,8 @@
             Viagem_PublicaGasto: 'Gastos Públicos',
             Viagem_PercentualIOF: 'Percentual IOF',
             Viagem_Moeda: 'Moeda',
+            Viagem_SelecionarAmigo: 'Favor selecionar um amigo para adicionar',
+            Viagem_AmigoJaAdicionado: 'O amigo selecionado já esta presente nessa listagem',
             ViagemAerea_IdentificadorViagem: 'Viagem',
             ViagemAerea_CompanhiaAerea: 'CompanhiaAerea',
             ViagemAerea_DataPrevista: 'DataPrevista',

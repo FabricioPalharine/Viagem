@@ -121,6 +121,10 @@ private void ValidarTipoArquivo(Microsoft.Practices.EnterpriseLibrary.Validation
 			public Usuario ItemUsuario { get; set; }
 
 			public Viagem ItemViagem { get; set; }
+
+			public DateTime? DataAtualizacao { get; set; }
+
+			public DateTime? DataExclusao { get; set; }
 		 public Foto Clone()
 		{
 			 return (Foto) this.MemberwiseClone();

@@ -23,7 +23,6 @@ namespace CV.Model
 			[NotNullValidator(MessageTemplateResourceName="AvaliacaoAerea_IdentificadorViagemAerea",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public int? IdentificadorViagemAerea { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="AvaliacaoAerea_Nota",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public int? Nota { get; set; }
 
 			public string Comentario { get; set; }
@@ -31,6 +30,10 @@ namespace CV.Model
 			public Usuario ItemUsuario { get; set; }
 
 			public ViagemAerea ItemViagemAerea { get; set; }
+
+			public DateTime? DataAtualizacao { get; set; }
+
+			public DateTime? DataExclusao { get; set; }
 		 public AvaliacaoAerea Clone()
 		{
 			 return (AvaliacaoAerea) this.MemberwiseClone();

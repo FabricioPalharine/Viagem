@@ -26,6 +26,10 @@ namespace CV.Model
 			public Foto ItemFoto { get; set; }
 
 			public Refeicao ItemRefeicao { get; set; }
+
+			public DateTime? DataAtualizacao { get; set; }
+
+			public DateTime? DataExclusao { get; set; }
 		 public FotoRefeicao Clone()
 		{
 			 return (FotoRefeicao) this.MemberwiseClone();

@@ -1,0 +1,77 @@
+08/11/2016 20:46:42	This log contains information about the import schema operation into project 'CV.Database' on computer 'NOTEFABRICIO' by user 'fabricio.palharine'.
+08/11/2016 20:46:42	Import of database schema has started.
+08/11/2016 20:46:55	Gathering database options
+08/11/2016 20:46:55	Gathering users
+08/11/2016 20:46:55	Gathering roles
+08/11/2016 20:46:55	Gathering application roles
+08/11/2016 20:46:55	Gathering role memberships
+08/11/2016 20:46:55	Gathering filegroups
+08/11/2016 20:46:55	Gathering full-text catalogs
+08/11/2016 20:46:55	Gathering assemblies
+08/11/2016 20:46:55	Gathering certificates
+08/11/2016 20:46:55	Gathering asymmetric keys
+08/11/2016 20:46:55	Gathering symmetric keys
+08/11/2016 20:46:55	Gathering encrypted symmetric keys
+08/11/2016 20:46:55	Gathering schemas
+08/11/2016 20:46:55	Gathering XML schema collections
+08/11/2016 20:46:55	Gathering user-defined data types
+08/11/2016 20:46:55	Gathering user-defined types
+08/11/2016 20:46:55	Gathering table types
+08/11/2016 20:46:55	Gathering unique keys for table types
+08/11/2016 20:46:55	Gathering primary keys for table types
+08/11/2016 20:46:55	Gathering indexes for table types
+08/11/2016 20:46:55	Gathering check constraints for table types
+08/11/2016 20:46:55	Gathering default constraints for table types
+08/11/2016 20:46:55	Gathering partition functions
+08/11/2016 20:46:55	Gathering partition schemes
+08/11/2016 20:46:55	Gathering functions
+08/11/2016 20:46:55	Gathering encrypted functions
+08/11/2016 20:46:55	Gathering aggregates
+08/11/2016 20:46:55	Gathering procedures
+08/11/2016 20:46:55	Gathering encrypted procedures
+08/11/2016 20:46:55	Gathering tables
+08/11/2016 20:46:55	Gathering primary keys
+08/11/2016 20:46:56	Gathering unique constraints
+08/11/2016 20:46:56	Gathering foreign keys
+08/11/2016 20:46:56	Gathering default constraints
+08/11/2016 20:46:56	Gathering check constraints
+08/11/2016 20:46:56	Gathering views
+08/11/2016 20:46:56	Gathering encrypted views
+08/11/2016 20:46:56	Gathering indexes
+08/11/2016 20:46:56	Gathering statistics
+08/11/2016 20:46:56	Gathering full-text index stoplists
+08/11/2016 20:46:56	Gathering search property lists
+08/11/2016 20:46:56	Gathering search properties
+08/11/2016 20:46:56	Gathering full-text indexes
+08/11/2016 20:46:56	Gathering column store indexes
+08/11/2016 20:46:56	Gathering spatial indexes
+08/11/2016 20:46:56	Gathering XML indexes
+08/11/2016 20:46:56	Gathering Selective XML indexes
+08/11/2016 20:46:56	Gathering encrypted triggers
+08/11/2016 20:46:56	Gathering triggers
+08/11/2016 20:46:56	Gathering encrypted and clr ddl triggers
+08/11/2016 20:46:56	Gathering ddl triggers
+08/11/2016 20:46:56	Gathering synonyms
+08/11/2016 20:46:56	Gathering defaults
+08/11/2016 20:46:56	Gathering data constraint uddt bindings
+08/11/2016 20:46:56	Gathering rules
+08/11/2016 20:46:56	Gathering data constraint uddt bindings
+08/11/2016 20:46:56	Gathering message types
+08/11/2016 20:46:56	Gathering queues
+08/11/2016 20:46:56	Gathering contracts
+08/11/2016 20:46:56	Gathering services
+08/11/2016 20:46:56	Gathering event notifications
+08/11/2016 20:46:56	Gathering remote service bindings
+08/11/2016 20:46:56	Gathering broker priorities
+08/11/2016 20:46:56	Gathering signatures
+08/11/2016 20:46:56	Gathering data compression options
+08/11/2016 20:46:56	Gathering sequence types
+08/11/2016 20:46:56	Gathering extended properties
+08/11/2016 20:46:57	Gathering credentials
+08/11/2016 20:46:57	Gathering logins
+08/11/2016 20:46:57	Gathering server audits
+08/11/2016 20:46:58	Scanning project for duplicate elements
+08/11/2016 20:46:58	Finished duplicate element processing
+08/11/2016 20:46:59	Finished importing database.
+08/11/2016 20:46:59	A summary of the import was saved to the following location: D:\Desenvolvimento\ViagemNew\Desenvolvimento\Fontes\CV.Database\Import Schema Logs\CV.Database_20161108104642.log
+08/11/2016 20:46:59	Click Finish to continue...

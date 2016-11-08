@@ -1339,7 +1339,7 @@ namespace CV.Data
 			public Viagem SelecionarViagem (int? Identificador)
 			{
 			IQueryable<Viagem> query =	 Context.Viagemes
-;
+.Include("Participantes").Include("Participantes.ItemUsuario").Include("UsuariosGastos").Include("UsuariosGastos.ItemUsuario");
 					if (Identificador.HasValue)
 					query = query.Where(d=>d.Identificador == Identificador);
 					return query.FirstOrDefault();
@@ -1506,11 +1506,11 @@ namespace CV.Data
 						Context.Entry<AvaliacaoLoja>(itemExcluir).State = EntityState.Deleted;
 				Context.SaveChanges();
 			}
-			public UsuarioGasto SelecionarUsuarioGasto (string Identificador)
+			public UsuarioGasto SelecionarUsuarioGasto (int? Identificador)
 			{
 			IQueryable<UsuarioGasto> query =	 Context.UsuarioGastos
 ;
-					if (!string.IsNullOrEmpty(Identificador))
+					if (Identificador.HasValue)
 					query = query.Where(d=>d.Identificador == Identificador);
 					return query.FirstOrDefault();
 			}
@@ -1573,6 +1573,55 @@ namespace CV.Data
 			.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
 						Context.Entry<HotelEvento>(itemExcluir).State = EntityState.Deleted;
 				Context.SaveChanges();
+			}
+			public void SalvarViagem_Completa (Viagem itemGravar)
+			{
+				Viagem itemBase =  Context.Viagemes
+.Include("Participantes").Include("UsuariosGastos")				.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
+				if (itemBase == null)
+				{
+				itemBase = Context.Viagemes.Create();
+				itemBase.Participantes = new List<ParticipanteViagem>();
+				itemBase.UsuariosGastos = new List<UsuarioGasto>();
+ 			Context.Entry<Viagem>(itemBase).State = System.Data.Entity.EntityState.Added;
+				}
+ 			AtualizarPropriedades<Viagem>(itemBase, itemGravar);
+				foreach (ParticipanteViagem itemParticipanteViagem in new List<ParticipanteViagem>( itemBase.Participantes))
+				{
+					if (!itemGravar.Participantes.Where(f=>f.Identificador == itemParticipanteViagem.Identificador).Any())
+					{
+						Context.Entry<ParticipanteViagem>(itemParticipanteViagem).State = EntityState.Deleted;
+					}
+				}
+				foreach (ParticipanteViagem itemParticipanteViagem in new List<ParticipanteViagem>( itemGravar.Participantes))
+				{
+				ParticipanteViagem itemBaseParticipanteViagem = !itemParticipanteViagem.Identificador.HasValue?null: itemBase.Participantes.Where(f=>f.Identificador == itemParticipanteViagem.Identificador).FirstOrDefault();
+				if (itemBaseParticipanteViagem == null)
+				{
+				itemBaseParticipanteViagem = Context.ParticipanteViagemes.Create();
+ 			itemBase.Participantes.Add(itemBaseParticipanteViagem);
+				}
+ 			AtualizarPropriedades<ParticipanteViagem>(itemBaseParticipanteViagem, itemParticipanteViagem);
+				}
+				foreach (UsuarioGasto itemUsuarioGasto in new List<UsuarioGasto>( itemBase.UsuariosGastos))
+				{
+					if (!itemGravar.UsuariosGastos.Where(f=>f.Identificador == itemUsuarioGasto.Identificador).Any())
+					{
+						Context.Entry<UsuarioGasto>(itemUsuarioGasto).State = EntityState.Deleted;
+					}
+				}
+				foreach (UsuarioGasto itemUsuarioGasto in new List<UsuarioGasto>( itemGravar.UsuariosGastos))
+				{
+				UsuarioGasto itemBaseUsuarioGasto = !itemUsuarioGasto.Identificador.HasValue?null: itemBase.UsuariosGastos.Where(f=>f.Identificador == itemUsuarioGasto.Identificador).FirstOrDefault();
+				if (itemBaseUsuarioGasto == null)
+				{
+				itemBaseUsuarioGasto = Context.UsuarioGastos.Create();
+ 			itemBase.UsuariosGastos.Add(itemBaseUsuarioGasto);
+				}
+ 			AtualizarPropriedades<UsuarioGasto>(itemBaseUsuarioGasto, itemUsuarioGasto);
+				}
+			Context.SaveChanges();
+				itemGravar.Identificador = itemBase.Identificador;
 			}
 	}
 

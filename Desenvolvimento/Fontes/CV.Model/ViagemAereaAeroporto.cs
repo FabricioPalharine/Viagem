@@ -60,6 +60,10 @@ private void ValidarAeroporto(Microsoft.Practices.EnterpriseLibrary.Validation.V
 
 			[StringLengthValidator(50,MessageTemplateResourceName="ViagemAereaAeroporto_CodigoPlace_Tamanho",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public string CodigoPlace { get; set; }
+
+			public DateTime? DataAtualizacao { get; set; }
+
+			public DateTime? DataExclusao { get; set; }
 		 public ViagemAereaAeroporto Clone()
 		{
 			 return (ViagemAereaAeroporto) this.MemberwiseClone();

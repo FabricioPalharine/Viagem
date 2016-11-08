@@ -9,6 +9,8 @@
     [DT_CHEGADA]                DATETIME        NULL,
     [DT_SAIDA]                  DATETIME        NULL,
     [CD_PLACE]                  VARCHAR (50)    NOT NULL,
+    [DT_ATUALIZACAO]            DATETIME        NOT NULL,
+    [DT_EXCLUSAO]               DATETIME        NULL,
     CONSTRAINT [PK32] PRIMARY KEY NONCLUSTERED ([ID_VIAGEM_AEREA_AEROPORTO] ASC),
     CONSTRAINT [RefCidade52] FOREIGN KEY ([ID_CIDADE]) REFERENCES [dbo].[Cidade] ([ID_CIDADE]),
     CONSTRAINT [RefViagemAerea51] FOREIGN KEY ([ID_VIAGEM_AEREA]) REFERENCES [dbo].[ViagemAerea] ([ID_VIAGEM_AEREA])

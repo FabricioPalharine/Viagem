@@ -22,12 +22,13 @@ namespace CV.Data.Configuration
 			this.Property(i => i.IdentificadorViagem).HasColumnName("ID_VIAGEM");
 			this.Property(i => i.IdentificadorUsuario).HasColumnName("ID_USUARIO");
 			this.Property(i => i.Valor).HasColumnName("VL_QUANTIDADE").HasPrecision(18,2);
-			this.Property(i => i.MoedaEstragengeira).HasColumnName("FL_MOEDA_ESTRANGEIRA");
 			this.Property(i => i.Moeda).HasColumnName("CD_MOEDA");
 			this.Property(i => i.DataAporte).HasColumnName("DT_APORTE");
 			this.Property(i => i.Cotacao).HasColumnName("VL_COTACAO").HasPrecision(18,6);
 			this.HasRequired(i => i.ItemUsuario).WithMany().HasForeignKey(d=>d.IdentificadorUsuario);
 			this.HasRequired(i => i.ItemViagem).WithMany().HasForeignKey(d=>d.IdentificadorViagem);
+			this.Property(i => i.DataAtualizacao).HasColumnName("DT_ATUALIZACAO");
+			this.Property(i => i.DataExclusao).HasColumnName("DT_EXCLUSAO");
 		MapearCamposManualmente();
 		}
 	}

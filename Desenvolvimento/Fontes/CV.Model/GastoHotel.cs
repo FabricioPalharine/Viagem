@@ -26,6 +26,10 @@ namespace CV.Model
 			public Gasto ItemGasto { get; set; }
 
 			public Hotel ItemHotel { get; set; }
+
+			public DateTime? DataAtualizacao { get; set; }
+
+			public DateTime? DataExclusao { get; set; }
 		 public GastoHotel Clone()
 		{
 			 return (GastoHotel) this.MemberwiseClone();

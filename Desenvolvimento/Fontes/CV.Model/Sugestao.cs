@@ -63,6 +63,10 @@ private void ValidarLocal(Microsoft.Practices.EnterpriseLibrary.Validation.Valid
 
 			[StringLengthValidator(50,MessageTemplateResourceName="Sugestao_Tipo_Tamanho",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public string Tipo { get; set; }
+
+			public DateTime? DataAtualizacao { get; set; }
+
+			public DateTime? DataExclusao { get; set; }
 		 public Sugestao Clone()
 		{
 			 return (Sugestao) this.MemberwiseClone();

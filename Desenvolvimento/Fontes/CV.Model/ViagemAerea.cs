@@ -52,6 +52,10 @@ private void ValidarCompanhiaAerea(Microsoft.Practices.EnterpriseLibrary.Validat
 			public IList<ViagemAereaAeroporto> Aeroportos { get; set; }
 
 			public IList<AvaliacaoAerea> Avaliacoes { get; set; }
+
+			public DateTime? DataAtualizacao { get; set; }
+
+			public DateTime? DataExclusao { get; set; }
 		 public ViagemAerea Clone()
 		{
 			 return (ViagemAerea) this.MemberwiseClone();

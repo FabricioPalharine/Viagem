@@ -24,7 +24,6 @@ namespace CV.Data.Configuration
 			this.Property(i => i.Descricao).HasColumnName("DS_GASTO");
 			this.Property(i => i.Data).HasColumnName("DT_GASTO");
 			this.Property(i => i.Valor).HasColumnName("VL_GASTO").HasPrecision(18,2);
-			this.Property(i => i.MoedaEstrageira).HasColumnName("FL_MOEDA_ESTRANGEIRA");
 			this.Property(i => i.Especie).HasColumnName("FL_ESPECIE");
 			this.Property(i => i.Moeda).HasColumnName("CD_MOEDA");
 			this.Property(i => i.DataPagamento).HasColumnName("DT_PAGAMENTO");
@@ -33,6 +32,8 @@ namespace CV.Data.Configuration
 			this.HasRequired(i => i.ItemUsuario).WithMany().HasForeignKey(d=>d.IdentificadorUsuario);
 			this.HasRequired(i => i.ItemViagem).WithMany().HasForeignKey(d=>d.IdentificadorViagem);
 			this.HasMany(i => i.Posicoes).WithRequired().HasForeignKey(d=>d.IdentificadorGasto);
+			this.Property(i => i.DataAtualizacao).HasColumnName("DT_ATUALIZACAO");
+			this.Property(i => i.DataExclusao).HasColumnName("DT_EXCLUSAO");
 		MapearCamposManualmente();
 		}
 	}

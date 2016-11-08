@@ -24,6 +24,8 @@ namespace CV.Data.Configuration
 			this.Property(i => i.ValorCotacao).HasColumnName("VL_COTACAO").HasPrecision(18,6);
 			this.Property(i => i.IdentificadorViagem).HasColumnName("ID_VIAGEM");
 			this.HasRequired(i => i.ItemViagem).WithMany().HasForeignKey(d=>d.IdentificadorViagem);
+			this.Property(i => i.DataAtualizacao).HasColumnName("DT_ATUALIZACAO");
+			this.Property(i => i.DataExclusao).HasColumnName("DT_EXCLUSAO");
 		MapearCamposManualmente();
 		}
 	}

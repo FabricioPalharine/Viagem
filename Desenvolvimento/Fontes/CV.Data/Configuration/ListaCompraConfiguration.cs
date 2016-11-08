@@ -27,12 +27,14 @@ namespace CV.Data.Configuration
 			this.Property(i => i.ValorMaximo).HasColumnName("VL_MAXIMO").HasPrecision(9,2);
 			this.Property(i => i.Moeda).HasColumnName("CD_MOEDA");
 			this.Property(i => i.Reembolsavel).HasColumnName("FL_REEMBOLSAVEL");
-			this.Property(i => i.Comprado).HasColumnName("FL_COMPRADO");
+			this.Property(i => i.Status).HasColumnName("CD_STATUS");
 			this.HasMany(i => i.ItensCompra).WithOptional().HasForeignKey(d=>d.IdentificadorListaCompra);
 			this.HasRequired(i => i.ItemUsuario).WithMany().HasForeignKey(d=>d.IdentificadorUsuario);
 			this.HasOptional(i => i.ItemUsuarioPedido).WithMany().HasForeignKey(d=>d.IdentificadorUsuarioPedido);
-			this.HasRequired(i => i.Viagem).WithMany().HasForeignKey(d=>d.IdentificadorViagem);
+			this.HasRequired(i => i.ItemViagem).WithMany().HasForeignKey(d=>d.IdentificadorViagem);
 			this.Property(i => i.Destinatario).HasColumnName("DS_DESTINATARIO");
+			this.Property(i => i.DataAtualizacao).HasColumnName("DT_ATUALIZACAO");
+			this.Property(i => i.DataExclusao).HasColumnName("DT_EXCLUSAO");
 		MapearCamposManualmente();
 		}
 	}

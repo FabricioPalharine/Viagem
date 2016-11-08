@@ -10,6 +10,8 @@
     [CD_PLACE]               VARCHAR (50)    NULL,
     [DS_TIPO]                VARCHAR (50)    NULL,
     [CD_PRIORIDADE]          INT             NOT NULL,
+    [DT_ATUALIZACAO]         DATETIME        NOT NULL,
+    [DT_EXCLUSAO]            DATETIME        NULL,
     CONSTRAINT [PK14] PRIMARY KEY NONCLUSTERED ([ID_CALENDARIO_PREVISTO] ASC),
     CONSTRAINT [RefViagem21] FOREIGN KEY ([ID_VIAGEM]) REFERENCES [dbo].[Viagem] ([ID_VIAGEM])
 );

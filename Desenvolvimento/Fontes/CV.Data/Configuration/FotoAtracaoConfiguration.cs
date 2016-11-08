@@ -23,6 +23,8 @@ namespace CV.Data.Configuration
 			this.Property(i => i.IdentificadorFoto).HasColumnName("ID_FOTO");
 			this.HasRequired(i => i.ItemAtracao).WithMany().HasForeignKey(d=>d.IdentificadorAtracao);
 			this.HasRequired(i => i.ItemFoto).WithMany().HasForeignKey(d=>d.IdentificadorFoto);
+			this.Property(i => i.DataAtualizacao).HasColumnName("DT_ATUALIZACAO");
+			this.Property(i => i.DataExclusao).HasColumnName("DT_EXCLUSAO");
 		MapearCamposManualmente();
 		}
 	}

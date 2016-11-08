@@ -72,6 +72,14 @@ private void ValidarMarca(Microsoft.Practices.EnterpriseLibrary.Validation.Valid
 			public IList<FotoItemCompra> Fotos { get; set; }
 
 			public ListaCompra ItemListaCompra { get; set; }
+
+			public int? IdentificadorUsuario { get; set; }
+
+			public Usuario ItemUsuario { get; set; }
+
+			public DateTime? DataAtualizacao { get; set; }
+
+			public DateTime? DataExclusao { get; set; }
 		 public ItemCompra Clone()
 		{
 			 return (ItemCompra) this.MemberwiseClone();

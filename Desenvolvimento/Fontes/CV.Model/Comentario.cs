@@ -34,6 +34,10 @@ namespace CV.Model
 			public Cidade ItemCidade { get; set; }
 
 			public Viagem ItemViagem { get; set; }
+
+			public DateTime? DataAtualizacao { get; set; }
+
+			public DateTime? DataExclusao { get; set; }
 		 public Comentario Clone()
 		{
 			 return (Comentario) this.MemberwiseClone();

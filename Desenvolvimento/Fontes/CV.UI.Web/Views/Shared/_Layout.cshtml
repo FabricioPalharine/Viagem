@@ -72,8 +72,8 @@
                                 <li ng-repeat="viagem in account.user.ListaViagens track by viagem.Identificador" ng-show="account.user.ListaViagens">
                                     <a href="javascript:void(0)" ng-click="account.SelecionarViagem(viagem.Identificador)">{{viagem.Nome}}</a>
                                 </li>
-                                <li><a ui-sref="EscolherViagem()">@TextosPaginas.Menu_EscolherOutraViagem</a></li>
-                                <li><a ui-sref="CriarViagem()">@TextosPaginas.Menu_CriarViagem</a></li>
+                                <li><a ui-sref="Viagem()">@TextosPaginas.Menu_EscolherOutraViagem</a></li>
+                                <li><a ui-sref="ViagemEdicao()">@TextosPaginas.Menu_CriarViagem</a></li>
                             </ul>
                         </li>
                         <li class="dropdown user user-menu">
@@ -161,7 +161,7 @@
                             <li><a ui-sref="Refeicao()"><span>@TextosPaginas.Home_Refeicao</span></a></li>
                             <li><a ui-sref="RequisicaoAmizade()"><span>@TextosPaginas.Home_RequisicaoAmizade</span></a></li>
                             <li><a ui-sref="Sugestao()"><span>@TextosPaginas.Home_Sugestao</span></a></li>
-                            <li><a ui-sref="Viagem()"><span>@TextosPaginas.Home_Viagem</span></a></li>
+                            <li><a ui-sref="ViagemEdicao({ id: account.user.IdentificadorViagem})"><span>@TextosPaginas.Home_Viagem</span></a></li>
                             <li><a ui-sref="ViagemAerea()"><span>@TextosPaginas.Home_ViagemAerea</span></a></li>
 
                         </ul>

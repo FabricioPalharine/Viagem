@@ -69,6 +69,10 @@ private void ValidarNome(Microsoft.Practices.EnterpriseLibrary.Validation.Valida
 			public Atracao ItemAtracao { get; set; }
 
 			public IList<RefeicaoPedido> Pedidos { get; set; }
+
+			public DateTime? DataAtualizacao { get; set; }
+
+			public DateTime? DataExclusao { get; set; }
 		 public Refeicao Clone()
 		{
 			 return (Refeicao) this.MemberwiseClone();

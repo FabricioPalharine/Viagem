@@ -61,6 +61,1455 @@ namespace CV.Model.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DIRHAM/EMIR.ARABE.
+        /// </summary>
+        public static string enumMoeda_AED {
+            get {
+                return ResourceManager.GetString("enumMoeda_AED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LEK ALBANIA REP.
+        /// </summary>
+        public static string enumMoeda_ALL {
+            get {
+                return ResourceManager.GetString("enumMoeda_ALL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DRAM ARMENIA REP.
+        /// </summary>
+        public static string enumMoeda_AMD {
+            get {
+                return ResourceManager.GetString("enumMoeda_AMD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GUILDER ANTILHAS HOLANDESAS.
+        /// </summary>
+        public static string enumMoeda_ANG {
+            get {
+                return ResourceManager.GetString("enumMoeda_ANG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KWANZA/ANGOLA.
+        /// </summary>
+        public static string enumMoeda_AOA {
+            get {
+                return ResourceManager.GetString("enumMoeda_AOA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PESO ARGENTINO.
+        /// </summary>
+        public static string enumMoeda_ARS {
+            get {
+                return ResourceManager.GetString("enumMoeda_ARS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DOLAR AUSTRALIANO.
+        /// </summary>
+        public static string enumMoeda_AUD {
+            get {
+                return ResourceManager.GetString("enumMoeda_AUD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FLORIM/ARUBA.
+        /// </summary>
+        public static string enumMoeda_AWG {
+            get {
+                return ResourceManager.GetString("enumMoeda_AWG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MANAT ARZEBAIJAO.
+        /// </summary>
+        public static string enumMoeda_AZN {
+            get {
+                return ResourceManager.GetString("enumMoeda_AZN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MARCO CONV BOSNIA.
+        /// </summary>
+        public static string enumMoeda_BAM {
+            get {
+                return ResourceManager.GetString("enumMoeda_BAM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DOLAR/BARBADOS.
+        /// </summary>
+        public static string enumMoeda_BBD {
+            get {
+                return ResourceManager.GetString("enumMoeda_BBD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TACA/BANGLADESH.
+        /// </summary>
+        public static string enumMoeda_BDT {
+            get {
+                return ResourceManager.GetString("enumMoeda_BDT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LEV/BULGARIA, REP.
+        /// </summary>
+        public static string enumMoeda_BGN {
+            get {
+                return ResourceManager.GetString("enumMoeda_BGN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DINAR/BAHREIN.
+        /// </summary>
+        public static string enumMoeda_BHD {
+            get {
+                return ResourceManager.GetString("enumMoeda_BHD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FRANCO/BURUNDI.
+        /// </summary>
+        public static string enumMoeda_BIF {
+            get {
+                return ResourceManager.GetString("enumMoeda_BIF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DOLAR/BERMUDAS.
+        /// </summary>
+        public static string enumMoeda_BMD {
+            get {
+                return ResourceManager.GetString("enumMoeda_BMD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DOLAR BRUNEI.
+        /// </summary>
+        public static string enumMoeda_BND {
+            get {
+                return ResourceManager.GetString("enumMoeda_BND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BOLIVIANO/BOLIVIA.
+        /// </summary>
+        public static string enumMoeda_BOB {
+            get {
+                return ResourceManager.GetString("enumMoeda_BOB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to REAL BRASIL.
+        /// </summary>
+        public static string enumMoeda_BRL {
+            get {
+                return ResourceManager.GetString("enumMoeda_BRL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DOLAR/BAHAMAS.
+        /// </summary>
+        public static string enumMoeda_BSD {
+            get {
+                return ResourceManager.GetString("enumMoeda_BSD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NGULTRUM/BUTAO.
+        /// </summary>
+        public static string enumMoeda_BTN {
+            get {
+                return ResourceManager.GetString("enumMoeda_BTN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PULA/BOTSWANA.
+        /// </summary>
+        public static string enumMoeda_BWP {
+            get {
+                return ResourceManager.GetString("enumMoeda_BWP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RUBLO BELARUS.
+        /// </summary>
+        public static string enumMoeda_BYN {
+            get {
+                return ResourceManager.GetString("enumMoeda_BYN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DOLAR/BELIZE.
+        /// </summary>
+        public static string enumMoeda_BZD {
+            get {
+                return ResourceManager.GetString("enumMoeda_BZD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DOLAR CANADENSE.
+        /// </summary>
+        public static string enumMoeda_CAD {
+            get {
+                return ResourceManager.GetString("enumMoeda_CAD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FRANCO CONGOLES.
+        /// </summary>
+        public static string enumMoeda_CDF {
+            get {
+                return ResourceManager.GetString("enumMoeda_CDF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FRANCO SUICO.
+        /// </summary>
+        public static string enumMoeda_CHF {
+            get {
+                return ResourceManager.GetString("enumMoeda_CHF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UNIDADE DE FOMENTO DO CHILE.
+        /// </summary>
+        public static string enumMoeda_CLF {
+            get {
+                return ResourceManager.GetString("enumMoeda_CLF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PESO CHILE.
+        /// </summary>
+        public static string enumMoeda_CLP {
+            get {
+                return ResourceManager.GetString("enumMoeda_CLP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RENMINBI HONG KONG.
+        /// </summary>
+        public static string enumMoeda_CNH {
+            get {
+                return ResourceManager.GetString("enumMoeda_CNH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RENMIMBI IUAN.
+        /// </summary>
+        public static string enumMoeda_CNY {
+            get {
+                return ResourceManager.GetString("enumMoeda_CNY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PESO/COLOMBIA.
+        /// </summary>
+        public static string enumMoeda_COP {
+            get {
+                return ResourceManager.GetString("enumMoeda_COP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to COLON/COSTA RICA.
+        /// </summary>
+        public static string enumMoeda_CRC {
+            get {
+                return ResourceManager.GetString("enumMoeda_CRC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PESO/CUBA.
+        /// </summary>
+        public static string enumMoeda_CUP {
+            get {
+                return ResourceManager.GetString("enumMoeda_CUP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ESCUDO CABO VERDE.
+        /// </summary>
+        public static string enumMoeda_CVE {
+            get {
+                return ResourceManager.GetString("enumMoeda_CVE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to COROA TCHECA.
+        /// </summary>
+        public static string enumMoeda_CZK {
+            get {
+                return ResourceManager.GetString("enumMoeda_CZK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FRANCO/DJIBUTI.
+        /// </summary>
+        public static string enumMoeda_DJF {
+            get {
+                return ResourceManager.GetString("enumMoeda_DJF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to COROA DINAMARQUESA.
+        /// </summary>
+        public static string enumMoeda_DKK {
+            get {
+                return ResourceManager.GetString("enumMoeda_DKK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PESO/REP. DOMINIC.
+        /// </summary>
+        public static string enumMoeda_DOP {
+            get {
+                return ResourceManager.GetString("enumMoeda_DOP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DINAR ARGELINO.
+        /// </summary>
+        public static string enumMoeda_DZD {
+            get {
+                return ResourceManager.GetString("enumMoeda_DZD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LIBRA/EGITO.
+        /// </summary>
+        public static string enumMoeda_EGP {
+            get {
+                return ResourceManager.GetString("enumMoeda_EGP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NAKFA ERITREIA.
+        /// </summary>
+        public static string enumMoeda_ERN {
+            get {
+                return ResourceManager.GetString("enumMoeda_ERN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BIRR/ETIOPIA.
+        /// </summary>
+        public static string enumMoeda_ETB {
+            get {
+                return ResourceManager.GetString("enumMoeda_ETB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EURO.
+        /// </summary>
+        public static string enumMoeda_EUR {
+            get {
+                return ResourceManager.GetString("enumMoeda_EUR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DOLAR FIJI.
+        /// </summary>
+        public static string enumMoeda_FJD {
+            get {
+                return ResourceManager.GetString("enumMoeda_FJD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LIBRA/FALKLAND.
+        /// </summary>
+        public static string enumMoeda_FKP {
+            get {
+                return ResourceManager.GetString("enumMoeda_FKP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LIBRA ESTERLINA.
+        /// </summary>
+        public static string enumMoeda_GBP {
+            get {
+                return ResourceManager.GetString("enumMoeda_GBP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LARI GEORGIA.
+        /// </summary>
+        public static string enumMoeda_GEL {
+            get {
+                return ResourceManager.GetString("enumMoeda_GEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CEDI GANA.
+        /// </summary>
+        public static string enumMoeda_GHS {
+            get {
+                return ResourceManager.GetString("enumMoeda_GHS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LIBRA/GIBRALTAR.
+        /// </summary>
+        public static string enumMoeda_GIP {
+            get {
+                return ResourceManager.GetString("enumMoeda_GIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DALASI/GAMBIA.
+        /// </summary>
+        public static string enumMoeda_GMD {
+            get {
+                return ResourceManager.GetString("enumMoeda_GMD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FRANCO/GUINE.
+        /// </summary>
+        public static string enumMoeda_GNF {
+            get {
+                return ResourceManager.GetString("enumMoeda_GNF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to QUETZAL/GUATEMALA.
+        /// </summary>
+        public static string enumMoeda_GTQ {
+            get {
+                return ResourceManager.GetString("enumMoeda_GTQ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PESO/GUINE BISSAU.
+        /// </summary>
+        public static string enumMoeda_GWP {
+            get {
+                return ResourceManager.GetString("enumMoeda_GWP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DOLAR DA GUIANA.
+        /// </summary>
+        public static string enumMoeda_GYD {
+            get {
+                return ResourceManager.GetString("enumMoeda_GYD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DOLAR HONG KONG.
+        /// </summary>
+        public static string enumMoeda_HKD {
+            get {
+                return ResourceManager.GetString("enumMoeda_HKD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LEMPIRA/HONDURAS.
+        /// </summary>
+        public static string enumMoeda_HNL {
+            get {
+                return ResourceManager.GetString("enumMoeda_HNL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KUNA/CROACIA.
+        /// </summary>
+        public static string enumMoeda_HRK {
+            get {
+                return ResourceManager.GetString("enumMoeda_HRK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GOURDE/HAITI.
+        /// </summary>
+        public static string enumMoeda_HTG {
+            get {
+                return ResourceManager.GetString("enumMoeda_HTG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FORINT/HUNGRIA.
+        /// </summary>
+        public static string enumMoeda_HUF {
+            get {
+                return ResourceManager.GetString("enumMoeda_HUF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RUPIA/INDONESIA.
+        /// </summary>
+        public static string enumMoeda_IDR {
+            get {
+                return ResourceManager.GetString("enumMoeda_IDR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SHEKEL/ISRAEL.
+        /// </summary>
+        public static string enumMoeda_ILS {
+            get {
+                return ResourceManager.GetString("enumMoeda_ILS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RUPIA/INDIA.
+        /// </summary>
+        public static string enumMoeda_INR {
+            get {
+                return ResourceManager.GetString("enumMoeda_INR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DINAR/IRAQUE.
+        /// </summary>
+        public static string enumMoeda_IQD {
+            get {
+                return ResourceManager.GetString("enumMoeda_IQD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RIAL/IRAN, REP.
+        /// </summary>
+        public static string enumMoeda_IRR {
+            get {
+                return ResourceManager.GetString("enumMoeda_IRR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to COROA ISLND/ISLAN.
+        /// </summary>
+        public static string enumMoeda_ISK {
+            get {
+                return ResourceManager.GetString("enumMoeda_ISK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DOLAR/JAMAICA.
+        /// </summary>
+        public static string enumMoeda_JMD {
+            get {
+                return ResourceManager.GetString("enumMoeda_JMD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DINAR/JORDANIA.
+        /// </summary>
+        public static string enumMoeda_JOD {
+            get {
+                return ResourceManager.GetString("enumMoeda_JOD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IENE.
+        /// </summary>
+        public static string enumMoeda_JPY {
+            get {
+                return ResourceManager.GetString("enumMoeda_JPY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to XELIM/QUENIA.
+        /// </summary>
+        public static string enumMoeda_KES {
+            get {
+                return ResourceManager.GetString("enumMoeda_KES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SOM QUIRGUISTAO.
+        /// </summary>
+        public static string enumMoeda_KGS {
+            get {
+                return ResourceManager.GetString("enumMoeda_KGS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RIEL/CAMBOJA.
+        /// </summary>
+        public static string enumMoeda_KHR {
+            get {
+                return ResourceManager.GetString("enumMoeda_KHR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FRANCO/COMORES.
+        /// </summary>
+        public static string enumMoeda_KMF {
+            get {
+                return ResourceManager.GetString("enumMoeda_KMF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WON/COREIA NORTE.
+        /// </summary>
+        public static string enumMoeda_KPW {
+            get {
+                return ResourceManager.GetString("enumMoeda_KPW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WON COREIA SUL.
+        /// </summary>
+        public static string enumMoeda_KRW {
+            get {
+                return ResourceManager.GetString("enumMoeda_KRW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DINAR/KWAIT.
+        /// </summary>
+        public static string enumMoeda_KWD {
+            get {
+                return ResourceManager.GetString("enumMoeda_KWD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DOLAR CAYMAN.
+        /// </summary>
+        public static string enumMoeda_KYD {
+            get {
+                return ResourceManager.GetString("enumMoeda_KYD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TENGE CAZAQUISTAO.
+        /// </summary>
+        public static string enumMoeda_KZT {
+            get {
+                return ResourceManager.GetString("enumMoeda_KZT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to QUIPE/LAOS, REP.
+        /// </summary>
+        public static string enumMoeda_LAK {
+            get {
+                return ResourceManager.GetString("enumMoeda_LAK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LIBRA/LIBANO.
+        /// </summary>
+        public static string enumMoeda_LBP {
+            get {
+                return ResourceManager.GetString("enumMoeda_LBP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RUPIA/SRI LANKA.
+        /// </summary>
+        public static string enumMoeda_LKR {
+            get {
+                return ResourceManager.GetString("enumMoeda_LKR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DOLAR LIBERIA.
+        /// </summary>
+        public static string enumMoeda_LRD {
+            get {
+                return ResourceManager.GetString("enumMoeda_LRD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LOTI/LESOTO.
+        /// </summary>
+        public static string enumMoeda_LSL {
+            get {
+                return ResourceManager.GetString("enumMoeda_LSL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DINAR/LIBIA.
+        /// </summary>
+        public static string enumMoeda_LYD {
+            get {
+                return ResourceManager.GetString("enumMoeda_LYD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DIRHAM/MARROCOS.
+        /// </summary>
+        public static string enumMoeda_MAD {
+            get {
+                return ResourceManager.GetString("enumMoeda_MAD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LEU/MOLDAVIA, REP.
+        /// </summary>
+        public static string enumMoeda_MDL {
+            get {
+                return ResourceManager.GetString("enumMoeda_MDL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ARIARY MADAGASCAR.
+        /// </summary>
+        public static string enumMoeda_MGA {
+            get {
+                return ResourceManager.GetString("enumMoeda_MGA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DINAR/MACEDONIA.
+        /// </summary>
+        public static string enumMoeda_MKD {
+            get {
+                return ResourceManager.GetString("enumMoeda_MKD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to QUIATE/BIRMANIA.
+        /// </summary>
+        public static string enumMoeda_MMK {
+            get {
+                return ResourceManager.GetString("enumMoeda_MMK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TUGRIK/MONGOLIA.
+        /// </summary>
+        public static string enumMoeda_MNT {
+            get {
+                return ResourceManager.GetString("enumMoeda_MNT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PATACA/MACAU.
+        /// </summary>
+        public static string enumMoeda_MOP {
+            get {
+                return ResourceManager.GetString("enumMoeda_MOP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UGUIA MAURITANIA.
+        /// </summary>
+        public static string enumMoeda_MRO {
+            get {
+                return ResourceManager.GetString("enumMoeda_MRO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RUPIA/MAURICIO.
+        /// </summary>
+        public static string enumMoeda_MUR {
+            get {
+                return ResourceManager.GetString("enumMoeda_MUR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RUFIA/MALDIVAS.
+        /// </summary>
+        public static string enumMoeda_MVR {
+            get {
+                return ResourceManager.GetString("enumMoeda_MVR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to QUACHA/MALAVI.
+        /// </summary>
+        public static string enumMoeda_MWK {
+            get {
+                return ResourceManager.GetString("enumMoeda_MWK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PESO/MEXICO.
+        /// </summary>
+        public static string enumMoeda_MXN {
+            get {
+                return ResourceManager.GetString("enumMoeda_MXN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RINGGIT/MALASIA.
+        /// </summary>
+        public static string enumMoeda_MYR {
+            get {
+                return ResourceManager.GetString("enumMoeda_MYR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NOVA METICAL/MOCA.
+        /// </summary>
+        public static string enumMoeda_MZN {
+            get {
+                return ResourceManager.GetString("enumMoeda_MZN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DOLAR DA NAMIBIA.
+        /// </summary>
+        public static string enumMoeda_NAD {
+            get {
+                return ResourceManager.GetString("enumMoeda_NAD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NAIRA/NIGERIA.
+        /// </summary>
+        public static string enumMoeda_NGN {
+            get {
+                return ResourceManager.GetString("enumMoeda_NGN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CORDOBA OURO.
+        /// </summary>
+        public static string enumMoeda_NIO {
+            get {
+                return ResourceManager.GetString("enumMoeda_NIO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to COROA NORUEGUESA.
+        /// </summary>
+        public static string enumMoeda_NOK {
+            get {
+                return ResourceManager.GetString("enumMoeda_NOK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RUPIA/NEPAL.
+        /// </summary>
+        public static string enumMoeda_NPR {
+            get {
+                return ResourceManager.GetString("enumMoeda_NPR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DOLAR/NOVA ZELAND.
+        /// </summary>
+        public static string enumMoeda_NZD {
+            get {
+                return ResourceManager.GetString("enumMoeda_NZD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RIAL/OMA.
+        /// </summary>
+        public static string enumMoeda_OMR {
+            get {
+                return ResourceManager.GetString("enumMoeda_OMR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BALBOA/PANAMA.
+        /// </summary>
+        public static string enumMoeda_PAB {
+            get {
+                return ResourceManager.GetString("enumMoeda_PAB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NOVO SOL/PERU.
+        /// </summary>
+        public static string enumMoeda_PEN {
+            get {
+                return ResourceManager.GetString("enumMoeda_PEN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KINA/PAPUA N GUIN.
+        /// </summary>
+        public static string enumMoeda_PGK {
+            get {
+                return ResourceManager.GetString("enumMoeda_PGK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PESO/FILIPINAS.
+        /// </summary>
+        public static string enumMoeda_PHP {
+            get {
+                return ResourceManager.GetString("enumMoeda_PHP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RUPIA/PAQUISTAO.
+        /// </summary>
+        public static string enumMoeda_PKR {
+            get {
+                return ResourceManager.GetString("enumMoeda_PKR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ZLOTY/POLONIA.
+        /// </summary>
+        public static string enumMoeda_PLN {
+            get {
+                return ResourceManager.GetString("enumMoeda_PLN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GUARANI/PARAGUAI.
+        /// </summary>
+        public static string enumMoeda_PYG {
+            get {
+                return ResourceManager.GetString("enumMoeda_PYG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RIAL/CATAR.
+        /// </summary>
+        public static string enumMoeda_QAR {
+            get {
+                return ResourceManager.GetString("enumMoeda_QAR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NOVO LEU/ROMENIA.
+        /// </summary>
+        public static string enumMoeda_RON {
+            get {
+                return ResourceManager.GetString("enumMoeda_RON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DINAR SERVIO SERVIA.
+        /// </summary>
+        public static string enumMoeda_RSD {
+            get {
+                return ResourceManager.GetString("enumMoeda_RSD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RUBLO/RUSSIA.
+        /// </summary>
+        public static string enumMoeda_RUB {
+            get {
+                return ResourceManager.GetString("enumMoeda_RUB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FRANCO/RUANDA.
+        /// </summary>
+        public static string enumMoeda_RWF {
+            get {
+                return ResourceManager.GetString("enumMoeda_RWF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RIAL/ARAB SAUDITA.
+        /// </summary>
+        public static string enumMoeda_SAR {
+            get {
+                return ResourceManager.GetString("enumMoeda_SAR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DOLAR IL SALOMAO.
+        /// </summary>
+        public static string enumMoeda_SBD {
+            get {
+                return ResourceManager.GetString("enumMoeda_SBD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RUPIA/SEYCHELES.
+        /// </summary>
+        public static string enumMoeda_SCR {
+            get {
+                return ResourceManager.GetString("enumMoeda_SCR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NOVA LIBRA SUDANESA.
+        /// </summary>
+        public static string enumMoeda_SDG {
+            get {
+                return ResourceManager.GetString("enumMoeda_SDG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DIREITO ESPECIAL.
+        /// </summary>
+        public static string enumMoeda_SDR {
+            get {
+                return ResourceManager.GetString("enumMoeda_SDR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to COROA SUECA.
+        /// </summary>
+        public static string enumMoeda_SEK {
+            get {
+                return ResourceManager.GetString("enumMoeda_SEK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DOLAR CINGAPURA.
+        /// </summary>
+        public static string enumMoeda_SGD {
+            get {
+                return ResourceManager.GetString("enumMoeda_SGD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LIBRA/STA HELENA.
+        /// </summary>
+        public static string enumMoeda_SHP {
+            get {
+                return ResourceManager.GetString("enumMoeda_SHP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LEONE/SERRA LEOA.
+        /// </summary>
+        public static string enumMoeda_SLL {
+            get {
+                return ResourceManager.GetString("enumMoeda_SLL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to XELIM/SOMALIA.
+        /// </summary>
+        public static string enumMoeda_SOS {
+            get {
+                return ResourceManager.GetString("enumMoeda_SOS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DOLAR/SURINAME.
+        /// </summary>
+        public static string enumMoeda_SRD {
+            get {
+                return ResourceManager.GetString("enumMoeda_SRD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LIBRA SUL SUDANESA.
+        /// </summary>
+        public static string enumMoeda_SSP {
+            get {
+                return ResourceManager.GetString("enumMoeda_SSP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DOBRA S TOME PRIN.
+        /// </summary>
+        public static string enumMoeda_STD {
+            get {
+                return ResourceManager.GetString("enumMoeda_STD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to COLON/EL SALVADOR.
+        /// </summary>
+        public static string enumMoeda_SVC {
+            get {
+                return ResourceManager.GetString("enumMoeda_SVC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LIBRA/SIRIA, REP.
+        /// </summary>
+        public static string enumMoeda_SYP {
+            get {
+                return ResourceManager.GetString("enumMoeda_SYP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LILANGENI/SUAZIL.
+        /// </summary>
+        public static string enumMoeda_SZL {
+            get {
+                return ResourceManager.GetString("enumMoeda_SZL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BATH/TAILANDIA.
+        /// </summary>
+        public static string enumMoeda_THB {
+            get {
+                return ResourceManager.GetString("enumMoeda_THB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SOMONI TADJIQUISTAO.
+        /// </summary>
+        public static string enumMoeda_TJS {
+            get {
+                return ResourceManager.GetString("enumMoeda_TJS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NOVO MANAT TURCOM.
+        /// </summary>
+        public static string enumMoeda_TMT {
+            get {
+                return ResourceManager.GetString("enumMoeda_TMT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DINAR/TUNISIA.
+        /// </summary>
+        public static string enumMoeda_TND {
+            get {
+                return ResourceManager.GetString("enumMoeda_TND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PAANGA/TONGA.
+        /// </summary>
+        public static string enumMoeda_TOP {
+            get {
+                return ResourceManager.GetString("enumMoeda_TOP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LIRA TURCA.
+        /// </summary>
+        public static string enumMoeda_TRY {
+            get {
+                return ResourceManager.GetString("enumMoeda_TRY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DOLAR/TRIN. TOBAG.
+        /// </summary>
+        public static string enumMoeda_TTD {
+            get {
+                return ResourceManager.GetString("enumMoeda_TTD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NOVO DOLAR/TAIWAN.
+        /// </summary>
+        public static string enumMoeda_TWD {
+            get {
+                return ResourceManager.GetString("enumMoeda_TWD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to XELIM/TANZANIA.
+        /// </summary>
+        public static string enumMoeda_TZS {
+            get {
+                return ResourceManager.GetString("enumMoeda_TZS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HRYVNIA UCRANIA.
+        /// </summary>
+        public static string enumMoeda_UAH {
+            get {
+                return ResourceManager.GetString("enumMoeda_UAH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to XELIM/UGANDA.
+        /// </summary>
+        public static string enumMoeda_UGX {
+            get {
+                return ResourceManager.GetString("enumMoeda_UGX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DOLAR DOS EUA.
+        /// </summary>
+        public static string enumMoeda_USD {
+            get {
+                return ResourceManager.GetString("enumMoeda_USD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PESO/URUGUAIO.
+        /// </summary>
+        public static string enumMoeda_UYU {
+            get {
+                return ResourceManager.GetString("enumMoeda_UYU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SOM UZBEQUISTAO.
+        /// </summary>
+        public static string enumMoeda_UZS {
+            get {
+                return ResourceManager.GetString("enumMoeda_UZS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BOLIVAR VEN.
+        /// </summary>
+        public static string enumMoeda_VEF {
+            get {
+                return ResourceManager.GetString("enumMoeda_VEF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DONGUE/VIETNAN.
+        /// </summary>
+        public static string enumMoeda_VND {
+            get {
+                return ResourceManager.GetString("enumMoeda_VND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VATU VANUATU.
+        /// </summary>
+        public static string enumMoeda_VUV {
+            get {
+                return ResourceManager.GetString("enumMoeda_VUV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TALA SAMOA.
+        /// </summary>
+        public static string enumMoeda_WST {
+            get {
+                return ResourceManager.GetString("enumMoeda_WST", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FRANCO CFA BEAC.
+        /// </summary>
+        public static string enumMoeda_XAF {
+            get {
+                return ResourceManager.GetString("enumMoeda_XAF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DOLAR OURO.
+        /// </summary>
+        public static string enumMoeda_XAU {
+            get {
+                return ResourceManager.GetString("enumMoeda_XAU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DOLAR CARIBE ORIENTAL.
+        /// </summary>
+        public static string enumMoeda_XCD {
+            get {
+                return ResourceManager.GetString("enumMoeda_XCD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UNID.MONET.EUROP..
+        /// </summary>
+        public static string enumMoeda_XEU {
+            get {
+                return ResourceManager.GetString("enumMoeda_XEU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FRANCO CFA BCEAO.
+        /// </summary>
+        public static string enumMoeda_XOF {
+            get {
+                return ResourceManager.GetString("enumMoeda_XOF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FRANCO CFP.
+        /// </summary>
+        public static string enumMoeda_XPF {
+            get {
+                return ResourceManager.GetString("enumMoeda_XPF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RIAL/IEMEN.
+        /// </summary>
+        public static string enumMoeda_YER {
+            get {
+                return ResourceManager.GetString("enumMoeda_YER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RANDE/AFRICA SUL.
+        /// </summary>
+        public static string enumMoeda_ZAR {
+            get {
+                return ResourceManager.GetString("enumMoeda_ZAR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to QUACHA ZAMBIA.
+        /// </summary>
+        public static string enumMoeda_ZMW {
+            get {
+                return ResourceManager.GetString("enumMoeda_ZMW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DOLAR ZIMBABUE.
+        /// </summary>
+        public static string enumMoeda_ZWL {
+            get {
+                return ResourceManager.GetString("enumMoeda_ZWL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Alterar.
         /// </summary>
         public static string enumTipoAcao_Alterar {

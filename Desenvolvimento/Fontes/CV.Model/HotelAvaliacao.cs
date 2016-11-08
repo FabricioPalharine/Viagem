@@ -31,6 +31,10 @@ namespace CV.Model
 			public Hotel ItemHotel { get; set; }
 
 			public Usuario ItemUsuario { get; set; }
+
+			public DateTime? DataAtualizacao { get; set; }
+
+			public DateTime? DataExclusao { get; set; }
 		 public HotelAvaliacao Clone()
 		{
 			 return (HotelAvaliacao) this.MemberwiseClone();

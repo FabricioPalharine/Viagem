@@ -32,6 +32,8 @@ namespace CV.Data.Configuration
 			this.HasMany(i => i.Participantes).WithRequired().HasForeignKey(d=>d.IdentificadorViagem);
 			this.Property(i => i.Moeda).HasColumnName("CD_MOEDA");
 			this.HasMany(i => i.UsuariosGastos).WithRequired().HasForeignKey(d=>d.IdentificadorViagem);
+			this.Property(i => i.DataAlteracao).HasColumnName("DT_ATUALIZACAO");
+			this.Property(i => i.DataExclusao).HasColumnName("DT_EXCLUSAO");
 		MapearCamposManualmente();
 		}
 	}

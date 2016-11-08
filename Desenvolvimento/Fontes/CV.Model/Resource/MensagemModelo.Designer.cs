@@ -1600,6 +1600,15 @@ namespace CV.Model.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O campo Status é obrigatório.
+        /// </summary>
+        public static string ListaCompra_Status {
+            get {
+                return ResourceManager.GetString("ListaCompra_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O tamanho do campo Código Place excedeu o limite.
         /// </summary>
         public static string Loja_CodigoPlace_Tamanho {
@@ -2343,6 +2352,15 @@ namespace CV.Model.Resource {
         public static string Viagem_Aberto {
             get {
                 return ResourceManager.GetString("Viagem_Aberto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo Data Alteração é obrigatório.
+        /// </summary>
+        public static string Viagem_DataAlteracao {
+            get {
+                return ResourceManager.GetString("Viagem_DataAlteracao", resourceCulture);
             }
         }
         

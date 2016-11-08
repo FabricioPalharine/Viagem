@@ -30,6 +30,10 @@ namespace CV.Model
 			public int? IdentificadorViagem { get; set; }
 
 			public Viagem ItemViagem { get; set; }
+
+			public DateTime? DataAtualizacao { get; set; }
+
+			public DateTime? DataExclusao { get; set; }
 		 public CotacaoMoeda Clone()
 		{
 			 return (CotacaoMoeda) this.MemberwiseClone();

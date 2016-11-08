@@ -36,8 +36,16 @@
               },
             //  transformResponse: parseArray,
               isArray: false
-          }
-         
+          },
+          listaAmigos: 
+              {
+                  method: 'GET',
+                  params : 
+                      {
+                          controller: 'listaAmigos'
+                      },
+                  isArray: true
+              }
 
       });
     return UserBase;

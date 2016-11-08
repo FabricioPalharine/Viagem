@@ -925,4 +925,10 @@
   <data name="Sugestao_Status" xml:space="preserve">
     <value>O campo Status é obrigatório</value>
   </data>
+  <data name="Viagem_DataAlteracao" xml:space="preserve">
+    <value>O campo Data Alteração é obrigatório</value>
+  </data>
+  <data name="ListaCompra_Status" xml:space="preserve">
+    <value>O campo Status é obrigatório</value>
+  </data>
 </root>

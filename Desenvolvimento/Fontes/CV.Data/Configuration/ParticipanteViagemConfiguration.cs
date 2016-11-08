@@ -21,8 +21,6 @@ namespace CV.Data.Configuration
 			this.Property(i => i.Identificador).HasColumnName("ID_PARTICIPANTE_VIAGEM");
 			this.Property(i => i.IdentificadorViagem).HasColumnName("ID_VIAGEM");
 			this.Property(i => i.IdentificadorUsuario).HasColumnName("ID_USUARIO");
-			this.Property(i => i.EMail).HasColumnName("DS_EMAIL");
-			this.Property(i => i.Status).HasColumnName("CD_STATUS");
 			this.HasOptional(i => i.ItemUsuario).WithMany().HasForeignKey(d=>d.IdentificadorUsuario);
 			this.HasRequired(i => i.ItemViagem).WithMany().HasForeignKey(d=>d.IdentificadorViagem);
 		MapearCamposManualmente();

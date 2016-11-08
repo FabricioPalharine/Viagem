@@ -126,5 +126,13 @@ namespace CV.Data
                 Query = Query.Where(d => d.EMail == EMail);
             return Query.ToList();
         }
+
+        public List<Usuario> ListarUsuarioAmigo(int identificadorUsuario)
+        {
+            IQueryable<Usuario> Query = this.Context.Usuarios;
+            IQueryable<Amigo> QueryAmigo = this.Context.Amigos.Where(d => d.IdentificadorUsuario == identificadorUsuario);
+            Query = Query.Where(d => QueryAmigo.Where(e => e.IdentificadorAmigo == d.Identificador).Any());
+            return Query.ToList();
+        }
     }
 }

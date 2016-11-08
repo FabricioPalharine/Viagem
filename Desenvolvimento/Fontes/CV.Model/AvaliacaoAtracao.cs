@@ -20,7 +20,6 @@ namespace CV.Model
 			[NotNullValidator(MessageTemplateResourceName="AvaliacaoAtracao_IdentificadorUsuario",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public int? IdentificadorUsuario { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="AvaliacaoAtracao_Nota",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public int? Nota { get; set; }
 
 			public string Comentario { get; set; }
@@ -31,6 +30,10 @@ namespace CV.Model
 			public Atracao ItemAtracao { get; set; }
 
 			public Usuario ItemUsuario { get; set; }
+
+			public DateTime? DataAtualizacao { get; set; }
+
+			public DateTime? DataExclusao { get; set; }
 		 public AvaliacaoAtracao Clone()
 		{
 			 return (AvaliacaoAtracao) this.MemberwiseClone();

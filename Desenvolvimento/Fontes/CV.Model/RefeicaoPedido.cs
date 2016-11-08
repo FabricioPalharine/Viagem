@@ -48,6 +48,10 @@ private void ValidarPedido(Microsoft.Practices.EnterpriseLibrary.Validation.Vali
 			public Refeicao ItemRefeicao { get; set; }
 
 			public Usuario ItemUsuario { get; set; }
+
+			public DateTime? DataAtualizacao { get; set; }
+
+			public DateTime? DataExclusao { get; set; }
 		 public RefeicaoPedido Clone()
 		{
 			 return (RefeicaoPedido) this.MemberwiseClone();

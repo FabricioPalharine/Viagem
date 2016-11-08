@@ -5,7 +5,7 @@
 
     </h1>
     <ol class="breadcrumb">
-        
+
         <li>@TextosPaginas.Home_Menu</li>
         <li><a ui-sref="Viagem({filtro:itemViagemEdit.filtroConsulta})">@TextosPaginas.Home_Viagem</a></li>
         <li class="active">@TextosPaginas.Viagem_Manutencao</li>
@@ -22,95 +22,146 @@
         </div>
 
         <form role="form" ng-submit="itemViagemEdit.save(form)" name="form" novalidate>
+
             <div class="box-body">
 
-                 <div class="row" ng-show="itemViagemEdit.messages.length > 0">
-                     <div class="col-md-12">
-                         <div class="callout callout-danger">
-                             <h4>@TextosPaginas.Geral_ValidarErros</h4>
-                             <ul>
-                                 <li ng-repeat="erro in itemViagemEdit.messages">
-                                     <span ng-bind="erro.Mensagem"></span>
-                                 </li>
-                             </ul>
+                <div class="row" ng-show="itemViagemEdit.messages.length > 0">
+                    <div class="col-md-12">
+                        <div class="callout callout-danger">
+                            <h4>@TextosPaginas.Geral_ValidarErros</h4>
+                            <ul>
+                                <li ng-repeat="erro in itemViagemEdit.messages">
+                                    <span ng-bind="erro.Mensagem"></span>
+                                </li>
+                            </ul>
 
-                         </div>
-                     </div>
-
+                        </div>
+                    </div>
                 </div>
-                <div class="row">
-					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemViagemEdit.CamposInvalidos.IdentificadorUsuario}">
-					<label>@TextosPaginas.Viagem_IdentificadorUsuario</label>
-					<select ng-model="itemViagemEdit.itemUsuario" class="form-control" ng-options="obj.EMail for obj in itemViagemEdit.ListaUsuario track by obj.Identificador">
-						<option value="">@TextosPaginas.Selecione</option>
-					</select>
-					</div>
-					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemViagemEdit.CamposInvalidos.Nome}">
-					<label>@TextosPaginas.Viagem_Nome</label>
-					<input type="text" class="form-control" ng-model="itemViagemEdit.itemViagem.Nome" maxlength="200"  empty-to-null >
-					</div>
-					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemViagemEdit.CamposInvalidos.DataInicio}">
-					<label>@TextosPaginas.Viagem_DataInicio</label>
-<div class="dropdown">
-                                <a class="dropdown-toggle"  role="button" data-toggle="dropdown">
-                                    <div class="input-group">
-                                        <input date-input ng-model="itemViagemEdit.itemViagem.DataInicio" class="form-control"  input-mask="{mask: 'd/m/y'}" 
-                                               datapattern="dd/MM/yyyy">
-                                        <span class="input-group-addon">
-                                            <i class="glyphicon glyphicon-calendar"></i>
-                                        </span>
-                                    </div>
-                                </a>
-                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                    <datetimepicker data-ng-model="itemViagemEdit.itemViagem.DataInicio"                                                   
-                                                    data-datetimepicker-config="{  minView:'day' , langCode:itemViagemEdit.Idioma()  }" />
-                                </ul>
-                            </div>
-					</div>
-					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemViagemEdit.CamposInvalidos.DataFim}">
-					<label>@TextosPaginas.Viagem_DataFim</label>
-<div class="dropdown">
-                                <a class="dropdown-toggle"  role="button" data-toggle="dropdown">
-                                    <div class="input-group">
-                                        <input date-input ng-model="itemViagemEdit.itemViagem.DataFim" class="form-control"  input-mask="{mask: 'd/m/y'}" 
-                                               datapattern="dd/MM/yyyy">
-                                        <span class="input-group-addon">
-                                            <i class="glyphicon glyphicon-calendar"></i>
-                                        </span>
-                                    </div>
-                                </a>
-                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                    <datetimepicker data-ng-model="itemViagemEdit.itemViagem.DataFim"                                                   
-                                                    data-datetimepicker-config="{  minView:'day' , langCode:itemViagemEdit.Idioma()  }" />
-                                </ul>
-                            </div>
-					</div>
-					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemViagemEdit.CamposInvalidos.Aberto}">
-					<label><input type="checkbox" ng-model="itemViagemEdit.itemViagem.Aberto" >@TextosPaginas.Viagem_Aberto</label>
-					</div>
-					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemViagemEdit.CamposInvalidos.UnidadeMetrica}">
-					<label><input type="checkbox" ng-model="itemViagemEdit.itemViagem.UnidadeMetrica" >@TextosPaginas.Viagem_UnidadeMetrica</label>
-					</div>
-					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemViagemEdit.CamposInvalidos.QuantidadeParticipantes}">
-					<label>@TextosPaginas.Viagem_QuantidadeParticipantes</label>
-					<input type="text" class="form-control" ng-model="itemViagemEdit.itemViagem.QuantidadeParticipantes" maxlength="7"  empty-to-null integer-input >
-					</div>
-					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemViagemEdit.CamposInvalidos.PublicaGasto}">
-					<label><input type="checkbox" ng-model="itemViagemEdit.itemViagem.PublicaGasto" >@TextosPaginas.Viagem_PublicaGasto</label>
-					</div>
-					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemViagemEdit.CamposInvalidos.PercentualIOF}">
-					<label>@TextosPaginas.Viagem_PercentualIOF</label>
-					<input type="text" class="form-control" ng-model="itemViagemEdit.itemViagem.PercentualIOF"   empty-to-null decimal-input="{digits:4, integerDigits:5}">
-					</div>
-					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemViagemEdit.CamposInvalidos.Moeda}">
-					<label>@TextosPaginas.Viagem_Moeda</label>
-					<input type="text" class="form-control" ng-model="itemViagemEdit.itemViagem.Moeda" maxlength="7"  empty-to-null integer-input >
-					</div>
-                                   
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" data-target="#dados" style="cursor:pointer">@TextosPaginas.Viagem_DadosViagem</a></li>
+                    <li><a data-toggle="tab" data-target="#participantes" style="cursor:pointer">@TextosPaginas.Viagem_Participantes</a></li>
+                    <li><a data-toggle="tab" data-target="#custos" style="cursor:pointer" ng-if="!itemViagemEdit.itemViagem.PublicaGasto">@TextosPaginas.Viagem_CustoViagem</a></li>
 
-                </div>
-             
-            </div><!-- /.box-body -->
+                </ul>
+
+                <div class="tab-content">
+                    <div id="dados" class="tab-pane fade in active">
+                        <div class="row">
+                            <div class="form-group col-md-12" ng-class="{ 'has-error':itemViagemEdit.CamposInvalidos.Nome}">
+                                <label>@TextosPaginas.Viagem_Nome</label>
+                                <input type="text" class="form-control" ng-model="itemViagemEdit.itemViagem.Nome" maxlength="200" empty-to-null>
+                            </div>
+                            <div class="form-group col-md-6" ng-class="{ 'has-error':itemViagemEdit.CamposInvalidos.DataInicio}">
+                                <label>@TextosPaginas.Viagem_DataInicio</label>
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+                                        <div class="input-group">
+                                            <input date-input ng-model="itemViagemEdit.itemViagem.DataInicio" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                                   datapattern="dd/MM/yyyy">
+                                            <span class="input-group-addon">
+                                                <i class="glyphicon glyphicon-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                        <datetimepicker data-ng-model="itemViagemEdit.itemViagem.DataInicio"
+                                                        data-datetimepicker-config="{  minView:'day' , langCode:itemViagemEdit.Idioma()  }" />
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6" ng-class="{ 'has-error':itemViagemEdit.CamposInvalidos.DataFim}">
+                                <label>@TextosPaginas.Viagem_DataFim</label>
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+                                        <div class="input-group">
+                                            <input date-input ng-model="itemViagemEdit.itemViagem.DataFim" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                                   datapattern="dd/MM/yyyy">
+                                            <span class="input-group-addon">
+                                                <i class="glyphicon glyphicon-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                        <datetimepicker data-ng-model="itemViagemEdit.itemViagem.DataFim"
+                                                        data-datetimepicker-config="{  minView:'day' , langCode:itemViagemEdit.Idioma()  }" />
+                                    </ul>
+                                </div>
+                            </div>                          
+                            <div class="form-group col-md-6" ng-class="{ 'has-error':itemViagemEdit.CamposInvalidos.UnidadeMetrica}">
+                                <label><input type="checkbox" ng-model="itemViagemEdit.itemViagem.UnidadeMetrica">@TextosPaginas.Viagem_UnidadeMetrica</label>
+                            </div>
+                            <div class="form-group col-md-6" ng-class="{ 'has-error':itemViagemEdit.CamposInvalidos.QuantidadeParticipantes}">
+                                <label>@TextosPaginas.Viagem_QuantidadeParticipantes</label>
+                                <input type="text" class="form-control" ng-model="itemViagemEdit.itemViagem.QuantidadeParticipantes" maxlength="7" empty-to-null integer-input>
+                            </div>
+                            <div class="form-group col-md-6" ng-class="{ 'has-error':itemViagemEdit.CamposInvalidos.PublicaGasto}">
+                                <label><input type="checkbox" ng-model="itemViagemEdit.itemViagem.PublicaGasto">@TextosPaginas.Viagem_PublicaGasto</label>
+                            </div>
+                            <div class="form-group col-md-6" ng-class="{ 'has-error':itemViagemEdit.CamposInvalidos.PercentualIOF}">
+                                <label>@TextosPaginas.Viagem_PercentualIOF</label>
+                                <input type="text" class="form-control" ng-model="itemViagemEdit.itemViagem.PercentualIOF" empty-to-null decimal-input="{digits:4, integerDigits:5}">
+                            </div>
+                            <div class="form-group col-md-6" ng-class="{ 'has-error':itemViagemEdit.CamposInvalidos.Moeda}">
+                                <label>@TextosPaginas.Viagem_Moeda</label>
+                                <select ng-model="itemViagemEdit.itemMoeda" class="form-control" ng-options="obj.Descricao for obj in itemViagemEdit.ListaMoeda track by obj.Codigo">
+                                    <option value="">@TextosPaginas.Selecione</option>
+                                </select>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                    <div id="participantes" class="tab-pane fade in">
+                        <div class="box">
+                            <div class="box-header">
+                                <div class="row">
+                                    <div class="form-group col-md-6" ng-class="{ 'has-error':itemViagemEdit.CamposInvalidos.IdentificadorParticipante}">
+                                        <label>@TextosPaginas.Viagem_Amigo</label>
+                                        <select ng-model="itemViagemEdit.itemParticipante" class="form-control" ng-options="obj.Nome for obj in itemViagemEdit.ListaUsuario track by obj.Identificador">
+                                            <option value="">@TextosPaginas.Selecione</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <a role="button" class="btn btn-primary " title="@TextosPaginas.Adicionar" ng-click="itemViagemEdit.AdicionarParticipante()">
+                                            <span class="fa fa-plus" aria-hidden="true"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-body">                                
+                                <div class="gridStyle" ui-grid="itemViagemEdit.gridOptions"></div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div id="custos" class="tab-pane fade in" ng-if="!itemViagemEdit.itemViagem.PublicaGasto">
+                        <div class="box">
+                            <div class="box-header">
+                                <div class="row">
+                                    <div class="form-group col-md-9" ng-class="{ 'has-error':itemViagemEdit.CamposInvalidos.IdentificadorUsuarioCusto}">
+                                        <label>@TextosPaginas.Viagem_Amigo</label>
+                                        <select ng-model="itemViagemEdit.itemUsuarioCusto" class="form-control" ng-options="obj.Nome for obj in itemViagemEdit.ListaUsuario track by obj.Identificador">
+                                            <option value="">@TextosPaginas.Selecione</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <a role="button" class="btn btn-primary " title="@TextosPaginas.Adicionar" ng-click="itemViagemEdit.AdicionarCusto()">
+                                            <span class="fa fa-plus" aria-hidden="true"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                <div class="gridStyle" ui-grid="itemViagemEdit.gridOptionsCusto"></div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div><!-- /.box-body -->
+            </div>
             <div class="box-footer">
                 <button type="button" class="btn btn-primary " title="@TextosPaginas.Voltar" ui-sref="Viagem({filtro:itemViagemEdit.filtroConsulta})">
                     <span class="fa fa-arrow-left" aria-hidden="true"></span>
@@ -120,11 +171,42 @@
                 </button>
 
             </div>
+
         </form>
     </div><!-- /.box -->
 
+    <script type="text/ng-template" id="BotoesGridTemplate.html">
+
+        <div class="ngCellText hidden-xs">
+            <button type="button" ng-if="grid.appScope.itemViagem.IdentificadorUsuario != row.entity.IdentificadorUsuario" class="btn btn-danger small" ng-click="grid.appScope.modalPopupTriggerParticipante(row.entity, $index,'@TextosPaginas.Viagem_ConfirmarRemoverParticipante')"><span class="fa fa-close" aria-hidden="true"></span></button>
+
+        </div>
 
 
+    </script>
 
+    <script type="text/ng-template" id="BotoesGridTemplateCusto.html">
+
+        <div class="ngCellText hidden-xs">
+            <button type="button"  class="btn btn-danger small" ng-click="grid.appScope.modalPopupTriggerCusto(row.entity, $index,'@TextosPaginas.Viagem_ConfirmarRemoverCusto')"><span class="fa fa-close" aria-hidden="true"></span></button>
+
+        </div>
+
+
+    </script>
+
+
+    <script type="text/ng-template" id="modalDelete.html">
+        <div class="modal-header">
+            <span>{{vmDelete.MensagemConfirmacao}}</span>
+        </div>
+        <div class="modal-body">
+            <button type="button" class="btn btn-info btn-lg btn-block" ng-click="vmDelete.delete()">@TextosPaginas.Sim</button>
+            <button type="button" class="btn btn-default btn-lg btn-block" ng-click="vmDelete.close()">@TextosPaginas.Nao</button>
+        </div>
+        <div class="modal-footer hidden-lg hidden-md">
+            <button type="button" class="btn btn-default btn-lg btn-block" ng-click="vmDelete.back()">@TextosPaginas.Voltar</button>
+        </div>
+    </script>
 
 </section><!-- /.content -->

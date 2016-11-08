@@ -56,6 +56,8 @@
     <Compile Include="ConsultaAmigo.cs" />
     <Compile Include="ConsultaSolicitacao.cs" />
     <Compile Include="DadosGoogleToken.cs" />
+    <Compile Include="Dominio\enumMoeda.cs" />
+    <Compile Include="pItemLista.cs" />
     <Compile Include="Results\Message.cs" />
     <Compile Include="Results\ServiceResult.cs" />
     <Compile Include="Dominio\enumTipoAcao.cs" />

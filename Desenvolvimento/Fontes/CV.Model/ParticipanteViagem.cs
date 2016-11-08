@@ -22,27 +22,6 @@ namespace CV.Model
 
 			public int? IdentificadorUsuario { get; set; }
 
-			public string EMail { get; set; }
-			[SelfValidation]
-private void ValidarEMail(Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResults results)
-{
- if (EMail == null)
-  {
-      Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult result =
-            new Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult(Resource.MensagemModelo.ParticipanteViagem_EMail, this, "EMail", null, null);
-      results.AddResult(result);
-  }
-  else if (EMail.Length > 200)
-  {
-      Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult result =
-            new Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult(Resource.MensagemModelo.ParticipanteViagem_EMail_Tamanho, this, "EMail", null, null);
-      results.AddResult(result);
-  }
-}
-
-			[NotNullValidator(MessageTemplateResourceName="ParticipanteViagem_Status",MessageTemplateResourceType=typeof(MensagemModelo))]
-			public int? Status { get; set; }
-
 			public Usuario ItemUsuario { get; set; }
 
 			public Viagem ItemViagem { get; set; }

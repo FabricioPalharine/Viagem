@@ -47,9 +47,6 @@ private void ValidarDescricao(Microsoft.Practices.EnterpriseLibrary.Validation.V
 			[NotNullValidator(MessageTemplateResourceName="Gasto_Valor",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public decimal? Valor { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="Gasto_MoedaEstrageira",MessageTemplateResourceType=typeof(MensagemModelo))]
-			public bool? MoedaEstrageira { get; set; }
-
 			[NotNullValidator(MessageTemplateResourceName="Gasto_Especie",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public bool? Especie { get; set; }
 
@@ -67,6 +64,10 @@ private void ValidarDescricao(Microsoft.Practices.EnterpriseLibrary.Validation.V
 			public Viagem ItemViagem { get; set; }
 
 			public IList<GastoPosicao> Posicoes { get; set; }
+
+			public DateTime? DataAtualizacao { get; set; }
+
+			public DateTime? DataExclusao { get; set; }
 		 public Gasto Clone()
 		{
 			 return (Gasto) this.MemberwiseClone();

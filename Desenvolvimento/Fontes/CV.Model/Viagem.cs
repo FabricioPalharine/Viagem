@@ -64,6 +64,11 @@ private void ValidarNome(Microsoft.Practices.EnterpriseLibrary.Validation.Valida
 			public int? Moeda { get; set; }
 
 			public IList<UsuarioGasto> UsuariosGastos { get; set; }
+
+			[NotNullValidator(MessageTemplateResourceName="Viagem_DataAlteracao",MessageTemplateResourceType=typeof(MensagemModelo))]
+			public DateTime? DataAlteracao { get; set; }
+
+			public DateTime? DataExclusao { get; set; }
 		 public Viagem Clone()
 		{
 			 return (Viagem) this.MemberwiseClone();

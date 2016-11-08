@@ -25,6 +25,8 @@ namespace CV.Data.Configuration
 			this.HasRequired(i => i.ItemCidadeFilha).WithMany().HasForeignKey(d=>d.IdentificadorCidadeFilha);
 			this.HasRequired(i => i.ItemCidadePai).WithMany().HasForeignKey(d=>d.IdentificadorCidadePai);
 			this.HasRequired(i => i.ItemViagem).WithMany().HasForeignKey(d=>d.IdentificadorViagem);
+			this.Property(i => i.DataAtualizacao).HasColumnName("DT_ATUALIZACAO");
+			this.Property(i => i.DataExclusao).HasColumnName("DT_EXCLUSAO");
 		MapearCamposManualmente();
 		}
 	}

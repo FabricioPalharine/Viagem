@@ -805,7 +805,7 @@
     <value>Percentual IOF</value>
   </data>
   <data name="Viagem_Moeda" xml:space="preserve">
-    <value>Moeda</value>
+    <value>Moeda Padrão</value>
   </data>
   <data name="ViagemAerea_Manutencao" xml:space="preserve">
     <value>Manutenção</value>
@@ -863,5 +863,128 @@
   </data>
   <data name="Amigo_UsuarioNaoCadastrado" xml:space="preserve">
     <value>Essa pessoa ainda não se cadastrou no Curtindo uma Viagem</value>
+  </data>
+  <data name="Viagem_CustoViagem" xml:space="preserve">
+    <value>Amigos Visualizam Custos</value>
+  </data>
+  <data name="Viagem_DadosViagem" xml:space="preserve">
+    <value>Dados Viagem</value>
+  </data>
+  <data name="Viagem_Participantes" xml:space="preserve">
+    <value>Participantes</value>
+  </data>
+  <data name="Viagem_DataAlteracao" xml:space="preserve">
+    <value>Data Alteração</value>
+  </data>
+  <data name="Viagem_DataExclusao" xml:space="preserve">
+    <value>Data Exclusão</value>
+  </data>
+  <data name="Viagem_Amigo" xml:space="preserve">
+    <value>Amigo</value>
+  </data>
+  <data name="Viagem_ConfirmarRemoverCusto" xml:space="preserve">
+    <value>Confirmar a remoção dessa pessoa das que podem ver os custos da viagem?</value>
+  </data>
+  <data name="Viagem_ConfirmarRemoverParticipante" xml:space="preserve">
+    <value>Confirmar remoção dessa pessoa como participante da viagem?</value>
+  </data>
+  <data name="Reabastecimento_DataAtualizacao" xml:space="preserve">
+    <value>Data Atualização</value>
+  </data>
+  <data name="Reabastecimento_DataExclusao" xml:space="preserve">
+    <value>Data Exclusão</value>
+  </data>
+  <data name="AporteDinheiro_DataAtualizacao" xml:space="preserve">
+    <value>Data Atualização</value>
+  </data>
+  <data name="AporteDinheiro_DataExclusao" xml:space="preserve">
+    <value>Data Exclusão</value>
+  </data>
+  <data name="Atracao_DataAtualizacao" xml:space="preserve">
+    <value>Data Atualização</value>
+  </data>
+  <data name="Atracao_DataExclusao" xml:space="preserve">
+    <value>Data Exclusão</value>
+  </data>
+  <data name="CalendarioPrevisto_DataAtualizacao" xml:space="preserve">
+    <value>Data Atualização</value>
+  </data>
+  <data name="CalendarioPrevisto_DataExclusao" xml:space="preserve">
+    <value>Data Exclusão</value>
+  </data>
+  <data name="Carro_DataAtualizacao" xml:space="preserve">
+    <value>Data Atualização</value>
+  </data>
+  <data name="Carro_DataExclusao" xml:space="preserve">
+    <value>Data Exclusão</value>
+  </data>
+  <data name="CidadeGrupo_DataAtualizacao" xml:space="preserve">
+    <value>Data Atualização</value>
+  </data>
+  <data name="CidadeGrupo_DataExclusao" xml:space="preserve">
+    <value>Data Exclusão</value>
+  </data>
+  <data name="Comentario_DataAtualizacao" xml:space="preserve">
+    <value>Data Atualização</value>
+  </data>
+  <data name="Comentario_DataExclusao" xml:space="preserve">
+    <value>Data Exclusão</value>
+  </data>
+  <data name="CotacaoMoeda_DataAtualizacao" xml:space="preserve">
+    <value>Data Atualização</value>
+  </data>
+  <data name="CotacaoMoeda_DataExclusao" xml:space="preserve">
+    <value>Data Exclusão</value>
+  </data>
+  <data name="Foto_DataAtualizacao" xml:space="preserve">
+    <value>Data Atualização</value>
+  </data>
+  <data name="Foto_DataExclusao" xml:space="preserve">
+    <value>Data Exclusão</value>
+  </data>
+  <data name="Gasto_DataAtualizacao" xml:space="preserve">
+    <value>Data Atualização</value>
+  </data>
+  <data name="Gasto_DataExclusao" xml:space="preserve">
+    <value>Data Exclusão</value>
+  </data>
+  <data name="Hotel_DataAtualizacao" xml:space="preserve">
+    <value>Data Atualização</value>
+  </data>
+  <data name="Hotel_DataExclusao" xml:space="preserve">
+    <value>Data Exclusão</value>
+  </data>
+  <data name="ListaCompra_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="ListaCompra_DataAtualizacao" xml:space="preserve">
+    <value>Data Atualização</value>
+  </data>
+  <data name="ListaCompra_DataExclusao" xml:space="preserve">
+    <value>Data Exclusão</value>
+  </data>
+  <data name="Loja_DataAtualizacao" xml:space="preserve">
+    <value>Data Atualização</value>
+  </data>
+  <data name="Loja_DataExclusao" xml:space="preserve">
+    <value>Data Exclusão</value>
+  </data>
+  <data name="Refeicao_DataAtualizacao" xml:space="preserve">
+    <value>Data Atualização</value>
+  </data>
+  <data name="Refeicao_DataExclusao" xml:space="preserve">
+    <value>Data Exclusão</value>
+  </data>
+  <data name="Sugestao_DataAtualizacao" xml:space="preserve">
+    <value>Data Atualização</value>
+  </data>
+  <data name="Sugestao_DataExclusao" xml:space="preserve">
+    <value>Data Exclusão</value>
+  </data>
+  <data name="ViagemAerea_DataAtualizacao" xml:space="preserve">
+    <value>Data Atualização</value>
+  </data>
+  <data name="ViagemAerea_DataExclusao" xml:space="preserve">
+    <value>Data Exclusão</value>
   </data>
 </root>

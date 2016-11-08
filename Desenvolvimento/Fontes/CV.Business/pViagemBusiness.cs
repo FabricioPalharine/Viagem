@@ -501,11 +501,7 @@ namespace CV.Business
                     itemAmizade.IdentificadorUsuarioRequisitado = ItemUsuario.Identificador;
                     requisicoesAjustadas.Add(itemAmizade);
                 }
-                foreach (ParticipanteViagem itemParticipante in ListarParticipanteViagem(d => d.EMail == itemLogin.EMail && !d.IdentificadorUsuario.HasValue))
-                {
-                    itemParticipante.IdentificadorUsuario = ItemUsuario.Identificador;
-                    participantes.Add(itemParticipante);
-                }
+               
                 foreach (Amigo itemParticipante in ListarAmigo(d => d.EMail == itemLogin.EMail && !d.IdentificadorAmigo.HasValue))
                 {
                     itemParticipante.IdentificadorUsuario = ItemUsuario.Identificador;
@@ -699,6 +695,15 @@ namespace CV.Business
             using (ViagemRepository data = new ViagemRepository())
             {
                 return data.ListarUsuario_EMail(EMail);
+            }
+        }
+
+
+        public List<Usuario> ListarUsuarioAmigo(int identificadorUsuario)
+        {
+            using (ViagemRepository data = new ViagemRepository())
+            {
+                return data.ListarUsuarioAmigo(identificadorUsuario);
             }
         }
     }

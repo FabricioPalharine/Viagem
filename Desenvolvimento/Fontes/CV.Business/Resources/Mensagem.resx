@@ -519,8 +519,10 @@
   <data name="Amigo_UsuarioAtual" xml:space="preserve">
     <value>Você não pode se adicionar como amigo.</value>
   </data>
-   <data name="Amigo_TipoAmizade" xml:space="preserve">
+  <data name="Amigo_TipoAmizade" xml:space="preserve">
     <value>É necessário selecionar o tipo de amizade a ser associado.</value>
   </data>
-
+  <data name="Viagem_SalvarViagem_Completa_OK" xml:space="preserve">
+    <value>Gravação de Viagem foi realizada com sucesso</value>
+  </data>
 </root>

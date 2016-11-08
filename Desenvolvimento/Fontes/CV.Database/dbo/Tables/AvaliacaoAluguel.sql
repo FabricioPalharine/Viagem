@@ -1,9 +1,11 @@
 ﻿CREATE TABLE [dbo].[AvaliacaoAluguel] (
-    [ID_AVALIACAO_ALUGUEL] INT  IDENTITY (1, 1) NOT NULL,
-    [ID_USUARIO]           INT  NOT NULL,
-    [ID_CARRO]             INT  NOT NULL,
-    [NR_NOTA]              INT  NOT NULL,
-    [DS_COMENTARIO]        TEXT NULL,
+    [ID_AVALIACAO_ALUGUEL] INT      IDENTITY (1, 1) NOT NULL,
+    [ID_USUARIO]           INT      NOT NULL,
+    [ID_CARRO]             INT      NOT NULL,
+    [NR_NOTA]              INT      NULL,
+    [DS_COMENTARIO]        TEXT     NULL,
+    [DT_ATUALIZACAO]       DATETIME NOT NULL,
+    [DT_EXCLUSAO]          DATETIME NOT NULL,
     CONSTRAINT [PK19_1_1] PRIMARY KEY NONCLUSTERED ([ID_AVALIACAO_ALUGUEL] ASC),
     CONSTRAINT [RefCarro39] FOREIGN KEY ([ID_CARRO]) REFERENCES [dbo].[Carro] ([ID_CARRO]),
     CONSTRAINT [RefUsuario40] FOREIGN KEY ([ID_USUARIO]) REFERENCES [dbo].[Usuario] ([ID_USUARIO])

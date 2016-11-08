@@ -69,8 +69,8 @@ private void ValidarMarca(Microsoft.Practices.EnterpriseLibrary.Validation.Valid
 			[NotNullValidator(MessageTemplateResourceName="ListaCompra_Reembolsavel",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public bool? Reembolsavel { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="ListaCompra_Comprado",MessageTemplateResourceType=typeof(MensagemModelo))]
-			public bool? Comprado { get; set; }
+			[NotNullValidator(MessageTemplateResourceName="ListaCompra_Status",MessageTemplateResourceType=typeof(MensagemModelo))]
+			public int? Status { get; set; }
 
 			public IList<ItemCompra> ItensCompra { get; set; }
 
@@ -78,10 +78,14 @@ private void ValidarMarca(Microsoft.Practices.EnterpriseLibrary.Validation.Valid
 
 			public Usuario ItemUsuarioPedido { get; set; }
 
-			public Viagem Viagem { get; set; }
+			public Viagem ItemViagem { get; set; }
 
 			[StringLengthValidator(200,MessageTemplateResourceName="ListaCompra_Destinatario_Tamanho",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public string Destinatario { get; set; }
+
+			public DateTime? DataAtualizacao { get; set; }
+
+			public DateTime? DataExclusao { get; set; }
 		 public ListaCompra Clone()
 		{
 			 return (ListaCompra) this.MemberwiseClone();

@@ -26,6 +26,10 @@ namespace CV.Model
 			public Gasto ItemGasto { get; set; }
 
 			public ViagemAerea ItemViagemAerea { get; set; }
+
+			public DateTime? DataAtualizacao { get; set; }
+
+			public DateTime? DataExclusao { get; set; }
 		 public GastoViagemAerea Clone()
 		{
 			 return (GastoViagemAerea) this.MemberwiseClone();

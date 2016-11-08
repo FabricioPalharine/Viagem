@@ -39,6 +39,10 @@ namespace CV.Model
 			public Carro ItemCarro { get; set; }
 
 			public Cidade Cidade { get; set; }
+
+			public DateTime? DataAtualizacao { get; set; }
+
+			public DateTime? DataExclusao { get; set; }
 		 public Reabastecimento Clone()
 		{
 			 return (Reabastecimento) this.MemberwiseClone();

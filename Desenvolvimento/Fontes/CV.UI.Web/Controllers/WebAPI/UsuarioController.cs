@@ -35,6 +35,16 @@ namespace CV.UI.Web.Controllers.WebAPI
             return resultado;
         }
         [Authorize]
+        [ActionName("listaAmigos")]
+        [HttpGet]
+        public List<Usuario> listaAmigos()
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            return biz.ListarUsuarioAmigo(token.IdentificadorUsuario);
+        }
+
+
+        [Authorize]
         public Usuario Get(int id)
         {
             ViagemBusiness biz = new ViagemBusiness();

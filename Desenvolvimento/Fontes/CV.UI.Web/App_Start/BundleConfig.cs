@@ -37,6 +37,7 @@ namespace CV.UI.Web
                     "~/library/Scripts/app/Home/home-controller.js",
                     "~/library/Scripts/app/Home/home-routes.js",
                     "~/library/Scripts/app/Home/auth-factory.js",
+                    "~/library/Scripts/app/Home/dominio-factory.js",
                     "~/library/Scripts/app/Home/account-controler.js",
                     "~/library/Scripts/app/Home/login-controller.js",                    
                     "~/library/Scripts/app/Home/alteraSenha-controller.js",     

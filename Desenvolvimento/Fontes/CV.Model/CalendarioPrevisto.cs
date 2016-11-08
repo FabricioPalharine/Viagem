@@ -61,6 +61,10 @@ private void ValidarNome(Microsoft.Practices.EnterpriseLibrary.Validation.Valida
 
 			[NotNullValidator(MessageTemplateResourceName="CalendarioPrevisto_Prioridade",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public int? Prioridade { get; set; }
+
+			public DateTime? DataAtualizacao { get; set; }
+
+			public DateTime? DataExclusao { get; set; }
 		 public CalendarioPrevisto Clone()
 		{
 			 return (CalendarioPrevisto) this.MemberwiseClone();

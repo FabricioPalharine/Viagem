@@ -26,9 +26,6 @@ namespace CV.Model
 			[NotNullValidator(MessageTemplateResourceName="AporteDinheiro_Valor",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public decimal? Valor { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="AporteDinheiro_MoedaEstragengeira",MessageTemplateResourceType=typeof(MensagemModelo))]
-			public bool? MoedaEstragengeira { get; set; }
-
 			public int? Moeda { get; set; }
 
 			public DateTime? DataAporte { get; set; }
@@ -38,6 +35,10 @@ namespace CV.Model
 			public Usuario ItemUsuario { get; set; }
 
 			public Viagem ItemViagem { get; set; }
+
+			public DateTime? DataAtualizacao { get; set; }
+
+			public DateTime? DataExclusao { get; set; }
 		 public AporteDinheiro Clone()
 		{
 			 return (AporteDinheiro) this.MemberwiseClone();

@@ -22,9 +22,9 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             ResultadoConsultaTipo<Viagem> resultado = new ResultadoConsultaTipo<Viagem>();
             ViagemBusiness biz = new ViagemBusiness();
-           
+
             List<Viagem> _itens = biz.ListarViagem().ToList();
-resultado.TotalRegistros = _itens.Count();
+            resultado.TotalRegistros = _itens.Count();
             if (json.SortField != null && json.SortField.Any())
                 _itens = _itens.AsQueryable().OrderByField<Viagem>(json.SortField, json.SortOrder).ToList();
 
@@ -39,14 +39,17 @@ resultado.TotalRegistros = _itens.Count();
         {
             ViagemBusiness biz = new ViagemBusiness();
             Viagem itemViagem = biz.SelecionarViagem(id);
-          
+            itemViagem.UsuariosGastos.ToList().ForEach(d => d.ItemViagem = null);
+            itemViagem.Participantes.ToList().ForEach(d => d.ItemViagem = null);
+
             return itemViagem;
         }
         [Authorize]
         public ResultadoOperacao Post([FromBody] Viagem itemViagem)
         {
             ViagemBusiness biz = new ViagemBusiness();
-                      biz.SalvarViagem(itemViagem);
+            itemViagem.DataAlteracao = DateTime.Now;
+            biz.SalvarViagem_Completa(itemViagem);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
@@ -54,6 +57,7 @@ resultado.TotalRegistros = _itens.Count();
                 itemResultado.IdentificadorRegistro = itemViagem.Identificador;
             return itemResultado;
         }
+
         [Authorize]
         public ResultadoOperacao Delete(int id)
         {

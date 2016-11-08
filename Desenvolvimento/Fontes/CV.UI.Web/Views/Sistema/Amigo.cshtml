@@ -109,8 +109,8 @@
     <script type="text/ng-template" id="BotoesGridTemplate.html">
 
         <div class="ngCellText hidden-xs">
-            <button type="button"  class="btn btn-success small" title="@TextosPaginas.Editar" ng-click="grid.appScope.modalPopupTriggerAprovacao(row.entity, $index,'@TextosPaginas.Amigo_ConfirmarAprovacao', grid.appScope.AprovarRequisicao)"><span class="fa fa-check" aria-hidden="true"></span></button>
-            <button type="button"  class="btn btn-danger small" title="@TextosPaginas.Excluir" ng-click="grid.appScope.modalPopupTriggerAprovacao(row.entity, $index,'@TextosPaginas.Amigo_ConfirmarReprovacao', grid.appScope.ReprovarRequisicao)"><span class="fa fa-close" aria-hidden="true"></span></button>
+            <button type="button"  class="btn btn-success small"  ng-click="grid.appScope.modalPopupTriggerAprovacao(row.entity, $index,'@TextosPaginas.Amigo_ConfirmarAprovacao', grid.appScope.AprovarRequisicao)"><span class="fa fa-check" aria-hidden="true"></span></button>
+            <button type="button"  class="btn btn-danger small" ng-click="grid.appScope.modalPopupTriggerAprovacao(row.entity, $index,'@TextosPaginas.Amigo_ConfirmarReprovacao', grid.appScope.ReprovarRequisicao)"><span class="fa fa-close" aria-hidden="true"></span></button>
 
         </div>
 

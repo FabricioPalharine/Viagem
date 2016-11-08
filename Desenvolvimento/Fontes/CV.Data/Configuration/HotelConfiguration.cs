@@ -36,6 +36,8 @@ namespace CV.Data.Configuration
 			this.HasRequired(i => i.ItemViagem).WithMany().HasForeignKey(d=>d.IdentificadorViagem);
 			this.HasMany(i => i.Eventos).WithRequired().HasForeignKey(d=>d.IdentificadorHotel);
 			this.Property(i => i.Raio).HasColumnName("NR_RAIO");
+			this.Property(i => i.DataAtualizacao).HasColumnName("DT_ATUALIZACAO");
+			this.Property(i => i.DataExclusao).HasColumnName("DT_EXCLUSAO");
 		MapearCamposManualmente();
 		}
 	}

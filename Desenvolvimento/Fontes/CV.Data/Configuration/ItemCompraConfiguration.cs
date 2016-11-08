@@ -29,6 +29,10 @@ namespace CV.Data.Configuration
 			this.HasRequired(i => i.ItemGastoCompra).WithMany().HasForeignKey(d=>d.IdentificadorGastoCompra);
 			this.HasMany(i => i.Fotos).WithRequired().HasForeignKey(d=>d.IdentificadorItemCompra);
 			this.HasOptional(i => i.ItemListaCompra).WithMany().HasForeignKey(d=>d.IdentificadorListaCompra);
+			this.Property(i => i.IdentificadorUsuario).HasColumnName("ID_USUARIO");
+			this.HasOptional(i => i.ItemUsuario).WithMany().HasForeignKey(d=>d.IdentificadorUsuario);
+			this.Property(i => i.DataAtualizacao).HasColumnName("DT_ATUALIZACAO");
+			this.Property(i => i.DataExclusao).HasColumnName("DT_EXCLUSAO");
 		MapearCamposManualmente();
 		}
 	}

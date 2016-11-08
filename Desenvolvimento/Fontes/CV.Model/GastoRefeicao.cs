@@ -26,6 +26,10 @@ namespace CV.Model
 			public Gasto ItemGasto { get; set; }
 
 			public Refeicao ItemRefeicao { get; set; }
+
+			public DateTime? DataAtualizacao { get; set; }
+
+			public DateTime? DataExclusao { get; set; }
 		 public GastoRefeicao Clone()
 		{
 			 return (GastoRefeicao) this.MemberwiseClone();

@@ -26,6 +26,10 @@ namespace CV.Model
 			public Atracao ItemAtracao { get; set; }
 
 			public Foto ItemFoto { get; set; }
+
+			public DateTime? DataAtualizacao { get; set; }
+
+			public DateTime? DataExclusao { get; set; }
 		 public FotoAtracao Clone()
 		{
 			 return (FotoAtracao) this.MemberwiseClone();
