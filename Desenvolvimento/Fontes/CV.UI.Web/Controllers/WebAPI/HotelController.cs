@@ -88,5 +88,23 @@ namespace CV.UI.Web.Controllers.WebAPI
             ViagemBusiness biz = new ViagemBusiness();
             return biz.ListarHotel(d => d.IdentificadorViagem == token.IdentificadorViagem);
         }
+
+        [Authorize]
+        [ActionName("SalvarHotelEvento")]
+        [HttpPost]
+        public ResultadoOperacao SalvarHotelEvento(HotelEvento itemEvento)
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            biz.SalvarHotelEvento(itemEvento);
+
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+            itemResultado.Sucesso = biz.IsValid();
+            itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
+            if (itemResultado.Sucesso)
+            {
+                itemResultado.IdentificadorRegistro = itemEvento.Identificador;
+            }
+            return itemResultado;
+        }
     }
 }

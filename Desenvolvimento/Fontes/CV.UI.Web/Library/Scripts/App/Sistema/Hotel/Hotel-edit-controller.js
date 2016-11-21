@@ -133,6 +133,32 @@
 		            MinhaAvaliacao[0].Comentario = vm.ItemAvaliacao.Comentario;
 		            MinhaAvaliacao[0].Nota = vm.ItemAvaliacao.Nota;
 		        }
+
+		        if (vm.itemHotel.DataEntrada && !vm.itemOriginal.DataEntrada)
+		        {
+		            angular.forEach(vm.itemHotel.Avaliacoes, function (item) {
+		                if (!item.DataExclusao)
+		                {
+		                    var itemEvento = { IdentificadorUsuario: item.IdentificadorUsuario, DataEntrada: vm.itemHotel.DataEntrada, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss") };
+		                    vm.itemHotel.Eventos.push(itemEvento);
+		                }
+		            });
+		        }
+
+		        if (vm.itemHotel.DataSaidia && !vm.itemOriginal.DataSaidia) {
+		            angular.forEach(vm.itemHotel.Eventos, function (item) {
+		                if (!item.DataExclusao && !item.DataSaida) {
+		                    item.DataSaida = vm.itemHotel.DataSaidia;
+		                    item.DataAtualizacao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+		                }
+		            });
+		        }
+
+		        angular.forEach(vm.itemHotel.Eventos, function (itemEvento) {
+		            if (itemEvento.Edicao)
+		                vm.CancelarEvento(itemEvento);
+		        });
+
 		        Hotel.save(vm.itemHotel, function (data) {
 		            vm.loading = false;
 		            if (data.Sucesso) {
@@ -214,7 +240,9 @@
 		    if (vm.VisitaIniciada) {
 		        vm.itemHotel.DataEntrada = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
 		        vm.itemHotel.strHoraEntrada = moment(new Date()).format("HH:mm:ss");
-
+		        angular.forEach(vm.ListaParticipante, function (item) {
+		            item.Selecionado = true;
+		        });
 		    }
 		    else {
 		        vm.itemHotel.DataEntrada = null;
@@ -232,15 +260,11 @@
 		    if (vm.VisitaConcluida) {
 		        vm.itemHotel.DataSaidia = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
 		        vm.itemHotel.strHoraSaida = moment(new Date()).format("HH:mm:ss");
-		        angular.forEach(vm.ListaParticipante, function (item) {
-		            item.Selecionado = true;
-		        });
+		       
 		    }
 		    else {
 		        vm.itemHotel.DataSaidia = vm.itemHotel.strHoraSaida = null;
-		        angular.forEach(vm.ListaParticipante, function (item) {
-		            item.Selecionado = false;
-		        });
+		       
 		    }
 		};
 
@@ -527,6 +551,88 @@
 		    });
 		};
 
+		vm.AdicionarEvento = function (itemEvento) {
+		    var itemEvento = {IdentificadorHotel: vm.itemHotel.Identificador,  Edicao: true, Original: null, ItemUsuario: $.grep(vm.ListaParticipante, function (e) { return e.Identificador == Auth.currentUser.Codigo })[0], DataEntrada: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss"), strHoraEntrada: moment(new Date()).format("HH:mm:ss") }
+		    vm.itemHotel.Eventos.push(itemEvento);
+		   
+		};
+
+		vm.RemoverEvento = function (itemEvento) {
+		    $scope.$parent.itemHotel.modalPopupTrigger(itemEvento, $translate.instant('MensagemExclusao'), $translate.instant('Sim'), $translate.instant('Nao'), function () {
+		        itemEvento.DataExclusao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+		        Hotel.SalvarHotelEvento(itemEvento);
+		    });
+		};
+        
+		vm.EditarEvento = function (itemEvento) {
+		    var itemOriginal = jQuery.extend({}, itemEvento);
+		    itemEvento.Edicao = true;
+		    itemEvento.Original = itemOriginal;
+		};
+
+		vm.CancelarEvento = function (itemEvento) {
+		    if (!itemEvento.Identificador)
+		    {
+		        var Posicao = vm.itemHotel.Eventos.indexOf(itemEvento);
+		        vm.itemHotel.Eventos.splice(Posicao, 1);
+		    }
+		    else
+		    {
+		        itemEvento.Edicao = false;
+		        itemEvento.ItemUsuario = itemEvento.Original.ItemUsuario;
+		        itemEvento.DataEntrada = itemEvento.Original.DataEntrada;
+		        itemEvento.strHoraEntrada = itemEvento.Original.strHoraEntrada;
+		        itemEvento.DataSaida = itemEvento.Original.DataSaida;
+		        itemEvento.strHoraSaida = itemEvento.Original.strHoraSaida;
+		        itemEvento.DataAlteracao = itemEvento.Original.DataAlteracao;
+		        itemEvento.Original = null;
+		    }
+		};
+
+		vm.SalvarEvento = function (itemEvento) {
+		    if (itemEvento.ItemUsuario && itemEvento.ItemUsuario.Identificador)
+		        itemEvento.IdentificadorUsuario = itemEvento.ItemUsuario.Identificador;
+		    else
+		        itemEvento.IdentificadorUsuario = null;
+
+		    if (itemEvento.DataEntrada) {
+		        if (typeof itemEvento.DataEntrada == "string") {
+
+		            itemEvento.DataEntrada = moment(itemEvento.DataEntrada).format("YYYY-MM-DDT");
+		        }
+		        else
+		            itemEvento.DataEntrada = moment(itemEvento.DataEntrada).format("YYYY-MM-DDT");
+		        itemEvento.DataEntrada += (itemEvento.strHoraEntrada) ? itemEvento.strHoraEntrada : "00:00:00";
+
+		    }
+
+		    if (itemEvento.DataSaida) {
+		        if (typeof itemEvento.DataSaida == "string") {
+		            itemEvento.DataSaida = moment(itemEvento.DataSaida).format("YYYY-MM-DDT");
+		        }
+		        else
+		            itemEvento.DataSaida = moment(itemEvento.DataSaida).format("YYYY-MM-DDT");
+		        itemEvento.DataSaida += (itemEvento.strHoraSaida) ? itemEvento.strHoraSaida : "00:00:00";
+
+		    }
+		    itemEvento.DataAtualizacao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+		    vm.loading = true;
+		    vm.messages = [];
+		    Hotel.SalvarHotelEvento(itemEvento, function (data) {
+                vm.loading = false;
+                if (data.Sucesso) {
+                    if (!itemEvento.Identificador)
+                        itemEvento.Identificador = data.IdentificadorRegistro;
+                    itemEvento.Edicao = false;
+                    itemEvento.Original = null;
+                } else {
+                    vm.messages = data.Mensagens;
+                }
+            }, function (err) {
+                vm.loading = false;
+                Error.showError('error', 'Ops!', $translate.instant("ErroSalvar"), true);
+            });
+		};
 
 		vm.EditModalCtrl = function ($uibModalInstance, item) {
 		    var vmEdit = this;

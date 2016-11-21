@@ -58,6 +58,7 @@
     <Compile Include="ConsultaSolicitacao.cs" />
     <Compile Include="DadosGoogleToken.cs" />
     <Compile Include="Dominio\enumMoeda.cs" />
+    <Compile Include="Dominio\enumTipoTransporte.cs" />
     <Compile Include="UploadFoto.cs" />
     <Compile Include="pItemLista.cs" />
     <Compile Include="Results\Message.cs" />

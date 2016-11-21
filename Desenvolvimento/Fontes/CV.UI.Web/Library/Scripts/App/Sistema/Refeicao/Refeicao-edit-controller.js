@@ -21,7 +21,7 @@
 	        if (!item.Identificador) {
 	            angular.forEach($scope.$parent.itemRefeicao.ListaParticipantes, function (c) {
 	                var item2 = jQuery.extend({}, c);
-	                item2.Selecionado = false;
+	                item2.Selecionado = true;
 	                vm.ListaParticipante.push(item2);
 	            });
 	        }
@@ -567,6 +567,8 @@
 	        };
 
 	    }
+
+	    
 
 	    vm.SelecionarPosicao = function () {
 	        $uibModal.open({

@@ -1843,11 +1843,31 @@
                                           'library/scripts/app/Sistema/ViagemAerea/ViagemAerea-controller.js'
                                       ]
                                   }, {
-                                      name: 'ViagemFactory',
+                                      name: 'GastoFactory',
                                       files: [
-                                          'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
+                                          'library/scripts/app/Sistema/Gasto/Gasto-factory.js'
                                       ]
                                   },
+                                   {
+                                       name: 'GastoController',
+                                       files: [
+                                           'library/scripts/app/Sistema/Gasto/Gasto-edit-controller.js',
+                                           'library/scripts/app/Sistema/Gasto/Gasto-controller.js'
+                                       ]
+                                   },
+                                 {
+                                      name: 'CidadeFactory',
+                                      files: [
+                                          'library/scripts/app/Sistema/Cidade/Cidade-factory.js'
+                                      ]
+                                  },
+                                    {
+                                        name: 'ViagemFactory',
+                                        files: [
+                                            'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
+                                        ]
+                                    },
+                                     
                               ]);
 
                           }]

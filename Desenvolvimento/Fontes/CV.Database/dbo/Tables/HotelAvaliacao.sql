@@ -2,7 +2,7 @@
     [ID_HOTEL_AVALIACAO] INT      IDENTITY (1, 1) NOT NULL,
     [ID_USUARIO]         INT      NOT NULL,
     [ID_HOTEL]           INT      NOT NULL,
-    [NR_NOTA]            INT      NOT NULL,
+    [NR_NOTA]            INT      NULL,
     [DS_COMENTARIO]      TEXT     NULL,
     [DT_ATUALIZACAO]     DATETIME NOT NULL,
     [DT_EXCLUSAO]        DATETIME NULL,

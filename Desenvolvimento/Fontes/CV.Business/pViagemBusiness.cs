@@ -861,7 +861,7 @@ namespace CV.Business
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             Viagem itemViagem = SelecionarViagem(IdentificadoViagem);
 
-            itemResultado.ItemRegistro =  CadastrarNovaFoto(itemViagem, itemUsuario, itemFoto, true);
+            itemResultado.ItemRegistro = CadastrarNovaFoto(itemViagem, itemUsuario, itemFoto, true);
 
             return itemResultado;
         }
@@ -898,7 +898,7 @@ namespace CV.Business
             {
                 itemGravarFoto.IdentificadorCidade = RetornarCidadeGeocoding(itemGravarFoto.Latitude, itemGravarFoto.Longitude);
             }
-            DetectarAssociacoesFoto(itemUsuario.Identificador, itemViagem.Identificador, itemGravarFoto,itemFoto);
+            DetectarAssociacoesFoto(itemUsuario.Identificador, itemViagem.Identificador, itemGravarFoto, itemFoto);
             SalvarFoto_Completa(itemGravarFoto);
             itemGravarFoto = SelecionarFoto_Completa(itemGravarFoto.Identificador);
             itemGravarFoto.Atracoes.ToList().ForEach(d => { d.ItemFoto = null; d.ItemAtracao.Fotos = null; d.ItemAtracao.ItemAtracaoPai = null; });
@@ -937,7 +937,7 @@ namespace CV.Business
         {
             using (ViagemRepository data = new ViagemRepository())
             {
-                return data.ListarHotelData(IdentificadorViagem,Data);
+                return data.ListarHotelData(IdentificadorViagem, Data);
             }
         }
 
@@ -949,7 +949,7 @@ namespace CV.Business
             {
                 AtracoesPai.Add(itemAtracao.IdentificadorAtracaoPai);
                 LocalizarAtracoesPai(itemAtracao.IdentificadorAtracaoPai, AtracoesPai);
-                
+
             }
         }
 
@@ -969,10 +969,10 @@ namespace CV.Business
                 AtracoesPai.Add(itemFoto.IdentificadorAtracao);
                 LocalizarAtracoesPai(itemFoto.IdentificadorAtracao, AtracoesPai);
                 foreach (var IdentificadorAtracao in AtracoesPai)
-                 itemGravarFoto.Atracoes.Add(new FotoAtracao() { DataAtualizacao = DateTime.Now, IdentificadorAtracao = IdentificadorAtracao });
-                
-               
-                
+                    itemGravarFoto.Atracoes.Add(new FotoAtracao() { DataAtualizacao = DateTime.Now, IdentificadorAtracao = IdentificadorAtracao });
+
+
+
 
             }
             if (itemFoto.IdentificadorHotel.HasValue)
@@ -1088,7 +1088,7 @@ namespace CV.Business
         {
             using (ViagemRepository repositorio = new ViagemRepository())
             {
-                var lista = repositorio.ListarFotos(IdentificadorFoto,IdentificadorViagem, DataDe, DataAte, Comentario, IdentificadorAtracao, IdentificadorHotel, IdentificadorRefeicao, IdentificadorCidade, Skip,Count);
+                var lista = repositorio.ListarFotos(IdentificadorFoto, IdentificadorViagem, DataDe, DataAte, Comentario, IdentificadorAtracao, IdentificadorHotel, IdentificadorRefeicao, IdentificadorCidade, Skip, Count);
                 foreach (var itemFoto in lista)
                 {
                     itemFoto.Atracoes.ToList().ForEach(d => { d.ItemFoto = null; d.ItemAtracao.Fotos = null; d.ItemAtracao.ItemAtracaoPai = null; });
@@ -1132,6 +1132,15 @@ namespace CV.Business
                 return repositorio.CarregarCidadeHotel(IdentificadorViagem);
             }
         }
+
+        public List<Cidade> CarregarCidadeViagemAerea(int? IdentificadorViagem)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.CarregarCidadeViagemAerea(IdentificadorViagem);
+            }
+        }
+        
 
         public List<Cidade> CarregarCidadeLoja(int? IdentificadorViagem)
         {
@@ -1187,23 +1196,23 @@ namespace CV.Business
             }
         }
 
-        public IList<Usuario> CarregarParticipantesViagem (int? IdentificadorViagem)
+        public IList<Usuario> CarregarParticipantesViagem(int? IdentificadorViagem)
         {
             using (ViagemRepository repositorio = new ViagemRepository())
             {
                 return repositorio.CarregarParticipantesViagem(IdentificadorViagem);
             }
         }
-        
+
 
         public List<Atracao> ListarAtracao(int IdentificadorViagem, DateTime? DataChegadaDe, DateTime? DataChegadaAte,
              DateTime? DataPartidaDe, DateTime? DataPartidaAte, string Nome, string Tipo, int Situacao, int? IdentificadorCidade, int? IdentificadorAtracao)
         {
             using (ViagemRepository repositorio = new ViagemRepository())
             {
-                var ListaAtracoes = repositorio.ListarAtracao(IdentificadorViagem,DataChegadaDe,DataChegadaAte, DataPartidaDe, DataPartidaAte, Nome, Tipo, Situacao,
+                var ListaAtracoes = repositorio.ListarAtracao(IdentificadorViagem, DataChegadaDe, DataChegadaAte, DataPartidaDe, DataPartidaAte, Nome, Tipo, Situacao,
                     IdentificadorCidade, IdentificadorAtracao);
-               foreach (var itemAtracao in ListaAtracoes)
+                foreach (var itemAtracao in ListaAtracoes)
                 {
                     if (itemAtracao.ItemAtracaoPai != null)
                         itemAtracao.ItemAtracaoPai.Atracoes = null;
@@ -1218,7 +1227,7 @@ namespace CV.Business
             using (ViagemRepository repositorio = new ViagemRepository())
             {
                 return repositorio.ListarGasto(IdentificadorViagem, DataDe, DataAte, Descricao, IdentificadorUsuario, IdentificadorGasto);
-              
+
             }
         }
 
@@ -1227,7 +1236,7 @@ namespace CV.Business
         {
             using (ViagemRepository repositorio = new ViagemRepository())
             {
-                return repositorio.ListarRefeicao(IdentificadorViagem, DataDe, DataAte,Nome, Tipo, IdentificadorCidade,IdentificadorRefeicao);
+                return repositorio.ListarRefeicao(IdentificadorViagem, DataDe, DataAte, Nome, Tipo, IdentificadorCidade, IdentificadorRefeicao);
 
             }
         }
@@ -1237,9 +1246,18 @@ namespace CV.Business
         {
             using (ViagemRepository repositorio = new ViagemRepository())
             {
-                return repositorio.ListarHotel(IdentificadorViagem, DataCheckInDe, DataCheckInAte, DataCheckOutDe, DataCheckOutAte, Nome,Situacao,  IdentificadorCidade, IdentificadorHotel);
+                return repositorio.ListarHotel(IdentificadorViagem, DataCheckInDe, DataCheckInAte, DataCheckOutDe, DataCheckOutAte, Nome, Situacao, IdentificadorCidade, IdentificadorHotel);
 
             }
         }
-      }
+
+        public List<ViagemAerea> ListarViagemAerea(int IdentificadorViagem, DateTime? DataDe, DateTime? DataAte, string Companhia, int? Tipo,
+           int Situacao, int? IdentificadorCidadeOrigem, int? IdentificadorCidadeDestino, int? IdentificadorViagemAerea)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarViagemAerea(IdentificadorViagem, DataDe, DataAte, Companhia, Tipo, Situacao, IdentificadorCidadeOrigem, IdentificadorCidadeDestino, IdentificadorViagemAerea);
+            }
+        }
+    }
 }

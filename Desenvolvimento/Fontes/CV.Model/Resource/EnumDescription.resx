@@ -612,4 +612,25 @@
   <data name="enumMoeda_ZWL" xml:space="preserve">
     <value>DOLAR ZIMBABUE</value>
   </data>
+  <data name="enumTipoParada_Destino" xml:space="preserve">
+    <value>Destino</value>
+  </data>
+  <data name="enumTipoParada_Escala" xml:space="preserve">
+    <value>Escala</value>
+  </data>
+  <data name="enumTipoParada_Origem" xml:space="preserve">
+    <value>Origem</value>
+  </data>
+  <data name="enumTipoTransporte_Aereo" xml:space="preserve">
+    <value>Aéreo</value>
+  </data>
+  <data name="enumTipoTransporte_Ferroviario" xml:space="preserve">
+    <value>Ferroviário</value>
+  </data>
+  <data name="enumTipoTransporte_Fluvial" xml:space="preserve">
+    <value>Fluvial</value>
+  </data>
+  <data name="enumTipoTransporte_Rodoviario" xml:space="preserve">
+    <value>Rodoviário</value>
+  </data>
 </root>

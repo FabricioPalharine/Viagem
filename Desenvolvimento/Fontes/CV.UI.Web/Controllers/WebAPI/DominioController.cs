@@ -25,6 +25,32 @@ namespace CV.UI.Web.Controllers.WebAPI
             return lista.OrderBy(d=>d.Descricao);
         }
 
-        
+        // GET api/<controller>
+        [ActionName("CarregaTipoTransporte")]
+        [HttpGet]
+        public IEnumerable<ItemLista> CarregaTipoTransporte()
+        {
+            List<ItemLista> lista = new List<ItemLista>();
+            foreach (var enumerador in Enum.GetValues(typeof(enumTipoTransporte)))
+            {
+                var item = new ItemLista() { Codigo = Convert.ToInt32(enumerador).ToString(), Descricao = ((enumTipoTransporte)enumerador).Descricao() };
+                lista.Add(item);
+            }
+            return lista.OrderBy(d => d.Descricao);
+        }
+
+        [ActionName("CarregaTipoParada")]
+        [HttpGet]
+        public IEnumerable<ItemLista> CarregaTipoParada()
+        {
+            List<ItemLista> lista = new List<ItemLista>();
+            foreach (var enumerador in Enum.GetValues(typeof(enumTipoParada)))
+            {
+                var item = new ItemLista() { Codigo = Convert.ToInt32(enumerador).ToString(), Descricao = ((enumTipoParada)enumerador).Descricao() };
+                lista.Add(item);
+            }
+            return lista.OrderBy(d => d.Descricao);
+        }
+
     }
 }

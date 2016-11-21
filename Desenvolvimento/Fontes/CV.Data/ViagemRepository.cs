@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data.Entity;
+using System.Linq.Expressions;
 using System.Data.Entity.Infrastructure;
 using CV.Model;
 
@@ -1441,13 +1442,49 @@ namespace CV.Data
 			public void SalvarViagemAerea (ViagemAerea itemGravar)
 			{
 				ViagemAerea itemBase =  Context.ViagemAereas
-				.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
+.Include("Aeroportos").Include("Avaliacoes")				.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
 				if (itemBase == null)
 				{
 				itemBase = Context.ViagemAereas.Create();
+				itemBase.Aeroportos = new List<ViagemAereaAeroporto>();
+				itemBase.Avaliacoes = new List<AvaliacaoAerea>();
  			Context.Entry<ViagemAerea>(itemBase).State = System.Data.Entity.EntityState.Added;
 				}
  			AtualizarPropriedades<ViagemAerea>(itemBase, itemGravar);
+				foreach (ViagemAereaAeroporto itemViagemAereaAeroporto in new List<ViagemAereaAeroporto>( itemBase.Aeroportos))
+				{
+					if (!itemGravar.Aeroportos.Where(f=>f.Identificador == itemViagemAereaAeroporto.Identificador).Any())
+					{
+						Context.Entry<ViagemAereaAeroporto>(itemViagemAereaAeroporto).State = EntityState.Deleted;
+					}
+				}
+				foreach (ViagemAereaAeroporto itemViagemAereaAeroporto in new List<ViagemAereaAeroporto>( itemGravar.Aeroportos))
+				{
+				ViagemAereaAeroporto itemBaseViagemAereaAeroporto = !itemViagemAereaAeroporto.Identificador.HasValue?null: itemBase.Aeroportos.Where(f=>f.Identificador == itemViagemAereaAeroporto.Identificador).FirstOrDefault();
+				if (itemBaseViagemAereaAeroporto == null)
+				{
+				itemBaseViagemAereaAeroporto = Context.ViagemAereaAeroportos.Create();
+ 			itemBase.Aeroportos.Add(itemBaseViagemAereaAeroporto);
+				}
+ 			AtualizarPropriedades<ViagemAereaAeroporto>(itemBaseViagemAereaAeroporto, itemViagemAereaAeroporto);
+				}
+				foreach (AvaliacaoAerea itemAvaliacaoAerea in new List<AvaliacaoAerea>( itemBase.Avaliacoes))
+				{
+					if (!itemGravar.Avaliacoes.Where(f=>f.Identificador == itemAvaliacaoAerea.Identificador).Any())
+					{
+						Context.Entry<AvaliacaoAerea>(itemAvaliacaoAerea).State = EntityState.Deleted;
+					}
+				}
+				foreach (AvaliacaoAerea itemAvaliacaoAerea in new List<AvaliacaoAerea>( itemGravar.Avaliacoes))
+				{
+				AvaliacaoAerea itemBaseAvaliacaoAerea = !itemAvaliacaoAerea.Identificador.HasValue?null: itemBase.Avaliacoes.Where(f=>f.Identificador == itemAvaliacaoAerea.Identificador).FirstOrDefault();
+				if (itemBaseAvaliacaoAerea == null)
+				{
+				itemBaseAvaliacaoAerea = Context.AvaliacaoAereas.Create();
+ 			itemBase.Avaliacoes.Add(itemBaseAvaliacaoAerea);
+				}
+ 			AtualizarPropriedades<AvaliacaoAerea>(itemBaseAvaliacaoAerea, itemAvaliacaoAerea);
+				}
 			Context.SaveChanges();
 				itemGravar.Identificador = itemBase.Identificador;
 			}
@@ -2245,6 +2282,81 @@ namespace CV.Data
 				}
 			Context.SaveChanges();
 				itemGravar.Identificador = itemBase.Identificador;
+			}
+			public void SalvarViagemAerea_Completa (ViagemAerea itemGravar)
+			{
+				ViagemAerea itemBase =  Context.ViagemAereas
+.Include("Aeroportos").Include("Avaliacoes").Include("Gastos")				.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
+				if (itemBase == null)
+				{
+				itemBase = Context.ViagemAereas.Create();
+				itemBase.Aeroportos = new List<ViagemAereaAeroporto>();
+				itemBase.Avaliacoes = new List<AvaliacaoAerea>();
+				itemBase.Gastos = new List<GastoViagemAerea>();
+ 			Context.Entry<ViagemAerea>(itemBase).State = System.Data.Entity.EntityState.Added;
+				}
+ 			AtualizarPropriedades<ViagemAerea>(itemBase, itemGravar);
+				foreach (ViagemAereaAeroporto itemViagemAereaAeroporto in new List<ViagemAereaAeroporto>( itemBase.Aeroportos))
+				{
+					if (!itemGravar.Aeroportos.Where(f=>f.Identificador == itemViagemAereaAeroporto.Identificador).Any())
+					{
+						Context.Entry<ViagemAereaAeroporto>(itemViagemAereaAeroporto).State = EntityState.Deleted;
+					}
+				}
+				foreach (ViagemAereaAeroporto itemViagemAereaAeroporto in new List<ViagemAereaAeroporto>( itemGravar.Aeroportos))
+				{
+				ViagemAereaAeroporto itemBaseViagemAereaAeroporto = !itemViagemAereaAeroporto.Identificador.HasValue?null: itemBase.Aeroportos.Where(f=>f.Identificador == itemViagemAereaAeroporto.Identificador).FirstOrDefault();
+				if (itemBaseViagemAereaAeroporto == null)
+				{
+				itemBaseViagemAereaAeroporto = Context.ViagemAereaAeroportos.Create();
+ 			itemBase.Aeroportos.Add(itemBaseViagemAereaAeroporto);
+				}
+ 			AtualizarPropriedades<ViagemAereaAeroporto>(itemBaseViagemAereaAeroporto, itemViagemAereaAeroporto);
+				}
+				foreach (AvaliacaoAerea itemAvaliacaoAerea in new List<AvaliacaoAerea>( itemBase.Avaliacoes))
+				{
+					if (!itemGravar.Avaliacoes.Where(f=>f.Identificador == itemAvaliacaoAerea.Identificador).Any())
+					{
+						Context.Entry<AvaliacaoAerea>(itemAvaliacaoAerea).State = EntityState.Deleted;
+					}
+				}
+				foreach (AvaliacaoAerea itemAvaliacaoAerea in new List<AvaliacaoAerea>( itemGravar.Avaliacoes))
+				{
+				AvaliacaoAerea itemBaseAvaliacaoAerea = !itemAvaliacaoAerea.Identificador.HasValue?null: itemBase.Avaliacoes.Where(f=>f.Identificador == itemAvaliacaoAerea.Identificador).FirstOrDefault();
+				if (itemBaseAvaliacaoAerea == null)
+				{
+				itemBaseAvaliacaoAerea = Context.AvaliacaoAereas.Create();
+ 			itemBase.Avaliacoes.Add(itemBaseAvaliacaoAerea);
+				}
+ 			AtualizarPropriedades<AvaliacaoAerea>(itemBaseAvaliacaoAerea, itemAvaliacaoAerea);
+				}
+				foreach (GastoViagemAerea itemGastoViagemAerea in new List<GastoViagemAerea>( itemBase.Gastos))
+				{
+					if (!itemGravar.Gastos.Where(f=>f.Identificador == itemGastoViagemAerea.Identificador).Any())
+					{
+						Context.Entry<GastoViagemAerea>(itemGastoViagemAerea).State = EntityState.Deleted;
+					}
+				}
+				foreach (GastoViagemAerea itemGastoViagemAerea in new List<GastoViagemAerea>( itemGravar.Gastos))
+				{
+				GastoViagemAerea itemBaseGastoViagemAerea = !itemGastoViagemAerea.Identificador.HasValue?null: itemBase.Gastos.Where(f=>f.Identificador == itemGastoViagemAerea.Identificador).FirstOrDefault();
+				if (itemBaseGastoViagemAerea == null)
+				{
+				itemBaseGastoViagemAerea = Context.GastoViagemAereas.Create();
+ 			itemBase.Gastos.Add(itemBaseGastoViagemAerea);
+				}
+ 			AtualizarPropriedades<GastoViagemAerea>(itemBaseGastoViagemAerea, itemGastoViagemAerea);
+				}
+			Context.SaveChanges();
+				itemGravar.Identificador = itemBase.Identificador;
+			}
+			public ViagemAerea SelecionarViagemAerea_Completa (int? Identificador)
+			{
+			IQueryable<ViagemAerea> query =	 Context.ViagemAereas
+.Include("Aeroportos").Include("Avaliacoes").Include("Avaliacoes.ItemUsuario").Include("Gastos").Include("Gastos.ItemGasto").Include("Gastos.ItemGasto.ItemUsuario");
+					if (Identificador.HasValue)
+					query = query.Where(d=>d.Identificador == Identificador);
+					return query.FirstOrDefault();
 			}
 	}
 

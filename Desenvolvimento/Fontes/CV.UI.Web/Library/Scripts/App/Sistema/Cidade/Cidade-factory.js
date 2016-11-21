@@ -72,6 +72,13 @@
               },
               isArray: true
           },
+          CarregarViagemAerea: {
+              method: 'GET',
+              params: {
+                  controller: 'CarregarViagemAerea'
+              },
+              isArray: true
+          },
       });
     return UserBase;
   }

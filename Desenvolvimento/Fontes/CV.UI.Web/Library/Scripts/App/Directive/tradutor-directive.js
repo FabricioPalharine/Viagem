@@ -191,6 +191,7 @@
             ViagemAerea_DataPrevista: 'DataPrevista',
             ViagemAerea_DataInicio: 'DataInicio',
             ViagemAerea_DataFim: 'DataFim',
+            ViagemAerea_AeroportoObrigatorio: 'Favor preencher a informação Aeroporto/Porto/Estação para todas as etapas',
             Sim: 'Sim',
             Nao: 'Não',
             MensagemGastoAdicionar: 'Que gasto deseja adicionar?',

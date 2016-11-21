@@ -41,10 +41,6 @@ private void ValidarCompanhiaAerea(Microsoft.Practices.EnterpriseLibrary.Validat
 			[NotNullValidator(MessageTemplateResourceName="ViagemAerea_DataPrevista",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public DateTime? DataPrevista { get; set; }
 
-			public DateTime? DataInicio { get; set; }
-
-			public DateTime? DataFim { get; set; }
-
 			public Viagem ItemViagem { get; set; }
 
 			public IList<GastoViagemAerea> Gastos { get; set; }
@@ -56,6 +52,11 @@ private void ValidarCompanhiaAerea(Microsoft.Practices.EnterpriseLibrary.Validat
 			public DateTime? DataAtualizacao { get; set; }
 
 			public DateTime? DataExclusao { get; set; }
+
+			[NotNullValidator(MessageTemplateResourceName="ViagemAerea_Tipo",MessageTemplateResourceType=typeof(MensagemModelo))]
+			public int? Tipo { get; set; }
+
+			public string Descricao { get; set; }
 		 public ViagemAerea Clone()
 		{
 			 return (ViagemAerea) this.MemberwiseClone();

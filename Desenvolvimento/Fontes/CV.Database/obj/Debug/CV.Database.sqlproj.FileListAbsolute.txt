@@ -16,3 +16,8 @@ C:\Desenvolvimento\ViagemNew\Desenvolvimento\Fontes\CV.Database\obj\Debug\Model.
 C:\Desenvolvimento\ViagemNew\Desenvolvimento\Fontes\CV.Database\obj\Debug\refactor.xml
 C:\Desenvolvimento\ViagemNew\Desenvolvimento\Fontes\CV.Database\obj\Debug\postdeploy.sql
 C:\Desenvolvimento\ViagemNew\Desenvolvimento\Fontes\CV.Database\obj\Debug\predeploy.sql
+D:\Desenvolvimento\Fabricio\Viagem\Desenvolvimento\Fontes\CV.Database\bin\Debug\CV.Database.dacpac
+D:\Desenvolvimento\Fabricio\Viagem\Desenvolvimento\Fontes\CV.Database\bin\Debug\CV.Database.dll
+D:\Desenvolvimento\Fabricio\Viagem\Desenvolvimento\Fontes\CV.Database\bin\Debug\CV.Database.pdb
+D:\Desenvolvimento\Fabricio\Viagem\Desenvolvimento\Fontes\CV.Database\obj\Debug\CV.Database.dll
+D:\Desenvolvimento\Fabricio\Viagem\Desenvolvimento\Fontes\CV.Database\obj\Debug\CV.Database.pdb

@@ -44,6 +44,20 @@
               },
               isArray: true
           },
+          save:
+              {
+                  method: 'POST',
+                  params: {
+                      controller: 'Post'
+                  }
+              },
+          SalvarHotelEvento: 
+          {
+              method: 'POST',
+              params: {
+                  controller: 'SalvarHotelEvento'
+              }
+          }
          
 
       });

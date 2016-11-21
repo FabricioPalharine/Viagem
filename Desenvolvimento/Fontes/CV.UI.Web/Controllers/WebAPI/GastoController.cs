@@ -178,5 +178,26 @@ namespace CV.UI.Web.Controllers.WebAPI
             }
             return itemResultado;
         }
+
+
+        [HttpPost]
+        [ActionName("SalvarCustoViagemAerea")]
+        public ResultadoOperacao SalvarCustoViagemAerea([FromBody] GastoViagemAerea itemGasto)
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            var itemGastoBase = biz.SelecionarGasto_Completo(itemGasto.IdentificadorGasto);
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+
+            if (itemGasto.DataExclusao.HasValue || !itemGastoBase.ViagenAereas.Where(f => f.IdentificadorViagemAerea == itemGasto.IdentificadorViagemAerea).Any())
+            {
+                biz.SalvarGastoViagemAerea(itemGasto);
+                itemResultado.Sucesso = biz.IsValid();
+                itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
+                if (itemResultado.Sucesso)
+                    itemResultado.IdentificadorRegistro = itemGasto.Identificador;
+            }
+            return itemResultado;
+        }
+        
     }
 }

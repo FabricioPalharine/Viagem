@@ -30,7 +30,22 @@
             //  transformResponse: parseArray,
               isArray: true
           },
-         
+          CarregaTipoTransporte: {
+              method: 'GET',
+              params: {
+                  controller: 'CarregaTipoTransporte',
+              },
+              //  transformResponse: parseArray,
+              isArray: true
+          },
+          CarregaTipoParada: {
+              method: 'GET',
+              params: {
+                  controller: 'CarregaTipoParada',
+              },
+              //  transformResponse: parseArray,
+              isArray: true
+          },
 
       });
     return UserBase;

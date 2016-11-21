@@ -981,4 +981,7 @@
   <data name="HotelEvento_DataEntrada" xml:space="preserve">
     <value>O campo Data Entrada é obrigatório</value>
   </data>
+  <data name="ViagemAerea_Tipo" xml:space="preserve">
+    <value>O campo Tipo é obrigatório</value>
+  </data>
 </root>

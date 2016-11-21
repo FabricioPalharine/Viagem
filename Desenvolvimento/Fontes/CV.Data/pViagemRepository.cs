@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using CV.Model;
 using System.Linq.Expressions;
+using CV.Model.Dominio;
 
 namespace CV.Data
 {
@@ -256,6 +257,21 @@ namespace CV.Data
 
 
         }
+
+        public List<Cidade> CarregarCidadeViagemAerea(int? IdentificadorViagem)
+        {
+            IQueryable<Cidade> query = this.Context.ViagemAereaAeroportos.Where(d => d.ItemViagemAerea.IdentificadorViagem == IdentificadorViagem).Where(d=>d.TipoPonto != (int) enumTipoParada.Escala).Select(d => d.ItemCidade);
+
+            var queryJoin = query.GroupJoin(this.Context.CidadeGrupos.Where(d => d.IdentificadorViagem == IdentificadorViagem),
+                d => d.Identificador,
+                d => d.IdentificadorCidadeFilha,
+                (c, g) => new { cidade = g.Any() ? g.Select(d => d.ItemCidadePai).FirstOrDefault() : c });
+
+            return queryJoin.Where(d => d.cidade != null).Select(d => d.cidade).Distinct().OrderBy(d => d.Nome).ToList();
+
+
+        }
+
         public List<Cidade> CarregarCidadeLoja(int? IdentificadorViagem)
         {
             IQueryable<Cidade> query = this.Context.Lojas.Where(d => d.IdentificadorViagem == IdentificadorViagem).Select(d => d.ItemCidade);
@@ -474,6 +490,52 @@ namespace CV.Data
             if (IdentificadorCidade.HasValue)
                 query = query.Where(d => d.IdentificadorCidade == IdentificadorCidade || this.Context.CidadeGrupos.Where(e => e.IdentificadorCidadeFilha == d.IdentificadorCidade).Where(f => f.IdentificadorViagem == IdentificadorViagem).Where(e => e.IdentificadorCidadePai == IdentificadorCidade).Any());
             query = query.OrderByDescending(d => d.EntradaPrevista);
+
+
+
+            return query.ToList();
+        }
+
+        public List<ViagemAerea> ListarViagemAerea(int IdentificadorViagem, DateTime? DataDe, DateTime? DataAte, string Companhia, int? Tipo,
+            int Situacao, int? IdentificadorCidadeOrigem, int? IdentificadorCidadeDestino, int? IdentificadorViagemAerea)
+        {
+            IQueryable<ViagemAerea> query = this.Context.ViagemAereas;
+            //.Include("ItemAtracaoPai").Include("Fotos.ItemFoto")
+            //    .Include("Gastos").Include("Gastos.ItemGasto").Include("Gastos.ItemGasto.ItemUsuario")
+            //    .Include("Avaliacoes");
+            if (IdentificadorViagemAerea.HasValue)
+                query = query.Where(d => d.Identificador == IdentificadorViagemAerea);
+            query = query.Where(d => d.IdentificadorViagem == IdentificadorViagem);
+            if (DataDe.HasValue)
+                query = query.Where(d => d.DataPrevista >= DataDe);
+            if (DataAte.HasValue)
+            {
+                DataAte = DataAte.GetValueOrDefault().AddDays(1);
+                query = query.Where(d => d.DataPrevista < DataAte);
+            }
+            if (Tipo.HasValue)
+                query = query.Where(d => d.Tipo == Tipo);
+
+            if (!string.IsNullOrWhiteSpace(Companhia))
+                query = query.Where(d => d.CompanhiaAerea.Contains(Companhia));
+
+
+            if (Situacao == 1)
+                query = query.Where(d => d.Aeroportos.Where(e => e.TipoPonto == (int)enumTipoParada.Origem && e.DataChegada.HasValue).Any())
+                    .Where(d => d.Aeroportos.Where(e => e.TipoPonto == (int)enumTipoParada.Destino && !e.DataPartida.HasValue).Any());
+            else if (Situacao == 2)
+                query = query.Where(d => d.Aeroportos.Where(e => e.TipoPonto == (int)enumTipoParada.Origem && e.DataChegada.HasValue).Any())
+                    .Where(d => d.Aeroportos.Where(e => e.TipoPonto == (int)enumTipoParada.Destino && e.DataPartida.HasValue).Any());
+            else if (Situacao == 3)
+                query = query.Where(d => d.Aeroportos.Where(e => e.TipoPonto == (int)enumTipoParada.Origem && !e.DataChegada.HasValue).Any());
+            query = query.Where(d => !d.DataExclusao.HasValue);
+
+            if (IdentificadorCidadeOrigem.HasValue)
+                query = query.Where(d => d.Aeroportos.Where(e=> e.TipoPonto == (int)enumTipoParada.Origem).Where(e => e.IdentificadorCidade == IdentificadorCidadeOrigem || this.Context.CidadeGrupos.Where(f => f.IdentificadorCidadeFilha == e.IdentificadorCidade).Where(f => f.IdentificadorViagem == IdentificadorViagem).Where(f => f.IdentificadorCidadePai == IdentificadorCidadeOrigem).Any()).Any());
+            if (IdentificadorCidadeDestino.HasValue)
+                query = query.Where(d => d.Aeroportos.Where(e => e.TipoPonto == (int)enumTipoParada.Destino).Where(e => e.IdentificadorCidade == IdentificadorCidadeDestino || this.Context.CidadeGrupos.Where(f => f.IdentificadorCidadeFilha == e.IdentificadorCidade).Where(f => f.IdentificadorViagem == IdentificadorViagem).Where(f => f.IdentificadorCidadePai == IdentificadorCidadeDestino).Any()).Any());
+
+            query = query.OrderByDescending(d => d.DataPrevista);
 
 
 

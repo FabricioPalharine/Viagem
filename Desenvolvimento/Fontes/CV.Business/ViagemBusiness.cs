@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using CV.Business.Library;
 using CV.Data;
 
@@ -3196,6 +3197,38 @@ using(					ViagemRepository data = new ViagemRepository())
 					serviceResult.Add(resultado);
 				 }
 				 }
+			}
+			public void SalvarViagemAerea_Completa (ViagemAerea itemGravar)
+			{
+				 LimparValidacao();
+				 ValidateService(itemGravar);
+					ValidarRegrasNegocioViagemAerea(itemGravar);
+				 if (IsValid())
+				 {
+					using(ViagemRepository data = new ViagemRepository())
+				 {
+					data.SalvarViagemAerea_Completa(itemGravar);
+					Message msg = new Message();
+					msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_SalvarViagemAerea_Completa_OK") });
+					ServiceResult resultado = new ServiceResult();
+					resultado.Success = true;
+					resultado.Messages.Add(msg);
+					serviceResult.Add(resultado);
+				 }
+				 }
+			}
+			public ViagemAerea SelecionarViagemAerea_Completa (int? Identificador)
+			{
+				 LimparValidacao();
+ViagemAerea RetornoAcao = null;
+				if (IsValid())
+				{
+using(					ViagemRepository data = new ViagemRepository())
+				 {
+					RetornoAcao = data.SelecionarViagemAerea_Completa(Identificador);
+				}
+			}
+				return RetornoAcao;
 			}
 	}
 

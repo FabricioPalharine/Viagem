@@ -213,7 +213,9 @@
             if (vm.VisitaIniciada) {
                 vm.itemAtracao.Chegada = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
                 vm.itemAtracao.strHoraChegada = moment(new Date()).format("HH:mm:ss");
-
+                angular.forEach(vm.ListaParticipante, function (item) {
+                    item.Selecionado = true;
+                });
             }
             else {
                 vm.itemAtracao.Chegada = null;
@@ -231,15 +233,11 @@
             if (vm.VisitaConcluida) {
                 vm.itemAtracao.Partida = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
                 vm.itemAtracao.strHoraPartida = moment(new Date()).format("HH:mm:ss");
-                angular.forEach(vm.ListaParticipante, function (item) {
-                    item.Selecionado = true;
-                });
+              
             }
             else {
                 vm.itemAtracao.Partida = vm.itemAtracao.strHoraPartida = null;
-                angular.forEach(vm.ListaParticipante, function (item) {
-                    item.Selecionado = false;
-                });
+               
             }
         };
 

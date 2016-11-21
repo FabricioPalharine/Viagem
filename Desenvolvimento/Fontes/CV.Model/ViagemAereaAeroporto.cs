@@ -20,7 +20,6 @@ namespace CV.Model
 			[NotNullValidator(MessageTemplateResourceName="ViagemAereaAeroporto_IdentificadorViagemAerea",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public int? IdentificadorViagemAerea { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="ViagemAereaAeroporto_IdentificadorCidade",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public int? IdentificadorCidade { get; set; }
 
 			public string Aeroporto { get; set; }
@@ -41,10 +40,8 @@ private void ValidarAeroporto(Microsoft.Practices.EnterpriseLibrary.Validation.V
   }
 }
 
-			[NotNullValidator(MessageTemplateResourceName="ViagemAereaAeroporto_Latitude",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public decimal? Latitude { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="ViagemAereaAeroporto_Longitude",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public decimal? Longitude { get; set; }
 
 			[NotNullValidator(MessageTemplateResourceName="ViagemAereaAeroporto_TipoPonto",MessageTemplateResourceType=typeof(MensagemModelo))]
@@ -58,7 +55,6 @@ private void ValidarAeroporto(Microsoft.Practices.EnterpriseLibrary.Validation.V
 
 			public ViagemAerea ItemViagemAerea { get; set; }
 
-			[StringLengthValidator(50,MessageTemplateResourceName="ViagemAereaAeroporto_CodigoPlace_Tamanho",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public string CodigoPlace { get; set; }
 
 			public DateTime? DataAtualizacao { get; set; }

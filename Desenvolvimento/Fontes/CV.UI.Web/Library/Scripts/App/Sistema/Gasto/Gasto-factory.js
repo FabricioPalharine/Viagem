@@ -62,6 +62,12 @@
                   controller: 'SalvarCustoHotel'
               }
           },
+          SalvarCustoViagemAerea: {
+              method: 'POST',
+              params: {
+                  controller: 'SalvarCustoViagemAerea'
+              }
+          },
       });
     return UserBase;
   }

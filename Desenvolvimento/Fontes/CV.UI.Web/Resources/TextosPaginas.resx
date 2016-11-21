@@ -187,7 +187,7 @@
     <value>Viagem</value>
   </data>
   <data name="Home_ViagemAerea" xml:space="preserve">
-    <value>Viagem Aérea</value>
+    <value>Deslocamento</value>
   </data>
   <data name="Home_AlterarSenha" xml:space="preserve">
     <value>Alterar Senha</value>
@@ -814,7 +814,7 @@
     <value>Viagem</value>
   </data>
   <data name="ViagemAerea_CompanhiaAerea" xml:space="preserve">
-    <value>CompanhiaAerea</value>
+    <value>Companhia</value>
   </data>
   <data name="ViagemAerea_DataPrevista" xml:space="preserve">
     <value>DataPrevista</value>
@@ -1193,5 +1193,44 @@
   </data>
   <data name="Hotel_Todos" xml:space="preserve">
     <value>Todos</value>
+  </data>
+  <data name="ViagemAerea_Tipo" xml:space="preserve">
+    <value>Tipo</value>
+  </data>
+  <data name="ViagemAerea_Descricao" xml:space="preserve">
+    <value>Descrição</value>
+  </data>
+  <data name="ViagemAerea_Aeroporto" xml:space="preserve">
+    <value>Aeroporto/Porto/Estação</value>
+  </data>
+  <data name="ViagemAerea_Chegada" xml:space="preserve">
+    <value>Chegada Aeroporto/Porto/Estação</value>
+  </data>
+  <data name="ViagemAerea_CidadeDestino" xml:space="preserve">
+    <value>Cidade Destino</value>
+  </data>
+  <data name="ViagemAerea_CidadeOrigem" xml:space="preserve">
+    <value>Cidade Origem</value>
+  </data>
+  <data name="ViagemAerea_DataChegada" xml:space="preserve">
+    <value>Data Chegada Aeroporto/Porto/Estação</value>
+  </data>
+  <data name="ViagemAerea_DataPartida" xml:space="preserve">
+    <value>Data Partida Aeroporto/Porto/Estação</value>
+  </data>
+  <data name="ViagemAerea_Destino" xml:space="preserve">
+    <value>Destino</value>
+  </data>
+  <data name="ViagemAerea_Escala" xml:space="preserve">
+    <value>Escala</value>
+  </data>
+  <data name="ViagemAerea_Origem" xml:space="preserve">
+    <value>Origem</value>
+  </data>
+  <data name="ViagemAerea_Participantes" xml:space="preserve">
+    <value>Participantes</value>
+  </data>
+  <data name="ViagemAerea_Partida" xml:space="preserve">
+    <value>Partida Aeroporto/Porto/Estação</value>
   </data>
 </root>

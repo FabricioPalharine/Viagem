@@ -35,5 +35,8 @@ namespace CV.UI.Web.Models
         public string Tipo { get; set; }
         public int? Situacao { get; set; }
 
+        public int? TipoInteiro { get; set; }
+        public int? IdentificadorCidade2 { get; set; }
+
     }
 }
