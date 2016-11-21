@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using System.Net;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace CV.Business
 
@@ -292,6 +293,22 @@ namespace CV.Business
         private void ValidarRegrasExclusaoHotelEvento(HotelEvento itemGravar)
         {
         }
+
+        private void ValidarRegrasNegocioGastoAtracao(GastoAtracao itemGravar)
+        {
+        }
+        private void ValidarRegrasExclusaoGastoAtracao(GastoAtracao itemGravar)
+        {
+        }
+
+        private void ValidarRegrasExclusaoGastoDividido(GastoDividido itemGravar)
+        {
+        }
+
+        private void ValidarRegrasNegocioGastoDividido(GastoDividido itemGravar)
+        {
+        }
+
         public List<Usuario> ListarUsuario(Expression<Func<Usuario, bool>> predicate)
         {
             using (ViagemRepository data = new ViagemRepository())
@@ -336,6 +353,22 @@ namespace CV.Business
             }
         }
 
+        public List<Pais> ListarPais(Expression<Func<Pais, bool>> predicate)
+        {
+            using (ViagemRepository data = new ViagemRepository())
+            {
+                return data.ListarPais(predicate);
+            }
+        }
+
+        public List<Cidade> ListarCidade(Expression<Func<Cidade, bool>> predicate)
+        {
+            using (ViagemRepository data = new ViagemRepository())
+            {
+                return data.ListarCidade(predicate);
+            }
+        }
+
         public void SalvarUsuario(Usuario itemGravar, List<ParticipanteViagem> Participantes, List<RequisicaoAmizade> Requisicoes, List<Amigo> Amigos)
         {
             LimparValidacao();
@@ -358,29 +391,8 @@ namespace CV.Business
             if (ItemUsuario != null)
             {
                 WebClient client = new WebClient();
-
-                if (ItemUsuario.DataToken.GetValueOrDefault().AddSeconds(ItemUsuario.Lifetime.GetValueOrDefault(0) - 60) < DateTime.Now)
-                {
-                    // creates the post data for the POST request
-                    System.Collections.Specialized.NameValueCollection values = new System.Collections.Specialized.NameValueCollection();
-                    values.Add("client_id", "210037759249.apps.googleusercontent.com");
-                    values.Add("client_secret", "H1CNNlmDu-uNnGll5ylQmvgp");
-                    values.Add("refresh_token", ItemUsuario.RefreshToken);
-                    values.Add("grant_type", "refresh_token");
-
-                    //try
-                    //{
-                    byte[] response = client.UploadValues("https://accounts.google.com/o/oauth2/token", values);
-
-                    string TokenInformation = System.Text.Encoding.UTF8.GetString(response);
-
-                    var retornoCompleto = JsonConvert.DeserializeObject<dynamic>(TokenInformation);
-
-                    ItemUsuario.Token = retornoCompleto.access_token;
-                    ItemUsuario.Lifetime = retornoCompleto.expires_in;
-                    SalvarUsuario(ItemUsuario);
-                }
-
+                AtualizarTokenUsuario(ItemUsuario);
+                //VerificarAlbum(ItemUsuario);
                 string UserInformation = client.DownloadString("https://www.googleapis.com/oauth2/v2/userinfo?access_token=" + ItemUsuario.Token);
                 var userinfo = JsonConvert.DeserializeObject<dynamic>(UserInformation);
 
@@ -399,6 +411,32 @@ namespace CV.Business
             return itemResultado;
         }
 
+        public void AtualizarTokenUsuario(Usuario ItemUsuario)
+        {
+            if (ItemUsuario.DataToken.GetValueOrDefault().AddSeconds(ItemUsuario.Lifetime.GetValueOrDefault(0) - 60) < DateTime.Now)
+            {
+                WebClient client = new WebClient();
+                // creates the post data for the POST request
+                System.Collections.Specialized.NameValueCollection values = new System.Collections.Specialized.NameValueCollection();
+                values.Add("client_id", "210037759249.apps.googleusercontent.com");
+                values.Add("client_secret", "H1CNNlmDu-uNnGll5ylQmvgp");
+                values.Add("refresh_token", ItemUsuario.RefreshToken);
+                values.Add("grant_type", "refresh_token");
+
+                //try
+                //{
+                byte[] response = client.UploadValues("https://accounts.google.com/o/oauth2/token", values);
+
+                string TokenInformation = System.Text.Encoding.UTF8.GetString(response);
+
+                var retornoCompleto = JsonConvert.DeserializeObject<dynamic>(TokenInformation);
+
+                ItemUsuario.Token = retornoCompleto.access_token;
+                ItemUsuario.Lifetime = retornoCompleto.expires_in;
+                ItemUsuario.DataToken = DateTime.Now;
+                SalvarUsuario(ItemUsuario);
+            }
+        }
 
         public UsuarioLogado LoginAplicativo(DadosGoogleToken itemToken)
         {
@@ -413,7 +451,7 @@ namespace CV.Business
             PocoLogin itemLogin = new PocoLogin() { EMail = userinfo.email, Nome = userinfo.name, Codigo = userinfo.id };
             var ItemUsuario = ListarUsuario(d => d.Codigo == itemLogin.Codigo).FirstOrDefault();
             ItemUsuario = CadastrarUsuario(itemLogin, new ViagemBusiness(), ItemUsuario, itemToken.access_token, itemToken.refresh_token, Convert.ToInt32(itemToken.expires_in));
-
+            //VerificarAlbum(ItemUsuario);
             AuthenticationToken token = new AuthenticationToken();
             token.Cultura = "pt-br";
             token.Token = ItemUsuario.Token;
@@ -455,7 +493,7 @@ namespace CV.Business
             var retornoCompleto = JsonConvert.DeserializeObject<dynamic>(TokenInformation);
             ItemUsuario = CadastrarUsuario(itemLogin, biz, ItemUsuario, Convert.ToString(retornoCompleto.access_token), Convert.ToString(retornoCompleto.refresh_token), Convert.ToInt32(retornoCompleto.expires_in));
 
-
+            //VerificarAlbum(ItemUsuario);
 
             //}
             //catch (WebException ex)
@@ -501,7 +539,7 @@ namespace CV.Business
                     itemAmizade.IdentificadorUsuarioRequisitado = ItemUsuario.Identificador;
                     requisicoesAjustadas.Add(itemAmizade);
                 }
-               
+
                 foreach (Amigo itemParticipante in ListarAmigo(d => d.EMail == itemLogin.EMail && !d.IdentificadorAmigo.HasValue))
                 {
                     itemParticipante.IdentificadorUsuario = ItemUsuario.Identificador;
@@ -706,6 +744,502 @@ namespace CV.Business
                 return data.ListarUsuarioAmigo(identificadorUsuario);
             }
         }
-    }
 
+        public List<Viagem> ListarViagem(int? IdentificadorParticipante, string Nome, bool? Aberto, DateTime? DataInicioDe, DateTime? DataFimDe, DateTime? DataInicioAte, DateTime? DataFimAte, int? IdentificadorUsuario)
+        {
+            using (ViagemRepository data = new ViagemRepository())
+            {
+                return data.ListarViagem(IdentificadorParticipante, Nome, Aberto, DataInicioDe, DataInicioAte, DataFimDe, DataFimAte, IdentificadorUsuario);
+            }
+        }
+
+        public string CriarAlbum(Usuario itemUsuario, string Nome)
+        {
+            AtualizarTokenUsuario(itemUsuario);
+            using (WebClient wc = new WebClient())
+            {
+
+                wc.Headers[HttpRequestHeader.Authorization] = "Bearer " + itemUsuario.Token;
+                wc.Headers["GData-Version"] = "2";
+                //var jsonData = wc.DownloadString("https://picasaweb.google.com/data/feed/api/user/default?alt=json");
+                //var albuminfo = JsonConvert.DeserializeObject<dynamic>(jsonData);
+                //var entries = ((Newtonsoft.Json.Linq.JArray)albuminfo.feed.entry);
+                //foreach (var itemEntry in entries)
+                //{
+                //    if (itemEntry["title"].First.First.ToString() == "CurtindoViagem")
+                //    {
+                //        return itemEntry["gphoto$id"].First.First.ToString();
+                //    }
+                //}
+
+                string XMLEntrada = @"<entry xmlns='http://www.w3.org/2005/Atom'
+    xmlns:media='http://search.yahoo.com/mrss/'
+    xmlns:gphoto='http://schemas.google.com/photos/2007'>
+  <title type='text'>" + Nome + @"</title>
+  <gphoto:access>public</gphoto:access>
+  <category scheme='http://schemas.google.com/g/2005#kind'
+    term='http://schemas.google.com/photos/2007#album'></category>
+</entry>";
+                wc.Headers[HttpRequestHeader.ContentType] = "application/atom+xml";
+
+
+                string URI = "https://picasaweb.google.com/data/feed/api/user/default?alt=json";
+                string HtmlResult = wc.UploadString(URI, "POST", XMLEntrada);
+                var newalbuminfo = JsonConvert.DeserializeObject<dynamic>(HtmlResult);
+                return ((Newtonsoft.Json.Linq.JObject)newalbuminfo.entry)["gphoto$id"].First.First.ToString();
+            }
+
+        }
+
+        public void SalvarViagem_Completa_Album(Viagem itemViagem)
+        {
+
+            ValidateService(itemViagem);
+            ValidarRegrasNegocioViagem(itemViagem);
+            if (IsValid())
+            {
+                if (string.IsNullOrEmpty(itemViagem.CodigoAlbum))
+                {
+                    Usuario itemUsuario = SelecionarUsuario(itemViagem.IdentificadorUsuario);
+                    itemViagem.CodigoAlbum = CriarAlbum(itemUsuario, itemViagem.Nome);
+                }
+                SalvarViagem_Completa(itemViagem);
+            }
+        }
+
+        public ResultadoOperacao CadastrarFoto(UploadFoto itemFoto, Usuario itemUsuario, int? IdentificadoViagem)
+        {
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+            Viagem itemViagem = SelecionarViagem(IdentificadoViagem);
+            AtualizarTokenUsuario(itemUsuario);
+            SubirImagemPicasa(itemFoto, itemUsuario, itemViagem);
+            itemResultado.ItemRegistro = CadastrarNovaFoto(itemViagem, itemUsuario, itemFoto, false);
+            return itemResultado;
+        }
+
+        private void SubirImagemPicasa(UploadFoto itemFoto, Usuario itemUsuario, Viagem itemViagem)
+        {
+            string Album = itemViagem.CodigoAlbum;
+            string Base64 = itemFoto.Base64;
+            if (!string.IsNullOrEmpty(Base64))
+            {
+                int Posicao = Base64.IndexOf("base64,");
+                if (Posicao >= 0)
+                    Base64 = Base64.Substring(Posicao + 7);
+            }
+            byte[] Dados = Convert.FromBase64String(Base64);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://picasaweb.google.com/data/feed/api/user/default/albumid/" + Album + "?alt=json-in-script");
+            request.Method = "POST";
+            request.ContentType = itemFoto.ImageMime;
+            request.ContentLength = Dados.Length;
+            request.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + itemUsuario.Token);
+
+            using (Stream requestStream = request.GetRequestStream())
+            {
+                requestStream.Write(Dados, 0, Dados.Length);
+
+                requestStream.Close();
+            }
+
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            StreamReader responseReader = new StreamReader(response.GetResponseStream());
+
+            string responseStr = responseReader.ReadToEnd();
+            responseStr = responseStr.Substring(0, responseStr.Length - 2).Replace("gdata.io.handleScriptLoaded(", "");
+
+            var newimageinfo = JsonConvert.DeserializeObject<dynamic>(responseStr);
+
+            itemFoto.CodigoGoogle = ((Newtonsoft.Json.Linq.JContainer)(newimageinfo.entry["gphoto$id"])).First.First.ToString();
+
+
+            itemFoto.LinkGoogle = newimageinfo.entry["media$group"]["media$content"][0]["url"].ToString();
+            itemFoto.Thumbnail = newimageinfo.entry["media$group"]["media$thumbnail"][1]["url"].ToString();
+        }
+
+        public ResultadoOperacao CadastrarVideo(UploadFoto itemFoto, Usuario itemUsuario, int? IdentificadoViagem)
+        {
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+            Viagem itemViagem = SelecionarViagem(IdentificadoViagem);
+
+            itemResultado.ItemRegistro =  CadastrarNovaFoto(itemViagem, itemUsuario, itemFoto, true);
+
+            return itemResultado;
+        }
+
+        public Foto CadastrarNovaFoto(Viagem itemViagem, Usuario itemUsuario, UploadFoto itemFoto, bool Video)
+        {
+
+            Foto itemGravarFoto = new Foto();
+            itemGravarFoto.IdentificadorViagem = itemViagem.Identificador;
+            itemGravarFoto.Atracoes = new List<FotoAtracao>();
+            itemGravarFoto.CodigoFoto = itemFoto.CodigoGoogle;
+            itemGravarFoto.Data = itemFoto.DataArquivo;
+            itemGravarFoto.DataAtualizacao = DateTime.Now;
+            itemGravarFoto.Hoteis = new List<FotoHotel>();
+            itemGravarFoto.Comentario = itemFoto.Comentario;
+            itemGravarFoto.IdentificadorUsuario = itemUsuario.Identificador;
+            itemGravarFoto.ItensCompra = new List<FotoItemCompra>();
+
+            itemGravarFoto.Refeicoes = new List<FotoRefeicao>();
+            itemGravarFoto.TipoArquivo = itemFoto.ImageMime;
+            itemGravarFoto.Video = Video;
+            itemGravarFoto.LinkFoto = itemFoto.LinkGoogle;
+            itemGravarFoto.LinkThumbnail = itemFoto.Thumbnail;
+
+            if (itemFoto.Latitude.HasValue && itemFoto.Longitude.HasValue)
+            {
+                itemGravarFoto.Latitude = itemFoto.Latitude;
+                itemGravarFoto.Longitude = itemFoto.Longitude;
+            }
+            else
+                LocalizarPosicaoFoto(itemViagem.Identificador, itemUsuario.Identificador, itemGravarFoto.Data, itemGravarFoto);
+
+            if (itemGravarFoto.Latitude.HasValue && itemGravarFoto.Longitude.HasValue)
+            {
+                itemGravarFoto.IdentificadorCidade = RetornarCidadeGeocoding(itemGravarFoto.Latitude, itemGravarFoto.Longitude);
+            }
+            DetectarAssociacoesFoto(itemUsuario.Identificador, itemViagem.Identificador, itemGravarFoto,itemFoto);
+            SalvarFoto_Completa(itemGravarFoto);
+            itemGravarFoto = SelecionarFoto_Completa(itemGravarFoto.Identificador);
+            itemGravarFoto.Atracoes.ToList().ForEach(d => { d.ItemFoto = null; d.ItemAtracao.Fotos = null; d.ItemAtracao.ItemAtracaoPai = null; });
+            itemGravarFoto.Hoteis.ToList().ForEach(d => { d.ItemFoto = null; d.ItemHotel.Fotos = null; });
+            itemGravarFoto.ItensCompra.ToList().ForEach(d => { d.ItemFoto = null; d.ItemItemCompra.Fotos = null; });
+            itemGravarFoto.Refeicoes.ToList().ForEach(d => { d.ItemFoto = null; d.ItemRefeicao.Fotos = null; });
+
+            return itemGravarFoto;
+        }
+
+        private void LocalizarPosicaoFoto(int? IdentificadorUsuario, int? IdentificadorViagem, DateTime? data, Foto itemGravarFoto)
+        {
+            DateTime? DataMinima = data.GetValueOrDefault().AddMinutes(-5);
+            DateTime? DataMaxima = data.GetValueOrDefault().AddMinutes(5);
+            var lista = ListarPosicao(d => d.IdentificadorViagem == IdentificadorViagem && d.IdentificadorUsuario == IdentificadorUsuario && d.DataLocal >= DataMinima && d.DataLocal <= DataMaxima);
+            if (!lista.Any())
+                lista = ListarPosicao(d => d.IdentificadorViagem == IdentificadorViagem && d.DataLocal >= DataMinima && d.DataLocal <= DataMaxima);
+            if (lista.Any())
+            {
+                var itemPosicao = lista.OrderBy(d => Math.Abs(data.GetValueOrDefault().Subtract(d.DataLocal.GetValueOrDefault()).TotalSeconds)).FirstOrDefault();
+                itemGravarFoto.Longitude = itemPosicao.Longitude;
+                itemGravarFoto.Latitude = itemPosicao.Latitude;
+            }
+        }
+
+
+        public List<HotelEvento> ListarHotelEvento(Expression<Func<HotelEvento, bool>> predicate)
+        {
+            using (ViagemRepository data = new ViagemRepository())
+            {
+                return data.ListarHotelEvento(predicate);
+            }
+        }
+
+        public List<Hotel> ListarHotelData(int? IdentificadorViagem, DateTime? Data)
+        {
+            using (ViagemRepository data = new ViagemRepository())
+            {
+                return data.ListarHotelData(IdentificadorViagem,Data);
+            }
+        }
+
+        private void LocalizarAtracoesPai(int? IdentificadorAtracao, List<int?> AtracoesPai)
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            Atracao itemAtracao = biz.SelecionarAtracao(IdentificadorAtracao);
+            if (itemAtracao.IdentificadorAtracaoPai.HasValue && !AtracoesPai.Contains(itemAtracao.IdentificadorAtracaoPai))
+            {
+                AtracoesPai.Add(itemAtracao.IdentificadorAtracaoPai);
+                LocalizarAtracoesPai(itemAtracao.IdentificadorAtracaoPai, AtracoesPai);
+                
+            }
+        }
+
+        private void DetectarAssociacoesFoto(int? IdentificadorUsuario, int? IdentificadorViagem, Foto itemGravarFoto, UploadFoto itemFoto)
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            if (!itemFoto.IdentificadorAtracao.HasValue)
+            {
+                var ListaAtracoes = ListarAtracao(d => d.IdentificadorViagem == IdentificadorViagem && d.Chegada <= itemGravarFoto.Data &&
+                (!d.Partida.HasValue || d.Partida >= itemGravarFoto.Data) && !d.DataExclusao.HasValue);
+                foreach (var itemAtracao in ListaAtracoes)
+                    itemGravarFoto.Atracoes.Add(new FotoAtracao() { DataAtualizacao = DateTime.Now, IdentificadorAtracao = itemAtracao.Identificador });
+            }
+            else
+            {
+                List<int?> AtracoesPai = new List<int?>();
+                AtracoesPai.Add(itemFoto.IdentificadorAtracao);
+                LocalizarAtracoesPai(itemFoto.IdentificadorAtracao, AtracoesPai);
+                foreach (var IdentificadorAtracao in AtracoesPai)
+                 itemGravarFoto.Atracoes.Add(new FotoAtracao() { DataAtualizacao = DateTime.Now, IdentificadorAtracao = IdentificadorAtracao });
+                
+               
+                
+
+            }
+            if (itemFoto.IdentificadorHotel.HasValue)
+            {
+                itemGravarFoto.Hoteis.Add(new FotoHotel() { DataAtualizacao = DateTime.Now, IdentificadorHotel = itemFoto.IdentificadorHotel });
+
+            }
+            else
+                foreach (var itemHotel in ListarHotelData(IdentificadorViagem, itemGravarFoto.Data))
+                    itemGravarFoto.Hoteis.Add(new FotoHotel() { DataAtualizacao = DateTime.Now, IdentificadorHotel = itemHotel.Identificador });
+
+
+            if (itemFoto.IdentificadorItemCompra.HasValue)
+            {
+                itemGravarFoto.ItensCompra.Add(new FotoItemCompra() { DataAtualizacao = DateTime.Now, IdentificadorItemCompra = itemFoto.IdentificadorItemCompra });
+
+            }
+
+            if (itemFoto.IdentificadorRefeicao.HasValue)
+            {
+                itemGravarFoto.Refeicoes.Add(new FotoRefeicao() { DataAtualizacao = DateTime.Now, IdentificadorRefeicao = itemFoto.IdentificadorRefeicao });
+                Refeicao itemRefeicao = biz.SelecionarRefeicao(itemFoto.IdentificadorRefeicao);
+                if (itemRefeicao.IdentificadorAtracao.HasValue)
+                {
+                    List<int?> AtracoesPai = new List<int?>();
+                    AtracoesPai.Add(itemRefeicao.IdentificadorAtracao);
+                    LocalizarAtracoesPai(itemRefeicao.IdentificadorAtracao, AtracoesPai);
+                    foreach (var IdentificadorAtracao in AtracoesPai)
+                        itemGravarFoto.Atracoes.Add(new FotoAtracao() { DataAtualizacao = DateTime.Now, IdentificadorAtracao = IdentificadorAtracao });
+                }
+            }
+            else
+            {
+                DateTime dataInicio = itemGravarFoto.Data.GetValueOrDefault().AddMinutes(-5);
+                DateTime dataFim = itemGravarFoto.Data.GetValueOrDefault().AddMinutes(5);
+
+                var itemRefeicao = ListarRefeicao(d => d.IdentificadorViagem == IdentificadorViagem && d.Data >= dataInicio && d.Data <= dataFim).FirstOrDefault();
+                if (itemRefeicao != null)
+                    itemGravarFoto.Refeicoes.Add(new FotoRefeicao() { DataAtualizacao = DateTime.Now, IdentificadorRefeicao = itemRefeicao.Identificador });
+            }
+        }
+
+        public List<Posicao> ListarPosicao(Expression<Func<Posicao, bool>> predicate)
+        {
+            using (ViagemRepository data = new ViagemRepository())
+            {
+                return data.ListarPosicao(predicate);
+            }
+        }
+
+        public int? RetornarCidadeGeocoding(decimal? latitude, decimal? longitude)
+        {
+            WebClient client = new WebClient();
+
+
+            string LocationInformation = client.DownloadString("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude.GetValueOrDefault(0).ToString("F6", System.Globalization.CultureInfo.GetCultureInfo("en-Us")) + "," + longitude.GetValueOrDefault(0).ToString("F6", System.Globalization.CultureInfo.GetCultureInfo("en-Us")) + "&key=AIzaSyAlUpOpwZWS_ZGlMAtB6lY76oy1QBWk97g");
+
+            var locationinfo = JsonConvert.DeserializeObject<dynamic>(LocationInformation);
+            int? IdentificadorCidade = null;
+            if (locationinfo.status == "OK")
+            {
+                string Cidade = null;
+                string Estado = string.Empty;
+                string Pais = null;
+                string SiglaPais = null;
+                var entries = ((Newtonsoft.Json.Linq.JArray)locationinfo.results);
+                foreach (var itemResult in entries)
+                {
+
+                    if (itemResult["types"].ToString().IndexOf("administrative_area_level_2", StringComparison.InvariantCultureIgnoreCase) >= 0
+                        || itemResult["types"].ToString().IndexOf("locality", StringComparison.InvariantCultureIgnoreCase) >= 0)
+                    {
+                        Cidade = itemResult["address_components"][0]["long_name"].ToString();
+                    }
+                    if (itemResult["types"].ToString().IndexOf("administrative_area_level_1", StringComparison.InvariantCultureIgnoreCase) >= 0)
+                    {
+                        Estado = itemResult["address_components"][0]["long_name"].ToString();
+                    }
+                    if (itemResult["types"].ToString().IndexOf("country", StringComparison.InvariantCultureIgnoreCase) >= 0)
+                    {
+                        Pais = itemResult["address_components"][0]["long_name"].ToString();
+                        SiglaPais = itemResult["address_components"][0]["short_name"].ToString();
+                    }
+                }
+                if (!string.IsNullOrEmpty(Cidade) && !string.IsNullOrEmpty(Pais))
+                {
+                    Pais itemPais = ListarPais(d => d.Nome == Pais).FirstOrDefault();
+                    if (itemPais == null)
+                    {
+                        itemPais = new Model.Pais();
+                        itemPais.Nome = Pais;
+                        itemPais.Sigla = SiglaPais;
+                        SalvarPais(itemPais);
+                    }
+                    Cidade itemCidade = ListarCidade(d => d.IdentificadorPais == itemPais.Identificador && d.Nome == Cidade && d.Estado == Estado).FirstOrDefault();
+                    if (itemCidade == null)
+                    {
+                        itemCidade = new Model.Cidade();
+                        itemCidade.IdentificadorPais = itemPais.Identificador;
+                        itemCidade.Nome = Cidade;
+                        itemCidade.Estado = Estado;
+                        SalvarCidade(itemCidade);
+                    }
+                    IdentificadorCidade = itemCidade.Identificador;
+
+                }
+            }
+            return IdentificadorCidade;
+        }
+
+        public List<Foto> ListarFotos(int? IdentificadorFoto, int IdentificadorViagem, DateTime? DataDe, DateTime? DataAte, string Comentario, List<int?> IdentificadorAtracao,
+           List<int?> IdentificadorHotel, List<int?> IdentificadorRefeicao, int? IdentificadorCidade, int Skip, int Count)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                var lista = repositorio.ListarFotos(IdentificadorFoto,IdentificadorViagem, DataDe, DataAte, Comentario, IdentificadorAtracao, IdentificadorHotel, IdentificadorRefeicao, IdentificadorCidade, Skip,Count);
+                foreach (var itemFoto in lista)
+                {
+                    itemFoto.Atracoes.ToList().ForEach(d => { d.ItemFoto = null; d.ItemAtracao.Fotos = null; d.ItemAtracao.ItemAtracaoPai = null; });
+                    itemFoto.Hoteis.ToList().ForEach(d => { d.ItemFoto = null; d.ItemHotel.Fotos = null; });
+                    itemFoto.ItensCompra.ToList().ForEach(d => { d.ItemFoto = null; d.ItemItemCompra.Fotos = null; });
+                    itemFoto.Refeicoes.ToList().ForEach(d => { d.ItemFoto = null; d.ItemRefeicao.Fotos = null; });
+
+                }
+                return lista;
+            }
+        }
+
+        public List<Cidade> CarregarCidadeViagemFoto(int? IdentificadorViagem)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.CarregarCidadeViagemFoto(IdentificadorViagem);
+            }
+        }
+
+        public List<Cidade> CarregarCidadeAtracao(int? IdentificadorViagem)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.CarregarCidadeAtracao(IdentificadorViagem);
+            }
+        }
+
+        public List<Cidade> CarregarCidadeRefeicao(int? IdentificadorViagem)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.CarregarCidadeRefeicao(IdentificadorViagem);
+            }
+        }
+
+        public List<Cidade> CarregarCidadeHotel(int? IdentificadorViagem)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.CarregarCidadeHotel(IdentificadorViagem);
+            }
+        }
+
+        public List<Cidade> CarregarCidadeLoja(int? IdentificadorViagem)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.CarregarCidadeLoja(IdentificadorViagem);
+            }
+        }
+
+        public List<Refeicao> ListarRefeicao(Expression<Func<Refeicao, bool>> predicate)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarRefeicao(predicate);
+            }
+        }
+
+        public List<Hotel> ListarHotel(Expression<Func<Hotel, bool>> predicate)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarHotel(predicate);
+            }
+        }
+
+        public List<Atracao> ListarAtracao(Expression<Func<Atracao, bool>> predicate)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarAtracao(predicate);
+            }
+        }
+
+        public List<ItemCompra> ListarItemCompra(Expression<Func<ItemCompra, bool>> predicate)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarItemCompra(predicate);
+            }
+        }
+        public List<AvaliacaoAtracao> ListarAvaliacaoAtracao(Expression<Func<AvaliacaoAtracao, bool>> predicate)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarAvaliacaoAtracao(predicate);
+            }
+        }
+        public List<RefeicaoPedido> ListarRefeicaoPedido(Expression<Func<RefeicaoPedido, bool>> predicate)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarRefeicaoPedido(predicate);
+            }
+        }
+
+        public IList<Usuario> CarregarParticipantesViagem (int? IdentificadorViagem)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.CarregarParticipantesViagem(IdentificadorViagem);
+            }
+        }
+        
+
+        public List<Atracao> ListarAtracao(int IdentificadorViagem, DateTime? DataChegadaDe, DateTime? DataChegadaAte,
+             DateTime? DataPartidaDe, DateTime? DataPartidaAte, string Nome, string Tipo, int Situacao, int? IdentificadorCidade, int? IdentificadorAtracao)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                var ListaAtracoes = repositorio.ListarAtracao(IdentificadorViagem,DataChegadaDe,DataChegadaAte, DataPartidaDe, DataPartidaAte, Nome, Tipo, Situacao,
+                    IdentificadorCidade, IdentificadorAtracao);
+               foreach (var itemAtracao in ListaAtracoes)
+                {
+                    if (itemAtracao.ItemAtracaoPai != null)
+                        itemAtracao.ItemAtracaoPai.Atracoes = null;
+                }
+                return ListaAtracoes;
+            }
+        }
+
+        public List<Gasto> ListarGasto(int IdentificadorViagem, DateTime? DataDe, DateTime? DataAte, string Descricao,
+           int? IdentificadorUsuario, int? IdentificadorGasto)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarGasto(IdentificadorViagem, DataDe, DataAte, Descricao, IdentificadorUsuario, IdentificadorGasto);
+              
+            }
+        }
+
+        public List<Refeicao> ListarRefeicao(int IdentificadorViagem, DateTime? DataDe, DateTime? DataAte,
+             string Nome, string Tipo, int? IdentificadorCidade, int? IdentificadorRefeicao)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarRefeicao(IdentificadorViagem, DataDe, DataAte,Nome, Tipo, IdentificadorCidade,IdentificadorRefeicao);
+
+            }
+        }
+
+        public List<Hotel> ListarHotel(int IdentificadorViagem, DateTime? DataCheckInDe, DateTime? DataCheckInAte,
+         DateTime? DataCheckOutDe, DateTime? DataCheckOutAte, string Nome, int Situacao, int? IdentificadorCidade, int? IdentificadorHotel)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarHotel(IdentificadorViagem, DataCheckInDe, DataCheckInAte, DataCheckOutDe, DataCheckOutAte, Nome,Situacao,  IdentificadorCidade, IdentificadorHotel);
+
+            }
+        }
+      }
 }

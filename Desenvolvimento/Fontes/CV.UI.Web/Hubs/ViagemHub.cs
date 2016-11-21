@@ -75,11 +75,11 @@ namespace CV.UI.Web.Hubs
             }
         }
 
-        public void ViagemAtualizada(int IdentificadorViagem, string TipoAtualizacao)
+        public void ViagemAtualizada(int IdentificadorViagem, string TipoAtualizacao, int? Identificador, bool Inclusao)
         {
             var UsuariosConectados = UsuariosConetados.Where(x => x.IdentificadorViagem == IdentificadorViagem && x.AuthenticationToken != Context.ConnectionId);
             foreach (var itemUsuario in UsuariosConectados)
-                Clients.Client(itemUsuario.AuthenticationToken).AvisarAlertaAtualizacao(TipoAtualizacao);
+                Clients.Client(itemUsuario.AuthenticationToken).AvisarAlertaAtualizacao(TipoAtualizacao, Identificador, Inclusao);
         }
 
         public override System.Threading.Tasks.Task OnDisconnected(bool stopCalled)

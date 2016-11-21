@@ -207,10 +207,6 @@
       <AnsiNulls>On</AnsiNulls>
       <QuotedIdentifier>On</QuotedIdentifier>
     </Build>
-    <Build Include="dbo\Tables\GastoPosicao.sql">
-      <AnsiNulls>On</AnsiNulls>
-      <QuotedIdentifier>On</QuotedIdentifier>
-    </Build>
     <Build Include="dbo\Tables\GastoRefeicao.sql">
       <AnsiNulls>On</AnsiNulls>
       <QuotedIdentifier>On</QuotedIdentifier>
@@ -295,5 +291,10 @@
       <AnsiNulls>On</AnsiNulls>
       <QuotedIdentifier>On</QuotedIdentifier>
     </Build>
+    <Build Include="dbo\Tables\GastoAtracao.sql" />
+    <Build Include="dbo\Tables\GastoDividido.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="CV.Database.refactorlog" />
   </ItemGroup>
 </Project>

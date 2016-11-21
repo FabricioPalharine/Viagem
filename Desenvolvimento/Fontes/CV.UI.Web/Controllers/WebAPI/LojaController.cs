@@ -66,5 +66,14 @@ resultado.TotalRegistros = _itens.Count();
 
             return itemResultado;
         }
+
+        [Authorize]
+        [ActionName("CarregarFoto")]
+        [HttpGet]
+        public List<ItemCompra> CarregarFoto()
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            return biz.ListarItemCompra(d => d.ItemGastoCompra.ItemLoja.IdentificadorViagem == token.IdentificadorViagem);
+        }
     }
 }

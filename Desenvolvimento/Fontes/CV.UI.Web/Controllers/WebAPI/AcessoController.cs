@@ -28,7 +28,8 @@ namespace CV.UI.Web.Controllers.WebAPI
                 itemResultado.Sucesso = true;
                 itemResultado.Codigo = ItemUsuario.Identificador.GetValueOrDefault();
                 itemResultado.Cultura = "pt-br";
-               
+
+                //biz.VerificarAlbum(ItemUsuario);
                 biz.CarregarViagem(itemResultado, itemLogin.IdentificadorViagem);
 
                 AuthenticationToken token = new AuthenticationToken();
@@ -66,8 +67,9 @@ namespace CV.UI.Web.Controllers.WebAPI
                 token.IdentificadorViagem = itemLogin.IdentificadorViagem;
                 itemResultado.IdentificadorViagem = itemLogin.IdentificadorViagem;
                 itemResultado.NomeViagem = itemViagem.Nome;
-                itemResultado.PermiteEdicao = itemViagem.IdentificadorUsuario == itemResultado.Codigo || biz.ListarParticipanteViagem(d => d.IdentificadorUsuario == itemResultado.Codigo && d.IdentificadorViagem == itemLogin.IdentificadorViagem).Any();
-                itemResultado.VerCustos = itemResultado.PermiteEdicao || biz.ListarUsuarioGasto(d => d.IdentificadorUsuario == itemResultado.Codigo && d.IdentificadorViagem == itemLogin.IdentificadorViagem).Any();
+                itemResultado.PermiteEdicao = itemViagem.IdentificadorUsuario == token.IdentificadorUsuario || biz.ListarParticipanteViagem(d => d.IdentificadorUsuario == token.IdentificadorUsuario && d.IdentificadorViagem == itemLogin.IdentificadorViagem).Any();
+                itemResultado.VerCustos = itemResultado.PermiteEdicao || biz.ListarUsuarioGasto(d => d.IdentificadorUsuario == token.IdentificadorUsuario && d.IdentificadorViagem == itemLogin.IdentificadorViagem).Any();
+                itemResultado.Aberto = itemViagem.Aberto.GetValueOrDefault();
             }
             else
             {
@@ -107,5 +109,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             ViagemBusiness biz = new ViagemBusiness();
             return biz.CarregarAlertasUsuario(token);
         }
+
+       
     }
 }

@@ -36,9 +36,42 @@
               },
             //  transformResponse: parseArray,
               isArray: false
-          }
-         
-
+          },
+          CarregarFoto: {
+              method: 'GET',
+              params: {
+                  controller: 'CarregarFoto'
+              },
+              isArray: true
+          },
+          CarregarAtracao: {
+              method: 'GET',
+              params: {
+                  controller: 'CarregarAtracao'
+              },
+              isArray: true
+          },
+          CarregarRefeicao: {
+              method: 'GET',
+              params: {
+                  controller: 'CarregarRefeicao'
+              },
+              isArray: true
+          },
+          CarregarHotel: {
+              method: 'GET',
+              params: {
+                  controller: 'CarregarHotel'
+              },
+              isArray: true
+          },
+          CarregarLoja: {
+              method: 'GET',
+              params: {
+                  controller: 'CarregarLoja'
+              },
+              isArray: true
+          },
       });
     return UserBase;
   }

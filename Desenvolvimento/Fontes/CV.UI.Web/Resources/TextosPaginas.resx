@@ -790,7 +790,7 @@
     <value>Fim</value>
   </data>
   <data name="Viagem_Aberto" xml:space="preserve">
-    <value>Aberto</value>
+    <value>Aberta</value>
   </data>
   <data name="Viagem_UnidadeMetrica" xml:space="preserve">
     <value>Unidade Métrica</value>
@@ -986,5 +986,212 @@
   </data>
   <data name="ViagemAerea_DataExclusao" xml:space="preserve">
     <value>Data Exclusão</value>
+  </data>
+  <data name="Selecionar" xml:space="preserve">
+    <value>Selecionar</value>
+  </data>
+  <data name="Viagem_DataFimAte" xml:space="preserve">
+    <value>Data Fim até</value>
+  </data>
+  <data name="Viagem_DataFimDe" xml:space="preserve">
+    <value>Data Fim de</value>
+  </data>
+  <data name="Viagem_DataInicioAte" xml:space="preserve">
+    <value>Data Início até</value>
+  </data>
+  <data name="Viagem_DataInicioDe" xml:space="preserve">
+    <value>Data Início de</value>
+  </data>
+  <data name="Viagem_Fechado" xml:space="preserve">
+    <value>Fechada</value>
+  </data>
+  <data name="Viagem_Situacao" xml:space="preserve">
+    <value>Situação</value>
+  </data>
+  <data name="Viagem_Todas" xml:space="preserve">
+    <value>Todas</value>
+  </data>
+  <data name="Foto_Filtros" xml:space="preserve">
+    <value>Filtros</value>
+  </data>
+  <data name="Viagem_CodigoAlbum" xml:space="preserve">
+    <value>Album</value>
+  </data>
+  <data name="Foto_Atracao" xml:space="preserve">
+    <value>Atrações</value>
+  </data>
+  <data name="Foto_DataAte" xml:space="preserve">
+    <value>Data Até</value>
+  </data>
+  <data name="Foto_DataDe" xml:space="preserve">
+    <value>Data De</value>
+  </data>
+  <data name="Foto_Hotel" xml:space="preserve">
+    <value>Hotéis</value>
+  </data>
+  <data name="Foto_Refeicao" xml:space="preserve">
+    <value>Refeições</value>
+  </data>
+  <data name="Foto_Uploads" xml:space="preserve">
+    <value>Uploads</value>
+  </data>
+  <data name="Foto_EditaMidia" xml:space="preserve">
+    <value>Editar Mídia</value>
+  </data>
+  <data name="Foto_Hora" xml:space="preserve">
+    <value>Hora</value>
+  </data>
+  <data name="Foto_ItemCompra" xml:space="preserve">
+    <value>Item Compra</value>
+  </data>
+  <data name="Foto_NomeArquivo" xml:space="preserve">
+    <value>Nome do Arquivo</value>
+  </data>
+  <data name="Foto_Porcentual" xml:space="preserve">
+    <value>Porcentual</value>
+  </data>
+  <data name="Foto_Situacao" xml:space="preserve">
+    <value>Situação</value>
+  </data>
+  <data name="Posicao" xml:space="preserve">
+    <value>Posição</value>
+  </data>
+  <data name="Posicao_Endereco" xml:space="preserve">
+    <value>Endereço</value>
+  </data>
+  <data name="Atracao_ChegadaAte" xml:space="preserve">
+    <value>Chegada Até</value>
+  </data>
+  <data name="Atracao_ChegadaDe" xml:space="preserve">
+    <value>Chegada De</value>
+  </data>
+  <data name="Atracao_Comentario" xml:space="preserve">
+    <value>Comentário</value>
+  </data>
+  <data name="Atracao_Custos" xml:space="preserve">
+    <value>Custos</value>
+  </data>
+  <data name="Atracao_EnderecoBase" xml:space="preserve">
+    <value>Endereço Base</value>
+  </data>
+  <data name="Atracao_Midias" xml:space="preserve">
+    <value>Mídias</value>
+  </data>
+  <data name="Atracao_NaoIniciada" xml:space="preserve">
+    <value>Visita Não Iniciada</value>
+  </data>
+  <data name="Atracao_Nota" xml:space="preserve">
+    <value>Nota</value>
+  </data>
+  <data name="Atracao_PartidaAte" xml:space="preserve">
+    <value>Partida Até</value>
+  </data>
+  <data name="Atracao_PartidaDe" xml:space="preserve">
+    <value>Partida De</value>
+  </data>
+  <data name="Atracao_Situacao" xml:space="preserve">
+    <value>Situação</value>
+  </data>
+  <data name="Atracao_Todas" xml:space="preserve">
+    <value>Todas</value>
+  </data>
+  <data name="Atracao_Visitada" xml:space="preserve">
+    <value>Visitada</value>
+  </data>
+  <data name="Atracao_Visitando" xml:space="preserve">
+    <value>Visitando</value>
+  </data>
+  <data name="Atracao_Visitantes" xml:space="preserve">
+    <value>Visitantes</value>
+  </data>
+  <data name="Gasto_Latitude" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
+  <data name="Gasto_Longitude" xml:space="preserve">
+    <value>Longitude</value>
+  </data>
+  <data name="Gasto_IdentificadorCidade" xml:space="preserve">
+    <value>Cidade</value>
+  </data>
+  <data name="Atracao_VisitaConcluida" xml:space="preserve">
+    <value>Visita Concluída</value>
+  </data>
+  <data name="Atracao_VisitaIniciada" xml:space="preserve">
+    <value>Visita Iniciada</value>
+  </data>
+  <data name="Gasto_DividirCustos" xml:space="preserve">
+    <value>Dividir Custo Com</value>
+  </data>
+  <data name="Atracao_AdicionaCusto" xml:space="preserve">
+    <value>Adicionar Custo</value>
+  </data>
+  <data name="Gasto_SelecionarGasto" xml:space="preserve">
+    <value>Selecionar Gasto</value>
+  </data>
+  <data name="Loja_IdentificadorCidade" xml:space="preserve">
+    <value>Cidade</value>
+  </data>
+  <data name="Refeicao_AdicionaCusto" xml:space="preserve">
+    <value>Adicionar Gasto</value>
+  </data>
+  <data name="Refeicao_Comensais" xml:space="preserve">
+    <value>Comensais</value>
+  </data>
+  <data name="Refeicao_Comentario" xml:space="preserve">
+    <value>Comentário</value>
+  </data>
+  <data name="Refeicao_Custos" xml:space="preserve">
+    <value>Gastos</value>
+  </data>
+  <data name="Refeicao_Midias" xml:space="preserve">
+    <value>Mídias</value>
+  </data>
+  <data name="Refeicao_Nota" xml:space="preserve">
+    <value>Nota</value>
+  </data>
+  <data name="Refeicao_Pedido" xml:space="preserve">
+    <value>Pedido:</value>
+  </data>
+  <data name="HotelEvento_Entrada" xml:space="preserve">
+    <value>Entrada</value>
+  </data>
+  <data name="HotelEvento_Saida" xml:space="preserve">
+    <value>Saída</value>
+  </data>
+  <data name="HotelEvento_Usuario" xml:space="preserve">
+    <value>Participante</value>
+  </data>
+  <data name="Hotel_CheckIn" xml:space="preserve">
+    <value>Fazer Check-In</value>
+  </data>
+  <data name="Hotel_CheckInPrevistoAte" xml:space="preserve">
+    <value>Check In Até</value>
+  </data>
+  <data name="Hotel_CheckInPrevistoDe" xml:space="preserve">
+    <value>Check In De</value>
+  </data>
+  <data name="Hotel_CheckOut" xml:space="preserve">
+    <value>Fazer Check-Out</value>
+  </data>
+  <data name="Hotel_CheckOutPrevistoAte" xml:space="preserve">
+    <value>Check Out Até</value>
+  </data>
+  <data name="Hotel_CheckOutPrevistoDe" xml:space="preserve">
+    <value>Check Out De</value>
+  </data>
+  <data name="Hotel_Futuro" xml:space="preserve">
+    <value>Futuro</value>
+  </data>
+  <data name="Hotel_Passado" xml:space="preserve">
+    <value>Passado</value>
+  </data>
+  <data name="Hotel_Presente" xml:space="preserve">
+    <value>Presente</value>
+  </data>
+  <data name="Hotel_TempoHotel" xml:space="preserve">
+    <value>Tempo no Hotel</value>
+  </data>
+  <data name="Hotel_Todos" xml:space="preserve">
+    <value>Todos</value>
   </data>
 </root>

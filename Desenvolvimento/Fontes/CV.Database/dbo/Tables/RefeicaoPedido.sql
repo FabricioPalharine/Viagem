@@ -2,7 +2,7 @@
     [ID_REFEICAO_PEDIDO] INT           IDENTITY (1, 1) NOT NULL,
     [ID_REFEICAO]        INT           NOT NULL,
     [ID_USUARIO]         INT           NOT NULL,
-    [DS_PEDIDO]          VARCHAR (200) NOT NULL,
+    [DS_PEDIDO]          VARCHAR (200) NULL,
     [NR_NOTA]            INT           NULL,
     [DS_COMENTARIO]      TEXT          NULL,
     [DT_ATUALIZACAO]     DATETIME      NOT NULL,

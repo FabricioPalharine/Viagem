@@ -29,7 +29,7 @@ namespace CV.Data.Configuration
 			this.Property(i => i.Latitude).HasColumnName("NR_LATITUDE").HasPrecision(12,8);
 			this.Property(i => i.EntradaPrevista).HasColumnName("DT_ENTRADA_PREVISTA");
 			this.Property(i => i.SaidaPrevista).HasColumnName("DT_SAIDA_PREVISTA");
-			this.HasRequired(i => i.ItemCidade).WithMany().HasForeignKey(d=>d.IdentificadorCidade);
+			this.HasOptional(i => i.ItemCidade).WithMany().HasForeignKey(d=>d.IdentificadorCidade);
 			this.HasMany(i => i.Fotos).WithRequired().HasForeignKey(d=>d.IdentificadorHotel);
 			this.HasMany(i => i.Gastos).WithRequired().HasForeignKey(d=>d.IdentificadorHotel);
 			this.HasMany(i => i.Avaliacoes).WithRequired().HasForeignKey(d=>d.IdentificadorHotel);

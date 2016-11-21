@@ -19,96 +19,675 @@
             <i class="fa fa-refresh fa-spin text-gray"></i>
         </div>
 
-        <form role="form" ng-submit="itemHotel.filtraDado()" >
+        <div class="box collapsed-box">
+            <div class="box-header with-border">
+                <h3 class="box-title"><i class="fa fa-filter"></i>&nbsp;@TextosPaginas.Foto_Filtros</h3>
+
+                <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-plus"></i></button>
+                </div>
+            </div>
             <div class="box-body">
                 <div class="row">
+
+                    <div class="form-group col-md-6">
+                        <label>@TextosPaginas.Hotel_Nome</label>
+                        <input type="text" class="form-control" ng-model="itemHotel.filtro.Nome" maxlength="100" empty-to-null>
+                    </div>
                     
+                    <div class="form-group col-md-3">
+                        <label>@TextosPaginas.Hotel_CheckInPrevistoDe</label>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+                                <div class="input-group">
+                                    <input date-input ng-model="itemHotel.filtro.DataInicioDe" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                           datapattern="dd/MM/yyyy">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker data-ng-model="itemHotel.filtro.DataInicioDe"
+                                                data-datetimepicker-config="{  minView:'day' , langCode:itemHotel.Idioma()  }" />
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>@TextosPaginas.Hotel_CheckInPrevistoAte</label>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+                                <div class="input-group">
+                                    <input date-input ng-model="itemHotel.filtro.DataInicioAte" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                           datapattern="dd/MM/yyyy">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker data-ng-model="itemHotel.filtro.DataInicioAte"
+                                                data-datetimepicker-config="{  minView:'day' , langCode:itemHotel.Idioma()  }" />
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>@TextosPaginas.Hotel_CheckOutPrevistoDe</label>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+                                <div class="input-group">
+                                    <input date-input ng-model="itemHotel.filtro.DataFimDe" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                           datapattern="dd/MM/yyyy">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker data-ng-model="itemHotel.filtro.DataFimDe"
+                                                data-datetimepicker-config="{  minView:'day' , langCode:itemHotel.Idioma()  }" />
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>@TextosPaginas.Hotel_CheckOutPrevistoAte</label>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+                                <div class="input-group">
+                                    <input date-input ng-model="itemHotel.filtro.DataFimAte" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                           datapattern="dd/MM/yyyy">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker data-ng-model="itemHotel.filtro.DataFimAte"
+                                                data-datetimepicker-config="{  minView:'day' , langCode:itemHotel.Idioma()  }" />
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>@TextosPaginas.Foto_IdentificadorCidade</label>
+                        <select ng-model="itemHotel.itemCidade" class="form-control" ng-options="obj.Nome for obj in itemHotel.ListaCidades track by obj.Identificador">
+                            <option value="">@TextosPaginas.Selecione</option>
+                        </select>
+                    </div>
 
+                    <div class="form-group col-md-6">
+                        <label>@TextosPaginas.Atracao_Situacao</label>
 
+                        <div class="form-inline">
+
+                            <label class="radio">
+                                <input type="radio" class="radio-inline" name="radSituacao" value="1" ng-model="itemHotel.filtro.Situacao" />
+
+                                <label style="padding-top:5px">
+
+                                    @TextosPaginas.Hotel_Presente
+                                </label>
+                            </label>
+                            <label class="radio" style="margin-left:10px">
+                                <input type="radio" class="radio-inline" name="radSituacao" value="2" ng-model="itemHotel.filtro.Situacao" /><label>
+                                    @TextosPaginas.Hotel_Passado
+                                </label>
+                            </label>
+                            <label class="radio" style="margin-left:10px">
+                                <input type="radio" class="radio-inline" name="radSituacao" value="3" ng-model="itemHotel.filtro.Situacao" />
+                                <label>
+                                    @TextosPaginas.Hotel_Futuro
+                                </label>
+                            </label>
+                            <label class="radio" style="margin-left:10px">
+                                <input type="radio" class="radio-inline" name="radSituacao" value="4" ng-model="itemHotel.filtro.Situacao" />
+                                <label>
+                                    @TextosPaginas.Hotel_Todos
+                                </label>
+                            </label>
+                        </div>
+
+                    </div>
                 </div>
+
+
 
 
             </div><!-- /.box-body -->
             <div class="box-footer">
-                <a role="button" class="btn btn-primary " title="@TextosPaginas.Adicionar" ui-sref="HotelEdicao({filtro:itemHotel.filtroAtualizacao})" ng-if="itemHotel.PermiteInclusao">
-                    <span class="fa fa-plus" aria-hidden="true"></span>
-                </a>
-                <button type="submit" class="btn btn-primary  pull-right">
+
+
+                <button class="btn btn-primary  pull-right" ng-click="itemHotel.filtraDado()">
                     <span class="fa fa-search" aria-hidden="true"></span> @TextosPaginas.Pesquisar
                 </button>
 
             </div>
-        </form>
+        </div>
+
+        <div class="box-footer">
+            <a role="button" class="btn btn-primary " title="@TextosPaginas.Adicionar" ng-click="itemHotel.CriarNovoHotel()">
+                <span class="fa fa-plus" aria-hidden="true"></span>
+            </a>
+        </div>
     </div><!-- /.box -->
 
 
 
-    <div class="box" >
+    <div class="box">
         <div class="overlay" ng-show="itemHotel.loading">
             <i class="fa fa-refresh fa-spin text-gray"></i>
         </div>
-        <div class="box-body table-responsive">
-            <div class="gridStyle" ui-grid="itemHotel.gridOptions" ui-grid-pagination></div>
+        <div ng-repeat='item in itemHotel.ListaDados' class="box " ng-class="{ 'collapsed-box': item.Identificador }" class-validation ng-controller="HotelEditCtrl as itemEdit">
+            <div class="overlay" ng-show="itemEdit.loading">
+                <i class="fa fa-refresh fa-spin text-gray"></i>
+            </div>
+
+            <div class="box-header with-border">
+                <a data-widget="collapse" data-toggle="tooltip" ng-click="itemEdit.load(item)" style="cursor:pointer">
+                    <i class="fa fa-plus" ng-class="{ 'fa-minus': !item.Identificador }"></i>
 
 
+                    <h3 class="box-title">{{item.Nome}}</h3>
+
+                </a>
+            </div>
+
+            <div class="box-body" ng-init="itemEdit.ajustaInicio(item)">
+
+                <div class="row" ng-show="itemEdit.messages.length > 0">
+                    <div class="col-md-12">
+                        <div class="callout callout-danger">
+                            <h4>@TextosPaginas.Geral_ValidarErros</h4>
+                            <ul>
+                                <li ng-repeat="erro in itemEdit.messages">
+                                    <span ng-bind="erro.Mensagem"></span>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    @*<div class="col-md-6">
+                            <label>@TextosPaginas.Atracao_EnderecoBase</label>
+                            <input type="text" class="form-control" ng-model="item.Endereco" maxlength="100" empty-to-null>
+
+                        </div>*@
+                    <div class="col-md-6">
+                        <label>@TextosPaginas.Hotel_Nome</label>
+                        <input type="text" class="form-control" ng-model="itemEdit.itemHotel.Nome" maxlength="100" empty-to-null ng-if="!itemEdit.itemHotel.Latitude || !itemEdit.itemHotel.Longitude">
+                        <input ng-if="itemEdit.itemHotel.Latitude && itemEdit.itemHotel.Longitude" type="text" ng-model="itemEdit.itemHotel.Nome" uib-typeahead="address.name for address in itemEdit.CarregarDadosGoogleApi($viewValue) " typeahead-loading="itemEdit.loadingLocations" class="form-control" typeahead-on-select="itemEdit.SelecionarPlacesGoogle($item, $model, $label)">
+
+                    </div>
+                    <div class="col-md-6">
+                        <label>@TextosPaginas.Hotel_Raio</label>
+                        <input type="text" class="form-control"  ng-model="itemEdit.itemHotel.Raio" maxlength="3" empty-to-null integer-input>
+
+                    </div>
+                        <div class="col-md-3">
+                            <label>@TextosPaginas.Hotel_EntradaPrevista</label>
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+                                    <div class="input-group">
+                                        <input date-input ng-model="itemEdit.itemHotel.EntradaPrevista" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                               datapattern="dd/MM/yyyy">
+                                        <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </span>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    <datetimepicker data-ng-model="itemEdit.itemHotel.EntradaPrevista"
+                                                    data-datetimepicker-config="{  minView:'day' , langCode:itemHotel.Idioma()  }" />
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label>@TextosPaginas.Hotel_SaidaPrevista</label>
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+                                    <div class="input-group">
+                                        <input date-input ng-model="itemEdit.itemHotel.SaidaPrevista" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                               datapattern="dd/MM/yyyy">
+                                        <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </span>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    <datetimepicker data-ng-model="itemEdit.itemHotel.SaidaPrevista"
+                                                    data-datetimepicker-config="{  minView:'day' , langCode:itemHotel.Idioma()  }" />
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label>@TextosPaginas.Hotel_CheckIn</label>
+                            <input type="checkbox" ng-model="itemEdit.VisitaIniciada" ng-click="itemEdit.AjustarHoraChegada();" class="checkbox">
+                        </div>
+                        <div class="col-md-3" ng-if="itemEdit.VisitaIniciada">
+                            <label>@TextosPaginas.Hotel_CheckOut</label>
+                            <input type="checkbox" ng-model="itemEdit.VisitaConcluida" ng-click="itemEdit.AjustarHoraPartida();" class="checkbox">
+                        </div>
+
+                    </div>
+                <div class="row" ng-if="itemEdit.VisitaIniciada">
+                    <div class="col-md-3">
+                        <label>@TextosPaginas.Hotel_DataEntrada</label>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+                                <div class="input-group">
+                                    <input date-input ng-model="itemEdit.itemHotel.DataEntrada" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                           datapattern="dd/MM/yyyy">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker data-ng-model="itemEdit.itemHotel.DataEntrada"
+                                                data-datetimepicker-config="{  minView:'day' , langCode:itemHotel.Idioma()  }" />
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label>&nbsp;</label>
+                        <input type="text" class="form-control" ng-model="itemEdit.itemHotel.strHoraEntrada" input-mask="{mask: 'h:s:s'}" empty-to-null>
+
+                    </div>
+
+                    <div class="col-md-3" ng-if="itemEdit.VisitaConcluida">
+                        <label>@TextosPaginas.Hotel_DataSaidia</label>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+                                <div class="input-group">
+                                    <input date-input ng-model="itemEdit.itemHotel.DataSaidia" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                           datapattern="dd/MM/yyyy">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker data-ng-model="itemEdit.itemHotel.DataSaidia"
+                                                data-datetimepicker-config="{  minView:'day' , langCode:itemHotel.Idioma()  }" />
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3" ng-if="itemEdit.VisitaConcluida">
+                        <label>&nbsp;</label>
+                        <input type="text" class="form-control" ng-model="itemEdit.itemHotel.strHoraSaida" input-mask="{mask: 'h:s:s'}" empty-to-null>
+
+                    </div>
+                </div>
+
+                <div class="row" ng-show="itemEdit.VisitaIniciada">
+                    <div class="col-md-12" >
+                        <label>@TextosPaginas.Atracao_Visitantes</label>
+
+                        <div class="form-inline">
+                            <label ng-repeat='itemParticipante in itemEdit.ListaParticipante' class="radio">
+                                <input type="checkbox" ng-model="itemParticipante.Selecionado">
+                                <label style="padding-top:5px">
+                                    {{itemParticipante.Nome}}
+                                </label>
+                            </label>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row" ng-show="itemEdit.VisitaConcluida">
+                    <div class="col-md-12" ng-if="itemEdit.VisitaConcluida && itemEdit.VerificarParticipoHotel()">
+                        <label>@TextosPaginas.Atracao_Nota</label>
+                        <div star-rating ng-model="itemEdit.ItemAvaliacao.Nota" max="5"></div>
+                    </div>
+                    <div class="col-md-12" ng-if="itemEdit.VisitaConcluida && itemEdit.VerificarParticipoHotel()">
+                        <label>@TextosPaginas.Atracao_Comentario</label>
+                        <textarea class="form-control" rows="5" ng-model="itemEdit.ItemAvaliacao.Comentario"></textarea>
+
+                    </div>
+                </div>
+                <div class="row" ng-show="item.Identificador">
+                    <div class="col-xs-12">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" data-target="#custos{{item.Identificador}}" style="cursor:pointer">@TextosPaginas.Atracao_Custos</a></li>
+                            <li><a data-toggle="tab" data-target="#midia{{item.Identificador}}" style="cursor:pointer" ng-click="itemEdit.RecarregarFotos()">@TextosPaginas.Atracao_Midias</a></li>
+                            <li><a data-toggle="tab" data-target="#evento{{item.Identificador}}" style="cursor:pointer">@TextosPaginas.Hotel_TempoHotel</a></li>
+
+                        </ul>
+
+                        <div class="tab-content" style="height:140px">
+                            <div id="custos{{item.Identificador}}" class="tab-pane fade in active ">
+                                <div class="box" style="overflow-y:auto; height:140px">
+                                    <table class="table-condensed " style="width:100%; ">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-xs-3">
+                                                    @TextosPaginas.Gasto_Descricao
+                                                </th>
+                                                <th class="col-xs-3">
+                                                    @TextosPaginas.Gasto_Data
+                                                </th>
+                                                <th class="col-xs-3">
+                                                    @TextosPaginas.Gasto_Moeda
+                                                </th>
+                                                <th class="col-xs-2">
+                                                    @TextosPaginas.Gasto_Valor
+                                                </th>
+
+                                                <th class="col-xs-1">
+
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tr ng-repeat='itemCusto in itemEdit.itemHotel.Gastos' ng-if="!itemCusto.DataExclusao">
+                                            <td>
+                                                {{itemCusto.ItemGasto.Descricao}}
+                                            </td>
+                                            <td>
+                                                {{itemCusto.ItemGasto.Data | date:'dd/MM/yyyy'}}
+                                            </td>
+                                            <td>
+                                                {{itemCusto.ItemGasto.MoedaSigla}}
+                                            </td>
+                                            <td>
+                                                {{itemCusto.ItemGasto.Valor | number:'2'}}
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger small" ng-click="itemEdit.RemoverCusto( itemCusto)"><span class="fa fa-trash" aria-hidden="true"></span></button>
+
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                    <div class="box-footer">
+                                        <a role="button" class="btn-primary btn-sm pull-right" title="@TextosPaginas.Adicionar" ng-click="itemEdit.AbrirGasto();">
+                                            <span class="fa fa-plus" aria-hidden="true"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="midia{{item.Identificador}}" class="tab-pane fade in ">
+                                <div class="dropzone" file-dropzone="[image/png, image/jpeg, image/gif]"
+                                     on-file-uploaded="itemEdit.CarregarArquivo(item)" objeto="item" style="min-height:80px; width:100%">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <slick settings="itemEdit.slickConfig" ng-if="itemEdit.slickLoaded">
+                                                <div ng-repeat="itemFoto in itemEdit.itemHotel.Fotos" ng-if="!itemFoto.DataExclusao" style="height:90px;cursor:pointer">
+                                                    <img ng-src="{{itemFoto.ItemFoto.LinkThumbnail || trustAsResourceUrl}}" style="max-height:80px; width:100%" ng-click="itemEdit.AbrirJanelaEdicaoFoto(itemFoto)" />
+                                                </div>
+                                            </slick>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="evento{{item.Identificador}}" class="tab-pane fade in ">
+                                <div class="box" style="overflow-y:auto; height:140px">
+                                    <table class="table-condensed " style="width:100%; ">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-xs-2">
+                                                    @TextosPaginas.HotelEvento_Entrada
+                                                </th>
+                                                <th class="col-xs-2">
+                                                </th>
+                                                <th class="col-xs-2">
+                                                    @TextosPaginas.HotelEvento_Saida
+                                                </th>
+                                                <th class="col-xs-2">
+                                                </th>
+                                                <th class="col-xs-3">
+                                                    @TextosPaginas.HotelEvento_Usuario
+                                                </th>
+                                                <th class="col-xs-1">
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tr ng-repeat='itemCusto in itemEdit.itemHotel.Eventos' ng-if="!itemCusto.DataExclusao">
+                                            <td>
+                                                <div class="dropdown" ng-if="itemCusto.Edicao">
+                                                    <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+                                                        <div class="input-group">
+                                                            <input date-input ng-model="itemCusto.DataEntrada" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                                                   datapattern="dd/MM/yyyy">
+                                                            <span class="input-group-addon">
+                                                                <i class="glyphicon glyphicon-calendar"></i>
+                                                            </span>
+                                                        </div>
+                                                    </a>
+                                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                                        <datetimepicker data-ng-model="itemCusto.DataEntrada"
+                                                                        data-datetimepicker-config="{  minView:'day' , langCode:itemHotel.Idioma()  }" />
+                                                    </ul>
+                                                </div>
+                                                <div ng-if="itemCusto.Edicao">{{itemCusto.DataEntrada | date:'dd/MM/yyyy'}}</div>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" ng-model="itemCusto.strHoraEntrada" input-mask="{mask: 'h:s:s'}" empty-to-null ng-if="itemCusto.Edicao">
+                                                <div ng-if="itemCusto.Edicao">{{itemCusto.strHoraEntrada}}</div>
+
+                                            </td>
+                                            <td>
+                                                <div class="dropdown" ng-if="itemCusto.Edicao">
+                                                    <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+                                                        <div class="input-group">
+                                                            <input date-input ng-model="itemCusto.DataSaida" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                                                   datapattern="dd/MM/yyyy">
+                                                            <span class="input-group-addon">
+                                                                <i class="glyphicon glyphicon-calendar"></i>
+                                                            </span>
+                                                        </div>
+                                                    </a>
+                                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                                        <datetimepicker data-ng-model="itemCusto.DataSaida"
+                                                                        data-datetimepicker-config="{  minView:'day' , langCode:itemHotel.Idioma()  }" />
+                                                    </ul>
+                                                </div>
+                                                <div ng-if="itemCusto.Edicao">{{itemCusto.DataSaida | date:'dd/MM/yyyy'}}</div>
+
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" ng-model="itemCusto.strHoraSaida" input-mask="{mask: 'h:s:s'}" empty-to-null ng-if="itemCusto.Edicao">
+                                                <div ng-if="itemCusto.Edicao">{{itemCusto.strHoraSaida}}</div>
+
+                                            </td>
+                                            <td>
+                                                <select ng-model="itemCusto.ItemUsuario" class="form-control" ng-options="obj.Nome for obj in itemEdit.ListaParticipantes track by obj.Identificador" ng-if="itemCusto.Edicao">
+                                                    <option value="">@TextosPaginas.Selecione</option>
+                                                </select>
+                                                <div ng-if="itemCusto.Edicao">{{itemCusto.ItemUsuario.Nome}}</div>
+
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger btn-sm" ng-click="itemEdit.RemoverEvento( itemCusto)"><span class="fa fa-trash" aria-hidden="true" ng-if="!itemCusto.Edicao"></span></button>
+                                                <button type="button" class="btn btn-info btn-sm" ng-click="itemEdit.EditarEvento( itemCusto)"><span class="fa fa-pencil" aria-hidden="true" ng-if="!itemCusto.Edicao"></span></button>
+                                                <button type="button" class="btn btn-warning btn-sm" ng-click="itemEdit.CancelarEvento( itemCusto)"><span class="fa fa-close" aria-hidden="true" ng-if="itemCusto.Edicao"></span></button>
+                                                <button type="button" class="btn btn-info btn-sm" ng-click="itemEdit.SalvarEvento( itemCusto)"><span class="fa fa-save" aria-hidden="true" ng-if="itemCusto.Edicao"></span></button>
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div class="box-footer">
+                                        <a role="button" class="btn-primary btn-sm pull-right" title="@TextosPaginas.Adicionar" ng-click="itemEdit.AdicionarEvento();">
+                                            <span class="fa fa-plus" aria-hidden="true"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="box-footer">
+
+                <a role="button" class="btn btn-primary pull-right" title="@TextosPaginas.Geral_Salvar" ng-click="itemEdit.save()">
+                    <span class="fa fa-save" aria-hidden="true"></span>
+                </a>
+
+                <a role="button" class="btn btn-primary pull-right" title="@TextosPaginas.Excluir" ng-click="itemEdit.VerificarExclusao()">
+                    <span class="fa fa-trash-o" aria-hidden="true"></span>
+                </a>
+
+                <a role="button" class="btn btn-primary pull-right" title="@TextosPaginas.Posicao" ng-click="itemEdit.SelecionarPosicao()">
+                    <span class="fa fa-map-marker" aria-hidden="true"></span>
+                </a>
+
+            </div>
         </div>
+
+
     </div>
-
-    <script type="text/ng-template" id="modal.html">
-
-        <div class="modal-body">
-            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="vmAction.edit(vmAction.item.Identificador)">@TextosPaginas.Editar</button>
-            <button type="button" class="btn btn-danger btn-lg btn-block" ng-click="vmAction.askDelete(vmAction.item, vmAction.indexForDelete)">@TextosPaginas.Excluir</button>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default btn-lg btn-block" ng-click="vmAction.close()">@TextosPaginas.Cancelar</button>
-        </div>
-    </script>
 
 
     <script type="text/ng-template" id="modalDelete.html">
         <div class="modal-header">
-            <span>@TextosPaginas.ConfirmaExclusao</span>
+            <span>{{vmDelete.MensagemConfirmacao}}</span>
         </div>
         <div class="modal-body">
-            <button type="button" class="btn btn-info btn-lg btn-block" ng-click="vmDelete.delete()">@TextosPaginas.Sim</button>
-            <button type="button" class="btn btn-default btn-lg btn-block" ng-click="vmDelete.close()">@TextosPaginas.Nao</button>
-        </div>
-        <div class="modal-footer hidden-lg hidden-md">
-            <button type="button" class="btn btn-default btn-lg btn-block" ng-click="vmDelete.back()">@TextosPaginas.Voltar</button>
+            <button type="button" class="btn btn-info btn-lg btn-block" ng-click="vmDelete.confirmar()">{{vmDelete.TextoBotaoOK}}</button>
+            <button type="button" class="btn btn-default btn-lg btn-block" ng-click="vmDelete.close()">{{vmDelete.TextoBotaoCancel}}</button>
         </div>
     </script>
 
 
-    <script type="text/ng-template" id="NewFooterTemplate.html">
+    <script type="text/ng-template" id="editaImagem.html">
 
-        <div role="contentinfo" class="ui-grid-pager-panel" ui-grid-pager ng-show="grid.options.enablePaginationControls">
+        <div class="modal-header">
+            <span>@TextosPaginas.Foto_EditaMidia</span>
+        </div>
+        <div class="modal-body" ng-init="vmEdit.load()">
+            <div class="box box-primary">
+                <div class="box-body">
+                    <div class="row" ng-show="vmEdit.messages.length > 0">
+                        <div class="col-md-12">
+                            <div class="callout callout-danger">
+                                <h4>@TextosPaginas.Geral_ValidarErros</h4>
+                                <ul>
+                                    <li ng-repeat="erro in vmEdit.messages">
+                                        <span ng-bind="erro.Mensagem"></span>
+                                    </li>
+                                </ul>
 
-            <div role="navigation" class="ui-grid-pager-container">
-                <div role="menubar" class="ui-grid-pager-control">
-                    <button type="button" role="menuitem" class="ui-grid-pager-first" ui-grid-one-bind-title="aria.pageToFirst" ui-grid-one-bind-aria-label="aria.pageToFirst" ng-class="{'btn':true, 'btn-primary':true}" ng-click="pageFirstPageClick()" ng-disabled="cantPageBackward()">
-                        <div ng-class="grid.isRTL() ? 'last-triangle' : 'first-triangle'"><div ng-class="grid.isRTL() ? 'last-bar-rtl' : 'first-bar'"></div></div>
-                    </button>
-                    <button type="button" role="menuitem" class="ui-grid-pager-previous  btn btn-primary" ui-grid-one-bind-title="aria.pageBack" ui-grid-one-bind-aria-label="aria.pageBack" ng-click="pagePreviousPageClick()" ng-disabled="cantPageBackward()"><div ng-class="grid.isRTL() ? 'last-triangle prev-triangle' : 'first-triangle prev-triangle'"></div></button>
-                    <input type="number" ui-grid-one-bind-title="aria.pageSelected" ui-grid-one-bind-aria-label="aria.pageSelected" class="ui-grid-pager-control-input" ng-model="grid.options.paginationCurrentPage" min="1" max="{{ paginationApi.getTotalPages() }}" required> <span class="ui-grid-pager-max-pages-number" ng-show="paginationApi.getTotalPages() > 0"><abbr ui-grid-one-bind-title="paginationOf">/</abbr> {{ paginationApi.getTotalPages() }}</span>
-                    <button type="button" role="menuitem" class="ui-grid-pager-next  btn btn-primary" ui-grid-one-bind-title="aria.pageForward" ui-grid-one-bind-aria-label="aria.pageForward" ng-click="pageNextPageClick()" ng-disabled="cantPageForward()"><div ng-class="grid.isRTL() ? 'first-triangle next-triangle' : 'last-triangle next-triangle'"></div></button>
-                    <button type="button" role="menuitem" class="ui-grid-pager-last  btn btn-primary" ui-grid-one-bind-title="aria.pageToLast" ui-grid-one-bind-aria-label="aria.pageToLast" ng-click="pageLastPageClick()" ng-disabled="cantPageToLast()"><div ng-class="grid.isRTL() ? 'first-triangle' : 'last-triangle'"><div ng-class="grid.isRTL() ? 'first-bar-rtl' : 'last-bar'"></div></div></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group  col-md-12" ng-class="{ 'has-error': vmEdit.CamposInvalidos.Comentario }">
+                            <label>@TextosPaginas.Foto_Comentario</label>
+                            <input type="text" class="form-control" ng-model="vmEdit.itemFoto.ItemFoto.Comentario" empty-to-null>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6" ng-class="{ 'has-error': vmEdit.CamposInvalidos.Data }">
+                            <label for="txtDataInicio">@TextosPaginas.Foto_Data</label>
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" id="A1" role="button" data-toggle="dropdown">
+                                    <div class="input-group">
+                                        <input date-input ng-model="vmEdit.itemFoto.ItemFoto.Data" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                               datapattern="dd/MM/yyyy">
+                                        <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </span>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    <datetimepicker data-ng-model="vmEdit.itemFoto.ItemFoto.Data"
+                                                    data-datetimepicker-config="{  minView:'day', langCode: vmEdit.Idioma() }" />
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="txtDataInicio">@TextosPaginas.Foto_Hora</label>
+                            <input type="text" class="form-control" name="txtHorario" id="txtHorario" ng-model="vmEdit.itemFoto.ItemFoto.strHora" input-mask="{mask: 'h:s:s'}" empty-to-null>
+
+                        </div>
+                    </div>
+
                 </div>
             </div>
-            <div class="ui-grid-pager-count-container"><div class="ui-grid-pager-count"><span ng-show="grid.options.totalItems > 0">{{showingLow}} <abbr ui-grid-one-bind-title="paginationThrough">-</abbr> {{showingHigh}} {{paginationOf}} {{grid.options.totalItems}} {{totalItemsLabel}}</span></div></div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" ng-click="vmEdit.abrirMapa()">
+                <span class="fa fa-map-marker" aria-hidden="true">@TextosPaginas.Posicao</span>
+            </button>
+            <button type="button" class="btn btn-primary" ng-click="vmEdit.close()">
+                <span class="fa fa-close" aria-hidden="true">@TextosPaginas.Cancelar</span>
+            </button>
+            <button type="button" class="btn btn-primary" ng-click="vmEdit.Excluir()">
+                <span class="fa fa-trash" aria-hidden="true">@TextosPaginas.Excluir</span>
+            </button>
+            <button type="button" class="btn btn-primary  pull-right" ng-click="vmEdit.salvar()">
+                <span class="fa fa-cloud-upload" aria-hidden="true"></span> @TextosPaginas.Geral_Salvar
+            </button>
         </div>
     </script>
 
 
-    <script type="text/ng-template" id="BotoesGridTemplate.html">
+    <script type="text/ng-template" id="modalMapa.html">
+        <div class="modal-body">
+            <div class="box-body">
 
-        <div class="ngCellText hidden-xs">
-			<button type="button" ng-if="grid.appScope.PermiteAlteracao" class="btn btn-primary small" title="@TextosPaginas.Editar" ui-sref="HotelEdicao({ id: {{COL_FIELD}},filtro:grid.appScope.filtroAtualizacao })"><span class="fa fa-pencil" aria-hidden="true"></span></button>
-			<button type="button" ng-if="grid.appScope.PermiteExclusao" class="btn btn-danger small" title="@TextosPaginas.Excluir" ng-click="grid.appScope.askDelete(row.entity, $index)"><span class="fa fa-trash" aria-hidden="true"></span></button>
-
+                <div class="row">
+                    <div class="form-group  col-sm-8">
+                        <label>@TextosPaginas.Posicao_Endereco</label>
+                        <input type="text" class="form-control" ng-model="vmMapa.itemEndereco" empty-to-null>
+                    </div>
+                    <div class="form-group  col-sm-2">
+                        <label>&nbsp;</label>
+                        <button class="btn btn-primary btn-block " ng-click="vmMapa.centralizarEndereco()">
+                            <span class="fa fa-search" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div class="form-group  col-sm-2">
+                        <label>&nbsp;</label>
+                        <button class="btn btn-primary btn-block" ng-click="vmMapa.limparPosicao()">
+                            <span class="fa fa-unlink" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <ng-map zoom="13"
+                    center="[{{vmMapa.lat}}, {{vmMapa.lng}}]" on-click="vmMapa.ajustaPosicao()">
+                <marker ng-if="vmMapa.itemMarcador.Latitude && vmMapa.itemMarcador.Longitude" position="{{vmMapa.itemMarcador.Latitude}}, {{vmMapa.itemMarcador.Longitude}}"></marker>
+            </ng-map>
         </div>
-
-
+        <div class="modal-footer ">
+            <button type="button" class="btn btn-primary  pull-right" ng-click="vmMapa.salvar()">
+                <span class="fa fa-cloud-upload" aria-hidden="true"></span> @TextosPaginas.Geral_Salvar
+            </button>
+            <button type="button" class="btn btn-primary" ng-click="vmMapa.close()">
+                <span class="fa fa-close" aria-hidden="true">@TextosPaginas.Cancelar</span>
+            </button>
+        </div>
     </script>
+
+    <script type="text/ng-template" id="EditaCusto.html">
+
+        <div class="modal-header">
+            <span>@TextosPaginas.Refeicao_AdicionaCusto</span>
+        </div>
+        <div class="modal-body" ng-init="itemGastoEdit.load()">
+            <div class="box box-primary" ng-include="'Sistema/GastoEdicao'">
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" ng-click="itemGastoEdit.abrirMapa()">
+                <span class="fa fa-map-marker" aria-hidden="true">@TextosPaginas.Posicao</span>
+            </button>
+            <button type="button" class="btn btn-primary" ng-click="itemGastoEdit.close()">
+                <span class="fa fa-close" aria-hidden="true">@TextosPaginas.Cancelar</span>
+            </button>
+
+            <button type="button" class="btn btn-primary  pull-right" ng-click="itemGastoEdit.salvar()">
+                <span class="fa fa-save" aria-hidden="true"></span> @TextosPaginas.Geral_Salvar
+            </button>
+        </div>
+    </script>
+
 
 </section><!-- /.content -->

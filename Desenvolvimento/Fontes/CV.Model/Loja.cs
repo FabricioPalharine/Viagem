@@ -63,6 +63,10 @@ private void ValidarNome(Microsoft.Practices.EnterpriseLibrary.Validation.Valida
 			public DateTime? DataAtualizacao { get; set; }
 
 			public DateTime? DataExclusao { get; set; }
+
+			public int? IdentificadorCidade { get; set; }
+
+			public Cidade ItemCidade { get; set; }
 		 public Loja Clone()
 		{
 			 return (Loja) this.MemberwiseClone();

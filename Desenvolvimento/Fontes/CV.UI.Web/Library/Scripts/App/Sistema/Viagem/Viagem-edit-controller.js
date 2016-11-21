@@ -2,9 +2,9 @@
     'use strict';
     angular
 		.module('Sistema')
-		.controller('ViagemEditCtrl', ['Error', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', 'Usuario', 'Viagem', 'Dominio','$uibModal', ViagemEditCtrl]);
+		.controller('ViagemEditCtrl', ['Error', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', 'Usuario', 'Viagem', 'Dominio','$uibModal','SignalR', ViagemEditCtrl]);
 
-    function ViagemEditCtrl(Error, $state, $translate, $scope, Auth, $rootScope, $stateParams, Usuario, Viagem, Dominio, $uibModal) {
+    function ViagemEditCtrl(Error, $state, $translate, $scope, Auth, $rootScope, $stateParams, Usuario, Viagem, Dominio, $uibModal, SignalR) {
         var vm = this;
         vm.filtroConsulta = {};
         vm.itemViagem = { Aberto: true, UnidadeMetrica: true, QuantidadeParticipantes: 1, PublicaGasto: false, UsuariosGastos: [], Participantes: [] };
@@ -98,6 +98,10 @@
                         if (vm.inclusao)
                         {
                             Auth.SelecionarViagem(data.IdentificadorRegistro);
+                        }
+                        else
+                        {
+                            SignalR.ViagemAtualizada(vm.itemViagem.Identificador, 'V', vm.itemViagem.Identificador, false);
                         }
                     } else {
                         vm.messages = data.Mensagens;

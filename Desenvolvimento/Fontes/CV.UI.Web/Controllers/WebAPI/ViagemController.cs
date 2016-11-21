@@ -23,7 +23,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             ResultadoConsultaTipo<Viagem> resultado = new ResultadoConsultaTipo<Viagem>();
             ViagemBusiness biz = new ViagemBusiness();
 
-            List<Viagem> _itens = biz.ListarViagem().ToList();
+            List<Viagem> _itens = biz.ListarViagem(json.IdentificadorParticipante, json.Nome, json.Aberto, json.DataInicioDe, json.DataInicioAte, json.DataFimDe, json.DataFimAte, token.IdentificadorUsuario).ToList();
             resultado.TotalRegistros = _itens.Count();
             if (json.SortField != null && json.SortField.Any())
                 _itens = _itens.AsQueryable().OrderByField<Viagem>(json.SortField, json.SortOrder).ToList();
@@ -31,7 +31,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             if (json.Index.HasValue && json.Count.HasValue)
                 _itens = _itens.Skip(json.Index.Value).Take(json.Count.Value).ToList();
             resultado.Lista = _itens;
-
+            resultado.Lista.ForEach(d => d.Participantes.ToList().ForEach(f => f.ItemViagem = null));
             return resultado;
         }
         [Authorize]
@@ -49,7 +49,7 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             ViagemBusiness biz = new ViagemBusiness();
             itemViagem.DataAlteracao = DateTime.Now;
-            biz.SalvarViagem_Completa(itemViagem);
+            biz.SalvarViagem_Completa_Album(itemViagem);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
@@ -69,6 +69,16 @@ namespace CV.UI.Web.Controllers.WebAPI
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
 
             return itemResultado;
+        }
+
+        [Authorize]
+        [ActionName("CarregarParticipantes")]
+        [HttpGet]
+        public List<Usuario> CarregarParticipantes()
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            var lista = biz.CarregarParticipantesViagem(token.IdentificadorViagem);
+            return lista.ToList();
         }
     }
 }

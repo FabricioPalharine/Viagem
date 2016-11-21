@@ -19,7 +19,12 @@ namespace CV.UI.Web
                         "~/library/Scripts/Componentes/jquery-ui.min.js",
                         "~/library/Scripts/angular/moment-with-locales.min.js",
                         "~/library/Scripts/Componentes/jquery-ui.min.js",
-                        "~/library/Scripts/Componentes/jquery.signalR-2.0.0.js"
+                        "~/library/Scripts/Componentes/jquery.signalR-2.0.0.js",
+                        "~/library/Scripts/Componentes/load-image.all.min.js",
+                        "~/library/Scripts/Componentes/VideoUploader.js",
+                        "~/library/Scripts/Componentes/jszip.js",
+                         "~/library/Scripts/Componentes/slick.js",
+                         "~/library/Scripts/Componentes/csswatch.js"
 
                         ));
 
@@ -77,7 +82,9 @@ namespace CV.UI.Web
                     "~/library/Scripts/angular/calendar.js",
                     "~/library/Scripts/angular/ngInfiniteScroll.js",
                     "~/library/Scripts/angular/angular-multi-select-tree-0.1.0.js",
-                    "~/library/Scripts/angular/angular-multi-select-tree-0.1.0.tpl.js"
+                    "~/library/Scripts/angular/angular-multi-select-tree-0.1.0.tpl.js",
+                    "~/library/Scripts/angular/ng-map.min.js",
+                    "~/library/Scripts/angular/angular-slick.js"
                    )
                   );
 
@@ -96,7 +103,9 @@ namespace CV.UI.Web
                       "~/library/css/ivh-treeview-theme-basic.css",
                       "~/library/css/bootstrap-tagsinput.css",
                       "~/library/css/fullcalendar.min.css",
-                      "~/library/css/angular-multi-select-tree-0.1.0.css"
+                      "~/library/css/angular-multi-select-tree-0.1.0.css",
+                      "~/library/css/slick.css",
+                      "~/library/css/slick-theme.css"
                       )
 
                       );

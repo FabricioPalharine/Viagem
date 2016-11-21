@@ -27,7 +27,13 @@
                   controller: 'Get'
               }
           },
-          
+          RetornarAlbum: {
+              method: 'Post',
+              params: {
+                  controller: 'RetornarAlbum'
+              },
+              isArray: true
+          },
           list: {
               method: 'GET',
               params: {
@@ -36,10 +42,54 @@
               },
             //  transformResponse: parseArray,
               isArray: false
+          },
+          SubirImagem: {
+              method: 'Post',
+              params: {
+                  controller: 'SubirImagem'
+              }
+          },
+          SubirVideo: {
+              method: 'Post',
+              params: {
+                  controller: 'SubirVideo'
+              }
+          },
+          save: {
+              method: 'Post',
+              params: {
+                  controller: 'Post'
+              }
+          },
+          saveFotoAtracao: {
+              method: 'Post',
+              params: {
+                  controller: 'saveFotoAtracao'
+              }
+          },
+          saveFotoHotel: {
+              method: 'Post',
+              params: {
+                  controller: 'saveFotoHotel'
+              }
+          },
+          saveFotoRefeicao: {
+              method: 'Post',
+              params: {
+                  controller: 'saveFotoAtracao'
+              }
+          },
+          saveFoto: {
+              method: 'Post',
+              params: {
+                  controller: 'saveFoto'
+              }
           }
-         
 
       });
+
+
+
     return UserBase;
   }
 }());

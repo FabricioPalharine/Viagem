@@ -25,7 +25,7 @@ namespace CV.Data.Configuration
 			this.Property(i => i.Nome).HasColumnName("NM_ATRACAO");
 			this.Property(i => i.CodigoPlace).HasColumnName("CD_PLACE");
 			this.Property(i => i.Latitude).HasColumnName("NR_LATITUDE").HasPrecision(12,8);
-			this.Property(i => i.Longitude).HasColumnName("NR_LONGITUDE").HasPrecision(18,2);
+			this.Property(i => i.Longitude).HasColumnName("NR_LONGITUDE").HasPrecision(12,8);
 			this.Property(i => i.Chegada).HasColumnName("DT_CHEGADA");
 			this.Property(i => i.Partida).HasColumnName("DT_PARTIDA");
 			this.Property(i => i.Tipo).HasColumnName("DS_TIPO_ATRACAO");
@@ -33,10 +33,11 @@ namespace CV.Data.Configuration
 			this.HasMany(i => i.Avaliacoes).WithRequired().HasForeignKey(d=>d.IdentificadorAtracao);
 			this.HasMany(i => i.Fotos).WithRequired().HasForeignKey(d=>d.IdentificadorAtracao);
 			this.HasRequired(i => i.ItemCidade).WithMany().HasForeignKey(d=>d.IdentificadorCidade);
-			this.HasRequired(i => i.ItemViagem).WithMany().HasForeignKey(d=>d.IdentificadorViagem);
+			this.HasOptional(i => i.ItemViagem).WithMany().HasForeignKey(d=>d.IdentificadorViagem);
 			this.HasOptional(i => i.ItemAtracaoPai).WithMany().HasForeignKey(d=>d.IdentificadorAtracaoPai);
 			this.Property(i => i.DataAtualizacao).HasColumnName("DT_ATUALIZACAO");
 			this.Property(i => i.DataExclusao).HasColumnName("DT_EXCLUSAO");
+			this.HasMany(i => i.Gastos).WithRequired().HasForeignKey(d=>d.IdentificadorAtracao);
 		MapearCamposManualmente();
 		}
 	}

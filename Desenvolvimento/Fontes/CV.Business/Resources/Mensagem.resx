@@ -525,4 +525,34 @@
   <data name="Viagem_SalvarViagem_Completa_OK" xml:space="preserve">
     <value>Gravação de Viagem foi realizada com sucesso</value>
   </data>
+  <data name="Viagem_SalvarFoto_Completa_OK" xml:space="preserve">
+    <value>Gravação de Foto foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarAtracaoCompleto_OK" xml:space="preserve">
+    <value>Gravação de Atracao foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarAtracao_Completo_OK" xml:space="preserve">
+    <value>Gravação de Atracao foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarGastoAtracao_OK" xml:space="preserve">
+    <value>Gravação de GastoAtracao foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirGastoAtracao_OK" xml:space="preserve">
+    <value>Exclusão de GastoAtracao foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarGastoDividido_OK" xml:space="preserve">
+    <value>Gravação de Gasto Dividido foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirGastoDividido_OK" xml:space="preserve">
+    <value>Exclusão de Gasto Dividido foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarGasto_Completo_OK" xml:space="preserve">
+    <value>Gravação de Gasto foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarRefeicao_Completo_OK" xml:space="preserve">
+    <value>Gravação de Refeicao foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_SalvarHotel_Completo_OK" xml:space="preserve">
+    <value>Gravação de Hotel foi realizada com sucesso</value>
+  </data>
 </root>

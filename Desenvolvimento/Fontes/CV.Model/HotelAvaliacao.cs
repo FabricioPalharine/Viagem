@@ -23,7 +23,6 @@ namespace CV.Model
 			[NotNullValidator(MessageTemplateResourceName="HotelAvaliacao_IdentificadorHotel",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public int? IdentificadorHotel { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="HotelAvaliacao_Nota",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public int? Nota { get; set; }
 
 			public string Comentario { get; set; }

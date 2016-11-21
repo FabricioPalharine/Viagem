@@ -10,6 +10,14 @@ namespace CV.Model
 
 	public partial class HotelEvento
 	{
-	}
+        public String strHoraEntrada
+        {
+            get { return DataEntrada.HasValue ? DataEntrada.Value.ToString("HH:mm:ss") : null; }
+        }
+        public String strHoraSaida
+        {
+            get { return DataSaida.HasValue ? DataSaida.Value.ToString("HH:mm:ss") : null; }
+        }
+    }
 
 }

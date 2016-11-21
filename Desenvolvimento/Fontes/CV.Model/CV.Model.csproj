@@ -53,10 +53,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlertaUsuario.cs" />
+    <Compile Include="AtracaoConsulta.cs" />
     <Compile Include="ConsultaAmigo.cs" />
     <Compile Include="ConsultaSolicitacao.cs" />
     <Compile Include="DadosGoogleToken.cs" />
     <Compile Include="Dominio\enumMoeda.cs" />
+    <Compile Include="UploadFoto.cs" />
     <Compile Include="pItemLista.cs" />
     <Compile Include="Results\Message.cs" />
     <Compile Include="Results\ServiceResult.cs" />
@@ -172,6 +174,10 @@
     <Compile Include="pUsuarioGasto.cs" />
     <Compile Include="HotelEvento.cs" />
     <Compile Include="pHotelEvento.cs" />
+    <Compile Include="GastoAtracao.cs" />
+    <Compile Include="pGastoAtracao.cs" />
+    <Compile Include="GastoDividido.cs" />
+    <Compile Include="pGastoDividido.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resource\MensagemModelo.resx">

@@ -41,6 +41,7 @@ namespace CV.Model
         public bool PermiteEdicao { get; set; }
         public bool VerCustos { get; set; }
 
+        public bool Aberto { get; set; }
         public string LinkFoto { get; set; }
         public string CodigoGoogle { get; set; }
 

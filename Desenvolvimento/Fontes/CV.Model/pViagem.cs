@@ -10,6 +10,13 @@ namespace CV.Model
 
 	public partial class Viagem
 	{
+        public string AbertoTexto
+        {
+            get
+            {
+                return Aberto.GetValueOrDefault() ? MensagemModelo.Sim : MensagemModelo.Nao;
+            }
+        }
 	}
 
 }

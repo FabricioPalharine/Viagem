@@ -22,9 +22,9 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             ResultadoConsultaTipo<Gasto> resultado = new ResultadoConsultaTipo<Gasto>();
             ViagemBusiness biz = new ViagemBusiness();
-           
-            List<Gasto> _itens = biz.ListarGasto().ToList();
-resultado.TotalRegistros = _itens.Count();
+
+            List<Gasto> _itens = biz.ListarGasto(token.IdentificadorViagem.GetValueOrDefault(), json.DataInicioDe, json.DataInicioAte, json.Nome, json.IdentificadorParticipante, json.Identificador).ToList();
+            resultado.TotalRegistros = _itens.Count();
             if (json.SortField != null && json.SortField.Any())
                 _itens = _itens.AsQueryable().OrderByField<Gasto>(json.SortField, json.SortOrder).ToList();
 
@@ -38,32 +38,144 @@ resultado.TotalRegistros = _itens.Count();
         public Gasto Get(int id)
         {
             ViagemBusiness biz = new ViagemBusiness();
-            Gasto itemGasto = biz.SelecionarGasto(id);
-          
+            Gasto itemGasto = biz.SelecionarGasto_Completo(id);
+            foreach (var item in itemGasto.Alugueis)
+                item.ItemGasto = null;
+            foreach (var item in itemGasto.Atracoes)
+                item.ItemGasto = null;
+            foreach (var item in itemGasto.Compras)
+                item.ItemGasto = null;
+            foreach (var item in itemGasto.Hoteis)
+                item.ItemGasto = null;
+            foreach (var item in itemGasto.ViagenAereas)
+                item.ItemGasto = null;
+            foreach (var item in itemGasto.Reabastecimentos)
+                item.ItemGasto = null;
+            foreach (var item in itemGasto.Refeicoes)
+                item.ItemGasto = null;
             return itemGasto;
         }
         [Authorize]
         public ResultadoOperacao Post([FromBody] Gasto itemGasto)
         {
             ViagemBusiness biz = new ViagemBusiness();
-                      biz.SalvarGasto(itemGasto);
+            itemGasto.IdentificadorViagem = token.IdentificadorViagem;
+            itemGasto.DataAtualizacao = DateTime.Now;
+            itemGasto.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemGasto.Latitude, itemGasto.Longitude);
+            biz.SalvarGasto_Completo(itemGasto);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
             if (itemResultado.Sucesso)
+            {
                 itemResultado.IdentificadorRegistro = itemGasto.Identificador;
+                itemGasto = biz.SelecionarGasto_Completo(itemGasto.Identificador);
+                foreach (var item in itemGasto.Alugueis)
+                    item.ItemGasto = null;
+                foreach (var item in itemGasto.Atracoes)
+                    item.ItemGasto = null;
+                foreach (var item in itemGasto.Compras)
+                    item.ItemGasto = null;
+                foreach (var item in itemGasto.Hoteis)
+                    item.ItemGasto = null;
+                foreach (var item in itemGasto.ViagenAereas)
+                    item.ItemGasto = null;
+                foreach (var item in itemGasto.Reabastecimentos)
+                    item.ItemGasto = null;
+                foreach (var item in itemGasto.Refeicoes)
+                    item.ItemGasto = null;
+                itemResultado.ItemRegistro = itemGasto;
+            }
             return itemResultado;
         }
+
         [Authorize]
         public ResultadoOperacao Delete(int id)
         {
             ViagemBusiness biz = new ViagemBusiness();
-            Gasto itemGasto = biz.SelecionarGasto(id);
-            biz.ExcluirGasto(itemGasto);
+            Gasto itemGasto = biz.SelecionarGasto_Completo(id);
+            itemGasto.DataExclusao = DateTime.Now;
+            foreach (var item in itemGasto.Alugueis.Where(d => !d.DataExclusao.HasValue))
+                item.DataExclusao = DateTime.Now;
+            foreach (var item in itemGasto.Atracoes.Where(d => !d.DataExclusao.HasValue))
+                item.DataExclusao = DateTime.Now;
+            foreach (var item in itemGasto.Compras.Where(d => !d.DataExclusao.HasValue))
+                item.DataExclusao = DateTime.Now;
+            foreach (var item in itemGasto.Hoteis.Where(d => !d.DataExclusao.HasValue))
+                item.DataExclusao = DateTime.Now;
+            foreach (var item in itemGasto.Reabastecimentos.Where(d => !d.DataExclusao.HasValue))
+                item.DataExclusao = DateTime.Now;
+            foreach (var item in itemGasto.Refeicoes.Where(d => !d.DataExclusao.HasValue))
+                item.DataExclusao = DateTime.Now;           
+            foreach (var item in itemGasto.ViagenAereas.Where(d => !d.DataExclusao.HasValue))
+                item.DataExclusao = DateTime.Now;
+
+
+            biz.SalvarGasto_Completo(itemGasto);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
 
+            return itemResultado;
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ActionName("SalvarCustoAtracao")]
+        public ResultadoOperacao SalvarCustoAtracao([FromBody] GastoAtracao itemGasto)
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            var itemGastoBase = biz.SelecionarGasto_Completo(itemGasto.IdentificadorGasto);
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+
+            if (itemGasto.DataExclusao.HasValue || !itemGastoBase.Atracoes.Where(f => f.IdentificadorAtracao == itemGasto.IdentificadorAtracao).Any())
+            {
+                biz.SalvarGastoAtracao(itemGasto);
+                itemResultado.Sucesso = biz.IsValid();
+                itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
+                if (itemResultado.Sucesso)
+                    itemResultado.IdentificadorRegistro = itemGasto.Identificador;
+            }
+            return itemResultado;
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ActionName("SalvarCustoRefeicao")]
+        public ResultadoOperacao SalvarCustoRefeicao([FromBody] GastoRefeicao itemGasto)
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            var itemGastoBase = biz.SelecionarGasto_Completo(itemGasto.IdentificadorGasto);
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+
+            if (itemGasto.DataExclusao.HasValue || !itemGastoBase.Refeicoes.Where(f => f.IdentificadorRefeicao == itemGasto.IdentificadorRefeicao).Any())
+            {
+                biz.SalvarGastoRefeicao(itemGasto);
+                itemResultado.Sucesso = biz.IsValid();
+                itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
+                if (itemResultado.Sucesso)
+                    itemResultado.IdentificadorRegistro = itemGasto.Identificador;
+            }
+            return itemResultado;
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ActionName("SalvarCustoHotel")]
+        public ResultadoOperacao SalvarCustoHotel([FromBody] GastoHotel itemGasto)
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            var itemGastoBase = biz.SelecionarGasto_Completo(itemGasto.IdentificadorGasto);
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+
+            if (itemGasto.DataExclusao.HasValue || !itemGastoBase.Hoteis.Where(f => f.IdentificadorHotel == itemGasto.IdentificadorHotel).Any())
+            {
+                biz.SalvarGastoHotel(itemGasto);
+                itemResultado.Sucesso = biz.IsValid();
+                itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
+                if (itemResultado.Sucesso)
+                    itemResultado.IdentificadorRegistro = itemGasto.Identificador;
+            }
             return itemResultado;
         }
     }

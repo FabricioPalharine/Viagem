@@ -19,96 +19,181 @@
             <i class="fa fa-refresh fa-spin text-gray"></i>
         </div>
 
-        <form role="form" ng-submit="itemGasto.filtraDado()" >
             <div class="box-body">
-                <div class="row">
-                    
+                <div class="box collapsed-box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><i class="fa fa-filter"></i>&nbsp;@TextosPaginas.Foto_Filtros</h3>
 
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label>@TextosPaginas.Gasto_IdentificadorUsuario</label>
+                                <select ng-model="itemGasto.itemUsuario" class="form-control" ng-options="obj.Nome for obj in itemGasto.ListaParticipantes track by obj.Identificador">
+                                    <option value="">@TextosPaginas.Selecione</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>@TextosPaginas.Gasto_Descricao</label>
+                                <input type="text" class="form-control" ng-model="itemGasto.filtro.Nome" maxlength="200" empty-to-null>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>@TextosPaginas.Foto_DataDe</label>
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+                                        <div class="input-group">
+                                            <input date-input ng-model="itemGasto.filtro.DataInicioDe" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                                   datapattern="dd/MM/yyyy">
+                                            <span class="input-group-addon">
+                                                <i class="glyphicon glyphicon-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                        <datetimepicker data-ng-model="itemGasto.filtro.DataInicioDe"
+                                                        data-datetimepicker-config="{  minView:'day' , langCode:itemGasto.Idioma()  }" />
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>@TextosPaginas.Foto_DataAte</label>
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+                                        <div class="input-group">
+                                            <input date-input ng-model="itemGasto.filtro.DataInicioAte" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                                   datapattern="dd/MM/yyyy">
+                                            <span class="input-group-addon">
+                                                <i class="glyphicon glyphicon-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                        <datetimepicker data-ng-model="itemGasto.filtro.DataInicioAte"
+                                                        data-datetimepicker-config="{  minView:'day' , langCode:itemGasto.Idioma()  }" />
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
 
+                    </div><!-- /.box-body -->
+                    <div class="box-footer">
+
+                        <button class="btn btn-primary  pull-right" ng-click="itemGasto.filtraDado()">
+                            <span class="fa fa-search" aria-hidden="true"></span> @TextosPaginas.Pesquisar
+                        </button>
+
+                    </div>
                 </div>
 
-
+                
             </div><!-- /.box-body -->
             <div class="box-footer">
-                <a role="button" class="btn btn-primary " title="@TextosPaginas.Adicionar" ui-sref="GastoEdicao({filtro:itemGasto.filtroAtualizacao})" ng-if="itemGasto.PermiteInclusao">
+                <a role="button" class="btn btn-primary " title="@TextosPaginas.Adicionar"  ng-click="itemGasto.CriarNovoGasto()">
                     <span class="fa fa-plus" aria-hidden="true"></span>
                 </a>
-                <button type="submit" class="btn btn-primary  pull-right">
-                    <span class="fa fa-search" aria-hidden="true"></span> @TextosPaginas.Pesquisar
-                </button>
+               
 
             </div>
-        </form>
+
     </div><!-- /.box -->
 
-
-
-    <div class="box" >
+    <div class="box">
         <div class="overlay" ng-show="itemGasto.loading">
             <i class="fa fa-refresh fa-spin text-gray"></i>
         </div>
-        <div class="box-body table-responsive">
-            <div class="gridStyle" ui-grid="itemGasto.gridOptions" ui-grid-pagination></div>
+        <div ng-repeat='item in itemGasto.ListaDados' >
+            <div   class="box " ng-class="{ 'collapsed-box': item.Identificador }" class-validation ng-controller="GastoEditCtrl as itemGastoEdit" ng-inject="{'$uibModalInstance': null, Referencias: null, EscopoAtualizacao: itemGasto}">
+                <div class="overlay" ng-show="itemGastoEdit.loading">
+                    <i class="fa fa-refresh fa-spin text-gray"></i>
+                </div>
 
+                <div class="box-header with-border" ng-init="itemGastoEdit.ajustaItem(item)">
+                    <a data-widget="collapse" data-toggle="tooltip" ng-click="itemGastoEdit.load()" style="cursor:pointer">
+                        <i class="fa fa-plus" ng-class="{ 'fa-minus': !item.Identificador }"></i>
+
+
+                        <h3 class="box-title">{{item.Descricao}}</h3>
+
+                    </a>
+
+                </div>
+
+                <div ng-include="'Sistema/GastoEdicao'">
+
+                </div>
+
+
+                <div class="box-footer">
+
+                    <a role="button" class="btn btn-primary pull-right" title="@TextosPaginas.Geral_Salvar" ng-click="itemGastoEdit.salvar()">
+                        <span class="fa fa-save" aria-hidden="true"></span>
+                    </a>
+
+                    <a role="button" class="btn btn-primary pull-right" title="@TextosPaginas.Excluir" ng-click="itemGastoEdit.VerificarExclusao()" ng-if="itemGastoEdit.itemGasto.Identificador">
+                        <span class="fa fa-trash-o" aria-hidden="true"></span>
+                    </a>
+
+                    <a role="button" class="btn btn-primary pull-right" title="@TextosPaginas.Posicao" ng-click="itemGastoEdit.abrirMapa()">
+                        <span class="fa fa-map-marker" aria-hidden="true"></span>
+                    </a>
+
+                </div>
+            </div>
 
         </div>
+
+
     </div>
-
-    <script type="text/ng-template" id="modal.html">
-
-        <div class="modal-body">
-            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="vmAction.edit(vmAction.item.Identificador)">@TextosPaginas.Editar</button>
-            <button type="button" class="btn btn-danger btn-lg btn-block" ng-click="vmAction.askDelete(vmAction.item, vmAction.indexForDelete)">@TextosPaginas.Excluir</button>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default btn-lg btn-block" ng-click="vmAction.close()">@TextosPaginas.Cancelar</button>
-        </div>
-    </script>
-
 
     <script type="text/ng-template" id="modalDelete.html">
         <div class="modal-header">
-            <span>@TextosPaginas.ConfirmaExclusao</span>
+            <span>{{vmDelete.MensagemConfirmacao}}</span>
         </div>
         <div class="modal-body">
-            <button type="button" class="btn btn-info btn-lg btn-block" ng-click="vmDelete.delete()">@TextosPaginas.Sim</button>
-            <button type="button" class="btn btn-default btn-lg btn-block" ng-click="vmDelete.close()">@TextosPaginas.Nao</button>
-        </div>
-        <div class="modal-footer hidden-lg hidden-md">
-            <button type="button" class="btn btn-default btn-lg btn-block" ng-click="vmDelete.back()">@TextosPaginas.Voltar</button>
+            <button type="button" class="btn btn-info btn-lg btn-block" ng-click="vmDelete.confirmar()">{{vmDelete.TextoBotaoOK}}</button>
+            <button type="button" class="btn btn-default btn-lg btn-block" ng-click="vmDelete.close()">{{vmDelete.TextoBotaoCancel}}</button>
         </div>
     </script>
 
+    <script type="text/ng-template" id="modalMapa.html">
+        <div class="modal-body">
+            <div class="box-body">
 
-    <script type="text/ng-template" id="NewFooterTemplate.html">
-
-        <div role="contentinfo" class="ui-grid-pager-panel" ui-grid-pager ng-show="grid.options.enablePaginationControls">
-
-            <div role="navigation" class="ui-grid-pager-container">
-                <div role="menubar" class="ui-grid-pager-control">
-                    <button type="button" role="menuitem" class="ui-grid-pager-first" ui-grid-one-bind-title="aria.pageToFirst" ui-grid-one-bind-aria-label="aria.pageToFirst" ng-class="{'btn':true, 'btn-primary':true}" ng-click="pageFirstPageClick()" ng-disabled="cantPageBackward()">
-                        <div ng-class="grid.isRTL() ? 'last-triangle' : 'first-triangle'"><div ng-class="grid.isRTL() ? 'last-bar-rtl' : 'first-bar'"></div></div>
-                    </button>
-                    <button type="button" role="menuitem" class="ui-grid-pager-previous  btn btn-primary" ui-grid-one-bind-title="aria.pageBack" ui-grid-one-bind-aria-label="aria.pageBack" ng-click="pagePreviousPageClick()" ng-disabled="cantPageBackward()"><div ng-class="grid.isRTL() ? 'last-triangle prev-triangle' : 'first-triangle prev-triangle'"></div></button>
-                    <input type="number" ui-grid-one-bind-title="aria.pageSelected" ui-grid-one-bind-aria-label="aria.pageSelected" class="ui-grid-pager-control-input" ng-model="grid.options.paginationCurrentPage" min="1" max="{{ paginationApi.getTotalPages() }}" required> <span class="ui-grid-pager-max-pages-number" ng-show="paginationApi.getTotalPages() > 0"><abbr ui-grid-one-bind-title="paginationOf">/</abbr> {{ paginationApi.getTotalPages() }}</span>
-                    <button type="button" role="menuitem" class="ui-grid-pager-next  btn btn-primary" ui-grid-one-bind-title="aria.pageForward" ui-grid-one-bind-aria-label="aria.pageForward" ng-click="pageNextPageClick()" ng-disabled="cantPageForward()"><div ng-class="grid.isRTL() ? 'first-triangle next-triangle' : 'last-triangle next-triangle'"></div></button>
-                    <button type="button" role="menuitem" class="ui-grid-pager-last  btn btn-primary" ui-grid-one-bind-title="aria.pageToLast" ui-grid-one-bind-aria-label="aria.pageToLast" ng-click="pageLastPageClick()" ng-disabled="cantPageToLast()"><div ng-class="grid.isRTL() ? 'first-triangle' : 'last-triangle'"><div ng-class="grid.isRTL() ? 'first-bar-rtl' : 'last-bar'"></div></div></button>
+                <div class="row">
+                    <div class="form-group  col-sm-8">
+                        <label>@TextosPaginas.Posicao_Endereco</label>
+                        <input type="text" class="form-control" ng-model="vmMapa.itemEndereco" empty-to-null>
+                    </div>
+                    <div class="form-group  col-sm-2">
+                        <label>&nbsp;</label>
+                        <button class="btn btn-primary btn-block " ng-click="vmMapa.centralizarEndereco()">
+                            <span class="fa fa-search" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div class="form-group  col-sm-2">
+                        <label>&nbsp;</label>
+                        <button class="btn btn-primary btn-block" ng-click="vmMapa.limparPosicao()">
+                            <span class="fa fa-unlink" aria-hidden="true"></span>
+                        </button>
+                    </div>
                 </div>
             </div>
-            <div class="ui-grid-pager-count-container"><div class="ui-grid-pager-count"><span ng-show="grid.options.totalItems > 0">{{showingLow}} <abbr ui-grid-one-bind-title="paginationThrough">-</abbr> {{showingHigh}} {{paginationOf}} {{grid.options.totalItems}} {{totalItemsLabel}}</span></div></div>
+            <ng-map zoom="13"
+                    center="[{{vmMapa.lat}}, {{vmMapa.lng}}]" on-click="vmMapa.ajustaPosicao()">
+                <marker ng-if="vmMapa.itemMarcador.Latitude && vmMapa.itemMarcador.Longitude" position="{{vmMapa.itemMarcador.Latitude}}, {{vmMapa.itemMarcador.Longitude}}"></marker>
+            </ng-map>
         </div>
-    </script>
-
-
-    <script type="text/ng-template" id="BotoesGridTemplate.html">
-
-        <div class="ngCellText hidden-xs">
-			<button type="button" ng-if="grid.appScope.PermiteAlteracao" class="btn btn-primary small" title="@TextosPaginas.Editar" ui-sref="GastoEdicao({ id: {{COL_FIELD}},filtro:grid.appScope.filtroAtualizacao })"><span class="fa fa-pencil" aria-hidden="true"></span></button>
-			<button type="button" ng-if="grid.appScope.PermiteExclusao" class="btn btn-danger small" title="@TextosPaginas.Excluir" ng-click="grid.appScope.askDelete(row.entity, $index)"><span class="fa fa-trash" aria-hidden="true"></span></button>
-
+        <div class="modal-footer ">
+            <button type="button" class="btn btn-primary  pull-right" ng-click="vmMapa.salvar()">
+                <span class="fa fa-cloud-upload" aria-hidden="true"></span> @TextosPaginas.Geral_Salvar
+            </button>
+            <button type="button" class="btn btn-primary" ng-click="vmMapa.close()">
+                <span class="fa fa-close" aria-hidden="true">@TextosPaginas.Cancelar</span>
+            </button>
         </div>
-
-
     </script>
 
 </section><!-- /.content -->

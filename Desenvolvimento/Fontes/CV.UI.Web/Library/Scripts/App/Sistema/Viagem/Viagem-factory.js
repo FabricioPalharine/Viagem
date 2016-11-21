@@ -36,7 +36,15 @@
               },
             //  transformResponse: parseArray,
               isArray: false
-          }
+          },
+          CarregarParticipantes: {
+              method: 'GET',
+              params: {
+                  controller: 'CarregarParticipantes',
+              },
+              //  transformResponse: parseArray,
+              isArray: true
+          },
          
 
       });

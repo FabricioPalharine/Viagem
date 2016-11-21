@@ -9,11 +9,14 @@
               link: function (scope, el, attrs) {
                   $(el).inputmask(scope.$eval(attrs.inputMask));
                   $(el).on('change', function () {
-
-                      if (!attrs.datapattern)
-                          scope.$eval(attrs.ngModel + "='" + el.val() + "'");
+                      if (el.val()) {
+                          if (!attrs.datapattern)
+                              scope.$eval(attrs.ngModel + "='" + el.val() + "'");
+                          else
+                              scope.$eval(attrs.ngModel + "='" + moment(el.val(), attrs.datapattern.toUpperCase()).toISOString()+ "'");
+                      }
                       else
-                          scope.$eval(attrs.ngModel + "='" + Date.parseString(el.val(), attrs.datapattern) + "'");
+                          scope.$eval(attrs.ngModel + "=null");
                       // or scope[attrs.ngModel] = el.val() if your expression doesn't contain dot.
                   });
               }
@@ -92,12 +95,48 @@
                 replace: true,
                 link: function (scope, elm, attrs, ngModelCtrl) {
                     ngModelCtrl.$formatters.unshift(function (modelValue) {
-                        return dateFilter(Date.parse(modelValue), attrs.datapattern);
+                        if (modelValue)
+                            return moment(modelValue).format(attrs.datapattern.toUpperCase());
                     });
 
 
                 },
             };
-        }]);
+        }])
+
+    .directive("ngInject", function ($parse, $interpolate, $controller, $compile) {
+        return {
+            terminal: true,
+            transclude: true,
+            priority: 510,
+            link: function (scope, element, attrs, ctrls, transclude) {
+
+                if (!attrs.ngController) {
+                    element.removeAttr("ng-inject");
+                    $compile(element)(scope);
+                    return;
+                }
+
+                var controllerName = attrs.ngController;
+
+                var newScope = scope.$new(false);
+
+                var locals = $parse(attrs.ngInject)(scope);
+                locals.$scope = newScope;
+
+                var controller = $controller(controllerName, locals);
+
+                element.data("ngControllerController", controller);
+
+                element.removeAttr("ng-inject").removeAttr("ng-controller");
+                $compile(element)(newScope);
+                transclude(newScope, function (clone) {
+                    element.append(clone);
+                });
+                // restore to hide tracks
+                element.attr("ng-controller", controllerName);
+            }
+        };
+    });
 
 }());

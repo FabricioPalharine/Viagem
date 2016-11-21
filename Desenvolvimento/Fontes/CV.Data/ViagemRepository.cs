@@ -163,13 +163,31 @@ namespace CV.Data
 			public void SalvarAtracao (Atracao itemGravar)
 			{
 				Atracao itemBase =  Context.Atracoes
-				.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
+.Include("Avaliacoes")				.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
 				if (itemBase == null)
 				{
 				itemBase = Context.Atracoes.Create();
+				itemBase.Avaliacoes = new List<AvaliacaoAtracao>();
  			Context.Entry<Atracao>(itemBase).State = System.Data.Entity.EntityState.Added;
 				}
  			AtualizarPropriedades<Atracao>(itemBase, itemGravar);
+				foreach (AvaliacaoAtracao itemAvaliacaoAtracao in new List<AvaliacaoAtracao>( itemBase.Avaliacoes))
+				{
+					if (!itemGravar.Avaliacoes.Where(f=>f.Identificador == itemAvaliacaoAtracao.Identificador).Any())
+					{
+						Context.Entry<AvaliacaoAtracao>(itemAvaliacaoAtracao).State = EntityState.Deleted;
+					}
+				}
+				foreach (AvaliacaoAtracao itemAvaliacaoAtracao in new List<AvaliacaoAtracao>( itemGravar.Avaliacoes))
+				{
+				AvaliacaoAtracao itemBaseAvaliacaoAtracao = !itemAvaliacaoAtracao.Identificador.HasValue?null: itemBase.Avaliacoes.Where(f=>f.Identificador == itemAvaliacaoAtracao.Identificador).FirstOrDefault();
+				if (itemBaseAvaliacaoAtracao == null)
+				{
+				itemBaseAvaliacaoAtracao = Context.AvaliacaoAtracoes.Create();
+ 			itemBase.Avaliacoes.Add(itemBaseAvaliacaoAtracao);
+				}
+ 			AtualizarPropriedades<AvaliacaoAtracao>(itemBaseAvaliacaoAtracao, itemAvaliacaoAtracao);
+				}
 			Context.SaveChanges();
 				itemGravar.Identificador = itemBase.Identificador;
 			}
@@ -550,7 +568,23 @@ namespace CV.Data
 			public void ExcluirFoto (Foto itemGravar)
 			{
 				Foto itemExcluir =  Context.Fotos
-			.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
+.Include("Atracoes").Include("Hoteis").Include("ItensCompra").Include("Refeicoes")			.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
+				foreach (FotoAtracao itemFotoAtracao in new List<FotoAtracao>( itemExcluir.Atracoes))
+				{
+						Context.Entry<FotoAtracao>(itemFotoAtracao).State = EntityState.Deleted;
+				}
+				foreach (FotoHotel itemFotoHotel in new List<FotoHotel>( itemExcluir.Hoteis))
+				{
+						Context.Entry<FotoHotel>(itemFotoHotel).State = EntityState.Deleted;
+				}
+				foreach (FotoItemCompra itemFotoItemCompra in new List<FotoItemCompra>( itemExcluir.ItensCompra))
+				{
+						Context.Entry<FotoItemCompra>(itemFotoItemCompra).State = EntityState.Deleted;
+				}
+				foreach (FotoRefeicao itemFotoRefeicao in new List<FotoRefeicao>( itemExcluir.Refeicoes))
+				{
+						Context.Entry<FotoRefeicao>(itemFotoRefeicao).State = EntityState.Deleted;
+				}
 						Context.Entry<Foto>(itemExcluir).State = EntityState.Deleted;
 				Context.SaveChanges();
 			}
@@ -792,40 +826,6 @@ namespace CV.Data
 						Context.Entry<GastoHotel>(itemExcluir).State = EntityState.Deleted;
 				Context.SaveChanges();
 			}
-			public GastoPosicao SelecionarGastoPosicao (int? Identificador)
-			{
-			IQueryable<GastoPosicao> query =	 Context.GastoPosicoes
-;
-					if (Identificador.HasValue)
-					query = query.Where(d=>d.Identificador == Identificador);
-					return query.FirstOrDefault();
-			}
-			public IList<GastoPosicao> ListarGastoPosicao ()
-			{
-			IQueryable<GastoPosicao> query =	 Context.GastoPosicoes
-;
-				return query.ToList();
-			}
-			public void SalvarGastoPosicao (GastoPosicao itemGravar)
-			{
-				GastoPosicao itemBase =  Context.GastoPosicoes
-				.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
-				if (itemBase == null)
-				{
-				itemBase = Context.GastoPosicoes.Create();
- 			Context.Entry<GastoPosicao>(itemBase).State = System.Data.Entity.EntityState.Added;
-				}
- 			AtualizarPropriedades<GastoPosicao>(itemBase, itemGravar);
-			Context.SaveChanges();
-				itemGravar.Identificador = itemBase.Identificador;
-			}
-			public void ExcluirGastoPosicao (GastoPosicao itemGravar)
-			{
-				GastoPosicao itemExcluir =  Context.GastoPosicoes
-			.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
-						Context.Entry<GastoPosicao>(itemExcluir).State = EntityState.Deleted;
-				Context.SaveChanges();
-			}
 			public GastoRefeicao SelecionarGastoRefeicao (int? Identificador)
 			{
 			IQueryable<GastoRefeicao> query =	 Context.GastoRefeicoes
@@ -911,13 +911,49 @@ namespace CV.Data
 			public void SalvarHotel (Hotel itemGravar)
 			{
 				Hotel itemBase =  Context.Hoteis
-				.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
+.Include("Avaliacoes").Include("Eventos")				.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
 				if (itemBase == null)
 				{
 				itemBase = Context.Hoteis.Create();
+				itemBase.Avaliacoes = new List<HotelAvaliacao>();
+				itemBase.Eventos = new List<HotelEvento>();
  			Context.Entry<Hotel>(itemBase).State = System.Data.Entity.EntityState.Added;
 				}
  			AtualizarPropriedades<Hotel>(itemBase, itemGravar);
+				foreach (HotelAvaliacao itemHotelAvaliacao in new List<HotelAvaliacao>( itemBase.Avaliacoes))
+				{
+					if (!itemGravar.Avaliacoes.Where(f=>f.Identificador == itemHotelAvaliacao.Identificador).Any())
+					{
+						Context.Entry<HotelAvaliacao>(itemHotelAvaliacao).State = EntityState.Deleted;
+					}
+				}
+				foreach (HotelAvaliacao itemHotelAvaliacao in new List<HotelAvaliacao>( itemGravar.Avaliacoes))
+				{
+				HotelAvaliacao itemBaseHotelAvaliacao = !itemHotelAvaliacao.Identificador.HasValue?null: itemBase.Avaliacoes.Where(f=>f.Identificador == itemHotelAvaliacao.Identificador).FirstOrDefault();
+				if (itemBaseHotelAvaliacao == null)
+				{
+				itemBaseHotelAvaliacao = Context.HotelAvaliacoes.Create();
+ 			itemBase.Avaliacoes.Add(itemBaseHotelAvaliacao);
+				}
+ 			AtualizarPropriedades<HotelAvaliacao>(itemBaseHotelAvaliacao, itemHotelAvaliacao);
+				}
+				foreach (HotelEvento itemHotelEvento in new List<HotelEvento>( itemBase.Eventos))
+				{
+					if (!itemGravar.Eventos.Where(f=>f.Identificador == itemHotelEvento.Identificador).Any())
+					{
+						Context.Entry<HotelEvento>(itemHotelEvento).State = EntityState.Deleted;
+					}
+				}
+				foreach (HotelEvento itemHotelEvento in new List<HotelEvento>( itemGravar.Eventos))
+				{
+				HotelEvento itemBaseHotelEvento = !itemHotelEvento.Identificador.HasValue?null: itemBase.Eventos.Where(f=>f.Identificador == itemHotelEvento.Identificador).FirstOrDefault();
+				if (itemBaseHotelEvento == null)
+				{
+				itemBaseHotelEvento = Context.HotelEventos.Create();
+ 			itemBase.Eventos.Add(itemBaseHotelEvento);
+				}
+ 			AtualizarPropriedades<HotelEvento>(itemBaseHotelEvento, itemHotelEvento);
+				}
 			Context.SaveChanges();
 				itemGravar.Identificador = itemBase.Identificador;
 			}
@@ -1217,13 +1253,31 @@ namespace CV.Data
 			public void SalvarRefeicao (Refeicao itemGravar)
 			{
 				Refeicao itemBase =  Context.Refeicoes
-				.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
+.Include("Pedidos")				.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
 				if (itemBase == null)
 				{
 				itemBase = Context.Refeicoes.Create();
+				itemBase.Pedidos = new List<RefeicaoPedido>();
  			Context.Entry<Refeicao>(itemBase).State = System.Data.Entity.EntityState.Added;
 				}
  			AtualizarPropriedades<Refeicao>(itemBase, itemGravar);
+				foreach (RefeicaoPedido itemRefeicaoPedido in new List<RefeicaoPedido>( itemBase.Pedidos))
+				{
+					if (!itemGravar.Pedidos.Where(f=>f.Identificador == itemRefeicaoPedido.Identificador).Any())
+					{
+						Context.Entry<RefeicaoPedido>(itemRefeicaoPedido).State = EntityState.Deleted;
+					}
+				}
+				foreach (RefeicaoPedido itemRefeicaoPedido in new List<RefeicaoPedido>( itemGravar.Pedidos))
+				{
+				RefeicaoPedido itemBaseRefeicaoPedido = !itemRefeicaoPedido.Identificador.HasValue?null: itemBase.Pedidos.Where(f=>f.Identificador == itemRefeicaoPedido.Identificador).FirstOrDefault();
+				if (itemBaseRefeicaoPedido == null)
+				{
+				itemBaseRefeicaoPedido = Context.RefeicaoPedidos.Create();
+ 			itemBase.Pedidos.Add(itemBaseRefeicaoPedido);
+				}
+ 			AtualizarPropriedades<RefeicaoPedido>(itemBaseRefeicaoPedido, itemRefeicaoPedido);
+				}
 			Context.SaveChanges();
 				itemGravar.Identificador = itemBase.Identificador;
 			}
@@ -1619,6 +1673,575 @@ namespace CV.Data
  			itemBase.UsuariosGastos.Add(itemBaseUsuarioGasto);
 				}
  			AtualizarPropriedades<UsuarioGasto>(itemBaseUsuarioGasto, itemUsuarioGasto);
+				}
+			Context.SaveChanges();
+				itemGravar.Identificador = itemBase.Identificador;
+			}
+			public Foto SelecionarFoto_Completa (int? Identificador)
+			{
+			IQueryable<Foto> query =	 Context.Fotos
+.Include("Atracoes").Include("Atracoes.ItemAtracao").Include("Hoteis").Include("Hoteis.ItemHotel").Include("ItensCompra").Include("ItensCompra.ItemItemCompra").Include("Refeicoes").Include("Refeicoes.ItemRefeicao");
+					if (Identificador.HasValue)
+					query = query.Where(d=>d.Identificador == Identificador);
+					return query.FirstOrDefault();
+			}
+			public void SalvarFoto_Completa (Foto itemGravar)
+			{
+				Foto itemBase =  Context.Fotos
+.Include("Atracoes").Include("Hoteis").Include("Refeicoes").Include("ItensCompra")				.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
+				if (itemBase == null)
+				{
+				itemBase = Context.Fotos.Create();
+				itemBase.Atracoes = new List<FotoAtracao>();
+				itemBase.Hoteis = new List<FotoHotel>();
+				itemBase.Refeicoes = new List<FotoRefeicao>();
+				itemBase.ItensCompra = new List<FotoItemCompra>();
+ 			Context.Entry<Foto>(itemBase).State = System.Data.Entity.EntityState.Added;
+				}
+ 			AtualizarPropriedades<Foto>(itemBase, itemGravar);
+				foreach (FotoAtracao itemFotoAtracao in new List<FotoAtracao>( itemBase.Atracoes))
+				{
+					if (!itemGravar.Atracoes.Where(f=>f.Identificador == itemFotoAtracao.Identificador).Any())
+					{
+						Context.Entry<FotoAtracao>(itemFotoAtracao).State = EntityState.Deleted;
+					}
+				}
+				foreach (FotoAtracao itemFotoAtracao in new List<FotoAtracao>( itemGravar.Atracoes))
+				{
+				FotoAtracao itemBaseFotoAtracao = !itemFotoAtracao.Identificador.HasValue?null: itemBase.Atracoes.Where(f=>f.Identificador == itemFotoAtracao.Identificador).FirstOrDefault();
+				if (itemBaseFotoAtracao == null)
+				{
+				itemBaseFotoAtracao = Context.FotoAtracoes.Create();
+ 			itemBase.Atracoes.Add(itemBaseFotoAtracao);
+				}
+ 			AtualizarPropriedades<FotoAtracao>(itemBaseFotoAtracao, itemFotoAtracao);
+				}
+				foreach (FotoHotel itemFotoHotel in new List<FotoHotel>( itemBase.Hoteis))
+				{
+					if (!itemGravar.Hoteis.Where(f=>f.Identificador == itemFotoHotel.Identificador).Any())
+					{
+						Context.Entry<FotoHotel>(itemFotoHotel).State = EntityState.Deleted;
+					}
+				}
+				foreach (FotoHotel itemFotoHotel in new List<FotoHotel>( itemGravar.Hoteis))
+				{
+				FotoHotel itemBaseFotoHotel = !itemFotoHotel.Identificador.HasValue?null: itemBase.Hoteis.Where(f=>f.Identificador == itemFotoHotel.Identificador).FirstOrDefault();
+				if (itemBaseFotoHotel == null)
+				{
+				itemBaseFotoHotel = Context.FotoHoteis.Create();
+ 			itemBase.Hoteis.Add(itemBaseFotoHotel);
+				}
+ 			AtualizarPropriedades<FotoHotel>(itemBaseFotoHotel, itemFotoHotel);
+				}
+				foreach (FotoRefeicao itemFotoRefeicao in new List<FotoRefeicao>( itemBase.Refeicoes))
+				{
+					if (!itemGravar.Refeicoes.Where(f=>f.Identificador == itemFotoRefeicao.Identificador).Any())
+					{
+						Context.Entry<FotoRefeicao>(itemFotoRefeicao).State = EntityState.Deleted;
+					}
+				}
+				foreach (FotoRefeicao itemFotoRefeicao in new List<FotoRefeicao>( itemGravar.Refeicoes))
+				{
+				FotoRefeicao itemBaseFotoRefeicao = !itemFotoRefeicao.Identificador.HasValue?null: itemBase.Refeicoes.Where(f=>f.Identificador == itemFotoRefeicao.Identificador).FirstOrDefault();
+				if (itemBaseFotoRefeicao == null)
+				{
+				itemBaseFotoRefeicao = Context.FotoRefeicoes.Create();
+ 			itemBase.Refeicoes.Add(itemBaseFotoRefeicao);
+				}
+ 			AtualizarPropriedades<FotoRefeicao>(itemBaseFotoRefeicao, itemFotoRefeicao);
+				}
+				foreach (FotoItemCompra itemFotoItemCompra in new List<FotoItemCompra>( itemBase.ItensCompra))
+				{
+					if (!itemGravar.ItensCompra.Where(f=>f.Identificador == itemFotoItemCompra.Identificador).Any())
+					{
+						Context.Entry<FotoItemCompra>(itemFotoItemCompra).State = EntityState.Deleted;
+					}
+				}
+				foreach (FotoItemCompra itemFotoItemCompra in new List<FotoItemCompra>( itemGravar.ItensCompra))
+				{
+				FotoItemCompra itemBaseFotoItemCompra = !itemFotoItemCompra.Identificador.HasValue?null: itemBase.ItensCompra.Where(f=>f.Identificador == itemFotoItemCompra.Identificador).FirstOrDefault();
+				if (itemBaseFotoItemCompra == null)
+				{
+				itemBaseFotoItemCompra = Context.FotoItemCompras.Create();
+ 			itemBase.ItensCompra.Add(itemBaseFotoItemCompra);
+				}
+ 			AtualizarPropriedades<FotoItemCompra>(itemBaseFotoItemCompra, itemFotoItemCompra);
+				}
+			Context.SaveChanges();
+				itemGravar.Identificador = itemBase.Identificador;
+			}
+			public void SalvarAtracao_Completo (Atracao itemGravar)
+			{
+				Atracao itemBase =  Context.Atracoes
+.Include("Avaliacoes").Include("Fotos").Include("Gastos")				.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
+				if (itemBase == null)
+				{
+				itemBase = Context.Atracoes.Create();
+				itemBase.Avaliacoes = new List<AvaliacaoAtracao>();
+				itemBase.Fotos = new List<FotoAtracao>();
+				itemBase.Gastos = new List<GastoAtracao>();
+ 			Context.Entry<Atracao>(itemBase).State = System.Data.Entity.EntityState.Added;
+				}
+ 			AtualizarPropriedades<Atracao>(itemBase, itemGravar);
+				foreach (AvaliacaoAtracao itemAvaliacaoAtracao in new List<AvaliacaoAtracao>( itemBase.Avaliacoes))
+				{
+					if (!itemGravar.Avaliacoes.Where(f=>f.Identificador == itemAvaliacaoAtracao.Identificador).Any())
+					{
+						Context.Entry<AvaliacaoAtracao>(itemAvaliacaoAtracao).State = EntityState.Deleted;
+					}
+				}
+				foreach (AvaliacaoAtracao itemAvaliacaoAtracao in new List<AvaliacaoAtracao>( itemGravar.Avaliacoes))
+				{
+				AvaliacaoAtracao itemBaseAvaliacaoAtracao = !itemAvaliacaoAtracao.Identificador.HasValue?null: itemBase.Avaliacoes.Where(f=>f.Identificador == itemAvaliacaoAtracao.Identificador).FirstOrDefault();
+				if (itemBaseAvaliacaoAtracao == null)
+				{
+				itemBaseAvaliacaoAtracao = Context.AvaliacaoAtracoes.Create();
+ 			itemBase.Avaliacoes.Add(itemBaseAvaliacaoAtracao);
+				}
+ 			AtualizarPropriedades<AvaliacaoAtracao>(itemBaseAvaliacaoAtracao, itemAvaliacaoAtracao);
+				}
+				foreach (FotoAtracao itemFotoAtracao in new List<FotoAtracao>( itemBase.Fotos))
+				{
+					if (!itemGravar.Fotos.Where(f=>f.Identificador == itemFotoAtracao.Identificador).Any())
+					{
+						Context.Entry<FotoAtracao>(itemFotoAtracao).State = EntityState.Deleted;
+					}
+				}
+				foreach (FotoAtracao itemFotoAtracao in new List<FotoAtracao>( itemGravar.Fotos))
+				{
+				FotoAtracao itemBaseFotoAtracao = !itemFotoAtracao.Identificador.HasValue?null: itemBase.Fotos.Where(f=>f.Identificador == itemFotoAtracao.Identificador).FirstOrDefault();
+				if (itemBaseFotoAtracao == null)
+				{
+				itemBaseFotoAtracao = Context.FotoAtracoes.Create();
+ 			itemBase.Fotos.Add(itemBaseFotoAtracao);
+				}
+ 			AtualizarPropriedades<FotoAtracao>(itemBaseFotoAtracao, itemFotoAtracao);
+				}
+				foreach (GastoAtracao itemGastoAtracao in new List<GastoAtracao>( itemBase.Gastos))
+				{
+					if (!itemGravar.Gastos.Where(f=>f.Identificador == itemGastoAtracao.Identificador).Any())
+					{
+						Context.Entry<GastoAtracao>(itemGastoAtracao).State = EntityState.Deleted;
+					}
+				}
+				foreach (GastoAtracao itemGastoAtracao in new List<GastoAtracao>( itemGravar.Gastos))
+				{
+				GastoAtracao itemBaseGastoAtracao = !itemGastoAtracao.Identificador.HasValue?null: itemBase.Gastos.Where(f=>f.Identificador == itemGastoAtracao.Identificador).FirstOrDefault();
+				if (itemBaseGastoAtracao == null)
+				{
+				itemBaseGastoAtracao = Context.GastoAtracoes.Create();
+ 			itemBase.Gastos.Add(itemBaseGastoAtracao);
+				}
+ 			AtualizarPropriedades<GastoAtracao>(itemBaseGastoAtracao, itemGastoAtracao);
+				}
+			Context.SaveChanges();
+				itemGravar.Identificador = itemBase.Identificador;
+			}
+			public Atracao SelecionarAtracao_Completo (int? Identificador)
+			{
+			IQueryable<Atracao> query =	 Context.Atracoes
+.Include("Avaliacoes").Include("Fotos").Include("Fotos.ItemFoto").Include("Gastos").Include("Gastos.ItemGasto").Include("Gastos.ItemGasto.ItemUsuario").Include("ItemAtracaoPai");
+					if (Identificador.HasValue)
+					query = query.Where(d=>d.Identificador == Identificador);
+					return query.FirstOrDefault();
+			}
+			public GastoAtracao SelecionarGastoAtracao (int? Identificador)
+			{
+			IQueryable<GastoAtracao> query =	 Context.GastoAtracoes
+;
+					if (Identificador.HasValue)
+					query = query.Where(d=>d.Identificador == Identificador);
+					return query.FirstOrDefault();
+			}
+			public IList<GastoAtracao> ListarGastoAtracao ()
+			{
+			IQueryable<GastoAtracao> query =	 Context.GastoAtracoes
+;
+				return query.ToList();
+			}
+			public void SalvarGastoAtracao (GastoAtracao itemGravar)
+			{
+				GastoAtracao itemBase =  Context.GastoAtracoes
+				.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
+				if (itemBase == null)
+				{
+				itemBase = Context.GastoAtracoes.Create();
+ 			Context.Entry<GastoAtracao>(itemBase).State = System.Data.Entity.EntityState.Added;
+				}
+ 			AtualizarPropriedades<GastoAtracao>(itemBase, itemGravar);
+			Context.SaveChanges();
+				itemGravar.Identificador = itemBase.Identificador;
+			}
+			public void ExcluirGastoAtracao (GastoAtracao itemGravar)
+			{
+				GastoAtracao itemExcluir =  Context.GastoAtracoes
+			.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
+						Context.Entry<GastoAtracao>(itemExcluir).State = EntityState.Deleted;
+				Context.SaveChanges();
+			}
+			public GastoDividido SelecionarGastoDividido (int? Identificador)
+			{
+			IQueryable<GastoDividido> query =	 Context.GastoDivididos
+;
+					if (Identificador.HasValue)
+					query = query.Where(d=>d.Identificador == Identificador);
+					return query.FirstOrDefault();
+			}
+			public IList<GastoDividido> ListarGastoDividido ()
+			{
+			IQueryable<GastoDividido> query =	 Context.GastoDivididos
+;
+				return query.ToList();
+			}
+			public void SalvarGastoDividido (GastoDividido itemGravar)
+			{
+				GastoDividido itemBase =  Context.GastoDivididos
+				.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
+				if (itemBase == null)
+				{
+				itemBase = Context.GastoDivididos.Create();
+ 			Context.Entry<GastoDividido>(itemBase).State = System.Data.Entity.EntityState.Added;
+				}
+ 			AtualizarPropriedades<GastoDividido>(itemBase, itemGravar);
+			Context.SaveChanges();
+				itemGravar.Identificador = itemBase.Identificador;
+			}
+			public void ExcluirGastoDividido (GastoDividido itemGravar)
+			{
+				GastoDividido itemExcluir =  Context.GastoDivididos
+			.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
+						Context.Entry<GastoDividido>(itemExcluir).State = EntityState.Deleted;
+				Context.SaveChanges();
+			}
+			public void SalvarGasto_Completo (Gasto itemGravar)
+			{
+				Gasto itemBase =  Context.Gastos
+.Include("Alugueis").Include("Atracoes").Include("Compras").Include("Hoteis").Include("Refeicoes").Include("Usuarios").Include("ViagenAereas").Include("Reabastecimentos")				.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
+				if (itemBase == null)
+				{
+				itemBase = Context.Gastos.Create();
+				itemBase.Alugueis = new List<AluguelGasto>();
+				itemBase.Atracoes = new List<GastoAtracao>();
+				itemBase.Compras = new List<GastoCompra>();
+				itemBase.Hoteis = new List<GastoHotel>();
+				itemBase.Refeicoes = new List<GastoRefeicao>();
+				itemBase.Usuarios = new List<GastoDividido>();
+				itemBase.ViagenAereas = new List<GastoViagemAerea>();
+				itemBase.Reabastecimentos = new List<ReabastecimentoGasto>();
+ 			Context.Entry<Gasto>(itemBase).State = System.Data.Entity.EntityState.Added;
+				}
+ 			AtualizarPropriedades<Gasto>(itemBase, itemGravar);
+				foreach (AluguelGasto itemAluguelGasto in new List<AluguelGasto>( itemBase.Alugueis))
+				{
+					if (!itemGravar.Alugueis.Where(f=>f.Identificador == itemAluguelGasto.Identificador).Any())
+					{
+						Context.Entry<AluguelGasto>(itemAluguelGasto).State = EntityState.Deleted;
+					}
+				}
+				foreach (AluguelGasto itemAluguelGasto in new List<AluguelGasto>( itemGravar.Alugueis))
+				{
+				AluguelGasto itemBaseAluguelGasto = !itemAluguelGasto.Identificador.HasValue?null: itemBase.Alugueis.Where(f=>f.Identificador == itemAluguelGasto.Identificador).FirstOrDefault();
+				if (itemBaseAluguelGasto == null)
+				{
+				itemBaseAluguelGasto = Context.AluguelGastos.Create();
+ 			itemBase.Alugueis.Add(itemBaseAluguelGasto);
+				}
+ 			AtualizarPropriedades<AluguelGasto>(itemBaseAluguelGasto, itemAluguelGasto);
+				}
+				foreach (GastoAtracao itemGastoAtracao in new List<GastoAtracao>( itemBase.Atracoes))
+				{
+					if (!itemGravar.Atracoes.Where(f=>f.Identificador == itemGastoAtracao.Identificador).Any())
+					{
+						Context.Entry<GastoAtracao>(itemGastoAtracao).State = EntityState.Deleted;
+					}
+				}
+				foreach (GastoAtracao itemGastoAtracao in new List<GastoAtracao>( itemGravar.Atracoes))
+				{
+				GastoAtracao itemBaseGastoAtracao = !itemGastoAtracao.Identificador.HasValue?null: itemBase.Atracoes.Where(f=>f.Identificador == itemGastoAtracao.Identificador).FirstOrDefault();
+				if (itemBaseGastoAtracao == null)
+				{
+				itemBaseGastoAtracao = Context.GastoAtracoes.Create();
+ 			itemBase.Atracoes.Add(itemBaseGastoAtracao);
+				}
+ 			AtualizarPropriedades<GastoAtracao>(itemBaseGastoAtracao, itemGastoAtracao);
+				}
+				foreach (GastoCompra itemGastoCompra in new List<GastoCompra>( itemBase.Compras))
+				{
+					if (!itemGravar.Compras.Where(f=>f.Identificador == itemGastoCompra.Identificador).Any())
+					{
+						Context.Entry<GastoCompra>(itemGastoCompra).State = EntityState.Deleted;
+					}
+				}
+				foreach (GastoCompra itemGastoCompra in new List<GastoCompra>( itemGravar.Compras))
+				{
+				GastoCompra itemBaseGastoCompra = !itemGastoCompra.Identificador.HasValue?null: itemBase.Compras.Where(f=>f.Identificador == itemGastoCompra.Identificador).FirstOrDefault();
+				if (itemBaseGastoCompra == null)
+				{
+				itemBaseGastoCompra = Context.GastoCompras.Create();
+ 			itemBase.Compras.Add(itemBaseGastoCompra);
+				}
+ 			AtualizarPropriedades<GastoCompra>(itemBaseGastoCompra, itemGastoCompra);
+				}
+				foreach (GastoHotel itemGastoHotel in new List<GastoHotel>( itemBase.Hoteis))
+				{
+					if (!itemGravar.Hoteis.Where(f=>f.Identificador == itemGastoHotel.Identificador).Any())
+					{
+						Context.Entry<GastoHotel>(itemGastoHotel).State = EntityState.Deleted;
+					}
+				}
+				foreach (GastoHotel itemGastoHotel in new List<GastoHotel>( itemGravar.Hoteis))
+				{
+				GastoHotel itemBaseGastoHotel = !itemGastoHotel.Identificador.HasValue?null: itemBase.Hoteis.Where(f=>f.Identificador == itemGastoHotel.Identificador).FirstOrDefault();
+				if (itemBaseGastoHotel == null)
+				{
+				itemBaseGastoHotel = Context.GastoHoteis.Create();
+ 			itemBase.Hoteis.Add(itemBaseGastoHotel);
+				}
+ 			AtualizarPropriedades<GastoHotel>(itemBaseGastoHotel, itemGastoHotel);
+				}
+				foreach (GastoRefeicao itemGastoRefeicao in new List<GastoRefeicao>( itemBase.Refeicoes))
+				{
+					if (!itemGravar.Refeicoes.Where(f=>f.Identificador == itemGastoRefeicao.Identificador).Any())
+					{
+						Context.Entry<GastoRefeicao>(itemGastoRefeicao).State = EntityState.Deleted;
+					}
+				}
+				foreach (GastoRefeicao itemGastoRefeicao in new List<GastoRefeicao>( itemGravar.Refeicoes))
+				{
+				GastoRefeicao itemBaseGastoRefeicao = !itemGastoRefeicao.Identificador.HasValue?null: itemBase.Refeicoes.Where(f=>f.Identificador == itemGastoRefeicao.Identificador).FirstOrDefault();
+				if (itemBaseGastoRefeicao == null)
+				{
+				itemBaseGastoRefeicao = Context.GastoRefeicoes.Create();
+ 			itemBase.Refeicoes.Add(itemBaseGastoRefeicao);
+				}
+ 			AtualizarPropriedades<GastoRefeicao>(itemBaseGastoRefeicao, itemGastoRefeicao);
+				}
+				foreach (GastoDividido itemGastoDividido in new List<GastoDividido>( itemBase.Usuarios))
+				{
+					if (!itemGravar.Usuarios.Where(f=>f.Identificador == itemGastoDividido.Identificador).Any())
+					{
+						Context.Entry<GastoDividido>(itemGastoDividido).State = EntityState.Deleted;
+					}
+				}
+				foreach (GastoDividido itemGastoDividido in new List<GastoDividido>( itemGravar.Usuarios))
+				{
+				GastoDividido itemBaseGastoDividido = !itemGastoDividido.Identificador.HasValue?null: itemBase.Usuarios.Where(f=>f.Identificador == itemGastoDividido.Identificador).FirstOrDefault();
+				if (itemBaseGastoDividido == null)
+				{
+				itemBaseGastoDividido = Context.GastoDivididos.Create();
+ 			itemBase.Usuarios.Add(itemBaseGastoDividido);
+				}
+ 			AtualizarPropriedades<GastoDividido>(itemBaseGastoDividido, itemGastoDividido);
+				}
+				foreach (GastoViagemAerea itemGastoViagemAerea in new List<GastoViagemAerea>( itemBase.ViagenAereas))
+				{
+					if (!itemGravar.ViagenAereas.Where(f=>f.Identificador == itemGastoViagemAerea.Identificador).Any())
+					{
+						Context.Entry<GastoViagemAerea>(itemGastoViagemAerea).State = EntityState.Deleted;
+					}
+				}
+				foreach (GastoViagemAerea itemGastoViagemAerea in new List<GastoViagemAerea>( itemGravar.ViagenAereas))
+				{
+				GastoViagemAerea itemBaseGastoViagemAerea = !itemGastoViagemAerea.Identificador.HasValue?null: itemBase.ViagenAereas.Where(f=>f.Identificador == itemGastoViagemAerea.Identificador).FirstOrDefault();
+				if (itemBaseGastoViagemAerea == null)
+				{
+				itemBaseGastoViagemAerea = Context.GastoViagemAereas.Create();
+ 			itemBase.ViagenAereas.Add(itemBaseGastoViagemAerea);
+				}
+ 			AtualizarPropriedades<GastoViagemAerea>(itemBaseGastoViagemAerea, itemGastoViagemAerea);
+				}
+				foreach (ReabastecimentoGasto itemReabastecimentoGasto in new List<ReabastecimentoGasto>( itemBase.Reabastecimentos))
+				{
+					if (!itemGravar.Reabastecimentos.Where(f=>f.Identificador == itemReabastecimentoGasto.Identificador).Any())
+					{
+						Context.Entry<ReabastecimentoGasto>(itemReabastecimentoGasto).State = EntityState.Deleted;
+					}
+				}
+				foreach (ReabastecimentoGasto itemReabastecimentoGasto in new List<ReabastecimentoGasto>( itemGravar.Reabastecimentos))
+				{
+				ReabastecimentoGasto itemBaseReabastecimentoGasto = !itemReabastecimentoGasto.Identificador.HasValue?null: itemBase.Reabastecimentos.Where(f=>f.Identificador == itemReabastecimentoGasto.Identificador).FirstOrDefault();
+				if (itemBaseReabastecimentoGasto == null)
+				{
+				itemBaseReabastecimentoGasto = Context.ReabastecimentoGastos.Create();
+ 			itemBase.Reabastecimentos.Add(itemBaseReabastecimentoGasto);
+				}
+ 			AtualizarPropriedades<ReabastecimentoGasto>(itemBaseReabastecimentoGasto, itemReabastecimentoGasto);
+				}
+			Context.SaveChanges();
+				itemGravar.Identificador = itemBase.Identificador;
+			}
+			public Gasto SelecionarGasto_Completo (int? Identificador)
+			{
+			IQueryable<Gasto> query =	 Context.Gastos
+.Include("Alugueis").Include("Atracoes").Include("Compras").Include("Hoteis").Include("Refeicoes").Include("Usuarios").Include("ViagenAereas").Include("Reabastecimentos");
+					if (Identificador.HasValue)
+					query = query.Where(d=>d.Identificador == Identificador);
+					return query.FirstOrDefault();
+			}
+			public Refeicao SelecionarRefeicao_Completa (int? Identificador)
+			{
+			IQueryable<Refeicao> query =	 Context.Refeicoes
+.Include("Fotos").Include("Fotos.ItemFoto").Include("Gastos").Include("Gastos.ItemGasto").Include("Gastos.ItemGasto.ItemUsuario").Include("Pedidos").Include("Pedidos.ItemUsuario").Include("ItemAtracao");
+					if (Identificador.HasValue)
+					query = query.Where(d=>d.Identificador == Identificador);
+					return query.FirstOrDefault();
+			}
+			public void SalvarRefeicao_Completo (Refeicao itemGravar)
+			{
+				Refeicao itemBase =  Context.Refeicoes
+.Include("Fotos").Include("Gastos").Include("Pedidos")				.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
+				if (itemBase == null)
+				{
+				itemBase = Context.Refeicoes.Create();
+				itemBase.Fotos = new List<FotoRefeicao>();
+				itemBase.Gastos = new List<GastoRefeicao>();
+				itemBase.Pedidos = new List<RefeicaoPedido>();
+ 			Context.Entry<Refeicao>(itemBase).State = System.Data.Entity.EntityState.Added;
+				}
+ 			AtualizarPropriedades<Refeicao>(itemBase, itemGravar);
+				foreach (FotoRefeicao itemFotoRefeicao in new List<FotoRefeicao>( itemBase.Fotos))
+				{
+					if (!itemGravar.Fotos.Where(f=>f.Identificador == itemFotoRefeicao.Identificador).Any())
+					{
+						Context.Entry<FotoRefeicao>(itemFotoRefeicao).State = EntityState.Deleted;
+					}
+				}
+				foreach (FotoRefeicao itemFotoRefeicao in new List<FotoRefeicao>( itemGravar.Fotos))
+				{
+				FotoRefeicao itemBaseFotoRefeicao = !itemFotoRefeicao.Identificador.HasValue?null: itemBase.Fotos.Where(f=>f.Identificador == itemFotoRefeicao.Identificador).FirstOrDefault();
+				if (itemBaseFotoRefeicao == null)
+				{
+				itemBaseFotoRefeicao = Context.FotoRefeicoes.Create();
+ 			itemBase.Fotos.Add(itemBaseFotoRefeicao);
+				}
+ 			AtualizarPropriedades<FotoRefeicao>(itemBaseFotoRefeicao, itemFotoRefeicao);
+				}
+				foreach (GastoRefeicao itemGastoRefeicao in new List<GastoRefeicao>( itemBase.Gastos))
+				{
+					if (!itemGravar.Gastos.Where(f=>f.Identificador == itemGastoRefeicao.Identificador).Any())
+					{
+						Context.Entry<GastoRefeicao>(itemGastoRefeicao).State = EntityState.Deleted;
+					}
+				}
+				foreach (GastoRefeicao itemGastoRefeicao in new List<GastoRefeicao>( itemGravar.Gastos))
+				{
+				GastoRefeicao itemBaseGastoRefeicao = !itemGastoRefeicao.Identificador.HasValue?null: itemBase.Gastos.Where(f=>f.Identificador == itemGastoRefeicao.Identificador).FirstOrDefault();
+				if (itemBaseGastoRefeicao == null)
+				{
+				itemBaseGastoRefeicao = Context.GastoRefeicoes.Create();
+ 			itemBase.Gastos.Add(itemBaseGastoRefeicao);
+				}
+ 			AtualizarPropriedades<GastoRefeicao>(itemBaseGastoRefeicao, itemGastoRefeicao);
+				}
+				foreach (RefeicaoPedido itemRefeicaoPedido in new List<RefeicaoPedido>( itemBase.Pedidos))
+				{
+					if (!itemGravar.Pedidos.Where(f=>f.Identificador == itemRefeicaoPedido.Identificador).Any())
+					{
+						Context.Entry<RefeicaoPedido>(itemRefeicaoPedido).State = EntityState.Deleted;
+					}
+				}
+				foreach (RefeicaoPedido itemRefeicaoPedido in new List<RefeicaoPedido>( itemGravar.Pedidos))
+				{
+				RefeicaoPedido itemBaseRefeicaoPedido = !itemRefeicaoPedido.Identificador.HasValue?null: itemBase.Pedidos.Where(f=>f.Identificador == itemRefeicaoPedido.Identificador).FirstOrDefault();
+				if (itemBaseRefeicaoPedido == null)
+				{
+				itemBaseRefeicaoPedido = Context.RefeicaoPedidos.Create();
+ 			itemBase.Pedidos.Add(itemBaseRefeicaoPedido);
+				}
+ 			AtualizarPropriedades<RefeicaoPedido>(itemBaseRefeicaoPedido, itemRefeicaoPedido);
+				}
+			Context.SaveChanges();
+				itemGravar.Identificador = itemBase.Identificador;
+			}
+			public Hotel SelecionarHotel_Completo (int? Identificador)
+			{
+			IQueryable<Hotel> query =	 Context.Hoteis
+.Include("Avaliacoes").Include("Avaliacoes.ItemUsuario").Include("Eventos").Include("Eventos.ItemUsuario").Include("Fotos").Include("Fotos.ItemFoto").Include("Gastos").Include("Gastos.ItemGasto").Include("Gastos.ItemGasto.ItemUsuario");
+					if (Identificador.HasValue)
+					query = query.Where(d=>d.Identificador == Identificador);
+					return query.FirstOrDefault();
+			}
+			public void SalvarHotel_Completo (Hotel itemGravar)
+			{
+				Hotel itemBase =  Context.Hoteis
+.Include("Avaliacoes").Include("Eventos").Include("Fotos").Include("Gastos")				.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
+				if (itemBase == null)
+				{
+				itemBase = Context.Hoteis.Create();
+				itemBase.Avaliacoes = new List<HotelAvaliacao>();
+				itemBase.Eventos = new List<HotelEvento>();
+				itemBase.Fotos = new List<FotoHotel>();
+				itemBase.Gastos = new List<GastoHotel>();
+ 			Context.Entry<Hotel>(itemBase).State = System.Data.Entity.EntityState.Added;
+				}
+ 			AtualizarPropriedades<Hotel>(itemBase, itemGravar);
+				foreach (HotelAvaliacao itemHotelAvaliacao in new List<HotelAvaliacao>( itemBase.Avaliacoes))
+				{
+					if (!itemGravar.Avaliacoes.Where(f=>f.Identificador == itemHotelAvaliacao.Identificador).Any())
+					{
+						Context.Entry<HotelAvaliacao>(itemHotelAvaliacao).State = EntityState.Deleted;
+					}
+				}
+				foreach (HotelAvaliacao itemHotelAvaliacao in new List<HotelAvaliacao>( itemGravar.Avaliacoes))
+				{
+				HotelAvaliacao itemBaseHotelAvaliacao = !itemHotelAvaliacao.Identificador.HasValue?null: itemBase.Avaliacoes.Where(f=>f.Identificador == itemHotelAvaliacao.Identificador).FirstOrDefault();
+				if (itemBaseHotelAvaliacao == null)
+				{
+				itemBaseHotelAvaliacao = Context.HotelAvaliacoes.Create();
+ 			itemBase.Avaliacoes.Add(itemBaseHotelAvaliacao);
+				}
+ 			AtualizarPropriedades<HotelAvaliacao>(itemBaseHotelAvaliacao, itemHotelAvaliacao);
+				}
+				foreach (HotelEvento itemHotelEvento in new List<HotelEvento>( itemBase.Eventos))
+				{
+					if (!itemGravar.Eventos.Where(f=>f.Identificador == itemHotelEvento.Identificador).Any())
+					{
+						Context.Entry<HotelEvento>(itemHotelEvento).State = EntityState.Deleted;
+					}
+				}
+				foreach (HotelEvento itemHotelEvento in new List<HotelEvento>( itemGravar.Eventos))
+				{
+				HotelEvento itemBaseHotelEvento = !itemHotelEvento.Identificador.HasValue?null: itemBase.Eventos.Where(f=>f.Identificador == itemHotelEvento.Identificador).FirstOrDefault();
+				if (itemBaseHotelEvento == null)
+				{
+				itemBaseHotelEvento = Context.HotelEventos.Create();
+ 			itemBase.Eventos.Add(itemBaseHotelEvento);
+				}
+ 			AtualizarPropriedades<HotelEvento>(itemBaseHotelEvento, itemHotelEvento);
+				}
+				foreach (FotoHotel itemFotoHotel in new List<FotoHotel>( itemBase.Fotos))
+				{
+					if (!itemGravar.Fotos.Where(f=>f.Identificador == itemFotoHotel.Identificador).Any())
+					{
+						Context.Entry<FotoHotel>(itemFotoHotel).State = EntityState.Deleted;
+					}
+				}
+				foreach (FotoHotel itemFotoHotel in new List<FotoHotel>( itemGravar.Fotos))
+				{
+				FotoHotel itemBaseFotoHotel = !itemFotoHotel.Identificador.HasValue?null: itemBase.Fotos.Where(f=>f.Identificador == itemFotoHotel.Identificador).FirstOrDefault();
+				if (itemBaseFotoHotel == null)
+				{
+				itemBaseFotoHotel = Context.FotoHoteis.Create();
+ 			itemBase.Fotos.Add(itemBaseFotoHotel);
+				}
+ 			AtualizarPropriedades<FotoHotel>(itemBaseFotoHotel, itemFotoHotel);
+				}
+				foreach (GastoHotel itemGastoHotel in new List<GastoHotel>( itemBase.Gastos))
+				{
+					if (!itemGravar.Gastos.Where(f=>f.Identificador == itemGastoHotel.Identificador).Any())
+					{
+						Context.Entry<GastoHotel>(itemGastoHotel).State = EntityState.Deleted;
+					}
+				}
+				foreach (GastoHotel itemGastoHotel in new List<GastoHotel>( itemGravar.Gastos))
+				{
+				GastoHotel itemBaseGastoHotel = !itemGastoHotel.Identificador.HasValue?null: itemBase.Gastos.Where(f=>f.Identificador == itemGastoHotel.Identificador).FirstOrDefault();
+				if (itemBaseGastoHotel == null)
+				{
+				itemBaseGastoHotel = Context.GastoHoteis.Create();
+ 			itemBase.Gastos.Add(itemBaseGastoHotel);
+				}
+ 			AtualizarPropriedades<GastoHotel>(itemBaseGastoHotel, itemGastoHotel);
 				}
 			Context.SaveChanges();
 				itemGravar.Identificador = itemBase.Identificador;

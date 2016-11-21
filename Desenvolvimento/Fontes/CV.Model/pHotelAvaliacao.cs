@@ -10,6 +10,7 @@ namespace CV.Model
 
 	public partial class HotelAvaliacao
 	{
-	}
+
+    }
 
 }

@@ -22,14 +22,10 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             ResultadoConsultaTipo<Hotel> resultado = new ResultadoConsultaTipo<Hotel>();
             ViagemBusiness biz = new ViagemBusiness();
-           
-            List<Hotel> _itens = biz.ListarHotel().ToList();
-resultado.TotalRegistros = _itens.Count();
-            if (json.SortField != null && json.SortField.Any())
-                _itens = _itens.AsQueryable().OrderByField<Hotel>(json.SortField, json.SortOrder).ToList();
 
-            if (json.Index.HasValue && json.Count.HasValue)
-                _itens = _itens.Skip(json.Index.Value).Take(json.Count.Value).ToList();
+            List<Hotel> _itens = biz.ListarHotel(token.IdentificadorViagem.GetValueOrDefault(), json.DataInicioDe, json.DataInicioAte, json.DataFimDe, json.DataFimAte,
+                json.Nome, json.Situacao.GetValueOrDefault(0), json.IdentificadorCidade, json.Identificador).ToList();
+
             resultado.Lista = _itens;
 
             return resultado;
@@ -38,33 +34,59 @@ resultado.TotalRegistros = _itens.Count();
         public Hotel Get(int id)
         {
             ViagemBusiness biz = new ViagemBusiness();
-            Hotel itemHotel = biz.SelecionarHotel(id);
-          
+            Hotel itemHotel = biz.SelecionarHotel_Completo(id);
+            itemHotel.Avaliacoes.ToList().ForEach(d => d.ItemHotel = null);
+            itemHotel.Eventos.ToList().ForEach(d => d.ItemHotel = null);
+            itemHotel.Fotos.ToList().ForEach(d => { d.ItemHotel = null; d.ItemFoto.Hoteis = null; });
+            itemHotel.Gastos.ToList().ForEach(d => { d.ItemHotel = null; d.ItemGasto.Hoteis = null; });
             return itemHotel;
         }
         [Authorize]
         public ResultadoOperacao Post([FromBody] Hotel itemHotel)
         {
             ViagemBusiness biz = new ViagemBusiness();
-                      biz.SalvarHotel(itemHotel);
+            itemHotel.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemHotel.Latitude, itemHotel.Longitude);
+            itemHotel.IdentificadorViagem = token.IdentificadorViagem;
+            itemHotel.DataAtualizacao = DateTime.Now;
+            biz.SalvarHotel(itemHotel);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
             if (itemResultado.Sucesso)
+            {
                 itemResultado.IdentificadorRegistro = itemHotel.Identificador;
+                itemHotel.Avaliacoes = null;
+                itemHotel.Eventos = null;
+                itemResultado.ItemRegistro = itemHotel;
+            }
             return itemResultado;
         }
         [Authorize]
         public ResultadoOperacao Delete(int id)
         {
             ViagemBusiness biz = new ViagemBusiness();
-            Hotel itemHotel = biz.SelecionarHotel(id);
-            biz.ExcluirHotel(itemHotel);
+            Hotel itemHotel = biz.SelecionarHotel_Completo(id);
+            itemHotel.DataExclusao = DateTime.Now;
+            itemHotel.Avaliacoes.ToList().ForEach(d => d.DataExclusao = DateTime.Now);
+            itemHotel.Gastos.ToList().ForEach(d => d.DataExclusao = DateTime.Now);
+            itemHotel.Fotos.ToList().ForEach(d => d.DataExclusao = DateTime.Now);
+            itemHotel.Eventos.ToList().ForEach(d => d.DataExclusao = DateTime.Now);
+
+            biz.SalvarHotel_Completo(itemHotel);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
 
             return itemResultado;
+        }
+
+        [Authorize]
+        [ActionName("CarregarFoto")]
+        [HttpGet]
+        public List<Hotel> CarregarFoto()
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            return biz.ListarHotel(d => d.IdentificadorViagem == token.IdentificadorViagem);
         }
     }
 }

@@ -166,6 +166,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\MVC\BaseController.cs" />
     <Compile Include="Controllers\MVC\HomeController.cs" />
+    <Compile Include="Controllers\MVC\pSistemaController.cs" />
     <Compile Include="Controllers\WebAPI\AcessoController.cs" />
     <Compile Include="Controllers\WebAPI\BaseApiController.cs" />
     <Compile Include="Controllers\WebAPI\DominioController.cs" />
@@ -221,6 +222,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="Library\css\ajax-loader.gif" />
     <Content Include="Library\css\angular-multi-select-tree-0.1.0.css" />
     <Content Include="Library\css\bootstrap-tagsinput.css" />
     <Content Include="Library\css\bootstrap.css" />
@@ -235,6 +237,8 @@
     <Content Include="Library\css\ivh-treeview.min.css" />
     <Content Include="Library\css\Site.css" />
     <Content Include="Library\css\skins\skin-blue-light.css" />
+    <Content Include="Library\css\slick-theme.css" />
+    <Content Include="Library\css\slick.css" />
     <Content Include="Library\css\ui-grid.min.css" />
     <Content Include="Library\fonts\fontawesome-webfont.svg" />
     <Content Include="Library\fonts\glyphicons-halflings-regular.svg" />
@@ -266,6 +270,7 @@
     <Content Include="Library\Scripts\Angular\angular-sanitize.js" />
     <Content Include="Library\Scripts\Angular\angular-sanitize.min.js" />
     <Content Include="Library\Scripts\Angular\angular-scenario.js" />
+    <Content Include="Library\Scripts\Angular\angular-slick.js" />
     <Content Include="Library\Scripts\Angular\angular-touch.js" />
     <Content Include="Library\Scripts\Angular\angular-touch.min.js" />
     <Content Include="Library\Scripts\Angular\angular-translate.min.js" />
@@ -278,6 +283,7 @@
     <Content Include="Library\Scripts\Angular\moment-with-locales.min.js" />
     <Content Include="Library\Scripts\Angular\ng-file-upload-all.min.js" />
     <Content Include="Library\Scripts\Angular\ng-google-chart.js" />
+    <Content Include="Library\Scripts\Angular\ng-map.min.js" />
     <Content Include="Library\Scripts\Angular\ngContextMenu.js" />
     <Content Include="Library\Scripts\Angular\ngInfiniteScroll.js" />
     <Content Include="Library\Scripts\Angular\ocLazyLoad.min.js" />
@@ -310,6 +316,8 @@
     <Content Include="Library\Scripts\App\Home\SignalR-factory.js" />
     <Content Include="Library\Scripts\Componentes\bootstrap.js" />
     <Content Include="Library\Scripts\Componentes\bootstrap.min.js" />
+    <Content Include="Library\Scripts\Componentes\csswatch.js" />
+    <Content Include="Library\Scripts\Componentes\exif.js" />
     <Content Include="Library\Scripts\Componentes\fullcalendar.js" />
     <Content Include="Library\fonts\ui-grid.eot" />
     <Content Include="Library\fonts\ui-grid.ttf" />
@@ -325,11 +333,15 @@
     <Content Include="Library\Scripts\Componentes\jquery.inputmask.phone.extensions.js" />
     <Content Include="Library\Scripts\Componentes\jquery.inputmask.regex.extensions.js" />
     <Content Include="Library\Scripts\Componentes\jquery.signalR-2.0.0.js" />
+    <Content Include="Library\Scripts\Componentes\jszip.js" />
+    <Content Include="Library\Scripts\Componentes\load-image.all.min.js" />
     <Content Include="Library\Scripts\Componentes\modernizr-2.6.2.js" />
     <Content Include="Library\Scripts\Componentes\moment.min.js" />
     <Content Include="Library\Scripts\Componentes\respond.js" />
     <Content Include="Library\Scripts\Componentes\respond.min.js" />
     <None Include="Library\Scripts\_references.js" />
+    <Content Include="Library\Scripts\Componentes\slick.js" />
+    <Content Include="Library\Scripts\Componentes\VideoUploader.js" />
     <Content Include="packages.config" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -466,6 +478,7 @@
     <Content Include="Views\Sistema\ViagemEdicao.cshtml" />
     <Content Include="Views\Sistema\ViagemAerea.cshtml" />
     <Content Include="Views\Sistema\ViagemAereaEdicao.cshtml" />
+    <Content Include="Views\Sistema\GastoSelecao.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

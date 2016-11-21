@@ -44,6 +44,7 @@
 
         vm.SelecionarViagem = function (IdentificadorViagem) {
             Auth.SelecionarViagem(IdentificadorViagem);
+            $state.go('home');
         };
 
         vm.AbrirAlerta = function(IdentificadorAlerta, TipoAlerta)

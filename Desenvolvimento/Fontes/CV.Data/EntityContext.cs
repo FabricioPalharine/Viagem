@@ -43,7 +43,6 @@ using CV.Model;
 		public DbSet<Gasto> Gastos { get; set; }
 		public DbSet<GastoCompra> GastoCompras { get; set; }
 		public DbSet<GastoHotel> GastoHoteis { get; set; }
-		public DbSet<GastoPosicao> GastoPosicoes { get; set; }
 		public DbSet<GastoRefeicao> GastoRefeicoes { get; set; }
 		public DbSet<GastoViagemAerea> GastoViagemAereas { get; set; }
 		public DbSet<Hotel> Hoteis { get; set; }
@@ -66,6 +65,8 @@ using CV.Model;
 		public DbSet<AvaliacaoLoja> AvaliacaoLojas { get; set; }
 		public DbSet<UsuarioGasto> UsuarioGastos { get; set; }
 		public DbSet<HotelEvento> HotelEventos { get; set; }
+		public DbSet<GastoAtracao> GastoAtracoes { get; set; }
+		public DbSet<GastoDividido> GastoDivididos { get; set; }
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
 
@@ -94,7 +95,6 @@ using CV.Model;
 			modelBuilder.Configurations.Add(new GastoConfiguration());
 			modelBuilder.Configurations.Add(new GastoCompraConfiguration());
 			modelBuilder.Configurations.Add(new GastoHotelConfiguration());
-			modelBuilder.Configurations.Add(new GastoPosicaoConfiguration());
 			modelBuilder.Configurations.Add(new GastoRefeicaoConfiguration());
 			modelBuilder.Configurations.Add(new GastoViagemAereaConfiguration());
 			modelBuilder.Configurations.Add(new HotelConfiguration());
@@ -117,6 +117,8 @@ using CV.Model;
 			modelBuilder.Configurations.Add(new AvaliacaoLojaConfiguration());
 			modelBuilder.Configurations.Add(new UsuarioGastoConfiguration());
 			modelBuilder.Configurations.Add(new HotelEventoConfiguration());
+			modelBuilder.Configurations.Add(new GastoAtracaoConfiguration());
+			modelBuilder.Configurations.Add(new GastoDivididoConfiguration());
 			base.OnModelCreating(modelBuilder);
 		}		
 	}

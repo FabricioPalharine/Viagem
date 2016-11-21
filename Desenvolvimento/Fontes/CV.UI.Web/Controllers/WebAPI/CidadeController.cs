@@ -66,5 +66,55 @@ resultado.TotalRegistros = _itens.Count();
 
             return itemResultado;
         }
+
+        [Authorize]
+        [ActionName("CarregarFoto")]
+        [HttpGet]
+        public List<Cidade> CarregarFoto()
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            var lista = biz.CarregarCidadeViagemFoto(token.IdentificadorViagem);
+            return lista;
+        }
+
+        [Authorize]
+        [ActionName("CarregarAtracao")]
+        [HttpGet]
+        public List<Cidade> CarregarAtracao()
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            var lista = biz.CarregarCidadeAtracao(token.IdentificadorViagem);
+            return lista;
+        }
+
+        [Authorize]
+        [ActionName("CarregarRefeicao")]
+        [HttpGet]
+        public List<Cidade> CarregarRefeicao()
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            var lista = biz.CarregarCidadeRefeicao(token.IdentificadorViagem);
+            return lista;
+        }
+
+        [Authorize]
+        [ActionName("CarregarHotel")]
+        [HttpGet]
+        public List<Cidade> CarregarHotel()
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            var lista = biz.CarregarCidadeHotel(token.IdentificadorViagem);
+            return lista;
+        }
+
+        [Authorize]
+        [ActionName("CarregarLoja")]
+        [HttpGet]
+        public List<Cidade> CarregarLoja()
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            var lista = biz.CarregarCidadeLoja(token.IdentificadorViagem);
+            return lista;
+        }
     }
 }

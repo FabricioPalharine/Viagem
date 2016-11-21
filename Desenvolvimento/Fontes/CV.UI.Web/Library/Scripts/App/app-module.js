@@ -18,15 +18,17 @@
         'ngFileSaver',
         'ngContextMenu',
         'googlechart',
-        'infinite-scroll',
+        'dc.endlessScroll',
         'ui.bootstrap.datetimepicker',
         'ui.sortable',
         'ui.calendar',
         'pascalprecht.translate',
         'angularMoment',
-        'ivh.treeview',        
+        'ivh.treeview',
+        'ngMap',
         'home',
         'multi-select-tree',
+        'slickCarousel',
         'Sistema']
         );
 }());

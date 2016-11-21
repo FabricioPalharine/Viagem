@@ -20,7 +20,7 @@
         
         AuthBase.apiKey = 'AIzaSyAlUpOpwZWS_ZGlMAtB6lY76oy1QBWk97g';
         AuthBase.clientId = '210037759249.apps.googleusercontent.com';
-        AuthBase.scopes = 'profile https://picasaweb.google.com/data/';
+        AuthBase.scopes = 'profile https://picasaweb.google.com/data/ https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtube';
         AuthBase.auth2 = null;
        
 
@@ -171,7 +171,8 @@
                             IdentificadorViagem: data.IdentificadorViagem,
                             NomeViagem: data.NomeViagem,
                             PermiteEdicao: data.PermiteEdicao,
-                            VerCustos: data.VerCustos
+                            VerCustos: data.VerCustos,
+                            Aberto: data.Aberto
                         };
                        SignalR.ConectarUsuario(data.Codigo);
 
@@ -233,7 +234,8 @@
                                     IdentificadorViagem: data.IdentificadorViagem,
                                     NomeViagem: data.NomeViagem,
                                     PermiteEdicao: data.PermiteEdicao,
-                                    VerCustos: data.VerCustos
+                                    VerCustos: data.VerCustos,
+                                    Aberto: data.Aberto
                                 };
                                SignalR.ConectarUsuario(data.Codigo);
 
@@ -263,7 +265,7 @@
 
         AuthBase.SelecionarViagem = function (IdentificadorViagem) {
             $http.post('./api/Acesso/SelecionarViagem', {
-                IdentificadorViagem: $cookies.get('IdentificadorViagem')
+                IdentificadorViagem: IdentificadorViagem
             }).
               success(function (data) {
                   sessionStorage.setItem('token', data.AuthenticationToken);
@@ -272,7 +274,7 @@
                   AuthBase.currentUser.NomeViagem = data.NomeViagem;
                   AuthBase.currentUser.PermiteEdicao = data.PermiteEdicao;
                   AuthBase.currentUser.VerCustos = data.VerCustos;
-
+                  AuthBase.currentUser.Aberto = data.Aberto;
                   SignalR.ConectarViagem(data.IdentificadorViagem, data.PermiteEdicao);
                   var expireDate = new Date();
                   expireDate.setDate(expireDate.getDate() + 30);
@@ -287,6 +289,18 @@
                   callback(data);
               });
         };
+
+
+        $rootScope.$on('SignalRConnected', function (event) {
+            if (AuthBase.currentUser.Codigo)
+            {
+                SignalR.ConectarUsuario(AuthBase.currentUser.Codigo);
+                if (AuthBase.currentUser.IdentificadorViagem)
+                    SignalR.ConectarViagem(AuthBase.currentUser.IdentificadorViagem, AuthBase.currentUser.PermiteEdicao);
+
+            }
+
+        });
 
         AuthBase.init();
         return AuthBase;

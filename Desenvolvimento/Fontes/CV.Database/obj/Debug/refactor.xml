@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0">
+  <Operation Name="Rename Refactor" Key="0d67c6dd-58ff-4290-9986-49299ee9ce92" ChangeDateTime="11/19/2016 02:14:10" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+    <Property Name="ElementName" Value="[dbo].[GastoDividido].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[GastoDividido]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ID_GASTO_DIVIDIDO" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="ec5eede3-3bb2-4b36-870e-01ab310f9faa" ChangeDateTime="11/20/2016 02:03:40" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+    <Property Name="ElementName" Value="[dbo].[HotelEvento].[DT_EVENTO]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[HotelEvento]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="DT_ENTRADA" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="5dc34c46-0262-4793-9444-c8bbb37fe663" ChangeDateTime="11/20/2016 02:03:45" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+    <Property Name="ElementName" Value="[dbo].[HotelEvento].[CD_TIPO_EVENTO]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[HotelEvento]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="DT_SAIDA" />
+  </Operation>
+</Operations>

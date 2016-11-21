@@ -63,11 +63,31 @@ private void ValidarDescricao(Microsoft.Practices.EnterpriseLibrary.Validation.V
 
 			public Viagem ItemViagem { get; set; }
 
-			public IList<GastoPosicao> Posicoes { get; set; }
-
 			public DateTime? DataAtualizacao { get; set; }
 
 			public DateTime? DataExclusao { get; set; }
+
+			public decimal? Latitude { get; set; }
+
+			public decimal? Longitude { get; set; }
+
+			public int? IdentificadorCidade { get; set; }
+
+			public IList<GastoAtracao> Atracoes { get; set; }
+
+			public IList<GastoHotel> Hoteis { get; set; }
+
+			public IList<GastoCompra> Compras { get; set; }
+
+			public IList<AluguelGasto> Alugueis { get; set; }
+
+			public IList<GastoRefeicao> Refeicoes { get; set; }
+
+			public IList<GastoViagemAerea> ViagenAereas { get; set; }
+
+			public IList<GastoDividido> Usuarios { get; set; }
+
+			public IList<ReabastecimentoGasto> Reabastecimentos { get; set; }
 		 public Gasto Clone()
 		{
 			 return (Gasto) this.MemberwiseClone();

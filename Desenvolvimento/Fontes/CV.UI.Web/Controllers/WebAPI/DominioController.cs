@@ -22,7 +22,7 @@ namespace CV.UI.Web.Controllers.WebAPI
                 var item = new ItemLista() { Codigo = Convert.ToInt32(enumerador).ToString(), Descricao = ((enumMoeda)enumerador).Descricao() };
                 lista.Add(item);
             }
-            return lista;
+            return lista.OrderBy(d=>d.Descricao);
         }
 
         

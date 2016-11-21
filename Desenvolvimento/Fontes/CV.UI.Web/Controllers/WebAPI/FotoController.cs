@@ -22,18 +22,19 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             ResultadoConsultaTipo<Foto> resultado = new ResultadoConsultaTipo<Foto>();
             ViagemBusiness biz = new ViagemBusiness();
-           
-            List<Foto> _itens = biz.ListarFoto().ToList();
-resultado.TotalRegistros = _itens.Count();
-            if (json.SortField != null && json.SortField.Any())
-                _itens = _itens.AsQueryable().OrderByField<Foto>(json.SortField, json.SortOrder).ToList();
 
-            if (json.Index.HasValue && json.Count.HasValue)
-                _itens = _itens.Skip(json.Index.Value).Take(json.Count.Value).ToList();
+            List<Foto> _itens = biz.ListarFotos(json.Identificador, token.IdentificadorViagem.GetValueOrDefault(), json.DataInicioDe, json.DataInicioAte, json.Comentario, json.ListaAtracoes, json.ListaHoteis, json.ListaRefeicoes, json.IdentificadorCidade, json.Index.Value, json.Count.Value).ToList();
+            //resultado.TotalRegistros = _itens.Count();
+            //if (json.SortField != null && json.SortField.Any())
+            //    _itens = _itens.AsQueryable().OrderByField<Foto>(json.SortField, json.SortOrder).ToList();
+
+            //if (json.Index.HasValue && json.Count.HasValue)
+            //    _itens = _itens.Skip(json.Index.Value).Take(json.Count.Value).ToList();
             resultado.Lista = _itens;
 
             return resultado;
         }
+
         [Authorize]
         public Foto Get(int id)
         {
@@ -46,7 +47,13 @@ resultado.TotalRegistros = _itens.Count();
         public ResultadoOperacao Post([FromBody] Foto itemFoto)
         {
             ViagemBusiness biz = new ViagemBusiness();
-                      biz.SalvarFoto(itemFoto);
+            if (itemFoto.Latitude.HasValue && itemFoto.Longitude.HasValue)
+            {
+                itemFoto.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemFoto.Latitude, itemFoto.Longitude);
+            }
+            else
+                itemFoto.IdentificadorCidade = null;
+            biz.SalvarFoto_Completa(itemFoto);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
@@ -58,13 +65,91 @@ resultado.TotalRegistros = _itens.Count();
         public ResultadoOperacao Delete(int id)
         {
             ViagemBusiness biz = new ViagemBusiness();
-            Foto itemFoto = biz.SelecionarFoto(id);
-            biz.ExcluirFoto(itemFoto);
+            Foto itemFoto = biz.SelecionarFoto_Completa(id);
+            itemFoto.DataExclusao = DateTime.Now;
+            itemFoto.Atracoes.ToList().ForEach(d => d.DataExclusao = DateTime.Now);
+            itemFoto.Hoteis.ToList().ForEach(d => d.DataExclusao = DateTime.Now);
+            itemFoto.Refeicoes.ToList().ForEach(d => d.DataExclusao = DateTime.Now);
+            itemFoto.ItensCompra.ToList().ForEach(d => d.DataExclusao = DateTime.Now);
+            biz.SalvarFoto_Completa(itemFoto);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
 
             return itemResultado;
         }
+
+        [Authorize]
+        [ActionName("RetornarAlbum")]
+        public List<string> RetornarAlbum()
+        {
+            List<string> Dados = new List<string>();
+            ViagemBusiness biz = new ViagemBusiness();
+            Usuario itemUsuario = biz.SelecionarUsuario(token.IdentificadorUsuario);
+            biz.AtualizarTokenUsuario(itemUsuario);
+            Viagem itemViagem = biz.SelecionarViagem(token.IdentificadorViagem);
+            Dados.Add(itemViagem.CodigoAlbum);
+            Dados.Add(itemUsuario.Token);
+            return Dados;
+        }
+
+        [Authorize]
+        [ActionName("SubirImagem")]
+        public ResultadoOperacao SubirImagem(UploadFoto itemFoto)
+        {
+            
+            ViagemBusiness biz = new ViagemBusiness();
+            Usuario itemUsuario = biz.SelecionarUsuario(token.IdentificadorUsuario);
+            return biz.CadastrarFoto(itemFoto, itemUsuario, token.IdentificadorViagem);
+        }
+
+        [Authorize]
+        [ActionName("SubirVideo")]
+        public ResultadoOperacao SubirVideo(UploadFoto itemFoto)
+        {
+
+            ViagemBusiness biz = new ViagemBusiness();
+            Usuario itemUsuario = biz.SelecionarUsuario(token.IdentificadorUsuario);
+            return biz.CadastrarVideo(itemFoto, itemUsuario, token.IdentificadorViagem);
+        }
+
+        [Authorize]
+        [ActionName("saveFotoAtracao")]
+        public void saveFotoAtracao(FotoAtracao itemFoto)
+        {
+
+            ViagemBusiness biz = new ViagemBusiness();
+            biz.SalvarFotoAtracao(itemFoto);
+        }
+
+        [Authorize]
+        [ActionName("saveFotoRefeicao")]
+        public void saveFotoRefeicao(FotoRefeicao itemFoto)
+        {
+
+            ViagemBusiness biz = new ViagemBusiness();
+            biz.SalvarFotoRefeicao(itemFoto);
+        }
+
+        [Authorize]
+        [ActionName("saveFotoHotel")]
+        public void saveFotoHotel(FotoHotel itemFoto)
+        {
+
+            ViagemBusiness biz = new ViagemBusiness();
+            biz.SalvarFotoHotel(itemFoto);
+        }
+
+        [Authorize]
+        [ActionName("saveFoto")]
+        public void saveFoto(Foto itemFoto)
+        {
+
+            ViagemBusiness biz = new ViagemBusiness();
+            biz.SalvarFoto(itemFoto);
+        }
+
+
+
     }
 }

@@ -20,7 +20,6 @@ namespace CV.Model
 			[NotNullValidator(MessageTemplateResourceName="Hotel_IdentificadorViagem",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public int? IdentificadorViagem { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="Hotel_IdentificadorCidade",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public int? IdentificadorCidade { get; set; }
 
 			public string Nome { get; set; }
@@ -41,17 +40,14 @@ private void ValidarNome(Microsoft.Practices.EnterpriseLibrary.Validation.Valida
   }
 }
 
-			[StringLengthValidator(50,MessageTemplateResourceName="Hotel_CodigoPlace_Tamanho",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public string CodigoPlace { get; set; }
 
 			public DateTime? DataEntrada { get; set; }
 
 			public DateTime? DataSaidia { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="Hotel_Longitude",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public decimal? Longitude { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="Hotel_Latitude",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public decimal? Latitude { get; set; }
 
 			[NotNullValidator(MessageTemplateResourceName="Hotel_EntradaPrevista",MessageTemplateResourceType=typeof(MensagemModelo))]

@@ -6,23 +6,18 @@
 
 	function ViagemCtrl($uibModal,  Error, $timeout, $state, $translate, $scope, Auth, $rootScope, $stateParams, $window, i18nService,Usuario,Viagem) {
 		var vm = this;
-		vm.filtro = {  Index: 0, Count: 0 };
-		vm.filtroAtualizacao = {  Index: 0, Count: 0 };
+		vm.filtro = {  Index: 0, Count: 0, Situacao:"true" };
+		vm.filtroAtualizacao = {  Index: 0, Count: 0, Aberto:true };
 		vm.loading = false;
 		vm.showModal = false;
 		vm.modalAcao = function () {;
 			vm.showModal = true;
 		}
-		vm.modalDelete = {};
-		vm.PermiteInclusao = true;
-		vm.PermiteAlteracao = true;
-		vm.PermiteExclusao = true;
 		vm.ListaDados = [];
 		vm.gridApi = null;
-
+		vm.itemParticipante = null;
 		vm.load = function () {
 			vm.loading = true;
-			vm.verificarPermissoes();
 
 			var param = $stateParams;
 			if (param.filtro != null) {
@@ -34,117 +29,65 @@
 			}
 			vm.CarregarDadosWebApi(vm.pagingOptions.pageSize, vm.pagingOptions.currentPage);
 		};
-		vm.delete = function (itemForDelete, indexForDelete, callback) {
-			vm.loading = true;
-			Viagem.delete({ id: itemForDelete.Identificador }, function (data) {
-				callback(data);
-				if (data.Sucesso) {
-					vm.CarregarDadosWebApi(vm.pagingOptions.pageSize, vm.pagingOptions.currentPage);
-					Error.showError('success', $translate.instant("Sucesso"), data.Mensagens[0].Mensagem, true);
-				}
-				else {
-					var Mensagens = new Array();
-					$(data.Mensagens).each(function (j, jitem) {
-						Mensagens.push(jitem.Mensagem);
-					});
-				Error.showError('warning', $translate.instant("Alerta"), Mensagens.join("<br/>"), true);
-				}
-				vm.loading = false;
-			},
-			function (err) {
-				$uibModalInstance.close();
-				Error.showError('error', 'Ops!', $translate.instant("ErroExcluir"), true);
-				vm.loading = false;
-			})
-		};
 
-        vm.actionModal = function (item, indexForDelete) {
-            $uibModal.open({
-                templateUrl: 'modal.html',
-                controller: ['$uibModalInstance', 'item', 'index', vm.ActionModalCtrl],
-                controllerAs: 'vmAction',
-                resolve: {
-                    item: function () { return item; },
-                    index: function () { return indexForDelete; }
-                }
-            });
-        };
-        vm.ActionModalCtrl = function ($uibModalInstance, item, index) {
-            var vmAction = this;
-            vmAction.item = item;
-            vmAction.indexForDelete = index;
-            // console.log(itens);
-            vmAction.close = function () {
-                $uibModalInstance.close();
-            }
-            vmAction.edit = function (idToEdit) {
-                $uibModalInstance.close();
-                $state.go('ViagemEdicao', { id: idToEdit, filtro: vm.filtroAtualizacao });
-            };
-
-            vmAction.askDelete = function (itemForDelete, indexForDelete) {
-                vm.askDelete(itemForDelete, indexForDelete);
-                $uibModalInstance.close();
-            };
-
-        }
-
-        vm.askDelete = function (itemForDelete, indexForDelete) {
-            // $uibModalInstance.close();
-            $uibModal.open({
-                templateUrl: 'modalDelete.html',
-                controller: ['$uibModalInstance', 'item', 'index', vm.DeleteModalCtrl],
-                controllerAs: 'vmDelete',
-                resolve: {
-                    item: function () { return itemForDelete; },
-                    index: function () { return indexForDelete; }
-                }
-            });
-        };
-
-        vm.DeleteModalCtrl = function ($uibModalInstance, itemForDelete, indexForDelete) {
-            var vmDelete = this;
-            vmDelete.itemForDelete = itemForDelete;
-
-            vmDelete.close = function () {
-                $uibModalInstance.close();
-            };
-
-            vmDelete.back = function () {
-                $uibModalInstance.close();
-                vm.actionModal();
-            };
-
-            vmDelete.delete = function () {
-                vm.delete(vmDelete.itemForDelete, indexForDelete, function () {
-                    $uibModalInstance.close();
-                });
-            };
-        };
-
+	
         $rootScope.$on('loggin', function (event) {
-            vm.verificarPermissoes();
+            
         });
-
-        angular.element($window).bind('resize', function () {
-            var screenSizes = $.AdminLTE.options.screenSizes;
-            vm.gridOptions.columnDefs[0].visible = $(window).width() > (screenSizes.sm - 1);
-            vm.gridApi.grid.refresh();
-
-           
-        });
-
-
-		vm.verificarPermissoes = function () {
-			$(Auth.currentUser.access).each(function (i, item) {
-			});
-		};
 
         vm.filtraDado = function () {
 
             vm.filtroAtualizacao = jQuery.extend({}, vm.filtro);
+            
+            if (vm.filtroAtualizacao.Situacao == "")
+                vm.filtroAtualizacao.Aberto = null;
+            else
+                vm.filtroAtualizacao.Aberto = vm.filtroAtualizacao.Situacao == "true"
 
-                  
+            if (vm.itemParticipante && vm.itemParticipante.Identificador)
+                vm.filtroAtualizacao.IdentificadorParticipante = vm.itemParticipante.Identificador;
+            else
+                vm.filtroAtualizacao.IdentificadorParticipante = null;
+
+            if (vm.filtroAtualizacao.DataInicioDe) {
+                if (typeof vm.filtroAtualizacao.DataInicioDe == "string") {
+                    var date = Date.parse(vm.filtroAtualizacao.DataInicioDe);
+                    if (!isNaN(date))
+                        vm.filtroAtualizacao.DataInicioDe = $.datepicker.formatDate("yy-mm-ddT00:00:00", new Date(date));
+                }
+                else
+                    vm.filtroAtualizacao.DataInicioDe = $.datepicker.formatDate("yy-mm-ddT00:00:00", vm.filtroAtualizacao.DataInicioDe);
+            }
+
+            if (vm.filtroAtualizacao.DataInicioAte) {
+                if (typeof vm.filtroAtualizacao.DataInicioAte == "string") {
+                    var date = Date.parse(vm.filtroAtualizacao.DataInicioAte);
+                    if (!isNaN(date))
+                        vm.filtroAtualizacao.DataInicioAte = $.datepicker.formatDate("yy-mm-ddT00:00:00", new Date(date));
+                }
+                else
+                    vm.filtroAtualizacao.DataInicioAte = $.datepicker.formatDate("yy-mm-ddT00:00:00", vm.filtroAtualizacao.DataInicioAte);
+            }
+
+            if (vm.filtroAtualizacao.DataFimDe) {
+                if (typeof vm.filtroAtualizacao.DataFimDe == "string") {
+                    var date = Date.parse(vm.filtroAtualizacao.DataFimDe);
+                    if (!isNaN(date))
+                        vm.filtroAtualizacao.DataFimDe = $.datepicker.formatDate("yy-mm-ddT00:00:00", new Date(date));
+                }
+                else
+                    vm.filtroAtualizacao.DataFimDe = $.datepicker.formatDate("yy-mm-ddT00:00:00", vm.filtroAtualizacao.DataFimDe);
+            }
+
+            if (vm.filtroAtualizacao.DataFimAte) {
+                if (typeof vm.filtroAtualizacao.DataFimAte == "string") {
+                    var date = Date.parse(vm.filtroAtualizacao.DataDataFimAteFim);
+                    if (!isNaN(date))
+                        vm.filtroAtualizacao.DataFimAte = $.datepicker.formatDate("yy-mm-ddT00:00:00", new Date(date));
+                }
+                else
+                    vm.filtroAtualizacao.DataFimAte = $.datepicker.formatDate("yy-mm-ddT00:00:00", vm.filtroAtualizacao.DataFimAte);
+            }
 
             vm.pagingOptions.currentPage = 1;
             vm.gridApi.grid.options.paginationCurrentPage = 1;
@@ -217,18 +160,14 @@
 //
         vm.gridOptions = {
             data: 'itemViagem.ListaDados',           
-            			columnDefs: [
+            columnDefs: [
 				{field:'Identificador',  displayName: '', cellTemplate: "BotoesGridTemplate.html",  width: 60,},
-				{field:'IdentificadorUsuario', displayName: $translate.instant('Viagem_IdentificadorUsuario'),},
 				{field:'Nome', displayName: $translate.instant('Viagem_Nome'),},
 				{field:'DataInicio', displayName: $translate.instant('Viagem_DataInicio'),cellFilter: 'date:\'dd/MM/yyyy\'' },
 				{field:'DataFim', displayName: $translate.instant('Viagem_DataFim'),cellFilter: 'date:\'dd/MM/yyyy\'' },
-				{field:'Aberto', displayName: $translate.instant('Viagem_Aberto'),},
-				{field:'UnidadeMetrica', displayName: $translate.instant('Viagem_UnidadeMetrica'),},
-				{field:'QuantidadeParticipantes', displayName: $translate.instant('Viagem_QuantidadeParticipantes'),},
-				{field:'PublicaGasto', displayName: $translate.instant('Viagem_PublicaGasto'),},
-				{field:'PercentualIOF', displayName: $translate.instant('Viagem_PercentualIOF'),cellFilter: 'number:\'4\'' },
-				{field:'Moeda', displayName: $translate.instant('Viagem_Moeda'),},
+				{ field: 'AbertoTexto', displayName: $translate.instant('Viagem_Aberto'), },
+                { field: 'Participantes', displayName: $translate.instant('Viagem_Participantes'), cellTemplate: "ListaParticipantes.html", },
+
 			],
 
             enablePagination: true,
@@ -244,9 +183,7 @@
                     i18nService.setCurrentLang(cultura)
                 }
                 vm.gridApi = grid;
-                var screenSizes = $.AdminLTE.options.screenSizes;
-                vm.gridOptions.columnDefs[0].visible = $(window).width() > (screenSizes.sm - 1);
-                grid.core.on.sortChanged($scope, function (grid, sortColumns) {
+                  grid.core.on.sortChanged($scope, function (grid, sortColumns) {
                     vm.pagingOptions.fields = [];
                     vm.pagingOptions.directions = [];
                     angular.forEach(sortColumns, function (c) {
@@ -266,7 +203,10 @@
             paginationTemplate: "NewFooterTemplate.html",
             appScopeProvider: vm,
             totalItems: vm.totalServerItems,
-            rowTemplate: "<div on-long-press=\"grid.appScope.actionModal(row.entity, $index)\" ng-repeat=\"(colRenderIndex, col) in colContainer.renderedColumns track by col.uid\" ui-grid-one-bind-id-grid=\"rowRenderIndex + '-' + col.uid + '-cell'\" class=\"ui-grid-cell\" ng-class=\"{ 'ui-grid-row-header-cell': col.isRowHeader }\" role=\"{{col.isRowHeader ? 'rowheader' : 'gridcell'}}\" ui-grid-cell></div>" 
+        };
+
+        vm.SelecionarViagem = function (viagem) {
+            Auth.SelecionarViagem(viagem.Identificador);
         };
 	}
 }());

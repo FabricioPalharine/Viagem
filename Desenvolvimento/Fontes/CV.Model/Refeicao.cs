@@ -20,7 +20,6 @@ namespace CV.Model
 			[NotNullValidator(MessageTemplateResourceName="Refeicao_IdentificadorViagem",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public int? IdentificadorViagem { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="Refeicao_IdentificadorCidade",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public int? IdentificadorCidade { get; set; }
 
 			public string Nome { get; set; }
@@ -41,19 +40,15 @@ private void ValidarNome(Microsoft.Practices.EnterpriseLibrary.Validation.Valida
   }
 }
 
-			[StringLengthValidator(50,MessageTemplateResourceName="Refeicao_CodigoPlace_Tamanho",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public string CodigoPlace { get; set; }
 
 			[NotNullValidator(MessageTemplateResourceName="Refeicao_Data",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public DateTime? Data { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="Refeicao_Latitude",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public decimal? Latitude { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="Refeicao_Longitude",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public decimal? Longitude { get; set; }
 
-			[StringLengthValidator(50,MessageTemplateResourceName="Refeicao_Tipo_Tamanho",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public string Tipo { get; set; }
 
 			public Cidade ItemCidade { get; set; }

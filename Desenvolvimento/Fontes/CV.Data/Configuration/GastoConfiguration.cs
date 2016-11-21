@@ -31,9 +31,19 @@ namespace CV.Data.Configuration
 			this.Property(i => i.ApenasBaixa).HasColumnName("FL_APENAS_BAIXA");
 			this.HasRequired(i => i.ItemUsuario).WithMany().HasForeignKey(d=>d.IdentificadorUsuario);
 			this.HasRequired(i => i.ItemViagem).WithMany().HasForeignKey(d=>d.IdentificadorViagem);
-			this.HasMany(i => i.Posicoes).WithRequired().HasForeignKey(d=>d.IdentificadorGasto);
 			this.Property(i => i.DataAtualizacao).HasColumnName("DT_ATUALIZACAO");
 			this.Property(i => i.DataExclusao).HasColumnName("DT_EXCLUSAO");
+			this.Property(i => i.Latitude).HasColumnName("NR_LATITUDE").HasPrecision(12,6);
+			this.Property(i => i.Longitude).HasColumnName("NR_LONGITUDE");
+			this.Property(i => i.IdentificadorCidade).HasColumnName("ID_CIDADE");
+			this.HasMany(i => i.Atracoes).WithRequired().HasForeignKey(d=>d.IdentificadorGasto);
+			this.HasMany(i => i.Hoteis).WithRequired().HasForeignKey(d=>d.IdentificadorGasto);
+			this.HasMany(i => i.Compras).WithRequired().HasForeignKey(d=>d.IdentificadorGasto);
+			this.HasMany(i => i.Alugueis).WithRequired().HasForeignKey(d=>d.IdentificadorGasto);
+			this.HasMany(i => i.Refeicoes).WithRequired().HasForeignKey(d=>d.IdentificadorGasto);
+			this.HasMany(i => i.ViagenAereas).WithRequired().HasForeignKey(d=>d.IdentificadorGasto);
+			this.HasMany(i => i.Usuarios).WithOptional().HasForeignKey(d=>d.IdentificadorGasto);
+			this.HasMany(i => i.Reabastecimentos).WithRequired().HasForeignKey(d=>d.IdentificadorGasto);
 		MapearCamposManualmente();
 		}
 	}

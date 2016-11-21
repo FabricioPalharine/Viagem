@@ -24,22 +24,6 @@ namespace CV.Model
 			public int? IdentificadorUsuario { get; set; }
 
 			public string Pedido { get; set; }
-			[SelfValidation]
-private void ValidarPedido(Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResults results)
-{
- if (Pedido == null)
-  {
-      Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult result =
-            new Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult(Resource.MensagemModelo.RefeicaoPedido_Pedido, this, "Pedido", null, null);
-      results.AddResult(result);
-  }
-  else if (Pedido.Length > 200)
-  {
-      Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult result =
-            new Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult(Resource.MensagemModelo.RefeicaoPedido_Pedido_Tamanho, this, "Pedido", null, null);
-      results.AddResult(result);
-  }
-}
 
 			public int? Nota { get; set; }
 

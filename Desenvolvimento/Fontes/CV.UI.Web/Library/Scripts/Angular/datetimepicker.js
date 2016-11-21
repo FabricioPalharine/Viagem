@@ -205,7 +205,8 @@
                           var startDecade = (parseInt(selectedDate.year() / 10, 10) * 10);
                           var startDate = moment.utc(startOfDecade(unixDate)).subtract(1, 'year').startOf('year');
 
-                          var activeYear = ngModelController.$modelValue ? moment(ngModelController.$modelValue).year() : 0;
+                          
+                          var activeYear = ngModelController.$modelValue ? (moment(ngModelController.$modelValue, "DD/MM/YYYY").isValid() ? moment(ngModelController.$modelValue, "DD/MM/YYYY") : moment(ngModelController.$modelValue)).year() : 0;
 
                           var result = {
                               'currentView': 'year',
@@ -239,7 +240,7 @@
 
                           var startDate = moment.utc(unixDate).startOf('year');
                           var previousViewDate = startOfDecade(unixDate);
-                          var activeDate = ngModelController.$modelValue ? moment(ngModelController.$modelValue).locale(configuration.langCode).format('YYYY-MMM') : 0;
+                          var activeDate = ngModelController.$modelValue ? (moment(ngModelController.$modelValue, "DD/MM/YYYY").isValid() ? moment(ngModelController.$modelValue ,"DD/MM/YYYY"):moment(ngModelController.$modelValue)).locale(configuration.langCode).format('YYYY-MMM') : 0;
 
                           var result = {
                               'previousView': 'year',
@@ -277,7 +278,7 @@
 
                           var startDate = moment.utc(startOfMonth).subtract(Math.abs(startOfMonth.weekday()), 'days');
 
-                          var activeDate = ngModelController.$modelValue ? moment(ngModelController.$modelValue).locale(configuration.langCode).format('YYYY-MMM-DD') : '';
+                          var activeDate = ngModelController.$modelValue ? (moment(ngModelController.$modelValue, "DD/MM/YYYY").isValid() ? moment(ngModelController.$modelValue ,"DD/MM/YYYY") : moment(ngModelController.$modelValue)).locale(configuration.langCode).format('YYYY-MMM-DD') : '';
 
                           var result = {
                               'previousView': 'month',
@@ -389,7 +390,7 @@
                           var newDate = new Date(tempDate.getUTCFullYear(), tempDate.getUTCMonth(), tempDate.getUTCDate(), tempDate.getUTCHours(), tempDate.getUTCMinutes(), tempDate.getUTCSeconds(), tempDate.getUTCMilliseconds());
 
                           var oldDate = ngModelController.$modelValue;
-                          ngModelController.$setViewValue(newDate);
+                          ngModelController.$setViewValue(moment( newDate).format());
 
                           if (configuration.dropdownSelector) {
                               jQuery(configuration.dropdownSelector).dropdown('toggle');
@@ -402,7 +403,9 @@
                   };
 
                   var getUTCTime = function getUTCTime(modelValue) {
-                      var tempDate = (modelValue ? moment(modelValue).toDate() : new Date());
+
+
+                      var tempDate = (modelValue ? moment(modelValue, "DD/MM/YYYY").isValid() ? moment(modelValue, "DD/MM/YYYY").toDate() : moment(modelValue).toDate() : new Date());
                       return tempDate.getTime() - (tempDate.getTimezoneOffset() * 60000);
                   };
 

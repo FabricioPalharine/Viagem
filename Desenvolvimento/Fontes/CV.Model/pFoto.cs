@@ -10,6 +10,10 @@ namespace CV.Model
 
 	public partial class Foto
 	{
+        public String strHora
+        {
+            get { return Data.HasValue ? Data.Value.ToString("HH:mm:ss") : null; }
+        }
 	}
 
 }

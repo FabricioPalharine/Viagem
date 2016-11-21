@@ -36,8 +36,21 @@
               },
             //  transformResponse: parseArray,
               isArray: false
-          }
-         
+          },
+          CarregarFoto: {
+              method: 'GET',
+              params: {
+                  controller: 'CarregarFoto'
+              },
+              isArray: true
+          },
+          VerificarAtracaoAberto: {
+              method: 'GET',
+              params: {
+                  controller: 'VerificarAtracaoAberto'
+              },
+              isArray: false
+          },
 
       });
     return UserBase;

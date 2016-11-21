@@ -35,7 +35,8 @@
 
                           }]
                       }
-                  }).state('UsuarioEdicao', {
+                  })
+            .state('UsuarioEdicao', {
                       url: '/UsuarioEdicao/:id',
                       templateUrl: 'Sistema/UsuarioEdicao',
                       controller: 'UsuarioEditCtrl',
@@ -63,7 +64,8 @@
 
                           }]
                       }
-                  }).state('Reabastecimento', {
+            })
+            .state('Reabastecimento', {
                       url: '/Reabastecimento',
                       templateUrl: 'Sistema/Reabastecimento',
                       controller: 'ReabastecimentoCtrl',
@@ -103,7 +105,8 @@
 
                           }]
                       }
-                  }).state('ReabastecimentoEdicao', {
+            })
+            .state('ReabastecimentoEdicao', {
                       url: '/ReabastecimentoEdicao/:id',
                       templateUrl: 'Sistema/ReabastecimentoEdicao',
                       controller: 'ReabastecimentoEditCtrl',
@@ -143,7 +146,8 @@
 
                           }]
                       }
-                  }).state('Amigo', {
+            })
+            .state('Amigo', {
                       url: '/Amigo',
                       templateUrl: 'Sistema/Amigo',
                       controller: 'AmigoCtrl',
@@ -184,7 +188,8 @@
 
                           }]
                       }
-                  }).state('AmigoEdicao', {
+            })
+            .state('AmigoEdicao', {
                       url: '/AmigoEdicao/:id',
                       templateUrl: 'Sistema/AmigoEdicao',
                       controller: 'AmigoEditCtrl',
@@ -224,7 +229,8 @@
 
                           }]
                       }
-                  }).state('AporteDinheiro', {
+            })
+            .state('AporteDinheiro', {
                       url: '/AporteDinheiro',
                       templateUrl: 'Sistema/AporteDinheiro',
                       controller: 'AporteDinheiroCtrl',
@@ -264,7 +270,8 @@
 
                           }]
                       }
-                  }).state('AporteDinheiroEdicao', {
+            })
+            .state('AporteDinheiroEdicao', {
                       url: '/AporteDinheiroEdicao/:id',
                       templateUrl: 'Sistema/AporteDinheiroEdicao',
                       controller: 'AporteDinheiroEditCtrl',
@@ -304,7 +311,8 @@
 
                           }]
                       }
-                  }).state('Atracao', {
+            })
+            .state('Atracao', {
                       url: '/Atracao',
                       templateUrl: 'Sistema/Atracao',
                       controller: 'AtracaoCtrl',
@@ -320,6 +328,19 @@
                                        name: 'AtracaoFactory',
                                        files: [
                                            'library/scripts/app/Sistema/Atracao/Atracao-factory.js'
+                                       ]
+                                   },
+                                   {
+                                       name: 'GastoFactory',
+                                       files: [
+                                           'library/scripts/app/Sistema/Gasto/Gasto-factory.js'
+                                       ]
+                                   },
+                                   {
+                                       name: 'GastoController',
+                                       files: [
+                                           'library/scripts/app/Sistema/Gasto/Gasto-edit-controller.js',
+                                           'library/scripts/app/Sistema/Gasto/Gasto-controller.js'
                                        ]
                                    },
                                   {
@@ -340,11 +361,18 @@
                                             'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
                                         ]
                                     },
+                                     {
+                                         name: 'FotoFactory',
+                                         files: [
+                                             'library/scripts/app/Sistema/Foto/Foto-factory.js'
+                                         ]
+                                     },
                               ]);
 
                           }]
                       }
-                  }).state('AtracaoEdicao', {
+            })
+            .state('AtracaoEdicao', {
                       url: '/AtracaoEdicao/:id',
                       templateUrl: 'Sistema/AtracaoEdicao',
                       controller: 'AtracaoEditCtrl',
@@ -384,7 +412,8 @@
 
                           }]
                       }
-                  }).state('CalendarioPrevisto', {
+            })
+            .state('CalendarioPrevisto', {
                       url: '/CalendarioPrevisto',
                       templateUrl: 'Sistema/CalendarioPrevisto',
                       controller: 'CalendarioPrevistoCtrl',
@@ -870,6 +899,36 @@
                                             'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
                                         ]
                                     },
+                                     {
+                                         name: 'LojaFactory',
+                                         files: [
+                                             'library/scripts/app/Sistema/Loja/Loja-factory.js'
+                                         ]
+                                     },
+                                  {
+                                      name: 'RefeicaoFactory',
+                                      files: [
+                                          'library/scripts/app/Sistema/Refeicao/Refeicao-factory.js'
+                                      ]
+                                  },
+                                    {
+                                        name: 'HotelFactory',
+                                        files: [
+                                            'library/scripts/app/Sistema/Hotel/Hotel-factory.js'
+                                        ]
+                                    },
+                                    {
+                                        name: 'AtracaoFactory',
+                                        files: [
+                                            'library/scripts/app/Sistema/Atracao/Atracao-factory.js'
+                                        ]
+                                    },
+                                    {
+                                        name: 'CidadeFactory',
+                                        files: [
+                                            'library/scripts/app/Sistema/Cidade/Cidade-factory.js'
+                                        ]
+                                    },
                               ]);
 
                           }]
@@ -1025,6 +1084,19 @@
                                           'library/scripts/app/Sistema/Hotel/Hotel-controller.js'
                                       ]
                                   }, {
+                                      name: 'GastoFactory',
+                                      files: [
+                                          'library/scripts/app/Sistema/Gasto/Gasto-factory.js'
+                                      ]
+                                  },
+                                   {
+                                       name: 'GastoController',
+                                       files: [
+                                           'library/scripts/app/Sistema/Gasto/Gasto-edit-controller.js',
+                                           'library/scripts/app/Sistema/Gasto/Gasto-controller.js'
+                                       ]
+                                   },
+                                 {
                                       name: 'CidadeFactory',
                                       files: [
                                           'library/scripts/app/Sistema/Cidade/Cidade-factory.js'
@@ -1036,6 +1108,12 @@
                                             'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
                                         ]
                                     },
+                                     {
+                                         name: 'FotoFactory',
+                                         files: [
+                                             'library/scripts/app/Sistema/Foto/Foto-factory.js'
+                                         ]
+                                     },
                               ]);
 
                           }]
@@ -1412,7 +1490,27 @@
                                           'library/scripts/app/Sistema/Refeicao/Refeicao-edit-controller.js',
                                           'library/scripts/app/Sistema/Refeicao/Refeicao-controller.js'
                                       ]
-                                  }, {
+                                  },
+                                  {
+                                      name: 'AtracaoFactory',
+                                      files: [
+                                          'library/scripts/app/Sistema/Atracao/Atracao-factory.js'
+                                      ]
+                                  },
+                                   {
+                                       name: 'GastoFactory',
+                                       files: [
+                                           'library/scripts/app/Sistema/Gasto/Gasto-factory.js'
+                                       ]
+                                   },
+                                   {
+                                       name: 'GastoController',
+                                       files: [
+                                           'library/scripts/app/Sistema/Gasto/Gasto-edit-controller.js',
+                                           'library/scripts/app/Sistema/Gasto/Gasto-controller.js'
+                                       ]
+                                   },
+                                 {
                                       name: 'CidadeFactory',
                                       files: [
                                           'library/scripts/app/Sistema/Cidade/Cidade-factory.js'
@@ -1424,12 +1522,12 @@
                                             'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
                                         ]
                                     },
-                                    {
-                                        name: 'AtracaoFactory',
-                                        files: [
-                                            'library/scripts/app/Sistema/Atracao/Atracao-factory.js'
-                                        ]
-                                    },
+                                     {
+                                         name: 'FotoFactory',
+                                         files: [
+                                             'library/scripts/app/Sistema/Foto/Foto-factory.js'
+                                         ]
+                                     },
                               ]);
 
                           }]

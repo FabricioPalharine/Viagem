@@ -20,10 +20,13 @@ namespace CV.Data.Configuration
 		this.HasKey(i => new {i.Identificador });
 			this.Property(i => i.Identificador).HasColumnName("ID_HOTEL_EVENTO");
 			this.Property(i => i.IdentificadorHotel).HasColumnName("ID_HOTEL");
-			this.Property(i => i.DataEvento).HasColumnName("DT_EVENTO");
-			this.Property(i => i.Tipo).HasColumnName("CD_TIPO_EVENTO");
+			this.Property(i => i.DataEntrada).HasColumnName("DT_ENTRADA");
+			this.Property(i => i.DataSaida).HasColumnName("DT_SAIDA");
 			this.Property(i => i.DataAtualizacao).HasColumnName("DT_ATUALIZACAO");
 			this.HasRequired(i => i.ItemHotel).WithMany().HasForeignKey(d=>d.IdentificadorHotel);
+			this.Property(i => i.DataExclusao).HasColumnName("DT_EXCLUSAO");
+			this.Property(i => i.IdentificadorUsuario).HasColumnName("ID_USUARIO");
+			this.HasRequired(i => i.ItemUsuario).WithMany().HasForeignKey(d=>d.IdentificadorUsuario);
 		MapearCamposManualmente();
 		}
 	}

@@ -10,16 +10,28 @@
      */
     angular
       .module('home')
-      .factory('SignalR', ['$location', '$rootScope', '$http', '$cookies', '$q', '$translate', '$state', SignalR]);
+      .factory('SignalR', ['$location', '$rootScope', '$http', '$cookies', '$q', '$translate', '$state','$timeout', SignalR]);
 
-    function SignalR($location, $rootScope, $http, $cookies, $q, $translate, $state) {
+    function SignalR($location, $rootScope, $http, $cookies, $q, $translate, $state, $timeout) {
         var $hub = $.connection.Viagem;
         var connection = null;
+
+        
+
         var signalR = {
             startHub: function () {
                 console.log("started");
                 connection = $.connection.hub.start();
+                $.connection.hub.disconnected(function () {
+                    $timeout(function () {
+                        connection =  $.connection.hub.start().done(function() {
+                            $rootScope.$emit('SignalRConnected');
+                        });
+                    }, 5000); // Restart connection after 5 seconds.
+                });
             },
+
+
             ConectarUsuario: function (IdentificadorUsuario) {
                 connection.done(function () {
                     $hub.server.conectarUsuario(IdentificadorUsuario);
@@ -45,9 +57,9 @@
                     $hub.server.sugerirVisitaViagem(itemSugestao);
                 });
             },
-            ViagemAtualizada: function (IdentificadorViagem, TipoAtualizacao) {
+            ViagemAtualizada: function (IdentificadorViagem, TipoAtualizacao, Identificador, Inclusao ) {
                 connection.done(function () {
-                    $hub.server.viagemAtualizada(IdentificadorViagem, TipoAtualizacao);
+                    $hub.server.viagemAtualizada(IdentificadorViagem, TipoAtualizacao, Identificador, Inclusao);
                 });
             },
 

@@ -2,11 +2,12 @@
 	'use strict';
 	angular
 		.module('Sistema')
-		.controller('FotoCtrl',['$uibModal', 'Error', '$timeout', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', '$window', 'i18nService','Cidade','Usuario','Viagem','Foto', FotoCtrl]);
+		.controller('FotoCtrl', ['$uibModal', 'Error', '$timeout', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', '$window', 'i18nService', 'Cidade', 'Usuario', 'Viagem', 'Foto',
+            'Atracao','Hotel','Refeicao','Loja','NgMap','SignalR', FotoCtrl]);
 
-	function FotoCtrl($uibModal,  Error, $timeout, $state, $translate, $scope, Auth, $rootScope, $stateParams, $window, i18nService,Cidade,Usuario,Viagem,Foto) {
+	function FotoCtrl($uibModal, Error, $timeout, $state, $translate, $scope, Auth, $rootScope, $stateParams, $window, i18nService, Cidade, Usuario, Viagem, Foto, Atracao, Hotel, Refeicao, Loja, NgMap,SignalR) {
 		var vm = this;
-		vm.filtro = {  Index: 0, Count: 0 };
+		vm.filtro = {  Index: 0, Count: 0,Atracoes: [], Hoteis: [], Refeicoes:[] };
 		vm.filtroAtualizacao = {  Index: 0, Count: 0 };
 		vm.loading = false;
 		vm.showModal = false;
@@ -14,32 +15,273 @@
 			vm.showModal = true;
 		}
 		vm.modalDelete = {};
-		vm.PermiteInclusao = true;
-		vm.PermiteAlteracao = true;
-		vm.PermiteExclusao = true;
+		
 		vm.ListaDados = [];
-		vm.gridApi = null;
+
+		vm.ListaArquivos = [];
+		vm.ListaHotel = [];
+		vm.ListaAtracao = [];
+		vm.ListaRefeicao = [];
+		vm.ListaItemCompra = [];
+		vm.ListaCidades = [];
+		vm.itemCidade = null;
+		vm.pageSize = 30
+		vm.currentItem = 0;
+		vm.enableScroll = false;
+		vm.continuaPesquisando = true;
+		vm.FimPagina = false;
+		vm.CarregarArquivos = function (files) {
+		    for (var i = 0; i < files.length; i++)
+		        vm.CarregarArquivo(files[i]);
+
+		};
+
+		vm.CarregarArquivo = function (item) {
+		    var itemArquivo = { FileName: item.name, Porcentual: 0, Situacao: $translate.instant('Foto_Carregando'), CodigoSituacao: 0 }
+		    var type = item.type;
+		    if (type.indexOf("image/") < 0 
+                && type.indexOf("video/") < 0
+                && type.indexOf("application/x-zip-compressed") < 0)
+		    {
+		        itemArquivo.CodigoSituacao = 2;
+		        itemArquivo.Situacao= $translate.instant('Foto_ArquivoInvalido').format(item.name);
+		        vm.ListaArquivos.push(itemArquivo);
+
+		       
+		    }
+		    else
+		    {
+		        if (type.indexOf("image/") >= 0) {
+
+		            vm.ListaArquivos.push(itemArquivo);
+		            vm.ProcessarImagem(item, itemArquivo);
+		        }
+		        else if (type.indexOf("video/") >= 0) {
+		            vm.ListaArquivos.push(itemArquivo);
+		            vm.ProcessarVideo(item, itemArquivo);
+		        }
+		        else
+		            vm.ProcessarZip(item);
+		    }
+		};
+
+		vm.ProcessarZip = function (file) {
+		    var reader = new FileReader();
+
+		    reader.onload = function (e) {
+		        JSZip.loadAsync(reader.result)
+                .then(function (zip) {
+                    zip.forEach(function (relativePath, itemzip) {
+                        if (!itemzip.dir)
+                            vm.processarItemZip(itemzip);
+
+                    });
+                  
+                });
+
+		       
+		    };
+
+		    reader.readAsArrayBuffer(file);
+		};
+
+		vm.processarItemZip = function (itemZip) {
+		    //itemZip.async("arraybuffer")
+            //.then(function success(content) {
+            //    //var blob = new Blob(content, { name: itemZip.name, lastModifiedDate: itemZip.date });
+
+            //}, function error(e) {
+            //    // handle the error
+            //});
+
+		    itemZip.async("base64", function (meta) {
+		        //console.log("Generating the content, we are at " + meta.percent.toFixed(2) + " %");
+		    })
+           .then(function success(content ){
+
+               var tipo = TipoMimeType.lookup(itemZip.name);
+               var blob = vm.b64toBlob(content, tipo);
+               blob.lastModifiedDate = itemZip.date;
+               blob.name = itemZip.name;
+               vm.CarregarArquivo(blob);
+
+           }, function error(e) {
+               // handle the error
+           });
+            
+		};
+
+		vm.b64toBlob = function (b64Data, contentType, sliceSize) {
+		    contentType = contentType || '';
+		    sliceSize = sliceSize || 512;
+
+		    var byteCharacters = atob(b64Data);
+		    var byteArrays = [];
+
+		    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+		        var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+		        var byteNumbers = new Array(slice.length);
+		        for (var i = 0; i < slice.length; i++) {
+		            byteNumbers[i] = slice.charCodeAt(i);
+		        }
+
+		        var byteArray = new Uint8Array(byteNumbers);
+
+		        byteArrays.push(byteArray);
+		    }
+
+		    var blob = new Blob(byteArrays, { type: contentType });
+		    return blob;
+		}
+
+		vm.ProcessarVideo = function (item, itemArquivo) {
+		    Foto.RetornarAlbum(function (result)
+		    {
+		        itemArquivo.Situacao = $translate.instant('Foto_SubindoVideo');
+		        var uploadVideo = new UploadVideo();
+		        uploadVideo.itemArquivo = itemArquivo;
+		        uploadVideo.MensagemProcessando = $translate.instant('Foto_ProcessandoVideo');
+		        uploadVideo.callbackUpdate = function () {
+		            $scope.$apply();
+		        };
+		        uploadVideo.ready(result[1], item.name, item, function(link, status)
+		        {
+		            var itemFoto = {
+		                ImageMime: item.type, DataArquivo: item.lastModifiedDate, CodigoGoogle: uploadVideo.videoId, Thumbnail: uploadVideo.thumbnail,
+		                LinkGoogle: link
+		            };
+		            if (status == null) {
+		                itemArquivo.Situacao = $translate.instant('Foto_Enviando');
+		                Foto.SubirVideo(itemFoto, function (data) {
+		                    itemArquivo.Situacao = $translate.instant('Foto_Sucesso');
+		                    itemArquivo.CodigoSituacao = 1;
+		                    SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'F', data.ItemRegistro.Identificador, true);
+
+		                    if (!vm.continuaPesquisando)
+		                        vm.ListaDados.push(data.ItemRegistro);
+		                  
+		                });
+		            }
+		            else
+		            {
+		                itemArquivo.Situacao = $translate.instant('Foto_ErroVideo').format(status);
+		                itemArquivo.CodigoSituacao = 2;
+		            }
+		        });
+		    })
+		};
+
+		vm.ProcessarImagem = function (item, itemArquivo) {
+		    loadImage(
+                item,
+                function (img, dados) {
+                    var imageURL = img.toDataURL();
+                    var itemFoto = { Base64: imageURL, ImageMime: item.type, DataArquivo: item.lastModifiedDate };
+                    if (dados && dados.exif) {
+                        var tags = dados.exif.getAll()
+                        if (tags.GPSLatitude)
+                        {
+                            var arrPosicao = tags.GPSLatitude.split(',');
+                            itemFoto.Latitude = vm.ConverterDegressDecimal(arrPosicao[0], arrPosicao[1], arrPosicao[2] == "NaN" ? 0 : arrPosicao[2], tags.GPSLatitudeRef)
+                        }
+                        if (tags.GPSLongitude) {
+                            var arrPosicao = tags.GPSLongitude.split(',');
+                            itemFoto.Longitude = vm.ConverterDegressDecimal(arrPosicao[0], arrPosicao[1], arrPosicao[2] == "NaN" ? 0 : arrPosicao[2], tags.GPSLongitudeRef)
+                        }
+                    }
+                    itemArquivo.Situacao = $translate.instant('Foto_Enviando');
+
+                    Foto.SubirImagem(itemFoto, function (data) {
+                        itemArquivo.Situacao = $translate.instant('Foto_Sucesso');
+                        itemArquivo.CodigoSituacao = 1;
+                        SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'F', data.ItemRegistro.Identificador, true);
+
+                        if (!vm.continuaPesquisando)
+                            vm.ListaDados.push(data.ItemRegistro);
+                      
+                    });
+
+                    
+                },
+                { maxWidth: 2048, maxHeight: 2048, canvas: true, orientation: true } // Options
+            );
+		};
+
+		vm.ConverterDegressDecimal = function(degrees, minutes, seconds, direction) {
+		    var dd = parseInt( degrees) + parseFloat( minutes) / 60 + parseFloat( seconds) / (60 * 60);
+
+		    if (direction == "S" || direction == "W") {
+		        dd = dd * -1;
+		    } // Don't do anything for N or E
+		    return dd;
+		}
 
 		vm.load = function () {
 			vm.loading = true;
-			vm.verificarPermissoes();
+			Cidade.CarregarFoto(function (lista) {
+			    vm.ListaCidades = lista;
+                
+			});
+			Atracao.CarregarFoto(function (lista) {
+			    vm.ListaAtracao = lista;
+			    vm.filtro.Atracoes = lista;
+			});
+			Hotel.CarregarFoto(function (lista) {
+			    vm.ListaHotel = lista;
+			    vm.filtro.Hoteis = lista;
+			});
+			Refeicao.CarregarFoto(function (lista) {
+			    vm.ListaRefeicao = lista;
+			    vm.filtro.Refeicoes = lista;
+			});
+			Loja.CarregarFoto(function (lista) {
+			    vm.ListaItemCompra = lista;
+			});
 
-			var param = $stateParams;
-			if (param.filtro != null) {
-				vm.filtro = vm.filtroAtualizacao = param.filtro;
-				 vm.pagingOptions.fields = vm.filtroAtualizacao.SortField;
-				 vm.pagingOptions.directions = vm.filtroAtualizacao.SortOrder;
-				vm.pagingOptions.currentPage = (vm.filtroAtualizacao.Index / vm.pagingOptions.pageSize) + 1;
+			vm.CarregarDadosWebApi(vm.pageSize, vm.currentItem, vm.AjustarDadosPagina);
 
-			}
-			vm.CarregarDadosWebApi(vm.pagingOptions.pageSize, vm.pagingOptions.currentPage);
+			SignalR.AvisarAlertaAtualizacao = function (TipoAtualizacao, Identificador, Inclusao) {
+			    if (TipoAtualizacao == "F")
+			    {
+			        var itemPesquisa = { Index: 0, Count: 1, Identificador: Identificador };
+
+			        var itens = $.grep(vm.ListaDados, function (e) { return e.Identificador == Identificador; });
+			        if (itens.length == 0 && Inclusao && !vm.continuaPesquisando) {
+			            Foto.list({ json: JSON.stringify(itemPesquisa) }, function (data) {
+			                vm.ListaDados.push(data.Lista[0]);
+			            }, function (err) {
+			                Error.showError('error', 'Ops!', $translate.instant('ErroRequisicao'), true);
+			            });
+			        }
+			        else if (itens.length  > 0)
+			        {
+			            var Posicao = vm.ListaDados.indexOf(itens[0]);
+			            Foto.list({ json: JSON.stringify(itemPesquisa) }, function (data) {
+			                vm.ListaDados.splice(Posicao,1, data.Lista[0]);
+			            }, function (err) {
+			                Error.showError('error', 'Ops!', $translate.instant('ErroRequisicao'), true);
+			            });
+			        }
+			    }
+			};
 		};
-		vm.delete = function (itemForDelete, indexForDelete, callback) {
+
+
+		vm.delete = function (itemForDelete, callback) {
 			vm.loading = true;
 			Foto.delete({ id: itemForDelete.Identificador }, function (data) {
 				callback(data);
 				if (data.Sucesso) {
-					vm.CarregarDadosWebApi(vm.pagingOptions.pageSize, vm.pagingOptions.currentPage);
+				    vm.currentItem--;
+
+				    var itens =
+				    $.grep(vm.ListaDados, function (e) { return e.Identificador == itemForDelete.Identificador; });
+				    if (itens.length > 0)
+				    {
+				        var posicao = vm.ListaDados.indexOf(itens[0]);
+				        vm.ListaDados.splice(posicao, 1);
+				    }
 					Error.showError('success', $translate.instant("Sucesso"), data.Mensagens[0].Mensagem, true);
 				}
 				else {
@@ -58,51 +300,22 @@
 			})
 		};
 
-        vm.actionModal = function (item, indexForDelete) {
-            $uibModal.open({
-                templateUrl: 'modal.html',
-                controller: ['$uibModalInstance', 'item', 'index', vm.ActionModalCtrl],
-                controllerAs: 'vmAction',
-                resolve: {
-                    item: function () { return item; },
-                    index: function () { return indexForDelete; }
-                }
-            });
-        };
-        vm.ActionModalCtrl = function ($uibModalInstance, item, index) {
-            var vmAction = this;
-            vmAction.item = item;
-            vmAction.indexForDelete = index;
-            // console.log(itens);
-            vmAction.close = function () {
-                $uibModalInstance.close();
-            }
-            vmAction.edit = function (idToEdit) {
-                $uibModalInstance.close();
-                $state.go('FotoEdicao', { id: idToEdit, filtro: vm.filtroAtualizacao });
-            };
+    
+        
 
-            vmAction.askDelete = function (itemForDelete, indexForDelete) {
-                vm.askDelete(itemForDelete, indexForDelete);
-                $uibModalInstance.close();
-            };
-
-        }
-
-        vm.askDelete = function (itemForDelete, indexForDelete) {
+        vm.askDelete = function (itemForDelete) {
             // $uibModalInstance.close();
             $uibModal.open({
                 templateUrl: 'modalDelete.html',
-                controller: ['$uibModalInstance', 'item', 'index', vm.DeleteModalCtrl],
+                controller: ['$uibModalInstance', 'item', vm.DeleteModalCtrl],
                 controllerAs: 'vmDelete',
                 resolve: {
                     item: function () { return itemForDelete; },
-                    index: function () { return indexForDelete; }
                 }
             });
         };
 
-        vm.DeleteModalCtrl = function ($uibModalInstance, itemForDelete, indexForDelete) {
+        vm.DeleteModalCtrl = function ($uibModalInstance, itemForDelete) {
             var vmDelete = this;
             vmDelete.itemForDelete = itemForDelete;
 
@@ -116,64 +329,106 @@
             };
 
             vmDelete.delete = function () {
-                vm.delete(vmDelete.itemForDelete, indexForDelete, function () {
+                vm.delete(vmDelete.itemForDelete, function () {
                     $uibModalInstance.close();
                 });
             };
         };
 
-        $rootScope.$on('loggin', function (event) {
-            vm.verificarPermissoes();
-        });
-
-        angular.element($window).bind('resize', function () {
-            var screenSizes = $.AdminLTE.options.screenSizes;
-            vm.gridOptions.columnDefs[0].visible = $(window).width() > (screenSizes.sm - 1);
-            vm.gridApi.grid.refresh();
-
-           
-        });
-
-
-		vm.verificarPermissoes = function () {
-			$(Auth.currentUser.access).each(function (i, item) {
-			});
-		};
+    
 
         vm.filtraDado = function () {
 
-            vm.filtroAtualizacao = jQuery.extend({}, vm.filtro);
+            vm.filtroAtualizacao = jQuery.extend({}, vm.filtro);                  
 
-                  
+            vm.filtroAtualizacao.Hoteis = null;
+            vm.filtroAtualizacao.Atracoes = null;
+            vm.filtroAtualizacao.Refeicoes = null;
+            if (vm.itemCidade && vm.itemCidade.Identificador)
+                vm.filtroAtualizacao.IdentificadorCidade = vm.itemCidade.Identificador;
+            else
+                vm.filtroAtualizacao.IdentificadorCidade = null;
 
-            vm.pagingOptions.currentPage = 1;
-            vm.gridApi.grid.options.paginationCurrentPage = 1;
-            vm.pagingOptions.fields = [];
-            vm.pagingOptions.directions = [];
-            angular.forEach(vm.gridApi.grid.columns, function (c) {
-                c.sort = {};
+            if (vm.filtroAtualizacao.DataInicioDe) {
+                if (typeof vm.filtroAtualizacao.DataInicioDe == "string") {
+                    var date = Date.parse(vm.filtroAtualizacao.DataInicioDe);
+                    if (!isNaN(date))
+                        vm.filtroAtualizacao.DataInicioDe = $.datepicker.formatDate("yy-mm-ddT00:00:00", new Date(date));
+                }
+                else
+                    vm.filtroAtualizacao.DataInicioDe = $.datepicker.formatDate("yy-mm-ddT00:00:00", vm.filtroAtualizacao.DataInicioDe);
+            }
+
+            if (vm.filtroAtualizacao.DataInicioAte) {
+                if (typeof vm.filtroAtualizacao.DataInicioAte == "string") {
+                    var date = Date.parse(vm.filtroAtualizacao.DataInicioAte);
+                    if (!isNaN(date))
+                        vm.filtroAtualizacao.DataInicioAte = $.datepicker.formatDate("yy-mm-ddT00:00:00", new Date(date));
+                }
+                else
+                    vm.filtroAtualizacao.DataInicioAte = $.datepicker.formatDate("yy-mm-ddT00:00:00", vm.filtroAtualizacao.DataInicioAte);
+            }
+
+            vm.filtroAtualizacao.ListaHoteis = [];
+            angular.forEach(vm.filtro.Hoteis, function (c) {
+                if (c.Selecionado)
+                    vm.filtroAtualizacao.ListaHoteis.push(c.Identificador);
             });
 
-            vm.CarregarDadosWebApi(vm.pagingOptions.pageSize, vm.pagingOptions.currentPage);
+            vm.filtroAtualizacao.ListaAtracoes = [];
+            angular.forEach(vm.filtro.Atracoes, function (c) {
+                if (c.Selecionado)
+                    vm.filtroAtualizacao.ListaAtracoes.push(c.Identificador);
+            });
+
+            vm.filtroAtualizacao.ListaRefeicoes = [];
+            angular.forEach(vm.filtro.Refeicoes, function (c) {
+                if (c.Selecionado)
+                    vm.filtroAtualizacao.ListaRefeicoes.push(c.Identificador);
+            });
+
+            vm.pageSize = 30
+            vm.currentItem = 0;
+          
+
+            vm.CarregarDadosWebApi(vm.pageSize, vm.currentItem, vm.AjustarDadosPagina);
         };
 
-        vm.clean = function () {
-            vm.filtro = { Nome: '', Index: 0, Count: 0 };
-            vm.filtraDado();
+
+
+        vm.ProximaPagina = function () {
+            if (vm.continuaPesquisando) {
+                vm.enableScroll = false;
+                vm.loading = true;
+                vm.CarregarDadosWebApi(vm.pageSize, vm.currentItem, function (data) {
+
+                    angular.forEach(data.Lista, function (c) {
+                        vm.ListaDados.push(c);
+                    });
+
+                    vm.currentItem += data.Lista.length;
+                    if (data.Lista.length == 0)
+                        vm.continuaPesquisando = false
+                    if (!$scope.$$phase) {
+                        $scope.$apply();
+                    }
+                    vm.enableScroll = true;
+                    vm.loading = false;
+                });
+            }
+            
         };
 
-        vm.totalServerItems = 0;
-        vm.pagingOptions = {
-            pageSize: 20,
-            currentPage: 1,
-            fields: [],
-            directions: []
+        vm.AlterarSelecao = function (item) {
+            item.Selecionado = !item.Selecionado;
         };
 
+   
         vm.AjustarDadosPagina = function (data) {
-            // var pagedData = data.slice((page - 1) * pageSize, page * pageSize);
             vm.ListaDados = data.Lista;
-            vm.gridOptions.totalItems = data.TotalRegistros;
+            vm.continuaPesquisando = true;
+            vm.currentItem = data.Lista.length;
+            vm.enableScroll = true;
             if (!$scope.$$phase) {
                 $scope.$apply();
             }
@@ -186,26 +441,16 @@
                 return "pt";
         };
 //
-        vm.CarregarDadosWebApi = function (pageSize, page) {
+        vm.CarregarDadosWebApi = function (pageSize, page, callback) {
             vm.loading = true;
-            vm.filtroAtualizacao.Index = (page - 1) * pageSize;
+            vm.filtroAtualizacao.Index = page;
             vm.filtroAtualizacao.Count = pageSize;
 
-            vm.filtroAtualizacao.SortField =vm.pagingOptions.fields;
-            vm.filtroAtualizacao.SortOrder =vm.pagingOptions.directions;
-
-            vm.CamposInvalidos = {};
-            vm.messages = [];
-
+           
             Foto.list({ json: JSON.stringify(vm.filtroAtualizacao) }, function (data) {
                 vm.loading = false;
-                vm.AjustarDadosPagina(data);
-                if (!data.Sucesso) {
-                    vm.messages = data.Mensagens;
-                    vm.verificaCampoInvalido();
-                }
-
-               
+                callback(data);
+                             
                 vm.loading = false;
             }, function (err) {
                 vm.loading = false;
@@ -214,61 +459,249 @@
                 vm.loading = false;
             });
         };
-//
-        vm.gridOptions = {
-            data: 'itemFoto.ListaDados',           
-            			columnDefs: [
-				{field:'Identificador',  displayName: '', cellTemplate: "BotoesGridTemplate.html",  width: 60,},
-				{field:'IdentificadorViagem', displayName: $translate.instant('Foto_IdentificadorViagem'),},
-				{field:'IdentificadorUsuario', displayName: $translate.instant('Foto_IdentificadorUsuario'),},
-				{field:'IdentificadorCidade', displayName: $translate.instant('Foto_IdentificadorCidade'),},
-				{field:'Comentario', displayName: $translate.instant('Foto_Comentario'),},
-				{field:'Latitude', displayName: $translate.instant('Foto_Latitude'),cellFilter: 'number:\'8\'' },
-				{field:'Longitude', displayName: $translate.instant('Foto_Longitude'),cellFilter: 'number:\'8\'' },
-				{field:'Data', displayName: $translate.instant('Foto_Data'),cellFilter: 'date:\'dd/MM/yyyy\'' },
-				{field:'LinkThumbnail', displayName: $translate.instant('Foto_LinkThumbnail'),},
-				{field:'LinkFoto', displayName: $translate.instant('Foto_LinkFoto'),},
-				{field:'CodigoFoto', displayName: $translate.instant('Foto_CodigoFoto'),},
-				{field:'Video', displayName: $translate.instant('Foto_Video'),},
-				{field:'TipoArquivo', displayName: $translate.instant('Foto_TipoArquivo'),},
-			],
+	    //
 
-            enablePagination: true,
-            showGridFooter: false,
-            enableRowSelection: false,
-            multiSelect: false,
-            paginationPageSizes: [20],
-            enableHorizontalScrollbar: 0,
-            enableVerticalScrollbar: 1,
-            onRegisterApi: function (grid) {
-                if (Auth.currentUser && Auth.currentUser.Cultura) {
-                    var cultura = Auth.currentUser.Cultura.toLowerCase().substr(0, 2);
-                    i18nService.setCurrentLang(cultura)
+        vm.RemoverUpload = function (item) {
+            var posicao = vm.ListaArquivos.indexOf(item);
+            vm.ListaArquivos.splice(posicao, 1);
+        };
+
+        vm.AbrirJanelaEdicao = function (itemFoto) {
+
+            itemFoto.ListaAtracao = [];
+            itemFoto.ListaRefeicao = [];
+            itemFoto.ListaItemCompra = [];
+            itemFoto.ListaHotel = [];
+            angular.forEach(vm.ListaAtracao, function (c) {
+                var item = jQuery.extend({}, c);
+                item.Selecionado = $.grep(itemFoto.Atracoes, function (e) { return e.IdentificadorAtracao == item.Identificador && !e.DataExclusao; }).length > 0;
+                itemFoto.ListaAtracao.push(item);
+            });
+            angular.forEach(vm.ListaRefeicao, function (c) {
+                var item = jQuery.extend({}, c);
+                item.Selecionado = $.grep(itemFoto.Refeicoes, function (e) { return e.IdentificadorRefeicao == item.Identificador && !e.DataExclusao; }).length > 0;
+                itemFoto.ListaRefeicao.push(item);
+            });
+            angular.forEach(vm.ListaItemCompra, function (c) {
+                var item = jQuery.extend({}, c);
+                item.Selecionado = $.grep(itemFoto.ItensCompra, function (e) { return e.IdentificadorItemCompra == item.Identificador && !e.DataExclusao; }).length > 0;
+                itemFoto.ListaItemCompra.push(item);
+            });
+            angular.forEach(vm.ListaHotel, function (c) {
+                var item = jQuery.extend({}, c);
+                item.Selecionado = $.grep(itemFoto.Hoteis, function (e) { return e.IdentificadorHotel == item.Identificador && !e.DataExclusao; }).length > 0;
+                itemFoto.ListaHotel.push(item);
+            });
+
+            $uibModal.open({
+                templateUrl: 'editaImagem.html',
+                controller: ['$uibModalInstance', 'item', vm.EditModalCtrl],
+                controllerAs: 'vmEdit',
+                resolve: {
+                    item: function () { return itemFoto; },
                 }
-                vm.gridApi = grid;
-                var screenSizes = $.AdminLTE.options.screenSizes;
-                vm.gridOptions.columnDefs[0].visible = $(window).width() > (screenSizes.sm - 1);
-                grid.core.on.sortChanged($scope, function (grid, sortColumns) {
-                    vm.pagingOptions.fields = [];
-                    vm.pagingOptions.directions = [];
-                    angular.forEach(sortColumns, function (c) {
-                        vm.pagingOptions.fields.push(c.field);
-                        vm.pagingOptions.directions.push(c.sort.direction);
-                    });
-                    vm.CarregarDadosWebApi(vm.pagingOptions.pageSize, vm.pagingOptions.currentPage);
+            });
+        };
+      
+
+        vm.EditModalCtrl = function ($uibModalInstance, item ) {
+            var vmEdit = this;
+            vmEdit.loading = false;
+            vmEdit.itemFoto = item;
+            vmEdit.itemFotoOriginal = jQuery.extend({}, item);
+            vmEdit.messages = [];
+            vmEdit.CamposInvalidos = {};
+
+            // console.log(itens);
+            vmEdit.close = function () {
+                vmEdit.itemFoto = vmEdit.itemFotoOriginal;
+                $uibModalInstance.close();
+            }
+            vmEdit.edit = function (idToEdit) {
+                $uibModalInstance.close();
+                $state.go('FotoEdicao', { id: idToEdit, filtro: vm.filtroAtualizacao });
+            };
+
+            vmEdit.Excluir = function () {
+                vm.askDelete(item);
+                $uibModalInstance.close();
+            };
+
+            vmEdit.Idioma = function () {
+                if (Auth && Auth.currentUser && Auth.currentUser.Cultura)
+                    return Auth.currentUser.Cultura.toLowerCase().substr(0, 2);
+                else
+                    return "pt";
+            };
+
+            vmEdit.AlterarSelecaoAtracao = function (item)
+            {
+                item.Selecionado = !item.Selecionado;
+                var itens =
+                  $.grep(vmEdit.itemFoto.Atracoes, function (e) { return e.IdentificadorAtracao == item.Identificador && !e.DataExclusao });
+                if (item.Selecionado && itens.length == 0)
+                {
+                    vmEdit.itemFoto.Atracoes.push({ IdentificadorAtracao: item.Identificador, ItemAtracao: item, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss" ) });
+                }
+                else if (!item.Selecionado && itens.length > 0)
+                {
+                    //var posicao = vmEdit.itemFoto.Atracoes.indexOf(itens[0]);
+                    //vmEdit.itemFoto.Atracoes.splice(posicao, 1);
+                    item.DataExclusao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+                }
+            };
+
+            vmEdit.AlterarSelecaoHotel = function (item)
+            {
+                item.Selecionado = !item.Selecionado;
+                var itens =
+                  $.grep(vmEdit.itemFoto.Hoteis, function (e) { return e.IdentificadorHotel == item.Identificador && !e.DataExclusao });
+                if (item.Selecionado && itens.length == 0) {
+                    vmEdit.itemFoto.Hoteis.push({ IdentificadorHotel: item.Identificador, ItemHotel: item, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss")  });
+                }
+                else if (!item.Selecionado && itens.length > 0) {
+                    //var posicao = vmEdit.itemFoto.Hoteis.indexOf(itens[0]);
+                    //vmEdit.itemFoto.Hoteis.splice(posicao, 1);
+                    item.DataExclusao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+                }
+            };
+
+            vmEdit.AlterarSelecaoRefeicao = function (item)
+            {
+                item.Selecionado = !item.Selecionado;
+                var itens =
+                  $.grep(vmEdit.itemFoto.Refeicoes, function (e) { return e.IdentificadorRefeicao == item.Identificador && !e.DataExclusao });
+                if (item.Selecionado && itens.length == 0) {
+                    vmEdit.itemFoto.Refeicoes.push({ IdentificadorRefeicao: item.Identificador, ItemRefeicao: item, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss") });
+                }
+                else if (!item.Selecionado && itens.length > 0) {
+                    //var posicao = vmEdit.itemFoto.Refeicoes.indexOf(itens[0]);
+                    //vmEdit.itemFoto.Refeicoes.splice(posicao, 1);
+                    item.DataExclusao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+                }
+            };
+
+
+            vmEdit.AlterarSelecaoItemCompra = function (item)
+            {
+                item.Selecionado = !item.Selecionado;
+                var itens =
+                 $.grep(vmEdit.itemFoto.ItensCompra, function (e) { return e.IdentificadorItemCompra == item.Identificador && !e.DataExclusao });
+                if (item.Selecionado && itens.length == 0) {
+                    vmEdit.itemFoto.ItensCompra.push({ IdentificadorItemCompra: item.Identificador, ItemItemCompra: item, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss")  });
+                }
+                else if (!item.Selecionado && itens.length > 0) {
+                    item.DataExclusao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+                    //var posicao = vmEdit.itemFoto.ItensCompra.indexOf(itens[0]);
+                    //vmEdit.itemFoto.ItensCompra.splice(posicao, 1);
+                }
+            };
+
+            vmEdit.salvar = function () {
+                if (vmEdit.itemFoto.Data) {
+                    if (typeof vmEdit.itemFoto.Data == "string") {
+                        var date = Date.parse(vmEdit.itemFoto.Data);
+                        if (!isNaN(date))
+                            vmEdit.itemFoto.Data = moment(new Date(date)).format("YYYY-MM-DDT")  ;
+                    }
+                    else
+                        vmEdit.itemFoto.Data = moment(vmEdit.itemFoto.Data).format("YYYY-MM-DDT");
+                    vmEdit.itemFoto.Data += (vmEdit.itemFoto.strHora) ? vmEdit.itemFoto.strHora : "00:00:00";
+                }
+
+                Foto.save(vmEdit.itemFoto, function (data) {
+                    vmEdit.loading = false;
+                    if (data.Sucesso) {
+                        SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'F', vmEdit.itemFoto.Identificador, false);
+
+                        $uibModalInstance.close();
+                    } else {
+                        vmEdit.messages = data.Mensagens;
+                        vmEdit.verificaCampoInvalido();
+                    }
+                }, function (err) {
+                    vmEdit.loading = false;
+                    Error.showError('error', 'Ops!', $translate.instant("ErroSalvar"), true);
                 });
-                grid.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
-                    vm.pagingOptions.currentPage = newPage;
-                    vm.CarregarDadosWebApi(pageSize, newPage);
+            };
+
+            vmEdit.verificaCampoInvalido = function () {
+                vm.CamposInvalidos = {
+
+                };
+               
+                $(vm.messages).each(function (i, item) {
+                    vm.CamposInvalidos[item.Campo] = true;
                 });
-            },
-            useExternalPagination: true,
-            useExternalSorting: true,
-            pagination: vm.pagingOptions,
-            paginationTemplate: "NewFooterTemplate.html",
-            appScopeProvider: vm,
-            totalItems: vm.totalServerItems,
-            rowTemplate: "<div on-long-press=\"grid.appScope.actionModal(row.entity, $index)\" ng-repeat=\"(colRenderIndex, col) in colContainer.renderedColumns track by col.uid\" ui-grid-one-bind-id-grid=\"rowRenderIndex + '-' + col.uid + '-cell'\" class=\"ui-grid-cell\" ng-class=\"{ 'ui-grid-row-header-cell': col.isRowHeader }\" role=\"{{col.isRowHeader ? 'rowheader' : 'gridcell'}}\" ui-grid-cell></div>" 
+            };
+
+            vmEdit.abrirMapa = function () {
+                $uibModal.open({
+                    templateUrl: 'modalMapa.html',
+                    controller: ['$uibModalInstance', 'NgMap', '$timeout','$scope', 'item', vm.MapModalCtrl],
+                    controllerAs: 'vmMapa',
+                    resolve: {
+                        item: function () { return vmEdit.itemFoto; },
+                    }
+                });
+            };
+
+        }
+
+        vm.MapModalCtrl = function ($uibModalInstance,NgMap, $timeout,$scope, item) {
+            var vmMapa = this;
+            vmMapa.lat = -23.6040963;
+            vmMapa.lng = -46.6178018;
+            vmMapa.itemEndereco = "";
+            vmMapa.itemFoto = item;
+            vmMapa.itemMarcador = {};
+            vmMapa.map = null;
+            NgMap.getMap().then(function (evtMap) {
+                vmMapa.map = evtMap;
+                $timeout(function () {
+                    google.maps.event.trigger(vmMapa.map, "resize");
+
+                    if (vmMapa.itemFoto.Latitude && vmMapa.itemFoto.Longitude) {
+                        vmMapa.lat = vmMapa.itemFoto.Latitude;
+                        vmMapa.lng = vmMapa.itemFoto.Longitude;
+                        vmMapa.itemMarcador = { Latitude: vmMapa.itemFoto.Latitude, Longitude: vmMapa.itemFoto.Longitude };
+                    }
+                    $scope.$apply();
+                },500);
+            });
+            vmMapa.close = function () {
+                $uibModalInstance.close();
+            };
+
+            vmMapa.centralizarEndereco = function () {
+                var geocoder = new google.maps.Geocoder();
+                geocoder.geocode({ 'address': vmMapa.itemEndereco }, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        vmMapa.lat = results[0].geometry.location.lat();
+                        vmMapa.lng = results[0].geometry.location.lng();
+
+                       
+                        vmMapa.map.setCenter(results[0].geometry.location);
+                    }
+                });
+            };
+
+            vmMapa.salvar = function () {
+                vmMapa.itemFoto.Latitude = vmMapa.itemMarcador.Latitude;
+                vmMapa.itemFoto.Longitude = vmMapa.itemMarcador.Longitude;
+                $uibModalInstance.close();
+
+            };
+
+            vmMapa.ajustaPosicao = function(event) {
+                var ll = event.latLng;
+                vmMapa.itemMarcador = { Latitude: ll.lat(), Longitude: ll.lng() };
+
+            };
+
+            vmMapa.limparPosicao = function () {
+                vmMapa.itemMarcador = {};
+            };
         };
 	}
 }());

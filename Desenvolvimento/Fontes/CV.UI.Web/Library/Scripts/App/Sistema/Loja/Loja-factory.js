@@ -36,7 +36,14 @@
               },
             //  transformResponse: parseArray,
               isArray: false
-          }
+          },
+          CarregarFoto: {
+              method: 'GET',
+              params: {
+                  controller: 'CarregarFoto'
+              },
+              isArray: true
+          },
          
 
       });

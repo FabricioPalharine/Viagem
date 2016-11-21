@@ -151,6 +151,10 @@
     <Compile Include="pViagemRepository.cs" />
     <Compile Include="Configuration\HotelEventoConfiguration.cs" />
     <Compile Include="Configuration\pHotelEventoConfiguration.cs" />
+    <Compile Include="Configuration\GastoAtracaoConfiguration.cs" />
+    <Compile Include="Configuration\pGastoAtracaoConfiguration.cs" />
+    <Compile Include="Configuration\GastoDivididoConfiguration.cs" />
+    <Compile Include="Configuration\pGastoDivididoConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CV.Model\CV.Model.csproj">

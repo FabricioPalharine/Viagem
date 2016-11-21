@@ -37,8 +37,31 @@
             //  transformResponse: parseArray,
               isArray: false
           }
-         
-
+         ,
+          save: {
+              method: 'POST',
+              params: {
+                  controller: 'Post'
+              }
+          },
+          SalvarCustoAtracao: {
+              method: 'POST',
+              params: {
+                  controller: 'SalvarCustoAtracao'
+              }
+          },
+          SalvarCustoRefeicao: {
+              method: 'POST',
+              params: {
+                  controller: 'SalvarCustoRefeicao'
+              }
+          },
+          SalvarCustoHotel: {
+              method: 'POST',
+              params: {
+                  controller: 'SalvarCustoHotel'
+              }
+          },
       });
     return UserBase;
   }

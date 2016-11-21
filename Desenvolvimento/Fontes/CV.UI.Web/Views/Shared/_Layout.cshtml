@@ -8,6 +8,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <script src="https://apis.google.com/js/client.js"></script>
+    <script src="https://maps.google.com/maps/api/js?key=AIzaSyAlUpOpwZWS_ZGlMAtB6lY76oy1QBWk97g&libraries=placeses,visualization,drawing,geometry,places"></script>
 
 </head>
 <body class="hold-transition skin-blue-light sidebar-mini" ng-cloak>
@@ -69,7 +70,7 @@
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li ng-repeat="viagem in account.user.ListaViagens track by viagem.Identificador" ng-show="account.user.ListaViagens">
+                                <li ng-repeat="viagem in account.user.Viagens track by viagem.Identificador" ng-show="account.user.Viagens">
                                     <a href="javascript:void(0)" ng-click="account.SelecionarViagem(viagem.Identificador)">{{viagem.Nome}}</a>
                                 </li>
                                 <li><a ui-sref="Viagem()">@TextosPaginas.Menu_EscolherOutraViagem</a></li>
@@ -86,7 +87,7 @@
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header">
-                                    <img src="{{account.user.ImageURL || trustAsResourceUrl}}" />
+                                    <img ng-src="{{account.user.ImageURL || trustAsResourceUrl}}" />
                                     <p>
                                         <span ng-bind="account.user.Nome"></span>
                                         <small><span ng-bind="account.user.Mail" /></small>

@@ -1482,70 +1482,6 @@ using(					ViagemRepository data = new ViagemRepository())
 				 }
 				 }
 			}
-			public GastoPosicao SelecionarGastoPosicao (int? Identificador)
-			{
-				 LimparValidacao();
-GastoPosicao RetornoAcao = null;
-				if (IsValid())
-				{
-using(					ViagemRepository data = new ViagemRepository())
-				 {
-					RetornoAcao = data.SelecionarGastoPosicao(Identificador);
-				}
-			}
-				return RetornoAcao;
-			}
-			public IList<GastoPosicao> ListarGastoPosicao ()
-			{
-				 LimparValidacao();
-IList<GastoPosicao> RetornoAcao = new List<GastoPosicao>();
-				if (IsValid())
-				{
-using(					ViagemRepository data = new ViagemRepository())
-				 {
-					RetornoAcao = data.ListarGastoPosicao();
-				}
-			}
-				return RetornoAcao;
-			}
-			public void SalvarGastoPosicao (GastoPosicao itemGravar)
-			{
-				 LimparValidacao();
-				 ValidateService(itemGravar);
-					ValidarRegrasNegocioGastoPosicao(itemGravar);
-				 if (IsValid())
-				 {
-					using(ViagemRepository data = new ViagemRepository())
-				 {
-					data.SalvarGastoPosicao(itemGravar);
-					Message msg = new Message();
-					msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_SalvarGastoPosicao_OK") });
-					ServiceResult resultado = new ServiceResult();
-					resultado.Success = true;
-					resultado.Messages.Add(msg);
-					serviceResult.Add(resultado);
-				 }
-				 }
-			}
-			public void ExcluirGastoPosicao (GastoPosicao itemGravar)
-			{
-				 LimparValidacao();
-				 ValidateService(itemGravar);
-					ValidarRegrasExclusaoGastoPosicao(itemGravar);
-				 if (IsValid())
-				 {
-					using(ViagemRepository data = new ViagemRepository())
-				 {
-					data.ExcluirGastoPosicao(itemGravar);
-					Message msg = new Message();
-					msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_ExcluirGastoPosicao_OK") });
-					ServiceResult resultado = new ServiceResult();
-					resultado.Success = true;
-					resultado.Messages.Add(msg);
-					serviceResult.Add(resultado);
-				 }
-				 }
-			}
 			public GastoRefeicao SelecionarGastoRefeicao (int? Identificador)
 			{
 				 LimparValidacao();
@@ -2966,6 +2902,294 @@ using(					ViagemRepository data = new ViagemRepository())
 					data.SalvarViagem_Completa(itemGravar);
 					Message msg = new Message();
 					msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_SalvarViagem_Completa_OK") });
+					ServiceResult resultado = new ServiceResult();
+					resultado.Success = true;
+					resultado.Messages.Add(msg);
+					serviceResult.Add(resultado);
+				 }
+				 }
+			}
+			public Foto SelecionarFoto_Completa (int? Identificador)
+			{
+				 LimparValidacao();
+Foto RetornoAcao = null;
+				if (IsValid())
+				{
+using(					ViagemRepository data = new ViagemRepository())
+				 {
+					RetornoAcao = data.SelecionarFoto_Completa(Identificador);
+				}
+			}
+				return RetornoAcao;
+			}
+			public void SalvarFoto_Completa (Foto itemGravar)
+			{
+				 LimparValidacao();
+				 ValidateService(itemGravar);
+					ValidarRegrasNegocioFoto(itemGravar);
+				 if (IsValid())
+				 {
+					using(ViagemRepository data = new ViagemRepository())
+				 {
+					data.SalvarFoto_Completa(itemGravar);
+					Message msg = new Message();
+					msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_SalvarFoto_Completa_OK") });
+					ServiceResult resultado = new ServiceResult();
+					resultado.Success = true;
+					resultado.Messages.Add(msg);
+					serviceResult.Add(resultado);
+				 }
+				 }
+			}
+			public void SalvarAtracao_Completo (Atracao itemGravar)
+			{
+				 LimparValidacao();
+				 ValidateService(itemGravar);
+					ValidarRegrasNegocioAtracao(itemGravar);
+				 if (IsValid())
+				 {
+					using(ViagemRepository data = new ViagemRepository())
+				 {
+					data.SalvarAtracao_Completo(itemGravar);
+					Message msg = new Message();
+					msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_SalvarAtracao_Completo_OK") });
+					ServiceResult resultado = new ServiceResult();
+					resultado.Success = true;
+					resultado.Messages.Add(msg);
+					serviceResult.Add(resultado);
+				 }
+				 }
+			}
+			public Atracao SelecionarAtracao_Completo (int? Identificador)
+			{
+				 LimparValidacao();
+Atracao RetornoAcao = null;
+				if (IsValid())
+				{
+using(					ViagemRepository data = new ViagemRepository())
+				 {
+					RetornoAcao = data.SelecionarAtracao_Completo(Identificador);
+				}
+			}
+				return RetornoAcao;
+			}
+			public GastoAtracao SelecionarGastoAtracao (int? Identificador)
+			{
+				 LimparValidacao();
+GastoAtracao RetornoAcao = null;
+				if (IsValid())
+				{
+using(					ViagemRepository data = new ViagemRepository())
+				 {
+					RetornoAcao = data.SelecionarGastoAtracao(Identificador);
+				}
+			}
+				return RetornoAcao;
+			}
+			public IList<GastoAtracao> ListarGastoAtracao ()
+			{
+				 LimparValidacao();
+IList<GastoAtracao> RetornoAcao = new List<GastoAtracao>();
+				if (IsValid())
+				{
+using(					ViagemRepository data = new ViagemRepository())
+				 {
+					RetornoAcao = data.ListarGastoAtracao();
+				}
+			}
+				return RetornoAcao;
+			}
+			public void SalvarGastoAtracao (GastoAtracao itemGravar)
+			{
+				 LimparValidacao();
+				 ValidateService(itemGravar);
+					ValidarRegrasNegocioGastoAtracao(itemGravar);
+				 if (IsValid())
+				 {
+					using(ViagemRepository data = new ViagemRepository())
+				 {
+					data.SalvarGastoAtracao(itemGravar);
+					Message msg = new Message();
+					msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_SalvarGastoAtracao_OK") });
+					ServiceResult resultado = new ServiceResult();
+					resultado.Success = true;
+					resultado.Messages.Add(msg);
+					serviceResult.Add(resultado);
+				 }
+				 }
+			}
+			public void ExcluirGastoAtracao (GastoAtracao itemGravar)
+			{
+				 LimparValidacao();
+				 ValidateService(itemGravar);
+					ValidarRegrasExclusaoGastoAtracao(itemGravar);
+				 if (IsValid())
+				 {
+					using(ViagemRepository data = new ViagemRepository())
+				 {
+					data.ExcluirGastoAtracao(itemGravar);
+					Message msg = new Message();
+					msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_ExcluirGastoAtracao_OK") });
+					ServiceResult resultado = new ServiceResult();
+					resultado.Success = true;
+					resultado.Messages.Add(msg);
+					serviceResult.Add(resultado);
+				 }
+				 }
+			}
+			public GastoDividido SelecionarGastoDividido (int? Identificador)
+			{
+				 LimparValidacao();
+GastoDividido RetornoAcao = null;
+				if (IsValid())
+				{
+using(					ViagemRepository data = new ViagemRepository())
+				 {
+					RetornoAcao = data.SelecionarGastoDividido(Identificador);
+				}
+			}
+				return RetornoAcao;
+			}
+			public IList<GastoDividido> ListarGastoDividido ()
+			{
+				 LimparValidacao();
+IList<GastoDividido> RetornoAcao = new List<GastoDividido>();
+				if (IsValid())
+				{
+using(					ViagemRepository data = new ViagemRepository())
+				 {
+					RetornoAcao = data.ListarGastoDividido();
+				}
+			}
+				return RetornoAcao;
+			}
+			public void SalvarGastoDividido (GastoDividido itemGravar)
+			{
+				 LimparValidacao();
+				 ValidateService(itemGravar);
+					ValidarRegrasNegocioGastoDividido(itemGravar);
+				 if (IsValid())
+				 {
+					using(ViagemRepository data = new ViagemRepository())
+				 {
+					data.SalvarGastoDividido(itemGravar);
+					Message msg = new Message();
+					msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_SalvarGastoDividido_OK") });
+					ServiceResult resultado = new ServiceResult();
+					resultado.Success = true;
+					resultado.Messages.Add(msg);
+					serviceResult.Add(resultado);
+				 }
+				 }
+			}
+			public void ExcluirGastoDividido (GastoDividido itemGravar)
+			{
+				 LimparValidacao();
+				 ValidateService(itemGravar);
+					ValidarRegrasExclusaoGastoDividido(itemGravar);
+				 if (IsValid())
+				 {
+					using(ViagemRepository data = new ViagemRepository())
+				 {
+					data.ExcluirGastoDividido(itemGravar);
+					Message msg = new Message();
+					msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_ExcluirGastoDividido_OK") });
+					ServiceResult resultado = new ServiceResult();
+					resultado.Success = true;
+					resultado.Messages.Add(msg);
+					serviceResult.Add(resultado);
+				 }
+				 }
+			}
+			public void SalvarGasto_Completo (Gasto itemGravar)
+			{
+				 LimparValidacao();
+				 ValidateService(itemGravar);
+					ValidarRegrasNegocioGasto(itemGravar);
+				 if (IsValid())
+				 {
+					using(ViagemRepository data = new ViagemRepository())
+				 {
+					data.SalvarGasto_Completo(itemGravar);
+					Message msg = new Message();
+					msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_SalvarGasto_Completo_OK") });
+					ServiceResult resultado = new ServiceResult();
+					resultado.Success = true;
+					resultado.Messages.Add(msg);
+					serviceResult.Add(resultado);
+				 }
+				 }
+			}
+			public Gasto SelecionarGasto_Completo (int? Identificador)
+			{
+				 LimparValidacao();
+Gasto RetornoAcao = null;
+				if (IsValid())
+				{
+using(					ViagemRepository data = new ViagemRepository())
+				 {
+					RetornoAcao = data.SelecionarGasto_Completo(Identificador);
+				}
+			}
+				return RetornoAcao;
+			}
+			public Refeicao SelecionarRefeicao_Completa (int? Identificador)
+			{
+				 LimparValidacao();
+Refeicao RetornoAcao = null;
+				if (IsValid())
+				{
+using(					ViagemRepository data = new ViagemRepository())
+				 {
+					RetornoAcao = data.SelecionarRefeicao_Completa(Identificador);
+				}
+			}
+				return RetornoAcao;
+			}
+			public void SalvarRefeicao_Completo (Refeicao itemGravar)
+			{
+				 LimparValidacao();
+				 ValidateService(itemGravar);
+					ValidarRegrasNegocioRefeicao(itemGravar);
+				 if (IsValid())
+				 {
+					using(ViagemRepository data = new ViagemRepository())
+				 {
+					data.SalvarRefeicao_Completo(itemGravar);
+					Message msg = new Message();
+					msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_SalvarRefeicao_Completo_OK") });
+					ServiceResult resultado = new ServiceResult();
+					resultado.Success = true;
+					resultado.Messages.Add(msg);
+					serviceResult.Add(resultado);
+				 }
+				 }
+			}
+			public Hotel SelecionarHotel_Completo (int? Identificador)
+			{
+				 LimparValidacao();
+Hotel RetornoAcao = null;
+				if (IsValid())
+				{
+using(					ViagemRepository data = new ViagemRepository())
+				 {
+					RetornoAcao = data.SelecionarHotel_Completo(Identificador);
+				}
+			}
+				return RetornoAcao;
+			}
+			public void SalvarHotel_Completo (Hotel itemGravar)
+			{
+				 LimparValidacao();
+				 ValidateService(itemGravar);
+					ValidarRegrasNegocioHotel(itemGravar);
+				 if (IsValid())
+				 {
+					using(ViagemRepository data = new ViagemRepository())
+				 {
+					data.SalvarHotel_Completo(itemGravar);
+					Message msg = new Message();
+					msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_SalvarHotel_Completo_OK") });
 					ServiceResult resultado = new ServiceResult();
 					resultado.Success = true;
 					resultado.Messages.Add(msg);

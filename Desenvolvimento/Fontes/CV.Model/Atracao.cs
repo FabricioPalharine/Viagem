@@ -19,7 +19,6 @@ namespace CV.Model
 
 			public int? IdentificadorAtracaoPai { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="Atracao_IdentificadorViagem",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public int? IdentificadorViagem { get; set; }
 
 			[NotNullValidator(MessageTemplateResourceName="Atracao_IdentificadorCidade",MessageTemplateResourceType=typeof(MensagemModelo))]
@@ -43,20 +42,16 @@ private void ValidarNome(Microsoft.Practices.EnterpriseLibrary.Validation.Valida
   }
 }
 
-			[StringLengthValidator(50,MessageTemplateResourceName="Atracao_CodigoPlace_Tamanho",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public string CodigoPlace { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="Atracao_Latitude",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public decimal? Latitude { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="Atracao_Longitude",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public decimal? Longitude { get; set; }
 
 			public DateTime? Chegada { get; set; }
 
 			public DateTime? Partida { get; set; }
 
-			[StringLengthValidator(50,MessageTemplateResourceName="Atracao_Tipo_Tamanho",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public string Tipo { get; set; }
 
 			public IList<Atracao> Atracoes { get; set; }
@@ -74,6 +69,8 @@ private void ValidarNome(Microsoft.Practices.EnterpriseLibrary.Validation.Valida
 			public DateTime? DataAtualizacao { get; set; }
 
 			public DateTime? DataExclusao { get; set; }
+
+			public IList<GastoAtracao> Gastos { get; set; }
 		 public Atracao Clone()
 		{
 			 return (Atracao) this.MemberwiseClone();
