@@ -105,7 +105,7 @@
 			vm.messages = [];
 			vm.submitted = true;
 			vm.CamposInvalidos = {};
-			
+			vm.loading = true;
 				
 				if(vm.itemUsuario!== null && vm.itemUsuario.Identificador)
 					vm.itemGasto.IdentificadorUsuario= vm.itemUsuario.Identificador;

@@ -558,4 +558,7 @@
   <data name="Viagem_SalvarViagemAerea_Completa_OK" xml:space="preserve">
     <value>Gravação de ViagemAerea foi realizada com sucesso</value>
   </data>
+  <data name="Viagem_SalvarCarro_Completo_OK" xml:space="preserve">
+    <value>Gravação de Carro foi realizada com sucesso</value>
+  </data>
 </root>

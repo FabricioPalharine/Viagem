@@ -493,6 +493,15 @@ namespace CV.Model.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O campo Descrição é obrigatório.
+        /// </summary>
+        public static string Carro_Descricao {
+            get {
+                return ResourceManager.GetString("Carro_Descricao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O campo Identificador é obrigatório.
         /// </summary>
         public static string Carro_Identificador {
@@ -579,6 +588,15 @@ namespace CV.Model.Resource {
         public static string CarroEvento_IdentificadorCidade {
             get {
                 return ResourceManager.GetString("CarroEvento_IdentificadorCidade", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo Inicio é obrigatório.
+        /// </summary>
+        public static string CarroEvento_Inicio {
+            get {
+                return ResourceManager.GetString("CarroEvento_Inicio", resourceCulture);
             }
         }
         
@@ -1902,6 +1920,15 @@ namespace CV.Model.Resource {
         public static string Posicao_Longitude {
             get {
                 return ResourceManager.GetString("Posicao_Longitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo Data é obrigatório.
+        /// </summary>
+        public static string Reabastecimento_Data {
+            get {
+                return ResourceManager.GetString("Reabastecimento_Data", resourceCulture);
             }
         }
         

@@ -542,5 +542,46 @@ namespace CV.Data
             return query.ToList();
         }
 
+        public List<Carro> ListarCarro(int IdentificadorViagem,string Locadora, string Descricao, string Modelo,
+             DateTime? DataRetiradaDe, DateTime? DataRetiradaAte,      DateTime? DataDevolucaoDe, DateTime? DataDevolucaoAte, int? IdentificadorCarro)
+        {
+            IQueryable<Carro> query = this.Context.Carros;
+            //.Include("ItemAtracaoPai").Include("Fotos.ItemFoto")
+            //    .Include("Gastos").Include("Gastos.ItemGasto").Include("Gastos.ItemGasto.ItemUsuario")
+            //    .Include("Avaliacoes");
+            if (IdentificadorCarro.HasValue)
+                query = query.Where(d => d.Identificador == IdentificadorCarro);
+            query = query.Where(d => d.IdentificadorViagem == IdentificadorViagem);
+            query = query.Where(d => !d.DataExclusao.HasValue);
+            if (!string.IsNullOrEmpty(Locadora))
+                query = query.Where(d => d.Alugado.Value && d.Locadora.Contains(Locadora));
+            if (!string.IsNullOrEmpty(Modelo))
+                query = query.Where(d => d.Modelo.Contains(Modelo));
+            if (!string.IsNullOrEmpty(Descricao))
+                query = query.Where(d => d.Descricao.Contains(Descricao));
+
+            if (DataRetiradaDe.HasValue)
+                query = query.Where(d => d.DataRetirada >= DataRetiradaDe);
+            if (DataRetiradaAte.HasValue)
+            {
+                DataRetiradaAte = DataRetiradaAte.GetValueOrDefault().AddDays(1);
+                query = query.Where(d => d.DataRetirada < DataRetiradaAte);
+            }
+
+            if (DataDevolucaoDe.HasValue)
+                query = query.Where(d => d.DataDevolucao >= DataDevolucaoDe);
+            if (DataDevolucaoAte.HasValue)
+            {
+                DataDevolucaoAte = DataDevolucaoAte.GetValueOrDefault().AddDays(1);
+                query = query.Where(d => d.DataDevolucao < DataDevolucaoAte);
+            }
+
+            query = query.OrderByDescending(d => d.DataRetirada);
+
+
+
+            return query.ToList();
+        }
+
     }
 }

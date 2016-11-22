@@ -984,4 +984,13 @@
   <data name="ViagemAerea_Tipo" xml:space="preserve">
     <value>O campo Tipo é obrigatório</value>
   </data>
+  <data name="Reabastecimento_Data" xml:space="preserve">
+    <value>O campo Data é obrigatório</value>
+  </data>
+  <data name="CarroEvento_Inicio" xml:space="preserve">
+    <value>O campo Inicio é obrigatório</value>
+  </data>
+  <data name="Carro_Descricao" xml:space="preserve">
+    <value>O campo Descrição é obrigatório</value>
+  </data>
 </root>

@@ -59,6 +59,7 @@
 		vm.save = function () {
 		    vm.messages = [];
 		    vm.submitted = true;
+		    vm.loading = true;
 		    vm.CamposInvalidos = {};
 		    {
 		        if (vm.itemHotel.EntradaPrevista) {

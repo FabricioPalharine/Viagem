@@ -709,11 +709,29 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adicionar Reabastecimento.
+        /// </summary>
+        public static string Carro_AdicionaReabastecimento {
+            get {
+                return ResourceManager.GetString("Carro_AdicionaReabastecimento", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Alugado.
         /// </summary>
         public static string Carro_Alugado {
             get {
                 return ResourceManager.GetString("Carro_Alugado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data.
+        /// </summary>
+        public static string Carro_Data {
+            get {
+                return ResourceManager.GetString("Carro_Data", resourceCulture);
             }
         }
         
@@ -727,11 +745,83 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data Devolução Prevista.
+        /// </summary>
+        public static string Carro_DataDevolucao {
+            get {
+                return ResourceManager.GetString("Carro_DataDevolucao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data Devolução Até.
+        /// </summary>
+        public static string Carro_DataDevolucaoAte {
+            get {
+                return ResourceManager.GetString("Carro_DataDevolucaoAte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data Devolução De.
+        /// </summary>
+        public static string Carro_DataDevolucaoDe {
+            get {
+                return ResourceManager.GetString("Carro_DataDevolucaoDe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data Exclusão.
         /// </summary>
         public static string Carro_DataExclusao {
             get {
                 return ResourceManager.GetString("Carro_DataExclusao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data de Retirada Prevista.
+        /// </summary>
+        public static string Carro_DataRetirada {
+            get {
+                return ResourceManager.GetString("Carro_DataRetirada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data Retirada Até.
+        /// </summary>
+        public static string Carro_DataRetiradaAte {
+            get {
+                return ResourceManager.GetString("Carro_DataRetiradaAte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data Retirada De.
+        /// </summary>
+        public static string Carro_DataRetiradaDe {
+            get {
+                return ResourceManager.GetString("Carro_DataRetiradaDe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Descrição.
+        /// </summary>
+        public static string Carro_Descricao {
+            get {
+                return ResourceManager.GetString("Carro_Descricao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fim.
+        /// </summary>
+        public static string Carro_Devolucao {
+            get {
+                return ResourceManager.GetString("Carro_Devolucao", resourceCulture);
             }
         }
         
@@ -745,7 +835,7 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to KM.
+        ///   Looks up a localized string similar to Medida de Velocidade.
         /// </summary>
         public static string Carro_KM {
             get {
@@ -777,6 +867,51 @@ namespace CV.UI.Web.Resources {
         public static string Carro_Modelo {
             get {
                 return ResourceManager.GetString("Carro_Modelo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Carro Ocupantes.
+        /// </summary>
+        public static string Carro_Ocupantes {
+            get {
+                return ResourceManager.GetString("Carro_Ocupantes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Odômetro.
+        /// </summary>
+        public static string Carro_Odometro {
+            get {
+                return ResourceManager.GetString("Carro_Odometro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Odômetro Final.
+        /// </summary>
+        public static string Carro_OdometroFinal {
+            get {
+                return ResourceManager.GetString("Carro_OdometroFinal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OdômetroInicial.
+        /// </summary>
+        public static string Carro_OdometroInicial {
+            get {
+                return ResourceManager.GetString("Carro_OdometroInicial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Início.
+        /// </summary>
+        public static string Carro_Retirada {
+            get {
+                return ResourceManager.GetString("Carro_Retirada", resourceCulture);
             }
         }
         
@@ -1452,6 +1587,24 @@ namespace CV.UI.Web.Resources {
         public static string Gasto_Valor {
             get {
                 return ResourceManager.GetString("Gasto_Valor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quilômetros.
+        /// </summary>
+        public static string Geral_KM {
+            get {
+                return ResourceManager.GetString("Geral_KM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Milhas.
+        /// </summary>
+        public static string Geral_MI {
+            get {
+                return ResourceManager.GetString("Geral_MI", resourceCulture);
             }
         }
         
@@ -2401,6 +2554,15 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data.
+        /// </summary>
+        public static string Reabastecimento_Data {
+            get {
+                return ResourceManager.GetString("Reabastecimento_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data Atualização.
         /// </summary>
         public static string Reabastecimento_DataAtualizacao {
@@ -2478,6 +2640,15 @@ namespace CV.UI.Web.Resources {
         public static string Reabastecimento_QuantidadeReabastecida {
             get {
                 return ResourceManager.GetString("Reabastecimento_QuantidadeReabastecida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Valor.
+        /// </summary>
+        public static string Reabastecimento_Valor {
+            get {
+                return ResourceManager.GetString("Reabastecimento_Valor", resourceCulture);
             }
         }
         

@@ -61,9 +61,7 @@
 		                }).length > 0;
 		                vm.ListaParticipante.push(item);
 		            });
-		            vm.VisitaIniciada = itemBase.DataEntrada != null;
-		            vm.VisitaConcluida = itemBase.DataSaidia != null;
-		            vm.RecarregarFotos();
+
 		            vm.loading = false;
 		        });
 
@@ -77,15 +75,15 @@
 
 		vm.ExcluirEscala = function (itemEscala) {
 		    $scope.$parent.itemViagemAerea.modalPopupTrigger(itemEscala, $translate.instant('MensagemExclusao'), $translate.instant('Sim'), $translate.instant('Nao'), function () {
-		        itemEscala.DataExclusao = moment(Date()).format("YYYY-MM-DDTHH:mm:ss");
+		        itemEscala.DataExclusao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
 		    });
 		};
 
 		vm.AjustarHoraChegada = function (itemEscala) {
 		    if (itemEscala.ChegadaPonto)
 		    {
-		        itemEscala.DataChegada = moment(Date()).format("YYYY-MM-DDTHH:mm:ss");
-		        itemEscala.strHoraChegada = moment(Date()).format("HH:mm:ss");
+		        itemEscala.DataChegada = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+		        itemEscala.strHoraChegada = moment(new Date()).format("HH:mm:ss");
 		    }
 		    else
 		    {
@@ -96,8 +94,8 @@
 
 		vm.AjustarHoraPartida = function (itemEscala) {
 		    if (itemEscala.PartidaPonto) {
-		        itemEscala.DataPartida = moment(Date()).format("YYYY-MM-DDTHH:mm:ss");
-		        itemEscala.strHoraPartida = moment(Date()).format("HH:mm:ss");
+		        itemEscala.DataPartida = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+		        itemEscala.strHoraPartida = moment(new Date()).format("HH:mm:ss");
 		    }
 		    else {
 		        itemEscala.DataPartida = itemEscala.strHoraPartida = null;
@@ -108,6 +106,7 @@
 		vm.save = function () {
 		    vm.messages = [];
 		    vm.submitted = true;
+		    vm.loading = true;
 		    vm.CamposInvalidos = {};
 		    {
 		        if (vm.itemViagemAerea.DataPrevista) {
@@ -133,8 +132,7 @@
 		                vm.itemViagemAerea.Avaliacoes.push(NovoItem);
 		            }
 		            else if (!item.Selecionado && itens.length > 0) {
-		                //var posicao = vmEdit.itemFoto.Hoteis.indexOf(itens[0]);
-		                //vmEdit.itemFoto.Hoteis.splice(posicao, 1);
+
 		                item.DataExclusao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
 		            }
 
@@ -145,7 +143,7 @@
 		      
 		        angular.forEach(vm.itemViagemAerea.Gastos, function (item) {
 		            if (item.ItemGasto != null)
-		                item.ItemGasto.Hoteis = null;
+		                item.ItemGasto.ViagenAereas = null;
 		        });
 
 		        var possuiPontoSemNome = false;
@@ -193,7 +191,8 @@
 		      
 		        if (possuiPontoSemNome) {
 		            vm.messages = [];
-		            vm.messages.push({ Mensagem: $translate.instant("ViagemAerea_AeroportoObrigatorio") })
+		            vm.messages.push({ Mensagem: $translate.instant("ViagemAerea_AeroportoObrigatorio") });
+		            vm.loading = false;
 		        }
 		        else {
 		            ViagemAerea.save(vm.itemViagemAerea, function (data) {
@@ -269,42 +268,9 @@
 		        });
 		    }
 
-
-
-
 		};
 
-		vm.AjustarHoraChegada = function () {
-		    if (vm.VisitaIniciada) {
-		        vm.itemViagemAerea.DataEntrada = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
-		        vm.itemViagemAerea.strHoraEntrada = moment(new Date()).format("HH:mm:ss");
-		        angular.forEach(vm.ListaParticipante, function (item) {
-		            item.Selecionado = true;
-		        });
-		    }
-		    else {
-		        vm.itemViagemAerea.DataEntrada = null;
-		        vm.itemViagemAerea.strHoraEntrada = moment(new Date()).format("HH:mm:ss");
 
-		        vm.itemViagemAerea.DataSaidia = vm.itemViagemAerea.strHoraSaida = null;
-		        vm.VisitaConcluida = false;
-		        angular.forEach(vm.ListaParticipante, function (item) {
-		            item.Selecionado = false;
-		        });
-		    }
-		};
-
-		vm.AjustarHoraPartida = function () {
-		    if (vm.VisitaConcluida) {
-		        vm.itemViagemAerea.DataSaidia = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
-		        vm.itemViagemAerea.strHoraSaida = moment(new Date()).format("HH:mm:ss");
-
-		    }
-		    else {
-		        vm.itemViagemAerea.DataSaidia = vm.itemViagemAerea.strHoraSaida = null;
-
-		    }
-		};
 
 		vm.VerificarParticipoViagemAerea = function () {
 		    return $.grep(vm.ListaParticipante, function (e) {
@@ -323,7 +289,7 @@
 
 
 		vm.AtualizarGasto = function (itemGasto, itemOriginal) {
-		    var itemPush = itemGasto.Hoteis[0];
+		    var itemPush = itemGasto.ViagenAereas[0];
 		    itemPush.ItemGasto = itemGasto;
 		    vm.itemViagemAerea.Gastos.push(itemPush);
 		    SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'G', itemGasto.Identificador, true);

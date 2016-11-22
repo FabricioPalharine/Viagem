@@ -439,7 +439,7 @@
     <value>Modelo</value>
   </data>
   <data name="Carro_KM" xml:space="preserve">
-    <value>KM</value>
+    <value>Medida de Velocidade</value>
   </data>
   <data name="Carro_Alugado" xml:space="preserve">
     <value>Alugado</value>
@@ -1233,4 +1233,62 @@
   <data name="ViagemAerea_Partida" xml:space="preserve">
     <value>Partida Aeroporto/Porto/Estação</value>
   </data>
+  <data name="Reabastecimento_Data" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="Carro_OdometroInicial" xml:space="preserve">
+    <value>OdômetroInicial</value>
+  </data>
+  <data name="Carro_OdometroFinal" xml:space="preserve">
+    <value>Odômetro Final</value>
+  </data>
+  <data name="Carro_DataRetirada" xml:space="preserve">
+    <value>Data de Retirada Prevista</value>
+  </data>
+  <data name="Carro_DataDevolucao" xml:space="preserve">
+    <value>Data Devolução Prevista</value>
+  </data>
+  <data name="Carro_Descricao" xml:space="preserve">
+    <value>Descrição</value>
+  </data>
+  <data name="Carro_DataRetiradaDe" xml:space="preserve">
+    <value>Data Retirada De</value>
+  </data>
+  <data name="Carro_DataRetiradaAte" xml:space="preserve">
+    <value>Data Retirada Até</value>
+  </data>
+<data name="Carro_DataDevolucaoDe" xml:space="preserve">
+    <value>Data Devolução De</value>
+  </data>
+<data name="Carro_DataDevolucaoAte" xml:space="preserve">
+    <value>Data Devolução Até</value>
+  </data>
+<data name="Carro_Ocupantes" xml:space="preserve">
+    <value>Carro Ocupantes</value>
+  </data>
+<data name="Geral_KM" xml:space="preserve">
+    <value>Quilômetros</value>
+  </data>
+<data name="Geral_MI" xml:space="preserve">
+    <value>Milhas</value>
+  </data>
+<data name="Carro_Retirada" xml:space="preserve">
+    <value>Início</value>
+  </data>
+<data name="Carro_Devolucao" xml:space="preserve">
+    <value>Fim</value>
+  </data>
+<data name="Carro_Data" xml:space="preserve">
+    <value>Data</value>
+  </data>
+<data name="Carro_Odometro" xml:space="preserve">
+    <value>Odômetro</value>
+  </data>
+<data name="Reabastecimento_Valor" xml:space="preserve">
+    <value>Valor</value>
+  </data>
+  <data name="Carro_AdicionaReabastecimento" xml:space="preserve">
+    <value>Adicionar Reabastecimento</value>
+  </data>
+
 </root>

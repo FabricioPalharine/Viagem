@@ -21,3 +21,7 @@ D:\Desenvolvimento\Fabricio\Viagem\Desenvolvimento\Fontes\CV.Database\bin\Debug\
 D:\Desenvolvimento\Fabricio\Viagem\Desenvolvimento\Fontes\CV.Database\bin\Debug\CV.Database.pdb
 D:\Desenvolvimento\Fabricio\Viagem\Desenvolvimento\Fontes\CV.Database\obj\Debug\CV.Database.dll
 D:\Desenvolvimento\Fabricio\Viagem\Desenvolvimento\Fontes\CV.Database\obj\Debug\CV.Database.pdb
+D:\Desenvolvimento\Fabricio\Viagem\Desenvolvimento\Fontes\CV.Database\obj\Debug\Model.xml
+D:\Desenvolvimento\Fabricio\Viagem\Desenvolvimento\Fontes\CV.Database\obj\Debug\refactor.xml
+D:\Desenvolvimento\Fabricio\Viagem\Desenvolvimento\Fontes\CV.Database\obj\Debug\postdeploy.sql
+D:\Desenvolvimento\Fabricio\Viagem\Desenvolvimento\Fontes\CV.Database\obj\Debug\predeploy.sql

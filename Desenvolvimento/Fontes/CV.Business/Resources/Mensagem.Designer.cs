@@ -981,6 +981,15 @@ namespace CV.Business.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Gravação de Carro foi realizada com sucesso.
         /// </summary>
+        public static string Viagem_SalvarCarro_Completo_OK {
+            get {
+                return ResourceManager.GetString("Viagem_SalvarCarro_Completo_OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gravação de Carro foi realizada com sucesso.
+        /// </summary>
         public static string Viagem_SalvarCarro_OK {
             get {
                 return ResourceManager.GetString("Viagem_SalvarCarro_OK", resourceCulture);

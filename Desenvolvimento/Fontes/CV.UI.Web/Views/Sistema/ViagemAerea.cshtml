@@ -41,7 +41,7 @@
                             <option value="">@TextosPaginas.Selecione</option>
                         </select>
                     </div>
-                    
+
                     <div class="form-group col-md-3">
                         <label>@TextosPaginas.Foto_DataDe</label>
                         <div class="dropdown">
@@ -93,7 +93,7 @@
                         </select>
                     </div>
 
-                     <div class="form-group col-md-6">
+                    <div class="form-group col-md-6">
                         <label>@TextosPaginas.Atracao_Situacao</label>
 
                         <div class="form-inline">
@@ -188,13 +188,13 @@
                 </div>
 
                 <div class="row">
-                   
+
                     <div class="col-md-6 " ng-class="{ 'has-error':itemViagemAereaEdit.CamposInvalidos.CompanhiaAerea}">
                         <label>@TextosPaginas.ViagemAerea_CompanhiaAerea</label>
                         <input type="text" class="form-control" ng-model="itemEdit.itemViagemAerea.CompanhiaAerea" maxlength="50" empty-to-null>
                     </div>
 
-                    <div class="col-md-6" ng-class="{ 'has-error':itemViagemAereaEdit.CamposInvalidos.Tipo}">
+                    <div class="col-md-3" ng-class="{ 'has-error':itemViagemAereaEdit.CamposInvalidos.Tipo}">
                         <label>@TextosPaginas.ViagemAerea_Tipo</label>
                         <select ng-model="itemEdit.itemTipoViagem" class="form-control" ng-options="obj.Descricao for obj in itemViagemAerea.ListaTipo track by obj.Codigo">
                             <option value="">@TextosPaginas.Selecione</option>
@@ -202,7 +202,7 @@
 
                     </div>
 
-                    <div class="col-md-6" ng-class="{ 'has-error':itemViagemAereaEdit.CamposInvalidos.DataPrevista}">
+                    <div class="col-md-3" ng-class="{ 'has-error':itemViagemAereaEdit.CamposInvalidos.DataPrevista}">
                         <label>@TextosPaginas.ViagemAerea_DataPrevista</label>
                         <div class="dropdown">
                             <a class="dropdown-toggle" role="button" data-toggle="dropdown">
@@ -238,7 +238,7 @@
                         </a>
                     </div>
                     <div class="col-md-2 col-xs-6">
-                            <label>@TextosPaginas.ViagemAerea_Chegada</label>
+                        <label>@TextosPaginas.ViagemAerea_Chegada</label>
                         <input type="checkbox" ng-model="itemEdit.itemPontoOrigem.ChegadaPonto" ng-click="itemEdit.AjustarHoraChegada(itemEdit.itemPontoOrigem);" class="checkbox">
                     </div>
                     <div class="col-md-2  col-xs-6" ng-if="itemEdit.itemPontoOrigem.ChegadaPonto">
@@ -260,7 +260,7 @@
                             </a>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                                 <datetimepicker data-ng-model="itemEdit.itemPontoOrigem.DataChegada"
-                                                data-datetimepicker-config="{  minView:'day' , langCode:temViagemAerea.Idioma()   }" />
+                                                data-datetimepicker-config="{  minView:'day' , langCode:itemViagemAerea.Idioma()   }" />
                             </ul>
                         </div>
                     </div>
@@ -295,7 +295,7 @@
                     </div>
 
                 </div>
-                
+
                 <div class="row">
                     <div class="col-md-12">
                         <h3>@TextosPaginas.ViagemAerea_Destino</h3>
@@ -383,88 +383,88 @@
                         </a>
                     </div>
                 </div>
-                    <div class="row" ng-repeat="itemEscala in itemEdit.itemViagemAerea.Aeroportos" ng-if="itemEscala.TipoPonto==3 && !itemEscala.DataExclusao">
-                        <div class="col-xs-12">
-                            <div class="box">
-                                <div class="box-body">
-                                    <div class="row">
-                                        <div class="col-md-6 col-xs-6" ng-class="{ 'has-error':itemEscala.CamposInvalidos.Aeroporto}">
+                <div class="row" ng-repeat="itemEscala in itemEdit.itemViagemAerea.Aeroportos" ng-if="itemEscala.TipoPonto==3 && !itemEscala.DataExclusao">
+                    <div class="col-xs-12">
+                        <div class="box">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-6 col-xs-6" ng-class="{ 'has-error':itemEscala.CamposInvalidos.Aeroporto}">
 
-                                            <label>@TextosPaginas.ViagemAerea_Aeroporto</label>
-                                            <input type="text" class="form-control" ng-model="itemEscala.Aeroporto" maxlength="100" empty-to-null ng-if="!itemEscala.Latitude || !itemEscala.Longitude">
-                                            <input ng-if="itemEscala.Latitude && itemEscala.Longitude" type="text" ng-model="itemEscala.Aeroporto" uib-typeahead="address.name for address in itemEdit.CarregarDadosGoogleApi($viewValue,itemEscala) " typeahead-loading="itemEdit.loadingLocations" class="form-control" typeahead-on-select="itemEdit.SelecionarPlacesGoogle($item, $model, $label,itemEscala)">
+                                        <label>@TextosPaginas.ViagemAerea_Aeroporto</label>
+                                        <input type="text" class="form-control" ng-model="itemEscala.Aeroporto" maxlength="100" empty-to-null ng-if="!itemEscala.Latitude || !itemEscala.Longitude">
+                                        <input ng-if="itemEscala.Latitude && itemEscala.Longitude" type="text" ng-model="itemEscala.Aeroporto" uib-typeahead="address.name for address in itemEdit.CarregarDadosGoogleApi($viewValue,itemEscala) " typeahead-loading="itemEdit.loadingLocations" class="form-control" typeahead-on-select="itemEdit.SelecionarPlacesGoogle($item, $model, $label,itemEscala)">
 
-                                        </div>
-                                        <div class="col-md-2 col-xs-6">
-                                            <br />
-                                            <a role="button" class="btn btn-primary" title="@TextosPaginas.Posicao" ng-click="itemEdit.SelecionarPosicao(itemEscala)">
-                                                <span class="fa fa-map-marker" aria-hidden="true"></span>
+                                    </div>
+                                    <div class="col-md-2 col-xs-6">
+                                        <br />
+                                        <a role="button" class="btn btn-primary" title="@TextosPaginas.Posicao" ng-click="itemEdit.SelecionarPosicao(itemEscala)">
+                                            <span class="fa fa-map-marker" aria-hidden="true"></span>
+                                        </a>
+                                        <a role="button" class="btn btn-danger" title="@TextosPaginas.Excluir" ng-click="itemEdit.ExcluirEscala(itemEscala)">
+                                            <span class="fa fa-trash" aria-hidden="true"></span>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-2 col-xs-6">
+                                        <label>@TextosPaginas.ViagemAerea_Chegada</label>
+                                        <input type="checkbox" ng-model="itemEscala.ChegadaPonto" ng-click="itemEdit.AjustarHoraChegada(itemEscala);" class="checkbox">
+                                    </div>
+                                    <div class="col-md-2  col-xs-6" ng-if="itemEscala.ChegadaPonto">
+                                        <label>@TextosPaginas.ViagemAerea_Partida</label>
+                                        <input type="checkbox" ng-model="itemEscala.PartidaPonto" ng-click="itemEdit.AjustarHoraPartida(itemEscala);" class="checkbox">
+                                    </div>
+
+                                    <div class="col-md-3" ng-if="itemEscala.ChegadaPonto">
+                                        <label>@TextosPaginas.ViagemAerea_DataChegada</label>
+                                        <div class="dropdown">
+                                            <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+                                                <div class="input-group">
+                                                    <input date-input ng-model="itemEscala.DataChegada" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                                           datapattern="dd/MM/yyyy">
+                                                    <span class="input-group-addon">
+                                                        <i class="glyphicon glyphicon-calendar"></i>
+                                                    </span>
+                                                </div>
                                             </a>
-                                            <a role="button" class="btn btn-danger" title="@TextosPaginas.Excluir" ng-click="itemEdit.ExcluirEscala(itemEscala)">
-                                                <span class="fa fa-trash" aria-hidden="true"></span>
+                                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                                <datetimepicker data-ng-model="itemEscala.DataChegada"
+                                                                data-datetimepicker-config="{  minView:'day' , langCode:itemViagemAerea.Idioma()   }" />
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" ng-if="itemEscala.ChegadaPonto">
+                                        <label>&nbsp;</label>
+                                        <input type="text" class="form-control" ng-model="itemEscala.strHoraChegada" input-mask="{mask: 'h:s:s'}" empty-to-null>
+
+                                    </div>
+
+                                    <div class="col-md-3" ng-if="itemEscala.PartidaPonto">
+                                        <label>@TextosPaginas.ViagemAerea_DataPartida</label>
+                                        <div class="dropdown">
+                                            <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+                                                <div class="input-group">
+                                                    <input date-input ng-model="itemEscala.DataPartida" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                                           datapattern="dd/MM/yyyy">
+                                                    <span class="input-group-addon">
+                                                        <i class="glyphicon glyphicon-calendar"></i>
+                                                    </span>
+                                                </div>
                                             </a>
+                                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                                <datetimepicker data-ng-model="itemEscala.DataPartida"
+                                                                data-datetimepicker-config="{  minView:'day' , langCode:itemViagemAerea.Idioma()  }" />
+                                            </ul>
                                         </div>
-                                        <div class="col-md-2 col-xs-6">
-                                            <label>@TextosPaginas.ViagemAerea_Chegada</label>
-                                            <input type="checkbox" ng-model="itemEscala.ChegadaPonto" ng-click="itemEdit.AjustarHoraChegada(itemEscala);" class="checkbox">
-                                        </div>
-                                        <div class="col-md-2  col-xs-6" ng-if="itemEscala.ChegadaPonto">
-                                            <label>@TextosPaginas.ViagemAerea_Partida</label>
-                                            <input type="checkbox" ng-model="itemEscala.PartidaPonto" ng-click="itemEdit.AjustarHoraPartida(itemEscala);" class="checkbox">
-                                        </div>
+                                    </div>
+                                    <div class="col-md-3" ng-if="itemEscala.PartidaPonto">
+                                        <label>&nbsp;</label>
+                                        <input type="text" class="form-control" ng-model="itemEscala.strHoraPartida" input-mask="{mask: 'h:s:s'}" empty-to-null>
 
-                                        <div class="col-md-3" ng-if="itemEscala.ChegadaPonto">
-                                            <label>@TextosPaginas.ViagemAerea_DataChegada</label>
-                                            <div class="dropdown">
-                                                <a class="dropdown-toggle" role="button" data-toggle="dropdown">
-                                                    <div class="input-group">
-                                                        <input date-input ng-model="itemEscala.DataChegada" class="form-control" input-mask="{mask: 'd/m/y'}"
-                                                               datapattern="dd/MM/yyyy">
-                                                        <span class="input-group-addon">
-                                                            <i class="glyphicon glyphicon-calendar"></i>
-                                                        </span>
-                                                    </div>
-                                                </a>
-                                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                                    <datetimepicker data-ng-model="itemEscala.DataChegada"
-                                                                    data-datetimepicker-config="{  minView:'day' , langCode:temViagemAerea.Idioma()   }" />
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3" ng-if="itemEscala.ChegadaPonto">
-                                            <label>&nbsp;</label>
-                                            <input type="text" class="form-control" ng-model="itemEscala.strHoraChegada" input-mask="{mask: 'h:s:s'}" empty-to-null>
-
-                                        </div>
-
-                                        <div class="col-md-3" ng-if="itemEscala.PartidaPonto">
-                                            <label>@TextosPaginas.ViagemAerea_DataPartida</label>
-                                            <div class="dropdown">
-                                                <a class="dropdown-toggle" role="button" data-toggle="dropdown">
-                                                    <div class="input-group">
-                                                        <input date-input ng-model="itemEscala.DataPartida" class="form-control" input-mask="{mask: 'd/m/y'}"
-                                                               datapattern="dd/MM/yyyy">
-                                                        <span class="input-group-addon">
-                                                            <i class="glyphicon glyphicon-calendar"></i>
-                                                        </span>
-                                                    </div>
-                                                </a>
-                                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                                    <datetimepicker data-ng-model="itemEscala.DataPartida"
-                                                                    data-datetimepicker-config="{  minView:'day' , langCode:itemViagemAerea.Idioma()  }" />
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3" ng-if="itemEscala.PartidaPonto">
-                                            <label>&nbsp;</label>
-                                            <input type="text" class="form-control" ng-model="itemEscala.strHoraPartida" input-mask="{mask: 'h:s:s'}" empty-to-null>
-
-                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
 
                 <div class="row">
@@ -472,98 +472,94 @@
                         <label>@TextosPaginas.ViagemAerea_Participantes</label>
                     </div>
                 </div>
-                <div class="row" ng-repeat='itemParticipante in itemEdit.ListaParticipante'>
-                    <div class="col-xs-6">
-                        <label class="radio">
-                            <input type="checkbox" ng-model="itemParticipante.Selecionado">
-                            <label style="padding-top:5px">
-                                {{itemParticipante.Nome}}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-inline">
+                            <label ng-repeat='itemParticipante in itemEdit.ListaParticipante' class="radio">
+                                <input type="checkbox" ng-model="itemParticipante.Selecionado">
+                                <label style="padding-top:5px">
+                                    {{itemParticipante.Nome}}
+                                </label>
                             </label>
-                        </label>
-                    </div>
 
-                    <div class="col-xs-6" ng-if="itemParticipante.Selecionado">
-                        <label>@TextosPaginas.Refeicao_Pedido</label>
-                        <input type="text" class="form-control" ng-model="itemParticipante.Pedido" maxlength="100" empty-to-null>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" ng-if="itemEdit.VerificarParticipoViagemAerea() && itemEdit.itemPontoDestino.PartidaPonto">
+                        <label>@TextosPaginas.Refeicao_Nota</label>
+                        <div star-rating ng-model="itemEdit.ItemAvaliacao.Nota" max="5"></div>
+                    </div>
+                    <div class="col-md-12" ng-if="itemEdit.VerificarParticipoViagemAerea() && itemEdit.itemPontoDestino.PartidaPonto">
+                        <label>@TextosPaginas.Refeicao_Comentario</label>
+                        <textarea class="form-control" rows="5" ng-model="itemEdit.ItemAvaliacao.Comentario"></textarea>
 
                     </div>
                 </div>
+                <div class="row" ng-show="item.Identificador">
+                    <div class="col-xs-12">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" data-target="#custos{{item.Identificador}}" style="cursor:pointer">@TextosPaginas.Refeicao_Custos</a></li>
+                        </ul>
 
-                    <div class="row">
-                        <div class="col-md-12" ng-if="itemEdit.VerificarParticipoViagemAerea() && itemEdit.itemPontoDestino.PartidaPonto">
-                            <label>@TextosPaginas.Refeicao_Nota</label>
-                            <div star-rating ng-model="itemEdit.ItemAvaliacao.Nota" max="5"></div>
-                        </div>
-                        <div class="col-md-12" ng-if="itemEdit.VerificarParticipoViagemAerea() && itemEdit.itemPontoDestino.PartidaPonto">
-                            <label>@TextosPaginas.Refeicao_Comentario</label>
-                            <textarea class="form-control" rows="5" ng-model="itemEdit.ItemAvaliacao.Comentario"></textarea>
+                        <div class="tab-content" style="height:140px">
+                            <div id="custos{{item.Identificador}}" class="tab-pane fade in active ">
+                                <div class="box" style="overflow-y:auto; height:140px">
 
-                        </div>
-                    </div>
-                    <div class="row" ng-show="item.Identificador">
-                        <div class="col-xs-12">
-                            <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" data-target="#custos{{item.Identificador}}" style="cursor:pointer">@TextosPaginas.Refeicao_Custos</a></li>
-                            </ul>
+                                    <table class="table-condensed " style="width:100%; ">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-xs-3">
+                                                    @TextosPaginas.Gasto_Descricao
+                                                </th>
+                                                <th class="col-xs-3">
+                                                    @TextosPaginas.Gasto_Data
+                                                </th>
+                                                <th class="col-xs-3">
+                                                    @TextosPaginas.Gasto_Moeda
+                                                </th>
+                                                <th class="col-xs-2">
+                                                    @TextosPaginas.Gasto_Valor
+                                                </th>
 
-                            <div class="tab-content" style="height:140px">
-                                <div id="custos{{item.Identificador}}" class="tab-pane fade in active ">
-                                    <div class="box" style="overflow-y:auto; height:140px">
+                                                <th class="col-xs-1">
 
-                                        <table class="table-condensed " style="width:100%; ">
-                                            <thead>
-                                                <tr>
-                                                    <th class="col-xs-3">
-                                                        @TextosPaginas.Gasto_Descricao
-                                                    </th>
-                                                    <th class="col-xs-3">
-                                                        @TextosPaginas.Gasto_Data
-                                                    </th>
-                                                    <th class="col-xs-3">
-                                                        @TextosPaginas.Gasto_Moeda
-                                                    </th>
-                                                    <th class="col-xs-2">
-                                                        @TextosPaginas.Gasto_Valor
-                                                    </th>
-
-                                                    <th class="col-xs-1">
-
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tr ng-repeat='itemCusto in itemEdit.itemViagemAerea.Gastos' ng-if="!itemCusto.DataExclusao">
-                                                <td>
-                                                    {{itemCusto.ItemGasto.Descricao}}
-                                                </td>
-                                                <td>
-                                                    {{itemCusto.ItemGasto.Data | date:'dd/MM/yyyy'}}
-                                                </td>
-                                                <td>
-                                                    {{itemCusto.ItemGasto.MoedaSigla}}
-                                                </td>
-                                                <td>
-                                                    {{itemCusto.ItemGasto.Valor | number:'2'}}
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="btn btn-danger small" ng-click="itemEdit.RemoverCusto( itemCusto)"><span class="fa fa-trash" aria-hidden="true"></span></button>
-
-                                                </td>
+                                                </th>
                                             </tr>
-                                        </table>
+                                        </thead>
+                                        <tr ng-repeat='itemCusto in itemEdit.itemViagemAerea.Gastos' ng-if="!itemCusto.DataExclusao">
+                                            <td>
+                                                {{itemCusto.ItemGasto.Descricao}}
+                                            </td>
+                                            <td>
+                                                {{itemCusto.ItemGasto.Data | date:'dd/MM/yyyy'}}
+                                            </td>
+                                            <td>
+                                                {{itemCusto.ItemGasto.MoedaSigla}}
+                                            </td>
+                                            <td>
+                                                {{itemCusto.ItemGasto.Valor | number:'2'}}
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger small" ng-click="itemEdit.RemoverCusto( itemCusto)"><span class="fa fa-trash" aria-hidden="true"></span></button>
 
-                                        <div class="box-footer">
-                                            <a role="button" class="btn-primary btn-sm pull-right" title="@TextosPaginas.Adicionar" ng-click="itemEdit.AbrirGasto();">
-                                                <span class="fa fa-plus" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                    <div class="box-footer">
+                                        <a role="button" class="btn-primary btn-sm pull-right" title="@TextosPaginas.Adicionar" ng-click="itemEdit.AbrirGasto();">
+                                            <span class="fa fa-plus" aria-hidden="true"></span>
+                                        </a>
                                     </div>
                                 </div>
-
                             </div>
 
                         </div>
+
                     </div>
                 </div>
+            </div>
             <div class="box-footer">
 
                 <a role="button" class="btn btn-primary pull-right" title="@TextosPaginas.Geral_Salvar" ng-click="itemEdit.save()">
@@ -574,7 +570,7 @@
                     <span class="fa fa-trash-o" aria-hidden="true"></span>
                 </a>
 
-                
+
 
             </div>
         </div>

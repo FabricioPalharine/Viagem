@@ -27,9 +27,10 @@ namespace CV.Data.Configuration
 			this.Property(i => i.QuantidadeReabastecida).HasColumnName("VL_REABASTECIDO").HasPrecision(6,2);
 			this.HasMany(i => i.Gastos).WithRequired().HasForeignKey(d=>d.IdentificadorReabastecimento);
 			this.HasRequired(i => i.ItemCarro).WithMany().HasForeignKey(d=>d.IdentificadorCarro);
-			this.HasRequired(i => i.Cidade).WithMany().HasForeignKey(d=>d.IdentificadorCidade);
+			this.HasOptional(i => i.Cidade).WithMany().HasForeignKey(d=>d.IdentificadorCidade);
 			this.Property(i => i.DataAtualizacao).HasColumnName("DT_ATUALIZACAO");
 			this.Property(i => i.DataExclusao).HasColumnName("DT_EXCLUSAO");
+			this.Property(i => i.Data).HasColumnName("DT_REABASTECIMENTO");
 		MapearCamposManualmente();
 		}
 	}

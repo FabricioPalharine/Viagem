@@ -20,13 +20,10 @@ namespace CV.Model
 			[NotNullValidator(MessageTemplateResourceName="Reabastecimento_IdentificadorCarro",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public int? IdentificadorCarro { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="Reabastecimento_IdentificadorCidade",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public int? IdentificadorCidade { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="Reabastecimento_Latitude",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public decimal? Latitude { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="Reabastecimento_Longitude",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public decimal? Longitude { get; set; }
 
 			[NotNullValidator(MessageTemplateResourceName="Reabastecimento_Litro",MessageTemplateResourceType=typeof(MensagemModelo))]
@@ -43,6 +40,9 @@ namespace CV.Model
 			public DateTime? DataAtualizacao { get; set; }
 
 			public DateTime? DataExclusao { get; set; }
+
+			[NotNullValidator(MessageTemplateResourceName="Reabastecimento_Data",MessageTemplateResourceType=typeof(MensagemModelo))]
+			public DateTime? Data { get; set; }
 		 public Reabastecimento Clone()
 		{
 			 return (Reabastecimento) this.MemberwiseClone();

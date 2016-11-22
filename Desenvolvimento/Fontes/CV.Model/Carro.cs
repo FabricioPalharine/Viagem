@@ -20,7 +20,15 @@ namespace CV.Model
 			[NotNullValidator(MessageTemplateResourceName="Carro_IdentificadorViagem",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public int? IdentificadorViagem { get; set; }
 
-			[StringLengthValidator(50,MessageTemplateResourceName="Carro_Locadora_Tamanho",MessageTemplateResourceType=typeof(MensagemModelo))]
+			[SelfValidation]
+private void ValidarLocadora(Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResults results)
+{
+  {
+      Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult result =
+            new Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult(Resource.MensagemModelo.Carro_Locadora_Tamanho, this, "Locadora", null, null);
+      results.AddResult(result);
+  }
+}
 			public string Locadora { get; set; }
 
 			public string Modelo { get; set; }
@@ -60,6 +68,17 @@ private void ValidarModelo(Microsoft.Practices.EnterpriseLibrary.Validation.Vali
 			public DateTime? DataAtualizacao { get; set; }
 
 			public DateTime? DataExclusao { get; set; }
+
+			public int? OdometroInicial { get; set; }
+
+			public int? OdometroFinal { get; set; }
+
+			public DateTime? DataRetirada { get; set; }
+
+			public DateTime? DataDevolucao { get; set; }
+
+			[NotNullValidator(MessageTemplateResourceName="Carro_Descricao",MessageTemplateResourceType=typeof(MensagemModelo))]
+			public string Descricao { get; set; }
 		 public Carro Clone()
 		{
 			 return (Carro) this.MemberwiseClone();

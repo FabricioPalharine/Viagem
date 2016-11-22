@@ -1140,7 +1140,7 @@ namespace CV.Business
                 return repositorio.CarregarCidadeViagemAerea(IdentificadorViagem);
             }
         }
-        
+
 
         public List<Cidade> CarregarCidadeLoja(int? IdentificadorViagem)
         {
@@ -1258,6 +1258,16 @@ namespace CV.Business
             {
                 return repositorio.ListarViagemAerea(IdentificadorViagem, DataDe, DataAte, Companhia, Tipo, Situacao, IdentificadorCidadeOrigem, IdentificadorCidadeDestino, IdentificadorViagemAerea);
             }
+        }
+
+        public List<Carro> ListarCarro(int IdentificadorViagem, string Locadora, string Descricao, string Modelo,
+     DateTime? DataRetiradaDe, DateTime? DataRetiradaAte, DateTime? DataDevolucaoDe, DateTime? DataDevolucaoAte, int? IdentificadorCarro)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarCarro(IdentificadorViagem, Locadora, Descricao, Modelo, DataRetiradaDe, DataRetiradaAte, DataDevolucaoDe, DataDevolucaoAte, IdentificadorCarro);
+            }
+
         }
     }
 }

@@ -3230,6 +3230,38 @@ using(					ViagemRepository data = new ViagemRepository())
 			}
 				return RetornoAcao;
 			}
+			public Carro SelecionarCarro_Completo (int? Identificador)
+			{
+				 LimparValidacao();
+Carro RetornoAcao = null;
+				if (IsValid())
+				{
+using(					ViagemRepository data = new ViagemRepository())
+				 {
+					RetornoAcao = data.SelecionarCarro_Completo(Identificador);
+				}
+			}
+				return RetornoAcao;
+			}
+			public void SalvarCarro_Completo (Carro itemGravar)
+			{
+				 LimparValidacao();
+				 ValidateService(itemGravar);
+					ValidarRegrasNegocioCarro(itemGravar);
+				 if (IsValid())
+				 {
+					using(ViagemRepository data = new ViagemRepository())
+				 {
+					data.SalvarCarro_Completo(itemGravar);
+					Message msg = new Message();
+					msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_SalvarCarro_Completo_OK") });
+					ServiceResult resultado = new ServiceResult();
+					resultado.Success = true;
+					resultado.Messages.Add(msg);
+					serviceResult.Add(resultado);
+				 }
+				 }
+			}
 	}
 
 }

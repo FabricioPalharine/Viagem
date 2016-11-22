@@ -61,6 +61,7 @@
             vm.messages = [];
             vm.submitted = true;
             vm.CamposInvalidos = {};
+            vm.loading = true;
             {
               
                 if (vm.itemAtracao.ItemAtracaoPai && vm.itemAtracao.ItemAtracaoPai.Identificador)

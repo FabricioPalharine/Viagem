@@ -31,6 +31,11 @@ namespace CV.Data.Configuration
 			this.HasRequired(i => i.ItemViagem).WithMany().HasForeignKey(d=>d.IdentificadorViagem);
 			this.Property(i => i.DataAtualizacao).HasColumnName("DT_ATUALIZACAO");
 			this.Property(i => i.DataExclusao).HasColumnName("DT_EXCLUSAO");
+			this.Property(i => i.OdometroInicial).HasColumnName("VL_ODOMETRO_INICIO");
+			this.Property(i => i.OdometroFinal).HasColumnName("VL_ODOMETRO_FIM");
+			this.Property(i => i.DataRetirada).HasColumnName("DT_RETIRADA");
+			this.Property(i => i.DataDevolucao).HasColumnName("DT_DEVOLUCAO");
+			this.Property(i => i.Descricao).HasColumnName("DS_DESCRICAO");
 		MapearCamposManualmente();
 		}
 	}

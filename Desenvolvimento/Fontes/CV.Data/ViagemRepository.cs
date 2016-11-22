@@ -352,13 +352,49 @@ namespace CV.Data
 			public void SalvarCarro (Carro itemGravar)
 			{
 				Carro itemBase =  Context.Carros
-				.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
+.Include("Avaliacoes").Include("Eventos")				.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
 				if (itemBase == null)
 				{
 				itemBase = Context.Carros.Create();
+				itemBase.Avaliacoes = new List<AvaliacaoAluguel>();
+				itemBase.Eventos = new List<CarroEvento>();
  			Context.Entry<Carro>(itemBase).State = System.Data.Entity.EntityState.Added;
 				}
  			AtualizarPropriedades<Carro>(itemBase, itemGravar);
+				foreach (AvaliacaoAluguel itemAvaliacaoAluguel in new List<AvaliacaoAluguel>( itemBase.Avaliacoes))
+				{
+					if (!itemGravar.Avaliacoes.Where(f=>f.Identificador == itemAvaliacaoAluguel.Identificador).Any())
+					{
+						Context.Entry<AvaliacaoAluguel>(itemAvaliacaoAluguel).State = EntityState.Deleted;
+					}
+				}
+				foreach (AvaliacaoAluguel itemAvaliacaoAluguel in new List<AvaliacaoAluguel>( itemGravar.Avaliacoes))
+				{
+				AvaliacaoAluguel itemBaseAvaliacaoAluguel = !itemAvaliacaoAluguel.Identificador.HasValue?null: itemBase.Avaliacoes.Where(f=>f.Identificador == itemAvaliacaoAluguel.Identificador).FirstOrDefault();
+				if (itemBaseAvaliacaoAluguel == null)
+				{
+				itemBaseAvaliacaoAluguel = Context.AvaliacaoAlugueis.Create();
+ 			itemBase.Avaliacoes.Add(itemBaseAvaliacaoAluguel);
+				}
+ 			AtualizarPropriedades<AvaliacaoAluguel>(itemBaseAvaliacaoAluguel, itemAvaliacaoAluguel);
+				}
+				foreach (CarroEvento itemCarroEvento in new List<CarroEvento>( itemBase.Eventos))
+				{
+					if (!itemGravar.Eventos.Where(f=>f.Identificador == itemCarroEvento.Identificador).Any())
+					{
+						Context.Entry<CarroEvento>(itemCarroEvento).State = EntityState.Deleted;
+					}
+				}
+				foreach (CarroEvento itemCarroEvento in new List<CarroEvento>( itemGravar.Eventos))
+				{
+				CarroEvento itemBaseCarroEvento = !itemCarroEvento.Identificador.HasValue?null: itemBase.Eventos.Where(f=>f.Identificador == itemCarroEvento.Identificador).FirstOrDefault();
+				if (itemBaseCarroEvento == null)
+				{
+				itemBaseCarroEvento = Context.CarroEventos.Create();
+ 			itemBase.Eventos.Add(itemBaseCarroEvento);
+				}
+ 			AtualizarPropriedades<CarroEvento>(itemBaseCarroEvento, itemCarroEvento);
+				}
 			Context.SaveChanges();
 				itemGravar.Identificador = itemBase.Identificador;
 			}
@@ -2357,6 +2393,121 @@ namespace CV.Data
 					if (Identificador.HasValue)
 					query = query.Where(d=>d.Identificador == Identificador);
 					return query.FirstOrDefault();
+			}
+			public Carro SelecionarCarro_Completo (int? Identificador)
+			{
+			IQueryable<Carro> query =	 Context.Carros
+.Include("Avaliacoes").Include("Eventos").Include("Gastos").Include("Gastos.ItemGasto").Include("Gastos.ItemGasto.ItemUsuario").Include("Reabastecimentos").Include("Reabastecimentos.Gastos").Include("Reabastecimentos.Gastos.ItemGasto").Include("Reabastecimentos.Gastos.ItemGasto.ItemUsuario");
+					if (Identificador.HasValue)
+					query = query.Where(d=>d.Identificador == Identificador);
+					return query.FirstOrDefault();
+			}
+			public void SalvarCarro_Completo (Carro itemGravar)
+			{
+				Carro itemBase =  Context.Carros
+.Include("Avaliacoes").Include("Eventos").Include("Gastos").Include("Reabastecimentos").Include("Reabastecimentos.Gastos")				.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
+				if (itemBase == null)
+				{
+				itemBase = Context.Carros.Create();
+				itemBase.Avaliacoes = new List<AvaliacaoAluguel>();
+				itemBase.Eventos = new List<CarroEvento>();
+				itemBase.Gastos = new List<AluguelGasto>();
+				itemBase.Reabastecimentos = new List<Reabastecimento>();
+ 			Context.Entry<Carro>(itemBase).State = System.Data.Entity.EntityState.Added;
+				}
+ 			AtualizarPropriedades<Carro>(itemBase, itemGravar);
+				foreach (AvaliacaoAluguel itemAvaliacaoAluguel in new List<AvaliacaoAluguel>( itemBase.Avaliacoes))
+				{
+					if (!itemGravar.Avaliacoes.Where(f=>f.Identificador == itemAvaliacaoAluguel.Identificador).Any())
+					{
+						Context.Entry<AvaliacaoAluguel>(itemAvaliacaoAluguel).State = EntityState.Deleted;
+					}
+				}
+				foreach (AvaliacaoAluguel itemAvaliacaoAluguel in new List<AvaliacaoAluguel>( itemGravar.Avaliacoes))
+				{
+				AvaliacaoAluguel itemBaseAvaliacaoAluguel = !itemAvaliacaoAluguel.Identificador.HasValue?null: itemBase.Avaliacoes.Where(f=>f.Identificador == itemAvaliacaoAluguel.Identificador).FirstOrDefault();
+				if (itemBaseAvaliacaoAluguel == null)
+				{
+				itemBaseAvaliacaoAluguel = Context.AvaliacaoAlugueis.Create();
+ 			itemBase.Avaliacoes.Add(itemBaseAvaliacaoAluguel);
+				}
+ 			AtualizarPropriedades<AvaliacaoAluguel>(itemBaseAvaliacaoAluguel, itemAvaliacaoAluguel);
+				}
+				foreach (CarroEvento itemCarroEvento in new List<CarroEvento>( itemBase.Eventos))
+				{
+					if (!itemGravar.Eventos.Where(f=>f.Identificador == itemCarroEvento.Identificador).Any())
+					{
+						Context.Entry<CarroEvento>(itemCarroEvento).State = EntityState.Deleted;
+					}
+				}
+				foreach (CarroEvento itemCarroEvento in new List<CarroEvento>( itemGravar.Eventos))
+				{
+				CarroEvento itemBaseCarroEvento = !itemCarroEvento.Identificador.HasValue?null: itemBase.Eventos.Where(f=>f.Identificador == itemCarroEvento.Identificador).FirstOrDefault();
+				if (itemBaseCarroEvento == null)
+				{
+				itemBaseCarroEvento = Context.CarroEventos.Create();
+ 			itemBase.Eventos.Add(itemBaseCarroEvento);
+				}
+ 			AtualizarPropriedades<CarroEvento>(itemBaseCarroEvento, itemCarroEvento);
+				}
+				foreach (AluguelGasto itemAluguelGasto in new List<AluguelGasto>( itemBase.Gastos))
+				{
+					if (!itemGravar.Gastos.Where(f=>f.Identificador == itemAluguelGasto.Identificador).Any())
+					{
+						Context.Entry<AluguelGasto>(itemAluguelGasto).State = EntityState.Deleted;
+					}
+				}
+				foreach (AluguelGasto itemAluguelGasto in new List<AluguelGasto>( itemGravar.Gastos))
+				{
+				AluguelGasto itemBaseAluguelGasto = !itemAluguelGasto.Identificador.HasValue?null: itemBase.Gastos.Where(f=>f.Identificador == itemAluguelGasto.Identificador).FirstOrDefault();
+				if (itemBaseAluguelGasto == null)
+				{
+				itemBaseAluguelGasto = Context.AluguelGastos.Create();
+ 			itemBase.Gastos.Add(itemBaseAluguelGasto);
+				}
+ 			AtualizarPropriedades<AluguelGasto>(itemBaseAluguelGasto, itemAluguelGasto);
+				}
+				foreach (Reabastecimento itemReabastecimento in new List<Reabastecimento>( itemBase.Reabastecimentos))
+				{
+					if (!itemGravar.Reabastecimentos.Where(f=>f.Identificador == itemReabastecimento.Identificador).Any())
+					{
+				foreach (ReabastecimentoGasto itemReabastecimentoGasto in new List<ReabastecimentoGasto>( itemReabastecimento.Gastos))
+				{
+						Context.Entry<ReabastecimentoGasto>(itemReabastecimentoGasto).State = EntityState.Deleted;
+				}
+						Context.Entry<Reabastecimento>(itemReabastecimento).State = EntityState.Deleted;
+					}
+				}
+				foreach (Reabastecimento itemReabastecimento in new List<Reabastecimento>( itemGravar.Reabastecimentos))
+				{
+				Reabastecimento itemBaseReabastecimento = !itemReabastecimento.Identificador.HasValue?null: itemBase.Reabastecimentos.Where(f=>f.Identificador == itemReabastecimento.Identificador).FirstOrDefault();
+				if (itemBaseReabastecimento == null)
+				{
+				itemBaseReabastecimento = Context.Reabastecimentos.Create();
+				itemBaseReabastecimento.Gastos = new List<ReabastecimentoGasto>();
+ 			itemBase.Reabastecimentos.Add(itemBaseReabastecimento);
+				}
+ 			AtualizarPropriedades<Reabastecimento>(itemBaseReabastecimento, itemReabastecimento);
+				foreach (ReabastecimentoGasto itemReabastecimentoGasto in new List<ReabastecimentoGasto>( itemBaseReabastecimento.Gastos))
+				{
+					if (!itemReabastecimento.Gastos.Where(f=>f.Identificador == itemReabastecimentoGasto.Identificador).Any())
+					{
+						Context.Entry<ReabastecimentoGasto>(itemReabastecimentoGasto).State = EntityState.Deleted;
+					}
+				}
+				foreach (ReabastecimentoGasto itemReabastecimentoGasto in new List<ReabastecimentoGasto>( itemReabastecimento.Gastos))
+				{
+				ReabastecimentoGasto itemBaseReabastecimentoGasto = !itemReabastecimentoGasto.Identificador.HasValue?null: itemBaseReabastecimento.Gastos.Where(f=>f.Identificador == itemReabastecimentoGasto.Identificador).FirstOrDefault();
+				if (itemBaseReabastecimentoGasto == null)
+				{
+				itemBaseReabastecimentoGasto = Context.ReabastecimentoGastos.Create();
+ 			itemBaseReabastecimento.Gastos.Add(itemBaseReabastecimentoGasto);
+				}
+ 			AtualizarPropriedades<ReabastecimentoGasto>(itemBaseReabastecimentoGasto, itemReabastecimentoGasto);
+				}
+				}
+			Context.SaveChanges();
+				itemGravar.Identificador = itemBase.Identificador;
 			}
 	}
 
