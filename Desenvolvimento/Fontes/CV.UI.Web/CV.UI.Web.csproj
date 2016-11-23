@@ -314,6 +314,7 @@
     <Content Include="Library\Scripts\App\Home\home-routes.js" />
     <Content Include="Library\Scripts\App\Home\alteraSenha-controller.js" />
     <Content Include="Library\Scripts\App\Home\SignalR-factory.js" />
+    <Content Include="Library\Scripts\App\Sistema\CarroDeslocamento\CarroDeslocamento-edit-controller.js" />
     <Content Include="Library\Scripts\Componentes\bootstrap.js" />
     <Content Include="Library\Scripts\Componentes\bootstrap.min.js" />
     <Content Include="Library\Scripts\Componentes\csswatch.js" />
@@ -479,6 +480,7 @@
     <Content Include="Views\Sistema\ViagemAerea.cshtml" />
     <Content Include="Views\Sistema\ViagemAereaEdicao.cshtml" />
     <Content Include="Views\Sistema\GastoSelecao.cshtml" />
+    <Content Include="Views\Sistema\CarroDeslocamentoEdicao.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

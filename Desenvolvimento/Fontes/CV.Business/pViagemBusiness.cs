@@ -25,6 +25,13 @@ namespace CV.Business
         }
         private void ValidarRegrasNegocioReabastecimento(Reabastecimento itemGravar)
         {
+            if (IsValid())
+            {
+                foreach (var itemGasto in itemGravar.Gastos)
+                {
+                    ValidateService(itemGasto.ItemGasto);
+                }
+            }
         }
         private void ValidarRegrasExclusaoReabastecimento(Reabastecimento itemGravar)
         {
@@ -308,6 +315,95 @@ namespace CV.Business
         private void ValidarRegrasNegocioGastoDividido(GastoDividido itemGravar)
         {
         }
+
+        private void ValidarRegrasNegocioCarroDeslocamento(CarroDeslocamento itemGravar)
+        {
+
+        }
+
+        private void ValidarRegrasExclusaoCarroDeslocamento(CarroDeslocamento itemGravar)
+        {
+
+        }
+        #region Save
+
+        public void SalvarCarro_Completo(Carro itemGravar)
+        {
+            LimparValidacao();
+            ValidateService(itemGravar);
+            ValidarRegrasNegocioCarro(itemGravar);
+            if (IsValid())
+            {
+                using (ViagemRepository data = new ViagemRepository())
+                {
+                    data.SalvarCarro_Completo(itemGravar);
+                    Message msg = new Message();
+                    msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_SalvarCarro_Completo_OK") });
+                    ServiceResult resultado = new ServiceResult();
+                    resultado.Success = true;
+                    resultado.Messages.Add(msg);
+                    serviceResult.Add(resultado);
+                }
+            }
+        }
+
+
+        public void SalvarCarro_Evento(Carro itemGravar)
+        {
+            LimparValidacao();
+            ValidateService(itemGravar);
+            ValidarRegrasNegocioCarro(itemGravar);
+
+            if (IsValid())
+            {
+                using (ViagemRepository data = new ViagemRepository())
+                {
+                    data.SalvarCarro_Evento(itemGravar);
+                    Message msg = new Message();
+                    msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_SalvarCarro_Completo_OK") });
+                    ServiceResult resultado = new ServiceResult();
+                    resultado.Success = true;
+                    resultado.Messages.Add(msg);
+                    serviceResult.Add(resultado);
+                }
+            }
+        }
+
+
+        public void SalvarCarroDeslocamento_Evento(CarroDeslocamento itemGravar)
+        {
+            LimparValidacao();
+            ValidateService(itemGravar);
+            ValidarRegrasNegocioCarroDeslocamento(itemGravar);
+            if (itemGravar.ItemCarroEventoChegada != null)
+            {
+                if (itemGravar.ItemCarroEventoChegada.Data.HasValue && (!itemGravar.ItemCarroEventoChegada.Latitude.HasValue || !itemGravar.ItemCarroEventoChegada.Longitude.HasValue))
+                    AdicionaErroBusiness("CarroDeslocamento_PosicaoChegada_Obrigatoria", "ItemCarroEventoChegada_Posicao");
+            }
+            else if (itemGravar.ItemCarroEventoChegada != null)
+            {
+                if (!itemGravar.ItemCarroEventoPartida.Data.HasValue)
+                    AdicionaErroBusiness("CarroDeslocamento_DataPartida_Obrigatoria", "ItemCarroEventoPartida_Data");
+
+                if (itemGravar.ItemCarroEventoChegada.Data.HasValue && (!itemGravar.ItemCarroEventoChegada.Latitude.HasValue || !itemGravar.ItemCarroEventoChegada.Longitude.HasValue))
+                    AdicionaErroBusiness("CarroDeslocamento_PosicaoPartida_Obrigatoria", "ItemCarroEventoPartida_Posicao");
+
+            }
+            if (IsValid())
+            {
+                using (ViagemRepository data = new ViagemRepository())
+                {
+                    data.SalvarCarroDeslocamento_Evento(itemGravar);
+                    Message msg = new Message();
+                    msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_SalvarCarroDeslocamento_OK") });
+                    ServiceResult resultado = new ServiceResult();
+                    resultado.Success = true;
+                    resultado.Messages.Add(msg);
+                    serviceResult.Add(resultado);
+                }
+            }
+        }
+        #endregion
 
         public List<Usuario> ListarUsuario(Expression<Func<Usuario, bool>> predicate)
         {

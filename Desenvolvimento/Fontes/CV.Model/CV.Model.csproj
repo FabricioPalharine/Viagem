@@ -179,6 +179,10 @@
     <Compile Include="pGastoAtracao.cs" />
     <Compile Include="GastoDividido.cs" />
     <Compile Include="pGastoDividido.cs" />
+    <Compile Include="CarroDeslocamento.cs" />
+    <Compile Include="pCarroDeslocamento.cs" />
+    <Compile Include="CarroDeslocamentoUsuario.cs" />
+    <Compile Include="pCarroDeslocamentoUsuario.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resource\MensagemModelo.resx">

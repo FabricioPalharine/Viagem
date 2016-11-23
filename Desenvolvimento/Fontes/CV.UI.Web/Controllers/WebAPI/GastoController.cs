@@ -198,6 +198,25 @@ namespace CV.UI.Web.Controllers.WebAPI
             }
             return itemResultado;
         }
-        
+
+
+        [HttpPost]
+        [ActionName("SalvarCustoCarro")]
+        public ResultadoOperacao SalvarCustoCarro([FromBody] AluguelGasto itemGasto)
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            var itemGastoBase = biz.SelecionarGasto_Completo(itemGasto.IdentificadorGasto);
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+
+            if (itemGasto.DataExclusao.HasValue || !itemGastoBase.Alugueis.Where(f => f.IdentificadorCarro == itemGasto.IdentificadorCarro).Any())
+            {
+                biz.SalvarAluguelGasto(itemGasto);
+                itemResultado.Sucesso = biz.IsValid();
+                itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
+                if (itemResultado.Sucesso)
+                    itemResultado.IdentificadorRegistro = itemGasto.Identificador;
+            }
+            return itemResultado;
+        }
     }
 }

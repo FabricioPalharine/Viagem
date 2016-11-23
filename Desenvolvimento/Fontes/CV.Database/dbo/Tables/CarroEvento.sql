@@ -1,6 +1,5 @@
 ﻿CREATE TABLE [dbo].[CarroEvento] (
     [ID_CARRO_EVENTO] INT             IDENTITY (1, 1) NOT NULL,
-    [ID_CARRO]        INT             NOT NULL,
     [ID_CIDADE]       INT             NULL,
     [FL_INICIO]  BIT             NOT NULL,
     [NR_LATITUDE]     NUMERIC (12, 8) NULL,
@@ -8,8 +7,8 @@
     [DT_ATUALIZACAO]  DATETIME        NOT NULL,
     [DT_EXCLUSAO]     DATETIME        NULL,
     [DT_EVENTO] DATETIME NULL, 
+    [VL_ODOMETRO] INT NULL, 
     CONSTRAINT [PK45] PRIMARY KEY NONCLUSTERED ([ID_CARRO_EVENTO] ASC),
-    CONSTRAINT [RefCarro80] FOREIGN KEY ([ID_CARRO]) REFERENCES [dbo].[Carro] ([ID_CARRO]),
     CONSTRAINT [RefCidade81] FOREIGN KEY ([ID_CIDADE]) REFERENCES [dbo].[Cidade] ([ID_CIDADE])
 );
 

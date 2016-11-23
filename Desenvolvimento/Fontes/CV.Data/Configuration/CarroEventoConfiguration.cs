@@ -22,13 +22,12 @@ namespace CV.Data.Configuration
 			this.Property(i => i.Inicio).HasColumnName("FL_INICIO");
 			this.Property(i => i.Latitude).HasColumnName("NR_LATITUDE").HasPrecision(12,8);
 			this.Property(i => i.Longitude).HasColumnName("NR_LONGITUDE").HasPrecision(12,8);
-			this.Property(i => i.IdentificadorCarro).HasColumnName("ID_CARRO");
 			this.Property(i => i.IdentificadorCidade).HasColumnName("ID_CIDADE");
-			this.HasRequired(i => i.ItemCarro).WithMany().HasForeignKey(d=>d.IdentificadorCarro);
 			this.HasOptional(i => i.ItemCidade).WithMany().HasForeignKey(d=>d.IdentificadorCidade);
 			this.Property(i => i.DataAtualizacao).HasColumnName("DT_ATUALIZACAO");
 			this.Property(i => i.DataExclusao).HasColumnName("DT_EXCLUSAO");
 			this.Property(i => i.Data).HasColumnName("DT_EVENTO");
+			this.Property(i => i.Odometro).HasColumnName("VL_ODOMETRO");
 		MapearCamposManualmente();
 		}
 	}

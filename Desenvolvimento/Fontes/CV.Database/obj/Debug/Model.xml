@@ -110,7 +110,6 @@
 				</Entry>
 				<Entry>
 					<Element Type="SqlSimpleColumn" Name="[dbo].[AluguelGasto].[DT_EXCLUSAO]">
-						<Property Name="IsNullable" Value="False" />
 						<Relationship Name="TypeSpecifier">
 							<Entry>
 								<Element Type="SqlTypeSpecifier">
@@ -988,7 +987,6 @@
 				</Entry>
 				<Entry>
 					<Element Type="SqlSimpleColumn" Name="[dbo].[AvaliacaoAluguel].[DT_EXCLUSAO]">
-						<Property Name="IsNullable" Value="False" />
 						<Relationship Name="TypeSpecifier">
 							<Entry>
 								<Element Type="SqlTypeSpecifier">
@@ -1614,36 +1612,6 @@
 					</Element>
 				</Entry>
 				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[dbo].[Carro].[VL_ODOMETRO_INICIO]">
-						<Relationship Name="TypeSpecifier">
-							<Entry>
-								<Element Type="SqlTypeSpecifier">
-									<Relationship Name="Type">
-										<Entry>
-											<References ExternalSource="BuiltIns" Name="[int]" />
-										</Entry>
-									</Relationship>
-								</Element>
-							</Entry>
-						</Relationship>
-					</Element>
-				</Entry>
-				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[dbo].[Carro].[VL_ODOMETRO_FIM]">
-						<Relationship Name="TypeSpecifier">
-							<Entry>
-								<Element Type="SqlTypeSpecifier">
-									<Relationship Name="Type">
-										<Entry>
-											<References ExternalSource="BuiltIns" Name="[int]" />
-										</Entry>
-									</Relationship>
-								</Element>
-							</Entry>
-						</Relationship>
-					</Element>
-				</Entry>
-				<Entry>
 					<Element Type="SqlSimpleColumn" Name="[dbo].[Carro].[DT_RETIRADA]">
 						<Relationship Name="TypeSpecifier">
 							<Entry>
@@ -1690,6 +1658,36 @@
 						</Relationship>
 					</Element>
 				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[Carro].[ID_CARRO_EVENTO_RETIRADA]">
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[Carro].[ID_CARRO_EVENTO_DEVOLUCAO]">
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
 			</Relationship>
 			<Relationship Name="Schema">
 				<Entry>
@@ -1698,12 +1696,14 @@
 			</Relationship>
 			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="33" />
 			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="34" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="35" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="36" />
 		</Element>
-		<Element Type="SqlTable" Name="[dbo].[CarroEvento]">
-			<Property Name="IsAnsiNullsOn" Value="True" />
+		<Element Type="SqlTable" Name="[dbo].[CarroDeslocamento]">
+			<Property Name="IsQuotedIdentifierOn" Value="False" />
 			<Relationship Name="Columns">
 				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[dbo].[CarroEvento].[ID_CARRO_EVENTO]">
+					<Element Type="SqlSimpleColumn" Name="[dbo].[CarroDeslocamento].[ID_CARRO_DESLOCAMENTO]">
 						<Property Name="IsNullable" Value="False" />
 						<Property Name="IsIdentity" Value="True" />
 						<Relationship Name="TypeSpecifier">
@@ -1720,8 +1720,179 @@
 					</Element>
 				</Entry>
 				<Entry>
-					<Element Type="SqlSimpleColumn" Name="[dbo].[CarroEvento].[ID_CARRO]">
+					<Element Type="SqlSimpleColumn" Name="[dbo].[CarroDeslocamento].[ID_CARRO]">
 						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[CarroDeslocamento].[ID_CARRO_EVENTO_PARTIDA]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[CarroDeslocamento].[ID_CARRO_EVENTO_CHEGADA]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[CarroDeslocamento].[DT_ATUALIZACAO]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[datetime]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[CarroDeslocamento].[DT_EXCLUSAO]">
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[datetime]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[CarroDeslocamento].[DS_OBSERVACAO]">
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[text]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="37" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="38" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="39" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="40" />
+		</Element>
+		<Element Type="SqlTable" Name="[dbo].[CarroDeslocamentoUsuario]">
+			<Property Name="IsQuotedIdentifierOn" Value="False" />
+			<Relationship Name="Columns">
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[CarroDeslocamentoUsuario].[ID_CARRO_DESLOCAMENTO_USUARIO]">
+						<Property Name="IsNullable" Value="False" />
+						<Property Name="IsIdentity" Value="True" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[CarroDeslocamentoUsuario].[ID_CARRO_DESLOCAMENTO]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[CarroDeslocamentoUsuario].[ID_USUARIO]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="41" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="42" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="43" />
+		</Element>
+		<Element Type="SqlTable" Name="[dbo].[CarroEvento]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="Columns">
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[CarroEvento].[ID_CARRO_EVENTO]">
+						<Property Name="IsNullable" Value="False" />
+						<Property Name="IsIdentity" Value="True" />
 						<Relationship Name="TypeSpecifier">
 							<Entry>
 								<Element Type="SqlTypeSpecifier">
@@ -1846,15 +2017,29 @@
 						</Relationship>
 					</Element>
 				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[CarroEvento].[VL_ODOMETRO]">
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
 			</Relationship>
 			<Relationship Name="Schema">
 				<Entry>
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="35" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="36" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="37" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="44" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="45" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[Cidade]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -1932,8 +2117,8 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="38" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="39" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="46" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="47" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[CidadeGrupo]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -2040,10 +2225,10 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="40" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="41" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="42" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="43" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="48" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="49" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="50" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="51" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[Comentario]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -2185,9 +2370,9 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="44" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="45" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="46" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="52" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="53" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="54" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[CotacaoMoeda]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -2312,8 +2497,169 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="47" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="48" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="55" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="56" />
+		</Element>
+		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[FK_Carro1]">
+			<Relationship Name="Columns">
+				<Entry>
+					<References Name="[dbo].[Carro].[ID_CARRO_EVENTO_RETIRADA]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[Carro]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignColumns">
+				<Entry>
+					<References Name="[dbo].[CarroEvento].[ID_CARRO_EVENTO]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignTable">
+				<Entry>
+					<References Name="[dbo].[CarroEvento]" />
+				</Entry>
+			</Relationship>
+			<AttachedAnnotation Disambiguator="35" />
+		</Element>
+		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[FK_Carro2]">
+			<Relationship Name="Columns">
+				<Entry>
+					<References Name="[dbo].[Carro].[ID_CARRO_EVENTO_DEVOLUCAO]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[Carro]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignColumns">
+				<Entry>
+					<References Name="[dbo].[CarroEvento].[ID_CARRO_EVENTO]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignTable">
+				<Entry>
+					<References Name="[dbo].[CarroEvento]" />
+				</Entry>
+			</Relationship>
+			<AttachedAnnotation Disambiguator="36" />
+		</Element>
+		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[FK_CarroDeslocamento1]">
+			<Relationship Name="Columns">
+				<Entry>
+					<References Name="[dbo].[CarroDeslocamento].[ID_CARRO_EVENTO_PARTIDA]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[CarroDeslocamento]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignColumns">
+				<Entry>
+					<References Name="[dbo].[CarroEvento].[ID_CARRO_EVENTO]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignTable">
+				<Entry>
+					<References Name="[dbo].[CarroEvento]" />
+				</Entry>
+			</Relationship>
+			<AttachedAnnotation Disambiguator="38" />
+		</Element>
+		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[FK_CarroDeslocamento2]">
+			<Relationship Name="Columns">
+				<Entry>
+					<References Name="[dbo].[CarroDeslocamento].[ID_CARRO_EVENTO_CHEGADA]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[CarroDeslocamento]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignColumns">
+				<Entry>
+					<References Name="[dbo].[CarroEvento].[ID_CARRO_EVENTO]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignTable">
+				<Entry>
+					<References Name="[dbo].[CarroEvento]" />
+				</Entry>
+			</Relationship>
+			<AttachedAnnotation Disambiguator="39" />
+		</Element>
+		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[FK_CarroDeslocamento3]">
+			<Relationship Name="Columns">
+				<Entry>
+					<References Name="[dbo].[CarroDeslocamento].[ID_CARRO]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[CarroDeslocamento]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignColumns">
+				<Entry>
+					<References Name="[dbo].[Carro].[ID_CARRO]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignTable">
+				<Entry>
+					<References Name="[dbo].[Carro]" />
+				</Entry>
+			</Relationship>
+			<AttachedAnnotation Disambiguator="40" />
+		</Element>
+		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[FK_CarroDeslocamentoUsuario1]">
+			<Relationship Name="Columns">
+				<Entry>
+					<References Name="[dbo].[CarroDeslocamentoUsuario].[ID_CARRO_DESLOCAMENTO]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[CarroDeslocamentoUsuario]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignColumns">
+				<Entry>
+					<References Name="[dbo].[CarroDeslocamento].[ID_CARRO_DESLOCAMENTO]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignTable">
+				<Entry>
+					<References Name="[dbo].[CarroDeslocamento]" />
+				</Entry>
+			</Relationship>
+			<AttachedAnnotation Disambiguator="42" />
+		</Element>
+		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[FK_CarroDeslocamentoUsuario2]">
+			<Relationship Name="Columns">
+				<Entry>
+					<References Name="[dbo].[CarroDeslocamentoUsuario].[ID_USUARIO]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[CarroDeslocamentoUsuario]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignColumns">
+				<Entry>
+					<References Name="[dbo].[Usuario].[ID_USUARIO]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignTable">
+				<Entry>
+					<References Name="[dbo].[Usuario]" />
+				</Entry>
+			</Relationship>
+			<AttachedAnnotation Disambiguator="43" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[FK_GastoDividido1]">
 			<Relationship Name="Columns">
@@ -2336,7 +2682,7 @@
 					<References Name="[dbo].[Gasto]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="49" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="57" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[FK_GastoDividido2]">
 			<Relationship Name="Columns">
@@ -2359,7 +2705,7 @@
 					<References Name="[dbo].[Usuario]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="50" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="58" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[FKGastroAtracao1]">
 			<Relationship Name="Columns">
@@ -2382,7 +2728,7 @@
 					<References Name="[dbo].[Gasto]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="51" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="59" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[FKGastroAtracao2]">
 			<Relationship Name="Columns">
@@ -2405,7 +2751,7 @@
 					<References Name="[dbo].[Atracao]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="52" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="60" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[FKLoja4]">
 			<Relationship Name="Columns">
@@ -2428,7 +2774,7 @@
 					<References Name="[dbo].[Cidade]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="53" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="61" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[Foto]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -2682,10 +3028,10 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="54" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="55" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="56" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="57" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="62" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="63" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="64" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="65" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[FotoAtracao]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -2776,9 +3122,9 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="58" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="59" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="60" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="66" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="67" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="68" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[FotoHotel]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -2869,9 +3215,9 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="61" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="62" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="63" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="69" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="70" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="71" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[FotoItemCompra]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -2962,9 +3308,9 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="64" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="65" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="66" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="72" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="73" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="74" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[FotoRefeicao]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -3055,9 +3401,9 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="67" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="68" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="69" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="75" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="76" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="77" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[Gasto]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -3325,10 +3671,10 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="70" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="71" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="72" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="73" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="78" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="79" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="80" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="81" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[GastoAtracao]">
 			<Property Name="IsQuotedIdentifierOn" Value="False" />
@@ -3419,9 +3765,9 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="74" />
-			<AttachedAnnotation Disambiguator="51" />
-			<AttachedAnnotation Disambiguator="52" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="82" />
+			<AttachedAnnotation Disambiguator="59" />
+			<AttachedAnnotation Disambiguator="60" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[GastoCompra]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -3512,9 +3858,9 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="75" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="76" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="77" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="83" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="84" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="85" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[GastoDividido]">
 			<Property Name="IsQuotedIdentifierOn" Value="False" />
@@ -3574,9 +3920,9 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="78" />
-			<AttachedAnnotation Disambiguator="49" />
-			<AttachedAnnotation Disambiguator="50" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="86" />
+			<AttachedAnnotation Disambiguator="57" />
+			<AttachedAnnotation Disambiguator="58" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[GastoHotel]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -3667,9 +4013,9 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="79" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="80" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="81" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="87" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="88" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="89" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[GastoRefeicao]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -3760,9 +4106,9 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="82" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="83" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="84" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="90" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="91" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="92" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[GastoViagemAerea]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -3853,9 +4199,9 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="85" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="86" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="87" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="93" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="94" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="95" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[Hotel]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -4090,9 +4436,9 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="88" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="89" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="90" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="96" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="97" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="98" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[HotelAvaliacao]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -4213,9 +4559,9 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="91" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="92" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="93" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="99" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="100" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="101" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[HotelEvento]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -4337,9 +4683,9 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="94" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="95" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="96" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="102" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="103" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="104" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[ItemCompra]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -4543,10 +4889,10 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="97" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="98" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="99" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="100" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="105" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="106" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="107" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="108" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[ListaCompra]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -4767,10 +5113,10 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="101" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="102" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="103" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="104" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="109" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="110" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="111" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="112" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[Loja]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -4960,10 +5306,10 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="105" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="106" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="107" />
-			<AttachedAnnotation Disambiguator="53" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="113" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="114" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="115" />
+			<AttachedAnnotation Disambiguator="61" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[Pais]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -5025,7 +5371,7 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="108" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="116" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[ParticipanteViagem]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -5084,9 +5430,47 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="109" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="110" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="111" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="117" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="118" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="119" />
+		</Element>
+		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK_CarroDeslocamento]">
+			<Relationship Name="ColumnSpecifications">
+				<Entry>
+					<Element Type="SqlIndexedColumnSpecification">
+						<Relationship Name="Column">
+							<Entry>
+								<References Name="[dbo].[CarroDeslocamento].[ID_CARRO_DESLOCAMENTO]" />
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[CarroDeslocamento]" />
+				</Entry>
+			</Relationship>
+			<AttachedAnnotation Disambiguator="37" />
+		</Element>
+		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK_CarroDeslocamentoUsuario]">
+			<Relationship Name="ColumnSpecifications">
+				<Entry>
+					<Element Type="SqlIndexedColumnSpecification">
+						<Relationship Name="Column">
+							<Entry>
+								<References Name="[dbo].[CarroDeslocamentoUsuario].[ID_CARRO_DESLOCAMENTO_USUARIO]" />
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[CarroDeslocamentoUsuario]" />
+				</Entry>
+			</Relationship>
+			<AttachedAnnotation Disambiguator="41" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK_GastoDividido]">
 			<Relationship Name="ColumnSpecifications">
@@ -5105,7 +5489,7 @@
 					<References Name="[dbo].[GastoDividido]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="78" />
+			<AttachedAnnotation Disambiguator="86" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK1]">
 			<Property Name="IsClustered" Value="False" />
@@ -5125,7 +5509,7 @@
 					<References Name="[dbo].[Usuario]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="112" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="120" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK10]">
 			<Property Name="IsClustered" Value="False" />
@@ -5145,7 +5529,7 @@
 					<References Name="[dbo].[Cidade]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="38" />
+			<AttachedAnnotation Disambiguator="46" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK11]">
 			<Property Name="IsClustered" Value="False" />
@@ -5165,7 +5549,7 @@
 					<References Name="[dbo].[CidadeGrupo]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="40" />
+			<AttachedAnnotation Disambiguator="48" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK13]">
 			<Property Name="IsClustered" Value="False" />
@@ -5185,7 +5569,7 @@
 					<References Name="[dbo].[Comentario]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="44" />
+			<AttachedAnnotation Disambiguator="52" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK14]">
 			<Property Name="IsClustered" Value="False" />
@@ -5225,7 +5609,7 @@
 					<References Name="[dbo].[Sugestao]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="113" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="121" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK16]">
 			<Property Name="IsClustered" Value="False" />
@@ -5245,7 +5629,7 @@
 					<References Name="[dbo].[Posicao]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="114" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="122" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK17]">
 			<Property Name="IsClustered" Value="False" />
@@ -5265,7 +5649,7 @@
 					<References Name="[dbo].[Hotel]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="88" />
+			<AttachedAnnotation Disambiguator="96" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK18]">
 			<Property Name="IsClustered" Value="False" />
@@ -5285,7 +5669,7 @@
 					<References Name="[dbo].[GastoHotel]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="79" />
+			<AttachedAnnotation Disambiguator="87" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK19]">
 			<Property Name="IsClustered" Value="False" />
@@ -5305,7 +5689,7 @@
 					<References Name="[dbo].[HotelAvaliacao]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="91" />
+			<AttachedAnnotation Disambiguator="99" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK19_1]">
 			<Property Name="IsClustered" Value="False" />
@@ -5385,7 +5769,7 @@
 					<References Name="[dbo].[RequisicaoAmizade]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="115" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="123" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK22]">
 			<Property Name="IsClustered" Value="False" />
@@ -5405,7 +5789,7 @@
 					<References Name="[dbo].[Refeicao]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="116" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="124" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK23]">
 			<Property Name="IsClustered" Value="False" />
@@ -5425,7 +5809,7 @@
 					<References Name="[dbo].[GastoRefeicao]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="82" />
+			<AttachedAnnotation Disambiguator="90" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK24]">
 			<Property Name="IsClustered" Value="False" />
@@ -5505,7 +5889,7 @@
 					<References Name="[dbo].[ReabastecimentoGasto]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="117" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="125" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK3]">
 			<Property Name="IsClustered" Value="False" />
@@ -5545,7 +5929,7 @@
 					<References Name="[dbo].[ViagemAerea]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="118" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="126" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK31]">
 			<Property Name="IsClustered" Value="False" />
@@ -5565,7 +5949,7 @@
 					<References Name="[dbo].[GastoViagemAerea]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="85" />
+			<AttachedAnnotation Disambiguator="93" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK32]">
 			<Property Name="IsClustered" Value="False" />
@@ -5585,7 +5969,7 @@
 					<References Name="[dbo].[ViagemAereaAeroporto]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="119" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="127" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK35]">
 			<Property Name="IsClustered" Value="False" />
@@ -5605,7 +5989,7 @@
 					<References Name="[dbo].[ListaCompra]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="101" />
+			<AttachedAnnotation Disambiguator="109" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK36]">
 			<Property Name="IsClustered" Value="False" />
@@ -5625,7 +6009,7 @@
 					<References Name="[dbo].[Loja]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="105" />
+			<AttachedAnnotation Disambiguator="113" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK37]">
 			<Property Name="IsClustered" Value="False" />
@@ -5645,7 +6029,7 @@
 					<References Name="[dbo].[GastoCompra]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="75" />
+			<AttachedAnnotation Disambiguator="83" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK38]">
 			<Property Name="IsClustered" Value="False" />
@@ -5665,7 +6049,7 @@
 					<References Name="[dbo].[ItemCompra]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="97" />
+			<AttachedAnnotation Disambiguator="105" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK39]">
 			<Property Name="IsClustered" Value="False" />
@@ -5705,7 +6089,7 @@
 					<References Name="[dbo].[Viagem]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="120" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="128" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK40]">
 			<Property Name="IsClustered" Value="False" />
@@ -5725,7 +6109,7 @@
 					<References Name="[dbo].[Foto]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="54" />
+			<AttachedAnnotation Disambiguator="62" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK41]">
 			<Property Name="IsClustered" Value="False" />
@@ -5745,7 +6129,7 @@
 					<References Name="[dbo].[FotoAtracao]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="58" />
+			<AttachedAnnotation Disambiguator="66" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK42]">
 			<Property Name="IsClustered" Value="False" />
@@ -5765,7 +6149,7 @@
 					<References Name="[dbo].[FotoHotel]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="61" />
+			<AttachedAnnotation Disambiguator="69" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK43]">
 			<Property Name="IsClustered" Value="False" />
@@ -5785,7 +6169,7 @@
 					<References Name="[dbo].[FotoRefeicao]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="67" />
+			<AttachedAnnotation Disambiguator="75" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK44]">
 			<Property Name="IsClustered" Value="False" />
@@ -5805,7 +6189,7 @@
 					<References Name="[dbo].[FotoItemCompra]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="64" />
+			<AttachedAnnotation Disambiguator="72" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK45]">
 			<Property Name="IsClustered" Value="False" />
@@ -5825,7 +6209,7 @@
 					<References Name="[dbo].[CarroEvento]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="35" />
+			<AttachedAnnotation Disambiguator="44" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK46]">
 			<Property Name="IsClustered" Value="False" />
@@ -5845,7 +6229,7 @@
 					<References Name="[dbo].[Pais]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="108" />
+			<AttachedAnnotation Disambiguator="116" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK47]">
 			<Property Name="IsClustered" Value="False" />
@@ -5865,7 +6249,7 @@
 					<References Name="[dbo].[CotacaoMoeda]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="47" />
+			<AttachedAnnotation Disambiguator="55" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK48]">
 			<Relationship Name="ColumnSpecifications">
@@ -5884,7 +6268,7 @@
 					<References Name="[dbo].[RefeicaoPedido]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="121" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="129" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK49]">
 			<Relationship Name="ColumnSpecifications">
@@ -5923,7 +6307,7 @@
 					<References Name="[dbo].[ParticipanteViagem]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="109" />
+			<AttachedAnnotation Disambiguator="117" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK50]">
 			<Relationship Name="ColumnSpecifications">
@@ -5942,7 +6326,7 @@
 					<References Name="[dbo].[UsuarioGasto]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="122" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="130" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK51]">
 			<Relationship Name="ColumnSpecifications">
@@ -5961,7 +6345,7 @@
 					<References Name="[dbo].[HotelEvento]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="94" />
+			<AttachedAnnotation Disambiguator="102" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PK7]">
 			<Property Name="IsClustered" Value="False" />
@@ -6001,7 +6385,7 @@
 					<References Name="[dbo].[Gasto]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="70" />
+			<AttachedAnnotation Disambiguator="78" />
 		</Element>
 		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PKGastoAtracao]">
 			<Property Name="IsClustered" Value="False" />
@@ -6021,7 +6405,7 @@
 					<References Name="[dbo].[GastoAtracao]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="74" />
+			<AttachedAnnotation Disambiguator="82" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[Posicao]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -6166,9 +6550,9 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="114" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="123" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="124" />
+			<AttachedAnnotation Disambiguator="122" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="131" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="132" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[ReabastecimentoGasto]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -6259,9 +6643,9 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="117" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="125" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="126" />
+			<AttachedAnnotation Disambiguator="125" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="133" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="134" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefAluguelReabastecimento46]">
 			<Relationship Name="Columns">
@@ -6284,7 +6668,7 @@
 					<References Name="[dbo].[AluguelReabastecimento]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="125" />
+			<AttachedAnnotation Disambiguator="133" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefAtracao101]">
 			<Relationship Name="Columns">
@@ -6307,7 +6691,7 @@
 					<References Name="[dbo].[Atracao]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="106" />
+			<AttachedAnnotation Disambiguator="114" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefAtracao102]">
 			<Relationship Name="Columns">
@@ -6330,7 +6714,7 @@
 					<References Name="[dbo].[Atracao]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="127" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="135" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefAtracao67]">
 			<Relationship Name="Columns">
@@ -6376,7 +6760,7 @@
 					<References Name="[dbo].[Atracao]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="59" />
+			<AttachedAnnotation Disambiguator="67" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefAtracao72]">
 			<Relationship Name="Columns">
@@ -6470,29 +6854,6 @@
 			</Relationship>
 			<AttachedAnnotation Disambiguator="7" />
 		</Element>
-		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefCarro80]">
-			<Relationship Name="Columns">
-				<Entry>
-					<References Name="[dbo].[CarroEvento].[ID_CARRO]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="DefiningTable">
-				<Entry>
-					<References Name="[dbo].[CarroEvento]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="ForeignColumns">
-				<Entry>
-					<References Name="[dbo].[Carro].[ID_CARRO]" />
-				</Entry>
-			</Relationship>
-			<Relationship Name="ForeignTable">
-				<Entry>
-					<References Name="[dbo].[Carro]" />
-				</Entry>
-			</Relationship>
-			<AttachedAnnotation Disambiguator="36" />
-		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefCidade15]">
 			<Relationship Name="Columns">
 				<Entry>
@@ -6514,7 +6875,7 @@
 					<References Name="[dbo].[Cidade]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="41" />
+			<AttachedAnnotation Disambiguator="49" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefCidade16]">
 			<Relationship Name="Columns">
@@ -6537,7 +6898,7 @@
 					<References Name="[dbo].[Cidade]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="42" />
+			<AttachedAnnotation Disambiguator="50" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefCidade20]">
 			<Relationship Name="Columns">
@@ -6560,7 +6921,7 @@
 					<References Name="[dbo].[Cidade]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="45" />
+			<AttachedAnnotation Disambiguator="53" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefCidade24]">
 			<Relationship Name="Columns">
@@ -6583,7 +6944,7 @@
 					<References Name="[dbo].[Cidade]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="128" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="136" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefCidade28]">
 			<Relationship Name="Columns">
@@ -6606,7 +6967,7 @@
 					<References Name="[dbo].[Cidade]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="89" />
+			<AttachedAnnotation Disambiguator="97" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefCidade34]">
 			<Relationship Name="Columns">
@@ -6629,7 +6990,7 @@
 					<References Name="[dbo].[Cidade]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="129" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="137" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefCidade47]">
 			<Relationship Name="Columns">
@@ -6675,7 +7036,7 @@
 					<References Name="[dbo].[Cidade]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="130" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="138" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefCidade66]">
 			<Relationship Name="Columns">
@@ -6721,7 +7082,7 @@
 					<References Name="[dbo].[Cidade]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="55" />
+			<AttachedAnnotation Disambiguator="63" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefCidade81]">
 			<Relationship Name="Columns">
@@ -6744,7 +7105,7 @@
 					<References Name="[dbo].[Cidade]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="37" />
+			<AttachedAnnotation Disambiguator="45" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefCidadeGasto]">
 			<Relationship Name="Columns">
@@ -6767,7 +7128,7 @@
 					<References Name="[dbo].[Cidade]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="73" />
+			<AttachedAnnotation Disambiguator="81" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[Refeicao]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -6971,10 +7332,10 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="116" />
-			<AttachedAnnotation Disambiguator="127" />
-			<AttachedAnnotation Disambiguator="129" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="131" />
+			<AttachedAnnotation Disambiguator="124" />
+			<AttachedAnnotation Disambiguator="135" />
+			<AttachedAnnotation Disambiguator="137" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="139" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[RefeicaoPedido]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -7111,9 +7472,9 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="121" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="132" />
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="133" />
+			<AttachedAnnotation Disambiguator="129" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="140" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="141" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefFoto71]">
 			<Relationship Name="Columns">
@@ -7136,7 +7497,7 @@
 					<References Name="[dbo].[Foto]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="60" />
+			<AttachedAnnotation Disambiguator="68" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefFoto74]">
 			<Relationship Name="Columns">
@@ -7159,7 +7520,7 @@
 					<References Name="[dbo].[Foto]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="62" />
+			<AttachedAnnotation Disambiguator="70" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefFoto76]">
 			<Relationship Name="Columns">
@@ -7182,7 +7543,7 @@
 					<References Name="[dbo].[Foto]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="68" />
+			<AttachedAnnotation Disambiguator="76" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefFoto78]">
 			<Relationship Name="Columns">
@@ -7205,7 +7566,7 @@
 					<References Name="[dbo].[Foto]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="65" />
+			<AttachedAnnotation Disambiguator="73" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefGasto31]">
 			<Relationship Name="Columns">
@@ -7228,7 +7589,7 @@
 					<References Name="[dbo].[Gasto]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="80" />
+			<AttachedAnnotation Disambiguator="88" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefGasto36]">
 			<Relationship Name="Columns">
@@ -7251,7 +7612,7 @@
 					<References Name="[dbo].[Gasto]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="83" />
+			<AttachedAnnotation Disambiguator="91" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefGasto42]">
 			<Relationship Name="Columns">
@@ -7297,7 +7658,7 @@
 					<References Name="[dbo].[Gasto]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="126" />
+			<AttachedAnnotation Disambiguator="134" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefGasto49]">
 			<Relationship Name="Columns">
@@ -7320,7 +7681,7 @@
 					<References Name="[dbo].[Gasto]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="86" />
+			<AttachedAnnotation Disambiguator="94" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefGasto60]">
 			<Relationship Name="Columns">
@@ -7343,7 +7704,7 @@
 					<References Name="[dbo].[Gasto]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="76" />
+			<AttachedAnnotation Disambiguator="84" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefGastoCompra61]">
 			<Relationship Name="Columns">
@@ -7366,7 +7727,7 @@
 					<References Name="[dbo].[GastoCompra]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="98" />
+			<AttachedAnnotation Disambiguator="106" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefHotel30]">
 			<Relationship Name="Columns">
@@ -7389,7 +7750,7 @@
 					<References Name="[dbo].[Hotel]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="81" />
+			<AttachedAnnotation Disambiguator="89" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefHotel32]">
 			<Relationship Name="Columns">
@@ -7412,7 +7773,7 @@
 					<References Name="[dbo].[Hotel]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="92" />
+			<AttachedAnnotation Disambiguator="100" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefHotel75]">
 			<Relationship Name="Columns">
@@ -7435,7 +7796,7 @@
 					<References Name="[dbo].[Hotel]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="63" />
+			<AttachedAnnotation Disambiguator="71" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefHotel99]">
 			<Relationship Name="Columns">
@@ -7458,7 +7819,7 @@
 					<References Name="[dbo].[Hotel]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="95" />
+			<AttachedAnnotation Disambiguator="103" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefItemCompra79]">
 			<Relationship Name="Columns">
@@ -7481,7 +7842,7 @@
 					<References Name="[dbo].[ItemCompra]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="66" />
+			<AttachedAnnotation Disambiguator="74" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefListaCompra62]">
 			<Relationship Name="Columns">
@@ -7504,7 +7865,7 @@
 					<References Name="[dbo].[ListaCompra]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="99" />
+			<AttachedAnnotation Disambiguator="107" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefLoja59]">
 			<Relationship Name="Columns">
@@ -7527,7 +7888,7 @@
 					<References Name="[dbo].[Loja]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="77" />
+			<AttachedAnnotation Disambiguator="85" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefLoja97]">
 			<Relationship Name="Columns">
@@ -7573,7 +7934,7 @@
 					<References Name="[dbo].[Pais]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="39" />
+			<AttachedAnnotation Disambiguator="47" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefRefeicao104]">
 			<Relationship Name="Columns">
@@ -7596,7 +7957,7 @@
 					<References Name="[dbo].[Refeicao]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="132" />
+			<AttachedAnnotation Disambiguator="140" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefRefeicao35]">
 			<Relationship Name="Columns">
@@ -7619,7 +7980,7 @@
 					<References Name="[dbo].[Refeicao]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="84" />
+			<AttachedAnnotation Disambiguator="92" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefRefeicao77]">
 			<Relationship Name="Columns">
@@ -7642,7 +8003,7 @@
 					<References Name="[dbo].[Refeicao]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="69" />
+			<AttachedAnnotation Disambiguator="77" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefUsuario1]">
 			<Relationship Name="Columns">
@@ -7665,7 +8026,7 @@
 					<References Name="[dbo].[Usuario]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="134" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="142" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefUsuario10]">
 			<Relationship Name="Columns">
@@ -7711,7 +8072,7 @@
 					<References Name="[dbo].[Usuario]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="100" />
+			<AttachedAnnotation Disambiguator="108" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefUsuario103]">
 			<Relationship Name="Columns">
@@ -7734,7 +8095,7 @@
 					<References Name="[dbo].[Usuario]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="133" />
+			<AttachedAnnotation Disambiguator="141" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefUsuario105]">
 			<Relationship Name="Columns">
@@ -7757,7 +8118,7 @@
 					<References Name="[dbo].[Usuario]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="135" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="143" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefUsuario12]">
 			<Relationship Name="Columns">
@@ -7780,7 +8141,7 @@
 					<References Name="[dbo].[Usuario]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="71" />
+			<AttachedAnnotation Disambiguator="79" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefUsuario2]">
 			<Relationship Name="Columns">
@@ -7803,7 +8164,7 @@
 					<References Name="[dbo].[Usuario]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="136" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="144" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefUsuario23]">
 			<Relationship Name="Columns">
@@ -7826,7 +8187,7 @@
 					<References Name="[dbo].[Usuario]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="137" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="145" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefUsuario26]">
 			<Relationship Name="Columns">
@@ -7849,7 +8210,7 @@
 					<References Name="[dbo].[Usuario]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="123" />
+			<AttachedAnnotation Disambiguator="131" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefUsuario29]">
 			<Relationship Name="Columns">
@@ -7872,7 +8233,7 @@
 					<References Name="[dbo].[Usuario]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="93" />
+			<AttachedAnnotation Disambiguator="101" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefUsuario3]">
 			<Relationship Name="Columns">
@@ -7964,7 +8325,7 @@
 					<References Name="[dbo].[Usuario]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="138" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="146" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefUsuario54]">
 			<Relationship Name="Columns">
@@ -8010,7 +8371,7 @@
 					<References Name="[dbo].[Usuario]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="102" />
+			<AttachedAnnotation Disambiguator="110" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefUsuario57]">
 			<Relationship Name="Columns">
@@ -8033,7 +8394,7 @@
 					<References Name="[dbo].[Usuario]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="103" />
+			<AttachedAnnotation Disambiguator="111" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefUsuario64]">
 			<Relationship Name="Columns">
@@ -8079,7 +8440,7 @@
 					<References Name="[dbo].[Usuario]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="56" />
+			<AttachedAnnotation Disambiguator="64" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefUsuario7]">
 			<Relationship Name="Columns">
@@ -8102,7 +8463,7 @@
 					<References Name="[dbo].[Usuario]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="110" />
+			<AttachedAnnotation Disambiguator="118" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefUsuario96]">
 			<Relationship Name="Columns">
@@ -8148,7 +8509,7 @@
 					<References Name="[dbo].[Usuario]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="96" />
+			<AttachedAnnotation Disambiguator="104" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefViagem106]">
 			<Relationship Name="Columns">
@@ -8171,7 +8532,7 @@
 					<References Name="[dbo].[Viagem]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="139" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="147" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefViagem11]">
 			<Relationship Name="Columns">
@@ -8194,7 +8555,7 @@
 					<References Name="[dbo].[Viagem]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="72" />
+			<AttachedAnnotation Disambiguator="80" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefViagem14]">
 			<Relationship Name="Columns">
@@ -8217,7 +8578,7 @@
 					<References Name="[dbo].[Viagem]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="43" />
+			<AttachedAnnotation Disambiguator="51" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefViagem19]">
 			<Relationship Name="Columns">
@@ -8240,7 +8601,7 @@
 					<References Name="[dbo].[Viagem]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="46" />
+			<AttachedAnnotation Disambiguator="54" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefViagem21]">
 			<Relationship Name="Columns">
@@ -8286,7 +8647,7 @@
 					<References Name="[dbo].[Viagem]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="140" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="148" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefViagem25]">
 			<Relationship Name="Columns">
@@ -8309,7 +8670,7 @@
 					<References Name="[dbo].[Viagem]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="124" />
+			<AttachedAnnotation Disambiguator="132" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefViagem27]">
 			<Relationship Name="Columns">
@@ -8332,7 +8693,7 @@
 					<References Name="[dbo].[Viagem]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="90" />
+			<AttachedAnnotation Disambiguator="98" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefViagem33]">
 			<Relationship Name="Columns">
@@ -8355,7 +8716,7 @@
 					<References Name="[dbo].[Viagem]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="131" />
+			<AttachedAnnotation Disambiguator="139" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefViagem38]">
 			<Relationship Name="Columns">
@@ -8401,7 +8762,7 @@
 					<References Name="[dbo].[Viagem]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="141" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="149" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefViagem55]">
 			<Relationship Name="Columns">
@@ -8424,7 +8785,7 @@
 					<References Name="[dbo].[Viagem]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="104" />
+			<AttachedAnnotation Disambiguator="112" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefViagem58]">
 			<Relationship Name="Columns">
@@ -8447,7 +8808,7 @@
 					<References Name="[dbo].[Viagem]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="107" />
+			<AttachedAnnotation Disambiguator="115" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefViagem6]">
 			<Relationship Name="Columns">
@@ -8470,7 +8831,7 @@
 					<References Name="[dbo].[Viagem]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="111" />
+			<AttachedAnnotation Disambiguator="119" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefViagem65]">
 			<Relationship Name="Columns">
@@ -8516,7 +8877,7 @@
 					<References Name="[dbo].[Viagem]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="57" />
+			<AttachedAnnotation Disambiguator="65" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefViagem83]">
 			<Relationship Name="Columns">
@@ -8539,7 +8900,7 @@
 					<References Name="[dbo].[Viagem]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="48" />
+			<AttachedAnnotation Disambiguator="56" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefViagem9]">
 			<Relationship Name="Columns">
@@ -8585,7 +8946,7 @@
 					<References Name="[dbo].[ViagemAerea]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="87" />
+			<AttachedAnnotation Disambiguator="95" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefViagemAerea51]">
 			<Relationship Name="Columns">
@@ -8608,7 +8969,7 @@
 					<References Name="[dbo].[ViagemAerea]" />
 				</Entry>
 			</Relationship>
-			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="142" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="150" />
 		</Element>
 		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[RefViagemAerea53]">
 			<Relationship Name="Columns">
@@ -8739,9 +9100,9 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="115" />
-			<AttachedAnnotation Disambiguator="134" />
-			<AttachedAnnotation Disambiguator="136" />
+			<AttachedAnnotation Disambiguator="123" />
+			<AttachedAnnotation Disambiguator="142" />
+			<AttachedAnnotation Disambiguator="144" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[Sugestao]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -8948,10 +9309,10 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="113" />
-			<AttachedAnnotation Disambiguator="128" />
-			<AttachedAnnotation Disambiguator="137" />
-			<AttachedAnnotation Disambiguator="140" />
+			<AttachedAnnotation Disambiguator="121" />
+			<AttachedAnnotation Disambiguator="136" />
+			<AttachedAnnotation Disambiguator="145" />
+			<AttachedAnnotation Disambiguator="148" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[Usuario]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -9096,7 +9457,7 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="112" />
+			<AttachedAnnotation Disambiguator="120" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[UsuarioGasto]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -9155,9 +9516,9 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="122" />
-			<AttachedAnnotation Disambiguator="135" />
-			<AttachedAnnotation Disambiguator="139" />
+			<AttachedAnnotation Disambiguator="130" />
+			<AttachedAnnotation Disambiguator="143" />
+			<AttachedAnnotation Disambiguator="147" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[Viagem]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -9392,8 +9753,8 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="120" />
-			<AttachedAnnotation Disambiguator="138" />
+			<AttachedAnnotation Disambiguator="128" />
+			<AttachedAnnotation Disambiguator="146" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[ViagemAerea]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -9533,8 +9894,8 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="118" />
-			<AttachedAnnotation Disambiguator="141" />
+			<AttachedAnnotation Disambiguator="126" />
+			<AttachedAnnotation Disambiguator="149" />
 		</Element>
 		<Element Type="SqlTable" Name="[dbo].[ViagemAereaAeroporto]">
 			<Property Name="IsAnsiNullsOn" Value="True" />
@@ -9738,9 +10099,9 @@
 					<References ExternalSource="BuiltIns" Name="[dbo]" />
 				</Entry>
 			</Relationship>
-			<AttachedAnnotation Disambiguator="119" />
-			<AttachedAnnotation Disambiguator="130" />
-			<AttachedAnnotation Disambiguator="142" />
+			<AttachedAnnotation Disambiguator="127" />
+			<AttachedAnnotation Disambiguator="138" />
+			<AttachedAnnotation Disambiguator="150" />
 		</Element>
 	</Model>
 </DataSchemaModel>

@@ -67,6 +67,8 @@ using CV.Model;
 		public DbSet<HotelEvento> HotelEventos { get; set; }
 		public DbSet<GastoAtracao> GastoAtracoes { get; set; }
 		public DbSet<GastoDividido> GastoDivididos { get; set; }
+		public DbSet<CarroDeslocamento> CarroDeslocamentos { get; set; }
+		public DbSet<CarroDeslocamentoUsuario> CarroDeslocamentoUsuarios { get; set; }
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
 
@@ -119,6 +121,8 @@ using CV.Model;
 			modelBuilder.Configurations.Add(new HotelEventoConfiguration());
 			modelBuilder.Configurations.Add(new GastoAtracaoConfiguration());
 			modelBuilder.Configurations.Add(new GastoDivididoConfiguration());
+			modelBuilder.Configurations.Add(new CarroDeslocamentoConfiguration());
+			modelBuilder.Configurations.Add(new CarroDeslocamentoUsuarioConfiguration());
 			base.OnModelCreating(modelBuilder);
 		}		
 	}

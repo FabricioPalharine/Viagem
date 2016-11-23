@@ -20,15 +20,6 @@ namespace CV.Model
 			[NotNullValidator(MessageTemplateResourceName="Carro_IdentificadorViagem",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public int? IdentificadorViagem { get; set; }
 
-			[SelfValidation]
-private void ValidarLocadora(Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResults results)
-{
-  {
-      Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult result =
-            new Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult(Resource.MensagemModelo.Carro_Locadora_Tamanho, this, "Locadora", null, null);
-      results.AddResult(result);
-  }
-}
 			public string Locadora { get; set; }
 
 			public string Modelo { get; set; }
@@ -61,17 +52,11 @@ private void ValidarModelo(Microsoft.Practices.EnterpriseLibrary.Validation.Vali
 
 			public IList<AvaliacaoAluguel> Avaliacoes { get; set; }
 
-			public IList<CarroEvento> Eventos { get; set; }
-
 			public Viagem ItemViagem { get; set; }
 
 			public DateTime? DataAtualizacao { get; set; }
 
 			public DateTime? DataExclusao { get; set; }
-
-			public int? OdometroInicial { get; set; }
-
-			public int? OdometroFinal { get; set; }
 
 			public DateTime? DataRetirada { get; set; }
 
@@ -79,6 +64,16 @@ private void ValidarModelo(Microsoft.Practices.EnterpriseLibrary.Validation.Vali
 
 			[NotNullValidator(MessageTemplateResourceName="Carro_Descricao",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public string Descricao { get; set; }
+
+			public int? IdentificadorCarroEventoRetirada { get; set; }
+
+			public int? IdentificadorCarroEventoDevolucao { get; set; }
+
+			public CarroEvento ItemCarroEventoRetirada { get; set; }
+
+			public CarroEvento ItemCarroEventoDevolucao { get; set; }
+
+			public IList<CarroDeslocamento> Deslocamentos { get; set; }
 		 public Carro Clone()
 		{
 			 return (Carro) this.MemberwiseClone();

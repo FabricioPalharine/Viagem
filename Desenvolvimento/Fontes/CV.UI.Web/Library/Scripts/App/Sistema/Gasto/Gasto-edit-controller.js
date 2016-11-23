@@ -46,9 +46,24 @@
 			else
 			    vm.PreencherLoadItem();
 
+			EscopoAtualizacao.SalvarCusto = function () {
+			    if (vm.itemUsuario !== null && vm.itemUsuario.Identificador)
+			        vm.itemGasto.IdentificadorUsuario = vm.itemUsuario.Identificador;
+			    else
+			        vm.itemGasto.IdentificadorUsuario = null;
+
+			    if (vm.itemMoeda && vm.itemMoeda.Codigo)
+			        vm.itemGasto.Moeda = vm.itemMoeda.Codigo;
+			    else
+			        vm.itemGasto.Moeda = null;
 
 
+			    if (vm.itemGasto.Data) {
+			        vm.itemGasto.Data = moment(vm.itemGasto.Data).format("YYYY-MM-DDT");
+			        vm.itemGasto.Data += (vm.itemGasto.strHora) ? vm.itemGasto.strHora : "00:00:00";
 
+			    }
+			};
 			
 		};
 
@@ -85,8 +100,8 @@
 		            var item = { IdentificadorRefeicao: Referencias.IdentificadorRefeicao, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss") }
 		            vm.itemGasto.Refeicoes.push(item);
 		        }
-		        if (Referencias.IdentificadorAluguel) {
-		            var item = { IdentificadorAluguel: Referencias.IdentificadorAluguel, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss") }
+		        if (Referencias.IdentificadorCarro) {
+		            var item = { IdentificadorCarro: Referencias.IdentificadorCarro, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss") }
 		            vm.itemGasto.Alugueis.push(item);
 		        }
 		        if (Referencias.IdentificadorViagemAerea) {

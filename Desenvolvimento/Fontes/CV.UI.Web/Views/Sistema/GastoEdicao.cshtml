@@ -1,12 +1,12 @@
 <!-- Main content -->
 <!-- Default box -->
 <!-- general form elements -->
-<div class="box box-primary">
+<div ng-class="{'box box-primary':!itemGastoEdit.itemGasto.ExibeHora}">
     <div class="overlay" ng-show="itemGastoEdit.loading">
         <i class="fa fa-refresh fa-spin text-gray"></i>
     </div>
 
-      <div class="box-body" >
+      <div ng-class="{'box-body':!itemGastoEdit.itemGasto.ExibeHora}" >
 
             <div class="row" ng-show="itemGastoEdit.messages.length > 0">
                 <div class="col-md-12">
@@ -29,7 +29,7 @@
                         <option value="">@TextosPaginas.Selecione</option>
                     </select>
                 </div>
-                <div class="form-group col-md-6" ng-class="{ 'has-error':itemGastoEdit.CamposInvalidos.Data}">
+                <div class="form-group " ng-class="{ 'has-error':itemGastoEdit.CamposInvalidos.Data,'col-md-6':!itemGastoEdit.itemGasto.ExibeHora,'col-md-4':itemGastoEdit.itemGasto.ExibeHora }">
                     <label>@TextosPaginas.Gasto_Data</label>
                     <div class="dropdown">
                         <a class="dropdown-toggle" role="button" data-toggle="dropdown">
@@ -47,16 +47,20 @@
                         </ul>
                     </div>
                 </div>
+                <div class="form-group col-md-2" ng-if="itemGastoEdit.itemGasto.ExibeHora" style="padding-left:0px">
+                    <label>&nbsp;</label>
+                    <input type="text" class="form-control" ng-model="itemGastoEdit.itemGasto.strHora" input-mask="{mask: 'h:s:s'}" empty-to-null >
 
+                </div>
 
                 <div class="form-group col-md-6" ng-class="{ 'has-error':itemGastoEdit.CamposInvalidos.Descricao}">
                     <label>@TextosPaginas.Gasto_Descricao</label>
                     <input type="text" class="form-control" ng-model="itemGastoEdit.itemGasto.Descricao" maxlength="100" empty-to-null>
-                </div>                
+                </div>
                 <div class="form-group col-md-6" ng-class="{ 'has-error':itemGastoEdit.CamposInvalidos.Valor}">
                     <label>@TextosPaginas.Gasto_Valor</label>
                     <input type="text" class="form-control" ng-model="itemGastoEdit.itemGasto.Valor" empty-to-null decimal-input="{digits:2, integerDigits:16}">
-                </div>               
+                </div>
                 <div class="form-group col-md-6" ng-class="{ 'has-error':itemGastoEdit.CamposInvalidos.Especie}">
                     <label>@TextosPaginas.Gasto_Especie</label>
                     <input type="checkbox" ng-model="itemGastoEdit.itemGasto.Especie" class="checkbox">
@@ -85,7 +89,7 @@
                         </ul>
                     </div>
                 </div>
-               
+
                 <div class="form-group col-md-6" ng-class="{ 'has-error':itemGastoEdit.CamposInvalidos.ApenasBaixa}" ng-show="itemGastoEdit.itemGasto.Especie">
                     <label>@TextosPaginas.Gasto_ApenasBaixa</label>
                     <input type="checkbox" ng-model="itemGastoEdit.itemGasto.ApenasBaixa" class="checkbox">

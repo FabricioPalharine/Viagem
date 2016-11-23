@@ -155,6 +155,10 @@
     <Compile Include="Configuration\pGastoAtracaoConfiguration.cs" />
     <Compile Include="Configuration\GastoDivididoConfiguration.cs" />
     <Compile Include="Configuration\pGastoDivididoConfiguration.cs" />
+    <Compile Include="Configuration\CarroDeslocamentoConfiguration.cs" />
+    <Compile Include="Configuration\pCarroDeslocamentoConfiguration.cs" />
+    <Compile Include="Configuration\CarroDeslocamentoUsuarioConfiguration.cs" />
+    <Compile Include="Configuration\pCarroDeslocamentoUsuarioConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CV.Model\CV.Model.csproj">

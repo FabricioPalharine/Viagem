@@ -27,15 +27,17 @@ namespace CV.Data.Configuration
 			this.HasMany(i => i.Gastos).WithRequired().HasForeignKey(d=>d.IdentificadorCarro);
 			this.HasMany(i => i.Reabastecimentos).WithRequired().HasForeignKey(d=>d.IdentificadorCarro);
 			this.HasMany(i => i.Avaliacoes).WithRequired().HasForeignKey(d=>d.IdentificadorCarro);
-			this.HasMany(i => i.Eventos).WithRequired().HasForeignKey(d=>d.IdentificadorCarro);
 			this.HasRequired(i => i.ItemViagem).WithMany().HasForeignKey(d=>d.IdentificadorViagem);
 			this.Property(i => i.DataAtualizacao).HasColumnName("DT_ATUALIZACAO");
 			this.Property(i => i.DataExclusao).HasColumnName("DT_EXCLUSAO");
-			this.Property(i => i.OdometroInicial).HasColumnName("VL_ODOMETRO_INICIO");
-			this.Property(i => i.OdometroFinal).HasColumnName("VL_ODOMETRO_FIM");
 			this.Property(i => i.DataRetirada).HasColumnName("DT_RETIRADA");
 			this.Property(i => i.DataDevolucao).HasColumnName("DT_DEVOLUCAO");
 			this.Property(i => i.Descricao).HasColumnName("DS_DESCRICAO");
+			this.Property(i => i.IdentificadorCarroEventoRetirada).HasColumnName("ID_CARRO_EVENTO_RETIRADA");
+			this.Property(i => i.IdentificadorCarroEventoDevolucao).HasColumnName("ID_CARRO_EVENTO_DEVOLUCAO");
+			this.HasOptional(i => i.ItemCarroEventoRetirada).WithMany().HasForeignKey(d=>d.IdentificadorCarroEventoRetirada);
+			this.HasOptional(i => i.ItemCarroEventoDevolucao).WithMany().HasForeignKey(d=>d.IdentificadorCarroEventoDevolucao);
+			this.HasMany(i => i.Deslocamentos).WithRequired().HasForeignKey(d=>d.IdentificadorCarro);
 		MapearCamposManualmente();
 		}
 	}

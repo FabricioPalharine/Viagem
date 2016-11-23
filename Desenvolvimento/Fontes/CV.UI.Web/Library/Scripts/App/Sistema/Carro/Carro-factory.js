@@ -36,8 +36,19 @@
               },
             //  transformResponse: parseArray,
               isArray: false
-          }
-         
+          },
+          save: {
+              method: 'POST',
+              params: {
+                  controller: 'Post'
+              }
+          },
+          SalvarCarroDeslocamento: {
+              method: 'POST',
+              params: {
+                  controller: 'SalvarCarroDeslocamento'
+              }
+          },
 
       });
     return UserBase;

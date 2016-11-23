@@ -993,4 +993,31 @@
   <data name="Carro_Descricao" xml:space="preserve">
     <value>O campo Descrição é obrigatório</value>
   </data>
+  <data name="CarroDeslocamento_Identificador" xml:space="preserve">
+    <value>O campo Identificador é obrigatório</value>
+  </data>
+  <data name="CarroDeslocamento_IdentificadorCarro" xml:space="preserve">
+    <value>O campo Carro é obrigatório</value>
+  </data>
+  <data name="CarroDeslocamento_IdentificadorCarroEventoPartida" xml:space="preserve">
+    <value>O campo Partida é obrigatório</value>
+  </data>
+  <data name="CarroDeslocamento_IdentificadorCarroEventoChegada" xml:space="preserve">
+    <value>O campo Chegada é obrigatório</value>
+  </data>
+  <data name="CarroDeslocamento_DataAtualizacao" xml:space="preserve">
+    <value>O campo Data Atualização é obrigatório</value>
+  </data>
+  <data name="CarroDeslocamentoUsuario_Identificador" xml:space="preserve">
+    <value>O campo Identificador é obrigatório</value>
+  </data>
+  <data name="CarroDeslocamentoUsuario_IdentificadorCarroDeslocamento" xml:space="preserve">
+    <value>O campo Deslocamento é obrigatório</value>
+  </data>
+  <data name="CarroDeslocamentoUsuario_IdentificadorUsuario" xml:space="preserve">
+    <value>O campo Usuário é obrigatório</value>
+  </data>
+  <data name="AvaliacaoAluguel_IdentificadorUsuario" xml:space="preserve">
+    <value>O campo Usuário é obrigatório</value>
+  </data>
 </root>

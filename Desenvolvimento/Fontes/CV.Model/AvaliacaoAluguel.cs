@@ -17,8 +17,8 @@ namespace CV.Model
 
 			public int? Identificador { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="AvaliacaoAluguel_IdentificadorUsuário",MessageTemplateResourceType=typeof(MensagemModelo))]
-			public int? IdentificadorUsuário { get; set; }
+			[NotNullValidator(MessageTemplateResourceName="AvaliacaoAluguel_IdentificadorUsuario",MessageTemplateResourceType=typeof(MensagemModelo))]
+			public int? IdentificadorUsuario { get; set; }
 
 			[NotNullValidator(MessageTemplateResourceName="AvaliacaoAluguel_IdentificadorCarro",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public int? IdentificadorCarro { get; set; }

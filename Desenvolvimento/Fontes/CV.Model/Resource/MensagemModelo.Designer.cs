@@ -306,6 +306,15 @@ namespace CV.Model.Resource {
         /// <summary>
         ///   Looks up a localized string similar to O campo Usuário é obrigatório.
         /// </summary>
+        public static string AvaliacaoAluguel_IdentificadorUsuario {
+            get {
+                return ResourceManager.GetString("AvaliacaoAluguel_IdentificadorUsuario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo Usuário é obrigatório.
+        /// </summary>
         public static string AvaliacaoAluguel_IdentificadorUsuário {
             get {
                 return ResourceManager.GetString("AvaliacaoAluguel_IdentificadorUsuário", resourceCulture);
@@ -552,6 +561,78 @@ namespace CV.Model.Resource {
         public static string Carro_Modelo_Tamanho {
             get {
                 return ResourceManager.GetString("Carro_Modelo_Tamanho", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo Data Atualização é obrigatório.
+        /// </summary>
+        public static string CarroDeslocamento_DataAtualizacao {
+            get {
+                return ResourceManager.GetString("CarroDeslocamento_DataAtualizacao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo Identificador é obrigatório.
+        /// </summary>
+        public static string CarroDeslocamento_Identificador {
+            get {
+                return ResourceManager.GetString("CarroDeslocamento_Identificador", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo Carro é obrigatório.
+        /// </summary>
+        public static string CarroDeslocamento_IdentificadorCarro {
+            get {
+                return ResourceManager.GetString("CarroDeslocamento_IdentificadorCarro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo Chegada é obrigatório.
+        /// </summary>
+        public static string CarroDeslocamento_IdentificadorCarroEventoChegada {
+            get {
+                return ResourceManager.GetString("CarroDeslocamento_IdentificadorCarroEventoChegada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo Partida é obrigatório.
+        /// </summary>
+        public static string CarroDeslocamento_IdentificadorCarroEventoPartida {
+            get {
+                return ResourceManager.GetString("CarroDeslocamento_IdentificadorCarroEventoPartida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo Identificador é obrigatório.
+        /// </summary>
+        public static string CarroDeslocamentoUsuario_Identificador {
+            get {
+                return ResourceManager.GetString("CarroDeslocamentoUsuario_Identificador", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo Deslocamento é obrigatório.
+        /// </summary>
+        public static string CarroDeslocamentoUsuario_IdentificadorCarroDeslocamento {
+            get {
+                return ResourceManager.GetString("CarroDeslocamentoUsuario_IdentificadorCarroDeslocamento", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo Usuário é obrigatório.
+        /// </summary>
+        public static string CarroDeslocamentoUsuario_IdentificadorUsuario {
+            get {
+                return ResourceManager.GetString("CarroDeslocamentoUsuario_IdentificadorUsuario", resourceCulture);
             }
         }
         

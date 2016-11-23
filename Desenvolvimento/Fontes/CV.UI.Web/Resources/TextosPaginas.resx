@@ -1257,38 +1257,76 @@
   <data name="Carro_DataRetiradaAte" xml:space="preserve">
     <value>Data Retirada Até</value>
   </data>
-<data name="Carro_DataDevolucaoDe" xml:space="preserve">
+  <data name="Carro_DataDevolucaoDe" xml:space="preserve">
     <value>Data Devolução De</value>
   </data>
-<data name="Carro_DataDevolucaoAte" xml:space="preserve">
+  <data name="Carro_DataDevolucaoAte" xml:space="preserve">
     <value>Data Devolução Até</value>
   </data>
-<data name="Carro_Ocupantes" xml:space="preserve">
+  <data name="Carro_Ocupantes" xml:space="preserve">
     <value>Carro Ocupantes</value>
   </data>
-<data name="Geral_KM" xml:space="preserve">
+  <data name="Geral_KM" xml:space="preserve">
     <value>Quilômetros</value>
   </data>
-<data name="Geral_MI" xml:space="preserve">
+  <data name="Geral_MI" xml:space="preserve">
     <value>Milhas</value>
   </data>
-<data name="Carro_Retirada" xml:space="preserve">
+  <data name="Carro_Retirada" xml:space="preserve">
     <value>Início</value>
   </data>
-<data name="Carro_Devolucao" xml:space="preserve">
+  <data name="Carro_Devolucao" xml:space="preserve">
     <value>Fim</value>
   </data>
-<data name="Carro_Data" xml:space="preserve">
+  <data name="Carro_Data" xml:space="preserve">
     <value>Data</value>
   </data>
-<data name="Carro_Odometro" xml:space="preserve">
+  <data name="Carro_Odometro" xml:space="preserve">
     <value>Odômetro</value>
   </data>
-<data name="Reabastecimento_Valor" xml:space="preserve">
+  <data name="Reabastecimento_Valor" xml:space="preserve">
     <value>Valor</value>
   </data>
   <data name="Carro_AdicionaReabastecimento" xml:space="preserve">
     <value>Adicionar Reabastecimento</value>
   </data>
-
+  <data name="Carro_IdentificadorCarroEventoRetirada" xml:space="preserve">
+    <value>Retirada</value>
+  </data>
+  <data name="Carro_IdentificadorCarroEventoDevolucao" xml:space="preserve">
+    <value>Devolução</value>
+  </data>
+  <data name="Carro_Chegada" xml:space="preserve">
+    <value>Chegada</value>
+  </data>
+  <data name="Carro_Deslocamentos" xml:space="preserve">
+    <value>Deslocamentos</value>
+  </data>
+  <data name="Carro_FimDeslocamento" xml:space="preserve">
+    <value>Fim do Deslocamento</value>
+  </data>
+  <data name="Carro_Observacoes" xml:space="preserve">
+    <value>Observações</value>
+  </data>
+  <data name="Carro_Partida" xml:space="preserve">
+    <value>Partida</value>
+  </data>
+  <data name="Deslocamento_CidadeChegada" xml:space="preserve">
+    <value>Cidade</value>
+  </data>
+  <data name="Deslocamento_CidadePartida" xml:space="preserve">
+    <value>Cidade</value>
+  </data>
+  <data name="Deslocamento_DataChegada" xml:space="preserve">
+    <value>Chegada</value>
+  </data>
+  <data name="Deslocamento_DataPartida" xml:space="preserve">
+    <value>Partida</value>
+  </data>
+  <data name="Reabastecimento_Galao" xml:space="preserve">
+    <value>Galão</value>
+  </data>
+  <data name="Reabastecimento_Unidade" xml:space="preserve">
+    <value>Unidade</value>
+  </data>
 </root>

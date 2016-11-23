@@ -11,11 +11,11 @@
 
 </section>
 <!-- Main content -->
-<section class="content" ng-init="itemHotel.load()">
+<section class="content" ng-init="itemCarro.load()">
     <!-- Default box -->
     <!-- general form elements -->
     <div class="box box-primary">
-        <div class="overlay" ng-show="itemHotel.loading">
+        <div class="overlay" ng-show="itemCarro.loading">
             <i class="fa fa-refresh fa-spin text-gray"></i>
         </div>
 
@@ -32,15 +32,15 @@
 
                     <div class="form-group col-md-6">
                         <label>@TextosPaginas.Carro_Descricao</label>
-                        <input type="text" class="form-control" ng-model="itemHotel.filtro.Nome" maxlength="100" empty-to-null>
+                        <input type="text" class="form-control" ng-model="itemCarro.filtro.Nome" maxlength="100" empty-to-null>
                     </div>
                     <div class="form-group col-md-6">
                         <label>@TextosPaginas.Carro_Modelo</label>
-                        <input type="text" class="form-control" ng-model="itemHotel.filtro.Tipo" maxlength="100" empty-to-null>
+                        <input type="text" class="form-control" ng-model="itemCarro.filtro.Tipo" maxlength="100" empty-to-null>
                     </div>
                     <div class="form-group col-md-6">
                         <label>@TextosPaginas.Carro_Locadora</label>
-                        <input type="text" class="form-control" ng-model="itemHotel.filtro.Comentario" maxlength="100" empty-to-null>
+                        <input type="text" class="form-control" ng-model="itemCarro.filtro.Comentario" maxlength="100" empty-to-null>
                     </div>
                 </div>
                 <div class="row">
@@ -50,7 +50,7 @@
                         <div class="dropdown">
                             <a class="dropdown-toggle" role="button" data-toggle="dropdown">
                                 <div class="input-group">
-                                    <input date-input ng-model="itemHotel.filtro.DataInicioDe" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                    <input date-input ng-model="itemCarro.filtro.DataInicioDe" class="form-control" input-mask="{mask: 'd/m/y'}"
                                            datapattern="dd/MM/yyyy">
                                     <span class="input-group-addon">
                                         <i class="glyphicon glyphicon-calendar"></i>
@@ -58,8 +58,8 @@
                                 </div>
                             </a>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                <datetimepicker data-ng-model="itemHotel.filtro.DataInicioDe"
-                                                data-datetimepicker-config="{  minView:'day' , langCode:itemHotel.Idioma()  }" />
+                                <datetimepicker data-ng-model="itemCarro.filtro.DataInicioDe"
+                                                data-datetimepicker-config="{  minView:'day' , langCode:itemCarro.Idioma()  }" />
                             </ul>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                         <div class="dropdown">
                             <a class="dropdown-toggle" role="button" data-toggle="dropdown">
                                 <div class="input-group">
-                                    <input date-input ng-model="itemHotel.filtro.DataInicioAte" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                    <input date-input ng-model="itemCarro.filtro.DataInicioAte" class="form-control" input-mask="{mask: 'd/m/y'}"
                                            datapattern="dd/MM/yyyy">
                                     <span class="input-group-addon">
                                         <i class="glyphicon glyphicon-calendar"></i>
@@ -76,8 +76,8 @@
                                 </div>
                             </a>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                <datetimepicker data-ng-model="itemHotel.filtro.DataInicioAte"
-                                                data-datetimepicker-config="{  minView:'day' , langCode:itemHotel.Idioma()  }" />
+                                <datetimepicker data-ng-model="itemCarro.filtro.DataInicioAte"
+                                                data-datetimepicker-config="{  minView:'day' , langCode:itemCarro.Idioma()  }" />
                             </ul>
                         </div>
                     </div>
@@ -86,7 +86,7 @@
                         <div class="dropdown">
                             <a class="dropdown-toggle" role="button" data-toggle="dropdown">
                                 <div class="input-group">
-                                    <input date-input ng-model="itemHotel.filtro.DataFimDe" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                    <input date-input ng-model="itemCarro.filtro.DataFimDe" class="form-control" input-mask="{mask: 'd/m/y'}"
                                            datapattern="dd/MM/yyyy">
                                     <span class="input-group-addon">
                                         <i class="glyphicon glyphicon-calendar"></i>
@@ -94,8 +94,8 @@
                                 </div>
                             </a>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                <datetimepicker data-ng-model="itemHotel.filtro.DataFimDe"
-                                                data-datetimepicker-config="{  minView:'day' , langCode:itemHotel.Idioma()  }" />
+                                <datetimepicker data-ng-model="itemCarro.filtro.DataFimDe"
+                                                data-datetimepicker-config="{  minView:'day' , langCode:itemCarro.Idioma()  }" />
                             </ul>
                         </div>
                     </div>
@@ -104,7 +104,7 @@
                         <div class="dropdown">
                             <a class="dropdown-toggle" role="button" data-toggle="dropdown">
                                 <div class="input-group">
-                                    <input date-input ng-model="itemHotel.filtro.DataFimAte" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                    <input date-input ng-model="itemCarro.filtro.DataFimAte" class="form-control" input-mask="{mask: 'd/m/y'}"
                                            datapattern="dd/MM/yyyy">
                                     <span class="input-group-addon">
                                         <i class="glyphicon glyphicon-calendar"></i>
@@ -112,8 +112,8 @@
                                 </div>
                             </a>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                <datetimepicker data-ng-model="itemHotel.filtro.DataFimAte"
-                                                data-datetimepicker-config="{  minView:'day' , langCode:itemHotel.Idioma()  }" />
+                                <datetimepicker data-ng-model="itemCarro.filtro.DataFimAte"
+                                                data-datetimepicker-config="{  minView:'day' , langCode:itemCarro.Idioma()  }" />
                             </ul>
                         </div>
                     </div>
@@ -123,7 +123,7 @@
             <div class="box-footer">
 
 
-                <button class="btn btn-primary  pull-right" ng-click="itemHotel.filtraDado()">
+                <button class="btn btn-primary  pull-right" ng-click="itemCarro.filtraDado()">
                     <span class="fa fa-search" aria-hidden="true"></span> @TextosPaginas.Pesquisar
                 </button>
 
@@ -131,7 +131,7 @@
         </div>
 
         <div class="box-footer">
-            <a role="button" class="btn btn-primary " title="@TextosPaginas.Adicionar" ng-click="itemHotel.CriarNovoHotel()">
+            <a role="button" class="btn btn-primary " title="@TextosPaginas.Adicionar" ng-click="itemCarro.CriarNovoCarro()">
                 <span class="fa fa-plus" aria-hidden="true"></span>
             </a>
         </div>
@@ -140,10 +140,10 @@
 
 
     <div class="box">
-        <div class="overlay" ng-show="itemHotel.loading">
+        <div class="overlay" ng-show="itemCarro.loading">
             <i class="fa fa-refresh fa-spin text-gray"></i>
         </div>
-        <div ng-repeat='item in itemHotel.ListaDados' class="box " ng-class="{ 'collapsed-box': item.Identificador }" class-validation ng-controller="CarroEditCtrl as itemEdit">
+        <div ng-repeat='item in itemCarro.ListaDados' class="box " ng-class="{ 'collapsed-box': item.Identificador }" class-validation ng-controller="CarroEditCtrl as itemEdit">
             <div class="overlay" ng-show="itemEdit.loading">
                 <i class="fa fa-refresh fa-spin text-gray"></i>
             </div>
@@ -177,22 +177,22 @@
 
                 <div class="row">
 
-                    <div class="col-md-6 " ng-class="{ 'has-error':itemViagemAereaEdit.CamposInvalidos.Descricao}">
+                    <div class="col-md-6 " ng-class="{ 'has-error':itemEdit.CamposInvalidos.Descricao}">
                         <label>@TextosPaginas.Carro_Descricao</label>
-                        <input type="text" class="form-control" ng-model="itemEdit.itemViagemAerea.Descricao" maxlength="200" empty-to-null>
+                        <input type="text" class="form-control" ng-model="itemEdit.itemCarro.Descricao" maxlength="200" empty-to-null>
                     </div>
 
-                    <div class="col-md-6" ng-class="{ 'has-error':itemViagemAereaEdit.CamposInvalidos.Modelo}">
+                    <div class="col-md-6" ng-class="{ 'has-error':itemEdit.CamposInvalidos.Modelo}">
                         <label>@TextosPaginas.Carro_Modelo</label>
-                        <input type="text" class="form-control" ng-model="itemEdit.itemViagemAerea.Modelo" maxlength="100" empty-to-null>
+                        <input type="text" class="form-control" ng-model="itemEdit.itemCarro.Modelo" maxlength="100" empty-to-null>
                     </div>
 
-                    <div class="col-md-3 " ng-class="{ 'has-error':itemViagemAereaEdit.CamposInvalidos.Alugado}">
+                    <div class="col-md-3 " ng-class="{ 'has-error':itemEdit.CamposInvalidos.Alugado}">
                         <label>@TextosPaginas.Carro_KM</label>
                         <div class="form-inline">
 
                             <label class="radio">
-                                <input type="radio" class="radio-inline" name="radUnidade" value="1" ng-model="itemEdit.itemViagemAerea.KM" />
+                                <input type="radio" class="radio-inline" name="radUnidade" ng-value="true" ng-model="itemEdit.itemCarro.KM" />
 
                                 <label style="padding-top:5px">
 
@@ -200,37 +200,32 @@
                                 </label>
                             </label>
                             <label class="radio" style="margin-left:10px">
-                                <input type="radio" class="radio-inline" name="radUnidade" value="0" ng-model="itemEdit.itemViagemAerea.KM" /><label>
+                                <input type="radio" class="radio-inline" name="radUnidade" ng-value="false" ng-model="itemEdit.itemCarro.KM" /><label>
                                     @TextosPaginas.Geral_MI
                             </label>
                         </label>
                     </div>
 
                 </div>
+                                  
 
-                <div class="col-md-3 " ng-class="{ 'has-error':itemViagemAereaEdit.CamposInvalidos.Alugado}">
+                <div class="col-md-3 " ng-class="{ 'has-error':itemEdit.CamposInvalidos.Alugado}">
                     <label>@TextosPaginas.Carro_Alugado</label>
-                    <input type="checkbox" ng-model="itemEdit.itemViagemAerea.Alugado" class="checkbox">
+                    <input type="checkbox" ng-model="itemEdit.itemCarro.Alugado" class="checkbox">
 
                 </div>
 
-                <div class="col-md-3 " ng-class="{ 'has-error':itemViagemAereaEdit.CamposInvalidos.Alugado}">
-                    <label>@TextosPaginas.Carro_Alugado</label>
-                    <input type="checkbox" ng-model="itemEdit.itemViagemAerea.Alugado" class="checkbox">
-
-                </div>
-
-                <div class="col-md-6" ng-class="{ 'has-error':itemViagemAereaEdit.CamposInvalidos.Locadora}" ng-if="itemEdit.itemViagemAerea.Alugado">
+                <div class="col-md-6" ng-class="{ 'has-error':itemEdit.CamposInvalidos.Locadora}" ng-if="itemEdit.itemCarro.Alugado">
                     <label>@TextosPaginas.Carro_Locadora</label>
-                    <input type="text" class="form-control" ng-model="itemEdit.itemViagemAerea.Locadora" maxlength="50" empty-to-null>
+                    <input type="text" class="form-control" ng-model="itemEdit.itemCarro.Locadora" maxlength="50" empty-to-null>
                 </div>
 
-                <div class="col-md-6" ng-class="{ 'has-error':itemViagemAereaEdit.CamposInvalidos.DataRetirada}" ng-if="itemEdit.itemViagemAerea.Alugado">
+                <div class="col-md-6" ng-class="{ 'has-error':itemEdit.CamposInvalidos.DataRetirada}" ng-if="itemEdit.itemCarro.Alugado">
                     <label>@TextosPaginas.Carro_DataRetirada</label>
                     <div class="dropdown">
                         <a class="dropdown-toggle" role="button" data-toggle="dropdown">
                             <div class="input-group">
-                                <input date-input ng-model="itemEdit.itemViagemAerea.DataRetirada" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                <input date-input ng-model="itemEdit.itemCarro.DataRetirada" class="form-control" input-mask="{mask: 'd/m/y'}"
                                        datapattern="dd/MM/yyyy">
                                 <span class="input-group-addon">
                                     <i class="glyphicon glyphicon-calendar"></i>
@@ -238,18 +233,18 @@
                             </div>
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                            <datetimepicker data-ng-model="itemEdit.itemViagemAerea.DataRetirada"
-                                            data-datetimepicker-config="{  minView:'day' , langCode:itemViagemAerea.Idioma()  }" />
+                            <datetimepicker data-ng-model="itemEdit.itemCarro.DataRetirada"
+                                            data-datetimepicker-config="{  minView:'day' , langCode:itemCarro.Idioma()  }" />
                         </ul>
                     </div>
                 </div>
 
-                <div class="col-md-6" ng-class="{ 'has-error':itemViagemAereaEdit.CamposInvalidos.DataDevolucao}" ng-if="itemEdit.itemViagemAerea.Alugado">
-                    <label>@TextosPaginas.Carro_DataRetirada</label>
+                <div class="col-md-6" ng-class="{ 'has-error':itemEdit.CamposInvalidos.DataDevolucao}" ng-if="itemEdit.itemCarro.Alugado">
+                    <label>@TextosPaginas.Carro_DataDevolucao</label>
                     <div class="dropdown">
                         <a class="dropdown-toggle" role="button" data-toggle="dropdown">
                             <div class="input-group">
-                                <input date-input ng-model="itemEdit.itemViagemAerea.DataDevolucao" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                <input date-input ng-model="itemEdit.itemCarro.DataDevolucao" class="form-control" input-mask="{mask: 'd/m/y'}"
                                        datapattern="dd/MM/yyyy">
                                 <span class="input-group-addon">
                                     <i class="glyphicon glyphicon-calendar"></i>
@@ -257,19 +252,20 @@
                             </div>
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                            <datetimepicker data-ng-model="itemEdit.itemViagemAerea.DataDevolucao"
-                                            data-datetimepicker-config="{  minView:'day' , langCode:itemViagemAerea.Idioma()  }" />
+                            <datetimepicker data-ng-model="itemEdit.itemCarro.DataDevolucao"
+                                            data-datetimepicker-config="{  minView:'day' , langCode:itemCarro.Idioma()  }" />
                         </ul>
                     </div>
                 </div>
             </div>
 
-            <div class="row">
+                <div class="row" ng-if="itemEdit.itemCarro.Alugado">
                 <div class="col-md-10">
                     <h3>@TextosPaginas.Carro_Retirada</h3>
                 </div>
                 <div class="col-md-2">
-                    <a role="button" class="btn btn-primary " title="@TextosPaginas.Posicao" ng-click="itemEdit.SelecionarPosicao(itemEdit.itemPontoOrigem)">
+                    <br />
+                    <a role="button" class="btn btn-primary " title="@TextosPaginas.Posicao" ng-click="itemEdit.SelecionarPosicao(itemEdit.itemCarro.ItemCarroEventoRetirada)">
                         <span class="fa fa-map-marker" aria-hidden="true"></span>
                     </a>
                 </div>               
@@ -279,7 +275,7 @@
                     <div class="dropdown">
                         <a class="dropdown-toggle" role="button" data-toggle="dropdown">
                             <div class="input-group">
-                                <input date-input ng-model="itemEdit.itemPontoOrigem.Data" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                <input date-input ng-model="itemEdit.itemCarro.ItemCarroEventoRetirada.Data" class="form-control" input-mask="{mask: 'd/m/y'}"
                                        datapattern="dd/MM/yyyy">
                                 <span class="input-group-addon">
                                     <i class="glyphicon glyphicon-calendar"></i>
@@ -287,33 +283,34 @@
                             </div>
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                            <datetimepicker data-ng-model="itemEdit.itemPontoOrigem.Data"
-                                            data-datetimepicker-config="{  minView:'day' , langCode:itemViagemAerea.Idioma()   }" />
+                            <datetimepicker data-ng-model="itemEdit.itemCarro.ItemCarroEventoRetirada.Data"
+                                            data-datetimepicker-config="{  minView:'day' , langCode:itemCarro.Idioma()   }" />
                         </ul>
                     </div>
                 </div>
                 <div class="col-md-3" >
                     <label>&nbsp;</label>
-                    <input type="text" class="form-control" ng-model="itemEdit.itemPontoOrigem.strHora" input-mask="{mask: 'h:s:s'}" empty-to-null>
+                    <input type="text" class="form-control" ng-model="itemEdit.itemCarro.ItemCarroEventoRetirada.strHora" input-mask="{mask: 'h:s:s'}" empty-to-null>
 
                 </div>
 
                 <div class="col-md-6">
                     <label>@TextosPaginas.Carro_Odometro</label>
-                    <input type="text" class="form-control" ng-model="itemEdit.itemViagemAerea.OdometroInicial" maxlength="7" empty-to-null integer-input>
+                    <input type="text" class="form-control" ng-model="itemEdit.itemCarro.ItemCarroEventoRetirada.Odometro" maxlength="7" empty-to-null integer-input>
 
                 </div>
 
 
-            </div>
+                 </div>
 
 
-                <div class="row">
+                <div class="row" ng-if="itemEdit.itemCarro.Alugado">
                     <div class="col-md-10">
                         <h3>@TextosPaginas.Carro_Devolucao</h3>
                     </div>
                     <div class="col-md-2">
-                        <a role="button" class="btn btn-primary " title="@TextosPaginas.Posicao" ng-click="itemEdit.SelecionarPosicao(itemEdit.itemPontoDestino)">
+                        <br />
+                        <a role="button" class="btn btn-primary " title="@TextosPaginas.Posicao" ng-click="itemEdit.SelecionarPosicao(itemEdit.itemCarro.ItemCarroEventoDevolucao)">
                             <span class="fa fa-map-marker" aria-hidden="true"></span>
                         </a>
                     </div>
@@ -323,7 +320,7 @@
                         <div class="dropdown">
                             <a class="dropdown-toggle" role="button" data-toggle="dropdown">
                                 <div class="input-group">
-                                    <input date-input ng-model="itemEdit.itemPontoDestino.Data" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                    <input date-input ng-model="itemEdit.itemCarro.ItemCarroEventoDevolucao.Data" class="form-control" input-mask="{mask: 'd/m/y'}"
                                            datapattern="dd/MM/yyyy">
                                     <span class="input-group-addon">
                                         <i class="glyphicon glyphicon-calendar"></i>
@@ -331,20 +328,20 @@
                                 </div>
                             </a>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                <datetimepicker data-ng-model="itemEdit.itemPontoDestino.Data"
-                                                data-datetimepicker-config="{  minView:'day' , langCode:itemViagemAerea.Idioma()   }" />
+                                <datetimepicker data-ng-model="itemEdit.itemCarro.ItemCarroEventoDevolucao.Data"
+                                                data-datetimepicker-config="{  minView:'day' , langCode:itemCarro.Idioma()   }" />
                             </ul>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <label>&nbsp;</label>
-                        <input type="text" class="form-control" ng-model="itemEdit.itemPontoDestino.strHora" input-mask="{mask: 'h:s:s'}" empty-to-null>
+                        <input type="text" class="form-control" ng-model="itemEdit.itemCarro.ItemCarroEventoDevolucao.strHora" input-mask="{mask: 'h:s:s'}" empty-to-null>
 
                     </div>
 
                     <div class="col-md-6">
                         <label>@TextosPaginas.Carro_Odometro</label>
-                        <input type="text" class="form-control" ng-model="itemEdit.itemViagemAerea.OdometroFinal" maxlength="7" empty-to-null integer-input>
+                        <input type="text" class="form-control" ng-model="itemEdit.itemCarro.ItemCarroEventoDevolucao.Odometro" maxlength="7" empty-to-null integer-input>
 
                     </div>
 
@@ -369,12 +366,12 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12" ng-if="itemEdit.VerificarParticipoViagemAerea() && itemEdit.itemPontoDestino.Data && itemEdit.itemViagemAerea.Alugado">
+            <div class="row" ng-if="itemEdit.itemCarro.Alugado">
+                <div class="col-md-12" ng-if="itemEdit.VerificarParticipoCarro() && itemEdit.itemCarro.ItemCarroEventoDevolucao.Data ">
                     <label>@TextosPaginas.Refeicao_Nota</label>
                     <div star-rating ng-model="itemEdit.ItemAvaliacao.Nota" max="5"></div>
                 </div>
-                <div class="col-md-12" ng-if="itemEdit.VerificarParticipoViagemAerea() && itemEdit.itemPontoDestino.Data && itemEdit.itemViagemAerea.Alugado">
+                <div class="col-md-12" ng-if="itemEdit.VerificarParticipoCarro() && itemEdit.itemPontoDestino.Data ">
                     <label>@TextosPaginas.Refeicao_Comentario</label>
                     <textarea class="form-control" rows="5" ng-model="itemEdit.ItemAvaliacao.Comentario"></textarea>
 
@@ -385,6 +382,7 @@
                     <ul class="nav nav-tabs">
                         <li class="active"><a data-toggle="tab" data-target="#custos{{item.Identificador}}" style="cursor:pointer">@TextosPaginas.Refeicao_Custos</a></li>
                         <li ><a data-toggle="tab" data-target="#reabastecimentos{{item.Identificador}}" style="cursor:pointer">@TextosPaginas.Home_Reabastecimento</a></li>
+                        <li><a data-toggle="tab" data-target="#deslocamento{{item.Identificador}}" style="cursor:pointer">@TextosPaginas.Carro_Deslocamentos</a></li>
 
                     </ul>
 
@@ -413,7 +411,7 @@
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tr ng-repeat='itemCusto in itemEdit.itemViagemAerea.Gastos' ng-if="!itemCusto.DataExclusao">
+                                    <tr ng-repeat='itemCusto in itemEdit.itemCarro.Gastos' ng-if="!itemCusto.DataExclusao">
                                         <td>
                                             {{itemCusto.ItemGasto.Descricao}}
                                         </td>
@@ -441,7 +439,7 @@
                             </div>
                         </div>
 
-                        <div id="reabastecimentos{{item.Identificador}}" class="tab-pane fade in active ">
+                        <div id="reabastecimentos{{item.Identificador}}" class="tab-pane fade in ">
                             <div class="box" style="overflow-y:auto; height:140px">
 
                                 <table class="table-condensed " style="width:100%; ">
@@ -461,7 +459,7 @@
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tr ng-repeat='itemCusto in itemEdit.itemViagemAerea.Reabastecimentos' ng-if="!itemCusto.DataExclusao">
+                                    <tr ng-repeat='itemCusto in itemEdit.itemCarro.Reabastecimentos' ng-if="!itemCusto.DataExclusao">
                                         <td>
                                             {{itemCusto.Data | date:'dd/MM/yyyy'}}
                                         </td>
@@ -470,23 +468,74 @@
                                         </td>                                     
                                       
                                         <td>
-                                            {{itemCusto.Valor | number:'2'}}
+                                            {{itemCusto.Gastos[0].ItemGasto.Valor | number:'2'}}
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-danger small" ng-click="itemEdit.RemoverCusto( itemCusto)"><span class="fa fa-trash" aria-hidden="true"></span></button>
+                                            <button type="button" class="btn btn-danger small" ng-click="itemEdit.RemoverReabastecimento( itemCusto)"><span class="fa fa-trash" aria-hidden="true"></span></button>
 
                                         </td>
                                     </tr>
                                 </table>
 
                                 <div class="box-footer">
-                                    <a role="button" class="btn-primary btn-sm pull-right" title="@TextosPaginas.Adicionar" ng-click="itemEdit.AbrirReabastecimento();">
+                                    <a role="button" class="btn-primary btn-sm pull-right" title="@TextosPaginas.Adicionar" ng-click="itemEdit.AdicionarReabastecimento();">
                                         <span class="fa fa-plus" aria-hidden="true"></span>
                                     </a>
                                 </div>
                             </div>
                         </div>
+                        
+                        <div id="deslocamento{{item.Identificador}}" class="tab-pane fade in ">
+                            <div class="box" style="overflow-y:auto; height:140px">
 
+                                <table class="table-condensed " style="width:100%; ">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-xs-2">
+                                                @TextosPaginas.Deslocamento_DataPartida
+                                            </th>
+                                            <th class="col-xs-3">
+                                                @TextosPaginas.Deslocamento_CidadePartida
+                                            </th>
+                                            <th class="col-xs-2">
+                                                @TextosPaginas.Deslocamento_DataChegada
+                                            </th>
+                                            <th class="col-xs-3">
+                                                @TextosPaginas.Deslocamento_CidadeChegada
+                                            </th>
+                                            <th class="col-xs-2">
+
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tr ng-repeat='itemCusto in itemEdit.itemCarro.Deslocamentos' ng-if="!itemCusto.DataExclusao">
+                                        <td>
+                                            {{itemCusto.ItemCarroEventoPartida.Data | date:'dd/MM/yyyy HH:mm'}}
+                                        </td>
+                                        <td>
+                                            {{itemCusto.ItemCarroEventoPartida.ItemCidade.Nome}}
+                                        </td>
+                                        <td>
+                                            {{itemCusto.ItemCarroEventoChegada.Data | date:'dd/MM/yyyy HH:mm'}}
+                                        </td>
+                                        <td>
+                                            {{itemCusto.ItemCarroEventoChegada.ItemCidade.Nome}}
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger small" ng-click="itemEdit.RemoverDeslocamento( itemCusto)"><span class="fa fa-trash" aria-hidden="true"></span></button>
+                                            <button type="button" class="btn btn-default small" ng-click="itemEdit.EditarDeslocamento( itemCusto)"><span class="fa fa-pencil" aria-hidden="true"></span></button>
+
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <div class="box-footer">
+                                    <a role="button" class="btn-primary btn-sm pull-right" title="@TextosPaginas.Adicionar" ng-click="itemEdit.AdicionarDeslocamento();">
+                                        <span class="fa fa-plus" aria-hidden="true"></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -518,80 +567,6 @@
     <div class="modal-body">
         <button type="button" class="btn btn-info btn-lg btn-block" ng-click="vmDelete.confirmar()">{{vmDelete.TextoBotaoOK}}</button>
         <button type="button" class="btn btn-default btn-lg btn-block" ng-click="vmDelete.close()">{{vmDelete.TextoBotaoCancel}}</button>
-    </div>
-</script>
-
-
-<script type="text/ng-template" id="editaImagem.html">
-
-    <div class="modal-header">
-        <span>@TextosPaginas.Foto_EditaMidia</span>
-    </div>
-    <div class="modal-body" ng-init="vmEdit.load()">
-        <div class="box box-primary">
-            <div class="box-body">
-                <div class="row" ng-show="vmEdit.messages.length > 0">
-                    <div class="col-md-12">
-                        <div class="callout callout-danger">
-                            <h4>@TextosPaginas.Geral_ValidarErros</h4>
-                            <ul>
-                                <li ng-repeat="erro in vmEdit.messages">
-                                    <span ng-bind="erro.Mensagem"></span>
-                                </li>
-                            </ul>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group  col-md-12" ng-class="{ 'has-error': vmEdit.CamposInvalidos.Comentario }">
-                        <label>@TextosPaginas.Foto_Comentario</label>
-                        <input type="text" class="form-control" ng-model="vmEdit.itemFoto.ItemFoto.Comentario" empty-to-null>
-                    </div>
-
-                </div>
-                <div class="row">
-                    <div class="form-group col-md-6" ng-class="{ 'has-error': vmEdit.CamposInvalidos.Data }">
-                        <label for="txtDataInicio">@TextosPaginas.Foto_Data</label>
-                        <div class="dropdown">
-                            <a class="dropdown-toggle" id="A1" role="button" data-toggle="dropdown">
-                                <div class="input-group">
-                                    <input date-input ng-model="vmEdit.itemFoto.ItemFoto.Data" class="form-control" input-mask="{mask: 'd/m/y'}"
-                                           datapattern="dd/MM/yyyy">
-                                    <span class="input-group-addon">
-                                        <i class="glyphicon glyphicon-calendar"></i>
-                                    </span>
-                                </div>
-                            </a>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                <datetimepicker data-ng-model="vmEdit.itemFoto.ItemFoto.Data"
-                                                data-datetimepicker-config="{  minView:'day', langCode: vmEdit.Idioma() }" />
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="txtDataInicio">@TextosPaginas.Foto_Hora</label>
-                        <input type="text" class="form-control" name="txtHorario" id="txtHorario" ng-model="vmEdit.itemFoto.ItemFoto.strHora" input-mask="{mask: 'h:s:s'}" empty-to-null>
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-primary" ng-click="vmEdit.abrirMapa()">
-            <span class="fa fa-map-marker" aria-hidden="true">@TextosPaginas.Posicao</span>
-        </button>
-        <button type="button" class="btn btn-primary" ng-click="vmEdit.close()">
-            <span class="fa fa-close" aria-hidden="true">@TextosPaginas.Cancelar</span>
-        </button>
-        <button type="button" class="btn btn-primary" ng-click="vmEdit.Excluir()">
-            <span class="fa fa-trash" aria-hidden="true">@TextosPaginas.Excluir</span>
-        </button>
-        <button type="button" class="btn btn-primary  pull-right" ng-click="vmEdit.salvar()">
-            <span class="fa fa-cloud-upload" aria-hidden="true"></span> @TextosPaginas.Geral_Salvar
-        </button>
     </div>
 </script>
 
@@ -659,28 +634,6 @@
 </script>
 
 
-    <script type="text/ng-template" id="EditaReabastecimento.html">
 
-        <div class="modal-header">
-            <span>@TextosPaginas.Carro_AdicionaReabastecimento</span>
-        </div>
-        <div class="modal-body" ng-init="itemReabastecimentoEdit.load()">
-            <div class="box box-primary" >
-
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-primary" ng-click="itemReabastecimentoEdit.abrirMapa()">
-                <span class="fa fa-map-marker" aria-hidden="true">@TextosPaginas.Posicao</span>
-            </button>
-            <button type="button" class="btn btn-primary" ng-click="itemReabastecimentoEdit.close()">
-                <span class="fa fa-close" aria-hidden="true">@TextosPaginas.Cancelar</span>
-            </button>
-
-            <button type="button" class="btn btn-primary  pull-right" ng-click="itemReabastecimentoEdit.salvar()">
-                <span class="fa fa-save" aria-hidden="true"></span> @TextosPaginas.Geral_Salvar
-            </button>
-        </div>
-    </script>
 
 </section><!-- /.content -->

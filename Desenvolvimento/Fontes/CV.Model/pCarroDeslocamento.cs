@@ -8,12 +8,8 @@ using CV.Model.Resource;
 namespace CV.Model
 {
 
-	public partial class CarroEvento
+	public partial class CarroDeslocamento
 	{
-        public String strHora
-        {
-            get { return Data.HasValue ? Data.Value.ToString("HH:mm:ss") : null; }
-        }
-    }
+	}
 
 }

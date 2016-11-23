@@ -37,7 +37,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             Carro itemCarro = biz.SelecionarCarro_Completo(id);
 
             itemCarro.Avaliacoes.ToList().ForEach(d => d.ItemCarro = null);
-            itemCarro.Eventos.ToList().ForEach(d => { d.ItemCarro = null; });
+            itemCarro.Deslocamentos.ToList().ForEach(d => { d.ItemCarro = null; });
             itemCarro.Gastos.ToList().ForEach(d => { d.ItemCarro = null; d.ItemGasto.Alugueis = null; d.ItemGasto.Reabastecimentos = null; });
             foreach (var item in itemCarro.Reabastecimentos)
             {
@@ -46,7 +46,7 @@ namespace CV.UI.Web.Controllers.WebAPI
                 {
                     itemGasto.ItemReabastecimento = null;
                     itemGasto.ItemGasto.Alugueis = null;
-                    itemGasto.ItemReabastecimento = null;
+                    itemGasto.ItemGasto.Reabastecimentos = null;
                 }
             }
             return itemCarro;
@@ -57,12 +57,18 @@ namespace CV.UI.Web.Controllers.WebAPI
             ViagemBusiness biz = new ViagemBusiness();
             itemCarro.IdentificadorViagem = token.IdentificadorViagem;
             itemCarro.DataAtualizacao = DateTime.Now;
-            foreach (var itemAeroporto in itemCarro.Eventos)
+            if (itemCarro.ItemCarroEventoDevolucao != null)
             {
-                itemAeroporto.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemAeroporto.Latitude, itemAeroporto.Longitude);
-                itemAeroporto.DataAtualizacao = DateTime.Now;
+                itemCarro.ItemCarroEventoDevolucao.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemCarro.ItemCarroEventoDevolucao.Latitude, itemCarro.ItemCarroEventoDevolucao.Longitude);
+                itemCarro.ItemCarroEventoDevolucao.DataAtualizacao = DateTime.Now;
             }
-            biz.SalvarCarro_Completo(itemCarro);
+            if (itemCarro.ItemCarroEventoRetirada != null)
+            {
+                itemCarro.ItemCarroEventoRetirada.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemCarro.ItemCarroEventoRetirada.Latitude, itemCarro.ItemCarroEventoRetirada.Longitude);
+                itemCarro.ItemCarroEventoRetirada.DataAtualizacao = DateTime.Now;
+
+            }
+            biz.SalvarCarro_Evento(itemCarro);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
@@ -70,7 +76,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             {
                 itemResultado.IdentificadorRegistro = itemCarro.Identificador;
                 itemCarro.Avaliacoes = null;
-                itemCarro.Eventos = null;
+                itemCarro.Deslocamentos = null;
                 itemResultado.ItemRegistro = itemCarro;
             }
             return itemResultado;
@@ -83,7 +89,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             itemCarro.DataExclusao = DateTime.Now;
             itemCarro.Avaliacoes.ToList().ForEach(d => d.DataExclusao = DateTime.Now);
             itemCarro.Gastos.ToList().ForEach(d => d.DataExclusao = DateTime.Now);
-            itemCarro.Eventos.ToList().ForEach(d => d.DataExclusao = DateTime.Now);
+            itemCarro.Deslocamentos.ToList().ForEach(d => d.DataExclusao = DateTime.Now);
             foreach (var item in itemCarro.Reabastecimentos)
             {
                 item.DataExclusao = DateTime.Now;
@@ -97,6 +103,36 @@ namespace CV.UI.Web.Controllers.WebAPI
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
 
+            return itemResultado;
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ActionName("SalvarCarroDeslocamento")]
+        public ResultadoOperacao SalvarCarroDeslocamento([FromBody] CarroDeslocamento itemCarroDeslocamento)
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            itemCarroDeslocamento.DataAtualizacao = DateTime.Now;
+            if (itemCarroDeslocamento.ItemCarroEventoChegada != null)
+            {
+                itemCarroDeslocamento.ItemCarroEventoChegada.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemCarroDeslocamento.ItemCarroEventoChegada.Latitude, itemCarroDeslocamento.ItemCarroEventoChegada.Longitude);
+                itemCarroDeslocamento.ItemCarroEventoChegada.DataAtualizacao = DateTime.Now;
+            }
+            if (itemCarroDeslocamento.ItemCarroEventoPartida != null)
+            {
+                itemCarroDeslocamento.ItemCarroEventoPartida.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemCarroDeslocamento.ItemCarroEventoPartida.Latitude, itemCarroDeslocamento.ItemCarroEventoPartida.Longitude);
+                itemCarroDeslocamento.ItemCarroEventoPartida.DataAtualizacao = DateTime.Now;
+            }
+
+            biz.SalvarCarroDeslocamento_Evento(itemCarroDeslocamento);
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+            itemResultado.Sucesso = biz.IsValid();
+            itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
+            if (itemResultado.Sucesso)
+            {
+                itemResultado.IdentificadorRegistro = itemCarroDeslocamento.Identificador;
+                itemResultado.ItemRegistro = biz.SelecionarCarroDeslocamento(itemCarroDeslocamento.Identificador);
+            }
             return itemResultado;
         }
     }

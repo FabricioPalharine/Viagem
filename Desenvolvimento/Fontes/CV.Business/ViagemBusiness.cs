@@ -3243,24 +3243,95 @@ using(					ViagemRepository data = new ViagemRepository())
 			}
 				return RetornoAcao;
 			}
-			public void SalvarCarro_Completo (Carro itemGravar)
+			public CarroDeslocamento SelecionarCarroDeslocamento (int? Identificador)
+			{
+				 LimparValidacao();
+CarroDeslocamento RetornoAcao = null;
+				if (IsValid())
+				{
+using(					ViagemRepository data = new ViagemRepository())
+				 {
+					RetornoAcao = data.SelecionarCarroDeslocamento(Identificador);
+				}
+			}
+				return RetornoAcao;
+			}
+			public IList<CarroDeslocamento> ListarCarroDeslocamento ()
+			{
+				 LimparValidacao();
+IList<CarroDeslocamento> RetornoAcao = new List<CarroDeslocamento>();
+				if (IsValid())
+				{
+using(					ViagemRepository data = new ViagemRepository())
+				 {
+					RetornoAcao = data.ListarCarroDeslocamento();
+				}
+			}
+				return RetornoAcao;
+			}
+			public void SalvarCarroDeslocamento (CarroDeslocamento itemGravar)
 			{
 				 LimparValidacao();
 				 ValidateService(itemGravar);
-					ValidarRegrasNegocioCarro(itemGravar);
+					ValidarRegrasNegocioCarroDeslocamento(itemGravar);
 				 if (IsValid())
 				 {
 					using(ViagemRepository data = new ViagemRepository())
 				 {
-					data.SalvarCarro_Completo(itemGravar);
+					data.SalvarCarroDeslocamento(itemGravar);
 					Message msg = new Message();
-					msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_SalvarCarro_Completo_OK") });
+					msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_SalvarCarroDeslocamento_OK") });
 					ServiceResult resultado = new ServiceResult();
 					resultado.Success = true;
 					resultado.Messages.Add(msg);
 					serviceResult.Add(resultado);
 				 }
 				 }
+			}
+			public void ExcluirCarroDeslocamento (CarroDeslocamento itemGravar)
+			{
+				 LimparValidacao();
+				 ValidateService(itemGravar);
+					ValidarRegrasExclusaoCarroDeslocamento(itemGravar);
+				 if (IsValid())
+				 {
+					using(ViagemRepository data = new ViagemRepository())
+				 {
+					data.ExcluirCarroDeslocamento(itemGravar);
+					Message msg = new Message();
+					msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_ExcluirCarroDeslocamento_OK") });
+					ServiceResult resultado = new ServiceResult();
+					resultado.Success = true;
+					resultado.Messages.Add(msg);
+					serviceResult.Add(resultado);
+				 }
+				 }
+			}
+			public CarroDeslocamentoUsuario SelecionarCarroDeslocamentoUsuario (int? Identificador)
+			{
+				 LimparValidacao();
+CarroDeslocamentoUsuario RetornoAcao = null;
+				if (IsValid())
+				{
+using(					ViagemRepository data = new ViagemRepository())
+				 {
+					RetornoAcao = data.SelecionarCarroDeslocamentoUsuario(Identificador);
+				}
+			}
+				return RetornoAcao;
+			}
+			public IList<CarroDeslocamentoUsuario> ListarCarroDeslocamentoUsuario ()
+			{
+				 LimparValidacao();
+IList<CarroDeslocamentoUsuario> RetornoAcao = new List<CarroDeslocamentoUsuario>();
+				if (IsValid())
+				{
+using(					ViagemRepository data = new ViagemRepository())
+				 {
+					RetornoAcao = data.ListarCarroDeslocamentoUsuario();
+				}
+			}
+				return RetornoAcao;
 			}
 	}
 

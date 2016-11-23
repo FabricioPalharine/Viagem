@@ -505,12 +505,45 @@
                                           'library/scripts/app/Sistema/Carro/Carro-edit-controller.js',
                                           'library/scripts/app/Sistema/Carro/Carro-controller.js'
                                       ]
-                                  }, {
+                                  },
+                                   {
+                                       name: 'CarroDeslocamentoController',
+                                       files: [
+                                           'library/scripts/app/Sistema/CarroDeslocamento/CarroDeslocamento-edit-controller.js',
+                                       ]
+                                   },
+                                  {
                                       name: 'ViagemFactory',
                                       files: [
                                           'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
                                       ]
                                   },
+                                   {
+                                       name: 'ReabastecimentoFactory',
+                                       files: [
+                                           'library/scripts/app/Sistema/Reabastecimento/Reabastecimento-factory.js'
+                                       ]
+                                   },
+                                  {
+                                      name: 'ReabastecimentoController',
+                                      files: [
+                                          'library/scripts/app/Sistema/Reabastecimento/Reabastecimento-edit-controller.js',
+                                          'library/scripts/app/Sistema/Reabastecimento/Reabastecimento-controller.js'
+                                      ]
+                                  },
+                                  {
+                                      name: 'GastoFactory',
+                                      files: [
+                                          'library/scripts/app/Sistema/Gasto/Gasto-factory.js'
+                                      ]
+                                  },
+                                   {
+                                       name: 'GastoController',
+                                       files: [
+                                           'library/scripts/app/Sistema/Gasto/Gasto-edit-controller.js',
+                                           'library/scripts/app/Sistema/Gasto/Gasto-controller.js'
+                                       ]
+                                   },
                               ]);
 
                           }]

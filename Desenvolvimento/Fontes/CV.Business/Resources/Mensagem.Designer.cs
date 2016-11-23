@@ -142,6 +142,33 @@ namespace CV.Business.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Favor definir a data de Partida.
+        /// </summary>
+        public static string CarroDeslocamento_DataPartida_Obrigatoria {
+            get {
+                return ResourceManager.GetString("CarroDeslocamento_DataPartida_Obrigatoria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Favor definir a posição de Chegada.
+        /// </summary>
+        public static string CarroDeslocamento_PosicaoChegada_Obrigatoria {
+            get {
+                return ResourceManager.GetString("CarroDeslocamento_PosicaoChegada_Obrigatoria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Favor definir a posição de Partida.
+        /// </summary>
+        public static string CarroDeslocamento_PosicaoPartida_Obrigatoria {
+            get {
+                return ResourceManager.GetString("CarroDeslocamento_PosicaoPartida_Obrigatoria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A tela já se encontra aberta. Deseja fechá-la e abrir uma nova..
         /// </summary>
         public static string ConfirmacaoAberturaTela {
@@ -534,6 +561,15 @@ namespace CV.Business.Resources {
         public static string Viagem_ExcluirCarro_OK {
             get {
                 return ResourceManager.GetString("Viagem_ExcluirCarro_OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exclusão de Deslocamentos foi realizada com sucesso.
+        /// </summary>
+        public static string Viagem_ExcluirCarroDeslocamento_OK {
+            get {
+                return ResourceManager.GetString("Viagem_ExcluirCarroDeslocamento_OK", resourceCulture);
             }
         }
         
@@ -993,6 +1029,15 @@ namespace CV.Business.Resources {
         public static string Viagem_SalvarCarro_OK {
             get {
                 return ResourceManager.GetString("Viagem_SalvarCarro_OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gravação de Deslocamentos foi realizada com sucesso.
+        /// </summary>
+        public static string Viagem_SalvarCarroDeslocamento_OK {
+            get {
+                return ResourceManager.GetString("Viagem_SalvarCarroDeslocamento_OK", resourceCulture);
             }
         }
         

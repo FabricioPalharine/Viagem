@@ -561,4 +561,19 @@
   <data name="Viagem_SalvarCarro_Completo_OK" xml:space="preserve">
     <value>Gravação de Carro foi realizada com sucesso</value>
   </data>
+  <data name="Viagem_SalvarCarroDeslocamento_OK" xml:space="preserve">
+    <value>Gravação de Deslocamentos foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirCarroDeslocamento_OK" xml:space="preserve">
+    <value>Exclusão de Deslocamentos foi realizada com sucesso</value>
+  </data>
+  <data name="CarroDeslocamento_DataPartida_Obrigatoria" xml:space="preserve">
+    <value>Favor definir a data de Partida</value>
+  </data>
+  <data name="CarroDeslocamento_PosicaoChegada_Obrigatoria" xml:space="preserve">
+    <value>Favor definir a posição de Chegada</value>
+  </data>
+  <data name="CarroDeslocamento_PosicaoPartida_Obrigatoria" xml:space="preserve">
+    <value>Favor definir a posição de Partida</value>
+  </data>
 </root>
