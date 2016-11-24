@@ -34,3 +34,4 @@ obj
 *.VC.opendb
 *.VC.db filesv
 *.jfm
+/Desenvolvimento/Fontes/CV.Database/obj/Debug
