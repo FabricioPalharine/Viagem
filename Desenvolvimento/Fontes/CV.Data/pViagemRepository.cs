@@ -894,5 +894,33 @@ namespace CV.Data
             return query.ToList();
         }
 
+
+        public List<Loja> ListarLoja(int IdentificadorViagem, DateTime? DataDe, DateTime? DataAte,
+           string Nome, int? IdentificadorCidade, int? IdentificadorLoja)
+        {
+            IQueryable<Loja> query = this.Context.Lojas;
+
+            if (IdentificadorLoja.HasValue)
+                query = query.Where(d => d.Identificador == IdentificadorLoja);
+            query = query.Where(d => d.IdentificadorViagem == IdentificadorViagem);
+            if (DataDe.HasValue)
+                query = query.Where(d => d.Data >= DataDe);
+            if (DataAte.HasValue)
+            {
+                DataAte = DataAte.GetValueOrDefault().AddDays(1);
+                query = query.Where(d => d.Data < DataAte);
+            }
+
+            if (!string.IsNullOrWhiteSpace(Nome))
+                query = query.Where(d => d.Nome.Contains(Nome));
+
+            query = query.Where(d => !d.DataExclusao.HasValue);
+            if (IdentificadorCidade.HasValue)
+                query = query.Where(d => d.IdentificadorCidade == IdentificadorCidade || this.Context.CidadeGrupos.Where(e => e.IdentificadorCidadeFilha == d.IdentificadorCidade).Where(f => f.IdentificadorViagem == IdentificadorViagem).Where(e => e.IdentificadorCidadePai == IdentificadorCidade).Any());
+            query = query.OrderByDescending(d => d.Data);
+
+            return query.ToList();
+        }
+
     }
 }

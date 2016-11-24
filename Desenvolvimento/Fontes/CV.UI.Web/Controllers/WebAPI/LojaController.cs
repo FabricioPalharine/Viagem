@@ -22,44 +22,87 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             ResultadoConsultaTipo<Loja> resultado = new ResultadoConsultaTipo<Loja>();
             ViagemBusiness biz = new ViagemBusiness();
-           
-            List<Loja> _itens = biz.ListarLoja().ToList();
-resultado.TotalRegistros = _itens.Count();
-            if (json.SortField != null && json.SortField.Any())
-                _itens = _itens.AsQueryable().OrderByField<Loja>(json.SortField, json.SortOrder).ToList();
 
-            if (json.Index.HasValue && json.Count.HasValue)
-                _itens = _itens.Skip(json.Index.Value).Take(json.Count.Value).ToList();
+            List<Loja> _itens = biz.ListarLoja(token.IdentificadorViagem.GetValueOrDefault(), json.DataInicioDe, json.DataInicioAte,
+                json.Nome, json.IdentificadorCidade, json.Identificador).ToList();
+
             resultado.Lista = _itens;
 
             return resultado;
+
         }
         [Authorize]
         public Loja Get(int id)
         {
             ViagemBusiness biz = new ViagemBusiness();
-            Loja itemLoja = biz.SelecionarLoja(id);
-          
+            Loja itemLoja = biz.SelecionarLoja_Completo(id);
+            
+
+            foreach (var item in itemLoja.Compras)
+            {
+                item.ItemLoja = null;
+                item.ItemGasto.Compras = null;
+                foreach (var itemItemCompra in item.ItensComprados)
+                {
+                    itemItemCompra.ItemGastoCompra = null;
+                    foreach (var itemFoto in itemItemCompra.Fotos)
+                    {
+                        itemFoto.ItemItemCompra = null;
+                        itemFoto.ItemFoto.ItensCompra = null;
+                    }
+                }
+            }
+            foreach (var item in itemLoja.Avaliacoes)
+            {
+                item.ItemLoja = null;
+            }
             return itemLoja;
         }
         [Authorize]
         public ResultadoOperacao Post([FromBody] Loja itemLoja)
         {
             ViagemBusiness biz = new ViagemBusiness();
-                      biz.SalvarLoja(itemLoja);
+            itemLoja.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemLoja.Latitude, itemLoja.Longitude);
+            itemLoja.IdentificadorViagem = token.IdentificadorViagem;
+            itemLoja.DataAtualizacao = DateTime.Now;
+            biz.SalvarLoja(itemLoja);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
             if (itemResultado.Sucesso)
+            {
                 itemResultado.IdentificadorRegistro = itemLoja.Identificador;
+                itemLoja.Avaliacoes = null;
+                itemResultado.ItemRegistro = itemLoja;
+            }
             return itemResultado;
         }
+
         [Authorize]
         public ResultadoOperacao Delete(int id)
         {
             ViagemBusiness biz = new ViagemBusiness();
-            Loja itemLoja = biz.SelecionarLoja(id);
-            biz.ExcluirLoja(itemLoja);
+            Loja itemLoja = biz.SelecionarLoja_Completo(id);
+            itemLoja.DataExclusao = DateTime.Now;
+            foreach (var item in itemLoja.Compras.Where(d => !d.DataExclusao.HasValue))
+            {
+                item.DataExclusao = DateTime.Now;
+                item.ItemGasto.DataExclusao = DateTime.Now;
+                foreach (var itemItemCompra in item.ItensComprados)
+                {
+                    itemItemCompra.DataExclusao = DateTime.Now;
+                    foreach (var itemFoto in itemItemCompra.Fotos)
+                    {
+                        itemFoto.DataExclusao = DateTime.Now;
+                    }
+                }
+            }
+            foreach (var item in itemLoja.Avaliacoes.Where(d=>!d.DataExclusao.HasValue))
+            {
+                item.DataExclusao = DateTime.Now;
+            }
+
+            biz.SalvarLoja_Completo(itemLoja);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();

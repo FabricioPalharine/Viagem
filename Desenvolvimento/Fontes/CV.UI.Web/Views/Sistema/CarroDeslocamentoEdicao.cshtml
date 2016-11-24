@@ -36,8 +36,14 @@
                             <span class="fa fa-map-marker" aria-hidden="true"></span>
                         </a>
                     </div>
+                     <div class="col-md-6">
+                         <label>@TextosPaginas.Carro_Odometro</label>
+                         <input type="text" class="form-control" ng-model="itemCarroDeslocamentoEdit.itemCarroDeslocamento.ItemCarroEventoPartida.Odometro" maxlength="7" empty-to-null integer-input>
 
-                    <div class="col-md-3"  ng-class="{ 'has-error':itemCarroDeslocamentoEdit.CamposInvalidos.ItemCarroEventoPartida_Data}">
+                     </div>
+                     </div>
+                <div class="row">
+                    <div class="col-md-6" ng-class="{ 'has-error':itemCarroDeslocamentoEdit.CamposInvalidos.ItemCarroEventoPartida_Data}">
                         <label>@TextosPaginas.Carro_Data</label>
                         <div class="dropdown">
                             <a class="dropdown-toggle" role="button" data-toggle="dropdown">
@@ -55,16 +61,12 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-6">
                         <label>&nbsp;</label>
                         <input type="text" class="form-control" ng-model="itemCarroDeslocamentoEdit.itemCarroDeslocamento.ItemCarroEventoPartida.strHora" input-mask="{mask: 'h:s:s'}" empty-to-null>
 
                     </div>
-                     <div class="col-md-6">
-                         <label>@TextosPaginas.Carro_Odometro</label>
-                         <input type="text" class="form-control" ng-model="itemCarroDeslocamentoEdit.itemCarroDeslocamento.ItemCarroEventoPartida.Odometro" maxlength="7" empty-to-null integer-input>
 
-                     </div>
 
 
 
@@ -81,17 +83,21 @@
                         </a>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-6">
                         <label>@TextosPaginas.Carro_FimDeslocamento</label>
                         <input type="checkbox" ng-model="itemCarroDeslocamentoEdit.FimDeslocamento" ng-click="itemCarroDeslocamentoEdit.AjustarHoraChegada();" class="checkbox">
                     </div>
+                    <div class="col-md-6" ng-if="itemCarroDeslocamentoEdit.FimDeslocamento">
+                        <label>@TextosPaginas.Carro_Odometro</label>
+                        <input type="text" class="form-control" ng-model="itemCarroDeslocamentoEdit.itemCarroDeslocamento.ItemCarroEventoChegada.Odometro" maxlength="7" empty-to-null integer-input>
 
-                    <div class="col-md-3" ng-class="{ 'has-error':itemCarroDeslocamentoEdit.itemCarroDescolamento.CamposInvalidos.ItemCarroEventoChegada_Data}" ng-if="itemCarroDeslocamentoEdit.FimDeslocamento">
+                    </div>
+                    <div class="col-md-6" ng-class="{ 'has-error':itemCarroDeslocamentoEdit.itemCarroDescolamento.CamposInvalidos.ItemCarroEventoChegada_Data}" ng-if="itemCarroDeslocamentoEdit.FimDeslocamento">
                         <label>@TextosPaginas.Carro_Data</label>
                         <div class="dropdown">
                             <a class="dropdown-toggle" role="button" data-toggle="dropdown">
                                 <div class="input-group">
-                                    <input date-input ng-model="itemCarroDeslocamentoEdit.itemCarroDescolamento.ItemCarroEventoChegada.Data" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                    <input date-input ng-model="itemCarroDeslocamentoEdit.itemCarroDeslocamento.ItemCarroEventoChegada.Data" class="form-control" input-mask="{mask: 'd/m/y'}"
                                            datapattern="dd/MM/yyyy">
                                     <span class="input-group-addon">
                                         <i class="glyphicon glyphicon-calendar"></i>
@@ -99,26 +105,22 @@
                                 </div>
                             </a>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                <datetimepicker data-ng-model="itemCarroDeslocamentoEdit.itemCarroDescolamento.ItemCarroEventoChegada.Data"
+                                <datetimepicker data-ng-model="itemCarroDeslocamentoEdit.itemCarroDeslocamento.ItemCarroEventoChegada.Data"
                                                 data-datetimepicker-config="{  minView:'day' , langCode:itemCarroDeslocamentoEdit.Idioma()   }" />
                             </ul>
                         </div>
                     </div>
-                    <div class="col-md-3" ng-if="itemCarroDeslocamentoEdit.FimDeslocamento">
+                    <div class="col-md-6" ng-if="itemCarroDeslocamentoEdit.FimDeslocamento">
                         <label>&nbsp;</label>
                         <input type="text" class="form-control" ng-model="itemCarroDeslocamentoEdit.itemCarroDeslocamento.ItemCarroEventoChegada.strHora" input-mask="{mask: 'h:s:s'}" empty-to-null>
 
                     </div>
-                    <div class="col-md-6" ng-if="itemCarroDeslocamentoEdit.FimDeslocamento">
-                        <label>@TextosPaginas.Carro_Odometro</label>
-                        <input type="text" class="form-control" ng-model="itemCarroDeslocamentoEdit.itemCarroDeslocamento.ItemCarroEventoPartida.Odometro" maxlength="7" empty-to-null integer-input>
-
-                    </div>
+                    
                 </div>
                 <div class="row">
                     <div class="col-md-12" >
                         <label>@TextosPaginas.Carro_Observacoes</label>
-                        <textarea class="form-control" rows="5" ng-model="itemCarroDeslocamentoEdit.itemCarroDeslocamento.Observacao"></textarea>
+                        <textarea class="form-control" rows="3" ng-model="itemCarroDeslocamentoEdit.itemCarroDeslocamento.Observacao"></textarea>
 
                     </div>
                 </div>
@@ -131,7 +133,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-inline">
-                            <label ng-repeat='itemParticipante in itemCarroDeslocamentoEdit.ListaParticipante' class="radio">
+                            <label ng-repeat='itemParticipante in itemCarroDeslocamentoEdit.ListaParticipantes' class="radio">
                                 <input type="checkbox" ng-model="itemParticipante.Selecionado">
                                 <label style="padding-top:5px">
                                     {{itemParticipante.Nome}}

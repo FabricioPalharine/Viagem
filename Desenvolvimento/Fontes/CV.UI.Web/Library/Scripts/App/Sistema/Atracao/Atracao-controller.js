@@ -198,7 +198,7 @@
             var itemAtracao = { Avaliacoes: [], Fotos :[], Custos:[]};
             Atracao.VerificarAtracaoAberto(function (itemAberto) {
                 if (itemAberto != null)
-                    vm.modalPopupTrigger(itemAberto, $translate.instant('Refeicao_AssociaPai').format(itemAberto.Nome), $translate.instant('Sim'), $translate.instant('Nao'), function () {
+                    vm.modalPopupTrigger(itemAberto, $translate.instant('Atracao_AssociaPai').format(itemAberto.Nome), $translate.instant('Sim'), $translate.instant('Nao'), function () {
                         itemAtracao.IdentificadorAtracaoPai = itemAberto.Identificador;
                         itemAtracao.ItemAtracaoPai = itemAberto;
                         itemAtracao.Latitude = itemAberto.Latitude;

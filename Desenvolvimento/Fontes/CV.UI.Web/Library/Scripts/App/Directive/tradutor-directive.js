@@ -150,6 +150,8 @@
             Loja_CodigoPlace: 'Código Place',
             Loja_Data: 'Data',
             Loja_IdentificadorAtracao: 'Atração',
+            Loja_AssociaPai: 'A atração {0} está sendo visitada, deseja associar a nova loja como filha dela',
+
             Refeicao_IdentificadorViagem: 'Viagem',
             Refeicao_IdentificadorCidade: 'Cidade',
             Refeicao_Nome: 'Restaurante',

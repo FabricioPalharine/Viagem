@@ -1329,4 +1329,13 @@
   <data name="Reabastecimento_Unidade" xml:space="preserve">
     <value>Unidade</value>
   </data>
+  <data name="Gasto_Compras" xml:space="preserve">
+    <value>Compras</value>
+  </data>
+  <data name="Hotel_Hospedes" xml:space="preserve">
+    <value>Hóspedes</value>
+  </data>
+  <data name="Loja_Compradores" xml:space="preserve">
+    <value>Compradores</value>
+  </data>
 </root>

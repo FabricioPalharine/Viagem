@@ -109,7 +109,7 @@
 
 		        angular.forEach(vm.itemCarro.Gastos, function (item) {
 		            if (item.ItemGasto != null)
-		                item.ItemGasto.Carros = null;
+		                item.ItemGasto.Alugueis = null;
 		        });
 
 		        angular.forEach(vm.itemCarro.Eventos, function (item) {
@@ -122,7 +122,7 @@
 		                item.itemCarro = null;
 		            angular.forEach(item.Gastos, function (itemGasto) {
 		                if (itemGasto.ItemGasto != null) {
-		                    itemGasto.ItemGasto.Carros = null;
+		                    itemGasto.ItemGasto.Alugueis = null;
 		                    itemGasto.ItemGasto.Reabastecimentos = null;
 		                }
 		            });
@@ -250,6 +250,11 @@
 
 		};
 
+		vm.AtualizarDeslocamentoSalvo = function (itemDeslocamento, ItemRegistro) {
+		    var Posicao = vm.itemCarro.Deslocamentos.indexOf(itemDeslocamento);
+		    vm.itemCarro.Deslocamentos.splice(Posicao, 1, ItemRegistro);
+		};
+
 		vm.EditarDeslocamento = function (itemCusto) {
 		    $uibModal.open({
 		        templateUrl: 'Sistema/CarroDeslocamentoEdicao',
@@ -264,17 +269,26 @@
 
 		vm.AdicionarDeslocamento = function () {
 		    var UltimoOdometro = null;
-		    if (vm.itemCarro.Deslocamentos.length > 0)
+		    var Deslocamentos = $.grep(vm.itemCarro.Deslocamentos, function (e) { return  !e.DataExclusao });
+
+		    if (Deslocamentos.length > 0)
 		    {
-		        var ultimoDesloc = vm.itemCarro.Deslocamentos[vm.itemCarro.Deslocamentos.length - 1];
+		        var ultimoDesloc = Deslocamentos[Deslocamentos.length - 1];
 		        UltimoOdometro = ultimoDesloc.ItemCarroEventoChegada.Odometro;
 		    }
 		    else 
 		    {   
 		        UltimoOdometro = vm.itemCarro.ItemCarroEventoRetirada.Odometro;
 		    }
+		    var Usuarios = [];
+		    angular.forEach(vm.ListaParticipante, function (c) {
+		        if (c.Selecionado) {
+		            var item2 = { IdentificadorUsuario: c.Identificador }
+		            Usuarios.push(item2);
+		        }
+		    });
 
-		    var itemDeslocamento = { IdentificadorCarro: vm.itemCarro.Identificador, ItemCarroEventoPartida: { Inicio: true, Data: moment(new Date()).format("YYYY-MM-DD"), strHora: moment(new Date()).format("HH:mm:ss"), Odometro: UltimoOdometro }, ItemCarroEventoChegada: { Inicio: false }, Usuarios: [] };
+		    var itemDeslocamento = { IdentificadorCarro: vm.itemCarro.Identificador, ItemCarroEventoPartida: { Inicio: true, Data: moment(new Date()).format("YYYY-MM-DD"), strHora: moment(new Date()).format("HH:mm:ss"), Odometro: UltimoOdometro }, ItemCarroEventoChegada: { Inicio: false }, Usuarios: Usuarios };
 		    $uibModal.open({
 		        templateUrl: 'Sistema/CarroDeslocamentoEdicao',
 		        controller: 'CarroDeslocamentoEditCtrl',

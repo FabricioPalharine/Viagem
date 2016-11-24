@@ -27,7 +27,7 @@
             vm.itemReabastecimento.Data = vm.itemCusto.Data;
             vm.itemCusto.Latitude = vm.itemReabastecimento.Latitude;
             vm.itemCusto.Longitude = vm.itemReabastecimento.Longitude;
-            vm.itemReabastecimento.Gastos = [{ DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss"), itemGasto: vm.itemCusto }];
+            vm.itemReabastecimento.Gastos = [{ DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss"), ItemGasto: vm.itemCusto }];
             
             Reabastecimento.save(vm.itemReabastecimento, function (data) {
                 vm.loading = false;
@@ -81,7 +81,7 @@
                 controller: ['$uibModalInstance', 'NgMap', '$timeout', '$scope', 'item', vm.MapModalCtrl],
                 controllerAs: 'vmMapa',
                 resolve: {
-                    item: function () { return vm.itemGasto; },
+                    item: function () { return vm.itemReabastecimento; },
                 }
             });
         };

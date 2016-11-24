@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using CV.Business.Library;
 using CV.Data;
 
@@ -3332,6 +3331,38 @@ using(					ViagemRepository data = new ViagemRepository())
 				}
 			}
 				return RetornoAcao;
+			}
+			public Loja SelecionarLoja_Completo (int? Identificador)
+			{
+				 LimparValidacao();
+Loja RetornoAcao = null;
+				if (IsValid())
+				{
+using(					ViagemRepository data = new ViagemRepository())
+				 {
+					RetornoAcao = data.SelecionarLoja_Completo(Identificador);
+				}
+			}
+				return RetornoAcao;
+			}
+			public void SalvarLoja_Completo (Loja itemGravar)
+			{
+				 LimparValidacao();
+				 ValidateService(itemGravar);
+					ValidarRegrasNegocioLoja(itemGravar);
+				 if (IsValid())
+				 {
+					using(ViagemRepository data = new ViagemRepository())
+				 {
+					data.SalvarLoja_Completo(itemGravar);
+					Message msg = new Message();
+					msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_SalvarLoja_Completo_OK") });
+					ServiceResult resultado = new ServiceResult();
+					resultado.Success = true;
+					resultado.Messages.Add(msg);
+					serviceResult.Add(resultado);
+				 }
+				 }
 			}
 	}
 

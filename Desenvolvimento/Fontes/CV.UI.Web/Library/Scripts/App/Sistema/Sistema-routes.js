@@ -1443,18 +1443,44 @@
                                           'library/scripts/app/Sistema/Loja/Loja-edit-controller.js',
                                           'library/scripts/app/Sistema/Loja/Loja-controller.js'
                                       ]
-                                  }, {
-                                      name: 'ViagemFactory',
+                                  }, 
+                                  {
+                                      name: 'AtracaoFactory',
                                       files: [
-                                          'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
+                                          'library/scripts/app/Sistema/Atracao/Atracao-factory.js'
                                       ]
                                   },
+                                   {
+                                       name: 'GastoFactory',
+                                       files: [
+                                           'library/scripts/app/Sistema/Gasto/Gasto-factory.js'
+                                       ]
+                                   },
+                                   {
+                                       name: 'GastoController',
+                                       files: [
+                                           'library/scripts/app/Sistema/Gasto/Gasto-edit-controller.js',
+                                           'library/scripts/app/Sistema/Gasto/Gasto-controller.js'
+                                       ]
+                                   },
+                                 {
+                                     name: 'CidadeFactory',
+                                     files: [
+                                         'library/scripts/app/Sistema/Cidade/Cidade-factory.js'
+                                     ]
+                                 },
                                     {
-                                        name: 'AtracaoFactory',
+                                        name: 'ViagemFactory',
                                         files: [
-                                            'library/scripts/app/Sistema/Atracao/Atracao-factory.js'
+                                            'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
                                         ]
                                     },
+                                     {
+                                         name: 'FotoFactory',
+                                         files: [
+                                             'library/scripts/app/Sistema/Foto/Foto-factory.js'
+                                         ]
+                                     },
                               ]);
 
                           }]

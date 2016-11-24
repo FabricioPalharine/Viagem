@@ -380,12 +380,12 @@ namespace CV.Business
                 if (itemGravar.ItemCarroEventoChegada.Data.HasValue && (!itemGravar.ItemCarroEventoChegada.Latitude.HasValue || !itemGravar.ItemCarroEventoChegada.Longitude.HasValue))
                     AdicionaErroBusiness("CarroDeslocamento_PosicaoChegada_Obrigatoria", "ItemCarroEventoChegada_Posicao");
             }
-            else if (itemGravar.ItemCarroEventoChegada != null)
+            if (itemGravar.ItemCarroEventoPartida != null)
             {
                 if (!itemGravar.ItemCarroEventoPartida.Data.HasValue)
                     AdicionaErroBusiness("CarroDeslocamento_DataPartida_Obrigatoria", "ItemCarroEventoPartida_Data");
 
-                if (itemGravar.ItemCarroEventoChegada.Data.HasValue && (!itemGravar.ItemCarroEventoChegada.Latitude.HasValue || !itemGravar.ItemCarroEventoChegada.Longitude.HasValue))
+                if (itemGravar.ItemCarroEventoPartida.Data.HasValue && (!itemGravar.ItemCarroEventoPartida.Latitude.HasValue || !itemGravar.ItemCarroEventoPartida.Longitude.HasValue))
                     AdicionaErroBusiness("CarroDeslocamento_PosicaoPartida_Obrigatoria", "ItemCarroEventoPartida_Posicao");
 
             }
@@ -1365,5 +1365,15 @@ namespace CV.Business
             }
 
         }
-    }
+
+        public List<Loja> ListarLoja(int IdentificadorViagem, DateTime? DataDe, DateTime? DataAte,
+           string Nome, int? IdentificadorCidade, int? IdentificadorLoja)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarLoja(IdentificadorViagem, DataDe,DataAte,Nome,IdentificadorCidade, IdentificadorLoja);
+            }
+        }
+
+        }
 }

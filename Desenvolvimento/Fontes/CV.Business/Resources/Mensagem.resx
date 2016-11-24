@@ -576,4 +576,7 @@
   <data name="CarroDeslocamento_PosicaoPartida_Obrigatoria" xml:space="preserve">
     <value>Favor definir a posição de Partida</value>
   </data>
+  <data name="Viagem_SalvarLoja_Completo_OK" xml:space="preserve">
+    <value>Gravação de Loja foi realizada com sucesso</value>
+  </data>
 </root>

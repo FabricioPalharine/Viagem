@@ -13,7 +13,7 @@
         vm.messages = [];
         vm.CamposInvalidos = {};
         vm.FimDeslocamento = false;
-
+        vm.loading = true
 
         vm.load = function () {
             vm.loading = true;
@@ -29,7 +29,7 @@
                 });
             });
            
-
+            vm.loading = false;
         };
 
         vm.Idioma = function () {
@@ -52,7 +52,7 @@
         vm.AjustarHoraChegada = function () {
             if (vm.FimDeslocamento)
             {
-                vm.itemCarroDeslocamento.ItemCarroEventoChegada.Data = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+                vm.itemCarroDeslocamento.ItemCarroEventoChegada.Data = moment(new Date()).format("YYYY-MM-DD");
                 vm.itemCarroDeslocamento.ItemCarroEventoChegada.strHora = moment(new Date()).format("HH:mm:ss");
             }
             else
@@ -68,6 +68,51 @@
 
         vm.SelecionarPosicao = function (item) {
             vm.EscopoAtualizacao.SelecionarPosicao(item);
+        };
+
+        vm.salvar = function () {
+            vm.messages = [];
+            vm.loading = true;
+            vm.CamposInvalidos = {};
+
+            if (vm.itemCarroDeslocamento.ItemCarroEventoChegada.Data) {
+                vm.itemCarroDeslocamento.ItemCarroEventoChegada.Data = moment(vm.itemCarroDeslocamento.ItemCarroEventoChegada.Data).format("YYYY-MM-DDT");
+                vm.itemCarroDeslocamento.ItemCarroEventoChegada.Data += (vm.itemCarroDeslocamento.ItemCarroEventoChegada.strHora) ? vm.itemCarroDeslocamento.ItemCarroEventoChegada.strHora : "00:00:00";
+
+            }
+
+            if (vm.itemCarroDeslocamento.ItemCarroEventoPartida.Data) {
+                vm.itemCarroDeslocamento.ItemCarroEventoPartida.Data = moment(vm.itemCarroDeslocamento.ItemCarroEventoPartida.Data).format("YYYY-MM-DDT");
+                vm.itemCarroDeslocamento.ItemCarroEventoPartida.Data += (vm.itemCarroDeslocamento.ItemCarroEventoPartida.strHora) ? vm.itemCarroDeslocamento.ItemCarroEventoPartida.strHora : "00:00:00";
+            }
+
+            angular.forEach(vm.ListaParticipante, function (item) {
+                var itens =
+                     $.grep(vm.itemCarroDeslocamento.Usuarios, function (e) { return e.IdentificadorUsuario == item.Identificador  });
+                if (item.Selecionado && itens.length == 0) {
+                    var NovoItem = { IdentificadorUsuario: item.Identificador, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss") }
+                    vm.itemCarroDeslocamento.Usuarios.push(NovoItem);
+                }
+                else if (!item.Selecionado && itens.length > 0) {
+                    var Posicao = vm.itemCarroDeslocamento.indexOf(itens[0]);
+                    vm.itemCarroDeslocamento.Usuarios.splice(Posicao, 1);
+                }
+
+            });
+
+            Carro.SalvarCarroDeslocamento(vm.itemCarroDeslocamento, function (data) {
+                vm.loading = false;
+                if (data.Sucesso) {
+                    vm.EscopoAtualizacao.AtualizarDeslocamentoSalvo(vm.itemOriginal, data.ItemRegistro);
+                    vm.close();
+                } else {
+                    vm.messages = data.Mensagens;
+                    vm.verificaCampoInvalido();
+                }
+            }, function (err) {
+                vm.loading = false;
+                Error.showError('error', 'Ops!', $translate.instant("ErroSalvar"), true);
+            });
         };
     }
 }());

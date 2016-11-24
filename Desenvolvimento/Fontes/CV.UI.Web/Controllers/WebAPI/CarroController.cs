@@ -37,7 +37,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             Carro itemCarro = biz.SelecionarCarro_Completo(id);
 
             itemCarro.Avaliacoes.ToList().ForEach(d => d.ItemCarro = null);
-            itemCarro.Deslocamentos.ToList().ForEach(d => { d.ItemCarro = null; });
+            itemCarro.Deslocamentos.ToList().ForEach(d => { d.ItemCarro = null; d.Usuarios.ToList().ForEach(e => e.ItemCarroDeslocamento = null); });
             itemCarro.Gastos.ToList().ForEach(d => { d.ItemCarro = null; d.ItemGasto.Alugueis = null; d.ItemGasto.Reabastecimentos = null; });
             foreach (var item in itemCarro.Reabastecimentos)
             {
@@ -131,7 +131,9 @@ namespace CV.UI.Web.Controllers.WebAPI
             if (itemResultado.Sucesso)
             {
                 itemResultado.IdentificadorRegistro = itemCarroDeslocamento.Identificador;
-                itemResultado.ItemRegistro = biz.SelecionarCarroDeslocamento(itemCarroDeslocamento.Identificador);
+                var itemBase = biz.SelecionarCarroDeslocamento(itemCarroDeslocamento.Identificador);
+                itemBase.Usuarios.ToList().ForEach(d => d.ItemCarroDeslocamento = null);
+                itemResultado.ItemRegistro = itemBase;
             }
             return itemResultado;
         }

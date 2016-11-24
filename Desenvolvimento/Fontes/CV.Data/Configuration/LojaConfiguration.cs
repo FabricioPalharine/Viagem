@@ -25,7 +25,7 @@ namespace CV.Data.Configuration
 			this.Property(i => i.Longitude).HasColumnName("NR_LONGITUDE").HasPrecision(12,8);
 			this.Property(i => i.CodigoPlace).HasColumnName("CD_PLACE");
 			this.Property(i => i.Data).HasColumnName("DT_VISITA");
-			this.HasMany(i => i.Gastos).WithRequired().HasForeignKey(d=>d.IdentificadorLoja);
+			this.HasMany(i => i.Compras).WithRequired().HasForeignKey(d=>d.IdentificadorLoja);
 			this.HasRequired(i => i.ItemViagem).WithMany().HasForeignKey(d=>d.IdentificadorViagem);
 			this.Property(i => i.IdentificadorAtracao).HasColumnName("ID_ATRACAO");
 			this.HasOptional(i => i.ItemAtracao).WithMany().HasForeignKey(d=>d.IdentificadorAtracao);

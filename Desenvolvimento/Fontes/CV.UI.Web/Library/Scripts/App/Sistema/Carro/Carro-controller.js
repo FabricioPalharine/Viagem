@@ -198,7 +198,6 @@
 		    vm.ListaDados.splice(Posicao, 1, ItemRegistro);
 		    SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'C', ItemRegistro.Identificador, itemCarro.Identificador == null);
 
-		    vm.ItemAtual++;
 		};
 
 

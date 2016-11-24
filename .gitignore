@@ -31,3 +31,6 @@ obj
 /Desenvolvimento/Fontes/Mobile/packages
 /Desenvolvimento/Fontes/packages
 /Desenvolvimento/Fontes/CV.Database/CV.Database.dbmdl
+*.VC.opendb
+*.VC.db filesv
+*.jfm

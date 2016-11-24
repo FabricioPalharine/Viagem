@@ -3,7 +3,7 @@
 	angular
 		.module('Sistema')
 		.controller('RefeicaoCtrl', ['$uibModal', 'Error', '$timeout', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', '$window', 'i18nService', 'Cidade', 'Viagem', 'Atracao', 'SignalR', 'Refeicao', RefeicaoCtrl]);
-
+    
 	function RefeicaoCtrl($uibModal, Error, $timeout, $state, $translate, $scope, Auth, $rootScope, $stateParams, $window, i18nService, Cidade, Viagem, Atracao, SignalR, Refeicao) {
 	    var vm = this;
 	    vm.filtro = { Index: 0, Count: 0};
@@ -50,7 +50,7 @@
 	                }
 	                else if (itens.length > 0) {
 	                    var Posicao = vm.ListaDados.indexOf(itens[0]);
-	                    Atracao.list({ json: JSON.stringify(itemPesquisa) }, function (data) {
+	                    Refeicao.list({ json: JSON.stringify(itemPesquisa) }, function (data) {
 	                        vm.ListaDados.splice(Posicao, 1, data.Lista[0]);
 	                    }, function (err) {
 	                        Error.showError('error', 'Ops!', $translate.instant('ErroRequisicao'), true);
@@ -175,7 +175,7 @@
 	        var itemRefeicao = { Pedidos: [], Fotos: [], Gastos: [], Data: moment(new Date()).format("YYYY-MM-DD"), strHora:  moment(new Date()).format("HH:mm:ss") };
 	        Atracao.VerificarAtracaoAberto(function (itemAberto) {
 	            if (itemAberto != null)
-	                vm.modalPopupTrigger(itemAberto, $translate.instant('Atracao_AssociaPai').format(itemAberto.Nome), $translate.instant('Sim'), $translate.instant('Nao'), function () {
+	                vm.modalPopupTrigger(itemAberto, $translate.instant('Refeicao_AssociaPai').format(itemAberto.Nome), $translate.instant('Sim'), $translate.instant('Nao'), function () {
 	                    itemRefeicao.IdentificadorAtracao = itemAberto.Identificador;
 	                    itemRefeicao.ItemAtracao = itemAberto;
 	                    itemRefeicao.Latitude = itemAberto.Latitude;

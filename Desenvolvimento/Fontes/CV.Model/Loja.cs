@@ -38,19 +38,16 @@ private void ValidarNome(Microsoft.Practices.EnterpriseLibrary.Validation.Valida
   }
 }
 
-			[NotNullValidator(MessageTemplateResourceName="Loja_Latitude",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public decimal? Latitude { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="Loja_Longitude",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public decimal? Longitude { get; set; }
 
-			[StringLengthValidator(50,MessageTemplateResourceName="Loja_CodigoPlace_Tamanho",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public string CodigoPlace { get; set; }
 
 			[NotNullValidator(MessageTemplateResourceName="Loja_Data",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public DateTime? Data { get; set; }
 
-			public IList<GastoCompra> Gastos { get; set; }
+			public IList<GastoCompra> Compras { get; set; }
 
 			public Viagem ItemViagem { get; set; }
 
