@@ -22,14 +22,9 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             ResultadoConsultaTipo<ListaCompra> resultado = new ResultadoConsultaTipo<ListaCompra>();
             ViagemBusiness biz = new ViagemBusiness();
-           
-            List<ListaCompra> _itens = biz.ListarListaCompra().ToList();
-resultado.TotalRegistros = _itens.Count();
-            if (json.SortField != null && json.SortField.Any())
-                _itens = _itens.AsQueryable().OrderByField<ListaCompra>(json.SortField, json.SortOrder).ToList();
 
-            if (json.Index.HasValue && json.Count.HasValue)
-                _itens = _itens.Skip(json.Index.Value).Take(json.Count.Value).ToList();
+            List<ListaCompra> _itens = biz.ListarListaCompra(token.IdentificadorUsuario, token.IdentificadorViagem, json.Situacao, json.Nome, null, json.Tipo, json.Comentario).ToList();
+          
             resultado.Lista = _itens;
 
             return resultado;
@@ -39,14 +34,14 @@ resultado.TotalRegistros = _itens.Count();
         {
             ViagemBusiness biz = new ViagemBusiness();
             ListaCompra itemListaCompra = biz.SelecionarListaCompra(id);
-          
+
             return itemListaCompra;
         }
         [Authorize]
         public ResultadoOperacao Post([FromBody] ListaCompra itemListaCompra)
         {
             ViagemBusiness biz = new ViagemBusiness();
-                      biz.SalvarListaCompra(itemListaCompra);
+            biz.SalvarListaCompra(itemListaCompra);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
@@ -65,6 +60,16 @@ resultado.TotalRegistros = _itens.Count();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
 
             return itemResultado;
+        }
+
+        [Authorize]
+        [HttpGet]
+        [ActionName("CarregarListaPedidos")]
+        [BindJson(typeof(CriterioBusca), "json")]
+        public List<ListaCompra> CarregarListaPedidos(CriterioBusca json)
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            return biz.ListarListaCompra(json.IdentificadorParticipante, token.IdentificadorViagem, new List<int?>(new int?[] { (int) enumStatusListaCompra.Comprado, (int) enumStatusListaCompra.Pendente }), null);
         }
     }
 }

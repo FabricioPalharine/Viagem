@@ -72,6 +72,13 @@
               },
               isArray: true
           },
+          CarregarComentario: {
+              method: 'GET',
+              params: {
+                  controller: 'CarregarComentario'
+              },
+              isArray: true
+          },
           CarregarViagemAerea: {
               method: 'GET',
               params: {

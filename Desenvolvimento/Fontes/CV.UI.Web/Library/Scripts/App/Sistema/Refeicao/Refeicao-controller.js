@@ -174,7 +174,7 @@
 	    vm.CriarNovaRefeicao = function () {
 	        var itemRefeicao = { Pedidos: [], Fotos: [], Gastos: [], Data: moment(new Date()).format("YYYY-MM-DD"), strHora:  moment(new Date()).format("HH:mm:ss") };
 	        Atracao.VerificarAtracaoAberto(function (itemAberto) {
-	            if (itemAberto != null)
+	            if (itemAberto.Identificador)
 	                vm.modalPopupTrigger(itemAberto, $translate.instant('Refeicao_AssociaPai').format(itemAberto.Nome), $translate.instant('Sim'), $translate.instant('Nao'), function () {
 	                    itemRefeicao.IdentificadorAtracao = itemAberto.Identificador;
 	                    itemRefeicao.ItemAtracao = itemAberto;

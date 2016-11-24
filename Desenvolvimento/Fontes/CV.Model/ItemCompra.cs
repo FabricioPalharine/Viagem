@@ -64,7 +64,6 @@ private void ValidarMarca(Microsoft.Practices.EnterpriseLibrary.Validation.Valid
 			[NotNullValidator(MessageTemplateResourceName="ItemCompra_Reembolsavel",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public bool? Reembolsavel { get; set; }
 
-			[StringLengthValidator(50,MessageTemplateResourceName="ItemCompra_Destinatario_Tamanho",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public string Destinatario { get; set; }
 
 			public GastoCompra ItemGastoCompra { get; set; }

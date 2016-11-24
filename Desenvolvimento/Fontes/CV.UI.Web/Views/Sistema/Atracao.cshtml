@@ -219,8 +219,8 @@
                         </div>*@
                         <div class="col-md-6">
                             <label>@TextosPaginas.Atracao_Nome</label>
-                            <input type="text" class="form-control" ng-model="itemEdit.itemAtracao.Nome" maxlength="100" empty-to-null ng-if="!itemEdit.itemAtracao.Latitude || !itemEdit.itemAtracao.Longitude">
-                            <input ng-if="itemEdit.itemAtracao.Latitude && itemEdit.itemAtracao.Longitude" type="text" ng-model="itemEdit.itemAtracao.Nome" uib-typeahead="address.name for address in itemEdit.CarregarDadosGoogleApi($viewValue) " typeahead-loading="itemEdit.loadingLocations" class="form-control" typeahead-on-select="itemEdit.SelecionarPlacesGoogle($item, $model, $label)">
+                            <input type="text" class="form-control" ng-model="itemEdit.itemAtracao.Nome" maxlength="100" empty-to-null ng-if="(!itemEdit.itemAtracao.Latitude || !itemEdit.itemAtracao.Longitude) && !itemEdit.position.lat ">
+                            <input ng-if="(itemEdit.itemAtracao.Latitude && itemEdit.itemAtracao.Longitude) || itemEdit.position.lat" type="text" ng-model="itemEdit.itemAtracao.Nome" uib-typeahead="address.name for address in itemEdit.CarregarDadosGoogleApi($viewValue) " typeahead-loading="itemEdit.loadingLocations" class="form-control" typeahead-on-select="itemEdit.SelecionarPlacesGoogle($item, $model, $label)">
 
                         </div>
                         <div class="col-md-6">
@@ -512,7 +512,13 @@
                 <div class="row">
                     <div class="form-group  col-sm-8">
                         <label>@TextosPaginas.Posicao_Endereco</label>
-                        <input type="text" class="form-control" ng-model="vmMapa.itemEndereco" empty-to-null>
+
+                        <input places-auto-complete size=80
+                                class="form-control"
+                               ng-model="vmMapa.itemEndereco"
+
+                               on-place-changed="vmMapa.selecionarEndereco()"  /> 
+
                     </div>
                     <div class="form-group  col-sm-2">
                         <label>&nbsp;</label>

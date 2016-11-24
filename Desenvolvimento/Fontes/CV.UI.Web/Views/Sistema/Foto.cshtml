@@ -212,8 +212,7 @@
                                 <span ng-repeat="ano in item.Atracoes" class="tag label label-primary" ng-if="!ano.DataExclusao">{{ano.ItemAtracao.Nome}}</span>
                                 <span ng-repeat="ano in item.Hoteis" class="tag label label-success" ng-if="!ano.DataExclusao">{{ano.ItemHotel.Nome}}</span>
                                 <span ng-repeat="ano in item.Refeicoes" class="tag label label-warning" ng-if="!ano.DataExclusao">{{ano.ItemRefeicao.Nome}}</span>
-                                <span ng-repeat="ano in item.ItensCompra" class="tag label label-danger" ng-if="!ano.DataExclusao">{{ano.ItemItemCompra.Marca}} - {{ano.ItemItemCompra.Descricao}}</span>
-
+                          
                             </div>
                         </div>
                    
@@ -334,23 +333,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    @TextosPaginas.Foto_ItemCompra
-                                </div>
-                                <!-- /.panel-heading -->
-                                <div style="padding-left:15px;padding-right:15px">
-                                    <div class="row">
-                                        <div ng-repeat="ano in vmEdit.itemFoto.ListaItemCompra" ng-class="{ 'label-primary': ano.Selecionado}" ng-click="vmEdit.AlterarSelecaoItemCompra(ano);" style="text-align:center; cursor:pointer">
-                                            {{ano.Marca}} - {{ano.Descricao}}
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.panel-body -->
-
-                            </div>
-                        </div>
+                        
                     </div>
 
 
@@ -394,7 +377,10 @@
                 <div class="row">
                     <div class="form-group  col-sm-8">
                         <label>@TextosPaginas.Posicao_Endereco</label>
-                        <input type="text" class="form-control" ng-model="vmMapa.itemEndereco" empty-to-null>
+                        <input places-auto-complete size=80
+                               class="form-control"
+                               ng-model="vmMapa.itemEndereco"
+                               on-place-changed="vmMapa.selecionarEndereco()"  /> 
                     </div>
                     <div class="form-group  col-sm-2">
                         <label>&nbsp;</label>

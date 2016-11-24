@@ -197,7 +197,7 @@
         vm.CriarNovaAtracao = function () {
             var itemAtracao = { Avaliacoes: [], Fotos :[], Custos:[]};
             Atracao.VerificarAtracaoAberto(function (itemAberto) {
-                if (itemAberto != null)
+                if (itemAberto.Identificador)
                     vm.modalPopupTrigger(itemAberto, $translate.instant('Atracao_AssociaPai').format(itemAberto.Nome), $translate.instant('Sim'), $translate.instant('Nao'), function () {
                         itemAtracao.IdentificadorAtracaoPai = itemAberto.Identificador;
                         itemAtracao.ItemAtracaoPai = itemAberto;

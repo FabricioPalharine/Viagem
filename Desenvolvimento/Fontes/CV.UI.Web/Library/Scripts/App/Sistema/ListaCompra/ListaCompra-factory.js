@@ -34,9 +34,16 @@
                   controller: 'Get',
                   json: 'json'
               },
-            //  transformResponse: parseArray,
               isArray: false
-          }
+          },
+          CarregarListaPedidos: {
+              method: 'GET',
+              params: {
+                  controller: 'CarregarListaPedidos',
+                  json: 'json'
+              },
+              isArray: true
+          },
          
 
       });

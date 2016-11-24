@@ -103,8 +103,11 @@ namespace CV.UI.Web.Controllers.WebAPI
             ViagemBusiness biz = new ViagemBusiness();
             var itemAtracao = biz.ListarAtracao(d => d.IdentificadorViagem == token.IdentificadorViagem && d.Chegada.HasValue && (!d.Partida.HasValue || d.Partida >=  DateTime.Now))
                 .OrderByDescending(d=>d.Chegada).FirstOrDefault();
-            itemAtracao.ItemAtracaoPai = null;
-            itemAtracao.Atracoes = null;
+            if (itemAtracao != null)
+            {
+                itemAtracao.ItemAtracaoPai = null;
+                itemAtracao.Atracoes = null;
+            }
             return itemAtracao;
         }
 

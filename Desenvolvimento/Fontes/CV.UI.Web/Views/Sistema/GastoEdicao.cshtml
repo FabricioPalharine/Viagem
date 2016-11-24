@@ -23,12 +23,12 @@
 
             </div>
             <div class="row">                
-                <div class="form-group col-md-6" ng-class="{ 'has-error':itemGastoEdit.CamposInvalidos.IdentificadorUsuario}">
+                @*<div class="form-group col-md-6" ng-class="{ 'has-error':itemGastoEdit.CamposInvalidos.IdentificadorUsuario}">
                     <label>@TextosPaginas.Gasto_IdentificadorUsuario</label>
                     <select ng-model="itemGastoEdit.itemUsuario" class="form-control" ng-options="obj.Nome for obj in itemGastoEdit.ListaUsuario track by obj.Identificador">
                         <option value="">@TextosPaginas.Selecione</option>
                     </select>
-                </div>
+                </div>*@
                 <div class="form-group " ng-class="{ 'has-error':itemGastoEdit.CamposInvalidos.Data,'col-md-6':!itemGastoEdit.itemGasto.ExibeHora,'col-md-4':itemGastoEdit.itemGasto.ExibeHora }">
                     <label>@TextosPaginas.Gasto_Data</label>
                     <div class="dropdown">
@@ -90,10 +90,7 @@
                     </div>
                 </div>
 
-                <div class="form-group col-md-6" ng-class="{ 'has-error':itemGastoEdit.CamposInvalidos.ApenasBaixa}" ng-show="itemGastoEdit.itemGasto.Especie">
-                    <label>@TextosPaginas.Gasto_ApenasBaixa</label>
-                    <input type="checkbox" ng-model="itemGastoEdit.itemGasto.ApenasBaixa" class="checkbox">
-                </div>
+               
                 <div class="form-group col-md-6" ng-class="{ 'has-error':itemGastoEdit.CamposInvalidos.Dividido}">
                     <label>@TextosPaginas.Gasto_Dividido</label>
                     <input type="checkbox" ng-model="itemGastoEdit.itemGasto.Dividido" class="checkbox">

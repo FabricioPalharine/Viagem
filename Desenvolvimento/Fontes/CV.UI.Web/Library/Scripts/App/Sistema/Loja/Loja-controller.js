@@ -171,7 +171,7 @@
 		vm.CriarNovaLoja = function () {
 		    var itemLoja = { Avaliacoes: [], Compras: [], Data: moment(new Date()).format("YYYY-MM-DD"), strHora: moment(new Date()).format("HH:mm:ss") };
 		    Atracao.VerificarAtracaoAberto(function (itemAberto) {
-		        if (itemAberto != null)
+		        if (itemAberto.Identificador)
 		            vm.modalPopupTrigger(itemAberto, $translate.instant('Loja_AssociaPai').format(itemAberto.Nome), $translate.instant('Sim'), $translate.instant('Nao'), function () {
 		                itemLoja.IdentificadorAtracao = itemAberto.Identificador;
 		                itemLoja.ItemAtracao = itemAberto;

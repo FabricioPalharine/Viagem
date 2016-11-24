@@ -44,9 +44,6 @@ private void ValidarNome(Microsoft.Practices.EnterpriseLibrary.Validation.Valida
 
 			public string CodigoPlace { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="Loja_Data",MessageTemplateResourceType=typeof(MensagemModelo))]
-			public DateTime? Data { get; set; }
-
 			public IList<GastoCompra> Compras { get; set; }
 
 			public Viagem ItemViagem { get; set; }

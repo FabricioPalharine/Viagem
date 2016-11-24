@@ -128,5 +128,15 @@ resultado.TotalRegistros = _itens.Count();
             var lista = biz.CarregarCidadeLoja(token.IdentificadorViagem);
             return lista;
         }
+
+        [Authorize]
+        [ActionName("CarregarComentario")]
+        [HttpGet]
+        public List<Cidade> CarregarComentario()
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            var lista = biz.CarregarCidadeComentario(token.IdentificadorViagem);
+            return lista;
+        }
     }
 }

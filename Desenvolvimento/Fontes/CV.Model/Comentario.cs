@@ -22,10 +22,8 @@ namespace CV.Model
 
 			public int? IdentificadorCidade { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="Comentario_Latitude",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public decimal? Latitude { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="Comentario_Longitude",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public decimal? Longitude { get; set; }
 
 			[NotNullValidator(MessageTemplateResourceName="Comentario_Texto",MessageTemplateResourceType=typeof(MensagemModelo))]
@@ -38,6 +36,14 @@ namespace CV.Model
 			public DateTime? DataAtualizacao { get; set; }
 
 			public DateTime? DataExclusao { get; set; }
+
+			[NotNullValidator(MessageTemplateResourceName="Comentario_IdentificadorUsuario",MessageTemplateResourceType=typeof(MensagemModelo))]
+			public int? IdentificadorUsuario { get; set; }
+
+			public Usuario ItemUsuario { get; set; }
+
+			[NotNullValidator(MessageTemplateResourceName="Comentario_Data",MessageTemplateResourceType=typeof(MensagemModelo))]
+			public DateTime? Data { get; set; }
 		 public Comentario Clone()
 		{
 			 return (Comentario) this.MemberwiseClone();

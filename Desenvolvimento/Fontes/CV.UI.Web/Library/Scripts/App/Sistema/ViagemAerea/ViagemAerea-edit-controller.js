@@ -18,6 +18,18 @@
 		vm.itemPontoOrigem = null;
 		vm.itemPontoDestino = null;
 
+		vm.position = null;
+		vm.AjustarPosicao = function (position) {
+		    vm.position = {};
+		    vm.position.lat = position.coords.latitude;
+		    vm.position.lng = position.coords.longitude;
+		};
+
+		if (navigator.geolocation) {
+		    navigator.geolocation.getCurrentPosition(vm.AjustarPosicao);
+		}
+
+
 		vm.ajustaInicio = function (item) {
 		    vm.itemOriginal = vm.itemViagemAerea = item;
 		    if (!item.Identificador) {
@@ -251,8 +263,12 @@
 		};
 
 		vm.PesquisarDadosGoogleApi = function (valor, itemViagemAerea, callback, error) {
-		    if (itemViagemAerea.Latitude && itemViagemAerea.Longitude) {
-		        var posicao = new google.maps.LatLng(itemViagemAerea.Latitude, itemViagemAerea.Longitude);
+		    if (itemViagemAerea.Latitude && itemViagemAerea.Longitude || vm.position.lat) {
+		        var posicao;
+		        if (itemViagemAerea.Latitude && itemViagemAerea.Longitude)
+		            posicao = new google.maps.LatLng(itemViagemAerea.Latitude, itemViagemAerea.Longitude);
+		        else
+		            posicao = new google.maps.LatLng(vm.position.lat, vm.position.lng);
 		        var request = {
 		            location: posicao,
 		            radius: '2500',
@@ -399,6 +415,16 @@
 		    vmMapa.itemFoto = item;
 		    vmMapa.itemMarcador = {};
 		    vmMapa.map = null;
+
+		    vmMapa.AjustarPosicao = function (position) {
+		        vmMapa.lat = position.coords.latitude;
+		        vmMapa.lng = position.coords.longitude;
+		    };
+
+		    if (navigator.geolocation) {
+		        navigator.geolocation.getCurrentPosition(vmMapa.AjustarPosicao);
+		    }
+
 		    NgMap.getMap().then(function (evtMap) {
 		        vmMapa.map = evtMap;
 		        $timeout(function () {
@@ -427,6 +453,18 @@
 		                vmMapa.map.setCenter(results[0].geometry.location);
 		            }
 		        });
+		    };
+
+		    vmMapa.selecionarEndereco = function () {
+		        var place = this.getPlace();
+		        vmMapa.itemEndereco = place.formatted_address;
+
+		        vmMapa.lat = place.geometry.location.lat();
+		        vmMapa.lng = place.geometry.location.lng();
+
+
+		        vmMapa.map.setCenter(place.geometry.location);
+
 		    };
 
 		    vmMapa.salvar = function () {

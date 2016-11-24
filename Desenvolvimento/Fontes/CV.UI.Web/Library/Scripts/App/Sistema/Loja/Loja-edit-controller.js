@@ -15,6 +15,18 @@
 		vm.ItemAvaliacao = {};
 		vm.itemOriginal = {};
 
+
+		vm.position = null;
+		vm.AjustarPosicao = function (position) {
+		    vm.position = {};
+		    vm.position.lat = position.coords.latitude;
+		    vm.position.lng = position.coords.longitude;
+		};
+
+		if (navigator.geolocation) {
+		    navigator.geolocation.getCurrentPosition(vm.AjustarPosicao);
+		}
+
 		vm.ajustaInicio = function (item) {
 		    vm.itemOriginal = vm.itemLoja = item;
 		    if (!item.Identificador) {
@@ -65,16 +77,7 @@
 		            vm.itemLoja.ItemAtracao = null;
 		        }
 
-		        if (vm.itemLoja.Data) {
-		            if (typeof vm.itemLoja.Data == "string") {
-
-		                vm.itemLoja.Data = moment(vm.itemLoja.Data).format("YYYY-MM-DDT");
-		            }
-		            else
-		                vm.itemLoja.Data = moment(vm.itemLoja.Data).format("YYYY-MM-DDT");
-		            vm.itemLoja.Data += (vm.itemLoja.strHora) ? vm.itemLoja.strHora : "00:00:00";
-
-		        }
+		    
 
 
 		        angular.forEach(vm.ListaParticipante, function (item) {
@@ -189,8 +192,12 @@
 		};
 
 		vm.PesquisarDadosGoogleApi = function (valor, callback, error) {
-		    if (vm.itemLoja.Latitude && vm.itemLoja.Longitude) {
-		        var posicao = new google.maps.LatLng(vm.itemLoja.Latitude, vm.itemLoja.Longitude);
+		    if (vm.itemLoja.Latitude && vm.itemLoja.Longitude || vm.position.lat) {
+		        var posicao;
+		        if (vm.itemLoja.Latitude && vm.itemLoja.Longitude)
+		            posicao = new google.maps.LatLng(vm.itemLoja.Latitude, vm.itemLoja.Longitude);
+		        else
+		            posicao = new google.maps.LatLng(vm.position.lat, vm.position.lng);
 		        var request = {
 		            location: posicao,
 		            radius: '2500',
@@ -223,25 +230,48 @@
 		vm.RemoverCusto = function (itemCusto) {
 		    $scope.$parent.itemLoja.modalPopupTrigger(itemCusto, $translate.instant('MensagemExclusao'), $translate.instant('Sim'), $translate.instant('Nao'), function () {
 		        itemCusto.DataExclusao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
-		        Gasto.SalvarCustoCompra(itemCusto);
+		        Loja.excluirCompra(itemCusto);
 		    });
 
 		};
 
 
-		vm.AtualizarCompra = function (itemGasto, itemOriginal) {
-		    var itemPush = itemGasto.Compras[0];
-		    itemPush.ItemGasto = itemGasto;
-		    vm.itemLoja.Compras.push(itemPush);
+		vm.AtualizarCompra = function (itemOriginal, itemGasto) {
+		    if (itemOriginal.Identificador)
+		    {
+		        var Posicao = vm.itemLoja.Compras.indexOf(itemOriginal);
+		        vm.itemLoja.Compras.splice(Posicao, 1, itemGasto);
+		    }
+		    else
+		    {
+		        vm.itemLoja.Compras.push(itemGasto);
+		    }
 		    //SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'G', itemGasto.Identificador, true);
 		};
 
 		vm.AdicionarCompra = function () {
-		    var itemCusto = {ItensCompra:[] };
+		    var itemCusto = { ItensCompra: [], IdentificadorLoja: vm.itemLoja.Identificador, ItemGasto: { Usuarios: [], Especie: true, IdentificadorViagem: vm.itemLoja.IdentificadorViagem, ExibeHora: true, Data: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss"), strHora: moment(new Date()).format("HH:mm:ss"), ItemUsuario: { Identificador: Auth.currentUser.Codigo }, IdentificadorUsuario: Auth.currentUser.Codigo }, Usuarios: [] };
+		    $uibModal.open({
+		        templateUrl: 'Sistema/ComprasEdicao',
+		        controller: 'CompraEditCtrl',
+		        controllerAs: 'itemCompraEdit',
+		        resolve: {
+		            ItemGastoCompra: function () { return itemCusto; },
+		            EscopoAtualizacao: vm
+		        }
+		    });
 		};
 
 		vm.EditarCompra = function (itemCusto) {
-
+		    $uibModal.open({
+		        templateUrl: 'Sistema/ComprasEdicao',
+		        controller: 'CompraEditCtrl',
+		        controllerAs: 'itemCompraEdit',
+		        resolve: {
+		            ItemGastoCompra: function () { return itemCusto; },
+		            EscopoAtualizacao: vm
+		        }
+		    });
 		};
 	
 	
@@ -251,6 +281,10 @@
 		    });
 		};
 
+
+		vm.ChamarExclusao = function (item, callback1, callback2) {
+		    $scope.$parent.itemLoja.modalPopupTrigger(item, $translate.instant('MensagemExclusao'), $translate.instant('Sim'), $translate.instant('Nao'), callback1, callback2);
+		};
 	
 
 		vm.SelecionarPosicao = function () {
@@ -272,6 +306,16 @@
 		    vmMapa.itemFoto = item;
 		    vmMapa.itemMarcador = {};
 		    vmMapa.map = null;
+
+		    vmMapa.AjustarPosicao = function (position) {
+		        vmMapa.lat = position.coords.latitude;
+		        vmMapa.lng = position.coords.longitude;
+		    };
+
+		    if (navigator.geolocation) {
+		        navigator.geolocation.getCurrentPosition(vmMapa.AjustarPosicao);
+		    }
+
 		    NgMap.getMap().then(function (evtMap) {
 		        vmMapa.map = evtMap;
 		        $timeout(function () {
@@ -301,7 +345,17 @@
 		            }
 		        });
 		    };
+		    vmMapa.selecionarEndereco = function () {
+		        var place = this.getPlace();
+		        vmMapa.itemEndereco = place.formatted_address;
 
+		        vmMapa.lat = place.geometry.location.lat();
+		        vmMapa.lng = place.geometry.location.lng();
+
+
+		        vmMapa.map.setCenter(place.geometry.location);
+
+		    };
 		    vmMapa.salvar = function () {
 		        vmMapa.itemFoto.Latitude = vmMapa.itemMarcador.Latitude;
 		        vmMapa.itemFoto.Longitude = vmMapa.itemMarcador.Longitude;

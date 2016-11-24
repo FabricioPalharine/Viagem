@@ -118,5 +118,103 @@ namespace CV.UI.Web.Controllers.WebAPI
             ViagemBusiness biz = new ViagemBusiness();
             return biz.ListarItemCompra(d => d.ItemGastoCompra.ItemLoja.IdentificadorViagem == token.IdentificadorViagem);
         }
+
+        [Authorize]
+        [ActionName("saveCompra")]
+        [HttpPost]
+        public ResultadoOperacao saveCompra(GastoCompra itemCompra)
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            itemCompra.DataAtualizacao = DateTime.Now;
+            itemCompra.ItemGasto.DataAtualizacao = DateTime.Now;
+
+            biz.SalvarGastoCompra_Completo(itemCompra);
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+            itemResultado.Sucesso = biz.IsValid();
+            itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
+            if (itemResultado.Sucesso)
+            {
+                itemResultado.IdentificadorRegistro = itemCompra.Identificador;
+                GastoCompra item = biz.SelecionarGastoCompra(itemCompra.Identificador);
+                item.ItemLoja = null;
+                item.ItemGasto.Compras = null;
+                foreach (var itemItemCompra in item.ItensComprados)
+                {
+                    itemItemCompra.ItemGastoCompra = null;
+                    foreach (var itemFoto in itemItemCompra.Fotos)
+                    {
+                        itemFoto.ItemItemCompra = null;
+                        itemFoto.ItemFoto.ItensCompra = null;
+                    }
+                }
+                itemResultado.ItemRegistro = item;
+            }
+            return itemResultado;
+        }
+
+        [Authorize]
+        [ActionName("excluirCompra")]
+        [HttpPost]
+        public ResultadoOperacao excluirCompra(GastoCompra itemCompra)
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            GastoCompra item = biz.SelecionarGastoCompra(itemCompra.Identificador);
+            itemCompra.DataExclusao = DateTime.Now;
+            itemCompra.ItemGasto.DataExclusao = DateTime.Now;
+            foreach (var itemItemCompra in item.ItensComprados)
+            {
+                itemItemCompra.DataExclusao = DateTime.Now;
+                foreach (var itemFoto in itemItemCompra.Fotos)
+                {
+                    itemFoto.DataExclusao = DateTime.Now;
+                }
+            }
+            biz.SalvarGastoCompra_Item_Completo(itemCompra);
+
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+            itemResultado.Sucesso = biz.IsValid();
+            itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
+
+            return itemResultado;
+        }
+
+        [Authorize]
+        [ActionName("SalvarItemCompra")]
+        [HttpPost]
+        public ResultadoOperacao SalvarItemCompra(ItemCompra itemItemCompra)
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            ItemCompra itemOriginal = null;
+            itemItemCompra.DataAtualizacao = DateTime.Now;
+            if (itemItemCompra.Identificador.HasValue)
+                itemOriginal = biz.SelecionarItemCompra(itemItemCompra.Identificador);
+
+            biz.SalvarItemCompra(itemItemCompra);
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+            itemResultado.Sucesso = biz.IsValid();
+            itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
+            if (biz.IsValid())
+            {
+                itemResultado.IdentificadorRegistro = itemItemCompra.Identificador;
+                int? IdentificadorListaCompra = null;
+                if (itemOriginal != null)
+                    IdentificadorListaCompra = itemOriginal.IdentificadorListaCompra;
+                if (IdentificadorListaCompra.HasValue && (itemItemCompra.IdentificadorListaCompra != IdentificadorListaCompra || itemItemCompra.DataExclusao.HasValue))
+                {
+                    ListaCompra itemLista = biz.SelecionarListaCompra(IdentificadorListaCompra);
+                    itemLista.Status = (int)enumStatusListaCompra.Pendente;
+                    biz.SalvarListaCompra(itemLista);
+                }
+                else if (itemItemCompra.IdentificadorListaCompra.HasValue && !itemItemCompra.DataExclusao.HasValue && itemItemCompra.IdentificadorListaCompra != IdentificadorListaCompra)
+                {
+                    ListaCompra itemLista = biz.SelecionarListaCompra(itemItemCompra.IdentificadorListaCompra);
+                    itemLista.Status = (int)enumStatusListaCompra.Pendente;
+                    biz.SalvarListaCompra(itemLista);
+                }
+            }
+            return itemResultado;
+            
+            
+        }
     }
 }

@@ -152,6 +152,12 @@ namespace CV.Business
         }
         private void ValidarRegrasNegocioGastoCompra(GastoCompra itemGravar)
         {
+            if (IsValid())
+            {
+
+                ValidateService(itemGravar.ItemGasto);
+
+            }
         }
         private void ValidarRegrasExclusaoGastoCompra(GastoCompra itemGravar)
         {
@@ -396,6 +402,26 @@ namespace CV.Business
                     data.SalvarCarroDeslocamento_Evento(itemGravar);
                     Message msg = new Message();
                     msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_SalvarCarroDeslocamento_OK") });
+                    ServiceResult resultado = new ServiceResult();
+                    resultado.Success = true;
+                    resultado.Messages.Add(msg);
+                    serviceResult.Add(resultado);
+                }
+            }
+        }
+
+        public void SalvarGastoCompra_Completo(GastoCompra itemGravar)
+        {
+            LimparValidacao();
+            ValidateService(itemGravar);
+            ValidarRegrasNegocioGastoCompra(itemGravar);
+            if (IsValid())
+            {
+                using (ViagemRepository data = new ViagemRepository())
+                {
+                    data.SalvarGastoCompra_Completo(itemGravar);
+                    Message msg = new Message();
+                    msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_SalvarGastoCompra_OK") });
                     ServiceResult resultado = new ServiceResult();
                     resultado.Success = true;
                     resultado.Messages.Add(msg);
@@ -1246,6 +1272,14 @@ namespace CV.Business
             }
         }
 
+        public List<Cidade> CarregarCidadeComentario(int? IdentificadorViagem)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.CarregarCidadeComentario(IdentificadorViagem);
+            }
+        }
+
         public List<Refeicao> ListarRefeicao(Expression<Func<Refeicao, bool>> predicate)
         {
             using (ViagemRepository repositorio = new ViagemRepository())
@@ -1289,6 +1323,14 @@ namespace CV.Business
             using (ViagemRepository repositorio = new ViagemRepository())
             {
                 return repositorio.ListarRefeicaoPedido(predicate);
+            }
+        }
+
+        public List<CotacaoMoeda> ListarCotacaoMoeda(Expression<Func<CotacaoMoeda, bool>> predicate)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarCotacaoMoeda(predicate);
             }
         }
 
@@ -1371,9 +1413,34 @@ namespace CV.Business
         {
             using (ViagemRepository repositorio = new ViagemRepository())
             {
-                return repositorio.ListarLoja(IdentificadorViagem, DataDe,DataAte,Nome,IdentificadorCidade, IdentificadorLoja);
+                return repositorio.ListarLoja(IdentificadorViagem, DataDe, DataAte, Nome, IdentificadorCidade, IdentificadorLoja);
             }
         }
 
+        public List<ListaCompra> ListarListaCompra(int? IdentificadorUsuario, int? IdentificadorViagem, List<int?> Status, int? IdentificadorListaCompra)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarListaCompra(IdentificadorViagem, IdentificadorViagem, Status, IdentificadorListaCompra);
+            }
         }
+
+        public List<Comentario> ListarComentario(int? IdentificadorUsuario, int? IdentificadorViagem, DateTime? DataDe, DateTime? DataAte, int? IdentificadorCidade, int? IdentificadorComentario)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarComentario(IdentificadorUsuario, IdentificadorViagem, DataDe, DataAte, IdentificadorCidade, IdentificadorComentario);
+            }
+        }
+
+        public List<ListaCompra> ListarListaCompra(int? IdentificadorUsuario, int? IdentificadorViagem, int? Status, string Destinatario, int? IdentificadorUsuarioPedido,
+           string Marca, string Descricao)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarListaCompra(IdentificadorUsuario, IdentificadorViagem,Status, Destinatario, IdentificadorUsuarioPedido, Marca, Descricao);
+            }
+        }
+
+    }
 }

@@ -18,25 +18,24 @@
         <div class="overlay" ng-show="itemCotacaoMoeda.loading">
             <i class="fa fa-refresh fa-spin text-gray"></i>
         </div>
-
-        <form role="form" ng-submit="itemCotacaoMoeda.filtraDado()" >
-            <div class="box-body">
-                <div class="row">
-                    
-
+        <div class="row" ng-show="itemCotacaoMoeda.messages.length > 0">
+            <div class="col-md-12">
+                <div class="callout callout-danger">
+                    <h4>@TextosPaginas.Geral_ValidarErros</h4>
+                    <ul>
+                        <li ng-repeat="erro in itemCotacaoMoeda.messages">
+                            <span ng-bind="erro.Mensagem"></span>
+                        </li>
+                    </ul>
 
                 </div>
-
-
-            </div><!-- /.box-body -->
+            </div>
+        </div>
+        <form role="form" >         
             <div class="box-footer">
-                <a role="button" class="btn btn-primary " title="@TextosPaginas.Adicionar" ui-sref="CotacaoMoedaEdicao({filtro:itemCotacaoMoeda.filtroAtualizacao})" ng-if="itemCotacaoMoeda.PermiteInclusao">
+                <a role="button" class="btn btn-primary " title="@TextosPaginas.Adicionar" ng-click="itemCotacaoMoeda.AdicionarNovo()">
                     <span class="fa fa-plus" aria-hidden="true"></span>
-                </a>
-                <button type="submit" class="btn btn-primary  pull-right">
-                    <span class="fa fa-search" aria-hidden="true"></span> @TextosPaginas.Pesquisar
-                </button>
-
+                </a>              
             </div>
         </form>
     </div><!-- /.box -->
@@ -47,25 +46,71 @@
         <div class="overlay" ng-show="itemCotacaoMoeda.loading">
             <i class="fa fa-refresh fa-spin text-gray"></i>
         </div>
-        <div class="box-body table-responsive">
-            <div class="gridStyle" ui-grid="itemCotacaoMoeda.gridOptions" ui-grid-pagination></div>
+        <div class="box-body table-responsive">           
+                <table class="table-condensed " style="width:100%; ">
+                    <thead>
+                        <tr>
+                            <th class="col-xs-3">
+                                @TextosPaginas.CotacaoMoeda_Moeda
+                            </th>
+                            <th class="col-xs-3">
+                                @TextosPaginas.CotacaoMoeda_DataCotacao
+                            </th>                           
+                            <th class="col-xs-3">
+                                @TextosPaginas.CotacaoMoeda_ValorCotacao
+                            </th>
+                            <th class="col-xs-2">
+                            </th>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat='itemCotacao in itemCotacaoMoeda.ListaDados' >
+
+                        <td>
+                            <select  ng-if="itemCotacao.Edicao" ng-model="itemCotacao.ItemMoeda" class="form-control" ng-options="obj.Descricao for obj in itemCotacaoMoeda.ListaMoeda track by obj.Codigo">
+                                <option value="">@TextosPaginas.Selecione</option>
+                            </select>
+                            <div ng-if="!itemCotacao.Edicao">{{itemCotacao.MoedaSigla}}</div>
+                        </td>
+
+                        <td>
+                            <div class="dropdown" ng-if="itemCotacao.Edicao">
+                                <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+                                    <div class="input-group">
+                                        <input date-input ng-model="itemCotacao.DataCotacao" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                               datapattern="dd/MM/yyyy">
+                                        <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </span>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    <datetimepicker data-ng-model="itemCotacao.DataCotacao"
+                                                    data-datetimepicker-config="{  minView:'day' , langCode:itemCotacaoMoeda.Idioma()  }" />
+                                </ul>
+                            </div>
+                            <div ng-if="!itemCotacao.Edicao">{{itemCotacao.DataCotacao | date:'dd/MM/yyyy'}}</div>
+                        </td>
+                        <td>
+                            <input ng-if="itemCotacao.Edicao" type="text" class="form-control" ng-model="itemCotacao.ValorCotacao" empty-to-null decimal-input="{digits:6, integerDigits:6}">
+                            <div ng-if="!itemCotacao.Edicao">{{itemCotacao.ValorCotacao | number:'6'}}</div>
+                        </td>
+                      
+                        <td>
+                            <button type="button" class="btn btn-danger btn-sm" ng-click="itemCotacaoMoeda.RemoverMoeda( itemCotacao)" ng-if="!itemCotacao.Edicao"><span class="fa fa-trash" aria-hidden="true"></span></button>
+                            <button type="button" class="btn btn-info btn-sm" ng-click="itemCotacaoMoeda.EditarMoeda( itemCotacao)" ng-if="!itemCotacao.Edicao"><span class="fa fa-pencil" aria-hidden="true"></span></button>
+                            <button type="button" class="btn btn-warning btn-sm" ng-click="itemCotacaoMoeda.CancelarMoeda( itemCotacao) " ng-if="itemCotacao.Edicao"><span class="fa fa-close" aria-hidden="true"></span></button>
+                            <button type="button" class="btn btn-info btn-sm" ng-click="itemCotacaoMoeda.SalvarMoeda( itemCotacao)" ng-if="itemCotacao.Edicao"><span class="fa fa-save" aria-hidden="true"></span></button>
+
+                        </td>
+                    </tr>
+                </table>
+
 
 
         </div>
     </div>
 
-    <script type="text/ng-template" id="modal.html">
-
-        <div class="modal-body">
-            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="vmAction.edit(vmAction.item.Identificador)">@TextosPaginas.Editar</button>
-            <button type="button" class="btn btn-danger btn-lg btn-block" ng-click="vmAction.askDelete(vmAction.item, vmAction.indexForDelete)">@TextosPaginas.Excluir</button>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default btn-lg btn-block" ng-click="vmAction.close()">@TextosPaginas.Cancelar</button>
-        </div>
-    </script>
-
-
+  
     <script type="text/ng-template" id="modalDelete.html">
         <div class="modal-header">
             <span>@TextosPaginas.ConfirmaExclusao</span>
@@ -80,35 +125,6 @@
     </script>
 
 
-    <script type="text/ng-template" id="NewFooterTemplate.html">
-
-        <div role="contentinfo" class="ui-grid-pager-panel" ui-grid-pager ng-show="grid.options.enablePaginationControls">
-
-            <div role="navigation" class="ui-grid-pager-container">
-                <div role="menubar" class="ui-grid-pager-control">
-                    <button type="button" role="menuitem" class="ui-grid-pager-first" ui-grid-one-bind-title="aria.pageToFirst" ui-grid-one-bind-aria-label="aria.pageToFirst" ng-class="{'btn':true, 'btn-primary':true}" ng-click="pageFirstPageClick()" ng-disabled="cantPageBackward()">
-                        <div ng-class="grid.isRTL() ? 'last-triangle' : 'first-triangle'"><div ng-class="grid.isRTL() ? 'last-bar-rtl' : 'first-bar'"></div></div>
-                    </button>
-                    <button type="button" role="menuitem" class="ui-grid-pager-previous  btn btn-primary" ui-grid-one-bind-title="aria.pageBack" ui-grid-one-bind-aria-label="aria.pageBack" ng-click="pagePreviousPageClick()" ng-disabled="cantPageBackward()"><div ng-class="grid.isRTL() ? 'last-triangle prev-triangle' : 'first-triangle prev-triangle'"></div></button>
-                    <input type="number" ui-grid-one-bind-title="aria.pageSelected" ui-grid-one-bind-aria-label="aria.pageSelected" class="ui-grid-pager-control-input" ng-model="grid.options.paginationCurrentPage" min="1" max="{{ paginationApi.getTotalPages() }}" required> <span class="ui-grid-pager-max-pages-number" ng-show="paginationApi.getTotalPages() > 0"><abbr ui-grid-one-bind-title="paginationOf">/</abbr> {{ paginationApi.getTotalPages() }}</span>
-                    <button type="button" role="menuitem" class="ui-grid-pager-next  btn btn-primary" ui-grid-one-bind-title="aria.pageForward" ui-grid-one-bind-aria-label="aria.pageForward" ng-click="pageNextPageClick()" ng-disabled="cantPageForward()"><div ng-class="grid.isRTL() ? 'first-triangle next-triangle' : 'last-triangle next-triangle'"></div></button>
-                    <button type="button" role="menuitem" class="ui-grid-pager-last  btn btn-primary" ui-grid-one-bind-title="aria.pageToLast" ui-grid-one-bind-aria-label="aria.pageToLast" ng-click="pageLastPageClick()" ng-disabled="cantPageToLast()"><div ng-class="grid.isRTL() ? 'first-triangle' : 'last-triangle'"><div ng-class="grid.isRTL() ? 'first-bar-rtl' : 'last-bar'"></div></div></button>
-                </div>
-            </div>
-            <div class="ui-grid-pager-count-container"><div class="ui-grid-pager-count"><span ng-show="grid.options.totalItems > 0">{{showingLow}} <abbr ui-grid-one-bind-title="paginationThrough">-</abbr> {{showingHigh}} {{paginationOf}} {{grid.options.totalItems}} {{totalItemsLabel}}</span></div></div>
-        </div>
-    </script>
-
-
-    <script type="text/ng-template" id="BotoesGridTemplate.html">
-
-        <div class="ngCellText hidden-xs">
-			<button type="button" ng-if="grid.appScope.PermiteAlteracao" class="btn btn-primary small" title="@TextosPaginas.Editar" ui-sref="CotacaoMoedaEdicao({ id: {{COL_FIELD}},filtro:grid.appScope.filtroAtualizacao })"><span class="fa fa-pencil" aria-hidden="true"></span></button>
-			<button type="button" ng-if="grid.appScope.PermiteExclusao" class="btn btn-danger small" title="@TextosPaginas.Excluir" ng-click="grid.appScope.askDelete(row.entity, $index)"><span class="fa fa-trash" aria-hidden="true"></span></button>
-
-        </div>
-
-
-    </script>
+  
 
 </section><!-- /.content -->

@@ -13,6 +13,52 @@ namespace CV.Data
     {
         #region Save
 
+
+        public void SalvarGastoCompra_Completo(GastoCompra itemGravar)
+        {
+            GastoCompra itemBase = Context.GastoCompras
+.Include("ItemGasto").Include("ItemGasto.Usuarios").Where(f => f.Identificador == itemGravar.Identificador).FirstOrDefault();
+            if (itemBase == null)
+            {
+                itemBase = Context.GastoCompras.Create();
+                Context.Entry<GastoCompra>(itemBase).State = System.Data.Entity.EntityState.Added;
+            }
+            AtualizarPropriedades<GastoCompra>(itemBase, itemGravar);
+            Gasto itemGasto = itemGravar.ItemGasto;
+            Gasto itemBaseGasto = null;
+            if (itemGasto != null)
+            {
+                itemBaseGasto = Context.Gastos.Where(f => f.Identificador == itemGasto.Identificador).FirstOrDefault();
+                if (itemBaseGasto == null)
+                {
+                    itemBaseGasto = Context.Gastos.Create();
+                    itemBaseGasto.Usuarios = new List<GastoDividido>();
+                    Context.Entry<Gasto>(itemBaseGasto).State = System.Data.Entity.EntityState.Added;
+                }
+                AtualizarPropriedades<Gasto>(itemBaseGasto, itemGasto);
+                itemBase.ItemGasto = itemBaseGasto;
+                foreach (GastoDividido itemGastoDividido in new List<GastoDividido>(itemBaseGasto.Usuarios))
+                {
+                    if (!itemGasto.Usuarios.Where(f => f.Identificador == itemGastoDividido.Identificador).Any())
+                    {
+                        Context.Entry<GastoDividido>(itemGastoDividido).State = EntityState.Deleted;
+                    }
+                }
+                foreach (GastoDividido itemGastoDividido in new List<GastoDividido>(itemGasto.Usuarios))
+                {
+                    GastoDividido itemBaseGastoDividido = !itemGastoDividido.Identificador.HasValue ? null : itemBaseGasto.Usuarios.Where(f => f.Identificador == itemGastoDividido.Identificador).FirstOrDefault();
+                    if (itemBaseGastoDividido == null)
+                    {
+                        itemBaseGastoDividido = Context.GastoDivididos.Create();
+                        itemBaseGasto.Usuarios.Add(itemBaseGastoDividido);
+                    }
+                    AtualizarPropriedades<GastoDividido>(itemBaseGastoDividido, itemGastoDividido);
+                }
+            }
+            Context.SaveChanges();
+            itemGravar.Identificador = itemBase.Identificador;
+        }
+
         public void SalvarCarro_Completo(Carro itemGravar)
         {
             Carro itemBase = Context.Carros
@@ -596,6 +642,20 @@ namespace CV.Data
 
 
         }
+
+        public List<Cidade> CarregarCidadeComentario(int? IdentificadorViagem)
+        {
+            IQueryable<Cidade> query = this.Context.Comentarios.Where(d => d.IdentificadorViagem == IdentificadorViagem).Select(d => d.ItemCidade);
+
+            var queryJoin = query.GroupJoin(this.Context.CidadeGrupos.Where(d => d.IdentificadorViagem == IdentificadorViagem),
+                d => d.Identificador,
+                d => d.IdentificadorCidadeFilha,
+                (c, g) => new { cidade = g.Any() ? g.Select(d => d.ItemCidadePai).FirstOrDefault() : c });
+
+            return queryJoin.Where(d => d.cidade != null).Select(d => d.cidade).Distinct().OrderBy(d => d.Nome).ToList();
+
+
+        }
         public List<Refeicao> ListarRefeicao(Expression<Func<Refeicao, bool>> predicate)
         {
             return Context.Refeicoes.Where(d => !d.DataExclusao.HasValue).Where(predicate).ToList();
@@ -633,6 +693,11 @@ namespace CV.Data
         public List<RefeicaoPedido> ListarRefeicaoPedido(Expression<Func<RefeicaoPedido, bool>> predicate)
         {
             return Context.RefeicaoPedidos.Where(predicate).ToList();
+        }
+
+        public List<CotacaoMoeda> ListarCotacaoMoeda(Expression<Func<CotacaoMoeda, bool>> predicate)
+        {
+            return Context.CotacaoMoedas.Where(predicate).ToList();
         }
 
         /// <summary>
@@ -723,6 +788,9 @@ namespace CV.Data
                 DataAte = DataAte.GetValueOrDefault().AddDays(1);
                 query = query.Where(d => d.Data < DataAte);
             }
+            query = query.Where(d => !d.Compras.Any());
+            query = query.Where(d => !d.Reabastecimentos.Any());
+            query = query.Where(d => !d.ApenasBaixa.Value);
             query = query.OrderByDescending(d => d.Data);
             return query.ToList();
         }
@@ -904,11 +972,11 @@ namespace CV.Data
                 query = query.Where(d => d.Identificador == IdentificadorLoja);
             query = query.Where(d => d.IdentificadorViagem == IdentificadorViagem);
             if (DataDe.HasValue)
-                query = query.Where(d => d.Data >= DataDe);
+                query = query.Where(f=>f.Compras.Where( d => d.ItemGasto.Data >= DataDe).Any());
             if (DataAte.HasValue)
             {
                 DataAte = DataAte.GetValueOrDefault().AddDays(1);
-                query = query.Where(d => d.Data < DataAte);
+                query = query.Where(f => f.Compras.Where(d => d.ItemGasto.Data < DataAte).Any());
             }
 
             if (!string.IsNullOrWhiteSpace(Nome))
@@ -917,10 +985,78 @@ namespace CV.Data
             query = query.Where(d => !d.DataExclusao.HasValue);
             if (IdentificadorCidade.HasValue)
                 query = query.Where(d => d.IdentificadorCidade == IdentificadorCidade || this.Context.CidadeGrupos.Where(e => e.IdentificadorCidadeFilha == d.IdentificadorCidade).Where(f => f.IdentificadorViagem == IdentificadorViagem).Where(e => e.IdentificadorCidadePai == IdentificadorCidade).Any());
-            query = query.OrderByDescending(d => d.Data);
+            query = query.OrderBy(d=>d.Nome);
 
             return query.ToList();
         }
 
+        public List<ListaCompra> ListarListaCompra(int? IdentificadorUsuario, int? IdentificadorViagem, List<int?> Status , int? IdentificadorListaCompra)
+        {
+            IQueryable<ListaCompra> query = this.Context.ListaCompras;
+
+            if (IdentificadorListaCompra.HasValue)
+                query = query.Where(d => d.Identificador == IdentificadorListaCompra);
+            query = query.Where(d => d.IdentificadorViagem == IdentificadorViagem);
+            if (IdentificadorUsuario.HasValue)
+                query = query.Where(d => d.IdentificadorUsuarioPedido == IdentificadorUsuario || d.IdentificadorUsuario == IdentificadorUsuario);
+            query = query.Where(d => !d.DataExclusao.HasValue);
+            if (Status != null && Status.Any())
+                query = query.Where(d => Status.Contains(d.Status));
+            return query.OrderBy(d => d.Marca).ThenBy(d => d.Descricao).ToList();
+        }
+
+        public List<Comentario> ListarComentario(int? IdentificadorUsuario, int? IdentificadorViagem, DateTime? DataDe, DateTime? DataAte, int? IdentificadorCidade, int? IdentificadorComentario)
+        {
+
+            IQueryable<Comentario> query = this.Context.Comentarios;
+
+            if (IdentificadorComentario.HasValue)
+                query = query.Where(d => d.Identificador == IdentificadorComentario);
+            query = query.Where(d => d.IdentificadorViagem == IdentificadorViagem);
+            if (DataDe.HasValue)
+                query = query.Where(d => d.Data >= DataDe);
+            if (DataAte.HasValue)
+            {
+                DataAte = DataAte.GetValueOrDefault().AddDays(1);
+                query = query.Where(d => d.Data < DataAte);
+            }
+
+            if (IdentificadorUsuario.HasValue)
+                query = query.Where(d => d.IdentificadorUsuario == IdentificadorUsuario);
+
+            query = query.Where(d => !d.DataExclusao.HasValue);
+            if (IdentificadorCidade.HasValue)
+                query = query.Where(d => d.IdentificadorCidade == IdentificadorCidade || this.Context.CidadeGrupos.Where(e => e.IdentificadorCidadeFilha == d.IdentificadorCidade).Where(f => f.IdentificadorViagem == IdentificadorViagem).Where(e => e.IdentificadorCidadePai == IdentificadorCidade).Any());
+            query = query.OrderByDescending(d => d.Data);
+
+            return query.ToList();
+
+        }
+
+
+        public List<ListaCompra> ListarListaCompra(int? IdentificadorUsuario, int? IdentificadorViagem, int? Status, string Destinatario, int? IdentificadorUsuarioPedido,
+            string Marca, string Descricao)
+        {
+            IQueryable<ListaCompra> query = this.Context.ListaCompras.Include("ItemUsuario");
+            if (!string.IsNullOrEmpty(Marca))
+                query = query.Where(d => d.Marca.Contains(Marca));
+
+            if (!string.IsNullOrEmpty(Descricao))
+                query = query.Where(d => d.Descricao.Contains(Descricao));
+
+            if (IdentificadorUsuario.HasValue)
+                query = query.Where(d => d.IdentificadorUsuario == IdentificadorUsuario);
+            if (IdentificadorUsuarioPedido.HasValue)
+                query = query.Where(d => d.IdentificadorUsuarioPedido == IdentificadorUsuarioPedido);
+            if (!string.IsNullOrEmpty(Destinatario))
+                query = query.Where(d => d.ItemUsuarioPedido.Nome.Contains(Destinatario) || d.Destinatario.Contains(Destinatario));
+            query = query.Where(d => d.IdentificadorViagem == IdentificadorViagem);
+            query = query.Where(d => !d.DataExclusao.HasValue);
+            if (Status.GetValueOrDefault(-1) >= 0)
+                query = query.Where(d => d.Status == Status);
+
+            return query.OrderBy(d => d.Marca).ThenBy(d => d.Descricao).ToList();
+        }
+
     }
-}
+    }
