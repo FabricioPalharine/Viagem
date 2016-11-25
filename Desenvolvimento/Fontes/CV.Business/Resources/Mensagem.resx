@@ -579,4 +579,7 @@
   <data name="Viagem_SalvarLoja_Completo_OK" xml:space="preserve">
     <value>Gravação de Loja foi realizada com sucesso</value>
   </data>
+  <data name="Viagem_SalvarGastoCompra_Item_Completo_OK" xml:space="preserve">
+    <value>Gravação de GastoCompra foi realizada com sucesso</value>
+  </data>
 </root>

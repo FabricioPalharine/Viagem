@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using CV.Business.Library;
 using CV.Data;
 
@@ -3357,6 +3358,25 @@ using(					ViagemRepository data = new ViagemRepository())
 					data.SalvarLoja_Completo(itemGravar);
 					Message msg = new Message();
 					msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_SalvarLoja_Completo_OK") });
+					ServiceResult resultado = new ServiceResult();
+					resultado.Success = true;
+					resultado.Messages.Add(msg);
+					serviceResult.Add(resultado);
+				 }
+				 }
+			}
+			public void SalvarGastoCompra_Item_Completo (GastoCompra itemGravar)
+			{
+				 LimparValidacao();
+				 ValidateService(itemGravar);
+					ValidarRegrasNegocioGastoCompra(itemGravar);
+				 if (IsValid())
+				 {
+					using(ViagemRepository data = new ViagemRepository())
+				 {
+					data.SalvarGastoCompra_Item_Completo(itemGravar);
+					Message msg = new Message();
+					msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_SalvarGastoCompra_Item_Completo_OK") });
 					ServiceResult resultado = new ServiceResult();
 					resultado.Success = true;
 					resultado.Messages.Add(msg);

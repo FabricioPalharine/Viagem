@@ -656,6 +656,16 @@
             vmMapa.itemFoto = item;
             vmMapa.itemMarcador = {};
             vmMapa.map = null;
+
+            vmMapa.AjustarPosicao = function (position) {
+                vmMapa.lat = position.coords.latitude;
+                vmMapa.lng = position.coords.longitude;
+            };
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(vmMapa.AjustarPosicao);
+            }
+
             NgMap.getMap().then(function (evtMap) {
                 vmMapa.map = evtMap;
                 $timeout(function () {
@@ -684,6 +694,17 @@
                         vmMapa.map.setCenter(results[0].geometry.location);
                     }
                 });
+            };
+            vmMapa.selecionarEndereco = function () {
+                var place = this.getPlace();
+                vmMapa.itemEndereco = place.formatted_address;
+
+                vmMapa.lat = place.geometry.location.lat();
+                vmMapa.lng = place.geometry.location.lng();
+
+
+                vmMapa.map.setCenter(place.geometry.location);
+
             };
 
             vmMapa.salvar = function () {

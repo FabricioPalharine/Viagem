@@ -20,7 +20,6 @@ namespace CV.Model
 			[NotNullValidator(MessageTemplateResourceName="GastoCompra_IdentificadorLoja",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public int? IdentificadorLoja { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="GastoCompra_IdentificadorGasto",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public int? IdentificadorGasto { get; set; }
 
 			public Gasto ItemGasto { get; set; }

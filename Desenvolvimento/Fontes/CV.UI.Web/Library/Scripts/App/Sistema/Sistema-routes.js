@@ -1441,9 +1441,17 @@
                                       name: 'LojaController',
                                       files: [
                                           'library/scripts/app/Sistema/Loja/Loja-edit-controller.js',
-                                          'library/scripts/app/Sistema/Loja/Loja-controller.js'
+                                          'library/scripts/app/Sistema/Loja/Loja-controller.js',
+                                          'library/scripts/app/Sistema/Loja/Compra-edit-controller.js',
+                                          'library/scripts/app/Sistema/Loja/ItemCompra-edit-controller.js'
                                       ]
-                                  }, 
+                                  },
+                                   {
+                                       name: 'ListaCompraFactory',
+                                       files: [
+                                           'library/scripts/app/Sistema/ListaCompra/ListaCompra-factory.js'
+                                       ]
+                                   },
                                   {
                                       name: 'AtracaoFactory',
                                       files: [
@@ -1479,6 +1487,12 @@
                                          name: 'FotoFactory',
                                          files: [
                                              'library/scripts/app/Sistema/Foto/Foto-factory.js'
+                                         ]
+                                     },
+                                     {
+                                         name: 'UsuarioFactory',
+                                         files: [
+                                             'library/scripts/app/Sistema/Usuario/Usuario-factory.js'
                                          ]
                                      },
                               ]);

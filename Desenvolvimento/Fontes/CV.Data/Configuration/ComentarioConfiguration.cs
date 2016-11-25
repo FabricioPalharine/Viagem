@@ -28,6 +28,9 @@ namespace CV.Data.Configuration
 			this.HasRequired(i => i.ItemViagem).WithMany().HasForeignKey(d=>d.IdentificadorViagem);
 			this.Property(i => i.DataAtualizacao).HasColumnName("DT_ATUALIZACAO");
 			this.Property(i => i.DataExclusao).HasColumnName("DT_EXCLUSAO");
+			this.Property(i => i.IdentificadorUsuario).HasColumnName("ID_USUARIO");
+			this.HasRequired(i => i.ItemUsuario).WithMany().HasForeignKey(d=>d.IdentificadorUsuario);
+			this.Property(i => i.Data).HasColumnName("DT_COMENTARIO");
 		MapearCamposManualmente();
 		}
 	}

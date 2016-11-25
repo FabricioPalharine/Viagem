@@ -2,44 +2,36 @@
 	'use strict';
 	angular
 		.module('Sistema')
-		.controller('CotacaoMoedaCtrl',['$uibModal', 'Error', '$timeout', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', '$window', 'i18nService','Viagem','CotacaoMoeda', CotacaoMoedaCtrl]);
+		.controller('CotacaoMoedaCtrl',['$uibModal', 'Error', '$timeout', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', '$window', 'i18nService','Viagem','CotacaoMoeda','Dominio', CotacaoMoedaCtrl]);
 
-	function CotacaoMoedaCtrl($uibModal,  Error, $timeout, $state, $translate, $scope, Auth, $rootScope, $stateParams, $window, i18nService,Viagem,CotacaoMoeda) {
+	function CotacaoMoedaCtrl($uibModal, Error, $timeout, $state, $translate, $scope, Auth, $rootScope, $stateParams, $window, i18nService, Viagem, CotacaoMoeda, Dominio) {
 		var vm = this;
 		vm.filtro = {  Index: 0, Count: 0 };
 		vm.filtroAtualizacao = {  Index: 0, Count: 0 };
 		vm.loading = false;
-		vm.showModal = false;
-		vm.modalAcao = function () {;
-			vm.showModal = true;
-		}
+		vm.showModal = false;		
 		vm.modalDelete = {};
-		vm.PermiteInclusao = true;
-		vm.PermiteAlteracao = true;
-		vm.PermiteExclusao = true;
 		vm.ListaDados = [];
 		vm.gridApi = null;
+		vm.messages = [];
 
 		vm.load = function () {
-			vm.loading = true;
-			vm.verificarPermissoes();
+		    vm.loading = true;
 
-			var param = $stateParams;
-			if (param.filtro != null) {
-				vm.filtro = vm.filtroAtualizacao = param.filtro;
-				 vm.pagingOptions.fields = vm.filtroAtualizacao.SortField;
-				 vm.pagingOptions.directions = vm.filtroAtualizacao.SortOrder;
-				vm.pagingOptions.currentPage = (vm.filtroAtualizacao.Index / vm.pagingOptions.pageSize) + 1;
+		    Dominio.CarregaMoedas(function (data) {
+		        vm.ListaMoeda = data;
+		    });
 
-			}
-			vm.CarregarDadosWebApi(vm.pagingOptions.pageSize, vm.pagingOptions.currentPage);
+			vm.CarregarDadosWebApi();
 		};
-		vm.delete = function (itemForDelete, indexForDelete, callback) {
+
+		vm.delete = function (itemForDelete, callback) {
 			vm.loading = true;
 			CotacaoMoeda.delete({ id: itemForDelete.Identificador }, function (data) {
 				callback(data);
 				if (data.Sucesso) {
-					vm.CarregarDadosWebApi(vm.pagingOptions.pageSize, vm.pagingOptions.currentPage);
+				    var Posicao = vm.ListaDados.indexOf(itemForDelete);
+				    vm.ListaDados.splice(Posicao, 1);
 					Error.showError('success', $translate.instant("Sucesso"), data.Mensagens[0].Mensagem, true);
 				}
 				else {
@@ -58,51 +50,19 @@
 			})
 		};
 
-        vm.actionModal = function (item, indexForDelete) {
-            $uibModal.open({
-                templateUrl: 'modal.html',
-                controller: ['$uibModalInstance', 'item', 'index', vm.ActionModalCtrl],
-                controllerAs: 'vmAction',
-                resolve: {
-                    item: function () { return item; },
-                    index: function () { return indexForDelete; }
-                }
-            });
-        };
-        vm.ActionModalCtrl = function ($uibModalInstance, item, index) {
-            var vmAction = this;
-            vmAction.item = item;
-            vmAction.indexForDelete = index;
-            // console.log(itens);
-            vmAction.close = function () {
-                $uibModalInstance.close();
-            }
-            vmAction.edit = function (idToEdit) {
-                $uibModalInstance.close();
-                $state.go('CotacaoMoedaEdicao', { id: idToEdit, filtro: vm.filtroAtualizacao });
-            };
-
-            vmAction.askDelete = function (itemForDelete, indexForDelete) {
-                vm.askDelete(itemForDelete, indexForDelete);
-                $uibModalInstance.close();
-            };
-
-        }
-
-        vm.askDelete = function (itemForDelete, indexForDelete) {
+		vm.RemoverMoeda = function (itemForDelete) {
             // $uibModalInstance.close();
             $uibModal.open({
                 templateUrl: 'modalDelete.html',
-                controller: ['$uibModalInstance', 'item', 'index', vm.DeleteModalCtrl],
+                controller: ['$uibModalInstance', 'item',  vm.DeleteModalCtrl],
                 controllerAs: 'vmDelete',
                 resolve: {
                     item: function () { return itemForDelete; },
-                    index: function () { return indexForDelete; }
                 }
             });
         };
 
-        vm.DeleteModalCtrl = function ($uibModalInstance, itemForDelete, indexForDelete) {
+        vm.DeleteModalCtrl = function ($uibModalInstance, itemForDelete) {
             var vmDelete = this;
             vmDelete.itemForDelete = itemForDelete;
 
@@ -116,64 +76,19 @@
             };
 
             vmDelete.delete = function () {
-                vm.delete(vmDelete.itemForDelete, indexForDelete, function () {
+                vm.delete(vmDelete.itemForDelete, function () {
                     $uibModalInstance.close();
                 });
             };
-        };
-
-        $rootScope.$on('loggin', function (event) {
-            vm.verificarPermissoes();
-        });
-
-        angular.element($window).bind('resize', function () {
-            var screenSizes = $.AdminLTE.options.screenSizes;
-            vm.gridOptions.columnDefs[0].visible = $(window).width() > (screenSizes.sm - 1);
-            vm.gridApi.grid.refresh();
-
-           
-        });
-
-
-		vm.verificarPermissoes = function () {
-			$(Auth.currentUser.access).each(function (i, item) {
-			});
-		};
-
-        vm.filtraDado = function () {
-
-            vm.filtroAtualizacao = jQuery.extend({}, vm.filtro);
-
-                  
-
-            vm.pagingOptions.currentPage = 1;
-            vm.gridApi.grid.options.paginationCurrentPage = 1;
-            vm.pagingOptions.fields = [];
-            vm.pagingOptions.directions = [];
-            angular.forEach(vm.gridApi.grid.columns, function (c) {
-                c.sort = {};
-            });
-
-            vm.CarregarDadosWebApi(vm.pagingOptions.pageSize, vm.pagingOptions.currentPage);
-        };
-
-        vm.clean = function () {
-            vm.filtro = { Nome: '', Index: 0, Count: 0 };
-            vm.filtraDado();
-        };
-
-        vm.totalServerItems = 0;
-        vm.pagingOptions = {
-            pageSize: 20,
-            currentPage: 1,
-            fields: [],
-            directions: []
-        };
+        }; 
 
         vm.AjustarDadosPagina = function (data) {
-            // var pagedData = data.slice((page - 1) * pageSize, page * pageSize);
-            vm.ListaDados = data.Lista;
-            vm.gridOptions.totalItems = data.TotalRegistros;
+            vm.ListaDados = [];
+            angular.forEach(            data.Lista, function (itemLista) {
+                itemLista.ItemMoeda = { Codigo: itemLista.Moeda };
+                vm.ListaDados.push(itemLista);
+            });
+           
             if (!$scope.$$phase) {
                 $scope.$apply();
             }
@@ -185,16 +100,12 @@
             else
                 return "pt";
         };
-//
-        vm.CarregarDadosWebApi = function (pageSize, page) {
+
+        vm.CarregarDadosWebApi = function () {
             vm.loading = true;
-            vm.filtroAtualizacao.Index = (page - 1) * pageSize;
-            vm.filtroAtualizacao.Count = pageSize;
+            vm.filtroAtualizacao.Index = 0;
+            vm.filtroAtualizacao.Count = null;
 
-            vm.filtroAtualizacao.SortField =vm.pagingOptions.fields;
-            vm.filtroAtualizacao.SortOrder =vm.pagingOptions.directions;
-
-            vm.CamposInvalidos = {};
             vm.messages = [];
 
             CotacaoMoeda.list({ json: JSON.stringify(vm.filtroAtualizacao) }, function (data) {
@@ -202,7 +113,6 @@
                 vm.AjustarDadosPagina(data);
                 if (!data.Sucesso) {
                     vm.messages = data.Mensagens;
-                    vm.verificaCampoInvalido();
                 }
 
                
@@ -214,53 +124,60 @@
                 vm.loading = false;
             });
         };
-//
-        vm.gridOptions = {
-            data: 'itemCotacaoMoeda.ListaDados',           
-            			columnDefs: [
-				{field:'Identificador',  displayName: '', cellTemplate: "BotoesGridTemplate.html",  width: 60,},
-				{field:'Moeda', displayName: $translate.instant('CotacaoMoeda_Moeda'),},
-				{field:'DataCotacao', displayName: $translate.instant('CotacaoMoeda_DataCotacao'),cellFilter: 'date:\'dd/MM/yyyy\'' },
-				{field:'ValorCotacao', displayName: $translate.instant('CotacaoMoeda_ValorCotacao'),cellFilter: 'number:\'6\'' },
-				{field:'IdentificadorViagem', displayName: $translate.instant('CotacaoMoeda_IdentificadorViagem'),},
-			],
 
-            enablePagination: true,
-            showGridFooter: false,
-            enableRowSelection: false,
-            multiSelect: false,
-            paginationPageSizes: [20],
-            enableHorizontalScrollbar: 0,
-            enableVerticalScrollbar: 1,
-            onRegisterApi: function (grid) {
-                if (Auth.currentUser && Auth.currentUser.Cultura) {
-                    var cultura = Auth.currentUser.Cultura.toLowerCase().substr(0, 2);
-                    i18nService.setCurrentLang(cultura)
+        vm.AdicionarNovo = function () {
+            var itemCotacao = { Edicao: true, Original: null };
+            Viagem.get({ id: Auth.currentUser.IdentificadorViagem }, function (data) {
+                itemCotacao.ItemMoeda = { Codigo: data.Moeda };
+            });
+            vm.ListaDados.push(itemCotacao);
+        };
+
+        vm.EditarMoeda = function (itemCotacao) {
+            var itemOriginal = jQuery.extend({}, itemCotacao);
+            itemCotacao.Edicao = true;
+            itemCotacao.Original = itemOriginal;
+        };
+
+
+        vm.CancelarMoeda = function (itemEvento) {
+            if (!itemEvento.Identificador) {
+                var Posicao = vm.ListaDados.indexOf(itemEvento);
+                vm.ListaDados.splice(Posicao, 1);
+            }
+            else {
+                itemEvento.Edicao = false;
+                itemEvento.ItemMoeda = itemEvento.Original.ItemMoeda;
+                itemEvento.DataCotacao = itemEvento.Original.DataCotacao;
+                itemEvento.ValorCotacao = itemEvento.Original.ValorCotacao;
+                itemEvento.Moeda = itemEvento.Original.Moeda;
+                itemEvento.Original = null;
+            }
+        };
+
+        vm.SalvarMoeda = function (itemCotacao) {
+            if (itemCotacao.ItemMoeda && itemCotacao.ItemMoeda.Codigo)
+                itemCotacao.Moeda = itemCotacao.ItemMoeda.Codigo;
+            else
+                itemCotacao.Moeda = null;
+            vm.messages = [];
+            CotacaoMoeda.save(itemCotacao, function (data) {
+                vm.loading = false;
+                if (data.Sucesso) {
+                    var itemNovo = data.ItemRegistro;
+                    itemNovo.ItemMoeda = { Codigo: itemNovo.Moeda };
+                       var Posicao = vm.ListaDados.indexOf(itemCotacao);
+                        vm.ListaDados.splice(Posicao, 1, itemNovo);
+                            
+
+
+                } else {
+                    vm.messages = data.Mensagens;
                 }
-                vm.gridApi = grid;
-                var screenSizes = $.AdminLTE.options.screenSizes;
-                vm.gridOptions.columnDefs[0].visible = $(window).width() > (screenSizes.sm - 1);
-                grid.core.on.sortChanged($scope, function (grid, sortColumns) {
-                    vm.pagingOptions.fields = [];
-                    vm.pagingOptions.directions = [];
-                    angular.forEach(sortColumns, function (c) {
-                        vm.pagingOptions.fields.push(c.field);
-                        vm.pagingOptions.directions.push(c.sort.direction);
-                    });
-                    vm.CarregarDadosWebApi(vm.pagingOptions.pageSize, vm.pagingOptions.currentPage);
-                });
-                grid.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
-                    vm.pagingOptions.currentPage = newPage;
-                    vm.CarregarDadosWebApi(pageSize, newPage);
-                });
-            },
-            useExternalPagination: true,
-            useExternalSorting: true,
-            pagination: vm.pagingOptions,
-            paginationTemplate: "NewFooterTemplate.html",
-            appScopeProvider: vm,
-            totalItems: vm.totalServerItems,
-            rowTemplate: "<div on-long-press=\"grid.appScope.actionModal(row.entity, $index)\" ng-repeat=\"(colRenderIndex, col) in colContainer.renderedColumns track by col.uid\" ui-grid-one-bind-id-grid=\"rowRenderIndex + '-' + col.uid + '-cell'\" class=\"ui-grid-cell\" ng-class=\"{ 'ui-grid-row-header-cell': col.isRowHeader }\" role=\"{{col.isRowHeader ? 'rowheader' : 'gridcell'}}\" ui-grid-cell></div>" 
+            }, function (err) {
+                vm.loading = false;
+                Error.showError('error', 'Ops!', $translate.instant("ErroSalvar"), true);
+            });
         };
 	}
 }());

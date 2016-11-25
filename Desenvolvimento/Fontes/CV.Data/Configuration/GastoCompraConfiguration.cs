@@ -21,7 +21,7 @@ namespace CV.Data.Configuration
 			this.Property(i => i.Identificador).HasColumnName("ID_GASTO_COMPRA");
 			this.Property(i => i.IdentificadorLoja).HasColumnName("ID_LOJA");
 			this.Property(i => i.IdentificadorGasto).HasColumnName("ID_GASTO");
-			this.HasRequired(i => i.ItemGasto).WithMany().HasForeignKey(d=>d.IdentificadorGasto);
+			this.HasOptional(i => i.ItemGasto).WithMany().HasForeignKey(d=>d.IdentificadorGasto);
 			this.HasMany(i => i.ItensComprados).WithRequired().HasForeignKey(d=>d.IdentificadorGastoCompra);
 			this.HasRequired(i => i.ItemLoja).WithMany().HasForeignKey(d=>d.IdentificadorLoja);
 			this.Property(i => i.DataAtualizacao).HasColumnName("DT_ATUALIZACAO");

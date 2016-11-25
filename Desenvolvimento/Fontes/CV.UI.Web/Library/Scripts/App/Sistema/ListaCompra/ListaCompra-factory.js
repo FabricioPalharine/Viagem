@@ -34,10 +34,25 @@
                   controller: 'Get',
                   json: 'json'
               },
-            //  transformResponse: parseArray,
               isArray: false
-          }
-         
+          },
+          CarregarListaPedidos: {
+              method: 'GET',
+              params: {
+                  controller: 'CarregarListaPedidos',
+                  json: 'json'
+              },
+              isArray: true
+          },
+          CarregarPedidosRecebidos:
+         {
+             method: 'GET',
+             params: {
+                 controller: 'CarregarPedidosRecebidos',
+                 json: 'json'
+             },
+             isArray: true
+         },
 
       });
     return UserBase;

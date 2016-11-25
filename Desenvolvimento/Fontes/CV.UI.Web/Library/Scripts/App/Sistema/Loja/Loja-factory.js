@@ -34,7 +34,7 @@
                   controller: 'Get',
                   json: 'json'
               },
-            //  transformResponse: parseArray,
+              //  transformResponse: parseArray,
               isArray: false
           },
           CarregarFoto: {
@@ -44,6 +44,30 @@
               },
               isArray: true
           },
+          save: {
+              method: 'POST',
+              params: {
+                  controller: 'Post'
+              }
+          },
+          saveCompra: {
+              method: 'POST',
+              params: {
+                  controller: 'saveCompra'
+              }
+          },
+          excluirCompra: {
+              method: 'POST',
+              params: {
+                  controller: 'excluirCompra'
+                  }
+          },
+          SalvarItemCompra: {
+              method: 'POST',
+              params: {
+                  controller: 'SalvarItemCompra'
+              }
+          }
          
 
       });

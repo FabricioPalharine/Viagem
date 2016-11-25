@@ -1338,4 +1338,55 @@
   <data name="Loja_Compradores" xml:space="preserve">
     <value>Compradores</value>
   </data>
+  <data name="Compra_Itens" xml:space="preserve">
+    <value>Itens Compra</value>
+  </data>
+  <data name="Compra_Manutencao" xml:space="preserve">
+    <value>Manutenção Compra</value>
+  </data>
+  <data name="ItemCompra_Destinatario" xml:space="preserve">
+    <value>Comprado Para</value>
+  </data>
+  <data name="ItemCompra_Item" xml:space="preserve">
+    <value>Descrição</value>
+  </data>
+  <data name="ItemCompra_Marca" xml:space="preserve">
+    <value>Marca</value>
+  </data>
+  <data name="ItemCompra_Valor" xml:space="preserve">
+    <value>Valor</value>
+  </data>
+  <data name="ItemCompra_CadastradoAmigo" xml:space="preserve">
+    <value>Cadastrado com Amigo</value>
+  </data>
+  <data name="ItemCompra_Descricao" xml:space="preserve">
+    <value>Item</value>
+  </data>
+  <data name="ItemCompra_ListaCompra" xml:space="preserve">
+    <value>Item da Lista de Compra</value>
+  </data>
+  <data name="ItemCompra_Manutencao" xml:space="preserve">
+    <value>Item da Compra - Manutenção</value>
+  </data>
+  <data name="ItemCompra_Reembolsavel" xml:space="preserve">
+    <value>Reembolsável</value>
+  </data>
+  <data name="Comentario_IdentificadorUsuario" xml:space="preserve">
+    <value>Usuário</value>
+  </data>
+  <data name="Comentario_Data" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="Home_PedidosCompra" xml:space="preserve">
+    <value>Pedidos de Compra</value>
+  </data>
+  <data name="ListaCompra_Pendente" xml:space="preserve">
+    <value>Pendente</value>
+  </data>
+  <data name="Ignorar" xml:space="preserve">
+    <value>Ignorar</value>
+  </data>
+  <data name="ListaCompra_Ignorado" xml:space="preserve">
+    <value>Ignorado</value>
+  </data>
 </root>

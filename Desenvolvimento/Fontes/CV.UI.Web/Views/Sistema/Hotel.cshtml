@@ -216,8 +216,8 @@
                         </div>*@
                     <div class="col-md-6">
                         <label>@TextosPaginas.Hotel_Nome</label>
-                        <input type="text" class="form-control" ng-model="itemEdit.itemHotel.Nome" maxlength="100" empty-to-null ng-if="!itemEdit.itemHotel.Latitude || !itemEdit.itemHotel.Longitude">
-                        <input ng-if="itemEdit.itemHotel.Latitude && itemEdit.itemHotel.Longitude" type="text" ng-model="itemEdit.itemHotel.Nome" uib-typeahead="address.name for address in itemEdit.CarregarDadosGoogleApi($viewValue) " typeahead-loading="itemEdit.loadingLocations" class="form-control" typeahead-on-select="itemEdit.SelecionarPlacesGoogle($item, $model, $label)">
+                        <input type="text" class="form-control" ng-model="itemEdit.itemHotel.Nome" maxlength="100" empty-to-null ng-if="(!itemEdit.itemHotel.Latitude || !itemEdit.itemHotel.Longitude) && !itemEdit.position.lat">
+                        <input ng-if="(itemEdit.itemHotel.Latitude && itemEdit.itemHotel.Longitude) || itemEdit.position.lat " type="text" ng-model="itemEdit.itemHotel.Nome" uib-typeahead="address.name for address in itemEdit.CarregarDadosGoogleApi($viewValue) " typeahead-loading="itemEdit.loadingLocations" class="form-control" typeahead-on-select="itemEdit.SelecionarPlacesGoogle($item, $model, $label)">
 
                     </div>
                     <div class="col-md-6">
@@ -438,14 +438,12 @@
                                                 </th>
                                                 <th class="col-xs-2">
                                                 </th>
-                                                <th class="col-xs-3">
-                                                    @TextosPaginas.HotelEvento_Usuario
-                                                </th>
-                                                <th class="col-xs-1">
+                                                
+                                                <th class="col-xs-2">
                                                 </th>
                                             </tr>
                                         </thead>
-                                        <tr ng-repeat='itemCusto in itemEdit.itemHotel.Eventos' ng-if="!itemCusto.DataExclusao">
+                                        <tr ng-repeat='itemCusto in itemEdit.itemHotel.Eventos' ng-if="!itemCusto.DataExclusao && itemCusto.IdentiticadorUsuario == itemEdit.loggedUser.Codigo">
                                             <td>
                                                 <div class="dropdown" ng-if="itemCusto.Edicao">
                                                     <a class="dropdown-toggle" role="button" data-toggle="dropdown">
@@ -493,13 +491,13 @@
                                                 <div ng-if="!itemCusto.Edicao">{{itemCusto.strHoraSaida}}</div>
 
                                             </td>
-                                            <td>
+                                            @*<td>
                                                 <select ng-model="itemCusto.ItemUsuario" class="form-control" ng-options="obj.Nome for obj in itemEdit.ListaParticipante track by obj.Identificador" ng-if="itemCusto.Edicao">
                                                     <option value="">@TextosPaginas.Selecione</option>
                                                 </select>
                                                 <div ng-if="!itemCusto.Edicao">{{itemCusto.ItemUsuario.Nome}}</div>
 
-                                            </td>
+                                            </td>*@
                                             <td>
                                                 <button type="button" class="btn btn-danger btn-sm" ng-click="itemEdit.RemoverEvento( itemCusto)" ng-if="!itemCusto.Edicao"><span class="fa fa-trash" aria-hidden="true" ></span></button>
                                                 <button type="button" class="btn btn-info btn-sm" ng-click="itemEdit.EditarEvento( itemCusto)"  ng-if="!itemCusto.Edicao"><span class="fa fa-pencil" aria-hidden="true"></span></button>
@@ -634,7 +632,10 @@
                 <div class="row">
                     <div class="form-group  col-sm-8">
                         <label>@TextosPaginas.Posicao_Endereco</label>
-                        <input type="text" class="form-control" ng-model="vmMapa.itemEndereco" empty-to-null>
+                        <input places-auto-complete size=80
+                               class="form-control"
+                               ng-model="vmMapa.itemEndereco"
+                               on-place-changed="vmMapa.selecionarEndereco()"  /> 
                     </div>
                     <div class="form-group  col-sm-2">
                         <label>&nbsp;</label>

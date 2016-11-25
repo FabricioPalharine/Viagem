@@ -6,8 +6,8 @@
 
 	function GastoCtrl($uibModal, Error, $timeout, $state, $translate, $scope, Auth, $rootScope, $stateParams, $window, i18nService, Usuario, Viagem, Gasto, SignalR) {
 		var vm = this;
-		vm.filtro = { Index: null, Count: null };
-		vm.filtroAtualizacao = { Index: null, Count: null };
+		vm.filtro = { Index: null, Count: null , IdentificadorParticipante: Auth.currentUser.Codigo};
+		vm.filtroAtualizacao = { Index: null, Count: null,   IdentificadorParticipante: Auth.currentUser.Codigo };
 		vm.loading = false;
 		vm.showModal = false;
 		vm.modalAcao = function () {;
@@ -135,10 +135,10 @@
 
             vm.filtroAtualizacao = jQuery.extend({}, vm.filtro);
 
-            if (vm.itemUsuario && vm.itemUsuario.Identificador)
-                vm.filtroAtualizacao.IdentificadorUsuario = vm.itemUsuario.Identificador;
-            else
-                vm.filtroAtualizacao.IdentificadorUsuario = null;
+            //if (vm.itemUsuario && vm.itemUsuario.Identificador)
+            //    vm.filtroAtualizacao.IdentificadorParticipante = vm.itemUsuario.Identificador;
+            //else
+            //    vm.filtroAtualizacao.IdentificadorParticipante = null;
 
             if (vm.filtroAtualizacao.DataInicioDe) {
                 if (typeof vm.filtroAtualizacao.DataInicioDe == "string") {

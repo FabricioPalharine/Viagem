@@ -22,14 +22,10 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             ResultadoConsultaTipo<Comentario> resultado = new ResultadoConsultaTipo<Comentario>();
             ViagemBusiness biz = new ViagemBusiness();
-           
-            List<Comentario> _itens = biz.ListarComentario().ToList();
-resultado.TotalRegistros = _itens.Count();
-            if (json.SortField != null && json.SortField.Any())
-                _itens = _itens.AsQueryable().OrderByField<Comentario>(json.SortField, json.SortOrder).ToList();
 
-            if (json.Index.HasValue && json.Count.HasValue)
-                _itens = _itens.Skip(json.Index.Value).Take(json.Count.Value).ToList();
+            List<Comentario> _itens = biz.ListarComentario(token.IdentificadorUsuario, token.IdentificadorViagem.GetValueOrDefault(), json.DataInicioDe, json.DataInicioAte,
+                json.IdentificadorCidade, json.Identificador).ToList();
+
             resultado.Lista = _itens;
 
             return resultado;
@@ -42,11 +38,17 @@ resultado.TotalRegistros = _itens.Count();
           
             return itemComentario;
         }
+
         [Authorize]
         public ResultadoOperacao Post([FromBody] Comentario itemComentario)
         {
             ViagemBusiness biz = new ViagemBusiness();
-                      biz.SalvarComentario(itemComentario);
+            itemComentario.DataAtualizacao = DateTime.Now;
+            itemComentario.IdentificadorUsuario = token.IdentificadorUsuario;
+            itemComentario.IdentificadorViagem = token.IdentificadorViagem;
+            itemComentario.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemComentario.Latitude, itemComentario.Longitude);
+
+            biz.SalvarComentario(itemComentario);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
@@ -59,7 +61,8 @@ resultado.TotalRegistros = _itens.Count();
         {
             ViagemBusiness biz = new ViagemBusiness();
             Comentario itemComentario = biz.SelecionarComentario(id);
-            biz.ExcluirComentario(itemComentario);
+            itemComentario.DataExclusao = DateTime.Now;
+            biz.SalvarComentario(itemComentario);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();

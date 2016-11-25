@@ -1069,6 +1069,15 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data.
+        /// </summary>
+        public static string Comentario_Data {
+            get {
+                return ResourceManager.GetString("Comentario_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data Atualização.
         /// </summary>
         public static string Comentario_DataAtualizacao {
@@ -1092,6 +1101,15 @@ namespace CV.UI.Web.Resources {
         public static string Comentario_IdentificadorCidade {
             get {
                 return ResourceManager.GetString("Comentario_IdentificadorCidade", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usuário.
+        /// </summary>
+        public static string Comentario_IdentificadorUsuario {
+            get {
+                return ResourceManager.GetString("Comentario_IdentificadorUsuario", resourceCulture);
             }
         }
         
@@ -1137,6 +1155,24 @@ namespace CV.UI.Web.Resources {
         public static string Comentario_Texto {
             get {
                 return ResourceManager.GetString("Comentario_Texto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Itens Compra.
+        /// </summary>
+        public static string Compra_Itens {
+            get {
+                return ResourceManager.GetString("Compra_Itens", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manutenção Compra.
+        /// </summary>
+        public static string Compra_Manutencao {
+            get {
+                return ResourceManager.GetString("Compra_Manutencao", resourceCulture);
             }
         }
         
@@ -1897,6 +1933,15 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pedidos de Compra.
+        /// </summary>
+        public static string Home_PedidosCompra {
+            get {
+                return ResourceManager.GetString("Home_PedidosCompra", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Posição.
         /// </summary>
         public static string Home_Posicao {
@@ -2230,6 +2275,96 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ignorar.
+        /// </summary>
+        public static string Ignorar {
+            get {
+                return ResourceManager.GetString("Ignorar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cadastrado com Amigo.
+        /// </summary>
+        public static string ItemCompra_CadastradoAmigo {
+            get {
+                return ResourceManager.GetString("ItemCompra_CadastradoAmigo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item.
+        /// </summary>
+        public static string ItemCompra_Descricao {
+            get {
+                return ResourceManager.GetString("ItemCompra_Descricao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comprado Para.
+        /// </summary>
+        public static string ItemCompra_Destinatario {
+            get {
+                return ResourceManager.GetString("ItemCompra_Destinatario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Descrição.
+        /// </summary>
+        public static string ItemCompra_Item {
+            get {
+                return ResourceManager.GetString("ItemCompra_Item", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item da Lista de Compra.
+        /// </summary>
+        public static string ItemCompra_ListaCompra {
+            get {
+                return ResourceManager.GetString("ItemCompra_ListaCompra", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item da Compra - Manutenção.
+        /// </summary>
+        public static string ItemCompra_Manutencao {
+            get {
+                return ResourceManager.GetString("ItemCompra_Manutencao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Marca.
+        /// </summary>
+        public static string ItemCompra_Marca {
+            get {
+                return ResourceManager.GetString("ItemCompra_Marca", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reembolsável.
+        /// </summary>
+        public static string ItemCompra_Reembolsavel {
+            get {
+                return ResourceManager.GetString("ItemCompra_Reembolsavel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Valor.
+        /// </summary>
+        public static string ItemCompra_Valor {
+            get {
+                return ResourceManager.GetString("ItemCompra_Valor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Comprado.
         /// </summary>
         public static string ListaCompra_Comprado {
@@ -2302,6 +2437,15 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ignorado.
+        /// </summary>
+        public static string ListaCompra_Ignorado {
+            get {
+                return ResourceManager.GetString("ListaCompra_Ignorado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manutenção.
         /// </summary>
         public static string ListaCompra_Manutencao {
@@ -2325,6 +2469,15 @@ namespace CV.UI.Web.Resources {
         public static string ListaCompra_Moeda {
             get {
                 return ResourceManager.GetString("ListaCompra_Moeda", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pendente.
+        /// </summary>
+        public static string ListaCompra_Pendente {
+            get {
+                return ResourceManager.GetString("ListaCompra_Pendente", resourceCulture);
             }
         }
         

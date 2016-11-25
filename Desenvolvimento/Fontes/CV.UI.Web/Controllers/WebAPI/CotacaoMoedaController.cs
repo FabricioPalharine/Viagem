@@ -22,14 +22,8 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             ResultadoConsultaTipo<CotacaoMoeda> resultado = new ResultadoConsultaTipo<CotacaoMoeda>();
             ViagemBusiness biz = new ViagemBusiness();
-           
-            List<CotacaoMoeda> _itens = biz.ListarCotacaoMoeda().ToList();
-resultado.TotalRegistros = _itens.Count();
-            if (json.SortField != null && json.SortField.Any())
-                _itens = _itens.AsQueryable().OrderByField<CotacaoMoeda>(json.SortField, json.SortOrder).ToList();
 
-            if (json.Index.HasValue && json.Count.HasValue)
-                _itens = _itens.Skip(json.Index.Value).Take(json.Count.Value).ToList();
+            List<CotacaoMoeda> _itens = biz.ListarCotacaoMoeda(d => d.IdentificadorViagem == token.IdentificadorViagem && !d.DataExclusao.HasValue).ToList();
             resultado.Lista = _itens;
 
             return resultado;
@@ -39,19 +33,24 @@ resultado.TotalRegistros = _itens.Count();
         {
             ViagemBusiness biz = new ViagemBusiness();
             CotacaoMoeda itemCotacaoMoeda = biz.SelecionarCotacaoMoeda(id);
-          
+
             return itemCotacaoMoeda;
         }
         [Authorize]
         public ResultadoOperacao Post([FromBody] CotacaoMoeda itemCotacaoMoeda)
         {
             ViagemBusiness biz = new ViagemBusiness();
-                      biz.SalvarCotacaoMoeda(itemCotacaoMoeda);
+            itemCotacaoMoeda.IdentificadorViagem = token.IdentificadorViagem;
+            itemCotacaoMoeda.DataAtualizacao = DateTime.Now;
+            biz.SalvarCotacaoMoeda(itemCotacaoMoeda);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
             if (itemResultado.Sucesso)
+            {
                 itemResultado.IdentificadorRegistro = itemCotacaoMoeda.Identificador;
+                itemResultado.ItemRegistro = itemCotacaoMoeda;
+            }
             return itemResultado;
         }
         [Authorize]
@@ -59,7 +58,8 @@ resultado.TotalRegistros = _itens.Count();
         {
             ViagemBusiness biz = new ViagemBusiness();
             CotacaoMoeda itemCotacaoMoeda = biz.SelecionarCotacaoMoeda(id);
-            biz.ExcluirCotacaoMoeda(itemCotacaoMoeda);
+            itemCotacaoMoeda.DataExclusao = DateTime.Now;
+            biz.SalvarCotacaoMoeda(itemCotacaoMoeda);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();

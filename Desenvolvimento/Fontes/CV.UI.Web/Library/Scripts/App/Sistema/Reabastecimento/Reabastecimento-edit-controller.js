@@ -12,7 +12,7 @@
         vm.messages = [];
         vm.loggedUser = Auth.currentUser;
         vm.CamposInvalidos = {};
-        vm.itemCusto = { Usuarios: [], Especie: true, IdentificadorViagem: vm.EscopoAtualizacao.itemCarro.IdentificadorViagem, ExibeHora: true, Data: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss"), strHora: moment(new Date()).format("HH:mm:ss") };
+        vm.itemCusto = { Usuarios: [], Especie: true, IdentificadorViagem: vm.EscopoAtualizacao.itemCarro.IdentificadorViagem, ExibeHora: true, Data: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss"), strHora: moment(new Date()).format("HH:mm:ss"), IdentificadorUsuario: Auth.currentUser.Codigo };
 
         vm.loading = false;
         vm.load = function () {
@@ -94,6 +94,16 @@
             vmMapa.itemFoto = item;
             vmMapa.itemMarcador = {};
             vmMapa.map = null;
+
+            vmMapa.AjustarPosicao = function (position) {
+                vmMapa.lat = position.coords.latitude;
+                vmMapa.lng = position.coords.longitude;
+            };
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(vmMapa.AjustarPosicao);
+            }
+
             NgMap.getMap().then(function (evtMap) {
                 vmMapa.map = evtMap;
                 $timeout(function () {
@@ -123,7 +133,17 @@
                     }
                 });
             };
+            vmMapa.selecionarEndereco = function () {
+                var place = this.getPlace();
+                vmMapa.itemEndereco = place.formatted_address;
 
+                vmMapa.lat = place.geometry.location.lat();
+                vmMapa.lng = place.geometry.location.lng();
+
+
+                vmMapa.map.setCenter(place.geometry.location);
+
+            };
             vmMapa.salvar = function () {
                 vmMapa.itemFoto.Latitude = vmMapa.itemMarcador.Latitude;
                 vmMapa.itemFoto.Longitude = vmMapa.itemMarcador.Longitude;

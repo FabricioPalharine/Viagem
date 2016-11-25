@@ -1020,4 +1020,10 @@
   <data name="AvaliacaoAluguel_IdentificadorUsuario" xml:space="preserve">
     <value>O campo Usuário é obrigatório</value>
   </data>
+  <data name="Comentario_IdentificadorUsuario" xml:space="preserve">
+    <value>O campo Usuário é obrigatório</value>
+  </data>
+  <data name="Comentario_Data" xml:space="preserve">
+    <value>O campo Data é obrigatório</value>
+  </data>
 </root>
