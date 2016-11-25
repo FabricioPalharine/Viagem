@@ -1037,7 +1037,7 @@ namespace CV.Data
         public List<ListaCompra> ListarListaCompra(int? IdentificadorUsuario, int? IdentificadorViagem, int? Status, string Destinatario, int? IdentificadorUsuarioPedido,
             string Marca, string Descricao)
         {
-            IQueryable<ListaCompra> query = this.Context.ListaCompras.Include("ItemUsuario");
+            IQueryable<ListaCompra> query = this.Context.ListaCompras.Include("ItemUsuario").Include("ItemUsuarioPedido");
             if (!string.IsNullOrEmpty(Marca))
                 query = query.Where(d => d.Marca.Contains(Marca));
 

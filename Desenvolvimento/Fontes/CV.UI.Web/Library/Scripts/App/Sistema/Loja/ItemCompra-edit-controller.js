@@ -70,7 +70,22 @@
             vm.messages = [];
             vm.loading = true;
             vm.CamposInvalidos = {};            
-                              
+                             
+            if (vm.CadastradoAmigo) {
+                if (vm.itemUsuario && vm.itemUsuario.Identificador)
+                    vm.itemItemCompra.IdentificadorUsuario = vm.itemUsuario.Identificador;
+                else
+                    vm.itemItemCompra.IdentificadorUsuario = null;
+                vm.itemItemCompra.Destinatario = null;
+            }
+            else
+                vm.itemItemCompra.IdentificadorUsuario = null;
+
+            if (vm.itemListaCompra && vm.itemListaCompra.Identificador)
+                vm.itemItemCompra.IdentificadorListaCompra = vm.itemListaCompra.Identificador;
+            else
+                vm.itemItemCompra.IdentificadorListaCompra = null;
+
             Loja.SalvarItemCompra(vm.itemItemCompra, function (data) {
                 vm.loading = false;
                 if (data.Sucesso) {

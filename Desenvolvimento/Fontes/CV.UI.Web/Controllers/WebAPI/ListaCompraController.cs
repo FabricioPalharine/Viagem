@@ -71,5 +71,27 @@ namespace CV.UI.Web.Controllers.WebAPI
             ViagemBusiness biz = new ViagemBusiness();
             return biz.ListarListaCompra(json.IdentificadorParticipante, token.IdentificadorViagem, new List<int?>(new int?[] { (int) enumStatusListaCompra.Comprado, (int) enumStatusListaCompra.Pendente }), null);
         }
+
+        [Authorize]
+        [HttpGet]
+        [BindJson(typeof(CriterioBusca), "json")]
+        [ActionName("CarregarPedidosRecebidos")]
+
+        public ResultadoConsultaTipo<ListaCompra> CarregarPedidosRecebidos(CriterioBusca json)
+        {
+            ResultadoConsultaTipo<ListaCompra> resultado = new ResultadoConsultaTipo<ListaCompra>();
+            ViagemBusiness biz = new ViagemBusiness();
+
+            List<ListaCompra> _itens = biz.ListarListaCompra(json.IdentificadorParticipante, token.IdentificadorViagem, json.Situacao,null, token.IdentificadorUsuario, json.Tipo, json.Comentario).ToList();
+            foreach (var itemLista in _itens.Where(d => d.Status == (int)enumStatusListaCompra.NaoVisto))
+            {
+                itemLista.Status = (int)enumStatusListaCompra.Pendente;
+                itemLista.DataAtualizacao = DateTime.Now;
+                biz.SalvarListaCompra(itemLista);
+            }
+            resultado.Lista = _itens;
+
+            return resultado;
+        }
     }
 }

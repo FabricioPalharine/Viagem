@@ -2275,6 +2275,15 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ignorar.
+        /// </summary>
+        public static string Ignorar {
+            get {
+                return ResourceManager.GetString("Ignorar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cadastrado com Amigo.
         /// </summary>
         public static string ItemCompra_CadastradoAmigo {
@@ -2424,6 +2433,15 @@ namespace CV.UI.Web.Resources {
         public static string ListaCompra_IdentificadorViagem {
             get {
                 return ResourceManager.GetString("ListaCompra_IdentificadorViagem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ignorado.
+        /// </summary>
+        public static string ListaCompra_Ignorado {
+            get {
+                return ResourceManager.GetString("ListaCompra_Ignorado", resourceCulture);
             }
         }
         

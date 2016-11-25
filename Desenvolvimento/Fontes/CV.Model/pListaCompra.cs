@@ -24,9 +24,17 @@ namespace CV.Model
             get
             {
                 if (IdentificadorUsuarioPedido.HasValue && ItemUsuario != null)
-                    return ItemUsuario.Nome;
+                    return ItemUsuarioPedido.Nome;
                 else
                     return Destinatario;
+            }
+        }
+
+        public string Comprado
+        {
+            get
+            {
+                return (Status.GetValueOrDefault(-1) == (int)enumStatusListaCompra.Comprado) ? MensagemModelo.Sim : MensagemModelo.Nao;
             }
         }
     }

@@ -44,7 +44,15 @@
               },
               isArray: true
           },
-         
+          CarregarPedidosRecebidos:
+         {
+             method: 'GET',
+             params: {
+                 controller: 'CarregarPedidosRecebidos',
+                 json: 'json'
+             },
+             isArray: true
+         },
 
       });
     return UserBase;
