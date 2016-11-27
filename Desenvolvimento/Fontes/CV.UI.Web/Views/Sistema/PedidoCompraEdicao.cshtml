@@ -1,0 +1,79 @@
+<div class="modal-header">
+    <span>@TextosPaginas.PedidoCompra_Manutencao</span>
+</div>
+<div class="modal-body" ng-init="itemListaCompraEdit.load()">
+    <div class="box box-primary">
+        <div class="overlay" ng-show="itemListaCompraEdit.loading">
+            <i class="fa fa-refresh fa-spin text-gray"></i>
+        </div>
+
+        <div class="box-body">
+
+            <div class="row" ng-show="itemListaCompraEdit.messages.length > 0">
+                <div class="col-md-12">
+                    <div class="callout callout-danger">
+                        <h4>@TextosPaginas.Geral_ValidarErros</h4>
+                        <ul>
+                            <li ng-repeat="erro in itemListaCompraEdit.messages">
+                                <span ng-bind="erro.Mensagem"></span>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-6" ng-class="{ 'has-error':itemListaCompraEdit.CamposInvalidos.Marca}">
+                    <label>@TextosPaginas.ListaCompra_Marca</label>
+                    <input type="text" class="form-control" ng-model="itemListaCompraEdit.itemListaCompra.Marca" maxlength="50" empty-to-null>
+
+                </div>
+                <div class="col-md-6" ng-class="{ 'has-error':itemListaCompraEdit.CamposInvalidos.Descricao}">
+                    <label>@TextosPaginas.ListaCompra_Descricao</label>
+                    <input type="text" class="form-control" ng-model="itemListaCompraEdit.itemListaCompra.Descricao" maxlength="50" empty-to-null>
+                </div>
+
+                <div class="form-group col-md-6" ng-class="{ 'has-error':itemListaCompraEdit.CamposInvalidos.Valor}">
+                    <label>@TextosPaginas.ListaCompra_ValorMaximo</label>
+                    <input type="text" class="form-control" ng-model="itemListaCompraEdit.itemListaCompra.ValorMaximo" empty-to-null decimal-input="{digits:2, integerDigits:16}">
+                </div>
+
+                <div class="form-group col-md-6" ng-class="{ 'has-error':itemListaCompraEdit.CamposInvalidos.Moeda}">
+                    <label>@TextosPaginas.ListaCompra_Moeda</label>
+                    <select ng-model="itemListaCompraEdit.itemMoeda" class="form-control" ng-options="obj.Descricao for obj in itemListaCompraEdit.ListaMoeda track by obj.Codigo">
+                        <option value="">@TextosPaginas.Selecione</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label>@TextosPaginas.ListaCompra_PedirPara</label>
+
+                    <select ng-model="itemListaCompraEdit.itemUsuario" class="form-control" ng-options="obj.Nome for obj in itemListaCompraEdit.ListaUsuario track by obj.Identificador">
+                        <option value="">@TextosPaginas.Selecione</option>
+                    </select>
+
+                </div>
+
+                <div class="form-group col-md-6" ng-class="{ 'has-error':itemListaCompraEdit.CamposInvalidos.Reembolsavel}" >
+                    <label>@TextosPaginas.ListaCompra_Reembolsavel</label>
+                    <input type="checkbox" ng-model="itemListaCompraEdit.itemListaCompra.Reembolsavel" class="checkbox">
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /.box-body -->
+
+</div>
+</div>
+<div class="modal-footer">
+
+    <button type="button" class="btn btn-primary" ng-click="itemListaCompraEdit.close()">
+        <span class="fa fa-close" aria-hidden="true">@TextosPaginas.Cancelar</span>
+    </button>
+
+    <button type="button" class="btn btn-primary  pull-right" ng-click="itemListaCompraEdit.salvar()">
+        <span class="fa fa-save" aria-hidden="true"></span> @TextosPaginas.Geral_Salvar
+    </button>
+</div>

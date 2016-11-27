@@ -44,6 +44,13 @@ namespace CV.Business
         }
         private void ValidarRegrasNegocioAporteDinheiro(AporteDinheiro itemGravar)
         {
+            if (itemGravar.ItemGasto != null)
+            {
+                if (!itemGravar.ItemGasto.Moeda.HasValue)
+                    AdicionaErroBusiness("AporteDinheiro_MoedaGasto", "MoedaGasto");
+                if (!itemGravar.ItemGasto.Valor.HasValue)
+                    AdicionaErroBusiness("AporteDinheiro_ValorGasto", "ValorGasto");
+            }
         }
         private void ValidarRegrasExclusaoAporteDinheiro(AporteDinheiro itemGravar)
         {
@@ -206,6 +213,18 @@ namespace CV.Business
         }
         private void ValidarRegrasNegocioListaCompra(ListaCompra itemGravar)
         {
+            if (itemGravar.IdentificadorUsuario.HasValue && itemGravar.IdentificadorViagem.HasValue)
+            {
+                ViagemBusiness biz = new ViagemBusiness();
+                if (!itemGravar.IdentificadorUsuarioPedido.HasValue)
+                {
+                    var lista = biz.CarregarParticipantesViagem(itemGravar.IdentificadorViagem);
+                    if (!lista.Where(d => d.Identificador == itemGravar.IdentificadorUsuario).Any())
+                    {
+                        AdicionaErroBusiness("PedidoCompra_PedirParaObrigatorio", "IdentificadorUsuarioPedido");
+                    }
+                }
+            }
         }
         private void ValidarRegrasExclusaoListaCompra(ListaCompra itemGravar)
         {
@@ -332,7 +351,25 @@ namespace CV.Business
 
         }
         #region Save
-
+        public void SalvarAporteDinheiroCompleto(AporteDinheiro itemGravar)
+        {
+            LimparValidacao();
+            ValidateService(itemGravar);
+            ValidarRegrasNegocioAporteDinheiro(itemGravar);
+            if (IsValid())
+            {
+                using (ViagemRepository data = new ViagemRepository())
+                {
+                    data.SalvarAporteDinheiroCompleto(itemGravar);
+                    Message msg = new Message();
+                    msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_SalvarAporteDinheiro_OK") });
+                    ServiceResult resultado = new ServiceResult();
+                    resultado.Success = true;
+                    resultado.Messages.Add(msg);
+                    serviceResult.Add(resultado);
+                }
+            }
+        }
         public void SalvarCarro_Completo(Carro itemGravar)
         {
             LimparValidacao();
@@ -1271,7 +1308,7 @@ namespace CV.Business
                 return repositorio.CarregarCidadeLoja(IdentificadorViagem);
             }
         }
-
+        
         public List<Cidade> CarregarCidadeComentario(int? IdentificadorViagem)
         {
             using (ViagemRepository repositorio = new ViagemRepository())
@@ -1280,6 +1317,13 @@ namespace CV.Business
             }
         }
 
+        public List<Cidade> CarregarCidadeSugestao(int? IdentificadorViagem)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.CarregarCidadeSugestao(IdentificadorViagem);
+            }
+        }
         public List<Refeicao> ListarRefeicao(Expression<Func<Refeicao, bool>> predicate)
         {
             using (ViagemRepository repositorio = new ViagemRepository())
@@ -1442,5 +1486,20 @@ namespace CV.Business
             }
         }
 
-    }
+        public List<AporteDinheiro> ListarAporteDinheiro(int? IdentificadorUsuario, int? IdentificadorViagem, int? Moeda, DateTime? DataDe, DateTime? DataAte)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarAporteDinheiro(IdentificadorUsuario, IdentificadorViagem, Moeda, DataDe, DataAte);
+            }
+        }
+
+        public List<Sugestao> ListarSugestao(int? IdentificadorUsuario, int? IdentificadorViagem, string Nome, string Tipo)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarSugestao(IdentificadorUsuario, IdentificadorViagem, Nome,Tipo);
+            }
+        }
+        }
 }

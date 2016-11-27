@@ -23,7 +23,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             ResultadoConsultaTipo<ListaCompra> resultado = new ResultadoConsultaTipo<ListaCompra>();
             ViagemBusiness biz = new ViagemBusiness();
 
-            List<ListaCompra> _itens = biz.ListarListaCompra(token.IdentificadorUsuario, token.IdentificadorViagem, json.Situacao, json.Nome, null, json.Tipo, json.Comentario).ToList();
+            List<ListaCompra> _itens = biz.ListarListaCompra(token.IdentificadorUsuario, token.IdentificadorViagem, json.Situacao, json.Nome, json.IdentificadorParticipante, json.Tipo, json.Comentario).ToList();
           
             resultado.Lista = _itens;
 
@@ -41,12 +41,17 @@ namespace CV.UI.Web.Controllers.WebAPI
         public ResultadoOperacao Post([FromBody] ListaCompra itemListaCompra)
         {
             ViagemBusiness biz = new ViagemBusiness();
+            itemListaCompra.IdentificadorViagem = token.IdentificadorViagem;
+            itemListaCompra.DataAtualizacao = DateTime.Now;
             biz.SalvarListaCompra(itemListaCompra);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
             if (itemResultado.Sucesso)
+            {
                 itemResultado.IdentificadorRegistro = itemListaCompra.Identificador;
+                itemResultado.ItemRegistro = itemListaCompra;
+            }
             return itemResultado;
         }
         [Authorize]
@@ -77,9 +82,8 @@ namespace CV.UI.Web.Controllers.WebAPI
         [BindJson(typeof(CriterioBusca), "json")]
         [ActionName("CarregarPedidosRecebidos")]
 
-        public ResultadoConsultaTipo<ListaCompra> CarregarPedidosRecebidos(CriterioBusca json)
+        public List<ListaCompra> CarregarPedidosRecebidos(CriterioBusca json)
         {
-            ResultadoConsultaTipo<ListaCompra> resultado = new ResultadoConsultaTipo<ListaCompra>();
             ViagemBusiness biz = new ViagemBusiness();
 
             List<ListaCompra> _itens = biz.ListarListaCompra(json.IdentificadorParticipante, token.IdentificadorViagem, json.Situacao,null, token.IdentificadorUsuario, json.Tipo, json.Comentario).ToList();
@@ -89,9 +93,8 @@ namespace CV.UI.Web.Controllers.WebAPI
                 itemLista.DataAtualizacao = DateTime.Now;
                 biz.SalvarListaCompra(itemLista);
             }
-            resultado.Lista = _itens;
+            return _itens;
 
-            return resultado;
         }
     }
 }

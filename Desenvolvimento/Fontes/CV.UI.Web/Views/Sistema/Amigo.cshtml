@@ -16,8 +16,8 @@
     <!-- general form elements -->
 
     <ul class="nav nav-tabs">
-        <li  ng-class="{'active': !itemAmigo.AbrirAprovacao}"><a data-toggle="tab" data-target="#anigos" style="cursor:pointer">@TextosPaginas.Menu_Amigos</a></li>
-        <li ng-class="{'active': itemAmigo.AbrirAprovacao}"><a data-toggle="tab" data-target="#requisicoes" style="cursor:pointer">@TextosPaginas.Menu_RequisicoesPendentes</a></li>
+        <li  ng-class="{'active': !itemAmigo.AbrirAprovacao}"><a data-toggle="tab" data-target="#anigos" style="cursor:pointer" ng-click="itemAmigo.AtualizarGrid()">@TextosPaginas.Menu_Amigos</a></li>
+        <li ng-class="{'active': itemAmigo.AbrirAprovacao}"><a data-toggle="tab" data-target="#requisicoes" style="cursor:pointer" ng-click="itemAmigo.AtualizarGrid()">@TextosPaginas.Menu_RequisicoesPendentes</a></li>
     </ul>
 
     <div class="tab-content">
@@ -52,7 +52,7 @@
                     <i class="fa fa-refresh fa-spin text-gray"></i>
                 </div>
                 <div class="box-body table-responsive">
-                    <div class="gridStyle" ui-grid="itemAmigo.gridOptions" ui-grid-pagination></div>
+                    <div class="gridStyle" ui-grid="itemAmigo.gridOptions" ></div>
 
 
                 </div>
@@ -64,7 +64,7 @@
                     <i class="fa fa-refresh fa-spin text-gray"></i>
                 </div>
                 <div class="box-body table-responsive">
-                    <div class="gridStyle" ui-grid="itemAmigo.gridOptionsAprovar" ui-grid-pagination></div>
+                    <div class="gridStyle" ui-grid="itemAmigo.gridOptionsAprovar" ></div>
 
 
                 </div>

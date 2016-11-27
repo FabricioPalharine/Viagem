@@ -67,8 +67,8 @@
 	        ListaCompra.save(vm.itemListaCompra, function (data) {
 	            vm.loading = false;
 	            if (data.Sucesso) {
-	                vm.itemListaCompra.Identificador = data.IdentificadorRegistro;
-	                vm.EscopoAtualizacao.AtualizarItemCompra(vm.itemOriginal, vm.itemListaCompra);
+	                vm.itemListaCompra = data.ItemRegistro;
+	                vm.EscopoAtualizacao.AtualizarListaCompra(vm.itemOriginal, vm.itemListaCompra);
 	                vm.close();
 	            } else {
 	                vm.messages = data.Mensagens;

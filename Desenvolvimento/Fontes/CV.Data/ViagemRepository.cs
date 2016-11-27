@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data.Entity;
-using System.Linq.Expressions;
 using System.Data.Entity.Infrastructure;
 using CV.Model;
 
@@ -164,7 +163,7 @@ namespace CV.Data
 			public AporteDinheiro SelecionarAporteDinheiro (int? Identificador)
 			{
 			IQueryable<AporteDinheiro> query =	 Context.AporteDinheiros
-;
+.Include("ItemGasto");
 					if (Identificador.HasValue)
 					query = query.Where(d=>d.Identificador == Identificador);
 					return query.FirstOrDefault();
@@ -178,13 +177,26 @@ namespace CV.Data
 			public void SalvarAporteDinheiro (AporteDinheiro itemGravar)
 			{
 				AporteDinheiro itemBase =  Context.AporteDinheiros
-				.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
+.Include("ItemGasto")				.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
 				if (itemBase == null)
 				{
 				itemBase = Context.AporteDinheiros.Create();
  			Context.Entry<AporteDinheiro>(itemBase).State = System.Data.Entity.EntityState.Added;
 				}
  			AtualizarPropriedades<AporteDinheiro>(itemBase, itemGravar);
+				Gasto itemGasto = itemGravar.ItemGasto;
+				Gasto itemBaseGasto = null;
+				if (itemGasto != null)
+				{
+				itemBaseGasto =  Context.Gastos.Where(f=>f.Identificador == itemGasto.Identificador).FirstOrDefault();
+				if (itemBaseGasto == null)
+				{
+				itemBaseGasto = Context.Gastos.Create();
+ 			Context.Entry<Gasto>(itemBaseGasto).State = System.Data.Entity.EntityState.Added;
+				}
+ 			AtualizarPropriedades<Gasto>(itemBaseGasto, itemGasto);
+				itemBase.ItemGasto = itemBaseGasto;
+				}
 			Context.SaveChanges();
 				itemGravar.Identificador = itemBase.Identificador;
 			}

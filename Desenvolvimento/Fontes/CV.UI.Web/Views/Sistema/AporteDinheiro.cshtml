@@ -22,15 +22,55 @@
         <form role="form" ng-submit="itemAporteDinheiro.filtraDado()" >
             <div class="box-body">
                 <div class="row">
-                    
-
+                    <div class="form-group col-md-6" ng-class="{ 'has-error':itemAporteDinheiro.CamposInvalidos.Moeda}">
+                        <label>@TextosPaginas.Gasto_Moeda</label>
+                        <select ng-model="itemAporteDinheiro.itemMoeda" class="form-control" ng-options="obj.Descricao for obj in itemAporteDinheiro.ListaMoeda track by obj.Codigo">
+                            <option value="">@TextosPaginas.Selecione</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>@TextosPaginas.Foto_DataDe</label>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+                                <div class="input-group">
+                                    <input date-input ng-model="itemAporteDinheiro.filtro.DataInicioDe" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                           datapattern="dd/MM/yyyy">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker data-ng-model="itemAporteDinheiro.filtro.DataInicioDe"
+                                                data-datetimepicker-config="{  minView:'day' , langCode:itemAporteDinheiro.Idioma()  }" />
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>@TextosPaginas.Foto_DataAte</label>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+                                <div class="input-group">
+                                    <input date-input ng-model="itemAporteDinheiro.filtro.DataInicioAte" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                           datapattern="dd/MM/yyyy">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker data-ng-model="itemAporteDinheiro.filtro.DataInicioAte"
+                                                data-datetimepicker-config="{  minView:'day' , langCode:itemAporteDinheiro.Idioma()  }" />
+                            </ul>
+                        </div>
+                    </div>
 
                 </div>
 
 
             </div><!-- /.box-body -->
             <div class="box-footer">
-                <a role="button" class="btn btn-primary " title="@TextosPaginas.Adicionar" ui-sref="AporteDinheiroEdicao({filtro:itemAporteDinheiro.filtroAtualizacao})" ng-if="itemAporteDinheiro.PermiteInclusao">
+                <a role="button" class="btn btn-primary " title="@TextosPaginas.Adicionar" ng-click="itemAporteDinheiro.Incluir()">
                     <span class="fa fa-plus" aria-hidden="true"></span>
                 </a>
                 <button type="submit" class="btn btn-primary  pull-right">
@@ -48,22 +88,11 @@
             <i class="fa fa-refresh fa-spin text-gray"></i>
         </div>
         <div class="box-body table-responsive">
-            <div class="gridStyle" ui-grid="itemAporteDinheiro.gridOptions" ui-grid-pagination></div>
+            <div class="gridStyle" ui-grid="itemAporteDinheiro.gridOptions" ></div>
 
 
         </div>
     </div>
-
-    <script type="text/ng-template" id="modal.html">
-
-        <div class="modal-body">
-            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="vmAction.edit(vmAction.item.Identificador)">@TextosPaginas.Editar</button>
-            <button type="button" class="btn btn-danger btn-lg btn-block" ng-click="vmAction.askDelete(vmAction.item, vmAction.indexForDelete)">@TextosPaginas.Excluir</button>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default btn-lg btn-block" ng-click="vmAction.close()">@TextosPaginas.Cancelar</button>
-        </div>
-    </script>
 
 
     <script type="text/ng-template" id="modalDelete.html">
@@ -80,31 +109,11 @@
     </script>
 
 
-    <script type="text/ng-template" id="NewFooterTemplate.html">
-
-        <div role="contentinfo" class="ui-grid-pager-panel" ui-grid-pager ng-show="grid.options.enablePaginationControls">
-
-            <div role="navigation" class="ui-grid-pager-container">
-                <div role="menubar" class="ui-grid-pager-control">
-                    <button type="button" role="menuitem" class="ui-grid-pager-first" ui-grid-one-bind-title="aria.pageToFirst" ui-grid-one-bind-aria-label="aria.pageToFirst" ng-class="{'btn':true, 'btn-primary':true}" ng-click="pageFirstPageClick()" ng-disabled="cantPageBackward()">
-                        <div ng-class="grid.isRTL() ? 'last-triangle' : 'first-triangle'"><div ng-class="grid.isRTL() ? 'last-bar-rtl' : 'first-bar'"></div></div>
-                    </button>
-                    <button type="button" role="menuitem" class="ui-grid-pager-previous  btn btn-primary" ui-grid-one-bind-title="aria.pageBack" ui-grid-one-bind-aria-label="aria.pageBack" ng-click="pagePreviousPageClick()" ng-disabled="cantPageBackward()"><div ng-class="grid.isRTL() ? 'last-triangle prev-triangle' : 'first-triangle prev-triangle'"></div></button>
-                    <input type="number" ui-grid-one-bind-title="aria.pageSelected" ui-grid-one-bind-aria-label="aria.pageSelected" class="ui-grid-pager-control-input" ng-model="grid.options.paginationCurrentPage" min="1" max="{{ paginationApi.getTotalPages() }}" required> <span class="ui-grid-pager-max-pages-number" ng-show="paginationApi.getTotalPages() > 0"><abbr ui-grid-one-bind-title="paginationOf">/</abbr> {{ paginationApi.getTotalPages() }}</span>
-                    <button type="button" role="menuitem" class="ui-grid-pager-next  btn btn-primary" ui-grid-one-bind-title="aria.pageForward" ui-grid-one-bind-aria-label="aria.pageForward" ng-click="pageNextPageClick()" ng-disabled="cantPageForward()"><div ng-class="grid.isRTL() ? 'first-triangle next-triangle' : 'last-triangle next-triangle'"></div></button>
-                    <button type="button" role="menuitem" class="ui-grid-pager-last  btn btn-primary" ui-grid-one-bind-title="aria.pageToLast" ui-grid-one-bind-aria-label="aria.pageToLast" ng-click="pageLastPageClick()" ng-disabled="cantPageToLast()"><div ng-class="grid.isRTL() ? 'first-triangle' : 'last-triangle'"><div ng-class="grid.isRTL() ? 'first-bar-rtl' : 'last-bar'"></div></div></button>
-                </div>
-            </div>
-            <div class="ui-grid-pager-count-container"><div class="ui-grid-pager-count"><span ng-show="grid.options.totalItems > 0">{{showingLow}} <abbr ui-grid-one-bind-title="paginationThrough">-</abbr> {{showingHigh}} {{paginationOf}} {{grid.options.totalItems}} {{totalItemsLabel}}</span></div></div>
-        </div>
-    </script>
-
-
     <script type="text/ng-template" id="BotoesGridTemplate.html">
 
         <div class="ngCellText hidden-xs">
-			<button type="button" ng-if="grid.appScope.PermiteAlteracao" class="btn btn-primary small" title="@TextosPaginas.Editar" ui-sref="AporteDinheiroEdicao({ id: {{COL_FIELD}},filtro:grid.appScope.filtroAtualizacao })"><span class="fa fa-pencil" aria-hidden="true"></span></button>
-			<button type="button" ng-if="grid.appScope.PermiteExclusao" class="btn btn-danger small" title="@TextosPaginas.Excluir" ng-click="grid.appScope.askDelete(row.entity, $index)"><span class="fa fa-trash" aria-hidden="true"></span></button>
+			<button type="button" class="btn btn-primary small" title="@TextosPaginas.Editar" ng-click="grid.appScope.EditarItem(row.entity)"><span class="fa fa-pencil" aria-hidden="true"></span></button>
+			<button type="button" class="btn btn-danger small" title="@TextosPaginas.Excluir" ng-click="grid.appScope.askDelete(row.entity, $index)"><span class="fa fa-trash" aria-hidden="true"></span></button>
 
         </div>
 

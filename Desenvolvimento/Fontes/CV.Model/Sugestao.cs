@@ -35,15 +35,12 @@ private void ValidarLocal(Microsoft.Practices.EnterpriseLibrary.Validation.Valid
   }
 }
 
-			[NotNullValidator(MessageTemplateResourceName="Sugestao_Latitude",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public decimal? Latitude { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="Sugestao_Longitude",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public decimal? Longitude { get; set; }
 
 			public string Comentario { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="Sugestao_IdentificadorViagem",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public int? IdentificadorViagem { get; set; }
 
 			[NotNullValidator(MessageTemplateResourceName="Sugestao_IdentificadorUsuario",MessageTemplateResourceType=typeof(MensagemModelo))]
@@ -61,12 +58,13 @@ private void ValidarLocal(Microsoft.Practices.EnterpriseLibrary.Validation.Valid
 
 			public Viagem ItemViagem { get; set; }
 
-			[StringLengthValidator(50,MessageTemplateResourceName="Sugestao_Tipo_Tamanho",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public string Tipo { get; set; }
 
 			public DateTime? DataAtualizacao { get; set; }
 
 			public DateTime? DataExclusao { get; set; }
+
+			public string CodigoPlace { get; set; }
 		 public Sugestao Clone()
 		{
 			 return (Sugestao) this.MemberwiseClone();

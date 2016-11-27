@@ -16,6 +16,7 @@
 		vm.ListaDadosPedidos = [];
 		vm.ListaUsuario = [];
 		vm.gridApi = null;
+		vm.gridApiPedido = null;
 		vm.AbrirRequisicaoCompra = false;
 		vm.load = function () {
 		    vm.loading = true;
@@ -25,8 +26,15 @@
 		    });
 
 		    vm.CarregarDadosWebApi();
-		    vm.CarregarDadosWebApiPedido();
+		    vm.CarregarDadosWebApiPedidos();
 
+		};
+
+		vm.AtualizarGrid = function () {
+		    $timeout(function () {
+		        vm.gridApi.core.handleWindowResize();
+		        vm.gridApiPedido.core.handleWindowResize();
+		    }, 200);
 		};
 
 		vm.delete = function (itemForDelete, indexForDelete, callback) {
@@ -111,22 +119,45 @@
             vm.CarregarDadosWebApi();
 		};
 
-		vm.filtraDadoPedidos = function () {
+		vm.filtraDadoPedido = function () {
 
 		    if (vm.itemUsuario && vm.itemUsuario.Identificador)
-		        vm.filtraDadoPedidos.IdentificadorParticipante = vm.itemUsuario.Identificador;
+		        vm.filtroPedido.IdentificadorParticipante = vm.itemUsuario.Identificador;
 		    else
-		        vm.filtraDadoPedidos.IdentificadorParticipante = null;
+		        vm.filtroPedido.IdentificadorParticipante = null;
 
-		        vm.CarregarDadosWebApiPedido();
+		        vm.CarregarDadosWebApiPedidos();
 		};
 
 		vm.AdicionarListaCompra = function () {
+		    var itemLista = { IdentificadorUsuario: Auth.currentUser.Codigo, Reembolsavel:false,  Status:1};
+		    Viagem.get({ id: Auth.currentUser.IdentificadorViagem }, function (data) {
+		        itemLista.Moeda = data.Moeda;
+		        vm.EditarListaCompra(itemLista);
 
+		    });
 		};
 
 		vm.EditarListaCompra = function (itemLista) {
+		    $uibModal.open({
+		        templateUrl: 'Sistema/ListaCompraEdicao',
+		        controller: 'ListaCompraEditCtrl',
+		        controllerAs: 'itemListaCompraEdit',
+		        resolve: {
+		            EscopoAtualizacao: vm,
+		            ItemListaCompra: function () { return itemLista }
+		        }
+		    });
+		};
 
+		vm.AtualizarListaCompra = function (itemOriginal, itemLista) {
+		    if (itemOriginal.Identificador) {
+		        var Posicao = vm.ListaDados.indexOf(itemOriginal);
+		        vm.ListaDados.splice(Posicao, 1, itemLista);
+		    }
+		    else {
+		        vm.ListaDados.push(itemLista);
+		    }
 		};
 
         vm.VerificarExclusao = function (itemExcluir) {
@@ -222,15 +253,15 @@
             });
         };
 
-        vm.CarregarDadosWebApiPedios = function () {
+        vm.CarregarDadosWebApiPedidos = function () {
             vm.loadingPedidos = true;
-            vm.filtraDadoPedidos.Index = 0;
-            vm.filtraDadoPedidos.Count = null;
+            vm.filtroPedido.Index = 0;
+            vm.filtroPedido.Count = null;
 
             vm.CamposInvalidos = {};
             vm.messages = [];
 
-            ListaCompra.CarregarPedidosRecebidos({ json: JSON.stringify(vm.filtraDadoPedidos) }, function (data) {
+            ListaCompra.CarregarPedidosRecebidos({ json: JSON.stringify(vm.filtroPedido) }, function (data) {
                 vm.loadingPedidos = false;
                 vm.ListaDadosPedidos = data;
                 if (!$scope.$$phase) {
@@ -280,7 +311,7 @@
         vm.gridOptionsPedidos = {
             data: 'itemListaCompra.ListaDadosPedidos',
             columnDefs: [
-    { field: 'Identificador', displayName: '', cellTemplate: "BotoesGridTemplate.html", width: 60, },
+    { field: 'Identificador', displayName: '', cellTemplate: "BotoesGridExibicao.html", width: 60, },
     { field: 'Marca', displayName: $translate.instant('ListaCompra_Marca'), },
     { field: 'Descricao', displayName: $translate.instant('ListaCompra_Descricao'), },
     { field: 'ValorMaximo', displayName: $translate.instant('ListaCompra_ValorMaximo'), cellFilter: 'number:\'2\'' },
@@ -300,7 +331,7 @@
                     var cultura = Auth.currentUser.Cultura.toLowerCase().substr(0, 2);
                     i18nService.setCurrentLang(cultura)
                 }
-
+                vm.gridApiPedido = grid;
             },
             useExternalPagination: false,
             useExternalSorting: false,

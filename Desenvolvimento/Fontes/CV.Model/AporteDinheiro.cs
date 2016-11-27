@@ -39,6 +39,10 @@ namespace CV.Model
 			public DateTime? DataAtualizacao { get; set; }
 
 			public DateTime? DataExclusao { get; set; }
+
+			public int? IdentificadorGasto { get; set; }
+
+			public Gasto ItemGasto { get; set; }
 		 public AporteDinheiro Clone()
 		{
 			 return (AporteDinheiro) this.MemberwiseClone();

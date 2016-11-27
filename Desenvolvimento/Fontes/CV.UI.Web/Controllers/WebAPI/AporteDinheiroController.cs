@@ -23,13 +23,8 @@ namespace CV.UI.Web.Controllers.WebAPI
             ResultadoConsultaTipo<AporteDinheiro> resultado = new ResultadoConsultaTipo<AporteDinheiro>();
             ViagemBusiness biz = new ViagemBusiness();
            
-            List<AporteDinheiro> _itens = biz.ListarAporteDinheiro().ToList();
-resultado.TotalRegistros = _itens.Count();
-            if (json.SortField != null && json.SortField.Any())
-                _itens = _itens.AsQueryable().OrderByField<AporteDinheiro>(json.SortField, json.SortOrder).ToList();
+            List<AporteDinheiro> _itens = biz.ListarAporteDinheiro(token.IdentificadorUsuario, token.IdentificadorViagem, json.Moeda, json.DataInicioDe, json.DataInicioAte).ToList();
 
-            if (json.Index.HasValue && json.Count.HasValue)
-                _itens = _itens.Skip(json.Index.Value).Take(json.Count.Value).ToList();
             resultado.Lista = _itens;
 
             return resultado;
@@ -46,12 +41,25 @@ resultado.TotalRegistros = _itens.Count();
         public ResultadoOperacao Post([FromBody] AporteDinheiro itemAporteDinheiro)
         {
             ViagemBusiness biz = new ViagemBusiness();
-                      biz.SalvarAporteDinheiro(itemAporteDinheiro);
+            itemAporteDinheiro.IdentificadorViagem = token.IdentificadorViagem;
+            itemAporteDinheiro.IdentificadorUsuario = token.IdentificadorUsuario;
+            itemAporteDinheiro.DataAtualizacao = DateTime.Now;
+            if (itemAporteDinheiro.ItemGasto != null)
+            {
+                itemAporteDinheiro.ItemGasto.DataAtualizacao = DateTime.Now;
+                itemAporteDinheiro.ItemGasto.IdentificadorUsuario = token.IdentificadorUsuario;
+                itemAporteDinheiro.ItemGasto.IdentificadorViagem = token.IdentificadorViagem;
+                itemAporteDinheiro.ItemGasto.Data = itemAporteDinheiro.DataAporte;
+            }
+            biz.SalvarAporteDinheiroCompleto(itemAporteDinheiro);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
             if (itemResultado.Sucesso)
+            {
                 itemResultado.IdentificadorRegistro = itemAporteDinheiro.Identificador;
+                itemResultado.ItemRegistro = biz.SelecionarAporteDinheiro(itemAporteDinheiro.Identificador);
+            }
             return itemResultado;
         }
         [Authorize]
@@ -59,6 +67,9 @@ resultado.TotalRegistros = _itens.Count();
         {
             ViagemBusiness biz = new ViagemBusiness();
             AporteDinheiro itemAporteDinheiro = biz.SelecionarAporteDinheiro(id);
+            itemAporteDinheiro.DataExclusao = null;
+            if (itemAporteDinheiro.ItemGasto != null)
+                itemAporteDinheiro.ItemGasto.DataExclusao = DateTime.Now;
             biz.ExcluirAporteDinheiro(itemAporteDinheiro);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();

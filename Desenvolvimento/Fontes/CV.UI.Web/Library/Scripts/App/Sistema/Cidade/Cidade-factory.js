@@ -79,6 +79,13 @@
               },
               isArray: true
           },
+          CarregarSugestao: {
+              method: 'GET',
+              params: {
+                  controller: 'CarregarSugestao'
+              },
+              isArray: true
+          },
           CarregarViagemAerea: {
               method: 'GET',
               params: {

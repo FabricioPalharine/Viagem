@@ -2,44 +2,35 @@
 	'use strict';
 	angular
 		.module('Sistema')
-		.controller('SugestaoCtrl',['$uibModal', 'Error', '$timeout', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', '$window', 'i18nService','Cidade','Usuario','Viagem','Sugestao', SugestaoCtrl]);
+		.controller('SugestaoCtrl',['$uibModal', 'Error', '$timeout', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', '$window', 'i18nService','Cidade','Usuario','Viagem','Sugestao','SignalR', SugestaoCtrl]);
 
-	function SugestaoCtrl($uibModal,  Error, $timeout, $state, $translate, $scope, Auth, $rootScope, $stateParams, $window, i18nService,Cidade,Usuario,Viagem,Sugestao) {
+	function SugestaoCtrl($uibModal, Error, $timeout, $state, $translate, $scope, Auth, $rootScope, $stateParams, $window, i18nService, Cidade, Usuario, Viagem, Sugestao, SignalR) {
 		var vm = this;
 		vm.filtro = {  Index: 0, Count: 0 };
 		vm.filtroAtualizacao = {  Index: 0, Count: 0 };
-		vm.loading = false;
-		vm.showModal = false;
-		vm.modalAcao = function () {;
-			vm.showModal = true;
-		}
-		vm.modalDelete = {};
-		vm.PermiteInclusao = true;
-		vm.PermiteAlteracao = true;
-		vm.PermiteExclusao = true;
+		vm.loading = false;		
 		vm.ListaDados = [];
 		vm.gridApi = null;
+		vm.ListaCidades = [];
+		vm.itemCidade = {};
 
 		vm.load = function () {
 			vm.loading = true;
-			vm.verificarPermissoes();
+			Cidade.CarregarSugestao(function (lista) {
+			    vm.ListaCidades = lista;
 
-			var param = $stateParams;
-			if (param.filtro != null) {
-				vm.filtro = vm.filtroAtualizacao = param.filtro;
-				 vm.pagingOptions.fields = vm.filtroAtualizacao.SortField;
-				 vm.pagingOptions.directions = vm.filtroAtualizacao.SortOrder;
-				vm.pagingOptions.currentPage = (vm.filtroAtualizacao.Index / vm.pagingOptions.pageSize) + 1;
-
-			}
-			vm.CarregarDadosWebApi(vm.pagingOptions.pageSize, vm.pagingOptions.currentPage);
+			});
+			vm.CarregarDadosWebApi();
 		};
 		vm.delete = function (itemForDelete, indexForDelete, callback) {
 			vm.loading = true;
 			Sugestao.delete({ id: itemForDelete.Identificador }, function (data) {
-				callback(data);
+				
 				if (data.Sucesso) {
-					vm.CarregarDadosWebApi(vm.pagingOptions.pageSize, vm.pagingOptions.currentPage);
+				    callback(data);
+				    var Posicao = vm.ListaDados.indexOf(itemForDelete);
+				    vm.ListaDados.splice(Posicao, 1);
+
 					Error.showError('success', $translate.instant("Sucesso"), data.Mensagens[0].Mensagem, true);
 				}
 				else {
@@ -58,37 +49,7 @@
 			})
 		};
 
-        vm.actionModal = function (item, indexForDelete) {
-            $uibModal.open({
-                templateUrl: 'modal.html',
-                controller: ['$uibModalInstance', 'item', 'index', vm.ActionModalCtrl],
-                controllerAs: 'vmAction',
-                resolve: {
-                    item: function () { return item; },
-                    index: function () { return indexForDelete; }
-                }
-            });
-        };
-        vm.ActionModalCtrl = function ($uibModalInstance, item, index) {
-            var vmAction = this;
-            vmAction.item = item;
-            vmAction.indexForDelete = index;
-            // console.log(itens);
-            vmAction.close = function () {
-                $uibModalInstance.close();
-            }
-            vmAction.edit = function (idToEdit) {
-                $uibModalInstance.close();
-                $state.go('SugestaoEdicao', { id: idToEdit, filtro: vm.filtroAtualizacao });
-            };
-
-            vmAction.askDelete = function (itemForDelete, indexForDelete) {
-                vm.askDelete(itemForDelete, indexForDelete);
-                $uibModalInstance.close();
-            };
-
-        }
-
+ 
         vm.askDelete = function (itemForDelete, indexForDelete) {
             // $uibModalInstance.close();
             $uibModal.open({
@@ -122,58 +83,24 @@
             };
         };
 
-        $rootScope.$on('loggin', function (event) {
-            vm.verificarPermissoes();
-        });
 
-        angular.element($window).bind('resize', function () {
-            var screenSizes = $.AdminLTE.options.screenSizes;
-            vm.gridOptions.columnDefs[0].visible = $(window).width() > (screenSizes.sm - 1);
-            vm.gridApi.grid.refresh();
-
-           
-        });
-
-
-		vm.verificarPermissoes = function () {
-			$(Auth.currentUser.access).each(function (i, item) {
-			});
-		};
 
         vm.filtraDado = function () {
 
             vm.filtroAtualizacao = jQuery.extend({}, vm.filtro);
-
+            if (vm.itemCidade && vm.itemCidade.Identificador)
+                vm.filtroAtualizacao.IdentificadorCidade = vm.itemCidade.Identificador;
                   
 
-            vm.pagingOptions.currentPage = 1;
-            vm.gridApi.grid.options.paginationCurrentPage = 1;
-            vm.pagingOptions.fields = [];
-            vm.pagingOptions.directions = [];
-            angular.forEach(vm.gridApi.grid.columns, function (c) {
-                c.sort = {};
-            });
+         
 
-            vm.CarregarDadosWebApi(vm.pagingOptions.pageSize, vm.pagingOptions.currentPage);
+            vm.CarregarDadosWebApi();
         };
 
-        vm.clean = function () {
-            vm.filtro = { Nome: '', Index: 0, Count: 0 };
-            vm.filtraDado();
-        };
-
-        vm.totalServerItems = 0;
-        vm.pagingOptions = {
-            pageSize: 20,
-            currentPage: 1,
-            fields: [],
-            directions: []
-        };
 
         vm.AjustarDadosPagina = function (data) {
             // var pagedData = data.slice((page - 1) * pageSize, page * pageSize);
             vm.ListaDados = data.Lista;
-            vm.gridOptions.totalItems = data.TotalRegistros;
             if (!$scope.$$phase) {
                 $scope.$apply();
             }
@@ -186,15 +113,12 @@
                 return "pt";
         };
 //
-        vm.CarregarDadosWebApi = function (pageSize, page) {
+        vm.CarregarDadosWebApi = function () {
             vm.loading = true;
-            vm.filtroAtualizacao.Index = (page - 1) * pageSize;
-            vm.filtroAtualizacao.Count = pageSize;
+            vm.filtroAtualizacao.Index = 0;
+            vm.filtroAtualizacao.Count = null;
 
-            vm.filtroAtualizacao.SortField =vm.pagingOptions.fields;
-            vm.filtroAtualizacao.SortOrder =vm.pagingOptions.directions;
-
-            vm.CamposInvalidos = {};
+                     vm.CamposInvalidos = {};
             vm.messages = [];
 
             Sugestao.list({ json: JSON.stringify(vm.filtroAtualizacao) }, function (data) {
@@ -214,23 +138,51 @@
                 vm.loading = false;
             });
         };
+
+        vm.Incluir = function () {
+                var ItemSugestao = {  Status: 0};
+                vm.Editar(ItemSugestao);
+          
+        };
+
+        vm.Editar = function (ItemSugestao) {
+            $uibModal.open({
+                templateUrl: 'Sistema/SugestaoEdicao',
+                controller: 'SugestaoEditCtrl',
+                controllerAs: 'itemSugestaoEdit',
+                resolve: {
+                    EscopoAtualizacao: vm,
+                    ItemSugestao: function () { return ItemSugestao }
+                }
+            });
+        };
+
+        vm.AtualizarItemSalvo = function (itemAporte, itemOriginal) {
+            if (itemOriginal.Identificador) {
+                var Posicao = vm.ListaDados.indexOf(itemOriginal);
+                vm.ListaDados.splice(Posicao, 1, itemAporte);
+                var dados = vm.ListaDados;
+                vm.ListaDados = [];
+
+                $timeout(function () {
+                    vm.ListaDados = dados;
+                }, 5);
+            }
+            else
+                vm.ListaDados.push(itemAporte);
+        };
 //
         vm.gridOptions = {
             data: 'itemSugestao.ListaDados',           
             			columnDefs: [
 				{field:'Identificador',  displayName: '', cellTemplate: "BotoesGridTemplate.html",  width: 60,},
-				{field:'Local', displayName: $translate.instant('Sugestao_Local'),},
-				{field:'Latitude', displayName: $translate.instant('Sugestao_Latitude'),cellFilter: 'number:\'8\'' },
-				{field:'Longitude', displayName: $translate.instant('Sugestao_Longitude'),cellFilter: 'number:\'8\'' },
+				{ field: 'Local', displayName: $translate.instant('Sugestao_Local'), },
+                				{ field: 'Tipo', displayName: $translate.instant('Sugestao_Tipo'), },
+
 				{field:'Comentario', displayName: $translate.instant('Sugestao_Comentario'),},
-				{field:'IdentificadorViagem', displayName: $translate.instant('Sugestao_IdentificadorViagem'),},
-				{field:'IdentificadorUsuario', displayName: $translate.instant('Sugestao_IdentificadorUsuario'),},
-				{field:'IdentificadorCidade', displayName: $translate.instant('Sugestao_IdentificadorCidade'),},
-				{field:'Lida', displayName: $translate.instant('Sugestao_Lida'),},
-				{field:'Tipo', displayName: $translate.instant('Sugestao_Tipo'),},
 			],
 
-            enablePagination: true,
+            enablePagination: false,
             showGridFooter: false,
             enableRowSelection: false,
             multiSelect: false,
@@ -243,29 +195,11 @@
                     i18nService.setCurrentLang(cultura)
                 }
                 vm.gridApi = grid;
-                var screenSizes = $.AdminLTE.options.screenSizes;
-                vm.gridOptions.columnDefs[0].visible = $(window).width() > (screenSizes.sm - 1);
-                grid.core.on.sortChanged($scope, function (grid, sortColumns) {
-                    vm.pagingOptions.fields = [];
-                    vm.pagingOptions.directions = [];
-                    angular.forEach(sortColumns, function (c) {
-                        vm.pagingOptions.fields.push(c.field);
-                        vm.pagingOptions.directions.push(c.sort.direction);
-                    });
-                    vm.CarregarDadosWebApi(vm.pagingOptions.pageSize, vm.pagingOptions.currentPage);
-                });
-                grid.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
-                    vm.pagingOptions.currentPage = newPage;
-                    vm.CarregarDadosWebApi(pageSize, newPage);
-                });
+               
             },
-            useExternalPagination: true,
-            useExternalSorting: true,
-            pagination: vm.pagingOptions,
-            paginationTemplate: "NewFooterTemplate.html",
+            useExternalPagination: false,
+            useExternalSorting: false,
             appScopeProvider: vm,
-            totalItems: vm.totalServerItems,
-            rowTemplate: "<div on-long-press=\"grid.appScope.actionModal(row.entity, $index)\" ng-repeat=\"(colRenderIndex, col) in colContainer.renderedColumns track by col.uid\" ui-grid-one-bind-id-grid=\"rowRenderIndex + '-' + col.uid + '-cell'\" class=\"ui-grid-cell\" ng-class=\"{ 'ui-grid-row-header-cell': col.isRowHeader }\" role=\"{{col.isRowHeader ? 'rowheader' : 'gridcell'}}\" ui-grid-cell></div>" 
         };
 	}
 }());

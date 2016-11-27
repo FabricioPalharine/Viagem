@@ -365,6 +365,43 @@ namespace CV.Data
             Context.SaveChanges();
             itemGravar.Identificador = itemBase.Identificador;
         }
+
+        public void SalvarAporteDinheiroCompleto(AporteDinheiro itemGravar)
+        {
+            AporteDinheiro itemBase = Context.AporteDinheiros
+.Include("ItemGasto").Where(f => f.Identificador == itemGravar.Identificador).FirstOrDefault();
+            if (itemBase == null)
+            {
+                itemBase = Context.AporteDinheiros.Create();
+                Context.Entry<AporteDinheiro>(itemBase).State = System.Data.Entity.EntityState.Added;
+            }
+            AtualizarPropriedades<AporteDinheiro>(itemBase, itemGravar);
+            Gasto itemGasto = itemGravar.ItemGasto;
+            Gasto itemBaseGasto = null;
+            if (itemGasto != null)
+            {
+                itemBaseGasto = itemBase.ItemGasto;
+                if (itemBaseGasto == null)
+                {
+                    itemBaseGasto = Context.Gastos.Create();
+                    Context.Entry<Gasto>(itemBaseGasto).State = System.Data.Entity.EntityState.Added;
+                }
+                AtualizarPropriedades<Gasto>(itemBaseGasto, itemGasto);
+                itemBase.ItemGasto = itemBaseGasto;
+            }
+            else
+            {
+                if (itemBase.ItemGasto != null)
+                {
+                    itemBase.ItemGasto.DataExclusao = DateTime.Now;
+                    itemBase.ItemGasto = null;
+                }
+                itemBase.IdentificadorGasto = null;
+            }
+            Context.SaveChanges();
+            itemGravar.Identificador = itemBase.Identificador;
+        }
+
         #endregion
 
         public List<Usuario> ListarUsuario(Expression<Func<Usuario, bool>> predicate)
@@ -642,7 +679,21 @@ namespace CV.Data
 
 
         }
+        
 
+         public List<Cidade> CarregarCidadeSugestao(int? IdentificadorViagem)
+        {
+            IQueryable<Cidade> query = this.Context.Sugestoes.Where(d => d.IdentificadorViagem == IdentificadorViagem).Select(d => d.ItemCidade);
+
+            var queryJoin = query.GroupJoin(this.Context.CidadeGrupos.Where(d => d.IdentificadorViagem == IdentificadorViagem),
+                d => d.Identificador,
+                d => d.IdentificadorCidadeFilha,
+                (c, g) => new { cidade = g.Any() ? g.Select(d => d.ItemCidadePai).FirstOrDefault() : c });
+
+            return queryJoin.Where(d => d.cidade != null).Select(d => d.cidade).Distinct().OrderBy(d => d.Nome).ToList();
+
+
+        }
         public List<Cidade> CarregarCidadeComentario(int? IdentificadorViagem)
         {
             IQueryable<Cidade> query = this.Context.Comentarios.Where(d => d.IdentificadorViagem == IdentificadorViagem).Select(d => d.ItemCidade);
@@ -1053,10 +1104,49 @@ namespace CV.Data
             query = query.Where(d => d.IdentificadorViagem == IdentificadorViagem);
             query = query.Where(d => !d.DataExclusao.HasValue);
             if (Status.GetValueOrDefault(-1) >= 0)
-                query = query.Where(d => d.Status == Status);
-
+            {
+                if (Status == 1)
+                    query = query.Where(d => d.Status <= Status);
+                else
+                    query = query.Where(d => d.Status == Status);
+            }
             return query.OrderBy(d => d.Marca).ThenBy(d => d.Descricao).ToList();
         }
 
+
+        public List<AporteDinheiro> ListarAporteDinheiro(int? IdentificadorUsuario, int? IdentificadorViagem, int? Moeda, DateTime? DataDe, DateTime? DataAte)
+        {
+            IQueryable<AporteDinheiro> query = this.Context.AporteDinheiros.Include("ItemGasto");
+            
+            if (IdentificadorUsuario.HasValue)
+                query = query.Where(d => d.IdentificadorUsuario == IdentificadorUsuario);
+            if (Moeda.HasValue)
+                query = query.Where(d => d.Moeda == Moeda);
+            query = query.Where(d => d.IdentificadorViagem == IdentificadorViagem);
+            query = query.Where(d => !d.DataExclusao.HasValue);
+            if (DataDe.HasValue)
+                query = query.Where(d => d.DataAporte >= DataDe);
+            if (DataAte.HasValue)
+            {
+                DataAte = DataAte.GetValueOrDefault().AddDays(1);
+                query = query.Where(d => d.DataAporte < DataAte);
+            }
+            return query.OrderByDescending(d => d.DataAporte).ToList();
+        }
+
+        public List<Sugestao> ListarSugestao(int? IdentificadorUsuario, int? IdentificadorViagem, string Nome,string Tipo)
+        {
+            IQueryable<Sugestao> query = this.Context.Sugestoes;
+
+            if (IdentificadorUsuario.HasValue)
+                query = query.Where(d => d.IdentificadorUsuario == IdentificadorUsuario);
+            query = query.Where(d => d.IdentificadorViagem == IdentificadorViagem);
+            query = query.Where(d => !d.DataExclusao.HasValue);
+            if (!string.IsNullOrEmpty(Nome))
+                query = query.Where(d => d.Local.Contains(Nome));
+            if (!string.IsNullOrEmpty(Tipo))
+                query = query.Where(d => d.Tipo.Contains(Tipo));
+            return query.OrderBy(f => f.Local).ToList();
+        }
     }
     }

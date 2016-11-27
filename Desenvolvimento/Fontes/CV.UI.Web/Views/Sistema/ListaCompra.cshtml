@@ -16,8 +16,8 @@
     <!-- general form elements -->
 
     <ul class="nav nav-tabs">
-        <li ng-class="{'active': !itemListaCompra.AbrirRequisicaoCompra}"><a data-toggle="tab" data-target="#listaCompra" style="cursor:pointer">@TextosPaginas.Home_ListaCompra</a></li>
-        <li ng-class="{'active': itemListaCompra.AbrirRequisicaoCompra}"><a data-toggle="tab" data-target="#requisicoes" style="cursor:pointer">@TextosPaginas.Home_PedidosCompra</a></li>
+        <li ng-class="{'active': !itemListaCompra.AbrirRequisicaoCompra}"><a data-toggle="tab" data-target="#listaCompra" style="cursor:pointer" ng-click="itemListaCompra.AtualizarGrid()">@TextosPaginas.Home_ListaCompra</a></li>
+        <li ng-class="{'active': itemListaCompra.AbrirRequisicaoCompra}"><a data-toggle="tab" data-target="#requisicoes" style="cursor:pointer" ng-click="itemListaCompra.AtualizarGrid()">@TextosPaginas.Home_PedidosCompra</a></li>
     </ul>
 
     <div class="tab-content">
@@ -94,79 +94,81 @@
         </div>
 
         <div id="requisicoes" class="tab-pane fade in" ng-class="{'active': itemListaCompra.AbrirAprovacao}">
-            <div class="overlay" ng-show="itemListaCompra.loadingPedido">
-                <i class="fa fa-refresh fa-spin text-gray"></i>
-            </div>
-            <div class="box-body">
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label>@TextosPaginas.ListaCompra_Requisitante</label>
-                        <select  ng-model="itemListaCompra.itemUsuario" class="form-control" ng-options="obj.Nome for obj in itemListaCompra.ListaUsuario track by obj.Identificador">
-                            <option value="">@TextosPaginas.Selecione</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label>@TextosPaginas.ListaCompra_Marca</label>
-                        <input type="text" class="form-control" ng-model="itemListaCompra.filtroPedido.Tipo" maxlength="50" empty-to-null>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label>@TextosPaginas.ListaCompra_Descricao</label>
-                        <input type="text" class="form-control" ng-model="itemListaCompra.filtroPedido.Comentario" maxlength="50" empty-to-null>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label>@TextosPaginas.Atracao_Situacao</label>
-
-                        <div class="form-inline">
-
-                            <label class="radio">
-                                <input type="radio" class="radio-inline" name="radSituacao" value="3" ng-model="itemListaCompra.filtroPedido.Situacao" />
-
-                                <label style="padding-top:5px">
-
-                                    @TextosPaginas.ListaCompra_Comprado
-                                </label>
-
-                            </label>
-                            <label class="radio" style="margin-left:10px">
-                                <input type="radio" class="radio-inline" name="radSituacao" value="1" ng-model="itemListaCompra.filtroPedido.Situacao" /><label>
-                                    @TextosPaginas.ListaCompra_Pendente
-                                </label>
-                            </label>
-                            <label class="radio" style="margin-left:10px">
-                                <input type="radio" class="radio-inline" name="radSituacao" value="2" ng-model="itemListaCompra.filtroPedido.Situacao" /><label>
-                                    @TextosPaginas.ListaCompra_Ignorado
-                                </label>
-                            </label>
-                            <label class="radio" style="margin-left:10px">
-                                <input type="radio" class="radio-inline" name="radSituacao" value="-1" ng-model="itemListaCompra.filtroPedido.Situacao" />
-                                <label>
-                                    @TextosPaginas.Hotel_Todos
-                                </label>
-                            </label>
-                        </div>
-
-                    </div>
-
-
-                </div>
-            </div><!-- /.box-body -->
-            <div class="box-footer">
-              
-                <button type="submit" class="btn btn-primary  pull-right" ng-click="itemListaCompra.filtraDadoPedido()">
-                    <span class="fa fa-search" aria-hidden="true"></span> @TextosPaginas.Pesquisar
-                </button>
-            </div>
-
-            <div class="box">
+            <div class="box box-primary">
                 <div class="overlay" ng-show="itemListaCompra.loadingPedido">
                     <i class="fa fa-refresh fa-spin text-gray"></i>
                 </div>
-                <div class="box-body table-responsive">
-                    <div class="gridStyle" ui-grid="itemListaCompra.gridOptionsPedido"></div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label>@TextosPaginas.ListaCompra_Requisitante</label>
+                            <select ng-model="itemListaCompra.itemUsuario" class="form-control" ng-options="obj.Nome for obj in itemListaCompra.ListaUsuario track by obj.Identificador">
+                                <option value="">@TextosPaginas.Selecione</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>@TextosPaginas.ListaCompra_Marca</label>
+                            <input type="text" class="form-control" ng-model="itemListaCompra.filtroPedido.Tipo" maxlength="50" empty-to-null>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>@TextosPaginas.ListaCompra_Descricao</label>
+                            <input type="text" class="form-control" ng-model="itemListaCompra.filtroPedido.Comentario" maxlength="50" empty-to-null>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>@TextosPaginas.Atracao_Situacao</label>
 
+                            <div class="form-inline">
+
+                                <label class="radio">
+                                    <input type="radio" class="radio-inline" name="radSituacao" value="3" ng-model="itemListaCompra.filtroPedido.Situacao" />
+
+                                    <label style="padding-top:5px">
+
+                                        @TextosPaginas.ListaCompra_Comprado
+                                    </label>
+
+                                </label>
+                                <label class="radio" style="margin-left:10px">
+                                    <input type="radio" class="radio-inline" name="radSituacaoPedido" value="1" ng-model="itemListaCompra.filtroPedido.Situacao" /><label>
+                                        @TextosPaginas.ListaCompra_Pendente
+                                    </label>
+                                </label>
+                                <label class="radio" style="margin-left:10px">
+                                    <input type="radio" class="radio-inline" name="radSituacaoPedido" value="2" ng-model="itemListaCompra.filtroPedido.Situacao" /><label>
+                                        @TextosPaginas.ListaCompra_Ignorado
+                                    </label>
+                                </label>
+                                <label class="radio" style="margin-left:10px">
+                                    <input type="radio" class="radio-inline" name="radSituacaoPedido" value="-1" ng-model="itemListaCompra.filtroPedido.Situacao" />
+                                    <label>
+                                        @TextosPaginas.Hotel_Todos
+                                    </label>
+                                </label>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div><!-- /.box-body -->
+                <div class="box-footer">
+
+                    <button type="submit" class="btn btn-primary  pull-right" ng-click="itemListaCompra.filtraDadoPedido()">
+                        <span class="fa fa-search" aria-hidden="true"></span> @TextosPaginas.Pesquisar
+                    </button>
+                </div>
+
+                <div class="box">
+                    <div class="overlay" ng-show="itemListaCompra.loadingPedido">
+                        <i class="fa fa-refresh fa-spin text-gray"></i>
+                    </div>
+                    <div class="box-body table-responsive">
+                        <div class="gridStyle" ui-grid="itemListaCompra.gridOptionsPedidos"></div>
+
+                    </div>
+                </div>
                 </div>
             </div>
-        </div>
    </div>
 
     <script type="text/ng-template" id="modalDelete.html">

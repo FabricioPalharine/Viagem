@@ -582,4 +582,13 @@
   <data name="Viagem_SalvarGastoCompra_Item_Completo_OK" xml:space="preserve">
     <value>Gravação de GastoCompra foi realizada com sucesso</value>
   </data>
+  <data name="PedidoCompra_PedirParaObrigatorio" xml:space="preserve">
+    <value>O campo Pedir Para é obrigatório</value>
+  </data>
+  <data name="AporteDinheiro_MoedaGasto" xml:space="preserve">
+    <value>O campo Moeda Baixa é obrigatório.</value>
+  </data>
+  <data name="AporteDinheiro_ValorGasto" xml:space="preserve">
+    <value>O campo Valor Baixa é obrigatório.</value>
+  </data>
 </root>

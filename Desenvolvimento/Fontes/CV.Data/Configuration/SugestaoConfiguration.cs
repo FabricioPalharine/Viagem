@@ -29,10 +29,11 @@ namespace CV.Data.Configuration
 			this.Property(i => i.Status).HasColumnName("CD_STATUS");
 			this.HasRequired(i => i.ItemCidade).WithMany().HasForeignKey(d=>d.IdentificadorCidade);
 			this.HasRequired(i => i.ItemUsuario).WithMany().HasForeignKey(d=>d.IdentificadorUsuario);
-			this.HasRequired(i => i.ItemViagem).WithMany().HasForeignKey(d=>d.IdentificadorViagem);
+			this.HasOptional(i => i.ItemViagem).WithMany().HasForeignKey(d=>d.IdentificadorViagem);
 			this.Property(i => i.Tipo).HasColumnName("DS_TIPO");
 			this.Property(i => i.DataAtualizacao).HasColumnName("DT_ATUALIZACAO");
 			this.Property(i => i.DataExclusao).HasColumnName("DT_EXCLUSAO");
+			this.Property(i => i.CodigoPlace).HasColumnName("CD_PLACE");
 		MapearCamposManualmente();
 		}
 	}

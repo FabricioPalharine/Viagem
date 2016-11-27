@@ -1,73 +1,51 @@
-<section class="content-header">
-    <h1>
-        @TextosPaginas.Home_AporteDinheiro
-        <small>@TextosPaginas.AporteDinheiro_Manutencao</small>
-
-    </h1>
-    <ol class="breadcrumb">
-        
-        <li>@TextosPaginas.Home_Menu</li>
-        <li><a ui-sref="AporteDinheiro({filtro:itemAporteDinheiroEdit.filtroConsulta})">@TextosPaginas.Home_AporteDinheiro</a></li>
-        <li class="active">@TextosPaginas.AporteDinheiro_Manutencao</li>
-    </ol>
-
-</section>
+<div class="modal-header">
+    <span>@TextosPaginas.AporteDinheiro_Manutencao</span>
+</div>
 <!-- Main content -->
-<section class="content" ng-init="itemAporteDinheiroEdit.load()">
-    <!-- Default box -->
-    <!-- general form elements -->
-    <div class="box box-primary">
-        <div class="overlay" ng-show="itemAporteDinheiroEdit.loading">
-            <i class="fa fa-refresh fa-spin text-gray"></i>
-        </div>
+<div class="modal-body" ng-init="itemAporteDinheiroEdit.load()">
+         <!-- Default box -->
+        <!-- general form elements -->
+        <div class="box box-primary">
+            <div class="overlay" ng-show="itemAporteDinheiroEdit.loading">
+                <i class="fa fa-refresh fa-spin text-gray"></i>
+            </div>
 
-        <form role="form" ng-submit="itemAporteDinheiroEdit.save(form)" name="form" novalidate>
-            <div class="box-body">
+            <form role="form"  name="form" novalidate>
+                <div class="box-body">
 
-                 <div class="row" ng-show="itemAporteDinheiroEdit.messages.length > 0">
-                     <div class="col-md-12">
-                         <div class="callout callout-danger">
-                             <h4>@TextosPaginas.Geral_ValidarErros</h4>
-                             <ul>
-                                 <li ng-repeat="erro in itemAporteDinheiroEdit.messages">
-                                     <span ng-bind="erro.Mensagem"></span>
-                                 </li>
-                             </ul>
+                    <div class="row" ng-show="itemAporteDinheiroEdit.messages.length > 0">
+                        <div class="col-md-12">
+                            <div class="callout callout-danger">
+                                <h4>@TextosPaginas.Geral_ValidarErros</h4>
+                                <ul>
+                                    <li ng-repeat="erro in itemAporteDinheiroEdit.messages">
+                                        <span ng-bind="erro.Mensagem"></span>
+                                    </li>
+                                </ul>
 
-                         </div>
-                     </div>
+                            </div>
+                        </div>
 
-                </div>
-                <div class="row">
-					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemAporteDinheiroEdit.CamposInvalidos.IdentificadorViagem}">
-					<label>@TextosPaginas.AporteDinheiro_IdentificadorViagem</label>
-					<select ng-model="itemAporteDinheiroEdit.itemViagem" class="form-control" ng-options="obj.Nome for obj in itemAporteDinheiroEdit.ListaViagem track by obj.Identificador">
-						<option value="">@TextosPaginas.Selecione</option>
-					</select>
-					</div>
-					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemAporteDinheiroEdit.CamposInvalidos.IdentificadorUsuario}">
-					<label>@TextosPaginas.AporteDinheiro_IdentificadorUsuario</label>
-					<select ng-model="itemAporteDinheiroEdit.itemUsuario" class="form-control" ng-options="obj.EMail for obj in itemAporteDinheiroEdit.ListaUsuario track by obj.Identificador">
-						<option value="">@TextosPaginas.Selecione</option>
-					</select>
-					</div>
-					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemAporteDinheiroEdit.CamposInvalidos.Valor}">
-					<label>@TextosPaginas.AporteDinheiro_Valor</label>
-					<input type="text" class="form-control" ng-model="itemAporteDinheiroEdit.itemAporteDinheiro.Valor"   empty-to-null decimal-input="{digits:2, integerDigits:16}">
-					</div>
-					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemAporteDinheiroEdit.CamposInvalidos.MoedaEstragengeira}">
-					<label><input type="checkbox" ng-model="itemAporteDinheiroEdit.itemAporteDinheiro.MoedaEstragengeira" >@TextosPaginas.AporteDinheiro_MoedaEstragengeira</label>
-					</div>
-					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemAporteDinheiroEdit.CamposInvalidos.Moeda}">
-					<label>@TextosPaginas.AporteDinheiro_Moeda</label>
-					<input type="text" class="form-control" ng-model="itemAporteDinheiroEdit.itemAporteDinheiro.Moeda" maxlength="7"  empty-to-null integer-input >
-					</div>
-					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemAporteDinheiroEdit.CamposInvalidos.DataAporte}">
-					<label>@TextosPaginas.AporteDinheiro_DataAporte</label>
-<div class="dropdown">
-                                <a class="dropdown-toggle"  role="button" data-toggle="dropdown">
+                    </div>
+                    <div class="row">
+                        
+                        <div class="form-group col-md-6" ng-class="{ 'has-error':itemAporteDinheiroEdit.CamposInvalidos.Valor}">
+                            <label>@TextosPaginas.AporteDinheiro_Valor</label>
+                            <input type="text" class="form-control" ng-model="itemAporteDinheiroEdit.itemAporteDinheiro.Valor" empty-to-null decimal-input="{digits:2, integerDigits:16}">
+                        </div>
+                        
+                        <div class="form-group col-md-6" ng-class="{ 'has-error':itemAporteDinheiroEdit.CamposInvalidos.Moeda}">
+                            <label>@TextosPaginas.AporteDinheiro_Moeda</label>
+                            <select ng-model="itemAporteDinheiroEdit.itemMoeda" class="form-control" ng-options="obj.Descricao for obj in itemAporteDinheiroEdit.ListaMoeda track by obj.Codigo">
+                                <option value="">@TextosPaginas.Selecione</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6" ng-class="{ 'has-error':itemAporteDinheiroEdit.CamposInvalidos.DataAporte}">
+                            <label>@TextosPaginas.AporteDinheiro_DataAporte</label>
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" role="button" data-toggle="dropdown">
                                     <div class="input-group">
-                                        <input date-input ng-model="itemAporteDinheiroEdit.itemAporteDinheiro.DataAporte" class="form-control"  input-mask="{mask: 'd/m/y'}" 
+                                        <input date-input ng-model="itemAporteDinheiroEdit.itemAporteDinheiro.DataAporte" class="form-control" input-mask="{mask: 'd/m/y'}"
                                                datapattern="dd/MM/yyyy">
                                         <span class="input-group-addon">
                                             <i class="glyphicon glyphicon-calendar"></i>
@@ -75,34 +53,47 @@
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                    <datetimepicker data-ng-model="itemAporteDinheiroEdit.itemAporteDinheiro.DataAporte"                                                   
+                                    <datetimepicker data-ng-model="itemAporteDinheiroEdit.itemAporteDinheiro.DataAporte"
                                                     data-datetimepicker-config="{  minView:'day' , langCode:itemAporteDinheiroEdit.Idioma()  }" />
                                 </ul>
                             </div>
-					</div>
-					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemAporteDinheiroEdit.CamposInvalidos.Cotacao}">
-					<label>@TextosPaginas.AporteDinheiro_Cotacao</label>
-					<input type="text" class="form-control" ng-model="itemAporteDinheiroEdit.itemAporteDinheiro.Cotacao"   empty-to-null decimal-input="{digits:6, integerDigits:12}">
-					</div>
-                                   
+                        </div>
+                        <div class="form-group col-md-6" ng-class="{ 'has-error':itemAporteDinheiroEdit.CamposInvalidos.Cotacao}">
+                            <label>@TextosPaginas.AporteDinheiro_Cotacao</label>
+                            <input type="text" class="form-control" ng-model="itemAporteDinheiroEdit.itemAporteDinheiro.Cotacao" empty-to-null decimal-input="{digits:6, integerDigits:12}">
+                        </div>
+                        <div class="form-group col-md-6" ng-class="{ 'has-error':itemGastoEdit.CamposInvalidos.Especie}">
+                            <label>@TextosPaginas.AporteDinheiro_BaixaMoeda</label>
+                            <input type="checkbox" ng-model="itemAporteDinheiroEdit.BaixarMoeda" class="checkbox" ng-click="itemAporteDinheiroEdit.trocarBaixa()">
+                        </div>
+                        <div class="form-group col-md-6" ng-class="{ 'has-error':itemAporteDinheiroEdit.CamposInvalidos.MoedaGasto}" ng-if="itemAporteDinheiroEdit.BaixarMoeda">
+                            <label>@TextosPaginas.AporteDinheiro_MoedaBaixa</label>
+                            <select ng-model="itemAporteDinheiroEdit.itemMoedaGasto" class="form-control" ng-options="obj.Descricao for obj in itemAporteDinheiroEdit.ListaMoeda track by obj.Codigo">
+                                <option value="">@TextosPaginas.Selecione</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6" ng-class="{ 'has-error':itemAporteDinheiroEdit.CamposInvalidos.ValorGasto}" ng-if="itemAporteDinheiroEdit.BaixarMoeda">
+                            <label>@TextosPaginas.AporteDinheiro_ValorBaixa</label>
+                            <input type="text" class="form-control" ng-model="itemAporteDinheiroEdit.itemGasto.Valor" empty-to-null decimal-input="{digits:2, integerDigits:16}">
+                        </div>
+                    </div>
 
-                </div>
-             
-            </div><!-- /.box-body -->
-            <div class="box-footer">
-                <button type="button" class="btn btn-primary " title="@TextosPaginas.Voltar" ui-sref="AporteDinheiro({filtro:itemAporteDinheiroEdit.filtroConsulta})">
-                    <span class="fa fa-arrow-left" aria-hidden="true"></span>
-                </button>
-                <button type="submit" class="btn btn-primary  pull-right">
-                    <span class="fa fa-save" aria-hidden="true"></span> @TextosPaginas.Geral_Salvar
-                </button>
-
-            </div>
-        </form>
-    </div><!-- /.box -->
+                </div><!-- /.box-body -->
+               
+            </form>
+        </div><!-- /.box -->
+    
 
 
 
 
+    </div><!-- /.content -->
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" ng-click="itemAporteDinheiroEdit.close()">
+        <span class="fa fa-close" aria-hidden="true">@TextosPaginas.Cancelar</span>
+    </button>
+    <button type="button" class="btn btn-primary  pull-right" ng-click="itemAporteDinheiroEdit.save()">
+        <span class="fa fa-save" aria-hidden="true"></span> @TextosPaginas.Geral_Salvar
+    </button>
 
-</section><!-- /.content -->
+</div>

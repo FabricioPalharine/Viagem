@@ -23,13 +23,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             ResultadoConsultaTipo<Sugestao> resultado = new ResultadoConsultaTipo<Sugestao>();
             ViagemBusiness biz = new ViagemBusiness();
            
-            List<Sugestao> _itens = biz.ListarSugestao().ToList();
-resultado.TotalRegistros = _itens.Count();
-            if (json.SortField != null && json.SortField.Any())
-                _itens = _itens.AsQueryable().OrderByField<Sugestao>(json.SortField, json.SortOrder).ToList();
-
-            if (json.Index.HasValue && json.Count.HasValue)
-                _itens = _itens.Skip(json.Index.Value).Take(json.Count.Value).ToList();
+            List<Sugestao> _itens = biz.ListarSugestao(token.IdentificadorUsuario, token.IdentificadorViagem, json.Nome, json.Tipo).ToList();
             resultado.Lista = _itens;
 
             return resultado;
@@ -46,7 +40,11 @@ resultado.TotalRegistros = _itens.Count();
         public ResultadoOperacao Post([FromBody] Sugestao itemSugestao)
         {
             ViagemBusiness biz = new ViagemBusiness();
-                      biz.SalvarSugestao(itemSugestao);
+            itemSugestao.DataAtualizacao = DateTime.Now;
+            itemSugestao.IdentificadorViagem = token.IdentificadorViagem;
+            itemSugestao.IdentificadorUsuario = token.IdentificadorUsuario;
+            itemSugestao.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemSugestao.Latitude, itemSugestao.Longitude);
+             biz.SalvarSugestao(itemSugestao);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
@@ -59,7 +57,8 @@ resultado.TotalRegistros = _itens.Count();
         {
             ViagemBusiness biz = new ViagemBusiness();
             Sugestao itemSugestao = biz.SelecionarSugestao(id);
-            biz.ExcluirSugestao(itemSugestao);
+            itemSugestao.DataExclusao = DateTime.Now;
+            biz.SalvarSugestao(itemSugestao);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();

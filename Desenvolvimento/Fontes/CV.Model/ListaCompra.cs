@@ -80,7 +80,6 @@ private void ValidarMarca(Microsoft.Practices.EnterpriseLibrary.Validation.Valid
 
 			public Viagem ItemViagem { get; set; }
 
-			[StringLengthValidator(200,MessageTemplateResourceName="ListaCompra_Destinatario_Tamanho",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public string Destinatario { get; set; }
 
 			public DateTime? DataAtualizacao { get; set; }

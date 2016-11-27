@@ -135,13 +135,6 @@
             vm.verificarPermissoes();
         });
 
-        angular.element($window).bind('resize', function () {
-            var screenSizes = $.AdminLTE.options.screenSizes;
-            vm.gridOptions.columnDefs[0].visible = $(window).width() > (screenSizes.sm - 1);
-            vm.gridApi.grid.refresh();
-
-           
-        });
 
 
 		vm.verificarPermissoes = function () {
@@ -221,12 +214,8 @@
 //
         vm.CarregarDadosWebApiAprovacao = function (pageSize, page) {
             vm.loadingAprovacao = true;
-            vm.filtroAtualizacaoAprovacao.Index = (page - 1) * pageSize;
-            vm.filtroAtualizacaoAprovacao.Count = pageSize;
-
-            vm.filtroAtualizacaoAprovacao.SortField = vm.pagingOptionsAprovacao.fields;
-            vm.filtroAtualizacaoAprovacao.SortOrder = vm.pagingOptionsAprovacao.directions;
-
+            vm.filtroAtualizacaoAprovacao.Index = 0;
+            vm.filtroAtualizacaoAprovacao.Count = null;
          
 
             RequisicaoAmizade.list({ json: JSON.stringify(vm.filtroAtualizacaoAprovacao) }, function (data) {
@@ -243,11 +232,8 @@
 
         vm.CarregarDadosWebApi = function (pageSize, page) {
             vm.loading = true;
-            vm.filtroAtualizacao.Index = (page - 1) * pageSize;
-            vm.filtroAtualizacao.Count = pageSize;
-
-            vm.filtroAtualizacao.SortField = vm.pagingOptions.fields;
-            vm.filtroAtualizacao.SortOrder = vm.pagingOptions.directions;
+            vm.filtroAtualizacao.Index = 0;
+            vm.filtroAtualizacao.Count = null;
 
             vm.CamposInvalidos = {};
             vm.messages = [];
@@ -341,7 +327,7 @@
                 { field: 'Seguido', displayName: $translate.instant('Amigo_Seguido'), cellTemplate: "CheckSeguidoTemplate.html", width: 120, },
 			],
 
-            enablePagination: true,
+            enablePagination: false,
             showGridFooter: false,
             enableRowSelection: false,
             multiSelect: false,
@@ -354,29 +340,20 @@
                     i18nService.setCurrentLang(cultura)
                 }
                 vm.gridApi = grid;
-                var screenSizes = $.AdminLTE.options.screenSizes;
-                grid.core.on.sortChanged($scope, function (grid, sortColumns) {
-                    vm.pagingOptions.fields = [];
-                    vm.pagingOptions.directions = [];
-                    angular.forEach(sortColumns, function (c) {
-                        vm.pagingOptions.fields.push(c.field);
-                        vm.pagingOptions.directions.push(c.sort.direction);
-                    });
-                    vm.CarregarDadosWebApi(vm.pagingOptions.pageSize, vm.pagingOptions.currentPage);
-                });
-                grid.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
-                    vm.pagingOptions.currentPage = newPage;
-                    vm.CarregarDadosWebApi(pageSize, newPage);
-                });
+              
             },
-            useExternalPagination: true,
-            useExternalSorting: true,
+            useExternalPagination: false,
+            useExternalSorting: false,
             pagination: vm.pagingOptions,
-            paginationTemplate: "NewFooterTemplate.html",
             appScopeProvider: vm,
-            totalItems: vm.totalServerItems,
         };
 
+        vm.AtualizarGrid = function () {
+            $timeout(function () {
+                vm.gridApi.core.handleWindowResize();
+                vm.gridApiAprovacao.core.handleWindowResize();
+            }, 200);
+        };
 
         vm.gridOptionsAprovar = {
             data: 'itemAmigo.ListaRequisicao',
@@ -388,7 +365,7 @@
                 },
             ],
 
-            enablePagination: true,
+            enablePagination: false,
             showGridFooter: false,
             enableRowSelection: false,
             multiSelect: false,
@@ -401,25 +378,11 @@
                     i18nService.setCurrentLang(cultura)
                 }
                 vm.gridApiAprovacao = grid;
-                var screenSizes = $.AdminLTE.options.screenSizes;
-                grid.core.on.sortChanged($scope, function (grid, sortColumns) {
-                    vm.pagingOptionsAprovacao.fields = [];
-                    vm.pagingOptionsAprovacao.directions = [];
-                    angular.forEach(sortColumns, function (c) {
-                        vm.pagingOptionsAprovacao.fields.push(c.field);
-                        vm.pagingOptionsAprovacao.directions.push(c.sort.direction);
-                    });
-                    vm.CarregarDadosWebApiAprovacao(vm.pagingOptionsAprovacao.pageSize, vm.pagingOptionsAprovacao.currentPage);
-                });
-                grid.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
-                    vm.pagingOptionsAprovacao.currentPage = newPage;
-                    vm.CarregarDadosWebApiAprovacao(pageSize, newPage);
-                });
+               
             },
-            useExternalPagination: true,
-            useExternalSorting: true,
+            useExternalPagination: false,
+            useExternalSorting: false,
             pagination: vm.pagingOptionsAprovacao,
-            paginationTemplate: "NewFooterTemplate.html",
             appScopeProvider: vm,
             totalItems: vm.totalServerItemsAprovacao,
         };

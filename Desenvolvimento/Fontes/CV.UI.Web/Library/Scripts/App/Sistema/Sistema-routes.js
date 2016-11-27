@@ -65,88 +65,6 @@
                           }]
                       }
             })
-            .state('Reabastecimento', {
-                      url: '/Reabastecimento',
-                      templateUrl: 'Sistema/Reabastecimento',
-                      controller: 'ReabastecimentoCtrl',
-                      controllerAs: 'itemReabastecimento',
-                      authenticate: true,
-                      params: {
-                          filtro: null
-                      },
-                      resolve: {
-                          deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                              return $ocLazyLoad.load([
-                                   {
-                                       name: 'ReabastecimentoFactory',
-                                       files: [
-                                           'library/scripts/app/Sistema/Reabastecimento/Reabastecimento-factory.js'
-                                       ]
-                                   },
-                                  {
-                                      name: 'ReabastecimentoController',
-                                      files: [
-                                          'library/scripts/app/Sistema/Reabastecimento/Reabastecimento-edit-controller.js',
-                                          'library/scripts/app/Sistema/Reabastecimento/Reabastecimento-controller.js'
-                                      ]
-                                  }, {
-                                      name: 'CarroFactory',
-                                      files: [
-                                          'library/scripts/app/Sistema/Carro/Carro-factory.js'
-                                      ]
-                                  },
-                                    {
-                                        name: 'CidadeFactory',
-                                        files: [
-                                            'library/scripts/app/Sistema/Cidade/Cidade-factory.js'
-                                        ]
-                                    },
-                              ]);
-
-                          }]
-                      }
-            })
-            .state('ReabastecimentoEdicao', {
-                      url: '/ReabastecimentoEdicao/:id',
-                      templateUrl: 'Sistema/ReabastecimentoEdicao',
-                      controller: 'ReabastecimentoEditCtrl',
-                      controllerAs: 'itemReabastecimentoEdit',
-                      authenticate: true,
-                      params: {
-                          filtro: null
-                      },
-                      resolve: {
-                          deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                              return $ocLazyLoad.load([
-                                   {
-                                       name: 'ReabastecimentoFactory',
-                                       files: [
-                                           'library/scripts/app/Sistema/Reabastecimento/Reabastecimento-factory.js'
-                                       ]
-                                   },
-                                  {
-                                      name: 'ReabastecimentoController',
-                                      files: [
-                                          'library/scripts/app/Sistema/Reabastecimento/Reabastecimento-edit-controller.js',
-                                          'library/scripts/app/Sistema/Reabastecimento/Reabastecimento-controller.js'
-                                      ]
-                                  }, {
-                                      name: 'CarroFactory',
-                                      files: [
-                                          'library/scripts/app/Sistema/Carro/Carro-factory.js'
-                                      ]
-                                  },
-                                    {
-                                        name: 'CidadeFactory',
-                                        files: [
-                                            'library/scripts/app/Sistema/Cidade/Cidade-factory.js'
-                                        ]
-                                    },
-                              ]);
-
-                          }]
-                      }
-            })
             .state('Amigo', {
                       url: '/Amigo',
                       templateUrl: 'Sistema/Amigo',
@@ -372,47 +290,6 @@
                           }]
                       }
             })
-            .state('AtracaoEdicao', {
-                      url: '/AtracaoEdicao/:id',
-                      templateUrl: 'Sistema/AtracaoEdicao',
-                      controller: 'AtracaoEditCtrl',
-                      controllerAs: 'itemAtracaoEdit',
-                      authenticate: true,
-                      params: {
-                          filtro: null
-                      },
-                      resolve: {
-                          deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                              return $ocLazyLoad.load([
-                                   {
-                                       name: 'AtracaoFactory',
-                                       files: [
-                                           'library/scripts/app/Sistema/Atracao/Atracao-factory.js'
-                                       ]
-                                   },
-                                  {
-                                      name: 'AtracaoController',
-                                      files: [
-                                          'library/scripts/app/Sistema/Atracao/Atracao-edit-controller.js',
-                                          'library/scripts/app/Sistema/Atracao/Atracao-controller.js'
-                                      ]
-                                  }, {
-                                      name: 'CidadeFactory',
-                                      files: [
-                                          'library/scripts/app/Sistema/Cidade/Cidade-factory.js'
-                                      ]
-                                  },
-                                    {
-                                        name: 'ViagemFactory',
-                                        files: [
-                                            'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
-                                        ]
-                                    },
-                              ]);
-
-                          }]
-                      }
-            })
             .state('CalendarioPrevisto', {
                       url: '/CalendarioPrevisto',
                       templateUrl: 'Sistema/CalendarioPrevisto',
@@ -447,7 +324,8 @@
 
                           }]
                       }
-                  }).state('CalendarioPrevistoEdicao', {
+            })
+            .state('CalendarioPrevistoEdicao', {
                       url: '/CalendarioPrevistoEdicao/:id',
                       templateUrl: 'Sistema/CalendarioPrevistoEdicao',
                       controller: 'CalendarioPrevistoEditCtrl',
@@ -481,7 +359,8 @@
 
                           }]
                       }
-                  }).state('Carro', {
+            })
+            .state('Carro', {
                       url: '/Carro',
                       templateUrl: 'Sistema/Carro',
                       controller: 'CarroCtrl',
@@ -548,109 +427,8 @@
 
                           }]
                       }
-                  }).state('CarroEdicao', {
-                      url: '/CarroEdicao/:id',
-                      templateUrl: 'Sistema/CarroEdicao',
-                      controller: 'CarroEditCtrl',
-                      controllerAs: 'itemCarroEdit',
-                      authenticate: true,
-                      params: {
-                          filtro: null
-                      },
-                      resolve: {
-                          deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                              return $ocLazyLoad.load([
-                                   {
-                                       name: 'CarroFactory',
-                                       files: [
-                                           'library/scripts/app/Sistema/Carro/Carro-factory.js'
-                                       ]
-                                   },
-                                  {
-                                      name: 'CarroController',
-                                      files: [
-                                          'library/scripts/app/Sistema/Carro/Carro-edit-controller.js',
-                                          'library/scripts/app/Sistema/Carro/Carro-controller.js'
-                                      ]
-                                  }, {
-                                      name: 'ViagemFactory',
-                                      files: [
-                                          'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
-                                      ]
-                                  },
-                              ]);
-
-                          }]
-                      }
-                  }).state('Cidade', {
-                      url: '/Cidade',
-                      templateUrl: 'Sistema/Cidade',
-                      controller: 'CidadeCtrl',
-                      controllerAs: 'itemCidade',
-                      authenticate: true,
-                      params: {
-                          filtro: null
-                      },
-                      resolve: {
-                          deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                              return $ocLazyLoad.load([
-                                   {
-                                       name: 'CidadeFactory',
-                                       files: [
-                                           'library/scripts/app/Sistema/Cidade/Cidade-factory.js'
-                                       ]
-                                   },
-                                  {
-                                      name: 'CidadeController',
-                                      files: [
-                                          'library/scripts/app/Sistema/Cidade/Cidade-edit-controller.js',
-                                          'library/scripts/app/Sistema/Cidade/Cidade-controller.js'
-                                      ]
-                                  }, {
-                                      name: 'PaisFactory',
-                                      files: [
-                                          'library/scripts/app/Sistema/Pais/Pais-factory.js'
-                                      ]
-                                  },
-                              ]);
-
-                          }]
-                      }
-                  }).state('CidadeEdicao', {
-                      url: '/CidadeEdicao/:id',
-                      templateUrl: 'Sistema/CidadeEdicao',
-                      controller: 'CidadeEditCtrl',
-                      controllerAs: 'itemCidadeEdit',
-                      authenticate: true,
-                      params: {
-                          filtro: null
-                      },
-                      resolve: {
-                          deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                              return $ocLazyLoad.load([
-                                   {
-                                       name: 'CidadeFactory',
-                                       files: [
-                                           'library/scripts/app/Sistema/Cidade/Cidade-factory.js'
-                                       ]
-                                   },
-                                  {
-                                      name: 'CidadeController',
-                                      files: [
-                                          'library/scripts/app/Sistema/Cidade/Cidade-edit-controller.js',
-                                          'library/scripts/app/Sistema/Cidade/Cidade-controller.js'
-                                      ]
-                                  }, {
-                                      name: 'PaisFactory',
-                                      files: [
-                                          'library/scripts/app/Sistema/Pais/Pais-factory.js'
-                                      ]
-                                  },
-                              ]);
-
-                          }]
-                      }
-                  }).state('CidadeGrupo', {
+            })
+            .state('CidadeGrupo', {
                       url: '/CidadeGrupo',
                       templateUrl: 'Sistema/CidadeGrupo',
                       controller: 'CidadeGrupoCtrl',
@@ -696,7 +474,8 @@
 
                           }]
                       }
-                  }).state('CidadeGrupoEdicao', {
+            })
+            .state('CidadeGrupoEdicao', {
                       url: '/CidadeGrupoEdicao/:id',
                       templateUrl: 'Sistema/CidadeGrupoEdicao',
                       controller: 'CidadeGrupoEditCtrl',
@@ -742,7 +521,8 @@
 
                           }]
                       }
-                  }).state('Comentario', {
+            })
+            .state('Comentario', {
                       url: '/Comentario',
                       templateUrl: 'Sistema/Comentario',
                       controller: 'ComentarioCtrl',
@@ -782,47 +562,8 @@
 
                           }]
                       }
-                  }).state('ComentarioEdicao', {
-                      url: '/ComentarioEdicao/:id',
-                      templateUrl: 'Sistema/ComentarioEdicao',
-                      controller: 'ComentarioEditCtrl',
-                      controllerAs: 'itemComentarioEdit',
-                      authenticate: true,
-                      params: {
-                          filtro: null
-                      },
-                      resolve: {
-                          deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                              return $ocLazyLoad.load([
-                                   {
-                                       name: 'ComentarioFactory',
-                                       files: [
-                                           'library/scripts/app/Sistema/Comentario/Comentario-factory.js'
-                                       ]
-                                   },
-                                  {
-                                      name: 'ComentarioController',
-                                      files: [
-                                          'library/scripts/app/Sistema/Comentario/Comentario-edit-controller.js',
-                                          'library/scripts/app/Sistema/Comentario/Comentario-controller.js'
-                                      ]
-                                  }, {
-                                      name: 'CidadeFactory',
-                                      files: [
-                                          'library/scripts/app/Sistema/Cidade/Cidade-factory.js'
-                                      ]
-                                  },
-                                    {
-                                        name: 'ViagemFactory',
-                                        files: [
-                                            'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
-                                        ]
-                                    },
-                              ]);
-
-                          }]
-                      }
-                  }).state('CotacaoMoeda', {
+            })
+            .state('CotacaoMoeda', {
                       url: '/CotacaoMoeda',
                       templateUrl: 'Sistema/CotacaoMoeda',
                       controller: 'CotacaoMoedaCtrl',
@@ -856,41 +597,8 @@
 
                           }]
                       }
-                  }).state('CotacaoMoedaEdicao', {
-                      url: '/CotacaoMoedaEdicao/:id',
-                      templateUrl: 'Sistema/CotacaoMoedaEdicao',
-                      controller: 'CotacaoMoedaEditCtrl',
-                      controllerAs: 'itemCotacaoMoedaEdit',
-                      authenticate: true,
-                      params: {
-                          filtro: null
-                      },
-                      resolve: {
-                          deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                              return $ocLazyLoad.load([
-                                   {
-                                       name: 'CotacaoMoedaFactory',
-                                       files: [
-                                           'library/scripts/app/Sistema/CotacaoMoeda/CotacaoMoeda-factory.js'
-                                       ]
-                                   },
-                                  {
-                                      name: 'CotacaoMoedaController',
-                                      files: [
-                                          'library/scripts/app/Sistema/CotacaoMoeda/CotacaoMoeda-edit-controller.js',
-                                          'library/scripts/app/Sistema/CotacaoMoeda/CotacaoMoeda-controller.js'
-                                      ]
-                                  }, {
-                                      name: 'ViagemFactory',
-                                      files: [
-                                          'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
-                                      ]
-                                  },
-                              ]);
-
-                          }]
-                      }
-                  }).state('Foto', {
+            })
+            .state('Foto', {
                       url: '/Foto',
                       templateUrl: 'Sistema/Foto',
                       controller: 'FotoCtrl',
@@ -966,53 +674,8 @@
 
                           }]
                       }
-                  }).state('FotoEdicao', {
-                      url: '/FotoEdicao/:id',
-                      templateUrl: 'Sistema/FotoEdicao',
-                      controller: 'FotoEditCtrl',
-                      controllerAs: 'itemFotoEdit',
-                      authenticate: true,
-                      params: {
-                          filtro: null
-                      },
-                      resolve: {
-                          deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                              return $ocLazyLoad.load([
-                                   {
-                                       name: 'FotoFactory',
-                                       files: [
-                                           'library/scripts/app/Sistema/Foto/Foto-factory.js'
-                                       ]
-                                   },
-                                  {
-                                      name: 'FotoController',
-                                      files: [
-                                          'library/scripts/app/Sistema/Foto/Foto-edit-controller.js',
-                                          'library/scripts/app/Sistema/Foto/Foto-controller.js'
-                                      ]
-                                  }, {
-                                      name: 'CidadeFactory',
-                                      files: [
-                                          'library/scripts/app/Sistema/Cidade/Cidade-factory.js'
-                                      ]
-                                  },
-                                    {
-                                        name: 'UsuarioFactory',
-                                        files: [
-                                            'library/scripts/app/Sistema/Usuario/Usuario-factory.js'
-                                        ]
-                                    },
-                                    {
-                                        name: 'ViagemFactory',
-                                        files: [
-                                            'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
-                                        ]
-                                    },
-                              ]);
-
-                          }]
-                      }
-                  }).state('Gasto', {
+            })
+            .state('Gasto', {
                       url: '/Gasto',
                       templateUrl: 'Sistema/Gasto',
                       controller: 'GastoCtrl',
@@ -1052,47 +715,8 @@
 
                           }]
                       }
-                  }).state('GastoEdicao', {
-                      url: '/GastoEdicao/:id',
-                      templateUrl: 'Sistema/GastoEdicao',
-                      controller: 'GastoEditCtrl',
-                      controllerAs: 'itemGastoEdit',
-                      authenticate: true,
-                      params: {
-                          filtro: null
-                      },
-                      resolve: {
-                          deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                              return $ocLazyLoad.load([
-                                   {
-                                       name: 'GastoFactory',
-                                       files: [
-                                           'library/scripts/app/Sistema/Gasto/Gasto-factory.js'
-                                       ]
-                                   },
-                                  {
-                                      name: 'GastoController',
-                                      files: [
-                                          'library/scripts/app/Sistema/Gasto/Gasto-edit-controller.js',
-                                          'library/scripts/app/Sistema/Gasto/Gasto-controller.js'
-                                      ]
-                                  }, {
-                                      name: 'UsuarioFactory',
-                                      files: [
-                                          'library/scripts/app/Sistema/Usuario/Usuario-factory.js'
-                                      ]
-                                  },
-                                    {
-                                        name: 'ViagemFactory',
-                                        files: [
-                                            'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
-                                        ]
-                                    },
-                              ]);
-
-                          }]
-                      }
-                  }).state('Hotel', {
+            })
+            .state('Hotel', {
                       url: '/Hotel',
                       templateUrl: 'Sistema/Hotel',
                       controller: 'HotelCtrl',
@@ -1151,47 +775,8 @@
 
                           }]
                       }
-                  }).state('HotelEdicao', {
-                      url: '/HotelEdicao/:id',
-                      templateUrl: 'Sistema/HotelEdicao',
-                      controller: 'HotelEditCtrl',
-                      controllerAs: 'itemHotelEdit',
-                      authenticate: true,
-                      params: {
-                          filtro: null
-                      },
-                      resolve: {
-                          deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                              return $ocLazyLoad.load([
-                                   {
-                                       name: 'HotelFactory',
-                                       files: [
-                                           'library/scripts/app/Sistema/Hotel/Hotel-factory.js'
-                                       ]
-                                   },
-                                  {
-                                      name: 'HotelController',
-                                      files: [
-                                          'library/scripts/app/Sistema/Hotel/Hotel-edit-controller.js',
-                                          'library/scripts/app/Sistema/Hotel/Hotel-controller.js'
-                                      ]
-                                  }, {
-                                      name: 'CidadeFactory',
-                                      files: [
-                                          'library/scripts/app/Sistema/Cidade/Cidade-factory.js'
-                                      ]
-                                  },
-                                    {
-                                        name: 'ViagemFactory',
-                                        files: [
-                                            'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
-                                        ]
-                                    },
-                              ]);
-
-                          }]
-                      }
-                  }).state('ListaCompra', {
+            })
+            .state('ListaCompra', {
                       url: '/ListaCompra',
                       templateUrl: 'Sistema/ListaCompra',
                       controller: 'ListaCompraCtrl',
@@ -1237,109 +822,55 @@
 
                           }]
                       }
-                  }).state('ListaCompraEdicao', {
-                      url: '/ListaCompraEdicao/:id',
-                      templateUrl: 'Sistema/ListaCompraEdicao',
-                      controller: 'ListaCompraEditCtrl',
-                      controllerAs: 'itemListaCompraEdit',
-                      authenticate: true,
-                      params: {
-                          filtro: null
-                      },
-                      resolve: {
-                          deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                              return $ocLazyLoad.load([
-                                   {
-                                       name: 'ListaCompraFactory',
-                                       files: [
-                                           'library/scripts/app/Sistema/ListaCompra/ListaCompra-factory.js'
-                                       ]
-                                   },
-                                  {
-                                      name: 'ListaCompraController',
-                                      files: [
-                                          'library/scripts/app/Sistema/ListaCompra/ListaCompra-edit-controller.js',
-                                          'library/scripts/app/Sistema/ListaCompra/ListaCompra-controller.js'
-                                      ]
-                                  }, {
-                                      name: 'UsuarioFactory',
-                                      files: [
-                                          'library/scripts/app/Sistema/Usuario/Usuario-factory.js'
-                                      ]
-                                  },
-                                    {
-                                        name: 'UsuarioFactory',
-                                        files: [
-                                            'library/scripts/app/Sistema/Usuario/Usuario-factory.js'
-                                        ]
-                                    },
-                                    {
-                                        name: 'ViagemFactory',
-                                        files: [
-                                            'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
-                                        ]
-                                    },
-                              ]);
+            })
+            .state('PedidoCompra', {
+                url: '/PedidoCompra',
+                templateUrl: 'Sistema/PedidoCompra',
+                controller: 'PedidoCompraCtrl',
+                controllerAs: 'itemListaCompra',
+                authenticate: true,
+                params: {
+                    filtro: null
+                },
+                resolve: {
+                    deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                        return $ocLazyLoad.load([
+                             {
+                                 name: 'ListaCompraFactory',
+                                 files: [
+                                     'library/scripts/app/Sistema/ListaCompra/ListaCompra-factory.js'
+                                 ]
+                             },
+                            {
+                                name: 'PedidoCompraController',
+                                files: [
+                                    'library/scripts/app/Sistema/PedidoCompra/PedidoCompra-edit-controller.js',
+                                    'library/scripts/app/Sistema/PedidoCompra/PedidoCompra-controller.js'
+                                ]
+                            }, {
+                                name: 'UsuarioFactory',
+                                files: [
+                                    'library/scripts/app/Sistema/Usuario/Usuario-factory.js'
+                                ]
+                            },
+                              {
+                                  name: 'UsuarioFactory',
+                                  files: [
+                                      'library/scripts/app/Sistema/Usuario/Usuario-factory.js'
+                                  ]
+                              },
+                              {
+                                  name: 'ViagemFactory',
+                                  files: [
+                                      'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
+                                  ]
+                              },
+                        ]);
 
-                          }]
-                      }
-                  }).state('Pais', {
-                      url: '/Pais',
-                      templateUrl: 'Sistema/Pais',
-                      controller: 'PaisCtrl',
-                      controllerAs: 'itemPais',
-                      authenticate: true,
-                      params: {
-                          filtro: null
-                      },
-                      resolve: {
-                          deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                              return $ocLazyLoad.load([
-                                   {
-                                       name: 'PaisFactory',
-                                       files: [
-                                           'library/scripts/app/Sistema/Pais/Pais-factory.js'
-                                       ]
-                                   },
-                                  {
-                                      name: 'PaisController',
-                                      files: [
-                                          'library/scripts/app/Sistema/Pais/Pais-edit-controller.js',
-                                          'library/scripts/app/Sistema/Pais/Pais-controller.js'
-                                      ]
-                                  }, ]);
-
-                          }]
-                      }
-                  }).state('PaisEdicao', {
-                      url: '/PaisEdicao/:id',
-                      templateUrl: 'Sistema/PaisEdicao',
-                      controller: 'PaisEditCtrl',
-                      controllerAs: 'itemPaisEdit',
-                      authenticate: true,
-                      params: {
-                          filtro: null
-                      },
-                      resolve: {
-                          deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                              return $ocLazyLoad.load([
-                                   {
-                                       name: 'PaisFactory',
-                                       files: [
-                                           'library/scripts/app/Sistema/Pais/Pais-factory.js'
-                                       ]
-                                   },
-                                  {
-                                      name: 'PaisController',
-                                      files: [
-                                          'library/scripts/app/Sistema/Pais/Pais-edit-controller.js',
-                                          'library/scripts/app/Sistema/Pais/Pais-controller.js'
-                                      ]
-                                  }, ]);
-
-                          }]
-                      }
-                  }).state('Posicao', {
+                    }]
+                }
+            })
+            .state('Posicao', {
                       url: '/Posicao',
                       templateUrl: 'Sistema/Posicao',
                       controller: 'PosicaoCtrl',
@@ -1379,7 +910,8 @@
 
                           }]
                       }
-                  }).state('PosicaoEdicao', {
+            })
+            .state('PosicaoEdicao', {
                       url: '/PosicaoEdicao/:id',
                       templateUrl: 'Sistema/PosicaoEdicao',
                       controller: 'PosicaoEditCtrl',
@@ -1419,7 +951,8 @@
 
                           }]
                       }
-                  }).state('Loja', {
+            })
+            .state('Loja', {
                       url: '/Loja',
                       templateUrl: 'Sistema/Loja',
                       controller: 'LojaCtrl',
@@ -1499,47 +1032,8 @@
 
                           }]
                       }
-                  }).state('LojaEdicao', {
-                      url: '/LojaEdicao/:id',
-                      templateUrl: 'Sistema/LojaEdicao',
-                      controller: 'LojaEditCtrl',
-                      controllerAs: 'itemLojaEdit',
-                      authenticate: true,
-                      params: {
-                          filtro: null
-                      },
-                      resolve: {
-                          deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                              return $ocLazyLoad.load([
-                                   {
-                                       name: 'LojaFactory',
-                                       files: [
-                                           'library/scripts/app/Sistema/Loja/Loja-factory.js'
-                                       ]
-                                   },
-                                  {
-                                      name: 'LojaController',
-                                      files: [
-                                          'library/scripts/app/Sistema/Loja/Loja-edit-controller.js',
-                                          'library/scripts/app/Sistema/Loja/Loja-controller.js'
-                                      ]
-                                  }, {
-                                      name: 'ViagemFactory',
-                                      files: [
-                                          'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
-                                      ]
-                                  },
-                                    {
-                                        name: 'AtracaoFactory',
-                                        files: [
-                                            'library/scripts/app/Sistema/Atracao/Atracao-factory.js'
-                                        ]
-                                    },
-                              ]);
-
-                          }]
-                      }
-                  }).state('Refeicao', {
+            })
+           .state('Refeicao', {
                       url: '/Refeicao',
                       templateUrl: 'Sistema/Refeicao',
                       controller: 'RefeicaoCtrl',
@@ -1605,53 +1099,8 @@
 
                           }]
                       }
-                  }).state('RefeicaoEdicao', {
-                      url: '/RefeicaoEdicao/:id',
-                      templateUrl: 'Sistema/RefeicaoEdicao',
-                      controller: 'RefeicaoEditCtrl',
-                      controllerAs: 'itemRefeicaoEdit',
-                      authenticate: true,
-                      params: {
-                          filtro: null
-                      },
-                      resolve: {
-                          deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                              return $ocLazyLoad.load([
-                                   {
-                                       name: 'RefeicaoFactory',
-                                       files: [
-                                           'library/scripts/app/Sistema/Refeicao/Refeicao-factory.js'
-                                       ]
-                                   },
-                                  {
-                                      name: 'RefeicaoController',
-                                      files: [
-                                          'library/scripts/app/Sistema/Refeicao/Refeicao-edit-controller.js',
-                                          'library/scripts/app/Sistema/Refeicao/Refeicao-controller.js'
-                                      ]
-                                  }, {
-                                      name: 'CidadeFactory',
-                                      files: [
-                                          'library/scripts/app/Sistema/Cidade/Cidade-factory.js'
-                                      ]
-                                  },
-                                    {
-                                        name: 'ViagemFactory',
-                                        files: [
-                                            'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
-                                        ]
-                                    },
-                                    {
-                                        name: 'AtracaoFactory',
-                                        files: [
-                                            'library/scripts/app/Sistema/Atracao/Atracao-factory.js'
-                                        ]
-                                    },
-                              ]);
-
-                          }]
-                      }
-                  }).state('RequisicaoAmizade', {
+           })
+           .state('RequisicaoAmizade', {
                       url: '/RequisicaoAmizade',
                       templateUrl: 'Sistema/RequisicaoAmizade',
                       controller: 'RequisicaoAmizadeCtrl',
@@ -1691,7 +1140,8 @@
 
                           }]
                       }
-                  }).state('RequisicaoAmizadeEdicao', {
+           })
+            .state('RequisicaoAmizadeEdicao', {
                       url: '/RequisicaoAmizadeEdicao/:id',
                       templateUrl: 'Sistema/RequisicaoAmizadeEdicao',
                       controller: 'RequisicaoAmizadeEditCtrl',
@@ -1731,7 +1181,8 @@
 
                           }]
                       }
-                  }).state('Sugestao', {
+            })
+            .state('Sugestao', {
                       url: '/Sugestao',
                       templateUrl: 'Sistema/Sugestao',
                       controller: 'SugestaoCtrl',
@@ -1777,7 +1228,8 @@
 
                           }]
                       }
-                  }).state('SugestaoEdicao', {
+            })
+            .state('SugestaoEdicao', {
                       url: '/SugestaoEdicao/:id',
                       templateUrl: 'Sistema/SugestaoEdicao',
                       controller: 'SugestaoEditCtrl',
@@ -1823,7 +1275,8 @@
 
                           }]
                       }
-                  }).state('Viagem', {
+            })
+            .state('Viagem', {
                       url: '/Viagem',
                       templateUrl: 'Sistema/Viagem',
                       controller: 'ViagemCtrl',
@@ -1857,7 +1310,8 @@
 
                           }]
                       }
-                  }).state('ViagemEdicao', {
+            })
+            .state('ViagemEdicao', {
                       url: '/ViagemEdicao/:id',
                       templateUrl: 'Sistema/ViagemEdicao',
                       controller: 'ViagemEditCtrl',
@@ -1891,7 +1345,8 @@
 
                           }]
                       }
-                  }).state('ViagemAerea', {
+            })
+            .state('ViagemAerea', {
                       url: '/ViagemAerea',
                       templateUrl: 'Sistema/ViagemAerea',
                       controller: 'ViagemAereaCtrl',
@@ -1945,41 +1400,8 @@
 
                           }]
                       }
-                  }).state('ViagemAereaEdicao', {
-                      url: '/ViagemAereaEdicao/:id',
-                      templateUrl: 'Sistema/ViagemAereaEdicao',
-                      controller: 'ViagemAereaEditCtrl',
-                      controllerAs: 'itemViagemAereaEdit',
-                      authenticate: true,
-                      params: {
-                          filtro: null
-                      },
-                      resolve: {
-                          deps: ['$ocLazyLoad', function ($ocLazyLoad) {
-                              return $ocLazyLoad.load([
-                                   {
-                                       name: 'ViagemAereaFactory',
-                                       files: [
-                                           'library/scripts/app/Sistema/ViagemAerea/ViagemAerea-factory.js'
-                                       ]
-                                   },
-                                  {
-                                      name: 'ViagemAereaController',
-                                      files: [
-                                          'library/scripts/app/Sistema/ViagemAerea/ViagemAerea-edit-controller.js',
-                                          'library/scripts/app/Sistema/ViagemAerea/ViagemAerea-controller.js'
-                                      ]
-                                  }, {
-                                      name: 'ViagemFactory',
-                                      files: [
-                                          'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
-                                      ]
-                                  },
-                              ]);
+            })
 
-                          }]
-                      }
-                  })
         ;
     }
 }());

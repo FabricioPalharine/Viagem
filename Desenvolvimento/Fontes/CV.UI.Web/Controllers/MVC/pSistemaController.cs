@@ -27,5 +27,15 @@ namespace CV.UI.Web.Controllers.MVC
         {
             return PartialView();
         }
+
+        public ActionResult PedidoCompra()
+        {
+            return PartialView();
+        }
+
+        public ActionResult PedidoCompraEdicao()
+        {
+            return PartialView();
+        }
     }
 }

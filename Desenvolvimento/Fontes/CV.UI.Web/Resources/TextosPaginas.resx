@@ -130,7 +130,7 @@
     <value>Amigo</value>
   </data>
   <data name="Home_AporteDinheiro" xml:space="preserve">
-    <value>Aporte Dinheiro</value>
+    <value>Compra Moeda Estrangeira</value>
   </data>
   <data name="Home_Atracao" xml:space="preserve">
     <value>Atração</value>
@@ -1388,5 +1388,32 @@
   </data>
   <data name="ListaCompra_Ignorado" xml:space="preserve">
     <value>Ignorado</value>
+  </data>
+  <data name="ListaCompra_Requisitante" xml:space="preserve">
+    <value>Requisitante</value>
+  </data>
+  <data name="Home_PedidoCompra" xml:space="preserve">
+    <value>Pedido de Compra</value>
+  </data>
+  <data name="ListaCompra_PedirPara" xml:space="preserve">
+    <value>Pedir Para</value>
+  </data>
+  <data name="PedidoCompra_Manutencao" xml:space="preserve">
+    <value>Pedido de Compra - Manutenção</value>
+  </data>
+  <data name="AporteDinheiro_IdentificadorGasto" xml:space="preserve">
+    <value>Gasto</value>
+  </data>
+  <data name="AporteDinheiro_BaixaMoeda" xml:space="preserve">
+    <value>Baixar Moeda</value>
+  </data>
+  <data name="AporteDinheiro_MoedaBaixa" xml:space="preserve">
+    <value>Moeda Baixada</value>
+  </data>
+  <data name="AporteDinheiro_ValorBaixa" xml:space="preserve">
+    <value>Valor Baixado</value>
+  </data>
+  <data name="Sugestao_CodigoPlace" xml:space="preserve">
+    <value>Código Place</value>
   </data>
 </root>
