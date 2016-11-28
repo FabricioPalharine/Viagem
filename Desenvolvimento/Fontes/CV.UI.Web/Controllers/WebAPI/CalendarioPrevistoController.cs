@@ -23,13 +23,8 @@ namespace CV.UI.Web.Controllers.WebAPI
             ResultadoConsultaTipo<CalendarioPrevisto> resultado = new ResultadoConsultaTipo<CalendarioPrevisto>();
             ViagemBusiness biz = new ViagemBusiness();
            
-            List<CalendarioPrevisto> _itens = biz.ListarCalendarioPrevisto().ToList();
-resultado.TotalRegistros = _itens.Count();
-            if (json.SortField != null && json.SortField.Any())
-                _itens = _itens.AsQueryable().OrderByField<CalendarioPrevisto>(json.SortField, json.SortOrder).ToList();
+            List<CalendarioPrevisto> _itens = biz.ListarCalendarioPrevisto(token.IdentificadorViagem).ToList();
 
-            if (json.Index.HasValue && json.Count.HasValue)
-                _itens = _itens.Skip(json.Index.Value).Take(json.Count.Value).ToList();
             resultado.Lista = _itens;
 
             return resultado;
@@ -46,7 +41,9 @@ resultado.TotalRegistros = _itens.Count();
         public ResultadoOperacao Post([FromBody] CalendarioPrevisto itemCalendarioPrevisto)
         {
             ViagemBusiness biz = new ViagemBusiness();
-                      biz.SalvarCalendarioPrevisto(itemCalendarioPrevisto);
+            itemCalendarioPrevisto.DataAtualizacao = DateTime.Now;
+            itemCalendarioPrevisto.IdentificadorViagem = token.IdentificadorViagem;
+            biz.SalvarCalendarioPrevisto(itemCalendarioPrevisto);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
@@ -54,12 +51,14 @@ resultado.TotalRegistros = _itens.Count();
                 itemResultado.IdentificadorRegistro = itemCalendarioPrevisto.Identificador;
             return itemResultado;
         }
+
         [Authorize]
         public ResultadoOperacao Delete(int id)
         {
             ViagemBusiness biz = new ViagemBusiness();
             CalendarioPrevisto itemCalendarioPrevisto = biz.SelecionarCalendarioPrevisto(id);
-            biz.ExcluirCalendarioPrevisto(itemCalendarioPrevisto);
+            itemCalendarioPrevisto.DataExclusao = DateTime.Now;
+            biz.SalvarCalendarioPrevisto(itemCalendarioPrevisto);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();

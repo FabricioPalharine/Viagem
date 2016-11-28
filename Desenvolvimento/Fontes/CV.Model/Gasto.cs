@@ -88,6 +88,8 @@ private void ValidarDescricao(Microsoft.Practices.EnterpriseLibrary.Validation.V
 			public IList<GastoDividido> Usuarios { get; set; }
 
 			public IList<ReabastecimentoGasto> Reabastecimentos { get; set; }
+
+			public Cidade ItemCidade { get; set; }
 		 public Gasto Clone()
 		{
 			 return (Gasto) this.MemberwiseClone();

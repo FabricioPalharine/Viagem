@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data.Entity;
+using System.Linq.Expressions;
 using System.Data.Entity.Infrastructure;
 using CV.Model;
 
@@ -484,7 +485,7 @@ namespace CV.Data
 			public Cidade SelecionarCidade (int? Identificador)
 			{
 			IQueryable<Cidade> query =	 Context.Cidades
-;
+.Include("ItemPais");
 					if (Identificador.HasValue)
 					query = query.Where(d=>d.Identificador == Identificador);
 					return query.FirstOrDefault();
@@ -2741,6 +2742,31 @@ namespace CV.Data
 				}
 			Context.SaveChanges();
 				itemGravar.Identificador = itemBase.Identificador;
+			}
+			public void SalvarCidadeGrupo_Lista (IList<CidadeGrupo> ListaSalvar)
+			{
+			foreach (CidadeGrupo itemGravar in ListaSalvar)
+			{
+				CidadeGrupo itemBase =  Context.CidadeGrupos
+				.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
+				if (itemBase == null)
+				{
+				itemBase = Context.CidadeGrupos.Create();
+ 			Context.Entry<CidadeGrupo>(itemBase).State = System.Data.Entity.EntityState.Added;
+				}
+ 			AtualizarPropriedades<CidadeGrupo>(itemBase, itemGravar);
+			}
+			Context.SaveChanges();
+			}
+			public IList<CidadeGrupo> ListarCidadeGrupo_IdentificadorCidadePai (int? IdentificadorCidadePai,int? IdentificadorViagem)
+			{
+			IQueryable<CidadeGrupo> query =	 Context.CidadeGrupos
+;
+					if (IdentificadorCidadePai.HasValue)
+					query = query.Where(d=>d.IdentificadorCidadePai == IdentificadorCidadePai);
+					if (IdentificadorViagem.HasValue)
+					query = query.Where(d=>d.IdentificadorViagem == IdentificadorViagem);
+				return query.ToList();
 			}
 	}
 

@@ -52,8 +52,6 @@ private void ValidarNome(Microsoft.Practices.EnterpriseLibrary.Validation.Valida
       results.AddResult(result);
   }
 }
-
-			public IList<Cidade> Cidades { get; set; }
 		 public Pais Clone()
 		{
 			 return (Pais) this.MemberwiseClone();

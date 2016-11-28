@@ -44,6 +44,7 @@ namespace CV.Data.Configuration
 			this.HasMany(i => i.ViagenAereas).WithRequired().HasForeignKey(d=>d.IdentificadorGasto);
 			this.HasMany(i => i.Usuarios).WithOptional().HasForeignKey(d=>d.IdentificadorGasto);
 			this.HasMany(i => i.Reabastecimentos).WithRequired().HasForeignKey(d=>d.IdentificadorGasto);
+			this.HasOptional(i => i.ItemCidade).WithMany().HasForeignKey(d=>d.IdentificadorCidade);
 		MapearCamposManualmente();
 		}
 	}

@@ -75,7 +75,7 @@
             Cidade_Estado: 'Estado',
             CidadeGrupo_IdentificadorViagem: 'Viagem',
             CidadeGrupo_IdentificadorCidadeFilha: 'Cidade Filha',
-            CidadeGrupo_IdentificadorCidadePai: 'Cidade Pai',
+            CidadeGrupo_IdentificadorCidadePai: 'Cidade Principal',
             Comentario_IdentificadorViagem: 'Viagem',
             Comentario_IdentificadorCidade: 'Cidade',
             Comentario_Latitude: 'Latitude',

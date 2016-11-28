@@ -93,6 +93,27 @@
               },
               isArray: true
           },
+          ListarCidadePai: {
+              method: 'GET',
+              params: {
+                  controller: 'ListarCidadePai'
+              },
+              isArray: true
+          },
+          ListarCidadeNaoAssociadasFilho: {
+              method: 'GET',
+              params: {
+                  controller: 'ListarCidadeNaoAssociadasFilho'
+              },
+              isArray: true
+          },
+          ListarCidadeNaoAssociadasPai: {
+              method: 'GET',
+              params: {
+                  controller: 'ListarCidadeNaoAssociadasPai'
+              },
+              isArray: true
+          },
       });
     return UserBase;
   }

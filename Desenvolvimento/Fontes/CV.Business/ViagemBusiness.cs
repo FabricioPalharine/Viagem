@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using CV.Business.Library;
 using CV.Data;
 
@@ -3382,6 +3383,41 @@ using(					ViagemRepository data = new ViagemRepository())
 					serviceResult.Add(resultado);
 				 }
 				 }
+			}
+			public void SalvarCidadeGrupo_Lista (List<CidadeGrupo> itensGravar)
+			{
+				 LimparValidacao();
+				 foreach(CidadeGrupo itemGravar in itensGravar)
+					{
+					ValidateService(itemGravar);
+					ValidarRegrasNegocioCidadeGrupo(itemGravar);
+					}
+				 if (IsValid())
+				 {
+					using(ViagemRepository data = new ViagemRepository())
+				 {
+					data.SalvarCidadeGrupo_Lista(itensGravar);
+					Message msg = new Message();
+					msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_SalvarCidadeGrupo_Lista_OK") });
+					ServiceResult resultado = new ServiceResult();
+					resultado.Success = true;
+					resultado.Messages.Add(msg);
+					serviceResult.Add(resultado);
+				 }
+				 }
+			}
+			public IList<CidadeGrupo> ListarCidadeGrupo_IdentificadorCidadePai (int? IdentificadorCidadePai,int? IdentificadorViagem)
+			{
+				 LimparValidacao();
+IList<CidadeGrupo> RetornoAcao = new List<CidadeGrupo>();
+				if (IsValid())
+				{
+using(					ViagemRepository data = new ViagemRepository())
+				 {
+					RetornoAcao = data.ListarCidadeGrupo_IdentificadorCidadePai(IdentificadorCidadePai,IdentificadorViagem);
+				}
+			}
+				return RetornoAcao;
 			}
 	}
 

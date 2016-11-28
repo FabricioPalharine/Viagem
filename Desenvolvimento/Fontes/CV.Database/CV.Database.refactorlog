@@ -49,4 +49,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="DT_ATUALIZACAO" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="65c52ccc-2617-4267-a2e2-93ea4a50f196" ChangeDateTime="11/28/2016 15:28:14">
+    <Property Name="ElementName" Value="[dbo].[CalendarioPrevisto].[DT_CALENDARIO]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CalendarioPrevisto]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="DT_INICIO" />
+  </Operation>
 </Operations>

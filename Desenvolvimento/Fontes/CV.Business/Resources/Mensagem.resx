@@ -190,7 +190,7 @@
     <value>Exclusão de Cidade foi realizada com sucesso</value>
   </data>
   <data name="Viagem_SalvarCidadeGrupo_OK" xml:space="preserve">
-    <value>Gravação de CidadeGrupo foi realizada com sucesso</value>
+    <value>Gravação de Agrupamento de Cidades foi realizada com sucesso</value>
   </data>
   <data name="Viagem_ExcluirCidadeGrupo_OK" xml:space="preserve">
     <value>Exclusão de CidadeGrupo foi realizada com sucesso</value>
@@ -590,5 +590,20 @@
   </data>
   <data name="AporteDinheiro_ValorGasto" xml:space="preserve">
     <value>O campo Valor Baixa é obrigatório.</value>
+  </data>
+  <data name="Viagem_SalvarCidadeGrupo_Lista_OK" xml:space="preserve">
+    <value>Gravação de CidadeGrupo foi realizada com sucesso</value>
+  </data>
+  <data name="Viagem_ExcluirCidadeGrupo_Lista_OK" xml:space="preserve">
+    <value>Exclusão de Agrupamento de Cidades foi realizada com sucesso</value>
+  </data>
+  <data name="CidadeGrupo_CidadeFilhaAssociada" xml:space="preserve">
+    <value>Deve ser selecionada ao menos uma cidade como pertencente ao grupo</value>
+  </data>
+  <data name="CidadeGrupo_CidadePai" xml:space="preserve">
+    <value>O campo Cidade Principal é obrigatório</value>
+  </data>
+  <data name="CidadeGrupo_CidadePaiUtilizada" xml:space="preserve">
+    <value>A cidade principal já está associada a outro agrupamento de cidades</value>
   </data>
 </root>

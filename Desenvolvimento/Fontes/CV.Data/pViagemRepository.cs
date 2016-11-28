@@ -13,6 +13,16 @@ namespace CV.Data
     {
         #region Save
 
+        public void ExcluirCidadeGrupo_Lista(List<CidadeGrupo> ListaExcluir)
+        {
+            foreach (var itemGravar in ListaExcluir)
+            {
+                CidadeGrupo itemExcluir = Context.CidadeGrupos
+            .Where(f => f.Identificador == itemGravar.Identificador).FirstOrDefault();
+                Context.Entry<CidadeGrupo>(itemExcluir).State = EntityState.Deleted;
+            }
+            Context.SaveChanges();
+        }
 
         public void SalvarGastoCompra_Completo(GastoCompra itemGravar)
         {
@@ -271,7 +281,7 @@ namespace CV.Data
                     itemBase.Avaliacoes.Add(itemBaseAvaliacaoAluguel);
                 }
                 AtualizarPropriedades<AvaliacaoAluguel>(itemBaseAvaliacaoAluguel, itemAvaliacaoAluguel);
-            }           
+            }
             CarroEvento itemCarroEventoDevolucao = itemGravar.ItemCarroEventoDevolucao;
             CarroEvento itemBaseCarroEventoDevolucao = null;
             if (itemCarroEventoDevolucao != null)
@@ -654,7 +664,7 @@ namespace CV.Data
 
         public List<Cidade> CarregarCidadeViagemAerea(int? IdentificadorViagem)
         {
-            IQueryable<Cidade> query = this.Context.ViagemAereaAeroportos.Where(d => d.ItemViagemAerea.IdentificadorViagem == IdentificadorViagem).Where(d=>d.TipoPonto != (int) enumTipoParada.Escala).Select(d => d.ItemCidade);
+            IQueryable<Cidade> query = this.Context.ViagemAereaAeroportos.Where(d => d.ItemViagemAerea.IdentificadorViagem == IdentificadorViagem).Where(d => d.TipoPonto != (int)enumTipoParada.Escala).Select(d => d.ItemCidade);
 
             var queryJoin = query.GroupJoin(this.Context.CidadeGrupos.Where(d => d.IdentificadorViagem == IdentificadorViagem),
                 d => d.Identificador,
@@ -679,9 +689,9 @@ namespace CV.Data
 
 
         }
-        
 
-         public List<Cidade> CarregarCidadeSugestao(int? IdentificadorViagem)
+
+        public List<Cidade> CarregarCidadeSugestao(int? IdentificadorViagem)
         {
             IQueryable<Cidade> query = this.Context.Sugestoes.Where(d => d.IdentificadorViagem == IdentificadorViagem).Select(d => d.ItemCidade);
 
@@ -847,7 +857,7 @@ namespace CV.Data
         }
 
         public List<Refeicao> ListarRefeicao(int IdentificadorViagem, DateTime? DataDe, DateTime? DataAte,
-             string Nome, string Tipo,  int? IdentificadorCidade, int? IdentificadorRefeicao)
+             string Nome, string Tipo, int? IdentificadorCidade, int? IdentificadorRefeicao)
         {
             IQueryable<Refeicao> query = this.Context.Refeicoes;
             //.Include("ItemAtracaoPai").Include("Fotos.ItemFoto")
@@ -862,7 +872,7 @@ namespace CV.Data
             {
                 DataAte = DataAte.GetValueOrDefault().AddDays(1);
                 query = query.Where(d => d.Data < DataAte);
-            }                       
+            }
 
             if (!string.IsNullOrWhiteSpace(Nome))
                 query = query.Where(d => d.Nome.Contains(Nome));
@@ -909,7 +919,7 @@ namespace CV.Data
             if (!string.IsNullOrWhiteSpace(Nome))
                 query = query.Where(d => d.Nome.Contains(Nome));
 
-           
+
             if (Situacao == 1)
                 query = query.Where(d => d.DataEntrada.HasValue && !d.DataSaidia.HasValue);
             else if (Situacao == 2)
@@ -961,7 +971,7 @@ namespace CV.Data
             query = query.Where(d => !d.DataExclusao.HasValue);
 
             if (IdentificadorCidadeOrigem.HasValue)
-                query = query.Where(d => d.Aeroportos.Where(e=> e.TipoPonto == (int)enumTipoParada.Origem).Where(e => e.IdentificadorCidade == IdentificadorCidadeOrigem || this.Context.CidadeGrupos.Where(f => f.IdentificadorCidadeFilha == e.IdentificadorCidade).Where(f => f.IdentificadorViagem == IdentificadorViagem).Where(f => f.IdentificadorCidadePai == IdentificadorCidadeOrigem).Any()).Any());
+                query = query.Where(d => d.Aeroportos.Where(e => e.TipoPonto == (int)enumTipoParada.Origem).Where(e => e.IdentificadorCidade == IdentificadorCidadeOrigem || this.Context.CidadeGrupos.Where(f => f.IdentificadorCidadeFilha == e.IdentificadorCidade).Where(f => f.IdentificadorViagem == IdentificadorViagem).Where(f => f.IdentificadorCidadePai == IdentificadorCidadeOrigem).Any()).Any());
             if (IdentificadorCidadeDestino.HasValue)
                 query = query.Where(d => d.Aeroportos.Where(e => e.TipoPonto == (int)enumTipoParada.Destino).Where(e => e.IdentificadorCidade == IdentificadorCidadeDestino || this.Context.CidadeGrupos.Where(f => f.IdentificadorCidadeFilha == e.IdentificadorCidade).Where(f => f.IdentificadorViagem == IdentificadorViagem).Where(f => f.IdentificadorCidadePai == IdentificadorCidadeDestino).Any()).Any());
 
@@ -972,15 +982,15 @@ namespace CV.Data
             return query.ToList();
         }
 
-        public List<Carro> ListarCarro(int IdentificadorViagem,string Locadora, string Descricao, string Modelo,
-             DateTime? DataRetiradaDe, DateTime? DataRetiradaAte,      DateTime? DataDevolucaoDe, DateTime? DataDevolucaoAte, int? IdentificadorCarro)
+        public List<Carro> ListarCarro(int IdentificadorViagem, string Locadora, string Descricao, string Modelo,
+             DateTime? DataRetiradaDe, DateTime? DataRetiradaAte, DateTime? DataDevolucaoDe, DateTime? DataDevolucaoAte, int? IdentificadorCarro)
         {
             IQueryable<Carro> query = this.Context.Carros.Include("ItemCarroEventoDevolucao").Include("ItemCarroEventoRetirada");
             //.Include("ItemAtracaoPai").Include("Fotos.ItemFoto")
             //    .Include("Gastos").Include("Gastos.ItemGasto").Include("Gastos.ItemGasto.ItemUsuario")
             //    .Include("Avaliacoes");
             if (IdentificadorCarro.HasValue)
-                query = query.Where(d => d.Identificador == IdentificadorCarro );
+                query = query.Where(d => d.Identificador == IdentificadorCarro);
             query = query.Where(d => d.IdentificadorViagem == IdentificadorViagem);
             query = query.Where(d => !d.DataExclusao.HasValue);
             if (!string.IsNullOrEmpty(Locadora))
@@ -1023,7 +1033,7 @@ namespace CV.Data
                 query = query.Where(d => d.Identificador == IdentificadorLoja);
             query = query.Where(d => d.IdentificadorViagem == IdentificadorViagem);
             if (DataDe.HasValue)
-                query = query.Where(f=>f.Compras.Where( d => d.ItemGasto.Data >= DataDe).Any());
+                query = query.Where(f => f.Compras.Where(d => d.ItemGasto.Data >= DataDe).Any());
             if (DataAte.HasValue)
             {
                 DataAte = DataAte.GetValueOrDefault().AddDays(1);
@@ -1036,12 +1046,12 @@ namespace CV.Data
             query = query.Where(d => !d.DataExclusao.HasValue);
             if (IdentificadorCidade.HasValue)
                 query = query.Where(d => d.IdentificadorCidade == IdentificadorCidade || this.Context.CidadeGrupos.Where(e => e.IdentificadorCidadeFilha == d.IdentificadorCidade).Where(f => f.IdentificadorViagem == IdentificadorViagem).Where(e => e.IdentificadorCidadePai == IdentificadorCidade).Any());
-            query = query.OrderBy(d=>d.Nome);
+            query = query.OrderBy(d => d.Nome);
 
             return query.ToList();
         }
 
-        public List<ListaCompra> ListarListaCompra(int? IdentificadorUsuario, int? IdentificadorViagem, List<int?> Status , int? IdentificadorListaCompra)
+        public List<ListaCompra> ListarListaCompra(int? IdentificadorUsuario, int? IdentificadorViagem, List<int?> Status, int? IdentificadorListaCompra)
         {
             IQueryable<ListaCompra> query = this.Context.ListaCompras;
 
@@ -1054,6 +1064,15 @@ namespace CV.Data
             if (Status != null && Status.Any())
                 query = query.Where(d => Status.Contains(d.Status));
             return query.OrderBy(d => d.Marca).ThenBy(d => d.Descricao).ToList();
+        }
+
+        public List<CalendarioPrevisto> ListarCalendarioPrevisto( int? IdentificadorViagem)
+        {
+            IQueryable<CalendarioPrevisto> query = this.Context.CalendarioPrevistos;
+
+            query = query.Where(d => d.IdentificadorViagem == IdentificadorViagem);
+            query = query.Where(d => !d.DataExclusao.HasValue);
+            return query.ToList();
         }
 
         public List<Comentario> ListarComentario(int? IdentificadorUsuario, int? IdentificadorViagem, DateTime? DataDe, DateTime? DataAte, int? IdentificadorCidade, int? IdentificadorComentario)
@@ -1117,7 +1136,7 @@ namespace CV.Data
         public List<AporteDinheiro> ListarAporteDinheiro(int? IdentificadorUsuario, int? IdentificadorViagem, int? Moeda, DateTime? DataDe, DateTime? DataAte)
         {
             IQueryable<AporteDinheiro> query = this.Context.AporteDinheiros.Include("ItemGasto");
-            
+
             if (IdentificadorUsuario.HasValue)
                 query = query.Where(d => d.IdentificadorUsuario == IdentificadorUsuario);
             if (Moeda.HasValue)
@@ -1134,7 +1153,7 @@ namespace CV.Data
             return query.OrderByDescending(d => d.DataAporte).ToList();
         }
 
-        public List<Sugestao> ListarSugestao(int? IdentificadorUsuario, int? IdentificadorViagem, string Nome,string Tipo)
+        public List<Sugestao> ListarSugestao(int? IdentificadorUsuario, int? IdentificadorViagem, string Nome, string Tipo)
         {
             IQueryable<Sugestao> query = this.Context.Sugestoes;
 
@@ -1148,5 +1167,64 @@ namespace CV.Data
                 query = query.Where(d => d.Tipo.Contains(Tipo));
             return query.OrderBy(f => f.Local).ToList();
         }
+
+        public List<Cidade> ListarCidadePai(int? IdentificadorViagem)
+        {
+            IQueryable<CidadeGrupo> query = this.Context.CidadeGrupos.Where(d => d.IdentificadorViagem == IdentificadorViagem);
+            IQueryable<Cidade> queryCidade = this.Context.Cidades.Include("ItemPais")
+                .Where(d => query.Where(e => e.IdentificadorCidadePai == d.Identificador).Any())
+                .OrderBy(d => d.Nome);
+            return queryCidade.ToList();
+        }
+
+        public List<Cidade> ListarCidadeNaoAssociadasFilho(int? IdentificadorViagem)
+        {
+            var queryTodasCidades = ListarCidadesViagem(IdentificadorViagem);
+            return queryTodasCidades.Where(d => !this.Context.CidadeGrupos.Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.IdentificadorCidadeFilha == d.Identificador).Any())
+                  .OrderBy(d => d.Nome).ToList();
+        }
+
+        public List<Cidade> ListarCidadeNaoAssociadasPai(int? IdentificadorViagem,int? IdentificadorCidadePai)
+        {
+            int? IdentificadorCidade = IdentificadorCidadePai.GetValueOrDefault(0);
+            var queryTodasCidades = ListarCidadesViagem(IdentificadorViagem);
+            return queryTodasCidades.Where(d => !this.Context.CidadeGrupos.Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.IdentificadorCidadePai == d.Identificador).Any())
+                .Where(d => !this.Context.CidadeGrupos.Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e=>e.IdentificadorCidadePai != IdentificadorCidade).Where(e => e.IdentificadorCidadeFilha == d.Identificador).Any())
+                  .OrderBy(d => d.Nome).ToList();
+        }
+
+        public List<ManutencaoCidadeGrupo> ListarManutencaoCidadeGrupo(int? IdentificadorViagem, int? IdentificadorCidadePai)
+        {
+            IQueryable<CidadeGrupo> query = this.Context.CidadeGrupos.Where(d => d.IdentificadorCidadePai == IdentificadorCidadePai).Where(d => d.IdentificadorViagem == IdentificadorViagem);
+            return query.GroupBy(d => d.IdentificadorCidadePai)
+                .Select(d => new ManutencaoCidadeGrupo() { Edicao = true, IdentificadorCidade = d.Key, CidadesFilhas = d.Select(f => f.IdentificadorCidadeFilha) })
+                .ToList();
+        }
+
+        public List<CidadeGrupo> ListarCidadeGrupo(int? IdentificadorViagem, int? IdentificadorCidadePai)
+        {
+            IQueryable<CidadeGrupo> query = this.Context.CidadeGrupos.Where(d => d.IdentificadorCidadePai == IdentificadorCidadePai).Where(d => d.IdentificadorViagem == IdentificadorViagem);
+            return query.ToList();
+        }
+
+        private IQueryable<Cidade>  ListarCidadesViagem(int? IdentificadorViagem)
+        {
+            IQueryable<Cidade> query = this.Context.Atracoes.Where(d=>d.IdentificadorViagem == IdentificadorViagem).Where(d => d.IdentificadorCidade.HasValue).Select(d => d.ItemCidade);
+           // query = query.Union(this.Context.CalendarioPrevistos.Where(d => d.IdentificadorViagem == IdentificadorViagem).Where(d => d.IdentificadorCidade.HasValue).Select(d => d.ItemCidade));
+            query = query.Union(this.Context.CarroDeslocamentos.Where(d => d.ItemCarro.IdentificadorViagem == IdentificadorViagem).Where(d=>d.IdentificadorCarroEventoChegada.HasValue).Where(d => d.ItemCarroEventoChegada.IdentificadorCidade.HasValue).Select(d => d.ItemCarroEventoChegada.ItemCidade));
+            query = query.Union(this.Context.CarroDeslocamentos.Where(d => d.ItemCarro.IdentificadorViagem == IdentificadorViagem).Where(d => d.IdentificadorCarroEventoPartida.HasValue).Where(d => d.ItemCarroEventoPartida.IdentificadorCidade.HasValue).Select(d => d.ItemCarroEventoPartida.ItemCidade));
+            query = query.Union(this.Context.Carros.Where(d => d.IdentificadorViagem == IdentificadorViagem).Where(d => d.IdentificadorCarroEventoDevolucao.HasValue).Where(d => d.ItemCarroEventoDevolucao.IdentificadorCidade.HasValue).Select(d => d.ItemCarroEventoDevolucao.ItemCidade));
+            query = query.Union(this.Context.Carros.Where(d => d.IdentificadorViagem == IdentificadorViagem).Where(d => d.IdentificadorCarroEventoRetirada.HasValue).Where(d => d.ItemCarroEventoRetirada.IdentificadorCidade.HasValue).Select(d => d.ItemCarroEventoRetirada.ItemCidade));
+            query = query.Union(this.Context.Comentarios.Where(d => d.IdentificadorViagem == IdentificadorViagem).Where(d => d.IdentificadorCidade.HasValue).Select(d => d.ItemCidade));
+            query = query.Union(this.Context.Fotos.Where(d => d.IdentificadorViagem == IdentificadorViagem).Where(d => d.IdentificadorCidade.HasValue).Select(d => d.ItemCidade));
+            query = query.Union(this.Context.Gastos.Where(d => d.IdentificadorViagem == IdentificadorViagem).Where(d => d.IdentificadorCidade.HasValue).Select(d => d.ItemCidade));
+            query = query.Union(this.Context.Hoteis.Where(d => d.IdentificadorViagem == IdentificadorViagem).Where(d => d.IdentificadorCidade.HasValue).Select(d => d.ItemCidade));
+            query = query.Union(this.Context.Lojas.Where(d => d.IdentificadorViagem == IdentificadorViagem).Where(d => d.IdentificadorCidade.HasValue).Select(d => d.ItemCidade));
+            query = query.Union(this.Context.Reabastecimentos.Where(d => d.ItemCarro.IdentificadorViagem == IdentificadorViagem).Where(d => d.IdentificadorCidade.HasValue).Select(d => d.ItemCidade));
+            query = query.Union(this.Context.Refeicoes.Where(d => d.IdentificadorViagem == IdentificadorViagem).Where(d => d.IdentificadorCidade.HasValue).Select(d => d.ItemCidade));
+            query = query.Union(this.Context.Sugestoes.Where(d => d.IdentificadorViagem == IdentificadorViagem).Where(d => d.IdentificadorCidade.HasValue).Select(d => d.ItemCidade));
+            query = query.Union(this.Context.ViagemAereaAeroportos.Where(d => d.ItemViagemAerea.IdentificadorViagem == IdentificadorViagem).Where(d => d.IdentificadorCidade.HasValue).Select(d => d.ItemCidade));
+            return query.Distinct().OrderBy(d => d.Nome);
+        }
     }
-    }
+}

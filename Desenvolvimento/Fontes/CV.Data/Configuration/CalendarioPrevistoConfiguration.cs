@@ -20,9 +20,7 @@ namespace CV.Data.Configuration
 		this.HasKey(i => new {i.Identificador });
 			this.Property(i => i.Identificador).HasColumnName("ID_CALENDARIO_PREVISTO");
 			this.Property(i => i.IdentificadorViagem).HasColumnName("ID_VIAGEM");
-			this.Property(i => i.Data).HasColumnName("DT_CALENDARIO");
-			this.Property(i => i.Inicio).HasColumnName("HR_INICIO");
-			this.Property(i => i.Fim).HasColumnName("HR_FIM");
+			this.Property(i => i.DataInicio).HasColumnName("DT_INICIO");
 			this.Property(i => i.Nome).HasColumnName("NM_LOCAL");
 			this.Property(i => i.Latitude).HasColumnName("NR_LATITUDE").HasPrecision(12,8);
 			this.Property(i => i.Longitude).HasColumnName("NR_LONGITUDE").HasPrecision(12,8);
@@ -32,6 +30,8 @@ namespace CV.Data.Configuration
 			this.Property(i => i.Prioridade).HasColumnName("CD_PRIORIDADE");
 			this.Property(i => i.DataAtualizacao).HasColumnName("DT_ATUALIZACAO");
 			this.Property(i => i.DataExclusao).HasColumnName("DT_EXCLUSAO");
+			this.Property(i => i.DataFim).HasColumnName("DT_FIM");
+			this.Property(i => i.AvisarHorario).HasColumnName("FL_AVISAR");
 		MapearCamposManualmente();
 		}
 	}

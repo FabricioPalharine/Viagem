@@ -149,6 +149,34 @@ resultado.TotalRegistros = _itens.Count();
             return lista;
         }
 
-        
+        [Authorize]
+        [ActionName("ListarCidadePai")]
+        [HttpGet]
+        public List<Cidade> ListarCidadePai()
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            var lista = biz.ListarCidadePai(token.IdentificadorViagem);
+            return lista;
+        }
+
+        [Authorize]
+        [ActionName("ListarCidadeNaoAssociadasFilho")]
+        [HttpGet]
+        public List<Cidade> ListarCidadeNaoAssociadasFilho()
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            var lista = biz.ListarCidadeNaoAssociadasFilho(token.IdentificadorViagem);
+            return lista;
+        }
+
+        [Authorize]
+        [ActionName("ListarCidadeNaoAssociadasPai")]
+        [HttpGet]
+        public List<Cidade> ListarCidadeNaoAssociadasPai(int? id)
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            var lista = biz.ListarCidadeNaoAssociadasPai(token.IdentificadorViagem, id);
+            return lista;
+        }
     }
 }

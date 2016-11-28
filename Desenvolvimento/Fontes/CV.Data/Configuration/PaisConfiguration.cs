@@ -21,7 +21,6 @@ namespace CV.Data.Configuration
 			this.Property(i => i.Identificador).HasColumnName("ID_PAIS");
 			this.Property(i => i.Sigla).HasColumnName("SG_PAIS");
 			this.Property(i => i.Nome).HasColumnName("NM_PAIS");
-			this.HasMany(i => i.Cidades).WithRequired().HasForeignKey(d=>d.IdentificadorPais);
 		MapearCamposManualmente();
 		}
 	}

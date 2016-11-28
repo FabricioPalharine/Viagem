@@ -35,31 +35,33 @@ resultado.TotalRegistros = _itens.Count();
             return resultado;
         }
         [Authorize]
-        public CidadeGrupo Get(int id)
+        public ManutencaoCidadeGrupo Get(int id)
         {
             ViagemBusiness biz = new ViagemBusiness();
-            CidadeGrupo itemCidadeGrupo = biz.SelecionarCidadeGrupo(id);
+            ManutencaoCidadeGrupo itemCidadeGrupo = biz.ListarManutencaoCidadeGrupo(token.IdentificadorViagem, id).FirstOrDefault();
           
             return itemCidadeGrupo;
         }
         [Authorize]
-        public ResultadoOperacao Post([FromBody] CidadeGrupo itemCidadeGrupo)
+        public ResultadoOperacao Post([FromBody] ManutencaoCidadeGrupo itemCidadeGrupo)
         {
             ViagemBusiness biz = new ViagemBusiness();
-                      biz.SalvarCidadeGrupo(itemCidadeGrupo);
+            biz.SalvarCidadeGrupo(itemCidadeGrupo, token.IdentificadorViagem);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
             if (itemResultado.Sucesso)
-                itemResultado.IdentificadorRegistro = itemCidadeGrupo.Identificador;
+            {
+                itemResultado.ItemRegistro = biz.SelecionarCidade( itemCidadeGrupo.IdentificadorCidade);
+            }
             return itemResultado;
         }
         [Authorize]
         public ResultadoOperacao Delete(int id)
         {
             ViagemBusiness biz = new ViagemBusiness();
-            CidadeGrupo itemCidadeGrupo = biz.SelecionarCidadeGrupo(id);
-            biz.ExcluirCidadeGrupo(itemCidadeGrupo);
+            var ListaExcluir = biz.ListarCidadeGrupo(token.IdentificadorViagem, id).ToList();
+            biz.ExcluirCidadeGrupo_Lista(ListaExcluir);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();

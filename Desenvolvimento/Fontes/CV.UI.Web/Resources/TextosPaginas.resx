@@ -463,10 +463,10 @@
     <value>Viagem</value>
   </data>
   <data name="CidadeGrupo_IdentificadorCidadeFilha" xml:space="preserve">
-    <value>Cidade Filha</value>
+    <value>Cidades Grupo</value>
   </data>
   <data name="CidadeGrupo_IdentificadorCidadePai" xml:space="preserve">
-    <value>Cidade Pai</value>
+    <value>Cidade Principal</value>
   </data>
   <data name="Comentario_Manutencao" xml:space="preserve">
     <value>Manutenção</value>
@@ -1415,5 +1415,32 @@
   </data>
   <data name="Sugestao_CodigoPlace" xml:space="preserve">
     <value>Código Place</value>
+  </data>
+  <data name="CalendarioPrevisto_Dia" xml:space="preserve">
+    <value>Dia</value>
+  </data>
+  <data name="CalendarioPrevisto_Mes" xml:space="preserve">
+    <value>Mês</value>
+  </data>
+  <data name="CalendarioPrevisto_Semana" xml:space="preserve">
+    <value>Semana</value>
+  </data>
+  <data name="CalendarioPrevisto_DataInicio" xml:space="preserve">
+    <value>Data Início</value>
+  </data>
+  <data name="CalendarioPrevisto_DataFim" xml:space="preserve">
+    <value>Data Fim</value>
+  </data>
+  <data name="CalendarioPrevisto_AvisarHorario" xml:space="preserve">
+    <value>Avisar Horário</value>
+  </data>
+  <data name="CalendarioPrevisto_Alta" xml:space="preserve">
+    <value>Alta</value>
+  </data>
+  <data name="CalendarioPrevisto_Baixa" xml:space="preserve">
+    <value>Baixa</value>
+  </data>
+  <data name="CalendarioPrevisto_Media" xml:space="preserve">
+    <value>Média</value>
   </data>
 </root>

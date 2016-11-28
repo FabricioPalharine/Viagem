@@ -1026,4 +1026,13 @@
   <data name="Comentario_Data" xml:space="preserve">
     <value>O campo Data é obrigatório</value>
   </data>
+  <data name="CalendarioPrevisto_DataInicio" xml:space="preserve">
+    <value>O campo Data Início é obrigatório</value>
+  </data>
+  <data name="CalendarioPrevisto_AvisarHorario" xml:space="preserve">
+    <value>O campo Avisar Horário é obrigatório</value>
+  </data>
+  <data name="CalendarioPrevisto_DataFim" xml:space="preserve">
+    <value>O campo Data Fim é obrigatório</value>
+  </data>
 </root>

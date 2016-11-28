@@ -27,7 +27,7 @@
                 <div class="col-md-12">
                     <label>@TextosPaginas.ItemCompra_ListaCompra</label>
                     <select ng-model="itemItemCompraEdit.itemListaCompra" class="form-control" ng-change="itemItemCompraEdit.TrocarItemCompra()"
-                             ng-options="obj.name as (obj.Marca + ' - '  + obj.Descricao) for obj in itemItemCompraEdit.ListaItensCompra track by obj.Identificador">
+                             ng-options="(obj.Marca + ' - '  + obj.Descricao) for obj in itemItemCompraEdit.ListaItensCompra track by obj.Identificador">
                         <option value="">@TextosPaginas.Selecione</option>
                     </select>
                 </div>

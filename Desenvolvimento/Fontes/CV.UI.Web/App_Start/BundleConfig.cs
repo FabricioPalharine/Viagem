@@ -24,8 +24,8 @@ namespace CV.UI.Web
                         "~/library/Scripts/Componentes/VideoUploader.js",
                         "~/library/Scripts/Componentes/jszip.js",
                          "~/library/Scripts/Componentes/slick.js",
-                         "~/library/Scripts/Componentes/csswatch.js"
-
+                         "~/library/Scripts/Componentes/csswatch.js",
+                         "~/library/Scripts/Componentes/fullcalendar.js"
                         ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're

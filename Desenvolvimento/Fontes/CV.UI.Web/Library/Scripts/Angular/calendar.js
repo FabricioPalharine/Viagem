@@ -1,4 +1,4 @@
-/*
+﻿/*
 *  AngularJs Fullcalendar Wrapper for the JQuery FullCalendar
 *  API @ http://arshaw.com/fullcalendar/
 *
@@ -203,27 +203,27 @@ angular.module('ui.calendar', [])
             };
 
             this.getLocaleConfig = function (fullCalendarConfig) {
-                if (!fullCalendarConfig.lang || fullCalendarConfig.useNgLocale) {
-                    // Configure to use locale names by default
-                    var tValues = function (data) {
-                        // convert {0: "Jan", 1: "Feb", ...} to ["Jan", "Feb", ...]
-                        return (Object.keys(data) || []).reduce(
-                            function (rslt, el) {
-                                rslt.push(data[el]);
-                                return rslt;
-                            },
-                            []
-                        );
-                    };
+                //if (!fullCalendarConfig.lang || fullCalendarConfig.useNgLocale) {
+                //    // Configure to use locale names by default
+                //    var tValues = function (data) {
+                //        // convert {0: "Jan", 1: "Feb", ...} to ["Jan", "Feb", ...]
+                //        return (Object.keys(data) || []).reduce(
+                //            function (rslt, el) {
+                //                rslt.push(data[el]);
+                //                return rslt;
+                //            },
+                //            []
+                //        );
+                //    };
 
-                    var dtf = $locale.DATETIME_FORMATS;
-                    return {
-                        monthNames : tValues(dtf.MONTH),
-                        monthNamesShort : tValues(dtf.SHORTMONTH),
-                        dayNames : tValues(dtf.DAY),
-                        dayNamesShort : tValues(dtf.SHORTDAY)
-                    };
-                }
+                //    var dtf = $locale.DATETIME_FORMATS;
+                //    return {
+                //        monthNames : tValues(dtf.MONTH),
+                //        monthNamesShort : tValues(dtf.SHORTMONTH),
+                //        dayNames : tValues(dtf.DAY),
+                //        dayNamesShort : tValues(dtf.SHORTDAY)
+                //    };
+                //}
 
                 return {};
             };
@@ -363,3 +363,5 @@ angular.module('ui.calendar', [])
         }
     ]
 );
+
+

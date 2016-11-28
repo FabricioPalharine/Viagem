@@ -351,6 +351,70 @@ namespace CV.Business
 
         }
         #region Save
+
+        public void SalvarCidadeGrupo(ManutencaoCidadeGrupo itemManutencaoCidadeGrupo, int? IdentificadorViagem)
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+
+            if (!itemManutencaoCidadeGrupo.IdentificadorCidade.HasValue)
+                AdicionaErroBusiness("CidadeGrupo_CidadePai", "IdentificadorCidade");
+            if (itemManutencaoCidadeGrupo.CidadesFilhas == null || !itemManutencaoCidadeGrupo.CidadesFilhas.Any())
+                AdicionaErroBusiness("CidadeGrupo_CidadeFilhaAssociada", "CidadesFilhas");
+            if (!itemManutencaoCidadeGrupo.Edicao && IsValid())
+            {
+                if (biz.ListarCidadeGrupo_IdentificadorCidadePai(itemManutencaoCidadeGrupo.IdentificadorCidade, IdentificadorViagem).Any())
+                    AdicionaErroBusiness("CidadeGrupo_CidadePaiUtilizada", "IdentificadorCidade");
+            }
+            if (IsValid())
+            {
+                var CidadesAtuais = biz.ListarCidadeGrupo_IdentificadorCidadePai(itemManutencaoCidadeGrupo.IdentificadorCidade, IdentificadorViagem).ToList();
+                var CidadesExcluidas = new List<CidadeGrupo>();
+                var CidadesNovas = new List<CidadeGrupo>();
+                foreach (var itemCidade in CidadesAtuais.ToList())
+                {
+                    if (!itemManutencaoCidadeGrupo.CidadesFilhas.Contains(itemCidade.Identificador))
+                    {
+                        CidadesExcluidas.Add(itemCidade);
+                        CidadesAtuais.Remove(itemCidade);
+                    }
+                }
+                foreach (var identificadorCidade in itemManutencaoCidadeGrupo.CidadesFilhas)
+                {
+                    if (!CidadesAtuais.Where(d=>d.IdentificadorCidadeFilha == identificadorCidade).Any())
+                    {
+                        var itemCidadeGrupo = new CidadeGrupo() { DataAtualizacao = DateTime.Now, IdentificadorCidadeFilha = identificadorCidade, IdentificadorCidadePai = itemManutencaoCidadeGrupo.IdentificadorCidade, IdentificadorViagem = IdentificadorViagem };
+                        CidadesNovas.Add(itemCidadeGrupo);
+                    }
+                }
+                biz.ExcluirCidadeGrupo_Lista(CidadesExcluidas);
+                SalvarCidadeGrupo_Lista(CidadesNovas);
+
+            }
+        }
+
+        public void ExcluirCidadeGrupo_Lista(List<CidadeGrupo> ListaGrupos)
+        {
+            LimparValidacao();
+            foreach (var itemGravar in ListaGrupos)
+            {
+                ValidateService(itemGravar);
+                ValidarRegrasExclusaoCidadeGrupo(itemGravar);
+            }
+            if (IsValid())
+            {
+                using (ViagemRepository data = new ViagemRepository())
+                {
+                    data.ExcluirCidadeGrupo_Lista(ListaGrupos);
+                    Message msg = new Message();
+                    msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_ExcluirCidadeGrupo_Lista_OK") });
+                    ServiceResult resultado = new ServiceResult();
+                    resultado.Success = true;
+                    resultado.Messages.Add(msg);
+                    serviceResult.Add(resultado);
+                }
+            }
+        }
+
         public void SalvarAporteDinheiroCompleto(AporteDinheiro itemGravar)
         {
             LimparValidacao();
@@ -1308,7 +1372,7 @@ namespace CV.Business
                 return repositorio.CarregarCidadeLoja(IdentificadorViagem);
             }
         }
-        
+
         public List<Cidade> CarregarCidadeComentario(int? IdentificadorViagem)
         {
             using (ViagemRepository repositorio = new ViagemRepository())
@@ -1482,7 +1546,7 @@ namespace CV.Business
         {
             using (ViagemRepository repositorio = new ViagemRepository())
             {
-                return repositorio.ListarListaCompra(IdentificadorUsuario, IdentificadorViagem,Status, Destinatario, IdentificadorUsuarioPedido, Marca, Descricao);
+                return repositorio.ListarListaCompra(IdentificadorUsuario, IdentificadorViagem, Status, Destinatario, IdentificadorUsuarioPedido, Marca, Descricao);
             }
         }
 
@@ -1498,8 +1562,57 @@ namespace CV.Business
         {
             using (ViagemRepository repositorio = new ViagemRepository())
             {
-                return repositorio.ListarSugestao(IdentificadorUsuario, IdentificadorViagem, Nome,Tipo);
+                return repositorio.ListarSugestao(IdentificadorUsuario, IdentificadorViagem, Nome, Tipo);
             }
         }
+
+        public List<Cidade> ListarCidadePai(int? IdentificadorViagem)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarCidadePai(IdentificadorViagem);
+            }
         }
+
+        public List<Cidade> ListarCidadeNaoAssociadasFilho(int? IdentificadorViagem)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarCidadeNaoAssociadasFilho(IdentificadorViagem);
+            }
+        }
+
+        public List<Cidade> ListarCidadeNaoAssociadasPai(int? IdentificadorViagem, int? IdentificadorCidadePai)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarCidadeNaoAssociadasPai(IdentificadorViagem, IdentificadorCidadePai);
+            }
+        }
+
+        public List<ManutencaoCidadeGrupo> ListarManutencaoCidadeGrupo(int? IdentificadorViagem, int? IdentificadorCidadePai)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarManutencaoCidadeGrupo(IdentificadorViagem, IdentificadorCidadePai);
+            }
+        }
+
+        public List<CidadeGrupo> ListarCidadeGrupo(int? IdentificadorViagem, int? IdentificadorCidadePai)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarCidadeGrupo(IdentificadorViagem, IdentificadorCidadePai);
+            }
+
+        }
+
+        public List<CalendarioPrevisto> ListarCalendarioPrevisto(int? IdentificadorViagem)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarCalendarioPrevisto(IdentificadorViagem);
+            }
+        }
+    }
 }

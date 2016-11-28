@@ -1,19 +1,10 @@
-<section class="content-header">
-    <h1>
-        @TextosPaginas.Home_CalendarioPrevisto
-        <small>@TextosPaginas.CalendarioPrevisto_Manutencao</small>
 
-    </h1>
-    <ol class="breadcrumb">
-        
-        <li>@TextosPaginas.Home_Menu</li>
-        <li><a ui-sref="CalendarioPrevisto({filtro:itemCalendarioPrevistoEdit.filtroConsulta})">@TextosPaginas.Home_CalendarioPrevisto</a></li>
-        <li class="active">@TextosPaginas.CalendarioPrevisto_Manutencao</li>
-    </ol>
 
-</section>
+<div class="modal-header">
+    <span>@TextosPaginas.CalendarioPrevisto_Manutencao</span>
+</div>
 <!-- Main content -->
-<section class="content" ng-init="itemCalendarioPrevistoEdit.load()">
+<div class="modal-body" ng-init="itemCalendarioPrevistoEdit.load()">
     <!-- Default box -->
     <!-- general form elements -->
     <div class="box box-primary">
@@ -21,99 +12,136 @@
             <i class="fa fa-refresh fa-spin text-gray"></i>
         </div>
 
-        <form role="form" ng-submit="itemCalendarioPrevistoEdit.save(form)" name="form" novalidate>
+        <form role="form" name="form" novalidate>
             <div class="box-body">
 
-                 <div class="row" ng-show="itemCalendarioPrevistoEdit.messages.length > 0">
-                     <div class="col-md-12">
-                         <div class="callout callout-danger">
-                             <h4>@TextosPaginas.Geral_ValidarErros</h4>
-                             <ul>
-                                 <li ng-repeat="erro in itemCalendarioPrevistoEdit.messages">
-                                     <span ng-bind="erro.Mensagem"></span>
-                                 </li>
-                             </ul>
+                <div class="row" ng-show="itemCalendarioPrevistoEdit.messages.length > 0">
+                    <div class="col-md-12">
+                        <div class="callout callout-danger">
+                            <h4>@TextosPaginas.Geral_ValidarErros</h4>
+                            <ul>
+                                <li ng-repeat="erro in itemCalendarioPrevistoEdit.messages">
+                                    <span ng-bind="erro.Mensagem"></span>
+                                </li>
+                            </ul>
 
-                         </div>
-                     </div>
+                        </div>
+                    </div>
 
                 </div>
                 <div class="row">
-					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemCalendarioPrevistoEdit.CamposInvalidos.IdentificadorViagem}">
-					<label>@TextosPaginas.CalendarioPrevisto_IdentificadorViagem</label>
-					<select ng-model="itemCalendarioPrevistoEdit.itemViagem" class="form-control" ng-options="obj.Nome for obj in itemCalendarioPrevistoEdit.ListaViagem track by obj.Identificador">
-						<option value="">@TextosPaginas.Selecione</option>
-					</select>
-					</div>
-					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemCalendarioPrevistoEdit.CamposInvalidos.Data}">
-					<label>@TextosPaginas.CalendarioPrevisto_Data</label>
-<div class="dropdown">
-                                <a class="dropdown-toggle"  role="button" data-toggle="dropdown">
-                                    <div class="input-group">
-                                        <input date-input ng-model="itemCalendarioPrevistoEdit.itemCalendarioPrevisto.Data" class="form-control"  input-mask="{mask: 'd/m/y'}" 
-                                               datapattern="dd/MM/yyyy">
-                                        <span class="input-group-addon">
-                                            <i class="glyphicon glyphicon-calendar"></i>
-                                        </span>
-                                    </div>
-                                </a>
-                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                    <datetimepicker data-ng-model="itemCalendarioPrevistoEdit.itemCalendarioPrevisto.Data"                                                   
-                                                    data-datetimepicker-config="{  minView:'day' , langCode:itemCalendarioPrevistoEdit.Idioma()  }" />
-                                </ul>
-                            </div>
-					</div>
-					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemCalendarioPrevistoEdit.CamposInvalidos.Inicio}">
-					<label>@TextosPaginas.CalendarioPrevisto_Inicio</label>
-					<input type="text" class="form-control" ng-model="itemCalendarioPrevistoEdit.itemCalendarioPrevisto.Inicio" maxlength="5"  empty-to-null >
-					</div>
-					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemCalendarioPrevistoEdit.CamposInvalidos.Fim}">
-					<label>@TextosPaginas.CalendarioPrevisto_Fim</label>
-					<input type="text" class="form-control" ng-model="itemCalendarioPrevistoEdit.itemCalendarioPrevisto.Fim" maxlength="5"  empty-to-null >
-					</div>
-					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemCalendarioPrevistoEdit.CamposInvalidos.Nome}">
-					<label>@TextosPaginas.CalendarioPrevisto_Nome</label>
-					<input type="text" class="form-control" ng-model="itemCalendarioPrevistoEdit.itemCalendarioPrevisto.Nome" maxlength="100"  empty-to-null >
-					</div>
-					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemCalendarioPrevistoEdit.CamposInvalidos.Latitude}">
-					<label>@TextosPaginas.CalendarioPrevisto_Latitude</label>
-					<input type="text" class="form-control" ng-model="itemCalendarioPrevistoEdit.itemCalendarioPrevisto.Latitude"   empty-to-null decimal-input="{digits:8, integerDigits:4}">
-					</div>
-					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemCalendarioPrevistoEdit.CamposInvalidos.Longitude}">
-					<label>@TextosPaginas.CalendarioPrevisto_Longitude</label>
-					<input type="text" class="form-control" ng-model="itemCalendarioPrevistoEdit.itemCalendarioPrevisto.Longitude"   empty-to-null decimal-input="{digits:8, integerDigits:4}">
-					</div>
-					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemCalendarioPrevistoEdit.CamposInvalidos.CodigoPlace}">
-					<label>@TextosPaginas.CalendarioPrevisto_CodigoPlace</label>
-					<input type="text" class="form-control" ng-model="itemCalendarioPrevistoEdit.itemCalendarioPrevisto.CodigoPlace" maxlength="50"  empty-to-null >
-					</div>
-					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemCalendarioPrevistoEdit.CamposInvalidos.Tipo}">
-					<label>@TextosPaginas.CalendarioPrevisto_Tipo</label>
-					<input type="text" class="form-control" ng-model="itemCalendarioPrevistoEdit.itemCalendarioPrevisto.Tipo" maxlength="50"  empty-to-null >
-					</div>
-					<div class="form-group col-md-6"  ng-class="{ 'has-error':itemCalendarioPrevistoEdit.CamposInvalidos.Prioridade}">
-					<label>@TextosPaginas.CalendarioPrevisto_Prioridade</label>
-					<input type="text" class="form-control" ng-model="itemCalendarioPrevistoEdit.itemCalendarioPrevisto.Prioridade" maxlength="7"  empty-to-null integer-input >
-					</div>
-                                   
+                    <div class="form-group col-md-6" ng-class="{ 'has-error':itemCalendarioPrevistoEdit.CamposInvalidos.Nome}">
+                        <label>@TextosPaginas.CalendarioPrevisto_Nome</label>
+                        <input type="text" class="form-control" ng-model="itemCalendarioPrevistoEdit.itemCalendarioPrevisto.Nome" maxlength="100" empty-to-null ng-if="(!itemCalendarioPrevistoEdit.itemCalendarioPrevisto.Latitude || !itemCalendarioPrevistoEdit.itemCalendarioPrevisto.Longitude) && !itemCalendarioPrevistoEdit.position.lat ">
+                        <input ng-if="(itemCalendarioPrevistoEdit.itemCalendarioPrevisto.Latitude && itemCalendarioPrevistoEdit.itemCalendarioPrevisto.Longitude) || itemCalendarioPrevistoEdit.position.lat" type="text" ng-model="itemCalendarioPrevistoEdit.itemCalendarioPrevisto.Nome" uib-typeahead="address.name for address in itemCalendarioPrevistoEdit.CarregarDadosGoogleApi($viewValue) " typeahead-loading="itemCalendarioPrevistoEdit.loadingLocations" class="form-control" typeahead-on-select="itemCalendarioPrevistoEdit.SelecionarPlacesGoogle($item, $model, $label)">
 
+                    </div>
+                    <div class="form-group col-md-6 " ng-class="{ 'has-error':itemCalendarioPrevistoEdit.CamposInvalidos.Tipo}">
+                        <label>@TextosPaginas.Sugestao_Tipo</label>
+                        <input type="text" class="form-control" ng-model="itemCalendarioPrevistoEdit.itemCalendarioPrevisto.Tipo" maxlength="50" empty-to-null>
+                    </div>
+                    <div class="col-xs-6">
+                        <label>@TextosPaginas.CalendarioPrevisto_DataInicio</label>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+                                <div class="input-group">
+                                    <input date-input ng-model="itemCalendarioPrevistoEdit.itemCalendarioPrevisto.DataInicio" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                           datapattern="dd/MM/yyyy">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker data-ng-model="itemCalendarioPrevistoEdit.itemCalendarioPrevisto.DataInicio"
+                                                data-datetimepicker-config="{  minView:'day' , langCode:itemCalendarioPrevistoEdit.Idioma()  }" />
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <label>&nbsp;</label>
+                        <input type="text" class="form-control" ng-model="itemCalendarioPrevistoEdit.itemCalendarioPrevisto.strHoraDataInicio" input-mask="{mask: 'h:s:s'}" empty-to-null>
+
+                    </div>
+
+                    <div class="col-xs-6">
+                        <label>@TextosPaginas.CalendarioPrevisto_DataFim</label>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+                                <div class="input-group">
+                                    <input date-input ng-model="itemCalendarioPrevistoEdit.itemCalendarioPrevisto.DataFim" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                           datapattern="dd/MM/yyyy">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker data-ng-model="itemCalendarioPrevistoEdit.itemCalendarioPrevisto.DataFim"
+                                                data-datetimepicker-config="{  minView:'day' , langCode:itemCalendarioPrevistoEdit.Idioma()  }" />
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <label>&nbsp;</label>
+                        <input type="text" class="form-control" ng-model="itemCalendarioPrevistoEdit.itemCalendarioPrevisto.strHoraDataFim" input-mask="{mask: 'h:s:s'}" empty-to-null>
+
+                    </div>
                 </div>
-             
-            </div><!-- /.box-body -->
-            <div class="box-footer">
-                <button type="button" class="btn btn-primary " title="@TextosPaginas.Voltar" ui-sref="CalendarioPrevisto({filtro:itemCalendarioPrevistoEdit.filtroConsulta})">
-                    <span class="fa fa-arrow-left" aria-hidden="true"></span>
-                </button>
-                <button type="submit" class="btn btn-primary  pull-right">
-                    <span class="fa fa-save" aria-hidden="true"></span> @TextosPaginas.Geral_Salvar
-                </button>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>@TextosPaginas.CalendarioPrevisto_Prioridade</label>
+                        <div class="form-inline">
 
-            </div>
+                            <label class="radio">
+                                <input type="radio" class="radio-inline" name="radSituacao" value="1" ng-model="itemCalendarioPrevistoEdit.itemCalendarioPrevisto.Prioridade" />
+
+                                <label style="padding-top:5px">
+
+                                    @TextosPaginas.CalendarioPrevisto_Baixa
+                                </label>
+                            </label>
+                            <label class="radio" style="margin-left:10px">
+                                <input type="radio" class="radio-inline" name="radSituacao" value="2" ng-model="itemCalendarioPrevistoEdit.itemCalendarioPrevisto.Prioridade" /><label>
+                                    @TextosPaginas.CalendarioPrevisto_Media
+                            </label>
+                        </label>
+                        <label class="radio" style="margin-left:10px">
+                            <input type="radio" class="radio-inline" name="radSituacao" value="3" ng-model="itemCalendarioPrevistoEdit.itemCalendarioPrevisto.Prioridade" />
+                            <label>
+                                @TextosPaginas.CalendarioPrevisto_Alta
+                                </label>
+                            </label>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3" >
+                        <label>@TextosPaginas.CalendarioPrevisto_AvisarHorario</label>
+                        <input type="checkbox" ng-model="itemCalendarioPrevistoEdit.itemCalendarioPrevisto.AvisarHorario"  class="checkbox">
+                    </div>
+                </div>
+            </div><!-- /.box-body -->
+
         </form>
     </div><!-- /.box -->
 
 
+</div><!-- /.content -->
 
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" ng-click="itemCalendarioPrevistoEdit.close()">
+        <span class="fa fa-close" aria-hidden="true">@TextosPaginas.Cancelar</span>
+    </button>
+    <button type="button" class="btn btn-primary" ng-click="itemCalendarioPrevistoEdit.excluir()">
+        <span class="fa fa-trash" aria-hidden="true">@TextosPaginas.Excluir</span>
+    </button>
+    <button type="button" class="btn btn-primary" ng-click="itemCalendarioPrevistoEdit.abrirMapa()">
+        <span class="fa fa-map-marker" aria-hidden="true">@TextosPaginas.Posicao</span>
+    </button>
+    <button type="button" class="btn btn-primary  pull-right" ng-click="itemCalendarioPrevistoEdit.save()">
+        <span class="fa fa-save" aria-hidden="true"></span> @TextosPaginas.Geral_Salvar
+    </button>
 
-
-</section><!-- /.content -->
+</div>

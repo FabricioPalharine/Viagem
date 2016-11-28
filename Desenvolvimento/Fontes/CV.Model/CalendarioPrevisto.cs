@@ -20,14 +20,8 @@ namespace CV.Model
 			[NotNullValidator(MessageTemplateResourceName="CalendarioPrevisto_IdentificadorViagem",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public int? IdentificadorViagem { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="CalendarioPrevisto_Data",MessageTemplateResourceType=typeof(MensagemModelo))]
-			public DateTime? Data { get; set; }
-
-			[StringLengthValidator(5,MessageTemplateResourceName="CalendarioPrevisto_Inicio_Tamanho",MessageTemplateResourceType=typeof(MensagemModelo))]
-			public string Inicio { get; set; }
-
-			[StringLengthValidator(5,MessageTemplateResourceName="CalendarioPrevisto_Fim_Tamanho",MessageTemplateResourceType=typeof(MensagemModelo))]
-			public string Fim { get; set; }
+			[NotNullValidator(MessageTemplateResourceName="CalendarioPrevisto_DataInicio",MessageTemplateResourceType=typeof(MensagemModelo))]
+			public DateTime? DataInicio { get; set; }
 
 			public string Nome { get; set; }
 			[SelfValidation]
@@ -51,12 +45,10 @@ private void ValidarNome(Microsoft.Practices.EnterpriseLibrary.Validation.Valida
 
 			public decimal? Longitude { get; set; }
 
-			[StringLengthValidator(50,MessageTemplateResourceName="CalendarioPrevisto_CodigoPlace_Tamanho",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public string CodigoPlace { get; set; }
 
 			public Viagem ItemViagem { get; set; }
 
-			[StringLengthValidator(50,MessageTemplateResourceName="CalendarioPrevisto_Tipo_Tamanho",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public string Tipo { get; set; }
 
 			[NotNullValidator(MessageTemplateResourceName="CalendarioPrevisto_Prioridade",MessageTemplateResourceType=typeof(MensagemModelo))]
@@ -65,6 +57,12 @@ private void ValidarNome(Microsoft.Practices.EnterpriseLibrary.Validation.Valida
 			public DateTime? DataAtualizacao { get; set; }
 
 			public DateTime? DataExclusao { get; set; }
+
+			[NotNullValidator(MessageTemplateResourceName="CalendarioPrevisto_DataFim",MessageTemplateResourceType=typeof(MensagemModelo))]
+			public DateTime? DataFim { get; set; }
+
+			[NotNullValidator(MessageTemplateResourceName="CalendarioPrevisto_AvisarHorario",MessageTemplateResourceType=typeof(MensagemModelo))]
+			public bool? AvisarHorario { get; set; }
 		 public CalendarioPrevisto Clone()
 		{
 			 return (CalendarioPrevisto) this.MemberwiseClone();

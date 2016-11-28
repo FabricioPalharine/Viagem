@@ -2,44 +2,59 @@
 	'use strict';
 	angular
 		.module('Sistema')
-		.controller('CalendarioPrevistoCtrl',['$uibModal', 'Error', '$timeout', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', '$window', 'i18nService','Viagem','CalendarioPrevisto', CalendarioPrevistoCtrl]);
+		.controller('CalendarioPrevistoCtrl', ['$uibModal', 'Error', '$timeout', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', '$window', 'i18nService', 'Viagem', 'CalendarioPrevisto', 'uiCalendarConfig','SignalR', CalendarioPrevistoCtrl]);
 
-	function CalendarioPrevistoCtrl($uibModal,  Error, $timeout, $state, $translate, $scope, Auth, $rootScope, $stateParams, $window, i18nService,Viagem,CalendarioPrevisto) {
+	function CalendarioPrevistoCtrl($uibModal, Error, $timeout, $state, $translate, $scope, Auth, $rootScope, $stateParams, $window, i18nService, Viagem, CalendarioPrevisto, uiCalendarConfig, SignalR) {
 		var vm = this;
-		vm.filtro = {  Index: 0, Count: 0 };
-		vm.filtroAtualizacao = {  Index: 0, Count: 0 };
 		vm.loading = false;
-		vm.showModal = false;
-		vm.modalAcao = function () {;
-			vm.showModal = true;
-		}
-		vm.modalDelete = {};
-		vm.PermiteInclusao = true;
-		vm.PermiteAlteracao = true;
-		vm.PermiteExclusao = true;
-		vm.ListaDados = [];
+		vm.filtroAtualizacao = {};
+		
 		vm.gridApi = null;
+		vm.ListaDados = [];
+		vm.ListaEventos = [vm.ListaDados]
 
 		vm.load = function () {
 			vm.loading = true;
-			vm.verificarPermissoes();
+			
+			vm.CarregarDadosWebApi();
 
-			var param = $stateParams;
-			if (param.filtro != null) {
-				vm.filtro = vm.filtroAtualizacao = param.filtro;
-				 vm.pagingOptions.fields = vm.filtroAtualizacao.SortField;
-				 vm.pagingOptions.directions = vm.filtroAtualizacao.SortOrder;
-				vm.pagingOptions.currentPage = (vm.filtroAtualizacao.Index / vm.pagingOptions.pageSize) + 1;
+			SignalR.AvisarAlertaAtualizacao = function (TipoAtualizacao, Identificador, Inclusao) {
+			    if (TipoAtualizacao == "CP") {
+			        CalendarioPrevisto.get({ id: Identificador }, function (data) {
+			            var itens = $.grep(vm.ListaDados, function (e) { return e.id == Identificador; });
+			            if (data.DataExclusao)
+			            {
+			                if (itens.length > 0) {
+			                    var Posicao = vm.ListaDados.indexOf(itens[0]);
+			                    vm.ListaDados.splice(Posicao, 1);
+			                }
+			            }
+			            else
+			            {
+			                if (itens.length == 0 && Inclusao) {
+			                    vm.ListaDados.push(vm.TransformarCalendario(data));
+			                }
+			                else if (itens.length > 0) {
+			                    var Posicao = vm.ListaDados.indexOf(itens[0]);
+			                    vm.ListaDados.splice(Posicao, 1, vm.TransformarCalendario(data));
+			                }
+			            }
+			        });
 
-			}
-			vm.CarregarDadosWebApi(vm.pagingOptions.pageSize, vm.pagingOptions.currentPage);
+			    }
+			};
 		};
+
 		vm.delete = function (itemForDelete, indexForDelete, callback) {
 			vm.loading = true;
 			CalendarioPrevisto.delete({ id: itemForDelete.Identificador }, function (data) {
-				callback(data);
-				if (data.Sucesso) {
-					vm.CarregarDadosWebApi(vm.pagingOptions.pageSize, vm.pagingOptions.currentPage);
+				
+			    if (data.Sucesso) {
+			        callback(data);
+			        var ItemExcluir = $.grep(vm.ListaDados, function (e) { return e.Identificador == itemForDelete.Identificador })[0];
+			        var Posicao = vm.ListaDados.indexOf(ItemExcluir);
+			        vm.ListaDados.splice(Posicao, 1);
+			        SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'CP', itemForDelete.Identificador, false);
 					Error.showError('success', $translate.instant("Sucesso"), data.Mensagens[0].Mensagem, true);
 				}
 				else {
@@ -57,52 +72,21 @@
 				vm.loading = false;
 			})
 		};
-
-        vm.actionModal = function (item, indexForDelete) {
-            $uibModal.open({
-                templateUrl: 'modal.html',
-                controller: ['$uibModalInstance', 'item', 'index', vm.ActionModalCtrl],
-                controllerAs: 'vmAction',
-                resolve: {
-                    item: function () { return item; },
-                    index: function () { return indexForDelete; }
-                }
-            });
-        };
-        vm.ActionModalCtrl = function ($uibModalInstance, item, index) {
-            var vmAction = this;
-            vmAction.item = item;
-            vmAction.indexForDelete = index;
-            // console.log(itens);
-            vmAction.close = function () {
-                $uibModalInstance.close();
-            }
-            vmAction.edit = function (idToEdit) {
-                $uibModalInstance.close();
-                $state.go('CalendarioPrevistoEdicao', { id: idToEdit, filtro: vm.filtroAtualizacao });
-            };
-
-            vmAction.askDelete = function (itemForDelete, indexForDelete) {
-                vm.askDelete(itemForDelete, indexForDelete);
-                $uibModalInstance.close();
-            };
-
-        }
-
-        vm.askDelete = function (itemForDelete, indexForDelete) {
+             
+        vm.askDelete = function (itemForDelete, callback) {
             // $uibModalInstance.close();
             $uibModal.open({
                 templateUrl: 'modalDelete.html',
-                controller: ['$uibModalInstance', 'item', 'index', vm.DeleteModalCtrl],
+                controller: ['$uibModalInstance', 'item', 'callback', vm.DeleteModalCtrl],
                 controllerAs: 'vmDelete',
                 resolve: {
                     item: function () { return itemForDelete; },
-                    index: function () { return indexForDelete; }
+                    callback: function () { return callback; }
                 }
             });
         };
 
-        vm.DeleteModalCtrl = function ($uibModalInstance, itemForDelete, indexForDelete) {
+        vm.DeleteModalCtrl = function ($uibModalInstance, itemForDelete, callback) {
             var vmDelete = this;
             vmDelete.itemForDelete = itemForDelete;
 
@@ -116,67 +100,73 @@
             };
 
             vmDelete.delete = function () {
-                vm.delete(vmDelete.itemForDelete, indexForDelete, function () {
+                vm.delete(vmDelete.itemForDelete, function () {
                     $uibModalInstance.close();
+                    callback();
                 });
             };
         };
 
-        $rootScope.$on('loggin', function (event) {
-            vm.verificarPermissoes();
-        });
+       
 
-        angular.element($window).bind('resize', function () {
-            var screenSizes = $.AdminLTE.options.screenSizes;
-            vm.gridOptions.columnDefs[0].visible = $(window).width() > (screenSizes.sm - 1);
-            vm.gridApi.grid.refresh();
-
-           
-        });
-
-
-		vm.verificarPermissoes = function () {
-			$(Auth.currentUser.access).each(function (i, item) {
-			});
-		};
-
-        vm.filtraDado = function () {
-
-            vm.filtroAtualizacao = jQuery.extend({}, vm.filtro);
-
-                  
-
-            vm.pagingOptions.currentPage = 1;
-            vm.gridApi.grid.options.paginationCurrentPage = 1;
-            vm.pagingOptions.fields = [];
-            vm.pagingOptions.directions = [];
-            angular.forEach(vm.gridApi.grid.columns, function (c) {
-                c.sort = {};
-            });
-
-            vm.CarregarDadosWebApi(vm.pagingOptions.pageSize, vm.pagingOptions.currentPage);
-        };
-
-        vm.clean = function () {
-            vm.filtro = { Nome: '', Index: 0, Count: 0 };
-            vm.filtraDado();
-        };
-
-        vm.totalServerItems = 0;
-        vm.pagingOptions = {
-            pageSize: 20,
-            currentPage: 1,
-            fields: [],
-            directions: []
-        };
 
         vm.AjustarDadosPagina = function (data) {
             // var pagedData = data.slice((page - 1) * pageSize, page * pageSize);
-            vm.ListaDados = data.Lista;
-            vm.gridOptions.totalItems = data.TotalRegistros;
+           // vm.ListaDados = [];
+            angular.forEach(data.Lista, function (item) {
+                vm.ListaDados.push(vm.TransformarCalendario(item));
+            });
             if (!$scope.$$phase) {
                 $scope.$apply();
             }
+        };
+
+        vm.TransformarCalendario = function(item)
+        {
+            var itemCalendario = {
+                id: item.Identificador, title: item.Nome, start: moment(  item.DataInicio), end: moment( item.DataFim), editable: Auth.currentUser.PermiteEdicao,
+                //className: item.Prioridade==1?"bg-blue":item.Prioridade==2?"bg-yellow":"bg-red"
+            };
+            return itemCalendario;
+
+        }
+
+        vm.Incluir = function () {
+            var ItemSugestao = { Prioridade: 2, AvisarHorario: false };
+            vm.AbrirEdicao(ItemSugestao);
+        };
+
+        vm.Editar = function (ItemSugestao) {
+            CalendarioPrevisto.get({ id: ItemSugestao.id }, function (data) {
+                vm.AbrirEdicao(data);
+            });
+        };
+
+        vm.AtualizarItemSalvo = function (itemNovo, itemOriginal) {
+            if (!itemOriginal.Identificador)
+            {
+                vm.ListaDados.push(vm.TransformarCalendario(itemNovo));
+            }
+            else
+            {
+                var ItemExcluir = $.grep(vm.ListaDados, function (e) { return e.Identificador == itemOriginal.Identificador })[0];
+                var Posicao = vm.ListaDados.indexOf(ItemExcluir);
+                vm.ListaDados.splice(Posicao, 1, vm.TransformarCalendario(itemNovo));
+            }
+            SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'CP', itemNovo.Identificador, !itemOriginal.Identificador );
+        };
+
+
+        vm.AbrirEdicao = function (ItemSugestao) {
+            $uibModal.open({
+                templateUrl: 'Sistema/CalendarioPrevistoEdicao',
+                controller: 'CalendarioPrevistoEditCtrl',
+                controllerAs: 'itemCalendarioPrevistoEdit',
+                resolve: {
+                    EscopoAtualizacao: vm,
+                    ItemCalendarioPrevisto: function () { return ItemSugestao }
+                }
+            });
         };
 
         vm.Idioma = function () {
@@ -186,23 +176,17 @@
                 return "pt";
         };
 //
-        vm.CarregarDadosWebApi = function (pageSize, page) {
+        vm.CarregarDadosWebApi = function () {
             vm.loading = true;
-            vm.filtroAtualizacao.Index = (page - 1) * pageSize;
-            vm.filtroAtualizacao.Count = pageSize;
+            vm.filtroAtualizacao.Index = 0;
+            vm.filtroAtualizacao.Count = null;
 
-            vm.filtroAtualizacao.SortField =vm.pagingOptions.fields;
-            vm.filtroAtualizacao.SortOrder =vm.pagingOptions.directions;
-
-            vm.CamposInvalidos = {};
-            vm.messages = [];
+      
 
             CalendarioPrevisto.list({ json: JSON.stringify(vm.filtroAtualizacao) }, function (data) {
                 vm.loading = false;
                 vm.AjustarDadosPagina(data);
                 if (!data.Sucesso) {
-                    vm.messages = data.Mensagens;
-                    vm.verificaCampoInvalido();
                 }
 
                
@@ -213,60 +197,41 @@
                 
                 vm.loading = false;
             });
-        };
-//
-        vm.gridOptions = {
-            data: 'itemCalendarioPrevisto.ListaDados',           
-            			columnDefs: [
-				{field:'Identificador',  displayName: '', cellTemplate: "BotoesGridTemplate.html",  width: 60,},
-				{field:'IdentificadorViagem', displayName: $translate.instant('CalendarioPrevisto_IdentificadorViagem'),},
-				{field:'Data', displayName: $translate.instant('CalendarioPrevisto_Data'),cellFilter: 'date:\'dd/MM/yyyy\'' },
-				{field:'Inicio', displayName: $translate.instant('CalendarioPrevisto_Inicio'),},
-				{field:'Fim', displayName: $translate.instant('CalendarioPrevisto_Fim'),},
-				{field:'Nome', displayName: $translate.instant('CalendarioPrevisto_Nome'),},
-				{field:'Latitude', displayName: $translate.instant('CalendarioPrevisto_Latitude'),cellFilter: 'number:\'8\'' },
-				{field:'Longitude', displayName: $translate.instant('CalendarioPrevisto_Longitude'),cellFilter: 'number:\'8\'' },
-				{field:'CodigoPlace', displayName: $translate.instant('CalendarioPrevisto_CodigoPlace'),},
-				{field:'Tipo', displayName: $translate.instant('CalendarioPrevisto_Tipo'),},
-				{field:'Prioridade', displayName: $translate.instant('CalendarioPrevisto_Prioridade'),},
-			],
 
-            enablePagination: true,
-            showGridFooter: false,
-            enableRowSelection: false,
-            multiSelect: false,
-            paginationPageSizes: [20],
-            enableHorizontalScrollbar: 0,
-            enableVerticalScrollbar: 1,
-            onRegisterApi: function (grid) {
-                if (Auth.currentUser && Auth.currentUser.Cultura) {
-                    var cultura = Auth.currentUser.Cultura.toLowerCase().substr(0, 2);
-                    i18nService.setCurrentLang(cultura)
+
+            vm.alertOnEventClick = function (date, jsEvent, view) {
+                $scope.alertMessage = (date.title + ' was clicked ');
+            };
+            /* alert on Drop */
+            vm.alertOnDrop = function (event, delta, revertFunc, jsEvent, ui, view) {
+                $scope.alertMessage = ('Event Dropped to make dayDelta ' + delta);
+            };
+            /* alert on Resize */
+            vm.alertOnResize = function (event, delta, revertFunc, jsEvent, ui, view) {
+                $scope.alertMessage = ('Event Resized to make dayDelta ' + delta);
+            };
+          
+            vm.uiConfig = {
+                calendar: {
+                    height: 450,
+                    editable: true,
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month,agendaWeek,agendaDay,listMonth'
+                    },
+                    defaultView: 'agendaWeek',
+                    locale: vm.Idioma(),
+                    lazyFetching: false,
+                    allDaySlot: false,
+                    eventClick: vm.alertOnEventClick,
+                    eventDrop: vm.alertOnDrop,
+                    eventResize: vm.alertOnResize,
+                    //eventRender: $scope.eventRender
                 }
-                vm.gridApi = grid;
-                var screenSizes = $.AdminLTE.options.screenSizes;
-                vm.gridOptions.columnDefs[0].visible = $(window).width() > (screenSizes.sm - 1);
-                grid.core.on.sortChanged($scope, function (grid, sortColumns) {
-                    vm.pagingOptions.fields = [];
-                    vm.pagingOptions.directions = [];
-                    angular.forEach(sortColumns, function (c) {
-                        vm.pagingOptions.fields.push(c.field);
-                        vm.pagingOptions.directions.push(c.sort.direction);
-                    });
-                    vm.CarregarDadosWebApi(vm.pagingOptions.pageSize, vm.pagingOptions.currentPage);
-                });
-                grid.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
-                    vm.pagingOptions.currentPage = newPage;
-                    vm.CarregarDadosWebApi(pageSize, newPage);
-                });
-            },
-            useExternalPagination: true,
-            useExternalSorting: true,
-            pagination: vm.pagingOptions,
-            paginationTemplate: "NewFooterTemplate.html",
-            appScopeProvider: vm,
-            totalItems: vm.totalServerItems,
-            rowTemplate: "<div on-long-press=\"grid.appScope.actionModal(row.entity, $index)\" ng-repeat=\"(colRenderIndex, col) in colContainer.renderedColumns track by col.uid\" ui-grid-one-bind-id-grid=\"rowRenderIndex + '-' + col.uid + '-cell'\" class=\"ui-grid-cell\" ng-class=\"{ 'ui-grid-row-header-cell': col.isRowHeader }\" role=\"{{col.isRowHeader ? 'rowheader' : 'gridcell'}}\" ui-grid-cell></div>" 
+            };
         };
+	    //
+
 	}
 }());

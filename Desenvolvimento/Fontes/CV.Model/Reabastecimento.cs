@@ -35,7 +35,7 @@ namespace CV.Model
 
 			public Carro ItemCarro { get; set; }
 
-			public Cidade Cidade { get; set; }
+			public Cidade ItemCidade { get; set; }
 
 			public DateTime? DataAtualizacao { get; set; }
 
