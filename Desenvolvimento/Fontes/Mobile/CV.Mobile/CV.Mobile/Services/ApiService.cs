@@ -94,5 +94,21 @@ namespace CV.Mobile.Services
 
             return itemUsuario;
         }
+
+        public async Task<List<Viagem>> ListarViagens(CriterioBusca criterioBusca)
+        {
+            var ListaViagem = new List<Viagem>();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Viagem/Get&json=", JsonConvert.SerializeObject(criterioBusca)));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                var itemResultado = JsonConvert.DeserializeObject<ResultadoConsultaTipo<Viagem>>(resultado);
+                ListaViagem = itemResultado.Lista;
+            }
+
+            return ListaViagem;
+        }
     }
 }

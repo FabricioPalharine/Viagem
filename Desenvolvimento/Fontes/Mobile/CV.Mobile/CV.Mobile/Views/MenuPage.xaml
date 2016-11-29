@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.MenuPage"
+             Title="Menu">
+  <ContentPage.Content>
+    <StackLayout VerticalOptions="FillAndExpand">
+      <StackLayout Orientation="Horizontal">
+         <Image Aspect="AspectFill" HeightRequest ="40" WidthRequest="40" Source="{Binding ItemUsuario.LinkFoto}"  />
+        <Label Text="{Binding ItemUsuario.Nome}" YAlign="Start" Font="Medium"  />
+      </StackLayout>
+      <ListView x:Name="listView" VerticalOptions="FillAndExpand" SeparatorVisibility="None" ItemsSource="{Binding ItensMenu}" ItemTapped="ItemTapped" SelectedItem="{Binding ItemSelecionado, Mode=TwoWay}" Style="{StaticResource menuStyle}" >
+
+        <ListView.ItemTemplate >
+          <DataTemplate>
+            <ViewCell >
+
+              <StackLayout VerticalOptions="FillAndExpand" Orientation="Horizontal" Padding="10" IsVisible="{Binding Visible}" >
+                <Image Aspect="AspectFill" HeightRequest ="20" WidthRequest="20" Source="{Binding IconSource}"  />
+                <Label Text="{Binding Title}" YAlign="Start" Font="Medium" Style="{StaticResource menuLabelStyle}" />
+              </StackLayout>
+            </ViewCell>
+          </DataTemplate>
+
+        </ListView.ItemTemplate>
+      </ListView>
+    </StackLayout>
+  </ContentPage.Content>
+</ContentPage>

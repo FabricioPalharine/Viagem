@@ -21,6 +21,8 @@ namespace CV.Mobile.Models
         private bool _PublicaGasto;
         private decimal? _PercentualIOF;
         private int? _Moeda;
+        private bool _Edicao;
+        private bool _VejoGastos;
 
         public int? Id
         {
@@ -176,6 +178,32 @@ namespace CV.Mobile.Models
             set
             {
                 SetProperty(ref _Moeda, value);
+            }
+        }
+
+        public bool Edicao
+        {
+            get
+            {
+                return _Edicao;
+            }
+
+            set
+            {
+                _Edicao = value;
+            }
+        }
+
+        public bool VejoGastos
+        {
+            get
+            {
+                return _VejoGastos;
+            }
+
+            set
+            {
+                _VejoGastos = value;
             }
         }
     }

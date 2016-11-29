@@ -2,9 +2,9 @@
 	'use strict';
 	angular
 		.module('Sistema')
-		.controller('SugestaoEditCtrl',[ '$uibModalInstance','$uibModal','Error',  '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', 'Cidade','Usuario','Viagem','Sugestao','ItemSugestao','EscopoAtualizacao', SugestaoEditCtrl]);
+		.controller('SugestaoEditCtrl',[ '$uibModalInstance','$uibModal','Error',  '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', 'Cidade','Usuario','Viagem','Sugestao','ItemSugestao','EscopoAtualizacao','SignalR', SugestaoEditCtrl]);
 
-	function SugestaoEditCtrl($uibModalInstance,$uibModal, Error, $state, $translate, $scope, Auth, $rootScope, $stateParams, Cidade, Usuario, Viagem, Sugestao, ItemSugestao, EscopoAtualizacao) {
+	function SugestaoEditCtrl($uibModalInstance,$uibModal, Error, $state, $translate, $scope, Auth, $rootScope, $stateParams, Cidade, Usuario, Viagem, Sugestao, ItemSugestao, EscopoAtualizacao, SignalR) {
 		var vm = this;
 		vm.itemOriginal = ItemSugestao;
 		vm.itemSugestao = jQuery.extend({}, ItemSugestao);
@@ -40,7 +40,10 @@
 					vm.loading = false;
 					if (data.Sucesso) {
 					    Error.showError('success', $translate.instant("Sucesso"), data.Mensagens[0].Mensagem, true);
+                        
 					    vm.itemSugestao.Identificador = data.IdentificadorRegistro;
+					    if (!vm.itemOriginal.Identificador)
+					        SignalR.SugerirVisitaViagem(vm.itemSugestao);
 					    vm.EscopoAtualizacao.AtualizarItemSalvo(vm.itemSugestao, vm.itemOriginal);
 						vm.close();
 					} else {

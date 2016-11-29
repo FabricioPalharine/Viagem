@@ -319,6 +319,8 @@
     <Content Include="Library\Scripts\App\Sistema\PedidoCompra\PedidoCompra-edit-controller.js" />
     <Content Include="Library\Scripts\App\Sistema\Loja\ItemCompra-edit-controller.js" />
     <Content Include="Library\Scripts\App\Sistema\Loja\Compra-edit-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\VerificarSugestao\VerificarSugestao-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\VerificarSugestao\VerificarSugestao-edit-controller.js" />
     <Content Include="Library\Scripts\Componentes\bootstrap.js" />
     <Content Include="Library\Scripts\Componentes\bootstrap.min.js" />
     <Content Include="Library\Scripts\Componentes\csswatch.js" />
@@ -489,6 +491,8 @@
     <Content Include="Views\Sistema\ItemCompraEdicao.cshtml" />
     <Content Include="Views\Sistema\PedidoCompra.cshtml" />
     <Content Include="Views\Sistema\PedidoCompraEdicao.cshtml" />
+    <Content Include="Views\Sistema\VerificarSugestao.cshtml" />
+    <Content Include="Views\Sistema\VerificarSugestaoEdicao.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

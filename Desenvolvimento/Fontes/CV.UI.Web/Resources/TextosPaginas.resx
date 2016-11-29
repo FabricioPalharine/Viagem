@@ -1443,4 +1443,28 @@
   <data name="CalendarioPrevisto_Media" xml:space="preserve">
     <value>Média</value>
   </data>
+  <data name="Agendar" xml:space="preserve">
+    <value>Agendar</value>
+  </data>
+  <data name="ConfirmaIgnorar" xml:space="preserve">
+    <value>Deseja realmente ignorar essa sugestão?</value>
+  </data>
+  <data name="Home_VerificarSugestao" xml:space="preserve">
+    <value>Consultar Sugestões</value>
+  </data>
+  <data name="Sugestao_Agendada" xml:space="preserve">
+    <value>Agendada</value>
+  </data>
+  <data name="Sugestao_IdentificadorAmigo" xml:space="preserve">
+    <value>Amigo</value>
+  </data>
+  <data name="Sugestao_Ignorada" xml:space="preserve">
+    <value>Ignorada</value>
+  </data>
+  <data name="Sugestao_Pendente" xml:space="preserve">
+    <value>Pendente</value>
+  </data>
+  <data name="Visualizar" xml:space="preserve">
+    <value>Visualizar</value>
+  </data>
 </root>

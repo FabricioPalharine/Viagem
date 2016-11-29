@@ -139,8 +139,8 @@
 
 		};
 
-		vm.excluir = function (ItemCalendario) {
-		    vm.EscopoAtualizacao.askDelete(ItemCalendario, function () { vm.close(); })
+		vm.excluir = function () {
+		    vm.EscopoAtualizacao.askDelete(vm.itemCalendarioPrevisto, function () { vm.close(); })
 		}
 
 		

@@ -8,7 +8,8 @@
 		var vm = this;
 		vm.loading = false;
 		vm.filtroAtualizacao = {};
-		
+		vm.loggedUser = Auth.currentUser;
+
 		vm.gridApi = null;
 		vm.ListaDados = [];
 		vm.ListaEventos = [vm.ListaDados]
@@ -45,13 +46,13 @@
 			};
 		};
 
-		vm.delete = function (itemForDelete, indexForDelete, callback) {
+		vm.delete = function (itemForDelete,  callback) {
 			vm.loading = true;
 			CalendarioPrevisto.delete({ id: itemForDelete.Identificador }, function (data) {
 				
 			    if (data.Sucesso) {
 			        callback(data);
-			        var ItemExcluir = $.grep(vm.ListaDados, function (e) { return e.Identificador == itemForDelete.Identificador })[0];
+			        var ItemExcluir = $.grep(vm.ListaDados, function (e) { return e.id == itemForDelete.Identificador })[0];
 			        var Posicao = vm.ListaDados.indexOf(ItemExcluir);
 			        vm.ListaDados.splice(Posicao, 1);
 			        SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'CP', itemForDelete.Identificador, false);
@@ -149,7 +150,7 @@
             }
             else
             {
-                var ItemExcluir = $.grep(vm.ListaDados, function (e) { return e.Identificador == itemOriginal.Identificador })[0];
+                var ItemExcluir = $.grep(vm.ListaDados, function (e) { return e.id == itemOriginal.Identificador })[0];
                 var Posicao = vm.ListaDados.indexOf(ItemExcluir);
                 vm.ListaDados.splice(Posicao, 1, vm.TransformarCalendario(itemNovo));
             }
@@ -200,15 +201,34 @@
 
 
             vm.alertOnEventClick = function (date, jsEvent, view) {
-                $scope.alertMessage = (date.title + ' was clicked ');
+
+                vm.Editar(date);
             };
             /* alert on Drop */
             vm.alertOnDrop = function (event, delta, revertFunc, jsEvent, ui, view) {
-                $scope.alertMessage = ('Event Dropped to make dayDelta ' + delta);
+                CalendarioPrevisto.get({ id: event.id }, function (data) {
+                    data.DataInicio = event.start.format("YYYY-MM-DDTHH:mm:ss").replace("A", "T");
+                    if (event.end)
+                         data.DataFim = event.end.format("YYYY-MM-DDTHH:mm:ss").replace("A", "T");
+                    else
+                         data.DataFim = data.DataInicio;
+                    CalendarioPrevisto.save(data, function (resultado) {
+                        vm.AtualizarItemSalvo(data, data);
+                    });
+                });
+                
             };
             /* alert on Resize */
             vm.alertOnResize = function (event, delta, revertFunc, jsEvent, ui, view) {
-                $scope.alertMessage = ('Event Resized to make dayDelta ' + delta);
+                CalendarioPrevisto.get({ id: event.id }, function (data) {
+                    if (event.end)
+                        data.DataFim = event.end.format("YYYY-MM-DDTHH:mm:ss").replace("A", "T");
+                    else
+                        data.DataFim = data.DataInicio;
+                    CalendarioPrevisto.save(data, function (resultado) {
+                        vm.AtualizarItemSalvo(data, data);
+                    });
+                });
             };
           
             vm.uiConfig = {

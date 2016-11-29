@@ -1,0 +1,146 @@
+<section class="content-header">
+    <h1>
+        @TextosPaginas.Home_Sugestao
+
+    </h1>
+    <ol class="breadcrumb">
+
+        <li>@TextosPaginas.Home_Menu</li>
+        <li class="active">@TextosPaginas.Home_Sugestao</li>
+    </ol>
+
+</section>
+<!-- Main content -->
+<section class="content" ng-init="itemVerificarSugestao.load()">
+    <!-- Default box -->
+    <!-- general form elements -->
+    <div class="box box-primary">
+        <div class="overlay" ng-show="itemVerificarSugestao.loading">
+            <i class="fa fa-refresh fa-spin text-gray"></i>
+        </div>
+
+        <form role="form" ng-submit="itemVerificarSugestao.filtraDado()" >
+            <div class="box-body">
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label>@TextosPaginas.Atracao_Nome</label>
+                        <input type="text" class="form-control" ng-model="itemVerificarSugestao.filtro.Nome" maxlength="100" empty-to-null>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>@TextosPaginas.Atracao_Tipo</label>
+                        <input type="text" class="form-control" ng-model="itemVerificarSugestao.filtro.Tipo" maxlength="100" empty-to-null>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>@TextosPaginas.Foto_IdentificadorCidade</label>
+                        <select ng-model="itemVerificarSugestao.itemCidade" class="form-control" ng-options="obj.Nome for obj in itemVerificarSugestao.ListaCidades track by obj.Identificador">
+                            <option value="">@TextosPaginas.Selecione</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>@TextosPaginas.Sugestao_IdentificadorAmigo</label>
+                        <select ng-model="itemVerificarSugestao.itemAmigo" class="form-control" ng-options="obj.Nome for obj in itemVerificarSugestao.ListaAmigo track by obj.Identificador">
+                            <option value="">@TextosPaginas.Selecione</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>@TextosPaginas.Atracao_Situacao</label>
+
+                        <div class="form-inline">
+
+                            <label class="radio">
+                                <input type="radio" class="radio-inline" name="radSituacao" value="1" ng-model="itemVerificarSugestao.filtro.Situacao" />
+
+                                <label style="padding-top:5px">
+
+                                    @TextosPaginas.Sugestao_Pendente
+                                </label>
+                            </label>
+                            <label class="radio" style="margin-left:10px">
+                                <input type="radio" class="radio-inline" name="radSituacao" value="2" ng-model="itemVerificarSugestao.filtro.Situacao" /><label>
+                                    @TextosPaginas.Sugestao_Agendada
+                                </label>
+                            </label>
+                            <label class="radio" style="margin-left:10px">
+                                <input type="radio" class="radio-inline" name="radSituacao" value="3" ng-model="itemVerificarSugestao.filtro.Situacao" />
+                                <label>
+                                    @TextosPaginas.Sugestao_Ignorada
+                                </label>
+                            </label>
+                            <label class="radio" style="margin-left:10px">
+                                <input type="radio" class="radio-inline" name="radSituacao" value="" ng-model="itemVerificarSugestao.filtro.Situacao" />
+                                <label>
+                                    @TextosPaginas.Hotel_Todos
+                                </label>
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div><!-- /.box-body -->
+            <div class="box-footer">
+
+                <button type="submit" class="btn btn-primary  pull-right">
+                    <span class="fa fa-search" aria-hidden="true"></span> @TextosPaginas.Pesquisar
+                </button>
+
+            </div>
+        </form>
+    </div><!-- /.box -->
+
+
+
+    <div class="box" >
+        <div class="overlay" ng-show="itemVerificarSugestao.loading">
+            <i class="fa fa-refresh fa-spin text-gray"></i>
+        </div>
+        <div class="box-body table-responsive">
+            <div class="gridStyle" ui-grid="itemVerificarSugestao.gridOptions" ></div>
+
+
+        </div>
+    </div>
+
+
+
+    <script type="text/ng-template" id="modalDelete.html">
+        <div class="modal-header">
+            <span>@TextosPaginas.ConfirmaIgnorar</span>
+        </div>
+        <div class="modal-body">
+            <button type="button" class="btn btn-info btn-lg btn-block" ng-click="vmDelete.delete()">@TextosPaginas.Sim</button>
+            <button type="button" class="btn btn-default btn-lg btn-block" ng-click="vmDelete.close()">@TextosPaginas.Nao</button>
+        </div>
+        <div class="modal-footer hidden-lg hidden-md">
+            <button type="button" class="btn btn-default btn-lg btn-block" ng-click="vmDelete.back()">@TextosPaginas.Voltar</button>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="BotoesGridTemplate.html">
+
+        <div class="ngCellText hidden-xs">
+			<button type="button"  class="btn btn-primary small" title="@TextosPaginas.Visualizar"  ng-click="grid.appScope.Editar(row.entity)"><span class="fa fa-eye" aria-hidden="true"></span></button>
+
+        </div>
+
+
+    </script>
+
+    <script type="text/ng-template" id="modalMapa.html">
+    <div class="modal-body">
+
+        <ng-map zoom="13"
+                center="[{{vmMapa.lat}}, {{vmMapa.lng}}]" >
+            <marker ng-if="vmMapa.itemMarcador.Latitude && vmMapa.itemMarcador.Longitude" position="{{vmMapa.itemMarcador.Latitude}}, {{vmMapa.itemMarcador.Longitude}}"></marker>
+        </ng-map>
+    </div>
+    <div class="modal-footer ">
+        
+        <button type="button" class="btn btn-primary" ng-click="vmMapa.close()">
+            <span class="fa fa-close" aria-hidden="true">@TextosPaginas.Cancelar</span>
+        </button>
+    </div>
+    </script>
+
+</section><!-- /.content -->

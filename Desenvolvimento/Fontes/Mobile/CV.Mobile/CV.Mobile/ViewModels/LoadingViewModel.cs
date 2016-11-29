@@ -72,7 +72,7 @@ namespace CV.Mobile.ViewModels
                         itemUsuario.AuthenticationToken = autenticacao.Properties["AuthenticationToken"];
                         itemUsuario.Codigo = Convert.ToInt32(autenticacao.Properties["Codigo"]);
                         itemUsuario.CodigoGoogle = autenticacao.Username;
-                        itemUsuario.Email = autenticacao.Properties["EMail"];
+                        itemUsuario.Email = autenticacao.Properties["Email"];
                         itemUsuario.LinkFoto = autenticacao.Properties["LinkFoto"];
                         itemUsuario.Nome = autenticacao.Properties["Nome"];
                     }

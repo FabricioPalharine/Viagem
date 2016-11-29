@@ -178,6 +178,7 @@
             Sugestao_IdentificadorCidade: 'Cidade',
             Sugestao_Lida: 'Lida',
             Sugestao_Tipo: 'Tipo',
+            Sugestao_Amigo: 'Amigo',
             Viagem_IdentificadorUsuario: 'Usuário',
             Viagem_Nome: 'Nome',
             Viagem_DataInicio: 'Data Início',

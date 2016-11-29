@@ -816,11 +816,16 @@ namespace CV.Business
             List<RequisicaoAmizade> requisicoes = ListarRequisicaoAmizade(d => d.IdentificadorUsuarioRequisitado == token.IdentificadorUsuario && d.Status == 0);
             foreach (RequisicaoAmizade itemRequisicao in requisicoes)
             {
-                itemRequisicao.Status = 1;
-                SalvarRequisicaoAmizade(itemRequisicao);
                 alertas.Add(new AlertaUsuario() { IdentificadorAlerta = itemRequisicao.Identificador.Value, MensagemAlerta = MensagemBusiness.RetornaMensagens("AlertaRequisicaoAmizade", new string[] { itemRequisicao.ItemUsuario.Nome }), TipoAlerta = 1 });
             }
-
+            if (token.IdentificadorViagem.HasValue)
+            {
+                List<Sugestao> lista = ListarSugestao(null, token.IdentificadorViagem, null, null, null, 0);
+                foreach (Sugestao itemRequisicao in lista)
+                {
+                    alertas.Add(new AlertaUsuario() { IdentificadorAlerta = itemRequisicao.Identificador.Value, MensagemAlerta = MensagemBusiness.RetornaMensagens("AlertaSugestaoVisita", new string[] { itemRequisicao.ItemUsuario.Nome, itemRequisicao.Local }), TipoAlerta = 2 });
+                }
+            }
 
             return alertas;
         }
@@ -1558,11 +1563,11 @@ namespace CV.Business
             }
         }
 
-        public List<Sugestao> ListarSugestao(int? IdentificadorUsuario, int? IdentificadorViagem, string Nome, string Tipo)
+        public List<Sugestao> ListarSugestao(int? IdentificadorUsuario, int? IdentificadorViagem, string Nome, string Tipo, int? IdentificadorCidade, int? Situacao)
         {
             using (ViagemRepository repositorio = new ViagemRepository())
             {
-                return repositorio.ListarSugestao(IdentificadorUsuario, IdentificadorViagem, Nome, Tipo);
+                return repositorio.ListarSugestao(IdentificadorUsuario, IdentificadorViagem, Nome, Tipo,IdentificadorCidade,Situacao);
             }
         }
 

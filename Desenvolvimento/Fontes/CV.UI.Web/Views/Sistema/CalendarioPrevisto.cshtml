@@ -16,7 +16,7 @@
     <!-- general form elements -->
     <div class="box box-primary">
         <div class="box-footer">
-            <a role="button" class="btn btn-primary " title="@TextosPaginas.Adicionar" ng-click="itemCalendarioPrevisto.Incluir()">
+            <a role="button" class="btn btn-primary " title="@TextosPaginas.Adicionar" ng-click="itemCalendarioPrevisto.Incluir()" ng-if="itemCalendarioPrevisto.loggedUser.PermiteEdicao">
                 <span class="fa fa-plus" aria-hidden="true"></span>
             </a>
         </div>

@@ -46,8 +46,11 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Constants.cs" />
+    <Compile Include="Models\CriterioBusca.cs" />
     <Compile Include="Models\DadosGoogleToken.cs" />
+    <Compile Include="Models\ItemMenu.cs" />
     <Compile Include="Models\MessageKeys.cs" />
+    <Compile Include="Models\ResultadoConsultaTipo.cs" />
     <Compile Include="Models\UsuarioLogado.cs" />
     <Compile Include="Models\Viagem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -55,15 +58,27 @@
     <Compile Include="Services\OAuth2AuthenticatorToken.cs" />
     <Compile Include="ViewModels\BaseNavigationViewModel.cs" />
     <Compile Include="ViewModels\LoadingViewModel.cs" />
+    <Compile Include="ViewModels\MasterDetailViewModel.cs" />
     <Compile Include="ViewModels\MenuInicialViewModel.cs" />
+    <Compile Include="ViewModels\MenuViewModel.cs" />
+    <Compile Include="ViewModels\SelecionarViagemViewModel.cs" />
     <Compile Include="Views\AutenticacaoPage.xaml.cs">
       <DependentUpon>AutenticacaoPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoadingPage.xaml.cs">
       <DependentUpon>LoadingPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MasterDetailPage.xaml.cs">
+      <DependentUpon>MasterDetailPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MenuInicialPage.xaml.cs">
       <DependentUpon>MenuInicialPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MenuPage.xaml.cs">
+      <DependentUpon>MenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SelecionarViagemPage.xaml.cs">
+      <DependentUpon>SelecionarViagemPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +196,24 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\AutenticacaoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MasterDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MenuPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\SelecionarViagemPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

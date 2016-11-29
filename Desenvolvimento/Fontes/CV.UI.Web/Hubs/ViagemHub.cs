@@ -43,12 +43,7 @@ namespace CV.UI.Web.Hubs
                 AlertaUsuario itemAlerta = new AlertaUsuario() {  IdentificadorAlerta = IdentificadorRequisicao, MensagemAlerta = MensagemBusiness.RetornaMensagens("AlertaRequisicaoAmizade", new string[] { itemUsuarioLogado.Nome }), TipoAlerta=1 };
                 foreach (var itemUsuario in UsuariosConectados)
                     Clients.Client(itemUsuario.AuthenticationToken).EnviarAlertaRequisicao(itemAlerta);
-                RequisicaoAmizade itemRequisicao = biz.SelecionarRequisicaoAmizade(IdentificadorRequisicao);
-                if (itemRequisicao != null)
-                {
-                    itemRequisicao.Status = 2;
-                    biz.SalvarRequisicaoAmizade(itemRequisicao);
-                }
+               
             }
         }
 
@@ -67,11 +62,15 @@ namespace CV.UI.Web.Hubs
             var UsuariosConectados = UsuariosConetados.Where(x => x.IdentificadorViagem == itemSugestao.IdentificadorViagem && x.PermiteEdicao );
             if (UsuariosConectados.Any())
             {
-                foreach (var itemUsuario in UsuariosConectados)
-                    Clients.Client(itemUsuario.AuthenticationToken).EnviarAlertaSugestao(itemSugestao);
-                itemSugestao.Status = 1;
                 ViagemBusiness biz = new ViagemBusiness();
-                biz.SalvarSugestao(itemSugestao);
+
+                var itemUsuarioLogado = biz.SelecionarUsuario(itemSugestao.IdentificadorUsuario);
+
+                AlertaUsuario itemAlerta = new AlertaUsuario() { IdentificadorAlerta = itemSugestao.Identificador.GetValueOrDefault(0), MensagemAlerta = MensagemBusiness.RetornaMensagens("AlertaSugestaoVisita", new string[] { itemUsuarioLogado.Nome, itemSugestao.Local }), TipoAlerta = 2 };
+
+                foreach (var itemUsuario in UsuariosConectados)
+                    Clients.Client(itemUsuario.AuthenticationToken).EnviarAlertaRequisicao(itemAlerta);
+                
             }
         }
 

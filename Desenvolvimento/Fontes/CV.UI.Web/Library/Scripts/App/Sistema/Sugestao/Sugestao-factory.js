@@ -36,7 +36,29 @@
               },
             //  transformResponse: parseArray,
               isArray: false
-          }
+          },
+          listarConsulta:
+              {
+                  method: 'GET',
+                  params: {
+                      controller: 'listarConsulta',
+                      json: 'json'
+                  },
+                  //  transformResponse: parseArray,
+                  isArray: true
+              },
+          save: {
+              method: 'POST',
+              params: {
+                  controller: 'Post'
+              }
+          },
+          AgendarSugestao: {
+              method: 'POST',
+              params: {
+                  controller: 'AgendarSugestao'
+              }
+          },
          
 
       });

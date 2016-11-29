@@ -21,6 +21,7 @@
             //console.log(' pegou evento');
             vm.user = Auth.currentUser;
             Auth.CarregarAlertas(function (data) {
+                vm.alertas = [];
                 for (var i=0;i<data.length;i++)
                 {
                     vm.alertas.push(data[i]);
@@ -44,6 +45,13 @@
 
         vm.SelecionarViagem = function (IdentificadorViagem) {
             Auth.SelecionarViagem(IdentificadorViagem);
+            Auth.CarregarAlertas(function (data) {
+                vm.alertas = [];
+                for (var i = 0; i < data.length; i++) {
+                    vm.alertas.push(data[i]);
+                }
+                vm.totalAlertas = vm.alertas.length;
+            });
             $state.go('home');
         };
 
@@ -52,6 +60,10 @@
             if (TipoAlerta == 1)
             {
                 $state.go('Amigo', { AbrirAprovacao: true });
+
+            }
+            if (TipoAlerta == 2) {
+                $state.go('VerificarSugestao');
 
             }
         }

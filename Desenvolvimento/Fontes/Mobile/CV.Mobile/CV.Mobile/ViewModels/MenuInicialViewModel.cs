@@ -22,6 +22,9 @@ namespace CV.Mobile.ViewModels
             DeslogarCommand =  new Command(
                                     async () => await DeslogarAplicacao(),
                                     () => true);
+            EntrarViagemCommand = new Command(
+                                    async () => await EntraViagem(),
+                                    () => true);
         }
 
         private async Task DeslogarAplicacao()
@@ -31,6 +34,12 @@ namespace CV.Mobile.ViewModels
             await AccountStore.Create().DeleteAsync(autenticacao, Constants.AppName);
             LoadingViewModel vm = new LoadingViewModel();
             App.Current.MainPage = new LoadingPage() { BindingContext = vm };
+        }
+
+        private async Task EntraViagem()
+        {
+            var Pagina = new SelecionarViagemPage() { BindingContext = new SelecionarViagemViewModel() };
+            await PushAsync(Pagina);
         }
 
         public Command SelecionarViagemCommand { get; set; }

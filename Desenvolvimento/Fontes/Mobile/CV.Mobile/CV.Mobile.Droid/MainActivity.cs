@@ -27,9 +27,16 @@ namespace CV.Mobile.Droid
             RegisterDependencies();
             SecureStorageImplementation.StoragePassword = "mudar.123";
             base.OnCreate(bundle);
+            AndroidEnvironment.UnhandledExceptionRaiser += AndroidEnvironment_UnhandledExceptionRaiser; ;
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
+
             LoadApplication(new App());
+        }
+
+        private void AndroidEnvironment_UnhandledExceptionRaiser(object sender, RaiseThrowableEventArgs e)
+        {
+           
         }
 
         void RegisterDependencies()

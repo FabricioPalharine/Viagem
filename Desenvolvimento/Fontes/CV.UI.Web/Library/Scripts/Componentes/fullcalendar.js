@@ -10930,6 +10930,13 @@ function EventManager() { // assumed to be a calendar
 	// fetches an event source and processes its result ONLY if it is still the current fetch.
 	// caller is responsible for incrementing pendingSourceCnt first.
 	function tryFetchEventSource(source, fetchId) {
+
+	    if (source.origArray && source.origArray.length > 0) {
+	        source.events = $.map(source.origArray, function (eventInput) {
+	            return buildEventFromInput(eventInput, source);
+	        });
+	    }
+
 		_fetchEventSource(source, function(eventInputs) {
 			var isArraySource = $.isArray(source.events);
 			var i, eventInput;

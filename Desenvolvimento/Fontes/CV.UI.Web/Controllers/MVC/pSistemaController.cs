@@ -37,5 +37,15 @@ namespace CV.UI.Web.Controllers.MVC
         {
             return PartialView();
         }
+
+        public ActionResult VerificarSugestao()
+        {
+            return PartialView();
+        }
+
+        public ActionResult VerificarSugestaoEdicao()
+        {
+            return PartialView();
+        }
     }
 }

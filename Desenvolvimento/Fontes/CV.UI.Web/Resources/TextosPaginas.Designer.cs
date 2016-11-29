@@ -70,6 +70,15 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Agendar.
+        /// </summary>
+        public static string Agendar {
+            get {
+                return ResourceManager.GetString("Agendar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Alterar.
         /// </summary>
         public static string Alterar {
@@ -1303,6 +1312,15 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deseja realmente ignorar essa sugestão?.
+        /// </summary>
+        public static string ConfirmaIgnorar {
+            get {
+                return ResourceManager.GetString("ConfirmaIgnorar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data Atualização.
         /// </summary>
         public static string CotacaoMoeda_DataAtualizacao {
@@ -2118,6 +2136,15 @@ namespace CV.UI.Web.Resources {
         public static string Home_Usuario {
             get {
                 return ResourceManager.GetString("Home_Usuario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Consultar Sugestões.
+        /// </summary>
+        public static string Home_VerificarSugestao {
+            get {
+                return ResourceManager.GetString("Home_VerificarSugestao", resourceCulture);
             }
         }
         
@@ -3355,6 +3382,15 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Agendada.
+        /// </summary>
+        public static string Sugestao_Agendada {
+            get {
+                return ResourceManager.GetString("Sugestao_Agendada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Código Place.
         /// </summary>
         public static string Sugestao_CodigoPlace {
@@ -3391,6 +3427,15 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Amigo.
+        /// </summary>
+        public static string Sugestao_IdentificadorAmigo {
+            get {
+                return ResourceManager.GetString("Sugestao_IdentificadorAmigo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cidade.
         /// </summary>
         public static string Sugestao_IdentificadorCidade {
@@ -3414,6 +3459,15 @@ namespace CV.UI.Web.Resources {
         public static string Sugestao_IdentificadorViagem {
             get {
                 return ResourceManager.GetString("Sugestao_IdentificadorViagem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ignorada.
+        /// </summary>
+        public static string Sugestao_Ignorada {
+            get {
+                return ResourceManager.GetString("Sugestao_Ignorada", resourceCulture);
             }
         }
         
@@ -3459,6 +3513,15 @@ namespace CV.UI.Web.Resources {
         public static string Sugestao_Manutencao {
             get {
                 return ResourceManager.GetString("Sugestao_Manutencao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pendente.
+        /// </summary>
+        public static string Sugestao_Pendente {
+            get {
+                return ResourceManager.GetString("Sugestao_Pendente", resourceCulture);
             }
         }
         
@@ -4026,6 +4089,15 @@ namespace CV.UI.Web.Resources {
         public static string ViagemAerea_Tipo {
             get {
                 return ResourceManager.GetString("ViagemAerea_Tipo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visualizar.
+        /// </summary>
+        public static string Visualizar {
+            get {
+                return ResourceManager.GetString("Visualizar", resourceCulture);
             }
         }
         

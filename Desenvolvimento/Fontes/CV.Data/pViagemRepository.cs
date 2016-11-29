@@ -1153,9 +1153,9 @@ namespace CV.Data
             return query.OrderByDescending(d => d.DataAporte).ToList();
         }
 
-        public List<Sugestao> ListarSugestao(int? IdentificadorUsuario, int? IdentificadorViagem, string Nome, string Tipo)
+        public List<Sugestao> ListarSugestao(int? IdentificadorUsuario, int? IdentificadorViagem, string Nome, string Tipo, int? IdentificadorCidade, int? Situacao)
         {
-            IQueryable<Sugestao> query = this.Context.Sugestoes;
+            IQueryable<Sugestao> query = this.Context.Sugestoes.Include("ItemUsuario").Include("ItemCidade");
 
             if (IdentificadorUsuario.HasValue)
                 query = query.Where(d => d.IdentificadorUsuario == IdentificadorUsuario);
@@ -1165,6 +1165,16 @@ namespace CV.Data
                 query = query.Where(d => d.Local.Contains(Nome));
             if (!string.IsNullOrEmpty(Tipo))
                 query = query.Where(d => d.Tipo.Contains(Tipo));
+            if (Situacao.HasValue)
+            {
+                if (Situacao == 1)
+                    query = query.Where(d => d.Status <= 1);
+                else
+                    query = query.Where(d=>d.Status == Situacao);
+            }
+            if (IdentificadorCidade.HasValue)
+                query = query.Where(d => d.IdentificadorCidade == IdentificadorCidade || this.Context.CidadeGrupos.Where(e => e.IdentificadorCidadeFilha == d.IdentificadorCidade).Where(f => f.IdentificadorViagem == IdentificadorViagem).Where(e => e.IdentificadorCidadePai == IdentificadorCidade).Any());
+
             return query.OrderBy(f => f.Local).ToList();
         }
 

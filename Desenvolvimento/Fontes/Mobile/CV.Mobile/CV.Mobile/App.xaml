@@ -3,8 +3,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CV.Mobile.App">
   <Application.Resources>
+    <ResourceDictionary>
 
-    <!-- Application resource dictionary -->
+      <Style TargetType="NavigationPage">
+        <Setter Property="BarBackgroundColor" Value="#006F44"/>
+        <Setter Property="BarTextColor" Value="Color.White"/>
+      </Style>
+      <Style TargetType="Button">
+        <Setter Property="BackgroundColor" Value="#006F44"/>
+        <Setter Property="TextColor" Value="Color.White"/>
+      </Style>
+      <Style TargetType="ListView" x:Key="menuStyle">
+        <Setter Property="BackgroundColor" Value="#006F44" />
+      </Style>
+      <Style TargetType="Label" x:Key="menuLabelStyle">
+        <Setter Property="TextColor" Value="Color.White"/>
+      </Style>
+      
+    </ResourceDictionary>
 
   </Application.Resources>
 </Application>

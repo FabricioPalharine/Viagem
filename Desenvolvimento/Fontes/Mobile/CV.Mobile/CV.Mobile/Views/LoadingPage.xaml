@@ -27,8 +27,7 @@
             />
         </Label.GestureRecognizers>
       </Label>
-        <Button Command="{Binding EntrarCommand}" Text="Entrar Login Google"  Margin="20"/>
-
+        <Button Command="{Binding EntrarCommand}" Text="Fazer Login via Google"  Margin="20"/>
       </StackLayout>
       <AbsoluteLayout IsVisible ="{Binding LoadFinished, Converter={StaticResource boolInvConverter}}">
 

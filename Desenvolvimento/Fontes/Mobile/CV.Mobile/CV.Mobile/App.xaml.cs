@@ -17,6 +17,7 @@ namespace CV.Mobile
         {
             InitializeComponent();
             SubscribeToDisplayAlertMessages();
+
             LoadingViewModel vm = new LoadingViewModel();
             MainPage = new LoadingPage() { BindingContext = vm };
         }
@@ -47,10 +48,10 @@ namespace CV.Mobile
         public void RedirectToMenu(UsuarioLogado itemUsuario)
         {
             ItemUsuario = itemUsuario;
-            MenuInicialViewModel vm = new MenuInicialViewModel();
-            var Pagina = new MenuInicialPage() { BindingContext = vm };
+            MasterDetailViewModel vm = new MasterDetailViewModel(itemUsuario);
+            var Pagina = new Views.MasterDetailPage(vm);
 
-            MainPage = new NavigationPage(Pagina);
+            MainPage = Pagina;
         }
 
         protected override void OnStart()

@@ -22,7 +22,7 @@ namespace CV.Mobile.Helpers
         #region Setting Constants
 
         private const string CVBaseWebApiKey = "CVBaseWebApiKey";
-        private static readonly string CVBaseWebApiDefault = "http://192.168.0.13/CV/";
+        private static readonly string CVBaseWebApiDefault = "http://192.168.0.188/CV/";
 
         private const string CVModoAtualizacaoKey = "CVModoAtualizacaoKey";
         private static readonly string CVModoAtualizacaoDefault = "N";
@@ -35,6 +35,9 @@ namespace CV.Mobile.Helpers
 
         private const string CVAcompanhamnentoOnlineKey = "CVAcompanhamnentoOnlineKey";
         private static readonly string CVAcompanhamnentoOnlineDefault = "S";
+
+        private const string CVGeofencingHotelKey = "CVGeofencingHotelKey";
+        private static readonly string CVGeofencingHotelDefault = "S";
 
         #endregion
 
@@ -67,11 +70,11 @@ namespace CV.Mobile.Helpers
         {
             get
             {
-                return AppSettings.GetValueOrDefault<string>(CVModoAtualizacaoKey, CVModoAtualizacaoDefault);
+                return AppSettings.GetValueOrDefault<string>(CVModoImagemKey, CVModoImagemDefault);
             }
             set
             {
-                AppSettings.AddOrUpdateValue<string>(CVModoAtualizacaoKey, value);
+                AppSettings.AddOrUpdateValue<string>(CVModoImagemKey, value);
             }
         }
 
@@ -84,6 +87,18 @@ namespace CV.Mobile.Helpers
             set
             {
                 AppSettings.AddOrUpdateValue<string>(CVControleGPSKey, value);
+            }
+        }
+
+        public static string GeofencingHotel
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault<string>(CVGeofencingHotelKey, CVGeofencingHotelDefault);
+            }
+            set
+            {
+                AppSettings.AddOrUpdateValue<string>(CVGeofencingHotelKey, value);
             }
         }
 

@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.SelecionarViagemPage"
+             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             Title="Selecionar Viagem">
+  <ContentPage.Behaviors>
+    <behaviors:EventHandlerBehavior EventName="Appearing">
+      <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
+    </behaviors:EventHandlerBehavior>
+  </ContentPage.Behaviors>
+  <ContentPage.ToolbarItems>
+    <ToolbarItem x:Name="PesquisarToolbarItem" Icon="lupa.png" Text="Pesquisar" Command="{Binding PesquisarCommand}" />
+  </ContentPage.ToolbarItems>  
+  <ContentPage.Content>
+    <StackLayout Spacing="0">
+      <ListView x:Name="listView" VerticalOptions="FillAndExpand" SeparatorVisibility="None" ItemsSource="{Binding Viagens}" SelectedItem="{Binding ViagenSelecionada, Mode=TwoWay}" CachingStrategy="RecycleElement" RowHeight="20" HasUnevenRows="false"  IsPullToRefreshEnabled="true"  IsRefreshing="{Binding IsBusy, Mode=OneWay}" >
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ViewCell Height="20">
+              <ContentView >
+                <StackLayout Orientation="Horizontal" Spacing="0">
+                  <Button Aspect="AspectFill" HeightRequest ="20" WidthRequest="20" Source="" Text="Selecionar" Command="{Binding SelecionarCommand}" CommandParameter="{Binding Identificador}" />
+                  <Label Text="{Binding Nome}" HeightRequest="20" VerticalTextAlignment="End" LineBreakMode="TailTruncation" />
+                </StackLayout>
+              </ContentView>
+            </ViewCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+      
+    </StackLayout>
+  </ContentPage.Content>
+</ContentPage>

@@ -492,6 +492,9 @@
   <data name="AlertaRequisicaoAmizade" xml:space="preserve">
     <value>{0} deseja ser seu amigo para visualizar suas viagens.</value>
   </data>
+  <data name="AlertaSugestaoVisita" xml:space="preserve">
+    <value>{0} recomenda a visita a {1} durante sua viagem;</value>
+  </data>
   <data name="AbandonarSeguido" xml:space="preserve">
     <value>Você deixou de seguir essa pessoa.</value>
   </data>

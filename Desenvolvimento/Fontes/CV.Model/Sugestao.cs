@@ -41,12 +41,12 @@ private void ValidarLocal(Microsoft.Practices.EnterpriseLibrary.Validation.Valid
 
 			public string Comentario { get; set; }
 
+			[NotNullValidator(MessageTemplateResourceName="Sugestao_IdentificadorViagem",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public int? IdentificadorViagem { get; set; }
 
 			[NotNullValidator(MessageTemplateResourceName="Sugestao_IdentificadorUsuario",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public int? IdentificadorUsuario { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="Sugestao_IdentificadorCidade",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public int? IdentificadorCidade { get; set; }
 
 			[NotNullValidator(MessageTemplateResourceName="Sugestao_Status",MessageTemplateResourceType=typeof(MensagemModelo))]
