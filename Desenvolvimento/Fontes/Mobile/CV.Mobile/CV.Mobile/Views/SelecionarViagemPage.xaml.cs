@@ -14,5 +14,7 @@ namespace CV.Mobile.Views
         {
             InitializeComponent();
         }
+
+       
     }
 }

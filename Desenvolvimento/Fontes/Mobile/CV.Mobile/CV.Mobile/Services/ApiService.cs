@@ -98,7 +98,7 @@ namespace CV.Mobile.Services
         public async Task<List<Viagem>> ListarViagens(CriterioBusca criterioBusca)
         {
             var ListaViagem = new List<Viagem>();
-            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Viagem/Get&json=", JsonConvert.SerializeObject(criterioBusca)));
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Viagem/Get?json=", JsonConvert.SerializeObject(criterioBusca)));
             var response = await client.GetAsync(uri);
             var resultado = await response.Content.ReadAsStringAsync();
 

@@ -20,6 +20,8 @@ namespace CV.Mobile.ViewModels
         public ICommand PesquisarCommand { get; set; }
         public ICommand SelecionarCommand { get; set; }
 
+        private Viagem _ViagemSelecionada;
+
         public SelecionarViagemViewModel()
         {
             _itemCriterioBusca = new CriterioBusca() { Aberto = true };
@@ -27,6 +29,7 @@ namespace CV.Mobile.ViewModels
             PageAppearingCommand = new Command(
                                                                     async () => await CarregarListaViagens(),
                                                                     () => true);
+            SelecionarCommand = new Command<int>(async (Identificador) => await Selecionar(Identificador));
         }
 
         private async Task CarregarListaViagens()
@@ -40,6 +43,10 @@ namespace CV.Mobile.ViewModels
             }
         }
 
+        private async Task Selecionar(int Identificador)
+        { 
+        }
+
         public CriterioBusca ItemCriterioBusca
         {
             get
@@ -50,6 +57,20 @@ namespace CV.Mobile.ViewModels
             set
             {
                 SetProperty(ref _itemCriterioBusca, value);
+            }
+        }
+
+        public Viagem ViagemSelecionada
+        {
+            get
+            {
+                return _ViagemSelecionada;
+            }
+
+            set
+            {
+                _ViagemSelecionada = null;
+                OnPropertyChanged("ViagemSelecionada");
             }
         }
     }

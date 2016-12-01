@@ -51,6 +51,7 @@ namespace CV.Mobile.ViewModels
             }
         }
 
+
         public Viagem ItemViagem
         {
             get

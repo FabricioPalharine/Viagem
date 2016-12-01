@@ -171,6 +171,7 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Renderer\AutenticacaoPageRenderer.cs" />
     <Compile Include="Renderer\ImageButtonRenderer.cs" />
+    <Compile Include="Renderer\ListButtonRenderer .cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ValidarAutenticacaoService.cs" />

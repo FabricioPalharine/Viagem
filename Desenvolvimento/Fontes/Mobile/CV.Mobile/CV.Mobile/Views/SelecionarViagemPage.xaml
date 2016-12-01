@@ -3,25 +3,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CV.Mobile.Views.SelecionarViagemPage"
              xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
-             Title="Selecionar Viagem">
+             Title="Selecionar Viagem"
+             x:Name="paginaSelecao">
   <ContentPage.Behaviors>
     <behaviors:EventHandlerBehavior EventName="Appearing">
       <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
     </behaviors:EventHandlerBehavior>
   </ContentPage.Behaviors>
   <ContentPage.ToolbarItems>
-    <ToolbarItem x:Name="PesquisarToolbarItem" Icon="lupa.png" Text="Pesquisar" Command="{Binding PesquisarCommand}" />
+    <ToolbarItem x:Name="PesquisarToolbarItem" Icon="lupa.png" Text="Pesquisar" Command="{Binding SelecionarCommand}" />
   </ContentPage.ToolbarItems>  
   <ContentPage.Content>
     <StackLayout Spacing="0">
-      <ListView x:Name="listView" VerticalOptions="FillAndExpand" SeparatorVisibility="None" ItemsSource="{Binding Viagens}" SelectedItem="{Binding ViagenSelecionada, Mode=TwoWay}" CachingStrategy="RecycleElement" RowHeight="20" HasUnevenRows="false"  IsPullToRefreshEnabled="true"  IsRefreshing="{Binding IsBusy, Mode=OneWay}" >
+      <ListView x:Name="listView" VerticalOptions="FillAndExpand" SeparatorVisibility="None" ItemsSource="{Binding Viagens}" SelectedItem="{Binding ViagemSelecionada, Mode=TwoWay}" CachingStrategy="RecycleElement" RowHeight="60" HasUnevenRows="false"  IsPullToRefreshEnabled="true"  IsRefreshing="{Binding IsBusy, Mode=OneWay}" >
         <ListView.ItemTemplate>
           <DataTemplate>
-            <ViewCell Height="20">
+            <ViewCell Height="60">
               <ContentView >
-                <StackLayout Orientation="Horizontal" Spacing="0">
-                  <Button Aspect="AspectFill" HeightRequest ="20" WidthRequest="20" Source="" Text="Selecionar" Command="{Binding SelecionarCommand}" CommandParameter="{Binding Identificador}" />
-                  <Label Text="{Binding Nome}" HeightRequest="20" VerticalTextAlignment="End" LineBreakMode="TailTruncation" />
+                <StackLayout Orientation="Horizontal" Spacing="10">
+                  <Button   Text="Selecionar" Command="{Binding Path=BindingContext.SelecionarCommand,  Source={x:Reference paginaSelecao}}" CommandParameter="{Binding Identificador}"  />
+                  <Label Text="{Binding Nome}"  VerticalTextAlignment="End" LineBreakMode="TailTruncation" />
                 </StackLayout>
               </ContentView>
             </ViewCell>

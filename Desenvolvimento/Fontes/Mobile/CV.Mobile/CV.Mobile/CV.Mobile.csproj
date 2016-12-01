@@ -40,17 +40,34 @@
     </Compile>
     <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="Controls\ImageButtonSourceConverter.cs" />
+    <Compile Include="Helpers\ImageResourceExtension.cs" />
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Interfaces\IValidaAutenticacao.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Gasto.cs" />
+    <Compile Include="Models\Atracao.cs" />
+    <Compile Include="Models\AvaliacaoAerea.cs" />
+    <Compile Include="Models\AvaliacaoAluguel.cs" />
+    <Compile Include="Models\Foto.cs" />
+    <Compile Include="Models\RefeicaoPedido.cs" />
+    <Compile Include="Models\AvaliacaoLoja.cs" />
+    <Compile Include="Models\AvaliacaoHotel.cs" />
+    <Compile Include="Models\AvaliacaoAtracao.cs" />
     <Compile Include="Models\Constants.cs" />
+    <Compile Include="Models\ConsultaAmigo.cs" />
+    <Compile Include="Models\ControleSincronizacao.cs" />
     <Compile Include="Models\CriterioBusca.cs" />
     <Compile Include="Models\DadosGoogleToken.cs" />
     <Compile Include="Models\ItemMenu.cs" />
     <Compile Include="Models\MessageKeys.cs" />
+    <Compile Include="Models\ParticipanteViagem.cs" />
+    <Compile Include="Models\RequisicaoAmizade.cs" />
     <Compile Include="Models\ResultadoConsultaTipo.cs" />
+    <Compile Include="Models\Usuario.cs" />
+    <Compile Include="Models\GastoDividido.cs" />
+    <Compile Include="Models\UsuarioGasto.cs" />
     <Compile Include="Models\UsuarioLogado.cs" />
     <Compile Include="Models\Viagem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

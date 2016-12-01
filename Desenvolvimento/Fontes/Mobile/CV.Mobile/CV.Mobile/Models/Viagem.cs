@@ -21,8 +21,13 @@ namespace CV.Mobile.Models
         private bool _PublicaGasto;
         private decimal? _PercentualIOF;
         private int? _Moeda;
+        private string _CodigoAlbum;
         private bool _Edicao;
         private bool _VejoGastos;
+        private DateTime? _DataAlteracao;
+        private DateTime? _DataExclusao;
+        private ObservableRangeCollection<ParticipanteViagem> _Participantes = new ObservableRangeCollection<ParticipanteViagem>();
+        private ObservableRangeCollection<UsuarioGasto> _UsuariosGastos = new ObservableRangeCollection<UsuarioGasto>();
 
         public int? Id
         {
@@ -204,6 +209,71 @@ namespace CV.Mobile.Models
             set
             {
                 _VejoGastos = value;
+            }
+        }
+
+        public string CodigoAlbum
+        {
+            get
+            {
+                return _CodigoAlbum;
+            }
+
+            set
+            {
+                SetProperty(ref _CodigoAlbum, value);
+            }
+        }
+
+        public DateTime? DataAlteracao
+        {
+            get
+            {
+                return _DataAlteracao;
+            }
+
+            set
+            {
+                _DataAlteracao = value;
+            }
+        }
+
+        public DateTime? DataExclusao
+        {
+            get
+            {
+                return _DataExclusao;
+            }
+
+            set
+            {
+                _DataExclusao = value;
+            }
+        }
+
+        public ObservableRangeCollection<ParticipanteViagem> Participantes
+        {
+            get
+            {
+                return _Participantes;
+            }
+
+            set
+            {
+                SetProperty(ref _Participantes, value);
+            }
+        }
+
+        public ObservableRangeCollection<UsuarioGasto> UsuariosGastos
+        {
+            get
+            {
+                return _UsuariosGastos;
+            }
+
+            set
+            {
+                _UsuariosGastos = value;
             }
         }
     }
