@@ -4,6 +4,7 @@
              x:Class="CV.Mobile.Views.SelecionarViagemPage"
              xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
              Title="Selecionar Viagem"
+             xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
              x:Name="paginaSelecao">
   <ContentPage.Behaviors>
     <behaviors:EventHandlerBehavior EventName="Appearing">
@@ -11,16 +12,18 @@
     </behaviors:EventHandlerBehavior>
   </ContentPage.Behaviors>
   <ContentPage.ToolbarItems>
-    <ToolbarItem x:Name="PesquisarToolbarItem" Icon="lupa.png" Text="Pesquisar" Command="{Binding SelecionarCommand}" />
+    <ToolbarItem x:Name="PesquisarToolbarItem" Icon="search24.png"  Command="{Binding SelecionarCommand}" />
   </ContentPage.ToolbarItems>  
   <ContentPage.Content>
     <StackLayout Spacing="0">
       <ListView x:Name="listView" VerticalOptions="FillAndExpand" SeparatorVisibility="None" ItemsSource="{Binding Viagens}" SelectedItem="{Binding ViagemSelecionada, Mode=TwoWay}" CachingStrategy="RecycleElement" RowHeight="60" HasUnevenRows="false"  IsPullToRefreshEnabled="true"  IsRefreshing="{Binding IsBusy, Mode=OneWay}" >
         <ListView.ItemTemplate>
+          
           <DataTemplate>
             <ViewCell Height="60">
               <ContentView >
                 <StackLayout Orientation="Horizontal" Spacing="10">
+                  <Image Source="{local:ImageResource CV.Mobile.Icones.checkmark24.png}" Aspect="AspectFit" HeightRequest="24" WidthRequest="24" />
                   <Button   Text="Selecionar" Command="{Binding Path=BindingContext.SelecionarCommand,  Source={x:Reference paginaSelecao}}" CommandParameter="{Binding Identificador}"  />
                   <Label Text="{Binding Nome}"  VerticalTextAlignment="End" LineBreakMode="TailTruncation" />
                 </StackLayout>

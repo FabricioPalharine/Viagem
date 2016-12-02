@@ -25,4 +25,6 @@ namespace CV.Mobile.Helpers
             return imageSource;
         }
     }
+
+   
 }
