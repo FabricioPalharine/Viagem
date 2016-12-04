@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.EditarViagemPage"
+             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             Title="Selecionar Viagem"
+             xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+             x:Name="paginaSelecao">
+  <TabbedPage.Resources>
+    <ResourceDictionary>
+      <local:InverseBooleanConverter x:Key="boolInverterConverter" />
+    </ResourceDictionary>
+  </TabbedPage.Resources>
+  <TabbedPage.Behaviors>
+    <behaviors:EventHandlerBehavior EventName="Appearing">
+      <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
+    </behaviors:EventHandlerBehavior>
+  </TabbedPage.Behaviors>
+
+  <TabbedPage.ToolbarItems>
+    <ToolbarItem x:Name="PesquisarToolbarItem" Icon="save.png"  Command="{Binding SalvarCommand}" />
+  </TabbedPage.ToolbarItems>
+ 
+  <ContentPage Title="Dados">
+    <ContentPage.Content>
+      <StackLayout Spacing="0">
+        <Label Text="Nome"  />
+        <Entry Text="{Binding ItemViagem.Nome}" />
+        <Label Text="Data Início"  />
+        <DatePicker VerticalOptions="CenterAndExpand" Date="{Binding ItemViagem.DataInicio}">
+          <DatePicker.Format>dd/MM/yyyy</DatePicker.Format>
+        </DatePicker>      
+        <Label Text="Data Fim"  />
+        <DatePicker VerticalOptions="CenterAndExpand" Date="{Binding ItemViagem.DataFim}">
+          <DatePicker.Format>dd/MM/yyyy</DatePicker.Format>
+        </DatePicker>
+        <Label Text="Unidade Métrica"  />
+        <Switch IsToggled="{Binding ItemViagem.UnidadeMetrica}"></Switch>
+        <Label Text="Número Participantes"  />
+        <Label Text="Gastos Públicos"  />
+        <Switch IsToggled="{Binding ItemViagem.PublicaGasto}"></Switch>
+
+        <Label Text="Moeda Padrão"  />
+        <local:ExtendedPicker x:Name="myPicker"
+                             DisplayProperty="Descricao"
+                             KeyMemberPath="Codigo"
+                             ItemsSource="{Binding ListaMoeda}"
+                             SelectedItem="{Binding Moeda}"
+                             HorizontalOptions="FillAndExpand"
+                            />
+      </StackLayout>
+
+    </ContentPage.Content>
+  </ContentPage>
+   
+  <ContentPage Title="Participantes">
+        <ContentPage.Content>
+          <Label Text="Amigo"  />
+        </ContentPage.Content>
+      </ContentPage>
+   
+</TabbedPage>

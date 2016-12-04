@@ -25,6 +25,9 @@ namespace CV.Mobile.ViewModels
             EntrarViagemCommand = new Command(
                                     async () => await EntraViagem(),
                                     () => true);
+            CriarViagemCommand = new Command(
+                                    async () => await CriarViagem(),
+                                    () => true);
         }
 
         private async Task DeslogarAplicacao()
@@ -39,6 +42,12 @@ namespace CV.Mobile.ViewModels
         private async Task EntraViagem()
         {
             var Pagina = new SelecionarViagemPage() { BindingContext = new SelecionarViagemViewModel() };
+            await PushAsync(Pagina);
+        }
+
+        private async Task CriarViagem()
+        {
+            var Pagina = new EditarViagemPage() { BindingContext = new EditarViagemViewModel() };
             await PushAsync(Pagina);
         }
 

@@ -98,10 +98,7 @@
                             <div class="form-group col-md-6" ng-class="{ 'has-error':itemViagemEdit.CamposInvalidos.PublicaGasto}">
                                 <label><input type="checkbox" ng-model="itemViagemEdit.itemViagem.PublicaGasto">@TextosPaginas.Viagem_PublicaGasto</label>
                             </div>
-                            <div class="form-group col-md-6" ng-class="{ 'has-error':itemViagemEdit.CamposInvalidos.PercentualIOF}">
-                                <label>@TextosPaginas.Viagem_PercentualIOF</label>
-                                <input type="text" class="form-control" ng-model="itemViagemEdit.itemViagem.PercentualIOF" empty-to-null decimal-input="{digits:4, integerDigits:5}">
-                            </div>
+
                             <div class="form-group col-md-6" ng-class="{ 'has-error':itemViagemEdit.CamposInvalidos.Moeda}">
                                 <label>@TextosPaginas.Viagem_Moeda</label>
                                 <select ng-model="itemViagemEdit.itemMoeda" class="form-control" ng-options="obj.Descricao for obj in itemViagemEdit.ListaMoeda track by obj.Codigo">

@@ -40,7 +40,9 @@
     </Compile>
     <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="Controls\ImageButtonSourceConverter.cs" />
+    <Compile Include="Helpers\ExtendedPicker.cs" />
     <Compile Include="Helpers\ImageResourceExtension.cs" />
+    <Compile Include="Helpers\InverseBooleanConverter.cs" />
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Interfaces\IValidaAutenticacao.cs" />
     <Compile Include="MainPage.xaml.cs">
@@ -51,6 +53,7 @@
     <Compile Include="Models\AvaliacaoAerea.cs" />
     <Compile Include="Models\AvaliacaoAluguel.cs" />
     <Compile Include="Models\Foto.cs" />
+    <Compile Include="Models\ItemLista.cs" />
     <Compile Include="Models\RefeicaoPedido.cs" />
     <Compile Include="Models\AvaliacaoLoja.cs" />
     <Compile Include="Models\AvaliacaoHotel.cs" />
@@ -78,6 +81,7 @@
     <Compile Include="ViewModels\MasterDetailViewModel.cs" />
     <Compile Include="ViewModels\MenuInicialViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
+    <Compile Include="ViewModels\EditarViagemViewModel.cs" />
     <Compile Include="ViewModels\SelecionarViagemViewModel.cs" />
     <Compile Include="Views\AutenticacaoPage.xaml.cs">
       <DependentUpon>AutenticacaoPage.xaml</DependentUpon>
@@ -93,6 +97,9 @@
     </Compile>
     <Compile Include="Views\MenuPage.xaml.cs">
       <DependentUpon>MenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EditarViagemPage.xaml.cs">
+      <DependentUpon>EditarViagemPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SelecionarViagemPage.xaml.cs">
       <DependentUpon>SelecionarViagemPage.xaml</DependentUpon>
@@ -235,7 +242,12 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EditarViagemPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Icones\checkmark24.png" />
     <EmbeddedResource Include="Icones\search24.png" />
