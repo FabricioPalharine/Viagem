@@ -170,6 +170,7 @@
     <Compile Include="Extensions\Extension.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Renderer\AutenticacaoPageRenderer.cs" />
+    <Compile Include="Renderer\FormattedNumberEntryRenderer.cs" />
     <Compile Include="Renderer\ImageButtonRenderer.cs" />
     <Compile Include="Renderer\ListButtonRenderer .cs" />
     <Compile Include="Resources\Resource.Designer.cs" />

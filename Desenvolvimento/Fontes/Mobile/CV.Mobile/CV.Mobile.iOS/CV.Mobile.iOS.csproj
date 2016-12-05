@@ -91,6 +91,7 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Renderer\AutenticacaoPageRenderer.cs" />
+    <Compile Include="Renderer\FormattedNumberEntryRenderer.cs" />
     <Compile Include="Renderer\ImageButtonRenderer.cs" />
     <Compile Include="Services\ValidarAutenticacaoService.cs" />
     <None Include="app.config" />

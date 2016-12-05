@@ -35,3 +35,5 @@ obj
 *.VC.db filesv
 *.jfm
 /Desenvolvimento/Fontes/CV.Database/obj/Debug
+/Desenvolvimento/Fontes/Mobile/CV.Mobile/CV.Mobile.iOS/bin/iPhoneSimulator/Debug
+/Desenvolvimento/Fontes/Mobile/CV.Mobile/CV.Mobile.iOS/obj/iPhoneSimulator/Debug
