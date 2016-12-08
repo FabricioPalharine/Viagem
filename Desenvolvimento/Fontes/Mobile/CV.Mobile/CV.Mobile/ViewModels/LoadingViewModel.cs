@@ -24,7 +24,11 @@ namespace CV.Mobile.ViewModels
                                                                        () => true);
 
             PageAppearingCommand = new Command(
-                                                                      async () => await ConectarAutenticacao(),
+                                                                      async () => {
+                                                                          var itemUsuario = await ConectarAutenticacao();
+                                                                          if (itemUsuario != null)
+                                                                            (App.Current as App).RedirectToMenu(itemUsuario);
+                                                                      },
                                                                       () => true);
 
             EntrarCommand = new Command(()=>
@@ -57,13 +61,14 @@ namespace CV.Mobile.ViewModels
 
         }
 
-        private async Task ConectarAutenticacao()
+        private async Task<UsuarioLogado> ConectarAutenticacao()
         {
+            UsuarioLogado itemUsuario = null;
             IValidaAutenticacao _validador = ServiceLocator.Current.GetInstance<IValidaAutenticacao>();
             var autenticacao = await _validador.RetornarAutenticacaoAplicacao();
             if (autenticacao != null)
             {
-                UsuarioLogado itemUsuario = new UsuarioLogado();
+                itemUsuario = new UsuarioLogado();
                 using (ApiService srv = new ApiService())
                 {
                     itemUsuario = await srv.CarregarDadosAplicativo(new UsuarioLogado() { CodigoGoogle = autenticacao.Username });
@@ -76,11 +81,12 @@ namespace CV.Mobile.ViewModels
                         itemUsuario.LinkFoto = autenticacao.Properties["LinkFoto"];
                         itemUsuario.Nome = autenticacao.Properties["Nome"];
                     }
-                    (App.Current as App).RedirectToMenu(itemUsuario);
+                    
                 }
 
             }
             LoadFinished = true;
+            return itemUsuario;
         }
     }
 }

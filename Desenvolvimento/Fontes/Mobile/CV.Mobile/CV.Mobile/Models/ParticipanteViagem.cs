@@ -15,5 +15,6 @@ namespace CV.Mobile.Models
         public int? IdentificadorUsuario { get; set; }
         public string NomeUsuario { get; set; }
         public Usuario ItemUsuario { get; set; }
+        public bool PermiteExcluir { get; set; }
     }
 }

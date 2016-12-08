@@ -19,6 +19,7 @@ namespace CV.Mobile.ViewModels
         public MasterDetailViewModel(UsuarioLogado itemUsuario)
         {
             MenuViewModel vmMenu = new MenuViewModel(itemUsuario);
+            _ItemUsuario = itemUsuario;
             vmMenu.ItemMenuSelecionado += async (itemMenu) => { await SelecionarItemMenu(itemMenu); };
             var paginaMenu = new MenuPage() { BindingContext = vmMenu };
             MasterPage = paginaMenu;

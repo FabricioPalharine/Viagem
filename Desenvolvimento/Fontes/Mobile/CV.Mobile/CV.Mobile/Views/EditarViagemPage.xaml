@@ -1,26 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+<controles:ChildBindableTabbedPage  xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CV.Mobile.Views.EditarViagemPage"
              xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
-             Title="Selecionar Viagem"
+             Title="Editar Viagem"
              xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+             xmlns:controles="clr-namespace: CV.Mobile.Controls;assembly=CV.Mobile" 
+             ChildrenList="{Binding ListaPaginas}"
              x:Name="paginaSelecao">
-  <TabbedPage.Resources>
+  
+  <controles:ChildBindableTabbedPage.Resources>
     <ResourceDictionary>
       <local:InverseBooleanConverter x:Key="boolInverterConverter" />
+      <local:IntStringConverter x:Key="intStringConverter" />
     </ResourceDictionary>
-  </TabbedPage.Resources>
-  <TabbedPage.Behaviors>
+  </controles:ChildBindableTabbedPage.Resources>
+  
+  <controles:ChildBindableTabbedPage.Behaviors>
     <behaviors:EventHandlerBehavior EventName="Appearing">
       <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
     </behaviors:EventHandlerBehavior>
-  </TabbedPage.Behaviors>
+  </controles:ChildBindableTabbedPage.Behaviors>
 
-  <TabbedPage.ToolbarItems>
-    <ToolbarItem x:Name="PesquisarToolbarItem" Icon="save.png"  Command="{Binding SalvarCommand}" />
-  </TabbedPage.ToolbarItems>
- 
+  <controles:ChildBindableTabbedPage.ToolbarItems>
+    <ToolbarItem  Icon="save.png"  Command="{Binding SalvarCommand}" />
+  </controles:ChildBindableTabbedPage.ToolbarItems>
+
   <ContentPage Title="Dados">
     <ContentPage.Content>
       <StackLayout Spacing="0">
@@ -29,34 +34,79 @@
         <Label Text="Data Início"  />
         <DatePicker VerticalOptions="CenterAndExpand" Date="{Binding ItemViagem.DataInicio}">
           <DatePicker.Format>dd/MM/yyyy</DatePicker.Format>
-        </DatePicker>      
+        </DatePicker>
         <Label Text="Data Fim"  />
         <DatePicker VerticalOptions="CenterAndExpand" Date="{Binding ItemViagem.DataFim}">
           <DatePicker.Format>dd/MM/yyyy</DatePicker.Format>
         </DatePicker>
-        <Label Text="Unidade Métrica"  />
-        <Switch IsToggled="{Binding ItemViagem.UnidadeMetrica}"></Switch>
+        <StackLayout Orientation="Horizontal" Spacing="10">
+          <Label Text="Unidade Métrica"  />
+          <Switch IsToggled="{Binding ItemViagem.UnidadeMetrica}"></Switch>
+        </StackLayout>
+       
         <Label Text="Número Participantes"  />
-        <Label Text="Gastos Públicos"  />
-        <Switch IsToggled="{Binding ItemViagem.PublicaGasto}"></Switch>
+        <controles:FormattedNumberEntry x:Name="FormattedEntry" Keyboard="Numeric" DecimalPlaces="0" Value="{Binding ItemViagem.QuantidadeParticipantes}" />
 
+        <StackLayout Orientation="Horizontal" Spacing="10">
+            <Label Text="Gastos Públicos"  />
+            <Switch IsToggled="{Binding ItemViagem.PublicaGasto}"></Switch>
+        </StackLayout>
         <Label Text="Moeda Padrão"  />
-        <local:ExtendedPicker x:Name="myPicker"
+        <controles:ExtendedPicker
                              DisplayProperty="Descricao"
                              KeyMemberPath="Codigo"
                              ItemsSource="{Binding ListaMoeda}"
-                             SelectedItem="{Binding Moeda}"
+                             SelectedItem="{Binding ItemViagem.Moeda, Converter={StaticResource intStringConverter}}"
                              HorizontalOptions="FillAndExpand"
                             />
       </StackLayout>
 
     </ContentPage.Content>
   </ContentPage>
-   
+
   <ContentPage Title="Participantes">
-        <ContentPage.Content>
-          <Label Text="Amigo"  />
-        </ContentPage.Content>
-      </ContentPage>
-   
-</TabbedPage>
+
+    <ContentPage.ToolbarItems>
+      <ToolbarItem  Icon="add24.png"  Command="{Binding AdicionarParticipanteCommand}" />
+    </ContentPage.ToolbarItems>
+    
+    <StackLayout Spacing="0">
+      <Label Text="Amigo"  />
+      <StackLayout Orientation="Horizontal" Spacing="10">
+        <controles:ExtendedPicker
+                              DisplayProperty="Nome"
+                              ItemsSource="{Binding ListaAmigos}"
+                              SelectedItem="{Binding ItemAmigo}"
+                              HorizontalOptions="FillAndExpand"
+                               />
+       
+      </StackLayout>
+      <ListView VerticalOptions="FillAndExpand" SeparatorVisibility="None" RowHeight="20" ItemsSource="{Binding ItemViagem.Participantes}" SelectedItem="{Binding ParticipanteSelecionado, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="false"  IsPullToRefreshEnabled="False"  >
+        <ListView.ItemTemplate>
+
+          <DataTemplate>
+            <ViewCell >
+              <ContentView >
+                <StackLayout Orientation="Horizontal" Spacing="10">
+                  <Image Source="{local:ImageResource CV.Mobile.Icones.delete24.png}" Aspect="AspectFit" HeightRequest="16" WidthRequest="16" IsVisible="{Binding PermiteExcluir}" >
+                    <Image.GestureRecognizers>
+                      <TapGestureRecognizer
+                           Command="{Binding Path=BindingContext.SelecionarCommand,  Source={x:Reference paginaSelecao}}"
+                            CommandParameter="{Binding .}"
+                           NumberOfTapsRequired="1"/>
+                    </Image.GestureRecognizers>
+                  </Image>
+                  <StackLayout>
+                    <Label Text="{Binding NomeUsuario}"  VerticalTextAlignment="End" LineBreakMode="TailTruncation" />                    
+                  </StackLayout>
+                </StackLayout>
+              </ContentView>
+            </ViewCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+    </StackLayout>
+    </ContentPage>
+
+ 
+</controles:ChildBindableTabbedPage>

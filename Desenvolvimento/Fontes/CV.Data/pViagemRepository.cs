@@ -550,6 +550,16 @@ namespace CV.Data
             return Query.ToList();
         }
 
+        public List<Usuario> ListarUsuarioAmigoComigo(int identificadorUsuario)
+        {
+            IQueryable<Usuario> Query = this.Context.Usuarios;
+            IQueryable<Amigo> QueryAmigo = this.Context.Amigos.Where(d => d.IdentificadorUsuario == identificadorUsuario);
+            Query = Query.Where(d => QueryAmigo.Where(e => e.IdentificadorAmigo == d.Identificador).Any());
+            Query = Query.Union(this.Context.Usuarios.Where(d=>d.Identificador == identificadorUsuario));
+            return Query.ToList();
+        }
+
+
         public List<Viagem> ListarViagem(int? IdentificadorParticipante, string Nome, bool? Aberto, DateTime? DataInicioDe, DateTime? DataFimDe, DateTime? DataInicioAte, DateTime? DataFimAte, int? IdentificadorUsuario)
         {
             IQueryable<Usuario> Query = this.Context.Usuarios;

@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Acompanham Custos"
+             xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+             xmlns:controles="clr-namespace: CV.Mobile.Controls;assembly=CV.Mobile"
+              x:Class="CV.Mobile.Views.EdicaoViagemDados" 
+             x:Name="paginaSelecao"
+             >
+  <ContentPage.ToolbarItems>
+    <ToolbarItem  Icon="add24.png"  Command="{Binding AdicionarCustoCommand}" />
+  </ContentPage.ToolbarItems>
+  <StackLayout Spacing="0">
+    <Label Text="Amigo"  />
+    <StackLayout Orientation="Horizontal" Spacing="10">
+      <controles:ExtendedPicker
+                            DisplayProperty="Nome"
+                            ItemsSource="{Binding ListaAmigos}"
+                            SelectedItem="{Binding ItemAmigo}"
+                            HorizontalOptions="FillAndExpand"
+                               />
+
+    </StackLayout>
+    <Entry Text="{Binding ItemViagem.Nome}" />
+    <ListView VerticalOptions="FillAndExpand" SeparatorVisibility="None" RowHeight="20" ItemsSource="{Binding ItemViagem.UsuariosGastos}" SelectedItem="{Binding UsuarioGastoSelecionado, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="false"  IsPullToRefreshEnabled="False"  >
+      <ListView.ItemTemplate>
+
+        <DataTemplate>
+          <ViewCell >
+            <ContentView >
+              <StackLayout Orientation="Horizontal" Spacing="10">
+                <Image Source="{local:ImageResource CV.Mobile.Icones.delete24.png}" Aspect="AspectFit" HeightRequest="16" WidthRequest="16" IsVisible="{Binding PermiteExcluir}" >
+                  <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                         Command="{Binding Path=BindingContext.ExcluirCustoCommand,  Source={x:Reference paginaSelecao}}"
+                          CommandParameter="{Binding .}"
+                         NumberOfTapsRequired="1"/>
+                  </Image.GestureRecognizers>
+                </Image>
+                <StackLayout>
+                  <Label Text="{Binding NomeUsuario}"  VerticalTextAlignment="End" LineBreakMode="TailTruncation" />
+                </StackLayout>
+              </StackLayout>
+            </ContentView>
+          </ViewCell>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+  </StackLayout>
+</ContentPage>

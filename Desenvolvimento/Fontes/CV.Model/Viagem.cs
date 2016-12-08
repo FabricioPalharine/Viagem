@@ -38,8 +38,10 @@ private void ValidarNome(Microsoft.Practices.EnterpriseLibrary.Validation.Valida
   }
 }
 
+			[NotNullValidator(MessageTemplateResourceName="Viagem_DataInicio",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public DateTime? DataInicio { get; set; }
 
+			[NotNullValidator(MessageTemplateResourceName="Viagem_DataFim",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public DateTime? DataFim { get; set; }
 
 			[NotNullValidator(MessageTemplateResourceName="Viagem_Aberto",MessageTemplateResourceType=typeof(MensagemModelo))]

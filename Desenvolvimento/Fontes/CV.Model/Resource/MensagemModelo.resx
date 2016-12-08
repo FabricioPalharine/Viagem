@@ -1035,4 +1035,10 @@
   <data name="CalendarioPrevisto_DataFim" xml:space="preserve">
     <value>O campo Data Fim é obrigatório</value>
   </data>
+  <data name="Viagem_DataInicio" xml:space="preserve">
+    <value>O campo Data Início é obrigatório</value>
+  </data>
+  <data name="Viagem_DataFim" xml:space="preserve">
+    <value>O campo Fim é obrigatório</value>
+  </data>
 </root>

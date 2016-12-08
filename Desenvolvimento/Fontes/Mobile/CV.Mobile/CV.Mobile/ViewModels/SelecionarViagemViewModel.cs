@@ -15,10 +15,14 @@ namespace CV.Mobile.ViewModels
     {
         public SelecionarViagemViewModel()
         {
-            _itemCriterioBusca = new CriterioBusca() { Aberto = true, DataInicioDe = DateTime.Today.AddMonths(-1), DataInicioAte = DateTime.Today.AddMonths(2), DataFimDe = DateTime.Today.AddMonths(-1), DataFimAte= DateTime.Today.AddMonths(2) };
+            _itemCriterioBusca = new CriterioBusca() { Aberto = true};
             Viagens = new ObservableCollection<Viagem>();
             PageAppearingCommand = new Command(
-                                                                    async () => await CarregarListaViagens(),
+                                                                    async () =>
+                                                                    {
+                                                                        await CarregarListaAmigos();
+                                                                        await CarregarListaViagens();
+                                                                    },
                                                                     () => true);
             SelecionarCommand = new Command<int>(async (Identificador) => await Selecionar(Identificador));
             PesquisarCommand = new Command(
@@ -29,7 +33,6 @@ namespace CV.Mobile.ViewModels
                                                         () => true);
 
             ListaSituacao = new ObservableCollection<ItemLista>();
-            ListaAmigos = new ObservableCollection<Usuario>();
             ListaSituacao.Add(new ItemLista() { Codigo="1",Descricao="Aberta" });
             ListaSituacao.Add(new ItemLista() { Codigo = "2", Descricao = "Fechada" });
             ListaSituacao.Add(new ItemLista() { Codigo = "3", Descricao = "Todas" });
@@ -81,9 +84,19 @@ namespace CV.Mobile.ViewModels
            
         }
 
+        private async Task CarregarListaAmigos()
+        {
+            using (ApiService srv = new ApiService())
+            {
+                var Dados = await srv.ListarAmigosComigo();
+                ListaAmigos = new ObservableCollection<Usuario>(Dados);
+                OnPropertyChanged("ListaAmigos");
+            }
+        }
 
         private async Task Selecionar(int Identificador)
-        { 
+        {
+            await AtualizarViagem(Identificador);
         }
 
         public CriterioBusca ItemCriterioBusca

@@ -28,7 +28,6 @@ namespace CV.Mobile.Models
         private DateTime? _DataExclusao;
         private ObservableRangeCollection<ParticipanteViagem> _Participantes = new ObservableRangeCollection<ParticipanteViagem>();
         private ObservableRangeCollection<UsuarioGasto> _UsuariosGastos = new ObservableRangeCollection<UsuarioGasto>();
-
         public int? Id
         {
             get

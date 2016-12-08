@@ -16,6 +16,7 @@ namespace CV.Mobile.Models
         public DateTime? DataToken { get; set; }
         public int? Lifetime { get; set; }
         public string Codigo { get; set; }
+        
 
     }
 }

@@ -5,6 +5,8 @@
              xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
              Title="Selecionar Viagem"
              xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+             xmlns:controles="clr-namespace:CV.Mobile.Controls;assembly=CV.Mobile"
+
              x:Name="paginaSelecao">
   <ContentPage.Resources>
   <ResourceDictionary>
@@ -54,7 +56,7 @@
       </ListView>
       <StackLayout  IsVisible="{Binding ModoPesquisa}">
         <Label Text="Amigo"  />
-        <local:ExtendedPicker x:Name="myPicker"
+        <controles:ExtendedPicker x:Name="myPicker"
                               DisplayProperty="Nome"
                               KeyMemberPath="Identificador"
                               ItemsSource="{Binding ListaAmigos}"
@@ -62,23 +64,23 @@
                               HorizontalOptions="FillAndExpand"
                                />
         <Label Text="Data Início De"  />
-        <DatePicker VerticalOptions="CenterAndExpand" Date="{Binding ItemCriterioBusca.DataInicioDe}">
-          <DatePicker.Format>dd/MM/yyyy</DatePicker.Format>
-        </DatePicker>
+        <controles:NullableDatePicker VerticalOptions="CenterAndExpand" NullableDate="{Binding ItemCriterioBusca.DataInicioDe}">
+          <controles:NullableDatePicker.Format>dd/MM/yyyy</controles:NullableDatePicker.Format>
+        </controles:NullableDatePicker>
         <Label Text="Data Início Até"  />
-        <DatePicker VerticalOptions="CenterAndExpand" Date="{Binding ItemCriterioBusca.DataInicioAte}">
-          <DatePicker.Format>dd/MM/yyyy</DatePicker.Format>
-        </DatePicker>
+        <controles:NullableDatePicker VerticalOptions="CenterAndExpand" NullableDate="{Binding ItemCriterioBusca.DataInicioAte}">
+          <controles:NullableDatePicker.Format>dd/MM/yyyy</controles:NullableDatePicker.Format>
+        </controles:NullableDatePicker>
         <Label Text="Data Fim De"  />
-        <DatePicker VerticalOptions="CenterAndExpand" Date="{Binding ItemCriterioBusca.DataFimDe}">
-          <DatePicker.Format>dd/MM/yyyy</DatePicker.Format>
-        </DatePicker>
+        <controles:NullableDatePicker VerticalOptions="CenterAndExpand" NullableDate="{Binding ItemCriterioBusca.DataFimDe}">
+          <controles:NullableDatePicker.Format>dd/MM/yyyy</controles:NullableDatePicker.Format>
+        </controles:NullableDatePicker>
         <Label Text="Data Fim Até"  />
-        <DatePicker VerticalOptions="CenterAndExpand" Date="{Binding ItemCriterioBusca.DataFimAte}">
-          <DatePicker.Format>dd/MM/yyyy</DatePicker.Format>
-        </DatePicker>
+        <controles:NullableDatePicker VerticalOptions="CenterAndExpand" NullableDate="{Binding ItemCriterioBusca.DataFimAte}">
+          <controles:NullableDatePicker.Format>dd/MM/yyyy</controles:NullableDatePicker.Format>
+        </controles:NullableDatePicker>
         <Label Text="Situação"  />
-        <local:ExtendedPicker 
+        <controles:ExtendedPicker
                                       DisplayProperty="Descricao"
                                       ItemsSource="{Binding ListaSituacao}"
                                       SelectedItem="{Binding ItemSituacao}"

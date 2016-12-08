@@ -38,11 +38,16 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ChildBindableTabbedPage.cs" />
     <Compile Include="Controls\FormattedNumberEntry.cs" />
     <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="Controls\ImageButtonSourceConverter.cs" />
-    <Compile Include="Helpers\ExtendedPicker.cs" />
+    <Compile Include="Controls\NullableDatePicker.cs" />
+    <Compile Include="Controls\ExtendedPicker.cs" />
+    <Compile Include="Helpers\EnumHelperExtension.cs" />
+    <Compile Include="Helpers\enumMoeda.cs" />
     <Compile Include="Helpers\ImageResourceExtension.cs" />
+    <Compile Include="Helpers\IntStringConverter.cs" />
     <Compile Include="Helpers\InverseBooleanConverter.cs" />
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Interfaces\IValidaAutenticacao.cs" />
@@ -55,6 +60,7 @@
     <Compile Include="Models\AvaliacaoAluguel.cs" />
     <Compile Include="Models\Foto.cs" />
     <Compile Include="Models\ItemLista.cs" />
+    <Compile Include="Models\PocoLogin.cs" />
     <Compile Include="Models\RefeicaoPedido.cs" />
     <Compile Include="Models\AvaliacaoLoja.cs" />
     <Compile Include="Models\AvaliacaoHotel.cs" />
@@ -75,6 +81,11 @@
     <Compile Include="Models\UsuarioLogado.cs" />
     <Compile Include="Models\Viagem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resource\EnumDescription.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EnumDescription.resx</DependentUpon>
+    </Compile>
     <Compile Include="Services\ApiService.cs" />
     <Compile Include="Services\OAuth2AuthenticatorToken.cs" />
     <Compile Include="ViewModels\BaseNavigationViewModel.cs" />
@@ -86,6 +97,9 @@
     <Compile Include="ViewModels\SelecionarViagemViewModel.cs" />
     <Compile Include="Views\AutenticacaoPage.xaml.cs">
       <DependentUpon>AutenticacaoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoViagemDados.xaml.cs">
+      <DependentUpon>EdicaoViagemDados.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoadingPage.xaml.cs">
       <DependentUpon>LoadingPage.xaml</DependentUpon>
@@ -208,6 +222,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resource\EnumDescription.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>EnumDescription.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\MenuInicialPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
@@ -252,6 +270,18 @@
   <ItemGroup>
     <EmbeddedResource Include="Icones\checkmark24.png" />
     <EmbeddedResource Include="Icones\search24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icones\add24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icones\delete24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoViagemDados.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />

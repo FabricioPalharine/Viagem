@@ -3,7 +3,7 @@ using System.Collections;
 using System.Reflection;
 using Xamarin.Forms;
 
-namespace CV.Mobile.Helpers
+namespace CV.Mobile.Controls
 {
     public class ExtendedPicker : Picker
     {
@@ -144,7 +144,7 @@ namespace CV.Mobile.Helpers
                     {
                         var keyProperty = bindablePicker.SelectedItem;
                         var objProperty = obj.GetType().GetRuntimeProperty(picker.KeyMemberPath);
-                        if (keyProperty == objProperty.GetValue(obj))
+                        if (keyProperty.ToString() == objProperty.GetValue(obj).ToString())
                         {
                             bindablePicker.SelectedIndex = count;
                             break;

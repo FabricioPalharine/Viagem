@@ -1,5 +1,8 @@
-﻿using CV.Mobile.Models;
+﻿using CV.Mobile.Helpers;
+using CV.Mobile.Models;
 using CV.Mobile.Services;
+using CV.Mobile.Views;
+using FormsToolkit;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,93 +16,199 @@ namespace CV.Mobile.ViewModels
 {
     public class EditarViagemViewModel : BaseNavigationViewModel
     {
+
+        public ObservableCollection<Page> ListaPaginas { get; set; }
+
         public EditarViagemViewModel()
         {
-            _itemCriterioBusca = new CriterioBusca() { Aberto = true, DataInicioDe = DateTime.Today.AddMonths(-1), DataInicioAte = DateTime.Today.AddMonths(2), DataFimDe = DateTime.Today.AddMonths(-1), DataFimAte= DateTime.Today.AddMonths(2) };
-            Viagens = new ObservableCollection<Viagem>();
+            var ListaAtual = new List<Page>();
+            var ItemUsuario = ((MasterDetailViewModel)Application.Current?.MainPage.BindingContext).ItemUsuario;
+            _ViagemSelecionada = new Viagem() {IdentificadorUsuario = ItemUsuario.Codigo, PublicaGasto =false, DataInicio=DateTime.Today, DataFim = DateTime.Today, QuantidadeParticipantes=1, UnidadeMetrica=true, Participantes = new MvvmHelpers.ObservableRangeCollection<ParticipanteViagem>(), UsuariosGastos = new MvvmHelpers.ObservableRangeCollection<UsuarioGasto>() , Moeda=790};
+            _ViagemSelecionada.Participantes.Add(new ParticipanteViagem() { IdentificadorUsuario = ItemUsuario.Codigo, NomeUsuario = ItemUsuario.Nome, ItemUsuario = new Usuario() { Identificador = ItemUsuario.Codigo, Nome = ItemUsuario.Nome }, PermiteExcluir = false });
+            _ViagemSelecionada.PropertyChanged += _ViagemSelecionada_PropertyChanged;
+            ListaAtual.Add(new EdicaoViagemDados());
             PageAppearingCommand = new Command(
-                                                                    async () => await CarregarListaViagens(),
+                                                                    async () => await CarregarListaAmigos(),
                                                                     () => true);
-            SelecionarCommand = new Command<int>(async (Identificador) => await Selecionar(Identificador));
-            PesquisarCommand = new Command(
-                                                                    async () => await VerificarPesquisa(),
-                                                                    () => true);
-            AtualizarListaCommand = new Command(
-                                                        async () => await CarregarListaViagens(),
+            SelecionarCommand = new Command<ParticipanteViagem>( (Identificador) =>  ExcluirParticipante(Identificador));
+            
+            AdicionarCustoCommand = new Command(() => AdicionarCusto(), () => true);
+            AdicionarParticipanteCommand = new Command(() => AdicionarParticipante(), () => true);
+            ExcluirCustoCommand = new Command<UsuarioGasto>((Item) => ExcluirGasto(Item));
+
+            SalvarCommand = new Command(
+                                                        async () => await Salvar(),
                                                         () => true);
 
-            ListaSituacao = new ObservableCollection<ItemLista>();
-            ListaAmigos = new ObservableCollection<Usuario>();
-            ListaSituacao.Add(new ItemLista() { Codigo="1",Descricao="Aberta" });
-            ListaSituacao.Add(new ItemLista() { Codigo = "2", Descricao = "Fechada" });
-            ListaSituacao.Add(new ItemLista() { Codigo = "3", Descricao = "Todas" });
-            ItemSituacao = ListaSituacao[0];
-        }
-        private ItemLista _ItemSituacao;
+            ListaMoeda = new ObservableCollection<ItemLista>();
+            List<ItemLista> lista = new List<ItemLista>();
+            foreach (var enumerador in Enum.GetValues(typeof(enumMoeda)))
+            {
+                var item = new ItemLista() { Codigo = Convert.ToInt32(enumerador).ToString(), Descricao = ((enumMoeda)enumerador).Descricao() };
+                ListaMoeda.Add(item);
+            }
+            ListaMoeda = new ObservableCollection<ItemLista>( ListaMoeda.OrderBy(d => d.Descricao));
+            ListaPaginas = new ObservableCollection<Page>(ListaAtual);
 
-        private CriterioBusca _itemCriterioBusca;
-        public ObservableCollection<Viagem> Viagens { get; set; }
+        }
+
+        private void AdicionarParticipante()
+        {
+            if (ItemParticipante != null)
+            {
+                if (ItemViagem.Participantes.Where(d=>d.IdentificadorUsuario == ItemParticipante.Identificador).Any())
+                {
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Participante já Adicionado",
+                        Message = "O Participante selecionado já está adicionado a Viagem",
+                        Cancel = "OK"
+                    });
+                }
+                else
+                {
+                    ItemViagem.Participantes.Add(new ParticipanteViagem() { IdentificadorUsuario = ItemParticipante.Identificador, NomeUsuario = ItemParticipante.Nome, PermiteExcluir = true, ItemUsuario = ItemParticipante });
+                    if (ItemViagem.UsuariosGastos.Where(d=>d.IdentificadorUsuario == ItemParticipante.Identificador).Any())
+                    {
+                        ItemViagem.UsuariosGastos.Remove(ItemViagem.UsuariosGastos.Where(d => d.IdentificadorUsuario == ItemParticipante.Identificador).First());
+                    }
+                }
+            }
+        }
+
+        private void AdicionarCusto()
+        {
+            if (ItemAmigo != null)
+            {
+                if (ItemViagem.UsuariosGastos.Where(d => d.IdentificadorUsuario == ItemAmigo.Identificador).Any())
+                {
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Amigo já Adicionado",
+                        Message = "O Amigo selecionado já pode ver os gastos da viagem",
+                        Cancel = "OK"
+                    });
+                }
+                else if (ItemViagem.Participantes.Where(d => d.IdentificadorUsuario == ItemAmigo.Identificador).Any())
+                {
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Amigo Participante",
+                        Message = "O Amigo não pode ser adicionado, pois ele é um participante da viagem",
+                        Cancel = "OK"
+                    });
+                }
+                else
+                {
+                    ItemViagem.UsuariosGastos.Add(new UsuarioGasto() { IdentificadorUsuario = ItemParticipante.Identificador, NomeUsuario = ItemParticipante.Nome, ItemUsuario = ItemParticipante });
+                   
+                }
+            }
+        }
+
+        private void _ViagemSelecionada_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+           if (e.PropertyName == "PublicaGasto")
+            {
+                var ListaAtual = ListaPaginas.ToList();
+                if (!ItemViagem.PublicaGasto)
+                    ListaAtual.Add(new EdicaoViagemDados());
+                else if (ListaAtual.Any())
+                    ListaAtual.RemoveAt(0);
+                ListaPaginas = new ObservableCollection<Page>(ListaAtual);
+                OnPropertyChanged("ListaPaginas");
+
+            }
+        }
+
         public ObservableCollection<Usuario> ListaAmigos { get; set; }
-        public ObservableCollection<ItemLista> ListaSituacao { get; set; }
+        public ObservableCollection<ItemLista> ListaMoeda { get; set; }
 
         private Usuario _ItemAmigo;
+        private Usuario _ItemParticipante;
+        private ParticipanteViagem _ParticipanteSelecionado;
+        private UsuarioGasto _UsuarioGastoSelecionado;
+
         public Command PageAppearingCommand { get; set; }
         public Command PesquisarCommand { get; set; }
         public Command SelecionarCommand { get; set; }
-        public Command AtualizarListaCommand { get; set; }
+        public Command ExcluirCustoCommand { get; set; }
+
+        public Command AdicionarParticipanteCommand { get; set; }
+        public Command AdicionarCustoCommand { get; set; }
+
+        public Command SalvarCommand { get; set; }
 
         private Viagem _ViagemSelecionada;
 
         private bool _ModoPesquisa = false;
 
-        private async Task CarregarListaViagens()
+        private async Task CarregarListaAmigos()
         {
             IsBusy = true;
-            if (AtualizarListaCommand.CanExecute(null))
-                AtualizarListaCommand.ChangeCanExecute();
             using (ApiService srv = new ApiService())
             {
-                var Dados = await srv.ListarViagens(_itemCriterioBusca);
-                Viagens.Clear();
-                foreach (var itemViagem in Dados)
-                    Viagens.Add(itemViagem);
+                var Dados = await srv.ListarAmigos();
+                ListaAmigos = new ObservableCollection<Usuario>(Dados);
+                OnPropertyChanged("ListaAmigos");
             }
-            AtualizarListaCommand.ChangeCanExecute();
             IsBusy = false;
         }
 
-        private async Task VerificarPesquisa()
+        private async Task Salvar()
         {
-            if (ModoPesquisa)
+            IsBusy = true;
+            SalvarCommand.ChangeCanExecute();
+            try
             {
-                if (PesquisarCommand.CanExecute(null))
-                    PesquisarCommand.ChangeCanExecute();
-                await CarregarListaViagens();
-                PesquisarCommand.ChangeCanExecute();
+                await AtualizarViagem(ItemViagem.Identificador);
+                await PopAsync();
             }
-            ModoPesquisa = !ModoPesquisa;
-           
+            finally
+            {
+                SalvarCommand.ChangeCanExecute();
+                IsBusy = false;
+            }
         }
 
 
-        private async Task Selecionar(int Identificador)
-        { 
-        }
-
-        public CriterioBusca ItemCriterioBusca
+        private void ExcluirParticipante(ParticipanteViagem ItemParticipante)
         {
-            get
+            MessagingService.Current.SendMessage<MessagingServiceQuestion>(MessageKeys.DisplayQuestion, new MessagingServiceQuestion()
             {
-                return _itemCriterioBusca;
-            }
+                Title = string.Format("Excluir Participante {0}?", ItemParticipante.NomeUsuario),
+                Question = null,
+                Positive = "Excluir",
+                Negative = "Cancelar",
+                OnCompleted = new Action<bool>( result => {
+                    if (!result) return;
 
-            set
-            {
-                SetProperty(ref _itemCriterioBusca, value);
-            }
+                    // send a message that we want the given acquaintance to be deleted
+                    ItemViagem.Participantes.Remove(ItemParticipante);
+                })
+            });
         }
 
-        public Viagem ViagemSelecionada
+
+        private void ExcluirGasto(UsuarioGasto ItemParticipante)
+        {
+            MessagingService.Current.SendMessage<MessagingServiceQuestion>(MessageKeys.DisplayQuestion, new MessagingServiceQuestion()
+            {
+                Title = string.Format("Excluir Amigo {0}?", ItemParticipante.NomeUsuario),
+                Question = null,
+                Positive = "Excluir",
+                Negative = "Cancelar",
+                OnCompleted = new Action<bool>(result => {
+                    if (!result) return;
+
+                    // send a message that we want the given acquaintance to be deleted
+                    ItemViagem.UsuariosGastos.Remove(ItemParticipante);
+                })
+            });
+        }
+
+
+        public Viagem ItemViagem
         {
             get
             {
@@ -108,23 +217,12 @@ namespace CV.Mobile.ViewModels
 
             set
             {
-                _ViagemSelecionada = null;
-                OnPropertyChanged("ViagemSelecionada");
+
+                SetProperty(ref _ViagemSelecionada, value);
             }
         }
 
-        public bool ModoPesquisa
-        {
-            get
-            {
-                return _ModoPesquisa;
-            }
-
-            set
-            {
-                SetProperty(ref _ModoPesquisa, value);
-            }
-        }
+     
 
         public Usuario ItemAmigo
         {
@@ -135,33 +233,48 @@ namespace CV.Mobile.ViewModels
 
             set
             {
-                if (value != null)
-                    ItemCriterioBusca.IdentificadorParticipante = value.Identificador;
-                else
-                    ItemCriterioBusca.IdentificadorParticipante = null;
-                _ItemAmigo = value;
+                              _ItemAmigo = value;
             }
         }
 
-        public ItemLista ItemSituacao
+        public Usuario ItemParticipante
         {
             get
             {
-                return _ItemSituacao;
+                return _ItemParticipante;
             }
 
             set
             {
-                if (value != null)
-                {
-                    if (value.Codigo == "3")
-                        ItemCriterioBusca.Aberto = null;
-                    else
-                        ItemCriterioBusca.Aberto = value.Codigo == "1";
-                }
-                else
-                    ItemCriterioBusca.Aberto = null;
-                    _ItemSituacao = value;
+                _ItemParticipante = value;
+            }
+        }
+
+        public ParticipanteViagem ParticipanteSelecionado
+        {
+            get
+            {
+                return _ParticipanteSelecionado;
+            }
+
+            set
+            {
+                _ParticipanteSelecionado = null;
+                OnPropertyChanged();
+            }
+        }
+
+        public UsuarioGasto UsuarioGastoSelecionado
+        {
+            get
+            {
+                return _UsuarioGastoSelecionado;
+            }
+
+            set
+            {
+                _UsuarioGastoSelecionado = null;
+                OnPropertyChanged();
             }
         }
     }

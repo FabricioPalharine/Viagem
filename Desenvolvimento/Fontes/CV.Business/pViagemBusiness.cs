@@ -630,6 +630,7 @@ namespace CV.Business
                 itemResultado.Nome = ItemUsuario.Nome;
                 itemResultado.LinkFoto = userinfo.picture;
                 itemResultado.CodigoGoogle = ItemUsuario.Codigo;
+                itemResultado.Codigo = ItemUsuario.Identificador.GetValueOrDefault();
             }
             return itemResultado;
         }
@@ -972,6 +973,16 @@ namespace CV.Business
                 return data.ListarUsuarioAmigo(identificadorUsuario);
             }
         }
+
+
+        public List<Usuario> ListarUsuarioAmigoComigo(int identificadorUsuario)
+        {
+            using (ViagemRepository data = new ViagemRepository())
+            {
+                return data.ListarUsuarioAmigoComigo(identificadorUsuario);
+            }
+        }
+
 
         public List<Viagem> ListarViagem(int? IdentificadorParticipante, string Nome, bool? Aberto, DateTime? DataInicioDe, DateTime? DataFimDe, DateTime? DataInicioAte, DateTime? DataFimAte, int? IdentificadorUsuario)
         {

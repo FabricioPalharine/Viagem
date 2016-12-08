@@ -25,11 +25,11 @@ namespace CV.UI.Web.Controllers.WebAPI
 
             List<Viagem> _itens = biz.ListarViagem(json.IdentificadorParticipante, json.Nome, json.Aberto, json.DataInicioDe, json.DataInicioAte, json.DataFimDe, json.DataFimAte, token.IdentificadorUsuario).ToList();
             resultado.TotalRegistros = _itens.Count();
-            if (json.SortField != null && json.SortField.Any())
-                _itens = _itens.AsQueryable().OrderByField<Viagem>(json.SortField, json.SortOrder).ToList();
+            //if (json.SortField != null && json.SortField.Any())
+            //    _itens = _itens.AsQueryable().OrderByField<Viagem>(json.SortField, json.SortOrder).ToList();
 
-            if (json.Index.HasValue && json.Count.HasValue)
-                _itens = _itens.Skip(json.Index.Value).Take(json.Count.Value).ToList();
+            //if (json.Index.HasValue && json.Count.HasValue)
+            //    _itens = _itens.Skip(json.Index.Value).Take(json.Count.Value).ToList();
             resultado.Lista = _itens;
             resultado.Lista.ForEach(d => d.Participantes.ToList().ForEach(f => f.ItemViagem = null));
             return resultado;

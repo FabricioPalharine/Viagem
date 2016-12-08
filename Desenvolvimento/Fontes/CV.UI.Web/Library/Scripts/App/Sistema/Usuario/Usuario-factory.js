@@ -45,7 +45,16 @@
                           controller: 'listaAmigos'
                       },
                   isArray: true
-              }
+              },
+          listaAmigosComigo:
+             {
+                 method: 'GET',
+                 params:
+                     {
+                         controller: 'listaAmigosComigo'
+                     },
+                 isArray: true
+             }
 
       });
     return UserBase;

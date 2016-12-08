@@ -1,4 +1,6 @@
-﻿using MvvmHelpers;
+﻿using CV.Mobile.Models;
+using CV.Mobile.Services;
+using MvvmHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +22,30 @@ namespace CV.Mobile.ViewModels
                     return ((MasterDetailPage)Application.Current?.MainPage).Detail?.Navigation;
                 else
                     return Application.Current?.MainPage.Navigation;
+            }
+        }
+
+        public async Task AtualizarViagem(int? Identificador)
+        {
+            using (ApiService srv = new ApiService())
+            {
+                Viagem itemViagem = await srv.CarregarViagem(Identificador);
+                var DadosViagem = await srv.SelecionarViagem(itemViagem.Identificador);
+                itemViagem.VejoGastos = DadosViagem.VerCustos;
+                itemViagem.Edicao = DadosViagem.PermiteEdicao;
+                itemViagem.Aberto = DadosViagem.Aberto;
+                if (Application.Current?.MainPage is MasterDetailPage)
+                {
+                    ((MasterDetailViewModel)Application.Current?.MainPage.BindingContext).ItemViagem = itemViagem;
+                }
+                foreach (var Pagina in NavigationStack)
+                {
+                    if (Pagina.BindingContext is MenuInicialViewModel)
+                    {
+                        ((MenuInicialViewModel)Pagina.BindingContext).ViagemSelecionada = true;
+                        ((MenuInicialViewModel)Pagina.BindingContext).ItemViagem = itemViagem;
+                    }
+                }
             }
         }
 

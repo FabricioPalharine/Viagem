@@ -16,6 +16,7 @@
 		vm.ListaDados = [];
 		vm.gridApi = null;
 		vm.itemParticipante = null;
+		vm.ListaUsuario = []
 		vm.load = function () {
 			vm.loading = true;
 
@@ -27,6 +28,10 @@
 				vm.pagingOptions.currentPage = (vm.filtroAtualizacao.Index / vm.pagingOptions.pageSize) + 1;
 
 			}
+			Usuario.listaAmigosComigo(function (data)
+			{
+			    vm.ListaUsuario = data;
+			})
 			vm.CarregarDadosWebApi(vm.pagingOptions.pageSize, vm.pagingOptions.currentPage);
 		};
 
@@ -170,11 +175,10 @@
 
 			],
 
-            enablePagination: true,
+            enablePagination: false,
             showGridFooter: false,
             enableRowSelection: false,
             multiSelect: false,
-            paginationPageSizes: [20],
             enableHorizontalScrollbar: 0,
             enableVerticalScrollbar: 1,
             onRegisterApi: function (grid) {
@@ -183,24 +187,10 @@
                     i18nService.setCurrentLang(cultura)
                 }
                 vm.gridApi = grid;
-                  grid.core.on.sortChanged($scope, function (grid, sortColumns) {
-                    vm.pagingOptions.fields = [];
-                    vm.pagingOptions.directions = [];
-                    angular.forEach(sortColumns, function (c) {
-                        vm.pagingOptions.fields.push(c.field);
-                        vm.pagingOptions.directions.push(c.sort.direction);
-                    });
-                    vm.CarregarDadosWebApi(vm.pagingOptions.pageSize, vm.pagingOptions.currentPage);
-                });
-                grid.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
-                    vm.pagingOptions.currentPage = newPage;
-                    vm.CarregarDadosWebApi(pageSize, newPage);
-                });
+
             },
-            useExternalPagination: true,
-            useExternalSorting: true,
-            pagination: vm.pagingOptions,
-            paginationTemplate: "NewFooterTemplate.html",
+            useExternalPagination: false,
+            useExternalSorting: false,
             appScopeProvider: vm,
             totalItems: vm.totalServerItems,
         };

@@ -2608,6 +2608,24 @@ namespace CV.Model.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O campo Fim é obrigatório.
+        /// </summary>
+        public static string Viagem_DataFim {
+            get {
+                return ResourceManager.GetString("Viagem_DataFim", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo Data Início é obrigatório.
+        /// </summary>
+        public static string Viagem_DataInicio {
+            get {
+                return ResourceManager.GetString("Viagem_DataInicio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O campo Identificador é obrigatório.
         /// </summary>
         public static string Viagem_Identificador {
