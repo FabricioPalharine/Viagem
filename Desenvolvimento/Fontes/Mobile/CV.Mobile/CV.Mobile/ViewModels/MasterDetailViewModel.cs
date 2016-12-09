@@ -20,7 +20,7 @@ namespace CV.Mobile.ViewModels
         {
             MenuViewModel vmMenu = new MenuViewModel(itemUsuario);
             _ItemUsuario = itemUsuario;
-            vmMenu.ItemMenuSelecionado += async (itemMenu) => { await SelecionarItemMenu(itemMenu); };
+            vmMenu.ItemMenuSelecionado += async (itemMenu, novoStack) => { await SelecionarItemMenu(itemMenu, novoStack); };
             var paginaMenu = new MenuPage() { BindingContext = vmMenu };
             MasterPage = paginaMenu;
             var paginaDetalhe = new MenuInicialPage() { BindingContext = new MenuInicialViewModel() };
@@ -95,9 +95,16 @@ namespace CV.Mobile.ViewModels
 
         private bool isPresented;
 
-        private async Task SelecionarItemMenu(Page itemMenu)
+        private async Task SelecionarItemMenu(Page itemMenu, bool NovoStack)
         {
-            (Application.Current.MainPage as Xamarin.Forms.MasterDetailPage).Detail = new NavigationPage(itemMenu);
+            if (NovoStack)
+            {
+                (Application.Current.MainPage as Xamarin.Forms.MasterDetailPage).Detail = new NavigationPage(itemMenu);
+            }
+            else
+            {
+                await PushAsync(itemMenu);
+            }
             (Application.Current.MainPage as Xamarin.Forms.MasterDetailPage).IsPresented = false;
 
         }

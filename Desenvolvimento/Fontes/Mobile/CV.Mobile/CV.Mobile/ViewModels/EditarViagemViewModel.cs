@@ -19,12 +19,11 @@ namespace CV.Mobile.ViewModels
 
         public ObservableCollection<Page> ListaPaginas { get; set; }
 
-        public EditarViagemViewModel()
+        public EditarViagemViewModel(Viagem pViagem)
         {
             var ListaAtual = new List<Page>();
             var ItemUsuario = ((MasterDetailViewModel)Application.Current?.MainPage.BindingContext).ItemUsuario;
-            _ViagemSelecionada = new Viagem() {IdentificadorUsuario = ItemUsuario.Codigo, PublicaGasto =false, DataInicio=DateTime.Today, DataFim = DateTime.Today, QuantidadeParticipantes=1, UnidadeMetrica=true, Participantes = new MvvmHelpers.ObservableRangeCollection<ParticipanteViagem>(), UsuariosGastos = new MvvmHelpers.ObservableRangeCollection<UsuarioGasto>() , Moeda=790};
-            _ViagemSelecionada.Participantes.Add(new ParticipanteViagem() { IdentificadorUsuario = ItemUsuario.Codigo, NomeUsuario = ItemUsuario.Nome, ItemUsuario = new Usuario() { Identificador = ItemUsuario.Codigo, Nome = ItemUsuario.Nome }, PermiteExcluir = false });
+            _ViagemSelecionada = pViagem;
             _ViagemSelecionada.PropertyChanged += _ViagemSelecionada_PropertyChanged;
             ListaAtual.Add(new EdicaoViagemDados());
             PageAppearingCommand = new Command(
@@ -100,7 +99,7 @@ namespace CV.Mobile.ViewModels
                 }
                 else
                 {
-                    ItemViagem.UsuariosGastos.Add(new UsuarioGasto() { IdentificadorUsuario = ItemParticipante.Identificador, NomeUsuario = ItemParticipante.Nome, ItemUsuario = ItemParticipante });
+                    ItemViagem.UsuariosGastos.Add(new UsuarioGasto() { IdentificadorUsuario = ItemAmigo.Identificador, NomeUsuario = ItemAmigo.Nome, ItemUsuario = ItemAmigo });
                    
                 }
             }
@@ -114,7 +113,10 @@ namespace CV.Mobile.ViewModels
                 if (!ItemViagem.PublicaGasto)
                     ListaAtual.Add(new EdicaoViagemDados());
                 else if (ListaAtual.Any())
+                {
                     ListaAtual.RemoveAt(0);
+                    ItemViagem.UsuariosGastos.Clear();
+                }
                 ListaPaginas = new ObservableCollection<Page>(ListaAtual);
                 OnPropertyChanged("ListaPaginas");
 
@@ -141,7 +143,6 @@ namespace CV.Mobile.ViewModels
 
         private Viagem _ViagemSelecionada;
 
-        private bool _ModoPesquisa = false;
 
         private async Task CarregarListaAmigos()
         {
@@ -161,8 +162,31 @@ namespace CV.Mobile.ViewModels
             SalvarCommand.ChangeCanExecute();
             try
             {
-                await AtualizarViagem(ItemViagem.Identificador);
-                await PopAsync();
+                using (ApiService srv = new ApiService())
+                {
+                    var Resultado = await srv.SalvarViagem(ItemViagem);
+                    if (Resultado.Sucesso)
+                    {
+                        await AtualizarViagem(Resultado.IdentificadorRegistro);
+                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        {
+                            Title = "Sucesso",
+                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                            Cancel = "OK"
+                        });
+                        await PopAsync();
+                    }
+                    else if(Resultado.Mensagens != null && Resultado.Mensagens.Any())
+                    {
+                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        {
+                            Title = "Problemas Validação",
+                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d=>d.Mensagem).ToArray()),
+                            Cancel = "OK"
+                        });
+
+                    }
+                }
             }
             finally
             {

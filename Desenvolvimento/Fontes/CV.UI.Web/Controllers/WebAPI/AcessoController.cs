@@ -110,6 +110,13 @@ namespace CV.UI.Web.Controllers.WebAPI
             return biz.CarregarAlertasUsuario(token);
         }
 
-       
+        [ActionName("VerificaOnline")]
+        [Authorize]
+        [HttpGet]
+        public bool VerificaOnline()
+        {
+            return true;
+        }
+
     }
 }

@@ -13,6 +13,7 @@
     <ResourceDictionary>
       <local:InverseBooleanConverter x:Key="boolInverterConverter" />
       <local:IntStringConverter x:Key="intStringConverter" />
+      <local:IntDecimalConverter x:Key="intDecimalConverter" />
     </ResourceDictionary>
   </controles:ChildBindableTabbedPage.Resources>
   
@@ -45,7 +46,7 @@
         </StackLayout>
        
         <Label Text="Número Participantes"  />
-        <controles:FormattedNumberEntry x:Name="FormattedEntry" Keyboard="Numeric" DecimalPlaces="0" Value="{Binding ItemViagem.QuantidadeParticipantes}" />
+        <controles:FormattedNumberEntry x:Name="FormattedEntry" Keyboard="Numeric" DecimalPlaces="0" Value="{Binding ItemViagem.QuantidadeParticipantes, Converter={StaticResource intDecimalConverter}}" />
 
         <StackLayout Orientation="Horizontal" Spacing="10">
             <Label Text="Gastos Públicos"  />
@@ -76,7 +77,7 @@
         <controles:ExtendedPicker
                               DisplayProperty="Nome"
                               ItemsSource="{Binding ListaAmigos}"
-                              SelectedItem="{Binding ItemAmigo}"
+                              SelectedItem="{Binding ItemParticipante}"
                               HorizontalOptions="FillAndExpand"
                                />
        

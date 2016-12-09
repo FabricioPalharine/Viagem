@@ -28,8 +28,8 @@ namespace CV.UI.Web.Controllers.WebAPI
             if (json.SortField != null && json.SortField.Any())
                 _itens = _itens.AsQueryable().OrderByField<ConsultaAmigo>(json.SortField, json.SortOrder).ToList();
 
-            if (json.Index.HasValue && json.Count.HasValue)
-                _itens = _itens.Skip(json.Index.Value).Take(json.Count.Value).ToList();
+            //if (json.Index.HasValue && json.Count.HasValue)
+            //    _itens = _itens.Skip(json.Index.Value).Take(json.Count.Value).ToList();
             resultado.Lista = _itens;
 
             return resultado;

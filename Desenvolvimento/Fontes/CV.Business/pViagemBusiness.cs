@@ -896,8 +896,9 @@ namespace CV.Business
         {
             ViagemBusiness biz = new ViagemBusiness();
             Amigo itemAmigo = null;
-            if (itemRequisicao.Status == 2 && !biz.ListarAmigo(d => d.IdentificadorAmigo == itemRequisicao.IdentificadorUsuario && d.IdentificadorUsuario == itemRequisicao.IdentificadorUsuarioRequisitado).Any())
+            if (itemRequisicao.Status == 2 )
             {
+                if( !biz.ListarAmigo(d => d.IdentificadorAmigo == itemRequisicao.IdentificadorUsuario && d.IdentificadorUsuario == itemRequisicao.IdentificadorUsuarioRequisitado).Any())
                 itemAmigo = new Amigo() { EMail = itemRequisicao.EMail, IdentificadorAmigo = itemRequisicao.IdentificadorUsuario, IdentificadorUsuario = itemRequisicao.IdentificadorUsuarioRequisitado };
                 AdicionaMensagemBusiness("Requisicao_Aprovada");
             }

@@ -47,6 +47,8 @@
     <Compile Include="Helpers\EnumHelperExtension.cs" />
     <Compile Include="Helpers\enumMoeda.cs" />
     <Compile Include="Helpers\ImageResourceExtension.cs" />
+    <Compile Include="Helpers\IntDecimalConverter.cs" />
+    <Compile Include="Helpers\BooleanImageSourceConverter.cs" />
     <Compile Include="Helpers\IntStringConverter.cs" />
     <Compile Include="Helpers\InverseBooleanConverter.cs" />
     <Compile Include="Helpers\Settings.cs" />
@@ -54,12 +56,14 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\CotacaoMoeda.cs" />
     <Compile Include="Models\Gasto.cs" />
     <Compile Include="Models\Atracao.cs" />
     <Compile Include="Models\AvaliacaoAerea.cs" />
     <Compile Include="Models\AvaliacaoAluguel.cs" />
     <Compile Include="Models\Foto.cs" />
     <Compile Include="Models\ItemLista.cs" />
+    <Compile Include="Models\MensagemErro.cs" />
     <Compile Include="Models\PocoLogin.cs" />
     <Compile Include="Models\RefeicaoPedido.cs" />
     <Compile Include="Models\AvaliacaoLoja.cs" />
@@ -75,6 +79,7 @@
     <Compile Include="Models\ParticipanteViagem.cs" />
     <Compile Include="Models\RequisicaoAmizade.cs" />
     <Compile Include="Models\ResultadoConsultaTipo.cs" />
+    <Compile Include="Models\ResultadoOperacao.cs" />
     <Compile Include="Models\Usuario.cs" />
     <Compile Include="Models\GastoDividido.cs" />
     <Compile Include="Models\UsuarioGasto.cs" />
@@ -88,18 +93,30 @@
     </Compile>
     <Compile Include="Services\ApiService.cs" />
     <Compile Include="Services\OAuth2AuthenticatorToken.cs" />
+    <Compile Include="ViewModels\AdicionarAmigoViewModel.cs" />
     <Compile Include="ViewModels\BaseNavigationViewModel.cs" />
+    <Compile Include="ViewModels\ListagemAmigoViewModel.cs" />
+    <Compile Include="ViewModels\ListagemCotacaoMoedaViewModel.cs" />
     <Compile Include="ViewModels\LoadingViewModel.cs" />
     <Compile Include="ViewModels\MasterDetailViewModel.cs" />
     <Compile Include="ViewModels\MenuInicialViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="ViewModels\EditarViagemViewModel.cs" />
     <Compile Include="ViewModels\SelecionarViagemViewModel.cs" />
+    <Compile Include="Views\AdicionarAmigoPage.xaml.cs">
+      <DependentUpon>AdicionarAmigoPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AutenticacaoPage.xaml.cs">
       <DependentUpon>AutenticacaoPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EdicaoViagemDados.xaml.cs">
       <DependentUpon>EdicaoViagemDados.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemAmigoPage.xaml.cs">
+      <DependentUpon>ListagemAmigoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemCotacaoMoedaPage.xaml.cs">
+      <DependentUpon>ListagemCotacaoMoedaPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoadingPage.xaml.cs">
       <DependentUpon>LoadingPage.xaml</DependentUpon>
@@ -282,6 +299,34 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemAmigoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icones\checked24.png" />
+    <EmbeddedResource Include="Icones\unchecked24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icones\cancel24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\AdicionarAmigoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemCotacaoMoedaPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icones\pencil24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />

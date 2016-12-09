@@ -15,5 +15,7 @@ namespace CV.Mobile.Models
         public int? Status { get; set; }
         public Usuario ItemUsuario { get; set; }
         public Usuario ItemUsuarioRequisitado { get; set; }
+        public string EMailUsuario { get; set; }
+        public string NomeUsuario { get; set; }
     }
 }

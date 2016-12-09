@@ -25,11 +25,11 @@ namespace CV.UI.Web.Controllers.WebAPI
 
             List<RequisicaoAmizade> _itens = biz.ListarRequisicaoAmizade(d => d.IdentificadorUsuarioRequisitado == token.IdentificadorUsuario && d.Status < 2).ToList();
             resultado.TotalRegistros = _itens.Count();
-            if (json.SortField != null && json.SortField.Any())
-                _itens = _itens.AsQueryable().OrderByField<RequisicaoAmizade>(json.SortField, json.SortOrder).ToList();
+            //if (json.SortField != null && json.SortField.Any())
+            //    _itens = _itens.AsQueryable().OrderByField<RequisicaoAmizade>(json.SortField, json.SortOrder).ToList();
 
-            if (json.Index.HasValue && json.Count.HasValue)
-                _itens = _itens.Skip(json.Index.Value).Take(json.Count.Value).ToList();
+            //if (json.Index.HasValue && json.Count.HasValue)
+            //    _itens = _itens.Skip(json.Index.Value).Take(json.Count.Value).ToList();
             resultado.Lista = _itens;
 
             return resultado;

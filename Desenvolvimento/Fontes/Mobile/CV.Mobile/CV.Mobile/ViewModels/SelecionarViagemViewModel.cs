@@ -97,6 +97,7 @@ namespace CV.Mobile.ViewModels
         private async Task Selecionar(int Identificador)
         {
             await AtualizarViagem(Identificador);
+            await PopAsync();
         }
 
         public CriterioBusca ItemCriterioBusca

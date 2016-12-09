@@ -1,5 +1,7 @@
 ﻿using CV.Mobile.Models;
+using CV.Mobile.Services;
 using CV.Mobile.Views;
+using FormsToolkit;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,7 +21,7 @@ namespace CV.Mobile.ViewModels
         private ItemMenu _ItemMenuSelecionado;
         private Viagem _ItemViagem;
 
-        public delegate Task ItemMenuSelecionadoDelegate(Page pagina);
+        public delegate Task ItemMenuSelecionadoDelegate(Page pagina, bool NovoStack);
         public event ItemMenuSelecionadoDelegate ItemMenuSelecionado;
 
         public UsuarioLogado ItemUsuario
@@ -65,10 +67,10 @@ namespace CV.Mobile.ViewModels
             }
         }
 
-        public async Task OnItemMenuSelecionado(Page pagina)
+        public async Task OnItemMenuSelecionado(Page pagina, bool NovoStack)
         {
             if (ItemMenuSelecionado != null)
-                await ItemMenuSelecionado(pagina);
+                await ItemMenuSelecionado(pagina, NovoStack);
         }
 
         public MenuViewModel(UsuarioLogado itemUsuario)
@@ -206,7 +208,14 @@ namespace CV.Mobile.ViewModels
                 IconSource = "Dados.png",
                 Visible = true
             });
-            
+            ItensMenu.Add(new ItemMenu
+            {
+                Codigo = 18,
+                Title = "Editar Viagem",
+                IconSource = "Dados.png",
+                Visible = true
+            });
+
         }
 
         public async Task ExecutarAcao()
@@ -215,15 +224,46 @@ namespace CV.Mobile.ViewModels
             {
                 if (_ItemMenuSelecionado.Codigo == 0)
                 {
-                    await OnItemMenuSelecionado(new MenuInicialPage() { BindingContext = new MenuInicialViewModel() });
+                    await OnItemMenuSelecionado(new MenuInicialPage() { BindingContext = new MenuInicialViewModel() },true);
+                }
+                else if (_ItemMenuSelecionado.Codigo == 18)
+                {
+                    await EditarViagem();
                 }
                 else
                 {
                     Page pagina = new Page();
-                    await OnItemMenuSelecionado(pagina);
+                    await OnItemMenuSelecionado(pagina,true);
                 }
                 ItemSelecionado = null;
             }
+        }
+
+        private async Task EditarViagem()
+        {
+            Viagem itemEditar = null;
+            using (ApiService srv = new ApiService())
+            {
+                itemEditar = await srv.CarregarViagem(_ItemViagem.Identificador);
+            }
+            if (itemEditar != null && itemEditar.Identificador.HasValue)
+            {
+                foreach (var itemParticipante in itemEditar.Participantes)
+                    itemParticipante.PermiteExcluir = itemParticipante.IdentificadorUsuario != itemEditar.IdentificadorUsuario;
+                await OnItemMenuSelecionado(new EditarViagemPage() { BindingContext = new EditarViagemViewModel(itemEditar), Title="Editar" },false);
+            }
+            else
+                ExibirAlertaOffLine();
+        }
+
+        private void ExibirAlertaOffLine()
+        {
+            MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+            {
+                Title = "Conexão Off-Line",
+                Message = "Essa funcionalidade necessita que a conexão esteja On-Line",
+                Cancel = "OK"
+            });
         }
     }
 }

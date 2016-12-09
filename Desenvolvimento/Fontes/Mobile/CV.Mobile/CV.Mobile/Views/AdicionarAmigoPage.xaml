@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.AdicionarAmigoPage"
+             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             Title="Nova Amizade"
+             xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+             xmlns:controles="clr-namespace: CV.Mobile.Controls;assembly=CV.Mobile" >
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <local:BooleanImageSourceConverter x:Key="boolImageConverter" />
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.ToolbarItems>
+    <ToolbarItem  Icon="save.png"  Command="{Binding SalvarCommand}" />
+  </ContentPage.ToolbarItems>
+  <ContentPage.Content>
+    <StackLayout>
+      <Label Text="E-Mail"  />
+      <Entry Text="{Binding ItemAmigo.EMail}" Keyboard="Email"  >
+        <Entry.Behaviors>
+          <behaviors:EventHandlerBehavior EventName="Unfocused">
+            <behaviors:InvokeCommandAction Command="{Binding EMailTextChangedCommand}" />
+          </behaviors:EventHandlerBehavior>
+        </Entry.Behaviors>
+      </Entry>
+      <Label Text="Nome" IsVisible="{Binding ItemAmigo.UsuarioLocalizado}"  />
+      <Entry Text="{Binding ItemAmigo.Nome}"  IsVisible="{Binding ItemAmigo.UsuarioLocalizado}"  IsEnabled="false" ></Entry>
+      <Label Text="O e-mail informado ainda não está cadastrado no Curtindo uma Viagem." IsVisible="{Binding ItemAmigo.MailNaoLocalizado}"  />
+      <StackLayout Orientation="Horizontal" Spacing="10">
+        <Label Text="Permitir Visualizar Minhas Viagens (Seguidor)"  />
+        <Switch IsToggled="{Binding ItemAmigo.Seguidor}"></Switch>
+      </StackLayout>
+      <StackLayout Orientation="Horizontal" Spacing="10">
+        <Label Text="Requisitar Permissão para Visualizar as suas Viagens(Seguido)"  />
+        <Switch IsToggled="{Binding ItemAmigo.Seguido}"></Switch>
+      </StackLayout>
+    </StackLayout>
+  </ContentPage.Content>
+</ContentPage>

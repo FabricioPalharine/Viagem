@@ -10,5 +10,8 @@ namespace CV.Mobile.Models
     {
         public const string DisplayAlert = "DisplayAlert";
         public const string DisplayQuestion = "DisplayQuestion";
+        public const string AdicionarAmigo = "AdicionarAmigo";
+        public const string ManutencaoCotacaoMoeda = "ManutencaoCotacaoMoeda";
+
     }
 }

@@ -10,6 +10,20 @@ namespace CV.Model
 
 	public partial class RequisicaoAmizade
 	{
+        public string NomeUsuario
+        {
+            get
+            {
+                return this.ItemUsuario?.Nome;
+            }
+        }
+        public string EMailUsuario
+        {
+            get
+            {
+                return this.ItemUsuario?.EMail;
+            }
+        }
 	}
 
 }

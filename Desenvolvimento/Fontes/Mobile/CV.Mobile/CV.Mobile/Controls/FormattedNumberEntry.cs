@@ -7,7 +7,7 @@ namespace CV.Mobile.Controls
     public class FormattedNumberEntry : Entry
     {
         public static readonly BindableProperty ValueProperty =
-            BindableProperty.Create(nameof(Value), typeof(decimal), typeof(FormattedNumberEntry), 0m, BindingMode.TwoWay);
+            BindableProperty.Create(nameof(Value), typeof(decimal), typeof(FormattedNumberEntry), 0m, BindingMode.TwoWay,null,  new BindableProperty.BindingPropertyChangedDelegate(OnValueChanged));
 
         public static readonly BindableProperty DecimalPlacesProperty =
     BindableProperty.Create(nameof(DecimalPlaces), typeof(int), typeof(FormattedNumberEntry), 2);
@@ -66,7 +66,13 @@ namespace CV.Mobile.Controls
 
         private int? _PosicaoVirgula = int.MinValue;
 
+        private static void OnValueChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            FormattedNumberEntry element = (FormattedNumberEntry)bindable;
+            var newText = element.Value.ToString(!string.IsNullOrEmpty(element.Formato) && !element.ShouldReactToTextChanges ? element.Formato : String.Concat("N", element.DecimalPlaces));
+            element.Text = newText;
 
+        }
         public string Formato
         {
             get; set;

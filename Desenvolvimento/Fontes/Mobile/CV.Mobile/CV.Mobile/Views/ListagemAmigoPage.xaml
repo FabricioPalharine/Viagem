@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.ListagemAmigoPage"
+             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             Title="Amigos"
+             xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+             xmlns:controles="clr-namespace: CV.Mobile.Controls;assembly=CV.Mobile"
+             x:Name="paginaSelecao">
+  <TabbedPage.Resources>
+    <ResourceDictionary>
+      <local:BooleanImageSourceConverter x:Key="boolImageConverter" />
+    </ResourceDictionary>
+  </TabbedPage.Resources>
+
+  <TabbedPage.Behaviors>
+    <behaviors:EventHandlerBehavior EventName="Appearing">
+      <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
+    </behaviors:EventHandlerBehavior>
+  </TabbedPage.Behaviors>
+
+  <TabbedPage.ToolbarItems>
+    <ToolbarItem  Icon="add24.png"  Command="{Binding AdicionarAmigoCommand}" />
+  </TabbedPage.ToolbarItems>
+
+  <ContentPage Title="Amigos">
+    <ContentPage.Content>
+      <ListView  VerticalOptions="FillAndExpand" SeparatorVisibility="None" ItemsSource="{Binding Amigos}" SelectedItem="{Binding AmigoSelecionado, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="True"  IsPullToRefreshEnabled="true"  IsRefreshing="{Binding IsLoadingAmigo, Mode=TwoWay}" RefreshCommand="{Binding AtualizarAmigoCommand}"  >
+        <ListView.Header>
+
+          <Grid>
+
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="50*" />
+              <ColumnDefinition Width="50*" />
+              <ColumnDefinition Width="70" />
+              <ColumnDefinition Width="70" />
+            </Grid.ColumnDefinitions>
+            <Label Text="Nome" HorizontalTextAlignment="Center" Grid.Column="0"></Label>
+            <Label Text="E-Mail" HorizontalTextAlignment="Center" Grid.Column="1"></Label>
+            <Label Text="Seguidor" HorizontalTextAlignment="Center" Grid.Column="2"></Label>
+            <Label Text="Seguido" HorizontalTextAlignment="Center" Grid.Column="3"></Label>
+          </Grid>
+        </ListView.Header>
+
+        <ListView.ItemTemplate>
+
+          <DataTemplate>
+            <ViewCell >
+
+              <Grid>
+
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="50*" />
+                  <ColumnDefinition Width="50*" />
+                  <ColumnDefinition Width="70" />
+                  <ColumnDefinition Width="70" />
+                </Grid.ColumnDefinitions>
+                <Label Text="{Binding Nome}" HorizontalTextAlignment="Center" Grid.Column="0"></Label>
+                <Label Text="{Binding EMail}" HorizontalTextAlignment="Center" Grid.Column="1"></Label>
+                <Image Source="{Binding Seguidor, Converter={StaticResource boolImageConverter}, Mode=OneWay}" Aspect="AspectFit" HeightRequest="16" WidthRequest="16" Grid.Column="2">
+                  <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                         Command="{Binding Path=BindingContext.MarcarSeguidorCommand,  Source={x:Reference paginaSelecao}}"
+                          CommandParameter="{Binding .}"
+                         NumberOfTapsRequired="1"/>
+                  </Image.GestureRecognizers>
+                </Image>
+
+                <Image Source="{Binding Seguido, Converter={StaticResource boolImageConverter}, Mode=OneWay}" Aspect="AspectFit" HeightRequest="16" WidthRequest="16" Grid.Column="3">
+                  <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                         Command="{Binding Path=BindingContext.MarcarSeguidoCommand,  Source={x:Reference paginaSelecao}}"
+                          CommandParameter="{Binding .}"
+                         NumberOfTapsRequired="1"/>
+                  </Image.GestureRecognizers>
+                </Image>
+              </Grid>
+            </ViewCell>
+
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+
+    </ContentPage.Content>
+  </ContentPage>
+
+  <ContentPage Title="Requisições Pendentes">
+    <ContentPage.Content>
+      <ListView  VerticalOptions="FillAndExpand" SeparatorVisibility="None" ItemsSource="{Binding Requisicoes}" SelectedItem="{Binding RequisicaoSelecionada, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="True"  IsPullToRefreshEnabled="true"  IsRefreshing="{Binding IsLoadingRequisicao, Mode=TwoWay}" RefreshCommand="{Binding AtualizarRequisicaoCommand}"  >
+        <ListView.Header>
+
+          <Grid>
+
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="20" />
+              <ColumnDefinition Width="20" />
+              <ColumnDefinition Width="50*" />
+              <ColumnDefinition Width="50*" />
+              
+            </Grid.ColumnDefinitions>
+            <Label Text="Nome" HorizontalTextAlignment="Center" Grid.Column="2"></Label>
+            <Label Text="E-Mail" HorizontalTextAlignment="Center" Grid.Column="3"></Label>
+          </Grid>
+        </ListView.Header>
+
+        <ListView.ItemTemplate>
+
+          <DataTemplate>
+            <ViewCell >
+
+              <Grid>
+
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                   <ColumnDefinition Width="20" />
+              <ColumnDefinition Width="20" />
+              <ColumnDefinition Width="50*" />
+              <ColumnDefinition Width="50*" />
+                </Grid.ColumnDefinitions>
+                <Label Text="{Binding NomeUsuario}" HorizontalTextAlignment="Center" Grid.Column="2"></Label>
+                <Label Text="{Binding EMailUsuario}" HorizontalTextAlignment="Center" Grid.Column="3"></Label>
+                <Image Source="{local:ImageResource CV.Mobile.Icones.checkmark24.png}" Aspect="AspectFit" HeightRequest="16" WidthRequest="16" Grid.Column="0">
+                  <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                         Command="{Binding Path=BindingContext.AprovarAmizadeCommand,  Source={x:Reference paginaSelecao}}"
+                          CommandParameter="{Binding .}"
+                         NumberOfTapsRequired="1"/>
+                  </Image.GestureRecognizers>
+                </Image>
+
+                <Image Source="{local:ImageResource CV.Mobile.Icones.cancel24.png}" Aspect="AspectFit" HeightRequest="16" WidthRequest="16" Grid.Column="1">
+                  <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                         Command="{Binding Path=BindingContext.ReprovarAmizadeCommand,  Source={x:Reference paginaSelecao}}"
+                          CommandParameter="{Binding .}"
+                         NumberOfTapsRequired="1"/>
+                  </Image.GestureRecognizers>
+                </Image>
+              </Grid>
+            </ViewCell>
+
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+
+    </ContentPage.Content>
+  </ContentPage>
+
+</TabbedPage>

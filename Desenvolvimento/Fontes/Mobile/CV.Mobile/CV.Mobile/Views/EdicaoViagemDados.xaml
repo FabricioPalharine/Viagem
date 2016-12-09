@@ -21,7 +21,6 @@
                                />
 
     </StackLayout>
-    <Entry Text="{Binding ItemViagem.Nome}" />
     <ListView VerticalOptions="FillAndExpand" SeparatorVisibility="None" RowHeight="20" ItemsSource="{Binding ItemViagem.UsuariosGastos}" SelectedItem="{Binding UsuarioGastoSelecionado, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="false"  IsPullToRefreshEnabled="False"  >
       <ListView.ItemTemplate>
 
