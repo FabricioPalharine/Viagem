@@ -97,6 +97,8 @@ namespace CV.Mobile.ViewModels
 
         private async Task SelecionarItemMenu(Page itemMenu, bool NovoStack)
         {
+            (Application.Current.MainPage as Xamarin.Forms.MasterDetailPage).IsPresented = false;
+
             if (NovoStack)
             {
                 (Application.Current.MainPage as Xamarin.Forms.MasterDetailPage).Detail = new NavigationPage(itemMenu);
@@ -105,7 +107,6 @@ namespace CV.Mobile.ViewModels
             {
                 await PushAsync(itemMenu);
             }
-            (Application.Current.MainPage as Xamarin.Forms.MasterDetailPage).IsPresented = false;
 
         }
     }

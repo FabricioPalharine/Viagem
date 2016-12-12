@@ -38,6 +38,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\BindableToolbarItem.cs" />
     <Compile Include="Controls\ChildBindableTabbedPage.cs" />
     <Compile Include="Controls\FormattedNumberEntry.cs" />
     <Compile Include="Controls\ImageButton.cs" />
@@ -46,6 +47,7 @@
     <Compile Include="Controls\ExtendedPicker.cs" />
     <Compile Include="Helpers\EnumHelperExtension.cs" />
     <Compile Include="Helpers\enumMoeda.cs" />
+    <Compile Include="Helpers\enumStatusListaCompra.cs" />
     <Compile Include="Helpers\ImageResourceExtension.cs" />
     <Compile Include="Helpers\IntDecimalConverter.cs" />
     <Compile Include="Helpers\BooleanImageSourceConverter.cs" />
@@ -63,6 +65,7 @@
     <Compile Include="Models\AvaliacaoAluguel.cs" />
     <Compile Include="Models\Foto.cs" />
     <Compile Include="Models\ItemLista.cs" />
+    <Compile Include="Models\ListaCompra.cs" />
     <Compile Include="Models\MensagemErro.cs" />
     <Compile Include="Models\PocoLogin.cs" />
     <Compile Include="Models\RefeicaoPedido.cs" />
@@ -95,8 +98,14 @@
     <Compile Include="Services\OAuth2AuthenticatorToken.cs" />
     <Compile Include="ViewModels\AdicionarAmigoViewModel.cs" />
     <Compile Include="ViewModels\BaseNavigationViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoListaCompraViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoRequisicaoCompraViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoPedidoCompraViewModel.cs" />
+    <Compile Include="ViewModels\EditarCotacaoViewModel.cs" />
     <Compile Include="ViewModels\ListagemAmigoViewModel.cs" />
     <Compile Include="ViewModels\ListagemCotacaoMoedaViewModel.cs" />
+    <Compile Include="ViewModels\ListagemListaCompraViewModel.cs" />
+    <Compile Include="ViewModels\ListagemPedidoCompraViewModel.cs" />
     <Compile Include="ViewModels\LoadingViewModel.cs" />
     <Compile Include="ViewModels\MasterDetailViewModel.cs" />
     <Compile Include="ViewModels\MenuInicialViewModel.cs" />
@@ -109,14 +118,32 @@
     <Compile Include="Views\AutenticacaoPage.xaml.cs">
       <DependentUpon>AutenticacaoPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EdicaoCotacaoPage.xaml.cs">
+      <DependentUpon>EdicaoCotacaoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoListaCompraPage.xaml.cs">
+      <DependentUpon>EdicaoListaCompraPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoRequisicaoCompraPage.xaml.cs">
+      <DependentUpon>EdicaoRequisicaoCompraPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoPedidoCompraPage.xaml.cs">
+      <DependentUpon>EdicaoPedidoCompraPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EdicaoViagemDados.xaml.cs">
       <DependentUpon>EdicaoViagemDados.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemListaCompraPage.xaml.cs">
+      <DependentUpon>ListagemListaCompraPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ListagemAmigoPage.xaml.cs">
       <DependentUpon>ListagemAmigoPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ListagemCotacaoMoedaPage.xaml.cs">
       <DependentUpon>ListagemCotacaoMoedaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemPedidoCompraPage.xaml.cs">
+      <DependentUpon>ListagemPedidoCompraPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoadingPage.xaml.cs">
       <DependentUpon>LoadingPage.xaml</DependentUpon>
@@ -327,6 +354,42 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Icones\pencil24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoCotacaoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemPedidoCompraPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoPedidoCompraPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemListaCompraPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoRequisicaoCompraPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoListaCompraPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />

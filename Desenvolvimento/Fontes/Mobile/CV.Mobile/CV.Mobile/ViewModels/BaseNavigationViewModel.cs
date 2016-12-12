@@ -49,6 +49,17 @@ namespace CV.Mobile.ViewModels
             }
         }
 
+        public UsuarioLogado ItemUsuarioLogado
+        {
+            get
+            {
+                if (Application.Current?.MainPage is MasterDetailPage)
+                    return (((MasterDetailPage)Application.Current?.MainPage).BindingContext as MasterDetailViewModel).ItemUsuario;
+                else
+                    return null;
+            }
+        }
+
         #region INavigation implementation
 
         public void RemovePage(Page page)

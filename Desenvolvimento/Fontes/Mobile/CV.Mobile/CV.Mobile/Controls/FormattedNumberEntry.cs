@@ -7,14 +7,14 @@ namespace CV.Mobile.Controls
     public class FormattedNumberEntry : Entry
     {
         public static readonly BindableProperty ValueProperty =
-            BindableProperty.Create(nameof(Value), typeof(decimal), typeof(FormattedNumberEntry), 0m, BindingMode.TwoWay,null,  new BindableProperty.BindingPropertyChangedDelegate(OnValueChanged));
+            BindableProperty.Create(nameof(Value), typeof(decimal?), typeof(FormattedNumberEntry), 0m, BindingMode.TwoWay,null,  new BindableProperty.BindingPropertyChangedDelegate(OnValueChanged));
 
         public static readonly BindableProperty DecimalPlacesProperty =
     BindableProperty.Create(nameof(DecimalPlaces), typeof(int), typeof(FormattedNumberEntry), 2);
 
-        public decimal Value
+        public decimal? Value
         {
-            get { return (decimal)GetValue(ValueProperty); }
+            get { return (decimal?)GetValue(ValueProperty); }
             set { SetValue(ValueProperty, value); }
         }
 
@@ -31,9 +31,9 @@ namespace CV.Mobile.Controls
             ShouldReactToTextChanges = true;
         }
 
-        public decimal DumbParse(string input)
+        public decimal? DumbParse(string input)
         {
-            if (input == null) return 0;
+            if (string.IsNullOrEmpty( input)) return null;
             bool temDecimal = false;
             int posicao = 0;
             decimal number = 0;
@@ -69,9 +69,13 @@ namespace CV.Mobile.Controls
         private static void OnValueChanged(BindableObject bindable, object oldValue, object newValue)
         {
             FormattedNumberEntry element = (FormattedNumberEntry)bindable;
-            var newText = element.Value.ToString(!string.IsNullOrEmpty(element.Formato) && !element.ShouldReactToTextChanges ? element.Formato : String.Concat("N", element.DecimalPlaces));
-            element.Text = newText;
-
+            if (element.Value.HasValue)
+            {
+                var newText = element.Value.Value.ToString(!string.IsNullOrEmpty(element.Formato) && !element.ShouldReactToTextChanges ? element.Formato : String.Concat("N", element.DecimalPlaces));
+                element.Text = newText;
+            }
+            else
+                element.Text = null;
         }
         public string Formato
         {

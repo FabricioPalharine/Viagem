@@ -12,6 +12,9 @@ namespace CV.Mobile.Models
         public const string DisplayQuestion = "DisplayQuestion";
         public const string AdicionarAmigo = "AdicionarAmigo";
         public const string ManutencaoCotacaoMoeda = "ManutencaoCotacaoMoeda";
+        public const string ManutencaoPedidoCompra = "ManutencaoPedidoCompra";
+        public const string ManutencaoListaCompra = "ManutencaoListaCompra";
+        public const string ManutencaoRequisicaoPedidoCompra = "ManutencaoRequisicaoPedidoCompra";
 
     }
 }

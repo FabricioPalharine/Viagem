@@ -1,5 +1,6 @@
 ﻿using CV.Mobile.Models;
 using CV.Mobile.Services;
+using CV.Mobile.Views;
 using FormsToolkit;
 using System;
 using System.Collections.Generic;
@@ -128,7 +129,6 @@ namespace CV.Mobile.ViewModels
                         {
                             var Posicao = Cotacoes.IndexOf(Cotacoes.Where(d => d.Identificador == itemCotacao.Identificador).FirstOrDefault());
                             Cotacoes.RemoveAt(Posicao);
-                            Cotacoes.Insert(Posicao, itemCotacao);
                         }
                     }
 
@@ -141,16 +141,16 @@ namespace CV.Mobile.ViewModels
             using (ApiService srv = new ApiService())
             {
                 var itemEditar = await srv.CarregarCotacaoMoeda(itemCotacao.Identificador);
-
-                await PushAsync(new Page());
+                EdicaoCotacaoPage pagina = new EdicaoCotacaoPage() { BindingContext = new EditarCotacaoViewModel(itemEditar) };
+                await PushAsync(pagina);
             }
         }
 
         private async Task AbrirInclusao()
         {
-            var itemEditar = new CotacaoMoeda() { DataCotacao = DateTime.Today, IdentificadorViagem = ItemViagem.Identificador, Moeda = ItemViagem.Moeda };
-
-            await PushAsync(new Page());
+            var itemEditar = new CotacaoMoeda() { DataCotacao = DateTime.Today, IdentificadorViagem = ItemViagem.Identificador, Moeda = ItemViagem.Moeda , ValorCotacao=0};
+            EdicaoCotacaoPage pagina = new EdicaoCotacaoPage() { BindingContext = new EditarCotacaoViewModel(itemEditar) };
+            await PushAsync(pagina);
 
         }
     }

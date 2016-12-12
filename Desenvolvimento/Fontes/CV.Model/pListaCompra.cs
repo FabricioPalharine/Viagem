@@ -19,6 +19,23 @@ namespace CV.Model
             }
         }
 
+
+        public string NomeUsuario
+        {
+            get
+            {
+                return ItemUsuario != null ? ItemUsuario.Nome : null;
+            }
+        }
+
+        public string NomeUsuarioPedido
+        {
+            get
+            {
+                return ItemUsuarioPedido != null ? ItemUsuarioPedido.Nome : null;
+            }
+        }
+
         public string DestinatarioSelecao
         {
             get

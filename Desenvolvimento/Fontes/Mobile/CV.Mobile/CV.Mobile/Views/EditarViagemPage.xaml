@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <controles:ChildBindableTabbedPage  xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CV.Mobile.Views.EditarViagemPage"
-             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             x:Class="CV.Mobile.Views.EditarViagemPage"            
              Title="Editar Viagem"
+             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
              xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
              xmlns:controles="clr-namespace: CV.Mobile.Controls;assembly=CV.Mobile" 
              ChildrenList="{Binding ListaPaginas}"
@@ -33,11 +33,11 @@
         <Label Text="Nome"  />
         <Entry Text="{Binding ItemViagem.Nome}" />
         <Label Text="Data Início"  />
-        <DatePicker VerticalOptions="CenterAndExpand" Date="{Binding ItemViagem.DataInicio}">
+        <DatePicker Date="{Binding ItemViagem.DataInicio}">
           <DatePicker.Format>dd/MM/yyyy</DatePicker.Format>
         </DatePicker>
         <Label Text="Data Fim"  />
-        <DatePicker VerticalOptions="CenterAndExpand" Date="{Binding ItemViagem.DataFim}">
+        <DatePicker  Date="{Binding ItemViagem.DataFim}">
           <DatePicker.Format>dd/MM/yyyy</DatePicker.Format>
         </DatePicker>
         <StackLayout Orientation="Horizontal" Spacing="10">

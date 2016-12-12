@@ -141,7 +141,7 @@ namespace CV.Mobile.ViewModels
             ItensMenu.Add(new ItemMenu
             {
                 Codigo = 8,
-                Title = "Moeda Estrangeira",
+                Title = "Aquisição Moeda",
                 IconSource = "Dados.png",
                 Visible = true
             });
@@ -226,6 +226,18 @@ namespace CV.Mobile.ViewModels
                 {
                     await OnItemMenuSelecionado(new MenuInicialPage() { BindingContext = new MenuInicialViewModel() },true);
                 }
+                else if (_ItemMenuSelecionado.Codigo == 12)
+                {
+                    await AbrirCotacaoMoeda();
+                }
+                else if (_ItemMenuSelecionado.Codigo == 14)
+                {
+                    await AbrirListaCompra();
+                }
+                else if (_ItemMenuSelecionado.Codigo == 16)
+                {
+                    await AbrirPedidoCompra();
+                }
                 else if (_ItemMenuSelecionado.Codigo == 18)
                 {
                     await EditarViagem();
@@ -237,6 +249,51 @@ namespace CV.Mobile.ViewModels
                 }
                 ItemSelecionado = null;
             }
+        }
+
+        private async Task AbrirCotacaoMoeda()
+        {
+            if (_ItemViagem != null && await VerificarOnline())
+            {
+                ListagemCotacaoMoedaPage pagina = new ListagemCotacaoMoedaPage() { BindingContext = new ListagemCotacaoMoedaViewModel(_ItemViagem) };
+
+                await OnItemMenuSelecionado(pagina,false);
+
+            }
+        }
+
+        private async Task AbrirPedidoCompra()
+        {
+            if (_ItemViagem != null && await VerificarOnline())
+            {
+                ListagemPedidoCompraPage pagina = new ListagemPedidoCompraPage() { BindingContext = new ListagemPedidoCompraViewModel(_ItemViagem) };
+
+                await OnItemMenuSelecionado(pagina, false);
+
+            }
+        }
+
+        private async Task AbrirListaCompra()
+        {
+            if (_ItemViagem != null && await VerificarOnline())
+            {
+                var pagina = new ListagemListaCompraPage() { BindingContext = new ListagemListaCompraViewModel(_ItemViagem) };
+
+                await OnItemMenuSelecionado(pagina, false);
+
+            }
+        }
+
+        private async Task<bool> VerificarOnline()
+        {
+            bool Online = false;
+            using (ApiService srv = new ApiService())
+            {
+                Online = await srv.VerificarOnLine();
+            }
+            if (!Online)
+                ExibirAlertaOffLine();
+            return Online;
         }
 
         private async Task EditarViagem()

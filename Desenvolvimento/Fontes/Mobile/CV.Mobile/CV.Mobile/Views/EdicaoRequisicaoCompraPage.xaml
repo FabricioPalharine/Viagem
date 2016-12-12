@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.EdicaoRequisicaoCompraPage"
+             Title="Detalhes Pedido"
+             x:Name="this"
+             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+             xmlns:controles="clr-namespace: CV.Mobile.Controls;assembly=CV.Mobile"
+             >
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <local:IntStringConverter x:Key="intStringConverter" />
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.ToolbarItems>
+    <controles:BindableToolbarItem  Icon="cancel24.png" Parent="{x:Reference this}"  Command="{Binding CancelarCommand}" IsVisible="{Binding PermiteCancelar}"   />
+  </ContentPage.ToolbarItems>
+  <ContentPage.Behaviors>
+    <behaviors:EventHandlerBehavior EventName="Appearing">
+      <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
+    </behaviors:EventHandlerBehavior>
+  </ContentPage.Behaviors>
+  <ContentPage.Content>
+    <StackLayout>
+      <Label Text="Marca"  />
+      <Entry Text="{Binding ItemListaCompra.Marca}" IsEnabled="false"/>
+      <Label Text="Descrição"  />
+      <Entry Text="{Binding ItemListaCompra.Descricao}" IsEnabled="false"/>
+      <Label Text="Valor Máximo"  />
+      <controles:FormattedNumberEntry x:Name="FormattedEntry" Keyboard="Numeric" DecimalPlaces="2" Value="{Binding ItemListaCompra.ValorMaximo}"  IsEnabled="false"/>
+      <Label Text="Moeda "  />
+      <Entry Text="{Binding ItemListaCompra.MoedaSigla}" IsEnabled="false"/>
+      <Label Text="Comprado "  />
+      <Entry Text="{Binding ItemListaCompra.Comprado}" IsEnabled="false"/>
+      <Label Text="Requisitante"  />
+      <Entry Text="{Binding ItemListaCompra.NomeUsuario}" IsEnabled="false"/>
+      <StackLayout Orientation="Horizontal" Spacing="10">
+        <Label Text="Reembolsável"  />
+        <Switch IsToggled="{Binding ItemListaCompra.Reembolsavel}" IsEnabled="false"></Switch>
+      </StackLayout>
+    </StackLayout>
+
+  </ContentPage.Content>
+</ContentPage>

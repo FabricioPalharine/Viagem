@@ -195,7 +195,10 @@ namespace CV.Mobile.Services
         {
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Viagem/Post"));
-            var json = JsonConvert.SerializeObject(itemViagem);
+            var json = JsonConvert.SerializeObject(itemViagem, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            });
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = null;
@@ -285,7 +288,10 @@ namespace CV.Mobile.Services
         {
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/RequisicaoAmizade/Post"));
-            var json = JsonConvert.SerializeObject(itemAmigo);
+            var json = JsonConvert.SerializeObject(itemAmigo, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            });
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = null;
@@ -320,11 +326,30 @@ namespace CV.Mobile.Services
             return ListaViagem;
         }
 
+        public async Task<List<Usuario>> ListarParticipantesViagem()
+        {
+            var ListaViagem = new List<Usuario>();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Viagem/CarregarParticipantes"));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                var itemResultado = JsonConvert.DeserializeObject<List<Usuario>>(resultado);
+                ListaViagem = itemResultado;
+            }
+
+            return ListaViagem;
+        }
+
         public async Task<ResultadoOperacao> SalvarAmigo(ConsultaAmigo itemAmigo)
         {
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Amigo/Post"));
-            var json = JsonConvert.SerializeObject(itemAmigo);
+            var json = JsonConvert.SerializeObject(itemAmigo, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            });
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = null;
@@ -376,10 +401,129 @@ namespace CV.Mobile.Services
         public async Task<ResultadoOperacao> ExcluirCotacaoMoeda(int? Identificador)
         {
             ResultadoOperacao itemResultado = new ResultadoOperacao();
-            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/CotacaoMoeda/Delete/",Identificador));
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/CotacaoMoeda/",Identificador));
 
             HttpResponseMessage response = null;
             response = await client.DeleteAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                itemResultado = JsonConvert.DeserializeObject<ResultadoOperacao>(resultado);
+            }
+
+
+            return itemResultado;
+        }
+
+        public async Task<ResultadoOperacao> SalvarCotacaoMoeda(CotacaoMoeda itemCotacaoMoeda)
+        {
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/CotacaoMoeda/Post"));
+            var json = JsonConvert.SerializeObject(itemCotacaoMoeda, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            });
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = null;
+            response = await client.PostAsync(uri, content);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                itemResultado = JsonConvert.DeserializeObject<ResultadoOperacao>(resultado);
+            }
+
+
+            return itemResultado;
+        }
+
+
+
+        public async Task<List<ListaCompra>> ListarListaCompra(CriterioBusca criterioBusca)
+        {
+            var ListaAmigos = new List<ListaCompra>();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/ListaCompra/Get?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            }))); var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                var itemResultado = JsonConvert.DeserializeObject<ResultadoConsultaTipo<ListaCompra>>(resultado);
+                ListaAmigos = itemResultado.Lista;
+            }
+
+            return ListaAmigos;
+        }
+
+        public async Task<List<ListaCompra>> ListarPedidosCompraRecebido(CriterioBusca criterioBusca)
+        {
+            var ListaAmigos = new List<ListaCompra>();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/ListaCompra/CarregarPedidosRecebidos?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            }))); var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                ListaAmigos = JsonConvert.DeserializeObject<List<ListaCompra>>(resultado);
+            }
+
+            return ListaAmigos;
+        }
+
+        public async Task<ListaCompra> CarregarListaCompra(int? Identificador)
+        {
+            var itemListaCompra = new ListaCompra();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/ListaCompra/get/", Identificador.GetValueOrDefault(0)));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                itemListaCompra = JsonConvert.DeserializeObject<ListaCompra>(resultado);
+
+            }
+
+            return itemListaCompra;
+        }
+
+
+
+        public async Task<ResultadoOperacao> ExcluirListaCompra(int? Identificador)
+        {
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/ListaCompra/", Identificador));
+
+            HttpResponseMessage response = null;
+            response = await client.DeleteAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                itemResultado = JsonConvert.DeserializeObject<ResultadoOperacao>(resultado);
+            }
+
+
+            return itemResultado;
+        }
+
+        public async Task<ResultadoOperacao> SalvarListaCompra(ListaCompra itemPedidoCompra)
+        {
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/ListaCompra/Post"));
+            var json = JsonConvert.SerializeObject(itemPedidoCompra, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            });
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = null;
+            response = await client.PostAsync(uri, content);
             var resultado = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)

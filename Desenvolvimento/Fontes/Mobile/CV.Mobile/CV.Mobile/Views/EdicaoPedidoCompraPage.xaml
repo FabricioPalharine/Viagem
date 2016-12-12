@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.EdicaoPedidoCompraPage"
+             Title="Manutenção Pedido de Compra"
+             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+             xmlns:controles="clr-namespace: CV.Mobile.Controls;assembly=CV.Mobile"
+             >
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <local:IntStringConverter x:Key="intStringConverter" />
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.ToolbarItems>
+    <ToolbarItem  Icon="save.png"  Command="{Binding SalvarCommand}" />
+  </ContentPage.ToolbarItems>
+  <ContentPage.Content>
+    <StackLayout>
+      <Label Text="Marca"  />
+      <Entry Text="{Binding ItemListaCompra.Marca}"/>
+      <Label Text="Descrição"  />
+      <Entry Text="{Binding ItemListaCompra.Descricao}"/>
+      <Label Text="Valor Máximo"  />
+      <controles:FormattedNumberEntry x:Name="FormattedEntry" Keyboard="Numeric" DecimalPlaces="2" Value="{Binding ItemListaCompra.ValorMaximo}" />
+
+      <Label Text="Moeda "  />
+      <controles:ExtendedPicker
+                           DisplayProperty="Descricao"
+                           KeyMemberPath="Codigo"
+                           ItemsSource="{Binding ListaMoeda}"
+                           SelectedItem="{Binding ItemListaCompra.Moeda, Converter={StaticResource intStringConverter}}"
+                           HorizontalOptions="FillAndExpand"
+                            />
+      <Label Text="Pedir Para"  />
+      <controles:ExtendedPicker x:Name="myPicker"
+                                    DisplayProperty="Nome"
+                                    KeyMemberPath="Identificador"
+                                    ItemsSource="{Binding ListaAmigos}"
+                                    SelectedItem="{Binding ItemListaCompra.IdentificadorUsuarioPedido}"
+                                    HorizontalOptions="FillAndExpand"
+                               />
+      <StackLayout Orientation="Horizontal" Spacing="10">
+        <Label Text="Reembolsável"  />
+        <Switch IsToggled="{Binding ItemListaCompra.Reembolsavel}"></Switch>
+      </StackLayout>
+    </StackLayout>
+
+  </ContentPage.Content>
+</ContentPage>

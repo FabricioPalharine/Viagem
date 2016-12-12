@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.EdicaoCotacaoPage"
+             Title="Edição de Cotação"
+              xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+             xmlns:controles="clr-namespace: CV.Mobile.Controls;assembly=CV.Mobile"
+             >
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <local:IntStringConverter x:Key="intStringConverter" />
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.ToolbarItems>
+    <ToolbarItem  Icon="save.png"  Command="{Binding SalvarCommand}" />
+  </ContentPage.ToolbarItems>
+  <ContentPage.Content>
+    <StackLayout>
+      <Label Text="Data Cotação"  />
+      <DatePicker Date="{Binding ItemCotacao.DataCotacao}" VerticalOptions="Start">
+        <DatePicker.Format>dd/MM/yyyy</DatePicker.Format>
+      </DatePicker>
+      <Label Text="Moeda "  />
+      <controles:ExtendedPicker
+                           DisplayProperty="Descricao"
+                           KeyMemberPath="Codigo"
+                           ItemsSource="{Binding ListaMoeda}"
+                           SelectedItem="{Binding ItemCotacao.Moeda, Converter={StaticResource intStringConverter}}"
+                           HorizontalOptions="FillAndExpand"
+                            />
+      <Label Text="Cotação"  />
+      <controles:FormattedNumberEntry x:Name="FormattedEntry" Keyboard="Numeric" DecimalPlaces="4" Value="{Binding ItemCotacao.ValorCotacao}" />
+
+    </StackLayout>
+
+  </ContentPage.Content>
+</ContentPage>

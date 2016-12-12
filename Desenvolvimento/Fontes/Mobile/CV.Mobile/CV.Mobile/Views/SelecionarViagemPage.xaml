@@ -2,8 +2,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CV.Mobile.Views.SelecionarViagemPage"
+              Title="Selecionar Viagem"
+
              xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
-             Title="Selecionar Viagem"
              xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
              xmlns:controles="clr-namespace:CV.Mobile.Controls;assembly=CV.Mobile"
 
@@ -58,25 +59,24 @@
         <Label Text="Amigo"  />
         <controles:ExtendedPicker x:Name="myPicker"
                               DisplayProperty="Nome"
-                              KeyMemberPath="Identificador"
                               ItemsSource="{Binding ListaAmigos}"
                               SelectedItem="{Binding ItemAmigo}"
                               HorizontalOptions="FillAndExpand"
                                />
         <Label Text="Data Início De"  />
-        <controles:NullableDatePicker VerticalOptions="CenterAndExpand" NullableDate="{Binding ItemCriterioBusca.DataInicioDe}">
+        <controles:NullableDatePicker NullableDate="{Binding ItemCriterioBusca.DataInicioDe}">
           <controles:NullableDatePicker.Format>dd/MM/yyyy</controles:NullableDatePicker.Format>
         </controles:NullableDatePicker>
         <Label Text="Data Início Até"  />
-        <controles:NullableDatePicker VerticalOptions="CenterAndExpand" NullableDate="{Binding ItemCriterioBusca.DataInicioAte}">
+        <controles:NullableDatePicker NullableDate="{Binding ItemCriterioBusca.DataInicioAte}">
           <controles:NullableDatePicker.Format>dd/MM/yyyy</controles:NullableDatePicker.Format>
         </controles:NullableDatePicker>
         <Label Text="Data Fim De"  />
-        <controles:NullableDatePicker VerticalOptions="CenterAndExpand" NullableDate="{Binding ItemCriterioBusca.DataFimDe}">
+        <controles:NullableDatePicker NullableDate="{Binding ItemCriterioBusca.DataFimDe}">
           <controles:NullableDatePicker.Format>dd/MM/yyyy</controles:NullableDatePicker.Format>
         </controles:NullableDatePicker>
         <Label Text="Data Fim Até"  />
-        <controles:NullableDatePicker VerticalOptions="CenterAndExpand" NullableDate="{Binding ItemCriterioBusca.DataFimAte}">
+        <controles:NullableDatePicker NullableDate="{Binding ItemCriterioBusca.DataFimAte}">
           <controles:NullableDatePicker.Format>dd/MM/yyyy</controles:NullableDatePicker.Format>
         </controles:NullableDatePicker>
         <Label Text="Situação"  />

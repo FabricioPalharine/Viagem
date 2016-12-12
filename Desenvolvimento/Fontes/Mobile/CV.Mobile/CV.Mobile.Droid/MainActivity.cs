@@ -36,7 +36,7 @@ namespace CV.Mobile.Droid
 
         private void AndroidEnvironment_UnhandledExceptionRaiser(object sender, RaiseThrowableEventArgs e)
         {
-            e.Handled = true;
+            
         }
 
         void RegisterDependencies()

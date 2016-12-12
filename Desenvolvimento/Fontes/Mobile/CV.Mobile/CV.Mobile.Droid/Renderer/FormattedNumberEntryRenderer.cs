@@ -33,10 +33,15 @@ namespace CV.Mobile.Droid.Renderer
                 var element = ((FormattedNumberEntry)Element);
                 // 5. Format number, and place the formatted text in newText
                 //var newText = element.Value.ToString(element.Formato??String.Concat( "N",element.DecimalPlaces));
-                var newText = element.Value.ToString(!string.IsNullOrEmpty(element.Formato) && !element.ShouldReactToTextChanges ? element.Formato : String.Concat("N", element.DecimalPlaces));
+                if (element.Value.HasValue)
+                {
+                    var newText = element.Value.Value.ToString(!string.IsNullOrEmpty(element.Formato) && !element.ShouldReactToTextChanges ? element.Formato : String.Concat("N", element.DecimalPlaces));
 
-                // 6. Set the Text property of our control to newText
-                Control.Text = newText;
+                    // 6. Set the Text property of our control to newText
+                    Control.Text = newText;
+                }
+                else
+                    Control.Text = string.Empty;
 
             }
             else if (!e.PropertyName.Equals(nameof(FormattedNumberEntry.PosicaoVirgula)))
@@ -65,7 +70,7 @@ namespace CV.Mobile.Droid.Renderer
             element.Value = number;
 
             // 5. Format number, and place the formatted text in newText
-            var newText = number.ToString(element.Formato);
+            var newText = number.HasValue? number.Value.ToString(element.Formato):string.Empty;
 
             // 6. Set the Text property of our control to newText
             Control.Text = newText;
