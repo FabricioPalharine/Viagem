@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CV.Mobile.Views.EdicaoListaCompraPage"
-             Title="Manutenção Pedido de Compra"
+             Title="Manutenção Lista"
              xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
              xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
              xmlns:controles="clr-namespace: CV.Mobile.Controls;assembly=CV.Mobile"
@@ -10,6 +10,8 @@
   <ContentPage.Resources>
     <ResourceDictionary>
       <local:IntStringConverter x:Key="intStringConverter" />
+      <local:InverseBooleanConverter x:Key="boolInverterConverter" />
+
     </ResourceDictionary>
   </ContentPage.Resources>
   <ContentPage.ToolbarItems>
@@ -43,8 +45,10 @@
                                     ItemsSource="{Binding ListaAmigos}"
                                     SelectedItem="{Binding ItemListaCompra.IdentificadorUsuarioPedido}"
                                     HorizontalOptions="FillAndExpand"
+                                 IsVisible="{Binding CadastradoComoAmigo}"
                                />
-     
+      <Entry Text="{Binding ItemListaCompra.Destinatario}"  IsVisible="{Binding CadastradoComoAmigo, Converter={StaticResource boolInverterConverter}}"/>
+
     </StackLayout>
 
   </ContentPage.Content>

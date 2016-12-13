@@ -534,5 +534,124 @@ namespace CV.Mobile.Services
 
             return itemResultado;
         }
+
+        public async Task<List<Cidade>> ListarCidadePai()
+        {
+            var Lista = new List<Cidade>();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Cidade/ListarCidadePai"));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                Lista = JsonConvert.DeserializeObject<List<Cidade>>(resultado);
+            }
+
+            return Lista;
+        }
+
+        public async Task<List<Cidade>> ListarCidadeNaoAssociadasFilho()
+        {
+            var Lista = new List<Cidade>();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Cidade/ListarCidadeNaoAssociadasFilho"));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                Lista = JsonConvert.DeserializeObject<List<Cidade>>(resultado);
+            }
+
+            return Lista;
+        }
+
+        public async Task<List<Cidade>> ListarCidadeNaoAssociadasPai(int id)
+        {
+            var Lista = new List<Cidade>();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Cidade/ListarCidadeNaoAssociadasPai/", id));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                Lista = JsonConvert.DeserializeObject<List<Cidade>>(resultado);
+            }
+
+            return Lista;
+        }
+
+        public async Task<ResultadoOperacao> ExcluirCidadeGrupo(int? Identificador)
+        {
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/CidadeGrupo/", Identificador));
+
+            HttpResponseMessage response = null;
+            response = await client.DeleteAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                itemResultado = JsonConvert.DeserializeObject<ResultadoOperacao>(resultado);
+            }
+
+
+            return itemResultado;
+        }
+
+        public async Task<ManutencaoCidadeGrupo> CarregarCidadeGrupo(int? Identificador)
+        {
+            var itemListaCompra = new ManutencaoCidadeGrupo();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/CidadeGrupo/get/", Identificador.GetValueOrDefault(0)));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                itemListaCompra = JsonConvert.DeserializeObject<ManutencaoCidadeGrupo>(resultado);
+
+            }
+
+            return itemListaCompra;
+        }
+
+        public async Task<Cidade> CarregarCidade(int? Identificador)
+        {
+            var itemListaCompra = new Cidade();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Cidade/get/", Identificador.GetValueOrDefault(0)));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                itemListaCompra = JsonConvert.DeserializeObject<Cidade>(resultado);
+
+            }
+
+            return itemListaCompra;
+        }
+
+        public async Task<ResultadoOperacao> SalvarCidadeGrupo(ManutencaoCidadeGrupo itemCidadeGrupo)
+        {
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/CidadeGrupo/Post"));
+            var json = JsonConvert.SerializeObject(itemCidadeGrupo, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            });
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = null;
+            response = await client.PostAsync(uri, content);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                itemResultado = JsonConvert.DeserializeObject<ResultadoOperacao>(resultado);
+            }
+
+
+            return itemResultado;
+        }
+
     }
 }

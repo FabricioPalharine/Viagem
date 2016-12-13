@@ -58,6 +58,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Cidade.cs" />
     <Compile Include="Models\CotacaoMoeda.cs" />
     <Compile Include="Models\Gasto.cs" />
     <Compile Include="Models\Atracao.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Models\Foto.cs" />
     <Compile Include="Models\ItemLista.cs" />
     <Compile Include="Models\ListaCompra.cs" />
+    <Compile Include="Models\ManutencaoCidadeGrupo.cs" />
     <Compile Include="Models\MensagemErro.cs" />
     <Compile Include="Models\PocoLogin.cs" />
     <Compile Include="Models\RefeicaoPedido.cs" />
@@ -101,8 +103,10 @@
     <Compile Include="ViewModels\EdicaoListaCompraViewModel.cs" />
     <Compile Include="ViewModels\EdicaoRequisicaoCompraViewModel.cs" />
     <Compile Include="ViewModels\EdicaoPedidoCompraViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoAgrupamentoCidadeViewModel.cs" />
     <Compile Include="ViewModels\EditarCotacaoViewModel.cs" />
     <Compile Include="ViewModels\ListagemAmigoViewModel.cs" />
+    <Compile Include="ViewModels\ListagemAgrupamentoCidadeViewModel.cs" />
     <Compile Include="ViewModels\ListagemCotacaoMoedaViewModel.cs" />
     <Compile Include="ViewModels\ListagemListaCompraViewModel.cs" />
     <Compile Include="ViewModels\ListagemPedidoCompraViewModel.cs" />
@@ -132,6 +136,9 @@
     </Compile>
     <Compile Include="Views\EdicaoViagemDados.xaml.cs">
       <DependentUpon>EdicaoViagemDados.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemAgrupamentoCidadePage.xaml.cs">
+      <DependentUpon>ListagemAgrupamentoCidadePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ListagemListaCompraPage.xaml.cs">
       <DependentUpon>ListagemListaCompraPage.xaml</DependentUpon>
@@ -387,6 +394,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\EdicaoListaCompraPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemAgrupamentoCidadePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

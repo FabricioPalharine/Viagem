@@ -226,6 +226,10 @@ namespace CV.Mobile.ViewModels
                 {
                     await OnItemMenuSelecionado(new MenuInicialPage() { BindingContext = new MenuInicialViewModel() },true);
                 }
+                else if (_ItemMenuSelecionado.Codigo == 10)
+                {
+                    await AbrirGrupoCidade();
+                }
                 else if (_ItemMenuSelecionado.Codigo == 12)
                 {
                     await AbrirCotacaoMoeda();
@@ -258,6 +262,17 @@ namespace CV.Mobile.ViewModels
                 ListagemCotacaoMoedaPage pagina = new ListagemCotacaoMoedaPage() { BindingContext = new ListagemCotacaoMoedaViewModel(_ItemViagem) };
 
                 await OnItemMenuSelecionado(pagina,false);
+
+            }
+        }
+
+        private async Task AbrirGrupoCidade()
+        {
+            if (_ItemViagem != null && await VerificarOnline())
+            {
+                var pagina = new ListagemAgrupamentoCidadePage() { BindingContext = new ListagemAgrupamentoCidadeViewModel(_ItemViagem) };
+
+                await OnItemMenuSelecionado(pagina, false);
 
             }
         }

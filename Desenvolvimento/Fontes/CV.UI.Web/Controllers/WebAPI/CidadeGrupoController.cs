@@ -53,6 +53,7 @@ resultado.TotalRegistros = _itens.Count();
             if (itemResultado.Sucesso)
             {
                 itemResultado.ItemRegistro = biz.SelecionarCidade( itemCidadeGrupo.IdentificadorCidade);
+                itemResultado.IdentificadorRegistro = itemCidadeGrupo.IdentificadorCidade;
             }
             return itemResultado;
         }

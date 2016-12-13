@@ -100,16 +100,19 @@ namespace CV.Mobile.Controls
 
         private void OnSelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(KeyMemberPath))
+            if (SelectedIndex > -1)
             {
-                var selectedItem = ItemsSource[SelectedIndex];
-                var keyProperty = selectedItem.GetType().GetRuntimeProperty(KeyMemberPath);
-                var valor = keyProperty.GetValue(selectedItem);
-                if (valor != this.SelectedItem)
-                    this.SelectedItem = valor;
+                if (!string.IsNullOrEmpty(KeyMemberPath))
+                {
+                    var selectedItem = ItemsSource[SelectedIndex];
+                    var keyProperty = selectedItem.GetType().GetRuntimeProperty(KeyMemberPath);
+                    var valor = keyProperty.GetValue(selectedItem);
+                    if (valor != this.SelectedItem)
+                        this.SelectedItem = valor;
+                }
+                else
+                    this.SelectedItem = ItemsSource[SelectedIndex];
             }
-            else
-                this.SelectedItem = ItemsSource[SelectedIndex];
         }
 
 
@@ -117,6 +120,11 @@ namespace CV.Mobile.Controls
         {
             ExtendedPicker bindablePicker = (ExtendedPicker)bindable;
             ExtendedPicker picker = bindable as ExtendedPicker;
+            if (newValue == null)
+            {
+                picker.SelectedIndex = -1;
+                return;
+            }
             if (picker != null && picker.SelectedIndex != -1)
             {
                 var selectedItem = picker.ItemsSource[picker.SelectedIndex];

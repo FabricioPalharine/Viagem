@@ -10,6 +10,14 @@ namespace CV.Model
 
 	public partial class Cidade
 	{
-	}
+        public string NomePais
+        {
+            get
+            {
+                return ItemPais != null ? ItemPais.Nome : string.Empty;
+            }
+        }
+
+    }
 
 }
