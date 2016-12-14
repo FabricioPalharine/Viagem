@@ -18,6 +18,8 @@ namespace CV.Mobile.ViewModels
         private UsuarioLogado _ItemUsuario;
 
         public ObservableCollection<ItemMenu> ItensMenu { get; set; }
+        public ObservableCollection<ItemMenu> ItensMenuCompleto { get; set; }
+
         private ItemMenu _ItemMenuSelecionado;
         private Viagem _ItemViagem;
 
@@ -64,6 +66,38 @@ namespace CV.Mobile.ViewModels
             set
             {
                 SetProperty(ref _ItemViagem, value);
+                if (value != null)
+                {
+                    AjustarVisibilidadeItens();
+                }
+                else
+                {
+                    foreach (var itemMenu in ItensMenuCompleto)
+                        if (itemMenu.Codigo != 0)
+                            itemMenu.Visible = false;
+                }
+                ItensMenu = new ObservableCollection<ItemMenu>(ItensMenuCompleto.Where(d => d.Visible));
+                OnPropertyChanged("ItensMenu");
+
+            }
+        }
+
+        private void AjustarVisibilidadeItens()
+        {
+            foreach (var itemMenu in ItensMenuCompleto)
+            {
+                if (itemMenu.ApenasAmigo)
+                    itemMenu.Visible = !ItemViagem.Edicao;
+                else if (itemMenu.ApenasParticipante)
+                    itemMenu.Visible = ItemViagem.Edicao;
+                else
+                    itemMenu.Visible = true;
+
+                if (itemMenu.Visible)
+                {
+                    if (itemMenu.ViagemAberta)
+                        itemMenu.Visible = ItemViagem.Aberto;
+                }
             }
         }
 
@@ -76,144 +110,163 @@ namespace CV.Mobile.ViewModels
         public MenuViewModel(UsuarioLogado itemUsuario)
         {
             _ItemUsuario = itemUsuario;
-            ItensMenu = new ObservableCollection<ItemMenu>();
+            ItensMenuCompleto = new ObservableCollection<ItemMenu>();
             CarregarItensMenu();
+            ItensMenu = new ObservableCollection<ItemMenu>(ItensMenuCompleto.Where(d => d.Visible));
+            OnPropertyChanged("ItensMenu");
         }
 
         private void CarregarItensMenu()
         {
-            ItensMenu.Add(new ItemMenu
+            ItensMenuCompleto.Add(new ItemMenu
             {
                 Codigo = 0,
                 Title = "Home",
                 IconSource = "Dados.png",
                 Visible = true
             });
-            ItensMenu.Add(new ItemMenu
+            ItensMenuCompleto.Add(new ItemMenu
             {
                 Codigo = 1,
                 Title = "Atração",
                 IconSource = "Dados.png",
-                Visible = true
+                Visible = false,
+                ApenasParticipante = true
             });
-            ItensMenu.Add(new ItemMenu
+            ItensMenuCompleto.Add(new ItemMenu
             {
                 Codigo = 2,
                 Title = "Hotel",
                 IconSource = "Dados.png",
-                Visible = true
+                Visible = false,
+                ApenasParticipante = true
             });
-            ItensMenu.Add(new ItemMenu
+            ItensMenuCompleto.Add(new ItemMenu
             {
                 Codigo = 3,
                 Title = "Refeição",
                 IconSource = "Dados.png",
-                Visible = true
+                Visible = false,
+                ApenasParticipante = true
             });
-            ItensMenu.Add(new ItemMenu
+            ItensMenuCompleto.Add(new ItemMenu
             {
                 Codigo = 4,
                 Title = "Loja",
                 IconSource = "Dados.png",
-                Visible = true
+                Visible = false,
+                ApenasParticipante = true
             });
-            ItensMenu.Add(new ItemMenu
+            ItensMenuCompleto.Add(new ItemMenu
             {
                 Codigo = 5,
                 Title = "Carro",
                 IconSource = "Dados.png",
-                Visible = true
+                Visible = false,
+                ApenasParticipante = true
             });
-            ItensMenu.Add(new ItemMenu
+            ItensMenuCompleto.Add(new ItemMenu
             {
                 Codigo = 6,
                 Title = "Deslocamento",
                 IconSource = "Dados.png",
-                Visible = true
+                Visible = false,
+                ApenasParticipante = true
             });
-            ItensMenu.Add(new ItemMenu
+            ItensMenuCompleto.Add(new ItemMenu
             {
                 Codigo = 7,
                 Title = "Gasto",
                 IconSource = "Dados.png",
-                Visible = true
+                Visible = false,
+                ApenasParticipante = true
             });
-            ItensMenu.Add(new ItemMenu
+            ItensMenuCompleto.Add(new ItemMenu
             {
                 Codigo = 8,
                 Title = "Aquisição Moeda",
                 IconSource = "Dados.png",
-                Visible = true
+                Visible = false,
+                ApenasParticipante = true
             });
-            ItensMenu.Add(new ItemMenu
+            ItensMenuCompleto.Add(new ItemMenu
             {
                 Codigo = 9,
                 Title = "Calendário Previsto",
                 IconSource = "Dados.png",
-                Visible = true
+                Visible = false
             });
-            ItensMenu.Add(new ItemMenu
+            ItensMenuCompleto.Add(new ItemMenu
             {
                 Codigo = 10,
                 Title = "Grupo de Cidade",
                 IconSource = "Dados.png",
-                Visible = true
+                Visible = false,
+                ApenasParticipante = true
             });
-            ItensMenu.Add(new ItemMenu
+            ItensMenuCompleto.Add(new ItemMenu
             {
                 Codigo = 11,
                 Title = "Comentário",
                 IconSource = "Dados.png",
-                Visible = true
+                Visible = false,
+                ApenasParticipante = true
             });
-            ItensMenu.Add(new ItemMenu
+            ItensMenuCompleto.Add(new ItemMenu
             {
                 Codigo = 12,
                 Title = "Cotação Moeda",
                 IconSource = "Dados.png",
-                Visible = true
+                Visible = false,
+                ApenasParticipante = true
             });
-            ItensMenu.Add(new ItemMenu
+            ItensMenuCompleto.Add(new ItemMenu
             {
                 Codigo = 13,
                 Title = "Foto",
                 IconSource = "Dados.png",
-                Visible = true
+                Visible = false,
+                ApenasParticipante = true
             });
-            ItensMenu.Add(new ItemMenu
+            ItensMenuCompleto.Add(new ItemMenu
             {
                 Codigo = 14,
                 Title = "Lista de Compra",
                 IconSource = "Dados.png",
-                Visible = true
+                Visible = false,
+                ApenasParticipante = true
             });
-            ItensMenu.Add(new ItemMenu
+            ItensMenuCompleto.Add(new ItemMenu
             {
                 Codigo = 15,
                 Title = "Consultar Sugestão",
                 IconSource = "Dados.png",
-                Visible = true
+                Visible = false,
+                ApenasParticipante = true
             });
-            ItensMenu.Add(new ItemMenu
+            ItensMenuCompleto.Add(new ItemMenu
             {
                 Codigo = 16,
                 Title = "Pedido de Compra",
                 IconSource = "Dados.png",
-                Visible = true
+                Visible = false,
+                ApenasAmigo = true
             });
-            ItensMenu.Add(new ItemMenu
+            ItensMenuCompleto.Add(new ItemMenu
             {
                 Codigo = 17,
                 Title = "Sugestão",
                 IconSource = "Dados.png",
-                Visible = true
+                Visible = false,
+                ApenasAmigo = true
             });
-            ItensMenu.Add(new ItemMenu
+            ItensMenuCompleto.Add(new ItemMenu
             {
                 Codigo = 18,
                 Title = "Editar Viagem",
                 IconSource = "Dados.png",
-                Visible = true
+                Visible = false,
+                ApenasParticipante = true
             });
 
         }
@@ -225,6 +278,10 @@ namespace CV.Mobile.ViewModels
                 if (_ItemMenuSelecionado.Codigo == 0)
                 {
                     await OnItemMenuSelecionado(new MenuInicialPage() { BindingContext = new MenuInicialViewModel() },true);
+                }
+                else if (_ItemMenuSelecionado.Codigo == 8)
+                {
+                    await AbrirCompraMoeda();
                 }
                 else if (_ItemMenuSelecionado.Codigo == 10)
                 {
@@ -262,6 +319,17 @@ namespace CV.Mobile.ViewModels
                 ListagemCotacaoMoedaPage pagina = new ListagemCotacaoMoedaPage() { BindingContext = new ListagemCotacaoMoedaViewModel(_ItemViagem) };
 
                 await OnItemMenuSelecionado(pagina,false);
+
+            }
+        }
+
+        private async Task AbrirCompraMoeda()
+        {
+            if (_ItemViagem != null)
+            {
+                var pagina = new ListagemAporteDinheiroPage() { BindingContext = new ListagemAporteDinheiroViewModel(_ItemViagem) };
+
+                await OnItemMenuSelecionado(pagina, false);
 
             }
         }

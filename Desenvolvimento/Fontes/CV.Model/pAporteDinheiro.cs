@@ -18,6 +18,14 @@ namespace CV.Model
                 return Moeda.HasValue ? ((enumMoeda)Moeda.Value).ToString() : null;
             }
         }
+
+        public string NomeUsuario
+        {
+            get
+            {
+                return (ItemUsuario ?? new Usuario()).Nome;
+            }
+        }
     }
 
 }

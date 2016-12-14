@@ -159,7 +159,7 @@ namespace CV.Mobile.ViewModels
                 var ListaCidadesPai = await srv.ListarCidadeNaoAssociadasFilho();
                 var ListaCidadesFilha = await srv.ListarCidadeNaoAssociadasPai(itemManutencao.IdentificadorCidade.GetValueOrDefault(-1));
                 var vm = new EdicaoAgrupamentoCidadeViewModel(itemManutencao, ListaCidadesPai, ListaCidadesFilha);
-                var pagina = new EdicaoCotacaoPage() { BindingContext = vm };
+                var pagina = new EdicaoAgrupamentoCidadePage() { BindingContext = vm };
                 await PushAsync(pagina);
             }
         }

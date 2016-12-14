@@ -33,6 +33,9 @@ namespace CV.Mobile.ViewModels
             AbrirAmigosCommand = new Command(
                                     async () => await AbrirViewAmigo(),
                                     () => true);
+            AbrirRankingCommand = new Command(
+                                    async () => await AbrirRankings(),
+                                    () => true);
         }
 
         private async Task DeslogarAplicacao()
@@ -74,6 +77,15 @@ namespace CV.Mobile.ViewModels
                 var Pagina = new ListagemAmigoPage() { BindingContext = new ListagemAmigoViewModel() };
                 await PushAsync(Pagina);
             }
+        }
+
+        private async Task AbrirRankings()
+        {
+            
+
+                var Pagina = new PaginaTeste() ;
+                await PushAsync(Pagina);
+        
         }
 
         public Command SelecionarViagemCommand { get; set; }

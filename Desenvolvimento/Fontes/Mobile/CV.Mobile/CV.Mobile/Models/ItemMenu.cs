@@ -13,6 +13,9 @@ namespace CV.Mobile.Models
         private string _IconSource;
         private bool _Visible;
         private int _Codigo;
+        private bool _ApenasParticipante;
+        private bool _ApenasAmigo;
+        private bool _ViagemAberta = true;
 
         public string Title
         {
@@ -63,6 +66,45 @@ namespace CV.Mobile.Models
             set
             {
                 SetProperty(ref _Codigo, value);
+            }
+        }
+
+        public bool ApenasParticipante
+        {
+            get
+            {
+                return _ApenasParticipante;
+            }
+
+            set
+            {
+                _ApenasParticipante = value;
+            }
+        }
+
+        public bool ApenasAmigo
+        {
+            get
+            {
+                return _ApenasAmigo;
+            }
+
+            set
+            {
+                _ApenasAmigo = value;
+            }
+        }
+
+        public bool ViagemAberta
+        {
+            get
+            {
+                return _ViagemAberta;
+            }
+
+            set
+            {
+                _ViagemAberta = value;
             }
         }
     }

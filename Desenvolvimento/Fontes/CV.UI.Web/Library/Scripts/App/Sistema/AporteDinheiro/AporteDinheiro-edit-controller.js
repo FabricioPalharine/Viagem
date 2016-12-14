@@ -44,7 +44,7 @@
 
             if (vm.itemAporteDinheiro.DataAporte) {
               
-                vm.itemAporteDinheiro.EntradaPrevista = moment(vm.itemAporteDinheiro.DataAporte).format("YYYY-MM-DDTHH:mm:ss");
+                vm.itemAporteDinheiro.DataAporte = moment(vm.itemAporteDinheiro.DataAporte).format("YYYY-MM-DDTHH:mm:ss");
               
             }
 

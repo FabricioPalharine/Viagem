@@ -62,7 +62,7 @@
                             <label>@TextosPaginas.AporteDinheiro_Cotacao</label>
                             <input type="text" class="form-control" ng-model="itemAporteDinheiroEdit.itemAporteDinheiro.Cotacao" empty-to-null decimal-input="{digits:6, integerDigits:12}">
                         </div>
-                        <div class="form-group col-md-6" ng-class="{ 'has-error':itemGastoEdit.CamposInvalidos.Especie}">
+                        <div class="form-group col-md-6" ng-class="{ 'has-error':itemGastoEdit.CamposInvalidos.BaixarMoeda}">
                             <label>@TextosPaginas.AporteDinheiro_BaixaMoeda</label>
                             <input type="checkbox" ng-model="itemAporteDinheiroEdit.BaixarMoeda" class="checkbox" ng-click="itemAporteDinheiroEdit.trocarBaixa()">
                         </div>

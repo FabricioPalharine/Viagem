@@ -16,12 +16,15 @@ namespace CV.Mobile.ViewModels
     {
         private ManutencaoCidadeGrupo _ItemCidadeGrupo;
         private Cidade _ItemCidadeSelecionada;
+        private Cidade _CidadeFilhaSelecionada;
 
         public EdicaoAgrupamentoCidadeViewModel(ManutencaoCidadeGrupo pItemCidadeGrupo, List<Cidade> pCidadesPai, List<Cidade> pCidadesFilhas)
         {
             _ItemCidadeGrupo = pItemCidadeGrupo;
             CidadesPai = new ObservableCollection<Cidade>(pCidadesPai);
             CidadesFilhas = new ObservableCollection<Cidade>(pCidadesFilhas);
+            if (pItemCidadeGrupo.IdentificadorCidade.HasValue)
+                ItemCidadeSelecionada = CidadesPai.Where(f => f.Identificador == pItemCidadeGrupo.IdentificadorCidade).FirstOrDefault();
             foreach (var itemCidade in CidadesFilhas)
             {
                 if (pItemCidadeGrupo.CidadesFilhas.Contains(itemCidade.Identificador))
@@ -71,6 +74,20 @@ namespace CV.Mobile.ViewModels
                         itemCidade.Visivel = true;
                 }
 
+            }
+        }
+
+        public Cidade CidadeFilhaSelecionada
+        {
+            get
+            {
+                return _CidadeFilhaSelecionada;
+            }
+
+            set
+            {
+                _CidadeFilhaSelecionada = null;
+                OnPropertyChanged();
             }
         }
 

@@ -30,7 +30,7 @@ namespace CV.Mobile.Droid
             AndroidEnvironment.UnhandledExceptionRaiser += AndroidEnvironment_UnhandledExceptionRaiser; ;
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
-
+            Xamarin.FormsMaps.Init(this, bundle);
             LoadApplication(new App());
         }
 

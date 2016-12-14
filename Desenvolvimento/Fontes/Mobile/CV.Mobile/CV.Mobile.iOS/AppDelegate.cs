@@ -9,6 +9,8 @@ using Autofac.Extras.CommonServiceLocator;
 using Microsoft.Practices.ServiceLocation;
 using CV.Mobile.iOS.Services;
 using CV.Mobile.Interfaces;
+using Xamarin;
+using TK.CustomMap.iOSUnified;
 
 namespace CV.Mobile.iOS
 {
@@ -31,6 +33,11 @@ namespace CV.Mobile.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
+            FormsMaps.Init();
+            TKCustomMapRenderer.InitMapRenderer();
+            NativePlacesApi.Init();
+
+
             LoadApplication(new App());
             RegisterDependencies();
             return base.FinishedLaunching(app, options);

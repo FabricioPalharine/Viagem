@@ -653,5 +653,83 @@ namespace CV.Mobile.Services
             return itemResultado;
         }
 
+
+        public async Task<List<AporteDinheiro>> ListarAporteDinheiro(CriterioBusca criterioBusca)
+        {
+            var ListaAmigos = new List<AporteDinheiro>();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/AporteDinheiro/get?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            })));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                var itemResultado = JsonConvert.DeserializeObject<ResultadoConsultaTipo<AporteDinheiro>>(resultado);
+                ListaAmigos = itemResultado.Lista;
+            }
+
+            return ListaAmigos;
+        }
+
+        public async Task<AporteDinheiro> CarregarAporteDinheiro(int? Identificador)
+        {
+            var itemAporteDinheiro = new AporteDinheiro();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/AporteDinheiro/get/", Identificador.GetValueOrDefault(0)));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                itemAporteDinheiro = JsonConvert.DeserializeObject<AporteDinheiro>(resultado);
+
+            }
+
+            return itemAporteDinheiro;
+        }
+
+        public async Task<ResultadoOperacao> ExcluirAporteDinheiro(int? Identificador)
+        {
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/AporteDinheiro/", Identificador));
+
+            HttpResponseMessage response = null;
+            response = await client.DeleteAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                itemResultado = JsonConvert.DeserializeObject<ResultadoOperacao>(resultado);
+            }
+
+
+            return itemResultado;
+        }
+
+        public async Task<ResultadoOperacao> SalvarAporteDinheiro(AporteDinheiro itemAporteDinheiro)
+        {
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/AporteDinheiro/Post"));
+            var json = JsonConvert.SerializeObject(itemAporteDinheiro, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            });
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = null;
+            response = await client.PostAsync(uri, content);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                itemResultado = JsonConvert.DeserializeObject<ResultadoOperacao>(resultado);
+            }
+
+
+            return itemResultado;
+        }
+
+
     }
 }

@@ -58,6 +58,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\AporteDinheiro.cs" />
     <Compile Include="Models\Cidade.cs" />
     <Compile Include="Models\CotacaoMoeda.cs" />
     <Compile Include="Models\Gasto.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Services\OAuth2AuthenticatorToken.cs" />
     <Compile Include="ViewModels\AdicionarAmigoViewModel.cs" />
     <Compile Include="ViewModels\BaseNavigationViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoAporteDinheiroViewModel.cs" />
     <Compile Include="ViewModels\EdicaoListaCompraViewModel.cs" />
     <Compile Include="ViewModels\EdicaoRequisicaoCompraViewModel.cs" />
     <Compile Include="ViewModels\EdicaoPedidoCompraViewModel.cs" />
@@ -108,6 +110,7 @@
     <Compile Include="ViewModels\ListagemAmigoViewModel.cs" />
     <Compile Include="ViewModels\ListagemAgrupamentoCidadeViewModel.cs" />
     <Compile Include="ViewModels\ListagemCotacaoMoedaViewModel.cs" />
+    <Compile Include="ViewModels\ListagemAporteDinheiroViewModel.cs" />
     <Compile Include="ViewModels\ListagemListaCompraViewModel.cs" />
     <Compile Include="ViewModels\ListagemPedidoCompraViewModel.cs" />
     <Compile Include="ViewModels\LoadingViewModel.cs" />
@@ -115,15 +118,25 @@
     <Compile Include="ViewModels\MenuInicialViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="ViewModels\EditarViagemViewModel.cs" />
+    <Compile Include="ViewModels\PaginaTeste.xaml.cs">
+      <DependentUpon>PaginaTeste.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\SelecionarViagemViewModel.cs" />
+    <Compile Include="ViewModels\TesteRotaVM.cs" />
     <Compile Include="Views\AdicionarAmigoPage.xaml.cs">
       <DependentUpon>AdicionarAmigoPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AutenticacaoPage.xaml.cs">
       <DependentUpon>AutenticacaoPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EdicaoAgrupamentoCidadePage.xaml.cs">
+      <DependentUpon>EdicaoAgrupamentoCidadePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EdicaoCotacaoPage.xaml.cs">
       <DependentUpon>EdicaoCotacaoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoAporteDinheiroPage.xaml.cs">
+      <DependentUpon>EdicaoAporteDinheiroPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EdicaoListaCompraPage.xaml.cs">
       <DependentUpon>EdicaoListaCompraPage.xaml</DependentUpon>
@@ -149,6 +162,9 @@
     <Compile Include="Views\ListagemCotacaoMoedaPage.xaml.cs">
       <DependentUpon>ListagemCotacaoMoedaPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ListagemAporteDinheiroPage.xaml.cs">
+      <DependentUpon>ListagemAporteDinheiroPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ListagemPedidoCompraPage.xaml.cs">
       <DependentUpon>ListagemPedidoCompraPage.xaml</DependentUpon>
     </Compile>
@@ -167,6 +183,7 @@
     <Compile Include="Views\EditarViagemPage.xaml.cs">
       <DependentUpon>EditarViagemPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PlacesAutoComplete.cs" />
     <Compile Include="Views\SelecionarViagemPage.xaml.cs">
       <DependentUpon>SelecionarViagemPage.xaml</DependentUpon>
     </Compile>
@@ -200,6 +217,10 @@
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ModernHttpClient, Version=2.4.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\modernhttpclient.2.4.2\lib\Portable-Net45+WinRT45+WP8+WPA81\ModernHttpClient.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="MvvmHelpers, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -246,6 +267,10 @@
       <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Primitives.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="TK.CustomMap, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\TK.CustomMap.1.5.0\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+UAP10\TK.CustomMap.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Validation, Version=2.0.0.0, Culture=neutral, PublicKeyToken=2fc06f0d701809a7, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Validation.2.0.4.14103\lib\portable-windows8+net40+sl5+wp8+wpa81+wp81+MonoAndroid+MonoTouch\Validation.dll</HintPath>
       <Private>True</Private>
@@ -255,15 +280,19 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Xamarin.Forms.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Xamarin.Forms.2.3.2.127\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Core.dll</HintPath>
+      <HintPath>..\..\packages\Xamarin.Forms.2.3.3.175\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Maps, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xamarin.Forms.Maps.2.3.3.175\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10\Xamarin.Forms.Maps.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Xamarin.Forms.Platform, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Xamarin.Forms.2.3.2.127\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Platform.dll</HintPath>
+      <HintPath>..\..\packages\Xamarin.Forms.2.3.3.175\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Platform.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Xamarin.Forms.Xaml, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Xamarin.Forms.2.3.2.127\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Xaml.dll</HintPath>
+      <HintPath>..\..\packages\Xamarin.Forms.2.3.3.175\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Xaml.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -404,14 +433,38 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoAgrupamentoCidadePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoAporteDinheiroPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemAporteDinheiroPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ViewModels\PaginaTeste.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
-  <Import Project="..\..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets'))" />
     <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Xamarin.Forms.2.3.3.175\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Xamarin.Forms.2.3.3.175\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets'))" />
   </Target>
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Import Project="..\..\packages\Xamarin.Forms.2.3.3.175\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.3.175\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
 </Project>

@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.EdicaoAporteDinheiro"
+             Title="Manutenção Compra Moeda"
+             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+             xmlns:controles="clr-namespace: CV.Mobile.Controls;assembly=CV.Mobile"
+             >
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <local:IntStringConverter x:Key="intStringConverter" />
+      <local:InverseBooleanConverter x:Key="boolInverterConverter" />
+
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.Behaviors>
+    <behaviors:EventHandlerBehavior EventName="Appearing">
+      <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
+    </behaviors:EventHandlerBehavior>
+  </ContentPage.Behaviors>
+  <ContentPage.ToolbarItems>
+    <ToolbarItem  Icon="save.png"  Command="{Binding SalvarCommand}" />
+  </ContentPage.ToolbarItems>
+  <ContentPage.Content>
+    <StackLayout>
+     
+      <Label Text="Valor"  />
+      <controles:FormattedNumberEntry x:Name="FormattedEntry" Keyboard="Numeric" DecimalPlaces="2" Value="{Binding ItemAporteDinheiro.Valor}" />
+      <Label Text="Moeda "  />
+      <controles:ExtendedPicker
+                           DisplayProperty="Descricao"
+                           KeyMemberPath="Codigo"
+                           ItemsSource="{Binding ListaMoeda}"
+                           SelectedItem="{Binding ItemAporteDinheiro.Moeda, Converter={StaticResource intStringConverter}}"
+                           HorizontalOptions="FillAndExpand"
+                            />
+      <Label Text="Data Compra"  />
+      <DatePicker Date="{Binding ItemAporteDinheiro.DataAporte}" VerticalOptions="Start">
+        <DatePicker.Format>dd/MM/yyyy</DatePicker.Format>
+      </DatePicker>
+
+      <Label Text="Cotação"  />
+      <controles:FormattedNumberEntry Keyboard="Numeric" DecimalPlaces="4" Value="{Binding ItemAporteDinheiro.Cotacao}" />
+
+
+
+      <StackLayout Orientation="Horizontal" Spacing="10">
+        <Label Text="Baixar Moeda"  />
+        <Switch IsToggled="{Binding BaixarMoeda}"></Switch>
+      </StackLayout>
+
+      
+        <Label Text="Valor Baixar"  IsVisible="{Binding BaixarMoeda}"/>
+        <controles:FormattedNumberEntry  Keyboard="Numeric" DecimalPlaces="2" Value="{Binding ItemGasto.Valor}" IsVisible="{Binding BaixarMoeda}" />
+        <Label Text="Moeda Baixar" IsVisible="{Binding BaixarMoeda}" />
+        <controles:ExtendedPicker
+                             DisplayProperty="Descricao"
+                             KeyMemberPath="Codigo"
+                             ItemsSource="{Binding ListaMoeda}"
+                             SelectedItem="{Binding ItemGasto.Moeda, Converter={StaticResource intStringConverter}}"
+                             HorizontalOptions="FillAndExpand" IsVisible="{Binding BaixarMoeda}"
+                            />
+
+  
+
+   
+    </StackLayout>
+
+  </ContentPage.Content>
+</ContentPage>

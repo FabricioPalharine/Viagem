@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using TK.CustomMap.Api.Google;
 using Xamarin.Forms;
 
 namespace CV.Mobile
@@ -17,6 +17,8 @@ namespace CV.Mobile
         {
             InitializeComponent();
             SubscribeToDisplayAlertMessages();
+            GmsPlace.Init("AIzaSyAlUpOpwZWS_ZGlMAtB6lY76oy1QBWk97g");
+            GmsDirection.Init("AIzaSyAlUpOpwZWS_ZGlMAtB6lY76oy1QBWk97g");
 
             LoadingViewModel vm = new LoadingViewModel();
             MainPage = new LoadingPage() { BindingContext = vm };

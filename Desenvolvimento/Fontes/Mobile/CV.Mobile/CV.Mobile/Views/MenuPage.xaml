@@ -9,7 +9,7 @@
          <Image Aspect="AspectFill" HeightRequest ="40" WidthRequest="40" Source="{Binding ItemUsuario.LinkFoto}"  />
         <Label Text="{Binding ItemUsuario.Nome}" YAlign="Start" Font="Medium"  />
       </StackLayout>
-      <ListView x:Name="listView" VerticalOptions="FillAndExpand" SeparatorVisibility="None" ItemsSource="{Binding ItensMenu}" ItemTapped="ItemTapped" SelectedItem="{Binding ItemSelecionado, Mode=TwoWay}" Style="{StaticResource menuStyle}" >
+      <ListView x:Name="listView" HasUnevenRows="True" VerticalOptions="FillAndExpand" SeparatorVisibility="None" ItemsSource="{Binding ItensMenu}" ItemTapped="ItemTapped" SelectedItem="{Binding ItemSelecionado, Mode=TwoWay}" Style="{StaticResource menuStyle}" >
 
         <ListView.ItemTemplate >
           <DataTemplate>

@@ -9,12 +9,15 @@ namespace CV.Mobile.Helpers
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            return value.ToString();
+            return System.Convert.ToString( value);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            return System.Convert.ToInt32(value);
+            if (value != null && System.Convert.ToString(value) != string.Empty) 
+                return System.Convert.ToInt32(value);
+            else
+                return null;
         }
     }
 }
