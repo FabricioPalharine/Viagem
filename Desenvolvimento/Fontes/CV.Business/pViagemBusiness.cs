@@ -1267,7 +1267,7 @@ namespace CV.Business
         {
             WebClient client = new WebClient();
 
-
+            client.Encoding = System.Text.Encoding.UTF8;
             string LocationInformation = client.DownloadString("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude.GetValueOrDefault(0).ToString("F6", System.Globalization.CultureInfo.GetCultureInfo("en-Us")) + "," + longitude.GetValueOrDefault(0).ToString("F6", System.Globalization.CultureInfo.GetCultureInfo("en-Us")) + "&key=AIzaSyAlUpOpwZWS_ZGlMAtB6lY76oy1QBWk97g");
 
             var locationinfo = JsonConvert.DeserializeObject<dynamic>(LocationInformation);

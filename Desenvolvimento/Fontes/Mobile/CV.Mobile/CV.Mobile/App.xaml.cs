@@ -17,8 +17,8 @@ namespace CV.Mobile
         {
             InitializeComponent();
             SubscribeToDisplayAlertMessages();
-            GmsPlace.Init("AIzaSyAlUpOpwZWS_ZGlMAtB6lY76oy1QBWk97g");
-            GmsDirection.Init("AIzaSyAlUpOpwZWS_ZGlMAtB6lY76oy1QBWk97g");
+            GmsPlace.Init(Constants.ClientAPI);
+            GmsDirection.Init(Constants.ClientAPI);
 
             LoadingViewModel vm = new LoadingViewModel();
             MainPage = new LoadingPage() { BindingContext = vm };

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CV.Mobile.Models;
+using CV.Mobile.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TK.CustomMap.Api;
@@ -7,7 +9,7 @@ using TK.CustomMap.Api.OSM;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 
-namespace CV.Mobile.Views
+namespace CV.Mobile.Controls
 {
     public class PlacesAutoComplete : RelativeLayout
     {
@@ -18,13 +20,13 @@ namespace CV.Mobile.Views
         // TODO: SUMMARIES
         public enum PlacesApi
         {
+
             Google,
             Osm,
             Native
         }
 
-        private readonly bool _useSearchBar;
-
+      
         private bool _textChangeItemSelected;
 
         private SearchBar _searchBar;
@@ -36,7 +38,10 @@ namespace CV.Mobile.Views
         public PlacesApi ApiToUse { get; set; }
 
         public static readonly BindableProperty PlaceSelectedCommandProperty =
-            BindableProperty.Create(nameof(PlaceSelectedCommand), typeof(Command<IPlaceResult>), typeof(PlacesAutoComplete),null);
+            BindableProperty.Create(nameof(PlaceSelectedCommand), typeof(Command<IPlaceResult>), typeof(PlacesAutoComplete), null);
+
+        public static readonly BindableProperty UseSearchBarProperty =
+           BindableProperty.Create(nameof(UseSearchBar), typeof(bool), typeof(PlacesAutoComplete), true);
 
         public Command<IPlaceResult> PlaceSelectedCommand
         {
@@ -47,18 +52,18 @@ namespace CV.Mobile.Views
         {
             get
             {
-                return this._useSearchBar ? this._searchBar.Height : this._entry.Height;
+                return this.UseSearchBar ? this._searchBar.Height : this._entry.Height;
             }
         }
         private string SearchText
         {
             get
             {
-                return this._useSearchBar ? this._searchBar.Text : this._entry.Text;
+                return this.UseSearchBar ? this._searchBar.Text : this._entry.Text;
             }
             set
             {
-                if (this._useSearchBar)
+                if (this.UseSearchBar)
                     this._searchBar.Text = value;
                 else
                     this._entry.Text = value;
@@ -71,31 +76,38 @@ namespace CV.Mobile.Views
         }
         public PlacesAutoComplete(bool useSearchBar)
         {
-            this._useSearchBar = useSearchBar;
+            this.UseSearchBar = useSearchBar;
             this.Init();
         }
 
         public string Placeholder
         {
-            get { return this._useSearchBar ? this._searchBar.Placeholder : this._entry.Placeholder; }
+            get { return this.UseSearchBar ? this._searchBar.Placeholder : this._entry.Placeholder; }
             set
             {
-                if (this._useSearchBar)
+                if (this.UseSearchBar)
                     this._searchBar.Placeholder = value;
                 else
                     this._entry.Placeholder = value;
             }
         }
+
+        public bool UseSearchBar
+        {
+            get { return (bool)this.GetValue(UseSearchBarProperty); }
+            set { this.SetValue(UseSearchBarProperty, value); }
+        }
+
         public PlacesAutoComplete()
         {
-            this._useSearchBar = true;
+            //this.UseSearchBar = true;
             this.Init();
         }
         private void Init()
         {
 
             OsmNominatim.Instance.CountryCodes.Add("br");
-            
+            ApiToUse = PlacesApi.Native;
 
             this._autoCompleteListView = new ListView
             {
@@ -113,7 +125,7 @@ namespace CV.Mobile.Views
             });
 
             View searchView;
-            if (this._useSearchBar)
+            if (this.UseSearchBar)
             {
                 this._searchBar = new SearchBar
                 {
@@ -189,7 +201,7 @@ namespace CV.Mobile.Views
 
                     if (apiResult != null)
                         result = apiResult.Predictions;
-                    
+
                 }
                 else if (this.ApiToUse == PlacesApi.Native)
                 {
@@ -247,7 +259,7 @@ namespace CV.Mobile.Views
             this._autoCompleteListView.IsVisible = false;
             this._autoCompleteListView.HeightRequest = 0;
 
-            if (this._useSearchBar)
+            if (this.UseSearchBar)
                 this._searchBar.Unfocus();
             else
                 this._entry.Unfocus();

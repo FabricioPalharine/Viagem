@@ -1,0 +1,24 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using TK.CustomMap;
+using Xamarin.Forms;
+using Xamarin.Forms.Maps;
+
+namespace CV.Mobile.Views
+{
+    public partial class PosicaoMapaPage : ContentPage
+    {
+        public PosicaoMapaPage()
+        {
+            InitializeComponent();
+        }
+
+        public void PlacesSearch_MapClicked(object sender, TKGenericEventArgs<Position> e)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

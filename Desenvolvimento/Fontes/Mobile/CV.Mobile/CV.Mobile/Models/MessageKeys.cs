@@ -17,6 +17,7 @@ namespace CV.Mobile.Models
         public const string ManutencaoRequisicaoPedidoCompra = "ManutencaoRequisicaoPedidoCompra";
         public const string ManutencaoAgrupamentoCidade = "ManutencaoAgrupamentoCidade";
         public const string ManutencaoAporteDinheiro = "ManutencaoAporteDinheiro";
+        public const string SelecaoMapaConfirmacao = "SelecaoMapaConfirmacao";
 
 
     }

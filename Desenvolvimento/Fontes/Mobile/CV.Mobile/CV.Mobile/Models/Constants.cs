@@ -10,6 +10,8 @@ namespace CV.Mobile.Models
     {
         public static string ClientId = "210037759249.apps.googleusercontent.com";
         public static string ClientSecret = "H1CNNlmDu-uNnGll5ylQmvgp";
+        public static string ClientAPI = "AIzaSyAlUpOpwZWS_ZGlMAtB6lY76oy1QBWk97g";
+
         public static string Scopes = "profile email https://picasaweb.google.com/data/";
         public static string AppName = "CV";
 

@@ -117,14 +117,6 @@
     <Reference Include="System.ObjectModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
-    <Reference Include="TK.CustomMap, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\TK.CustomMap.1.5.0\lib\MonoAndroid10\TK.CustomMap.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="TK.CustomMap.Android, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\TK.CustomMap.1.5.0\lib\MonoAndroid10\TK.CustomMap.Android.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Validation, Version=2.0.0.0, Culture=neutral, PublicKeyToken=2fc06f0d701809a7, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Validation.2.0.4.14103\lib\portable-windows8+net40+sl5+wp8+wpa81+wp81+MonoAndroid+MonoTouch\Validation.dll</HintPath>
       <Private>True</Private>
@@ -241,6 +233,14 @@
     <AndroidResource Include="Resources\values\styles.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\TK.CustomMap\TK.CustomMap\TK.CustomMap.Android\TK.CustomMap.Android.csproj">
+      <Project>{ad2d2db4-e781-4cf1-9b62-3aad264f196d}</Project>
+      <Name>TK.CustomMap.Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\TK.CustomMap\TK.CustomMap\TK.CustomMap\TK.CustomMap.csproj">
+      <Project>{14c534b6-1984-41a9-a384-d3a5508588e3}</Project>
+      <Name>TK.CustomMap</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CV.Mobile\CV.Mobile.csproj">
       <Project>{1bd6c374-2e03-408f-a156-a989ae0ffd54}</Project>
       <Name>CV.Mobile</Name>
@@ -257,6 +257,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\cancel24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\checkmark24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets')" />

@@ -15,13 +15,13 @@ using CV.Mobile.Services;
 
 namespace CV.Mobile.ViewModels
 {
-    public class MenuInicialViewModel:BaseNavigationViewModel
+    public class MenuInicialViewModel : BaseNavigationViewModel
     {
 
         public MenuInicialViewModel()
         {
             this.Title = "Curtindo uma Viagem";
-            DeslogarCommand =  new Command(
+            DeslogarCommand = new Command(
                                     async () => await DeslogarAplicacao(),
                                     () => true);
             EntrarViagemCommand = new Command(
@@ -81,11 +81,11 @@ namespace CV.Mobile.ViewModels
 
         private async Task AbrirRankings()
         {
-            
 
-                var Pagina = new PaginaTeste() ;
-                await PushAsync(Pagina);
-        
+            var vm = new PosicaoMapaViewModel(new Xamarin.Forms.Maps.Position(26, 26));
+            var Pagina = new PosicaoMapaPage() { BindingContext = vm };
+            await PushAsync(Pagina);
+
         }
 
         public Command SelecionarViagemCommand { get; set; }
@@ -120,9 +120,9 @@ namespace CV.Mobile.ViewModels
             {
                 SetProperty(ref _ItemViagem, value);
                 ViagemSelecionada = value != null;
-                if (ViagemSelecionada !=EntrarViagemCommand.CanExecute(null))
+                if (ViagemSelecionada != EntrarViagemCommand.CanExecute(null))
                     EntrarViagemCommand.ChangeCanExecute();
-                 
+
 
             }
         }
