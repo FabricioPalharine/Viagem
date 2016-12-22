@@ -36,10 +36,10 @@ namespace CV.Mobile.ViewModels
             ItemCriterioBuscaPedido = new CriterioBusca() { Situacao = 1 };
             PageAppearingCommand = new Command(
                                                                    async () =>
-                                                                   {
+                                                                   {                                                                       
+                                                                       await CarregarListaRequisicao();
                                                                        await CarregarListaAmigos();
                                                                        await CarregarListaPedidos();
-                                                                       await CarregarListaRequisicao();
                                                                    },
                                                                    () => true);
             PesquisarCommand = new Command(

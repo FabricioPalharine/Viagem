@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.EdicaoSugestaoPage"
+             Title="Manutenção Sugestão"
+             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+             xmlns:controles="clr-namespace: CV.Mobile.Controls;assembly=CV.Mobile"
+             >
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <local:IntStringConverter x:Key="intStringConverter" />
+      <local:InverseBooleanConverter x:Key="boolInverterConverter" />
+
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.Behaviors>
+    <behaviors:EventHandlerBehavior EventName="Appearing">
+      <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
+    </behaviors:EventHandlerBehavior>
+  </ContentPage.Behaviors>
+  <ContentPage.ToolbarItems>
+    <ToolbarItem  Icon="save.png"  Command="{Binding SalvarCommand}" />
+    <ToolbarItem  Icon="mapMarker24.png"  Command="{Binding SelecionarPosicaoCommand}" />
+
+  </ContentPage.ToolbarItems>
+  <ContentPage.Content>
+    <RelativeLayout  VerticalOptions="FillAndExpand" >
+      <StackLayout
+                                  RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent,
+            Property=Height,Factor=0,Constant=60}"
+                          RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width,Factor=1,Constant=0}"
+                        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1,Constant=60}"
+
+                         >
+
+        <Label Text="Tipo"  />
+        <Entry Text="{Binding ItemSugestao.Tipo}"/>
+        <Label Text="Comentário"  />
+        <Editor Text="{Binding ItemSugestao.Comentario}"  VerticalOptions="FillAndExpand"/>
+
+      </StackLayout>
+      <Label Text="Nome"  RelativeLayout.YConstraint="{ConstraintExpression Constant=0}"
+     RelativeLayout.XConstraint="{ConstraintExpression  Constant=0}"/>
+
+      <controles:PlacesSearch Bounds="{Binding Bounds}" PlaceSelectedCommand="{Binding PlaceSelectedCommand}" Text="{Binding ItemSugestao.Local}" Placeholder=""
+                       RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent,
+            Property=Height,Factor=0,Constant=10}"
+                        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1,Constant=10}"
+     RelativeLayout.XConstraint="{ConstraintExpression  Constant=0}"
+                                    ></controles:PlacesSearch>
+      
+    </RelativeLayout>
+  </ContentPage.Content>
+</ContentPage>

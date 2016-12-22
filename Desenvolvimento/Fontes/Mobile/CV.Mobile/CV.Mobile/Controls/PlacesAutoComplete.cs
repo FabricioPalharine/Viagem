@@ -226,7 +226,7 @@ namespace CV.Mobile.Controls
                     this._autoCompleteListView.IsVisible = false;
                 }
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 // TODO
             }

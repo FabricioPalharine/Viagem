@@ -1,6 +1,7 @@
 ﻿using CV.Mobile.Models;
 using CV.Mobile.Services;
 using MvvmHelpers;
+using Plugin.Geolocator.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,6 +48,16 @@ namespace CV.Mobile.ViewModels
                     }
                 }
             }
+        }
+
+        public async Task<Position> RetornarPosicao()
+        {
+            if (Application.Current?.MainPage is MasterDetailPage)
+            {
+                return await ((MasterDetailViewModel)Application.Current?.MainPage.BindingContext).RetornarPosicaoGPS();
+            }
+            else
+                return null;
         }
 
         public UsuarioLogado ItemUsuarioLogado

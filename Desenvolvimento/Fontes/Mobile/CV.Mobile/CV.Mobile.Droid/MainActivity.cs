@@ -12,6 +12,7 @@ using Microsoft.Practices.ServiceLocation;
 using CV.Mobile.Droid.Services;
 using CV.Mobile.Interfaces;
 using Plugin.SecureStorage;
+using Plugin.Permissions;
 
 namespace CV.Mobile.Droid
 {
@@ -37,6 +38,12 @@ namespace CV.Mobile.Droid
         private void AndroidEnvironment_UnhandledExceptionRaiser(object sender, RaiseThrowableEventArgs e)
         {
             
+        }
+
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
+        {
+            PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+
         }
 
         void RegisterDependencies()

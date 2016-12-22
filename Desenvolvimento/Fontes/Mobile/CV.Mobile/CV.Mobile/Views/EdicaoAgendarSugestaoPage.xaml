@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.EdicaoAgendarSugestaoPage"
+             Title="Agendar Sugestão"
+             x:Name="this"
+             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+             xmlns:controles="clr-namespace: CV.Mobile.Controls;assembly=CV.Mobile"
+               xmlns:tkmap="clr-namespace:TK.CustomMap;assembly=TK.CustomMap"
+
+             >
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <local:IntStringConverter x:Key="intStringConverter" />
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.ToolbarItems>
+    <ToolbarItem  Icon="checkmark24.png" Parent="{x:Reference this}"  Command="{Binding ConfirmarCommand}"    />
+  </ContentPage.ToolbarItems>
+  
+  <ContentPage.Content>
+    <ScrollView>
+    <StackLayout>
+      <Label Text="Local"  />
+      <Entry Text="{Binding ItemSugestao.Local}" IsEnabled="false"/>
+      <Label Text="Tipo"  />
+      <Entry Text="{Binding ItemSugestao.Tipo}" IsEnabled="false"/>
+      <Label Text="Comentário"  />
+      <Editor Text="{Binding ItemSugestao.Comentario}"  HeightRequest="60"  IsEnabled="false"/>
+      <Label Text="Data/Hora Início"  />
+      <DatePicker Date="{Binding ItemAgenda.DataInicio}" VerticalOptions="Start">
+        <DatePicker.Format>dd/MM/yyyy</DatePicker.Format>
+      </DatePicker>
+      <TimePicker Time="{Binding ItemAgenda.HoraInicio}" VerticalOptions="Start">
+        <TimePicker.Format>HH:mm</TimePicker.Format>
+      </TimePicker>
+      <Label Text="Data/Hora Fim"  />
+      <DatePicker Date="{Binding ItemAgenda.DataFim}" VerticalOptions="Start">
+        <DatePicker.Format>dd/MM/yyyy</DatePicker.Format>
+      </DatePicker>
+      <TimePicker Time="{Binding ItemAgenda.HoraFim}" VerticalOptions="Start">
+        <TimePicker.Format>HH:mm</TimePicker.Format>
+      </TimePicker>
+      <Label Text="Prioridade"  />
+      <controles:ExtendedPicker
+                             DisplayProperty="Descricao"
+                             KeyMemberPath="Codigo"
+                             ItemsSource="{Binding ListaStatus}"
+                             SelectedItem="{Binding ItemAgenda.Prioridade , Converter={StaticResource intStringConverter}}"
+                             HorizontalOptions="FillAndExpand"
+                               />
+      <StackLayout Orientation="Horizontal" Spacing="10">
+        <Label Text="Alertar Horário"  />
+        <Switch IsToggled="{Binding ItemAgenda.AvisarHorario}"></Switch>
+      </StackLayout>
+
+    </StackLayout>
+    </ScrollView>
+  </ContentPage.Content>
+</ContentPage>

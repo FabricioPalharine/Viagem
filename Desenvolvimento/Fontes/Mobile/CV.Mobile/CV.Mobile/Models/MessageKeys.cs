@@ -18,6 +18,8 @@ namespace CV.Mobile.Models
         public const string ManutencaoAgrupamentoCidade = "ManutencaoAgrupamentoCidade";
         public const string ManutencaoAporteDinheiro = "ManutencaoAporteDinheiro";
         public const string SelecaoMapaConfirmacao = "SelecaoMapaConfirmacao";
+        public const string ManutencaoSugestao = "ManutencaoSugestao";
+        public const string ManutencaoCalendario = "ManutencaoCalendario";
 
 
     }

@@ -10,7 +10,7 @@ using TK.CustomMap.Api.OSM;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 
-namespace CV.Mobile.Views
+namespace CV.Mobile.Controls
 {
     public class PlacesSearch : RelativeLayout
     {
@@ -41,6 +41,15 @@ namespace CV.Mobile.Views
             get { return (Command<GmsSearchResults>)this.GetValue(PlaceSelectedCommandProperty); }
             set { this.SetValue(PlaceSelectedCommandProperty, value); }
         }
+
+        public static readonly BindableProperty TextProperty =
+    BindableProperty.Create(nameof(Text), typeof(string), typeof(PlacesSearch), string.Empty, BindingMode.TwoWay);
+
+        public static readonly BindableProperty PlaceholderProperty =
+   BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(PlacesSearch), string.Empty);
+
+        
+
         public double HeightOfSearchBar
         {
             get
@@ -60,6 +69,7 @@ namespace CV.Mobile.Views
                     this._searchBar.Text = value;
                 else
                     this._entry.Text = value;
+                Text = value;
             }
         }
         public new MapSpan Bounds
@@ -82,24 +92,34 @@ namespace CV.Mobile.Views
 
         public string Placeholder
         {
-            get { return this._useSearchBar ? this._searchBar.Placeholder : this._entry.Placeholder; }
+            get { return (string)this.GetValue(PlaceholderProperty); }
             set
             {
                 if (this._useSearchBar)
                     this._searchBar.Placeholder = value;
                 else
                     this._entry.Placeholder = value;
-
+                this.SetValue(PlaceholderProperty, value);
 
             }
         }
+
+        public string Text
+        {
+            get { return (string)this.GetValue(TextProperty); }
+            set { this.SetValue(TextProperty, value);
+                this._entry.Text = value;
+            }
+        }
+
         public PlacesSearch()
         {
             this._useSearchBar = false;
             this.Init();
         }
-        private void Init()
+        private async void Init()
         {
+            await System.Threading.Tasks.Task.Delay(500);
 
             OsmNominatim.Instance.CountryCodes.Add("br");
 
@@ -114,7 +134,7 @@ namespace CV.Mobile.Views
             this._autoCompleteListView.ItemTemplate = new DataTemplate(() =>
             {
                 var cell = new TextCell();
-                cell.SetBinding(ImageCell.TextProperty, "Description");
+                cell.SetBinding(ImageCell.TextProperty, "name");
 
                 return cell;
             });
@@ -124,7 +144,7 @@ namespace CV.Mobile.Views
             {
                 this._searchBar = new SearchBar
                 {
-                    Placeholder = "Search for address..."
+                    Placeholder = this.Placeholder
                 };
                 this._searchBar.TextChanged += SearchTextChanged;
                 this._searchBar.SearchButtonPressed += SearchButtonPressed;
@@ -134,12 +154,17 @@ namespace CV.Mobile.Views
             }
             else
             {
+                Xamarin.Forms.TimePicker picker = new TimePicker();
+
                 this._entry = new Entry
                 {
-                    Placeholder = "Sarch for address"
+                    Placeholder = this.Placeholder
                 };
+                if (!string.IsNullOrEmpty(Text))
+                    this._entry.Text = Text;
                 this._entry.TextChanged += SearchTextChanged;
-
+                this._entry.Unfocused += _entry_Unfocused;
+               
                 searchView = this._entry;
             }
             this.Children.Add(searchView,
@@ -157,6 +182,13 @@ namespace CV.Mobile.Views
             this._textChangeItemSelected = false;
         }
 
+        private async void _entry_Unfocused(object sender, FocusEventArgs e)
+        {
+            await System.Threading.Tasks.Task.Delay(500);
+            this._autoCompleteListView.HeightRequest = 0;
+            this._autoCompleteListView.IsVisible = false;
+        }
+
         private void SearchButtonPressed(object sender, EventArgs e)
         {
             if (this._predictions != null && this._predictions.Any())
@@ -172,7 +204,7 @@ namespace CV.Mobile.Views
                 this._textChangeItemSelected = false;
                 return;
             }
-
+            Text = this._entry.Text;
             this.SearchPlaces();
         }
 
@@ -213,7 +245,7 @@ namespace CV.Mobile.Views
                     this._autoCompleteListView.IsVisible = false;
                 }
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 // TODO
             }

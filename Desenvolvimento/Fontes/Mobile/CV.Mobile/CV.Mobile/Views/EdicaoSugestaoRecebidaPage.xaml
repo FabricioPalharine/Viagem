@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.EdicaoSugestaoRecebidaPage"
+             Title="Detalhes Sugestão"
+             x:Name="this"
+             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+             xmlns:controles="clr-namespace: CV.Mobile.Controls;assembly=CV.Mobile"
+               xmlns:tkmap="clr-namespace:TK.CustomMap;assembly=TK.CustomMap"
+
+             >
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <local:IntStringConverter x:Key="intStringConverter" />
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.ToolbarItems>
+    <controles:BindableToolbarItem  Icon="checkmark24.png" Parent="{x:Reference this}"  Command="{Binding AgendarCommand}" IsVisible="{Binding PermiteCancelar}"   />
+    <controles:BindableToolbarItem  Icon="cancel24.png" Parent="{x:Reference this}"  Command="{Binding CancelarCommand}" IsVisible="{Binding PermiteCancelar}"   />
+  </ContentPage.ToolbarItems>
+  <ContentPage.Behaviors>
+    <behaviors:EventHandlerBehavior EventName="Appearing">
+      <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
+    </behaviors:EventHandlerBehavior>
+  </ContentPage.Behaviors>
+  <ContentPage.Content>
+    <ScrollView>
+    <StackLayout>
+      <Label Text="Local"  />
+      <Entry Text="{Binding ItemSugestao.Local}" IsEnabled="false"/>
+      <Label Text="Tipo"  />
+      <Entry Text="{Binding ItemSugestao.Tipo}" IsEnabled="false"/>
+      <Label Text="Comentário"  />
+      <Editor Text="{Binding ItemSugestao.Comentario}"  HeightRequest="60"  IsEnabled="false"/>
+
+      <tkmap:TKCustomMap MapRegion="{Binding LimiteMapa}" CustomPins="{Binding Pins}" MapCenter="{Binding MapCenter}" ></tkmap:TKCustomMap>
+      
+    </StackLayout>
+    </ScrollView>
+  </ContentPage.Content>
+</ContentPage>

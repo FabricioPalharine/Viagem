@@ -258,7 +258,7 @@ namespace CV.Mobile.ViewModels
                 Title = "Sugestão",
                 IconSource = "Dados.png",
                 Visible = false,
-                ApenasAmigo = true
+                ApenasAmigo = false
             });
             ItensMenuCompleto.Add(new ItemMenu
             {
@@ -295,9 +295,17 @@ namespace CV.Mobile.ViewModels
                 {
                     await AbrirListaCompra();
                 }
+                else if (_ItemMenuSelecionado.Codigo == 15)
+                {
+                    await AbrirConsultaSugestao();
+                }
                 else if (_ItemMenuSelecionado.Codigo == 16)
                 {
                     await AbrirPedidoCompra();
+                }
+                else if (_ItemMenuSelecionado.Codigo == 17)
+                {
+                    await AbrirSugestao();
                 }
                 else if (_ItemMenuSelecionado.Codigo == 18)
                 {
@@ -319,6 +327,17 @@ namespace CV.Mobile.ViewModels
                 ListagemCotacaoMoedaPage pagina = new ListagemCotacaoMoedaPage() { BindingContext = new ListagemCotacaoMoedaViewModel(_ItemViagem) };
 
                 await OnItemMenuSelecionado(pagina,false);
+
+            }
+        }
+
+        private async Task AbrirSugestao()
+        {
+            if (_ItemViagem != null && await VerificarOnline())
+            {
+                var pagina = new ListagemSugestaoPage() { BindingContext = new ListagemSugestaoViewModel(_ItemViagem) };
+
+                await OnItemMenuSelecionado(pagina, false);
 
             }
         }
@@ -350,6 +369,17 @@ namespace CV.Mobile.ViewModels
             if (_ItemViagem != null && await VerificarOnline())
             {
                 ListagemPedidoCompraPage pagina = new ListagemPedidoCompraPage() { BindingContext = new ListagemPedidoCompraViewModel(_ItemViagem) };
+
+                await OnItemMenuSelecionado(pagina, false);
+
+            }
+        }
+
+        private async Task AbrirConsultaSugestao()
+        {
+            if (_ItemViagem != null )
+            {
+                var pagina = new ListagemSugestaoRecebidaPage() { BindingContext = new ListagemSugestaoRecebidaViewModel(_ItemViagem) };
 
                 await OnItemMenuSelecionado(pagina, false);
 

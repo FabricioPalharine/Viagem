@@ -1,12 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CV.Mobile.Views.ListagemPedidoCompraPage"
-             Title="Pedidos de Compra"   
+             x:Class="CV.Mobile.Views.ListagemSugestaoPage"
+             Title="Sugestões"   
               xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
               xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
               xmlns:controles="clr-namespace:CV.Mobile.Controls;assembly=CV.Mobile"
-
               x:Name="paginaSelecao">
   <ContentPage.Resources>
     <ResourceDictionary>
@@ -26,14 +25,7 @@
 
   <ContentPage.Content>
     <StackLayout Spacing="0">
-      <ListView VerticalOptions="FillAndExpand" SeparatorVisibility="None" ItemsSource="{Binding PedidosCompra}" SelectedItem="{Binding PedidoSelecionado, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="True"  IsPullToRefreshEnabled="true"  IsRefreshing="{Binding IsLoadingLista, Mode=TwoWay}" RefreshCommand="{Binding RecarregarListaCommand}"  IsVisible="{Binding ModoPesquisa, Converter={StaticResource boolInverterConverter}}"  >
-
-        <ListView.Behaviors>
-          <behaviors:EventHandlerBehavior EventName="ItemTapped">
-            <behaviors:InvokeCommandAction Command="{Binding ItemTappedCommand}"   />
-          </behaviors:EventHandlerBehavior>
-        </ListView.Behaviors>
-        
+      <ListView VerticalOptions="FillAndExpand" SeparatorVisibility="None" ItemsSource="{Binding ListaDados}" SelectedItem="{Binding ItemSelecionado, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="True"  IsPullToRefreshEnabled="true"  IsRefreshing="{Binding IsLoadingLista, Mode=TwoWay}" RefreshCommand="{Binding RecarregarListaCommand}"  IsVisible="{Binding ModoPesquisa, Converter={StaticResource boolInverterConverter}}" >
         <ListView.Header>
           <Grid>
 
@@ -45,12 +37,10 @@
               <ColumnDefinition Width="20" />
               <ColumnDefinition Width="50*" />
               <ColumnDefinition Width="50*" />
-              <ColumnDefinition Width="70" />
-            </Grid.ColumnDefinitions>
-            <Label Text="Marca" HorizontalTextAlignment="Center" Grid.Column="2"></Label>
-            <Label Text="Descrição" HorizontalTextAlignment="Center" Grid.Column="3"></Label>
-            <Label Text="Comprado" HorizontalTextAlignment="Center" Grid.Column="4"></Label>
 
+            </Grid.ColumnDefinitions>
+            <Label Text="Nome" HorizontalTextAlignment="Center" Grid.Column="2"></Label>
+            <Label Text="Cidade" HorizontalTextAlignment="Center" Grid.Column="3"></Label>
           </Grid>
         </ListView.Header>
 
@@ -66,11 +56,9 @@
                   <ColumnDefinition Width="20" />
                   <ColumnDefinition Width="50*" />
                   <ColumnDefinition Width="50*" />
-                  <ColumnDefinition Width="70" />
                 </Grid.ColumnDefinitions>
-                <Label Text="{Binding Marca}" HorizontalTextAlignment="Center" Grid.Column="2"></Label>
-                <Label Text="{Binding Descricao}" HorizontalTextAlignment="Center" Grid.Column="3"></Label>
-                <Label Text="{Binding Comprado}" HorizontalTextAlignment="Center" Grid.Column="4"></Label>
+                <Label Text="{Binding Local}" HorizontalTextAlignment="Center" Grid.Column="2"></Label>
+                <Label Text="{Binding NomeCidade}" HorizontalTextAlignment="Center" Grid.Column="3"></Label>
 
                 <Image Source="{local:ImageResource CV.Mobile.Icones.pencil24.png}" Aspect="AspectFit" HeightRequest="16" WidthRequest="16" Grid.Column="0">
                   <Image.GestureRecognizers>
@@ -96,16 +84,16 @@
         </ListView.ItemTemplate>
       </ListView>
       <StackLayout  IsVisible="{Binding ModoPesquisa}">
-        <Label Text="Marca"  />
+        <Label Text="Nome"  />
+        <Entry Text="{Binding ItemCriterioBusca.Nome}" />
+        <Label Text="Tipo"  />
         <Entry Text="{Binding ItemCriterioBusca.Tipo}" />
-        <Label Text="Descrição"  />
-        <Entry Text="{Binding ItemCriterioBusca.Comentario}" />
-        <Label Text="Pedido Para"  />
+        <Label Text="Cidade"  />
         <controles:ExtendedPicker x:Name="myPicker"
                               DisplayProperty="Nome"
                               KeyMemberPath="Identificador"
-                              ItemsSource="{Binding ListaAmigos}"
-                              SelectedItem="{Binding ItemCriterioBusca.IdentificadorParticipante}"
+                              ItemsSource="{Binding ListaCidades}"
+                              SelectedItem="{Binding ItemCriterioBusca.IdentificadorCidade}"
                               HorizontalOptions="FillAndExpand"
                                />
   

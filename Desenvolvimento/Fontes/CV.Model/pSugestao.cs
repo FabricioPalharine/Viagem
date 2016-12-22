@@ -10,6 +10,14 @@ namespace CV.Model
 
 	public partial class Sugestao
 	{
-	}
+        public string NomeCidade
+        {
+            get { return (ItemCidade ?? new Cidade()).Nome; }
+        }
+        public string NomeUsuario
+        {
+            get { return (ItemUsuario ?? new Usuario()).Nome; }
+        }
+    }
 
 }

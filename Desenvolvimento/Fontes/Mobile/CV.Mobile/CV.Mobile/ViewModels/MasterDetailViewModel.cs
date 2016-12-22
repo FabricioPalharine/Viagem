@@ -1,5 +1,8 @@
 ﻿using CV.Mobile.Models;
+using CV.Mobile.Services;
 using CV.Mobile.Views;
+using Plugin.Geolocator;
+using Plugin.Geolocator.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +18,14 @@ namespace CV.Mobile.ViewModels
         private Page detailPage;
         private UsuarioLogado _ItemUsuario;
         private Viagem _ItemViagem;
+        private IGeolocator locator;
 
         public MasterDetailViewModel(UsuarioLogado itemUsuario)
         {
+            locator = CrossGeolocator.Current;
+            locator.DesiredAccuracy = 50;
+            locator.AllowsBackgroundUpdates = true;
+            locator.PositionChanged += Locator_PositionChanged;
             MenuViewModel vmMenu = new MenuViewModel(itemUsuario);
             _ItemUsuario = itemUsuario;
             vmMenu.ItemMenuSelecionado += async (itemMenu, novoStack) => { await SelecionarItemMenu(itemMenu, novoStack); };
@@ -25,6 +33,27 @@ namespace CV.Mobile.ViewModels
             MasterPage = paginaMenu;
             var paginaDetalhe = new MenuInicialPage() { BindingContext = new MenuInicialViewModel() };
             DetailPage = paginaDetalhe;
+        }
+
+        private async void Locator_PositionChanged(object sender, PositionEventArgs e)
+        {
+            if (_ItemViagem != null)
+            {
+                Posicao itemPosicao = new Posicao()
+                {
+                    DataGMT = e.Position.Timestamp.DateTime,
+                    DataLocal = DateTime.Now,
+                    IdentificadorUsuario = _ItemUsuario.Codigo,
+                    IdentificadorViagem = _ItemViagem.Identificador,
+                    Latitude = e.Position.Latitude,
+                    Longitude = e.Position.Longitude,
+                    Velocidade = e.Position.Speed
+                };
+                using (ApiService srv = new ApiService())
+                {
+                    await srv.SalvarPosicao(itemPosicao);
+                }
+            }
         }
 
         public MenuPage MasterPage
@@ -90,6 +119,36 @@ namespace CV.Mobile.ViewModels
             {
                 SetProperty(ref _ItemViagem, value);
                 (masterPage.BindingContext as MenuViewModel).ItemViagem = value;
+            }
+        }
+
+        public async Task IniciarControlePosicao()
+        {
+            if (locator.IsGeolocationEnabled && locator.IsGeolocationAvailable)
+            {
+                if (_ItemViagem != null && _ItemViagem.Edicao && _ItemViagem.Aberto)
+                {
+                    if (!locator.IsListening)
+                        await locator.StartListeningAsync(15, 1, true);
+                }
+                else
+                {
+                    if (locator.IsListening)
+                        await locator.StopListeningAsync();
+                }
+            }
+        }
+
+        public async Task<Position> RetornarPosicaoGPS()
+        {
+            try
+            {
+                var position = await locator.GetPositionAsync(timeoutMilliseconds: 2500);
+                return position;
+            }
+            catch 
+            {
+                return null;
             }
         }
 

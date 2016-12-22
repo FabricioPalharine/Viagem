@@ -48,5 +48,13 @@
     </array>
     <key>UILaunchStoryboardName</key>
     <string>LaunchScreen</string>
+    <key>UIBackgroundModes</key>
+    <array>
+      <string>location</string>
+    </array>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Need location for geolocator plugin.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>Need location for geolocator plugin.</string>
   </dict>
 </plist>

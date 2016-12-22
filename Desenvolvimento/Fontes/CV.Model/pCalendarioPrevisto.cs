@@ -19,6 +19,28 @@ namespace CV.Model
         {
             get { return DataFim.HasValue ? DataFim.Value.ToString("HH:mm:ss") : null; }
         }
+
+        public TimeSpan? HoraInicio
+        {
+            get
+            {
+                if (DataInicio.HasValue)
+                    return DataInicio.Value.TimeOfDay;
+                else
+                    return null;
+            }
+        }
+
+        public TimeSpan? HoraFim
+        {
+            get
+            {
+                if (DataFim.HasValue)
+                    return DataFim.Value.TimeOfDay;
+                else
+                    return null;
+            }
+        }
     }
 
 }

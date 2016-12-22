@@ -59,7 +59,9 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\AgendarSugestao.cs" />
     <Compile Include="Models\AporteDinheiro.cs" />
+    <Compile Include="Models\CalendarioPrevisto.cs" />
     <Compile Include="Models\Cidade.cs" />
     <Compile Include="Models\CotacaoMoeda.cs" />
     <Compile Include="Models\Gasto.cs" />
@@ -73,6 +75,7 @@
     <Compile Include="Models\ManutencaoCidadeGrupo.cs" />
     <Compile Include="Models\MensagemErro.cs" />
     <Compile Include="Models\PocoLogin.cs" />
+    <Compile Include="Models\Posicao.cs" />
     <Compile Include="Models\RefeicaoPedido.cs" />
     <Compile Include="Models\AvaliacaoLoja.cs" />
     <Compile Include="Models\AvaliacaoHotel.cs" />
@@ -88,6 +91,7 @@
     <Compile Include="Models\RequisicaoAmizade.cs" />
     <Compile Include="Models\ResultadoConsultaTipo.cs" />
     <Compile Include="Models\ResultadoOperacao.cs" />
+    <Compile Include="Models\Sugestao.cs" />
     <Compile Include="Models\Usuario.cs" />
     <Compile Include="Models\GastoDividido.cs" />
     <Compile Include="Models\UsuarioGasto.cs" />
@@ -105,6 +109,9 @@
     <Compile Include="ViewModels\AdicionarAmigoViewModel.cs" />
     <Compile Include="ViewModels\BaseNavigationViewModel.cs" />
     <Compile Include="ViewModels\EdicaoAporteDinheiroViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoAgendarSugestaoViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoSugestaoRecebidaViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoSugestaoViewModel.cs" />
     <Compile Include="ViewModels\EdicaoListaCompraViewModel.cs" />
     <Compile Include="ViewModels\EdicaoRequisicaoCompraViewModel.cs" />
     <Compile Include="ViewModels\EdicaoPedidoCompraViewModel.cs" />
@@ -115,6 +122,8 @@
     <Compile Include="ViewModels\ListagemCotacaoMoedaViewModel.cs" />
     <Compile Include="ViewModels\ListagemAporteDinheiroViewModel.cs" />
     <Compile Include="ViewModels\ListagemListaCompraViewModel.cs" />
+    <Compile Include="ViewModels\ListagemSugestaoRecebidaViewModel.cs" />
+    <Compile Include="ViewModels\ListagemSugestaoViewModel.cs" />
     <Compile Include="ViewModels\ListagemPedidoCompraViewModel.cs" />
     <Compile Include="ViewModels\LoadingViewModel.cs" />
     <Compile Include="ViewModels\MasterDetailViewModel.cs" />
@@ -123,7 +132,6 @@
     <Compile Include="ViewModels\EditarViagemViewModel.cs" />
     <Compile Include="ViewModels\PosicaoMapaViewModel.cs" />
     <Compile Include="ViewModels\SelecionarViagemViewModel.cs" />
-    <Compile Include="ViewModels\TesteRotaVM.cs" />
     <Compile Include="Views\AdicionarAmigoPage.xaml.cs">
       <DependentUpon>AdicionarAmigoPage.xaml</DependentUpon>
     </Compile>
@@ -138,6 +146,15 @@
     </Compile>
     <Compile Include="Views\EdicaoAporteDinheiroPage.xaml.cs">
       <DependentUpon>EdicaoAporteDinheiroPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoAgendarSugestaoPage.xaml.cs">
+      <DependentUpon>EdicaoAgendarSugestaoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoSugestaoRecebidaPage.xaml.cs">
+      <DependentUpon>EdicaoSugestaoRecebidaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoSugestaoPage.xaml.cs">
+      <DependentUpon>EdicaoSugestaoPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EdicaoListaCompraPage.xaml.cs">
       <DependentUpon>EdicaoListaCompraPage.xaml</DependentUpon>
@@ -165,6 +182,15 @@
     </Compile>
     <Compile Include="Views\ListagemAporteDinheiroPage.xaml.cs">
       <DependentUpon>ListagemAporteDinheiroPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemAtracaoPage.xaml.cs">
+      <DependentUpon>ListagemAtracaoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemSugestaoRecebidaPage.xaml.cs">
+      <DependentUpon>ListagemSugestaoRecebidaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemSugestaoPage.xaml.cs">
+      <DependentUpon>ListagemSugestaoPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ListagemPedidoCompraPage.xaml.cs">
       <DependentUpon>ListagemPedidoCompraPage.xaml</DependentUpon>
@@ -241,6 +267,14 @@
     </Reference>
     <Reference Include="PCLCrypto.Abstractions, Version=0.5.0.0, Culture=neutral, PublicKeyToken=d4421c8a4786956c, processorArchitecture=MSIL">
       <HintPath>..\..\packages\PCLCrypto.0.5.0.14108\lib\portable-net40+sl50+win+wpa81+wp80\PCLCrypto.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Plugin.Geolocator, Version=3.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xam.Plugin.Geolocator.3.0.4\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+UAP10\Plugin.Geolocator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Plugin.Geolocator.Abstractions, Version=3.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xam.Plugin.Geolocator.3.0.4\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+UAP10\Plugin.Geolocator.Abstractions.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Plugin.SecureStorage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -462,6 +496,42 @@
       <Project>{14c534b6-1984-41a9-a384-d3a5508588e3}</Project>
       <Name>TK.CustomMap</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemSugestaoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoSugestaoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemSugestaoRecebidaPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoSugestaoRecebidaPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoAgendarSugestaoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemAtracaoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

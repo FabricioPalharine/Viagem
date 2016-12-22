@@ -1175,7 +1175,7 @@ namespace CV.Data
                 query = query.Where(d => d.Local.Contains(Nome));
             if (!string.IsNullOrEmpty(Tipo))
                 query = query.Where(d => d.Tipo.Contains(Tipo));
-            if (Situacao.HasValue)
+            if (Situacao.HasValue && Situacao > 0)
             {
                 if (Situacao == 1)
                     query = query.Where(d => d.Status <= 1);
