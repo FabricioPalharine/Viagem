@@ -258,7 +258,7 @@ namespace CV.Mobile.ViewModels
                 Title = "Sugestão",
                 IconSource = "Dados.png",
                 Visible = false,
-                ApenasAmigo = false
+                ApenasAmigo = true
             });
             ItensMenuCompleto.Add(new ItemMenu
             {
@@ -278,6 +278,10 @@ namespace CV.Mobile.ViewModels
                 if (_ItemMenuSelecionado.Codigo == 0)
                 {
                     await OnItemMenuSelecionado(new MenuInicialPage() { BindingContext = new MenuInicialViewModel() },true);
+                }
+                else if (_ItemMenuSelecionado.Codigo == 1)
+                {
+                    await AbrirAtracao();
                 }
                 else if (_ItemMenuSelecionado.Codigo == 8)
                 {
@@ -336,6 +340,17 @@ namespace CV.Mobile.ViewModels
             if (_ItemViagem != null && await VerificarOnline())
             {
                 var pagina = new ListagemSugestaoPage() { BindingContext = new ListagemSugestaoViewModel(_ItemViagem) };
+
+                await OnItemMenuSelecionado(pagina, false);
+
+            }
+        }
+
+        private async Task AbrirAtracao()
+        {
+            if (_ItemViagem != null)
+            {
+                var pagina = new ListagemAtracaoPage() { BindingContext = new ListagemAtracaoViewModel(_ItemViagem) };
 
                 await OnItemMenuSelecionado(pagina, false);
 

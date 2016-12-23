@@ -1146,5 +1146,20 @@ namespace CV.Mobile.Services
         }
 
 
+        public async Task<Atracao> VerificarAtracaoAberto()
+        {
+            var itemAtracao = new Atracao();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Atracao/VerificarAtracaoAberto"));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                itemAtracao = JsonConvert.DeserializeObject<Atracao>(resultado);
+
+            }
+
+            return itemAtracao;
+        }
     }
 }

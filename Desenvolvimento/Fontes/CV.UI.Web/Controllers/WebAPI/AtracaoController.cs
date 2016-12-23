@@ -101,7 +101,7 @@ namespace CV.UI.Web.Controllers.WebAPI
         public Atracao VerificarAtracaoAberto()
         {
             ViagemBusiness biz = new ViagemBusiness();
-            var itemAtracao = biz.ListarAtracao(d => d.IdentificadorViagem == token.IdentificadorViagem && d.Chegada.HasValue && (!d.Partida.HasValue || d.Partida >=  DateTime.Now))
+            var itemAtracao = biz.ListarAtracao(d => d.IdentificadorViagem == token.IdentificadorViagem && d.Chegada.HasValue && (!d.Partida.HasValue))
                 .OrderByDescending(d=>d.Chegada).FirstOrDefault();
             if (itemAtracao != null)
             {

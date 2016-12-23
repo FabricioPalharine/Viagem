@@ -22,6 +22,8 @@
 
  <ContentPage.ToolbarItems>
     <ToolbarItem x:Name="PesquisarToolbarItem" Icon="search24.png"  Command="{Binding PesquisarCommand}" />
+    <ToolbarItem x:Name="AdicionarToolbarItem" Icon="add24.png"  Command="{Binding AdicionarCommand}" />
+
   </ContentPage.ToolbarItems>
 
   <ContentPage.Content>
@@ -75,8 +77,9 @@
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>
+      <ScrollView>
       <StackLayout  IsVisible="{Binding ModoPesquisa}">
-        <ScrollView>
+        
         <Label Text="Nome"  />
         <Entry Text="{Binding ItemCriterioBusca.Nome}" />
         <Label Text="Tipo"  />
@@ -116,9 +119,9 @@
                               HorizontalOptions="FillAndExpand"
       
                               />
-        </ScrollView>
+       
       </StackLayout>
-      
+       </ScrollView>
     </StackLayout>
   </ContentPage.Content>
   

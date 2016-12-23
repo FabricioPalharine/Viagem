@@ -20,6 +20,14 @@ namespace CV.Mobile.Models
         public const string SelecaoMapaConfirmacao = "SelecaoMapaConfirmacao";
         public const string ManutencaoSugestao = "ManutencaoSugestao";
         public const string ManutencaoCalendario = "ManutencaoCalendario";
+        public const string ManutencaoAtracao = "ManutencaoAtracao";
+        public const string ManutencaoHotel = "ManutencaoHotel";
+        public const string ManutencaoRefeicao = "ManutencaoRefeicao";
+        public const string ManutencaoCarro = "ManutencaoCarro";
+        public const string ManutencaoComentario = "ManutencaoComentario";
+        public const string ManutencaoViagemAerea = "ManutencaoViagemAerea";
+        public const string ManutencaoFoto = "ManutencaoFoto";
+        public const string ManutencaoLoja = "ManutencaoLoja";
 
 
     }

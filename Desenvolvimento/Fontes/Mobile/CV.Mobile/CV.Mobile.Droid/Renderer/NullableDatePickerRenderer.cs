@@ -48,6 +48,7 @@ namespace CV.Mobile.Droid.Renderer
                 {
                     Control.Text = el.EmptyStateText;
                 }
+                
             }
         }
     }

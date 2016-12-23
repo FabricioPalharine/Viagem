@@ -13,57 +13,59 @@ using Xamarin.Forms;
 
 namespace CV.Mobile.ViewModels
 {
-    public class ListagemSugestaoRecebidaViewModel : BaseNavigationViewModel
+    public class ListagemAtracaoViewModel : BaseNavigationViewModel
     {
         private CriterioBusca _itemCriterioBusca;
         private bool _ModoPesquisa = false;
 
         private bool _IsLoadingLista;
-        private Sugestao _ItemSelecionado;
+        private Atracao _ItemSelecionado;
 
 
-        public ListagemSugestaoRecebidaViewModel(Viagem pitemViagem)
+        public ListagemAtracaoViewModel(Viagem pitemViagem)
         {
-            IsLoadingLista = true;
             ItemViagem = pitemViagem;
             ItemCriterioBusca = new CriterioBusca() { Situacao=1};
             PageAppearingCommand = new Command(
                                                                    async () =>
                                                                    {
-                                                                       await CarregarListaAmigos();
                                                                        await CarregarListaCidades();
-                                                                       await CarregarListaPedidos();
+                                                                       await CarregarListaDados();
                                                                    },
                                                                    () => true);
             PesquisarCommand = new Command(
                                                                     async () => await VerificarPesquisa(),
                                                                     () => true);
+            AdicionarCommand = new Command(
+                                                                   async () => await Adicionar(),
+                                                                   () => true);
             RecarregarListaCommand = new Command(
                                                       async () =>
                                                       {
-                                                          await CarregarListaPedidos();
+                                                          await CarregarListaDados();
                                                       },
                                                       () => true);
 
             ItemTappedCommand = new Command<ItemTappedEventArgs>(
                                                                   async (obj) => await VerificarAcaoItem(obj));
             ListaStatus = new ObservableCollection<ItemLista>();
-            ListaStatus.Add(new ItemLista() { Codigo = "1", Descricao = "Pendente" });
-            ListaStatus.Add(new ItemLista() { Codigo = "2", Descricao = "Agendada" });
-            ListaStatus.Add(new ItemLista() { Codigo = "3", Descricao = "Ignorada" });
-            ListaStatus.Add(new ItemLista() { Codigo = "-1", Descricao = "Todas" });
+            ListaStatus.Add(new ItemLista() { Codigo = "1", Descricao = "Visitando" });
+            ListaStatus.Add(new ItemLista() { Codigo = "2", Descricao = "Visitada" });
+            ListaStatus.Add(new ItemLista() { Codigo = "3", Descricao = "Não Iniciada" });
+            ListaStatus.Add(new ItemLista() { Codigo = "4", Descricao = "Todas" });
 
-            MessagingService.Current.Subscribe<Sugestao>(MessageKeys.ManutencaoSugestao, (service, item) =>
+            MessagingService.Current.Subscribe<Atracao>(MessageKeys.ManutencaoAtracao, (service, item) =>
             {
                 IsBusy = true;
-
+                
                 if (ListaDados.Where(d => d.Identificador == item.Identificador).Any())
                 {
                     var Posicao = ListaDados.IndexOf(ListaDados.Where(d => d.Identificador == item.Identificador).FirstOrDefault());
                     ListaDados.RemoveAt(Posicao);
-                    ListaDados.Insert(Posicao, item);
+                    if (!item.DataExclusao.HasValue)
+                        ListaDados.Insert(Posicao, item);
                 }
-                else
+                else if (!item.DataExclusao.HasValue)
                     ListaDados.Add(item);
 
                 IsBusy = false;
@@ -85,7 +87,6 @@ namespace CV.Mobile.ViewModels
 
         public Viagem ItemViagem { get; set; }
         public ObservableCollection<Cidade> ListaCidades { get; set; }
-        public ObservableCollection<Usuario> ListaAmigos { get; set; }
         public ObservableCollection<ItemLista> ListaStatus { get; set; }
 
         public bool ModoPesquisa
@@ -102,11 +103,12 @@ namespace CV.Mobile.ViewModels
         }
 
 
-        public ObservableCollection<Sugestao> ListaDados { get; set; }
+        public ObservableCollection<Atracao> ListaDados { get; set; }
         public Command PageAppearingCommand { get; set; }
         public Command RecarregarListaCommand { get; set; }
         public Command PesquisarCommand { get; set; }
         public Command ItemTappedCommand { get; set; }
+        public Command AdicionarCommand { get; set; }
 
         public bool IsLoadingLista
         {
@@ -121,7 +123,7 @@ namespace CV.Mobile.ViewModels
             }
         }
 
-        public Sugestao ItemSelecionado
+        public Atracao ItemSelecionado
         {
             get
             {
@@ -142,7 +144,7 @@ namespace CV.Mobile.ViewModels
             {
                 if (PesquisarCommand.CanExecute(null))
                     PesquisarCommand.ChangeCanExecute();
-                await CarregarListaPedidos();
+                await CarregarListaDados();
                 PesquisarCommand.ChangeCanExecute();
             }
             ModoPesquisa = !ModoPesquisa;
@@ -158,34 +160,62 @@ namespace CV.Mobile.ViewModels
                 OnPropertyChanged("ListaCidades");
             }
         }
-        private async Task CarregarListaAmigos()
-        {
-            using (ApiService srv = new ApiService())
-            {
-                var Dados = await srv.ListarAmigos();
-                ListaAmigos = new ObservableCollection<Usuario>(Dados);
-                OnPropertyChanged("ListaAmigos");
-            }
-        }
+      
 
-        private async Task CarregarListaPedidos()
+        private async Task CarregarListaDados()
         {
             using (ApiService srv = new ApiService())
             {
-                var Dados = await srv.ListarSugestaoRecebida(ItemCriterioBusca);
-                ListaDados = new ObservableCollection<Sugestao>(Dados);
+                var Dados = await srv.ListarAtracao(ItemCriterioBusca);
+                ListaDados = new ObservableCollection<Atracao>(Dados);
                 OnPropertyChanged("ListaDados");
             }
-            await Task.Delay(100);
             IsLoadingLista = false;
         }
 
         private async Task VerificarAcaoItem(ItemTappedEventArgs itemSelecionado)
         {
-            var Pagina = new EdicaoSugestaoRecebidaPage() { BindingContext = new EdicaoSugestaoRecebidaViewModel((Sugestao)itemSelecionado.Item) };
-            await PushAsync(Pagina);
+            using (ApiService srv = new ApiService())
+            {
+                var ItemAtracao = await srv.CarregarAtracao(((Atracao)itemSelecionado.Item).Identificador);
+                var Pagina = new EdicaoAtracaoPage() { BindingContext = new EdicaoAtracaoViewModel(ItemAtracao,ItemViagem) };
+                await PushAsync(Pagina);
+            }
         }
+        private async Task Adicionar()
+        {
+            var ItemAtracao = new Atracao() { Avaliacoes = new ObservableCollection<AvaliacaoAtracao>() } ;
+            using (ApiService srv = new ApiService())
+            {
+                var AtracaoAberto = await srv.VerificarAtracaoAberto();
+                if (AtracaoAberto != null)
+                {
+                    MessagingService.Current.SendMessage<MessagingServiceQuestion>(MessageKeys.DisplayQuestion, new MessagingServiceQuestion()
+                    {
+                        Title = "Confirmação",
+                        Question = String.Format("A atração {0} está sendo visitada, deseja associar a nova atração como filha dela?", AtracaoAberto.Nome),
+                        Positive = "Sim",
+                        Negative = "Não",
+                        OnCompleted = new Action<bool>(async result =>
+                        {
+                            if (result)
+                            {
+                                ItemAtracao.IdentificadorAtracaoPai = AtracaoAberto.Identificador;
+                            }
+                            var Pagina2 = new EdicaoAtracaoPage() { BindingContext = new EdicaoAtracaoViewModel(ItemAtracao, ItemViagem) };
+                            await PushAsync(Pagina2);
 
+
+                        })
+                    });
+                }
+                else
+                {
+                    var Pagina = new EdicaoAtracaoPage() { BindingContext = new EdicaoAtracaoViewModel(ItemAtracao, ItemViagem) };
+                    await PushAsync(Pagina);
+                }
+            }
+        }
 
     }
 }

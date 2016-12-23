@@ -1,6 +1,7 @@
 ﻿using MvvmHelpers;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,13 +12,15 @@ namespace CV.Mobile.Models
     {
         private string _Nome;
         private string _CodigoPlace;
-        private decimal? _Latitude;
-        private decimal? _Longitude;
+        private double? _Latitude;
+        private double? _Longitude;
         private DateTime? _Chegada;
         private DateTime? _Partida;
         private string _Tipo;
         private int? _IdAtracaoPai;
         private int? _IdentificadorAtracaoPai;
+        private TimeSpan? _HoraChegada;
+        private TimeSpan? _HoraPartida;
 
 
         public int? Id { get; set; }
@@ -51,7 +54,7 @@ namespace CV.Mobile.Models
             }
         }
 
-        public decimal? Latitude
+        public double? Latitude
         {
             get
             {
@@ -64,7 +67,7 @@ namespace CV.Mobile.Models
             }
         }
 
-        public decimal? Longitude
+        public double? Longitude
         {
             get
             {
@@ -141,5 +144,36 @@ namespace CV.Mobile.Models
                 SetProperty(ref _IdentificadorAtracaoPai, value);
             }
         }
+
+        public TimeSpan? HoraChegada
+        {
+            get
+            {
+                return _HoraChegada;
+            }
+
+            set
+            {
+                SetProperty(ref _HoraChegada, value);
+            }
+        }
+
+        public TimeSpan? HoraPartida
+        {
+            get
+            {
+                return _HoraPartida;
+            }
+
+            set
+            {
+                SetProperty(ref _HoraPartida, value);
+            }
+        }
+
+        public ObservableCollection<AvaliacaoAtracao> Avaliacoes { get; set; }
+        public ObservableCollection<GastoAtracao> Gastos { get; set; }
+        public ObservableCollection<FotoAtracao> Fotos { get; set; }
+
     }
 }

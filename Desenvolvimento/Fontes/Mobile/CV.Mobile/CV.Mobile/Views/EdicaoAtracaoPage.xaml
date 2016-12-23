@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.EdicaoAtracaoPage"
+             Title="Manutenção Atração"
+             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+             xmlns:controles="clr-namespace: CV.Mobile.Controls;assembly=CV.Mobile"
+             x:Name="this"
+             >
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <local:IntStringConverter x:Key="intStringConverter" />
+      <local:InverseBooleanConverter x:Key="boolInverterConverter" />
+
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.Behaviors>
+    <behaviors:EventHandlerBehavior EventName="Appearing">
+      <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
+    </behaviors:EventHandlerBehavior>
+  </ContentPage.Behaviors>
+  <ContentPage.ToolbarItems>
+    <ToolbarItem  Icon="save.png"  Command="{Binding SalvarCommand}" />
+    <controles:BindableToolbarItem  Icon="delete24.png" Parent="{x:Reference this}"  Command="{Binding ExcluirCommand}" IsVisible="{Binding PermiteExcluir}"   />
+    <controles:BindableToolbarItem  Icon="dollar24.png" Parent="{x:Reference this}"  Command="{Binding AbrirCustosCommand}" IsVisible="{Binding PermiteExcluir}"   />
+
+  </ContentPage.ToolbarItems>
+  <ContentPage.Content>
+    <ScrollView>
+      <RelativeLayout  VerticalOptions="FillAndExpand" >
+      <StackLayout
+                                  RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent,
+            Property=Height,Factor=0,Constant=60}"
+                          RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width,Factor=1,Constant=0}"
+                         >
+        <Label Text="Atração Pai"  />
+        <controles:ExtendedPicker
+                              DisplayProperty="Nome"
+                              KeyMemberPath="Identificador"
+                              ItemsSource="{Binding ListaAtracaoPai}"
+                              SelectedItem="{Binding ItemAtracao.IdentificadorAtracaoPai }"
+                              HorizontalOptions="FillAndExpand"     
+                              />
+        
+        <Label Text="Tipo"  />
+        <Entry Text="{Binding ItemAtracao.Tipo}"/>
+        <StackLayout Orientation="Horizontal" Spacing="10">
+          <Label Text="Visita Iniciada"  />
+          <Switch IsToggled="{Binding VisitaIniciada}">
+             <Switch.Behaviors>
+          <behaviors:EventHandlerBehavior EventName="Toggled">
+            <behaviors:InvokeCommandAction Command="{Binding VisitaIniciadaToggledCommand}"   />
+          </behaviors:EventHandlerBehavior>
+        </Switch.Behaviors>
+          </Switch>
+        </StackLayout>
+        <Label Text="Chegada" IsVisible="{Binding VisitaIniciada}"  />
+        <controles:NullableDatePicker NullableDate="{Binding ItemAtracao.Chegada}" IsVisible="{Binding VisitaIniciada}">
+          <controles:NullableDatePicker.Format>dd/MM/yyyy</controles:NullableDatePicker.Format>
+        </controles:NullableDatePicker>
+        <TimePicker Time="{Binding ItemAtracao.HoraChegada}" VerticalOptions="Start" IsVisible="{Binding VisitaIniciada}">
+          <TimePicker.Format>HH:mm</TimePicker.Format>
+        </TimePicker>
+        <StackLayout Orientation="Horizontal" Spacing="10" IsVisible="{Binding VisitaIniciada}">
+          <Label Text="Visita Concluída"  />
+          <Switch IsToggled="{Binding VisitaConcluida}" >
+              <Switch.Behaviors>
+          <behaviors:EventHandlerBehavior EventName="Toggled">
+            <behaviors:InvokeCommandAction Command="{Binding VisitaConcluidaToggledCommand}"   />
+          </behaviors:EventHandlerBehavior>
+        </Switch.Behaviors>
+          </Switch>
+        </StackLayout>
+        <Label Text="Partida" IsVisible="{Binding VisitaConcluida}"  />
+        <controles:NullableDatePicker NullableDate="{Binding ItemAtracao.Partida}" IsVisible="{Binding VisitaConcluida}">
+          <controles:NullableDatePicker.Format>dd/MM/yyyy</controles:NullableDatePicker.Format>
+        </controles:NullableDatePicker>
+        <TimePicker Time="{Binding ItemAtracao.HoraPartida}" VerticalOptions="Start" IsVisible="{Binding VisitaConcluida}">
+          <TimePicker.Format>HH:mm</TimePicker.Format>
+        </TimePicker>
+                  
+               <Label Text="Nota" IsVisible="{Binding PossoComentar}" />
+        <controles:StarControl Orientation="Horizontal" HeightRequest="70" IsVisible="{Binding PossoComentar}" Nota="{Binding ItemAvaliacao.Nota}">
+        </controles:StarControl>
+        <StackLayout Orientation="Horizontal" HeightRequest="70" IsVisible="{Binding PossoComentar}">
+          <Grid>
+            <Grid.Behaviors>
+              <controles:StarBehavior x:Name="starOne" GroupName="myStar"/>
+            </Grid.Behaviors>
+            <Image x:Name="starBlankOne"
+                    Source="{local:ImageResource CV.Mobile.Icones.star_outline.png}" />
+
+            <Image x:Name="starSelectedOne"
+                    Source="{local:ImageResource CV.Mobile.Icones.star_selected.png}"
+                    IsVisible="{Binding Source={x:Reference starOne},
+                                    Path=IsStarred}"/>
+          </Grid>
+          <Grid >
+            <Grid.Behaviors>
+              <controles:StarBehavior x:Name="starTwo" GroupName="myStar"/>
+            </Grid.Behaviors>
+            <Image x:Name="starBlankTwo"
+                    Source="{local:ImageResource CV.Mobile.Icones.star_outline.png}" />
+
+            <Image x:Name="starSelectedTwo"
+                    Source="{local:ImageResource CV.Mobile.Icones.star_selected.png}"
+                    IsVisible="{Binding Source={x:Reference starTwo},
+                                    Path=IsStarred}"/>
+          </Grid>
+          <Grid >
+            <Grid.Behaviors>
+              <controles:StarBehavior x:Name="starThree" GroupName="myStar"/>
+            </Grid.Behaviors>
+            <Image x:Name="starBlankThree"
+                    Source="{local:ImageResource CV.Mobile.Icones.star_outline.png}" />
+
+            <Image x:Name="starSelectedThree"
+                    Source="{local:ImageResource CV.Mobile.Icones.star_selected.png}"
+                    IsVisible="{Binding Source={x:Reference starThree},
+                                    Path=IsStarred}"/>
+          </Grid>
+          <Grid >
+            <Grid.Behaviors>
+              <controles:StarBehavior x:Name="starFour" GroupName="myStar"/>
+            </Grid.Behaviors>
+            <Image x:Name="starBlankFour"
+                    Source="{local:ImageResource CV.Mobile.Icones.star_outline.png}" />
+
+            <Image x:Name="starSelectedFour"
+                    Source="{local:ImageResource CV.Mobile.Icones.star_selected.png}"
+                    IsVisible="{Binding Source={x:Reference starFour},
+                                    Path=IsStarred}"/>
+          </Grid>
+          <Grid >
+            <Grid.Behaviors>
+              <controles:StarBehavior x:Name="starFive" GroupName="myStar" Rating="{Binding ItemAvaliacao.Nota}"/>
+            </Grid.Behaviors>
+            <Image x:Name="starBlankFive"
+                    Source="{local:ImageResource CV.Mobile.Icones.star_outline.png}" />
+
+            <Image x:Name="starSelectedFive"
+                    Source="{local:ImageResource CV.Mobile.Icones.star_selected.png}"
+                    IsVisible="{Binding Source={x:Reference starFive},
+                                    Path=IsStarred}"
+                    />
+          </Grid>
+        
+       
+        </StackLayout>
+       <Label Text="Comentário" IsVisible="{Binding PossoComentar}" />
+        <Editor Text="{Binding ItemAvaliacao.Comentario}"  HeightRequest="100" IsVisible="{Binding PossoComentar}"/>
+ 
+
+    <Label Text="Visitantes" IsVisible="{Binding VisitaIniciada}"  />
+       
+        <ListView  SeparatorVisibility="None" ItemsSource="{Binding Participantes}" SelectedItem="{Binding ParticipanteSelecionado, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="True"  IsPullToRefreshEnabled="False" IsVisible="{Binding VisitaIniciada}"  >
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <ViewCell >
+                <StackLayout Orientation="Horizontal" Spacing="10" >
+                  <Label Text="{Binding Nome}"  />
+                  <Switch IsToggled="{Binding Selecionado}"></Switch>
+                </StackLayout>
+              </ViewCell>
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>    
+  
+      </StackLayout>
+      <Label Text="Nome"  RelativeLayout.YConstraint="{ConstraintExpression Constant=0}"
+     RelativeLayout.XConstraint="{ConstraintExpression  Constant=0}"/>
+
+      <controles:PlacesSearch Bounds="{Binding Bounds}" PlaceSelectedCommand="{Binding PlaceSelectedCommand}" Text="{Binding ItemAtracao.Nome}" Placeholder=""
+                       RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent,
+            Property=Height,Factor=0,Constant=10}"
+                        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1,Constant=10}"
+     RelativeLayout.XConstraint="{ConstraintExpression  Constant=0}"
+                                    ></controles:PlacesSearch>
+      
+    </RelativeLayout>
+    </ScrollView>
+
+  </ContentPage.Content>
+</ContentPage>

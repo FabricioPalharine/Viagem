@@ -46,6 +46,9 @@
     <Compile Include="Controls\NullableDatePicker.cs" />
     <Compile Include="Controls\ExtendedPicker.cs" />
     <Compile Include="Controls\PlacesSearch.cs" />
+    <Compile Include="Controls\StarBehavior.cs" />
+    <Compile Include="Controls\StarControl.cs" />
+    <Compile Include="Helpers\IntegerImageSourceConverter.cs" />
     <Compile Include="Helpers\EnumHelperExtension.cs" />
     <Compile Include="Helpers\enumMoeda.cs" />
     <Compile Include="Helpers\enumStatusListaCompra.cs" />
@@ -64,11 +67,13 @@
     <Compile Include="Models\CalendarioPrevisto.cs" />
     <Compile Include="Models\Cidade.cs" />
     <Compile Include="Models\CotacaoMoeda.cs" />
+    <Compile Include="Models\FotoAtracao.cs" />
     <Compile Include="Models\Gasto.cs" />
     <Compile Include="Models\Atracao.cs" />
     <Compile Include="Models\AvaliacaoAerea.cs" />
     <Compile Include="Models\AvaliacaoAluguel.cs" />
     <Compile Include="Models\Foto.cs" />
+    <Compile Include="Models\GastoAtracao.cs" />
     <Compile Include="Models\GmsPlacesSearch.cs" />
     <Compile Include="Models\ItemLista.cs" />
     <Compile Include="Models\ListaCompra.cs" />
@@ -111,6 +116,7 @@
     <Compile Include="ViewModels\EdicaoAporteDinheiroViewModel.cs" />
     <Compile Include="ViewModels\EdicaoAgendarSugestaoViewModel.cs" />
     <Compile Include="ViewModels\EdicaoSugestaoRecebidaViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoAtracaoViewModel.cs" />
     <Compile Include="ViewModels\EdicaoSugestaoViewModel.cs" />
     <Compile Include="ViewModels\EdicaoListaCompraViewModel.cs" />
     <Compile Include="ViewModels\EdicaoRequisicaoCompraViewModel.cs" />
@@ -122,6 +128,7 @@
     <Compile Include="ViewModels\ListagemCotacaoMoedaViewModel.cs" />
     <Compile Include="ViewModels\ListagemAporteDinheiroViewModel.cs" />
     <Compile Include="ViewModels\ListagemListaCompraViewModel.cs" />
+    <Compile Include="ViewModels\ListagemAtracaoViewModel.cs" />
     <Compile Include="ViewModels\ListagemSugestaoRecebidaViewModel.cs" />
     <Compile Include="ViewModels\ListagemSugestaoViewModel.cs" />
     <Compile Include="ViewModels\ListagemPedidoCompraViewModel.cs" />
@@ -149,6 +156,9 @@
     </Compile>
     <Compile Include="Views\EdicaoAgendarSugestaoPage.xaml.cs">
       <DependentUpon>EdicaoAgendarSugestaoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoAtracaoPage.xaml.cs">
+      <DependentUpon>EdicaoAtracaoPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EdicaoSugestaoRecebidaPage.xaml.cs">
       <DependentUpon>EdicaoSugestaoRecebidaPage.xaml</DependentUpon>
@@ -532,6 +542,16 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoAtracaoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icones\star_outline.png" />
+    <EmbeddedResource Include="Icones\star_selected.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

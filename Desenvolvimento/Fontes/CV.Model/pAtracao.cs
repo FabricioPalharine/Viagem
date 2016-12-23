@@ -19,6 +19,28 @@ namespace CV.Model
         {
             get { return Partida.HasValue ? Partida.Value.ToString("HH:mm:ss") : null; }
         }
+
+        public TimeSpan? HoraChegada
+        {
+            get
+            {
+                if (Chegada.HasValue)
+                    return Chegada.Value.TimeOfDay;
+                else
+                    return null;
+            }
+        }
+
+        public TimeSpan? HoraPartida
+        {
+            get
+            {
+                if (Partida.HasValue)
+                    return Partida.Value.TimeOfDay;
+                else
+                    return null;
+            }
+        }
     }
 
 }

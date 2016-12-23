@@ -259,6 +259,9 @@
   <ItemGroup>
     <BundleResource Include="Resources\mapMarker24.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\delete24.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

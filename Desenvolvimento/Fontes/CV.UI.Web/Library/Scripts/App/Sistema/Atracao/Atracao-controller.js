@@ -188,6 +188,7 @@
             };
 
             vmDelete.confirmar = function () {
+                VerificarAtracaoAberto
 
                 $uibModalInstance.close(vmDelete.itemForDelete);
             };
