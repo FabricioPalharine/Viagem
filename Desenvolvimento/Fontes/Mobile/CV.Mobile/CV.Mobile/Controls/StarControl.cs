@@ -11,7 +11,7 @@ namespace CV.Mobile.Controls
     public class StarControl: StackLayout
     {
         public static readonly BindableProperty NotaProperty = BindableProperty.Create
-            (nameof(Nota), typeof(int?), typeof(StarControl), default(int?));
+            (nameof(Nota), typeof(int?), typeof(StarControl), default(int?), BindingMode.TwoWay);
 
         public int? Nota
         {

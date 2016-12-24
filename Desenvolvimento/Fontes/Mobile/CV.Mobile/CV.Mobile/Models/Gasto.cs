@@ -1,4 +1,5 @@
-﻿using MvvmHelpers;
+﻿using CV.Mobile.Helpers;
+using MvvmHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,8 @@ namespace CV.Mobile.Models
     public class Gasto: ObservableObject
     {
         private string _Descricao;
-        private decimal? _Latitude;
-        private decimal? _Longitude;
+        private double? _Latitude;
+        private double? _Longitude;
         private DateTime? _Data;
         private decimal? _Valor;
         private bool _Especie;
@@ -47,7 +48,7 @@ namespace CV.Mobile.Models
 
      
 
-        public decimal? Latitude
+        public double? Latitude
         {
             get
             {
@@ -60,7 +61,7 @@ namespace CV.Mobile.Models
             }
         }
 
-        public decimal? Longitude
+        public double? Longitude
         {
             get
             {
@@ -174,6 +175,17 @@ namespace CV.Mobile.Models
             set
             {
                 SetProperty(ref _ApenasBaixa, value);
+            }
+        }
+
+        public string SiglaMoeda
+        {
+            get
+            {
+                if (Moeda.HasValue)
+                    return ((enumMoeda)Moeda).ToString();
+                else
+                    return null;
             }
         }
     }

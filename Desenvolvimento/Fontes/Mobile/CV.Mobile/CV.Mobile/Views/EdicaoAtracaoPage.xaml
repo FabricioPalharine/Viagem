@@ -83,72 +83,7 @@
                <Label Text="Nota" IsVisible="{Binding PossoComentar}" />
         <controles:StarControl Orientation="Horizontal" HeightRequest="70" IsVisible="{Binding PossoComentar}" Nota="{Binding ItemAvaliacao.Nota}">
         </controles:StarControl>
-        <StackLayout Orientation="Horizontal" HeightRequest="70" IsVisible="{Binding PossoComentar}">
-          <Grid>
-            <Grid.Behaviors>
-              <controles:StarBehavior x:Name="starOne" GroupName="myStar"/>
-            </Grid.Behaviors>
-            <Image x:Name="starBlankOne"
-                    Source="{local:ImageResource CV.Mobile.Icones.star_outline.png}" />
-
-            <Image x:Name="starSelectedOne"
-                    Source="{local:ImageResource CV.Mobile.Icones.star_selected.png}"
-                    IsVisible="{Binding Source={x:Reference starOne},
-                                    Path=IsStarred}"/>
-          </Grid>
-          <Grid >
-            <Grid.Behaviors>
-              <controles:StarBehavior x:Name="starTwo" GroupName="myStar"/>
-            </Grid.Behaviors>
-            <Image x:Name="starBlankTwo"
-                    Source="{local:ImageResource CV.Mobile.Icones.star_outline.png}" />
-
-            <Image x:Name="starSelectedTwo"
-                    Source="{local:ImageResource CV.Mobile.Icones.star_selected.png}"
-                    IsVisible="{Binding Source={x:Reference starTwo},
-                                    Path=IsStarred}"/>
-          </Grid>
-          <Grid >
-            <Grid.Behaviors>
-              <controles:StarBehavior x:Name="starThree" GroupName="myStar"/>
-            </Grid.Behaviors>
-            <Image x:Name="starBlankThree"
-                    Source="{local:ImageResource CV.Mobile.Icones.star_outline.png}" />
-
-            <Image x:Name="starSelectedThree"
-                    Source="{local:ImageResource CV.Mobile.Icones.star_selected.png}"
-                    IsVisible="{Binding Source={x:Reference starThree},
-                                    Path=IsStarred}"/>
-          </Grid>
-          <Grid >
-            <Grid.Behaviors>
-              <controles:StarBehavior x:Name="starFour" GroupName="myStar"/>
-            </Grid.Behaviors>
-            <Image x:Name="starBlankFour"
-                    Source="{local:ImageResource CV.Mobile.Icones.star_outline.png}" />
-
-            <Image x:Name="starSelectedFour"
-                    Source="{local:ImageResource CV.Mobile.Icones.star_selected.png}"
-                    IsVisible="{Binding Source={x:Reference starFour},
-                                    Path=IsStarred}"/>
-          </Grid>
-          <Grid >
-            <Grid.Behaviors>
-              <controles:StarBehavior x:Name="starFive" GroupName="myStar" Rating="{Binding ItemAvaliacao.Nota}"/>
-            </Grid.Behaviors>
-            <Image x:Name="starBlankFive"
-                    Source="{local:ImageResource CV.Mobile.Icones.star_outline.png}" />
-
-            <Image x:Name="starSelectedFive"
-                    Source="{local:ImageResource CV.Mobile.Icones.star_selected.png}"
-                    IsVisible="{Binding Source={x:Reference starFive},
-                                    Path=IsStarred}"
-                    />
-          </Grid>
-        
-       
-        </StackLayout>
-       <Label Text="Comentário" IsVisible="{Binding PossoComentar}" />
+        <Label Text="Comentário" IsVisible="{Binding PossoComentar}" />
         <Editor Text="{Binding ItemAvaliacao.Comentario}"  HeightRequest="100" IsVisible="{Binding PossoComentar}"/>
  
 

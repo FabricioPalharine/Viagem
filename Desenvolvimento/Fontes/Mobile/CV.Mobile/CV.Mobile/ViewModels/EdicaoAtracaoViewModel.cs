@@ -164,8 +164,7 @@ namespace CV.Mobile.ViewModels
                 {
                     ItemAtracao.Nome = p.name;
                     ItemAtracao.CodigoPlace = p.place_id;
-                    ItemAtracao.Longitude = p.geometry.location.lng;
-                    ItemAtracao.Latitude = p.geometry.location.lat;
+                    ItemAtracao.Tipo = string.Join(",", p.types);
 
                 });
             }
@@ -184,6 +183,7 @@ namespace CV.Mobile.ViewModels
             if (_ItemAtracao.Latitude.HasValue && _ItemAtracao.Longitude.HasValue)
             {
                 Bounds = MapSpan.FromCenterAndRadius(new Position(_ItemAtracao.Latitude.Value, _ItemAtracao.Longitude.Value), new Distance(5000));
+               
 
             }
             else
@@ -192,6 +192,8 @@ namespace CV.Mobile.ViewModels
                 if (posicao == null)
                     posicao = new Plugin.Geolocator.Abstractions.Position() { Latitude = -23.6040963, Longitude = -46.6178018 };
                 Bounds = MapSpan.FromCenterAndRadius(new Position(posicao.Latitude, posicao.Longitude), new Distance(5000));
+                ItemAtracao.Longitude = posicao.Longitude;
+                ItemAtracao.Latitude = posicao.Latitude;
             }
            
             
@@ -202,6 +204,7 @@ namespace CV.Mobile.ViewModels
         {
             using (ApiService srv = new ApiService())
             {
+                Participantes.Clear();
                 var ListaUsuario = await srv.ListarParticipantesViagem();
                 foreach (var itemUsuario in ListaUsuario)
                 {
@@ -482,6 +485,8 @@ namespace CV.Mobile.ViewModels
 
         private async Task AbrirJanelaCustos()
         {
+            var Pagina = new ListagemAtracaoCustoPage() { BindingContext = new ListagemAtracaoCustoViewModel(ItemViagem, ItemAtracao) };
+            await PushAsync(Pagina);
         }
     }
 }

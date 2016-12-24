@@ -143,7 +143,7 @@ namespace CV.Mobile.ViewModels
         {
             try
             {
-                var position = await locator.GetPositionAsync(timeoutMilliseconds: 2500);
+                var position = await locator.GetPositionAsync(timeoutMilliseconds: 10000);
                 return position;
             }
             catch 
