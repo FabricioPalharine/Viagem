@@ -11,11 +11,9 @@ namespace CV.Mobile.Models
     {
         public int? Id { get; set; }
         public int? Identificador { get; set; }
-        public int? IdGasto { get; set; }
 
         public int? IdentificadorGasto { get; set; }
 
-        public int? IdAtracao { get; set; }
         public int? IdentificadorAtracao { get; set; }
 
         public DateTime? DataAtualizacao { get; set; }

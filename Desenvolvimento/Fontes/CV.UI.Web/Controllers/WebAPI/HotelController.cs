@@ -106,5 +106,30 @@ namespace CV.UI.Web.Controllers.WebAPI
             }
             return itemResultado;
         }
+
+        [Authorize]
+        [ActionName("SalvarHotelEventoVerificacao")]
+        [HttpPost]
+        public ResultadoOperacao SalvarHotelEventoVerificacao(HotelEvento itemEvento)
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            var itemUltimoEvento = biz.ListarHotelEvento(d => d.IdentificadorHotel == itemEvento.IdentificadorHotel && d.IdentificadorUsuario == token.IdentificadorUsuario && !d.DataSaida.HasValue).OrderByDescending(d => d.DataEntrada).FirstOrDefault();
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+
+            if (itemUltimoEvento != null && itemEvento.DataSaida.HasValue)
+            {
+                itemUltimoEvento.DataSaida = itemEvento.DataSaida;
+                biz.SalvarHotelEvento(itemUltimoEvento);
+            }
+            else if (itemUltimoEvento == null && !itemEvento.DataSaida.HasValue)
+                biz.SalvarHotelEvento(itemEvento);
+            itemResultado.Sucesso = biz.IsValid();
+            itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
+            if (itemResultado.Sucesso)
+            {
+                itemResultado.IdentificadorRegistro = itemEvento.Identificador;
+            }
+            return itemResultado;
+        }
     }
 }

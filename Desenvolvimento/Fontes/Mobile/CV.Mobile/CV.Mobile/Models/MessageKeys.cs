@@ -30,6 +30,10 @@ namespace CV.Mobile.Models
         public const string ManutencaoLoja = "ManutencaoLoja";
         public const string ManutencaoGastoAtracao = "ManutencaoGastoAtracao";
         public const string GastoSelecionado = "GastoSelecionado";
+        public const string ManutencaoGasto = "ManutencaoGasto";
+        public const string GastoIncluido = "GastoIncluido";
+        public const string ManutencaoGastoHotel = "ManutencaoGastoHotel";
+
 
     }
 }

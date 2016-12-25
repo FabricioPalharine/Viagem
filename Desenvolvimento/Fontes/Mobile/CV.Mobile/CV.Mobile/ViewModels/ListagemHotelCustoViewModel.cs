@@ -13,17 +13,17 @@ using Xamarin.Forms;
 
 namespace CV.Mobile.ViewModels
 {
-    public class ListagemAtracaoCustoViewModel : BaseNavigationViewModel
+    public class ListagemHotelCustoViewModel : BaseNavigationViewModel
     {
        
-        private GastoAtracao _ItemSelecionado;
-        private Atracao _ItemAtracao;
+        private GastoHotel _ItemSelecionado;
+        private Hotel _ItemHotel;
 
-        public ListagemAtracaoCustoViewModel(Viagem pitemViagem, Atracao pItemAtracao)
+        public ListagemHotelCustoViewModel(Viagem pitemViagem, Hotel pItemHotel)
         {
             ItemViagem = pitemViagem;
-            ItemAtracao = pItemAtracao;
-            ListaDados = new ObservableCollection<GastoAtracao>(pItemAtracao.Gastos.Where(d => !d.DataExclusao.HasValue));
+            ItemHotel = pItemHotel;
+            ListaDados = new ObservableCollection<GastoHotel>(pItemHotel.Gastos.Where(d => !d.DataExclusao.HasValue));
             PageAppearingCommand = new Command(
                                                                     () =>
                                                                    {
@@ -38,9 +38,9 @@ namespace CV.Mobile.ViewModels
             ItemTappedCommand = new Command<ItemTappedEventArgs>(
                                                                   (obj) => { });
 
-            DeleteCommand = new Command<GastoAtracao>(
+            DeleteCommand = new Command<GastoHotel>(
                                                                    (obj) => VerificarExclusao(obj));
-            MessagingService.Current.Subscribe<GastoAtracao>(MessageKeys.ManutencaoGastoAtracao, (service, item) =>
+            MessagingService.Current.Subscribe<GastoHotel>(MessageKeys.ManutencaoGastoHotel, (service, item) =>
             {
                 IsBusy = true;
 
@@ -57,39 +57,39 @@ namespace CV.Mobile.ViewModels
                 else if (!item.DataExclusao.HasValue)
                 {
                     ListaDados.Add(item);
-                    ItemAtracao.Gastos.Add(item);
+                    ItemHotel.Gastos.Add(item);
                 }
                 IsBusy = false;
             });
             MessagingService.Current.Subscribe<Gasto>(MessageKeys.GastoSelecionado, async (service, item) =>
             {
-                var itemGravar = new GastoAtracao() { IdentificadorAtracao = ItemAtracao.Identificador, IdentificadorGasto = item.Identificador, DataAtualizacao = DateTime.Now };
+                var itemGravar = new GastoHotel() { IdentificadorHotel = ItemHotel.Identificador, IdentificadorGasto = item.Identificador, DataAtualizacao = DateTime.Now };
                 using (ApiService srv = new ApiService())
                 {
-                    var Resultado = await srv.SalvarGastoAtracao(itemGravar);
+                    var Resultado = await srv.SalvarGastoHotel(itemGravar);
                     if (Resultado.Sucesso)
                     {
                         itemGravar.Identificador = Resultado.IdentificadorRegistro;
                         itemGravar.ItemGasto = item;
-                        MessagingService.Current.SendMessage<GastoAtracao>(MessageKeys.ManutencaoGastoAtracao, itemGravar);
+                        MessagingService.Current.SendMessage<GastoHotel>(MessageKeys.ManutencaoGastoHotel, itemGravar);
                     }
                 }
 
             });
             MessagingService.Current.Subscribe<Gasto>(MessageKeys.GastoIncluido,  (service, item) =>
             {
-                var itemGravar = new GastoAtracao() { IdentificadorAtracao = ItemAtracao.Identificador, IdentificadorGasto = item.Identificador, DataAtualizacao = DateTime.Now };
+                var itemGravar = new GastoHotel() { IdentificadorHotel = ItemHotel.Identificador, IdentificadorGasto = item.Identificador, DataAtualizacao = DateTime.Now };
                
                         itemGravar.Identificador = item.Atracoes.Select(d => d.Identificador).FirstOrDefault();
                         itemGravar.ItemGasto = item;
-                        MessagingService.Current.SendMessage<GastoAtracao>(MessageKeys.ManutencaoGastoAtracao, itemGravar);
+                        MessagingService.Current.SendMessage<GastoHotel>(MessageKeys.ManutencaoGastoHotel, itemGravar);
                    
                 
 
             });
         }
 
-        private void VerificarExclusao(GastoAtracao obj)
+        private void VerificarExclusao(GastoHotel obj)
         {
             MessagingService.Current.SendMessage<MessagingServiceQuestion>(MessageKeys.DisplayQuestion, new MessagingServiceQuestion()
             {
@@ -103,7 +103,7 @@ namespace CV.Mobile.ViewModels
                     using (ApiService srv = new ApiService())
                     {
                         obj.DataExclusao = DateTime.Now;
-                        var Resultado = await srv.SalvarGastoAtracao(obj);
+                        var Resultado = await srv.SalvarGastoHotel(obj);
                         MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
                         {
                             Title = "Sucesso",
@@ -122,7 +122,7 @@ namespace CV.Mobile.ViewModels
            
 
 
-        public ObservableCollection<GastoAtracao> ListaDados { get; set; }
+        public ObservableCollection<GastoHotel> ListaDados { get; set; }
         public Command PageAppearingCommand { get; set; }
         public Command DeleteCommand { get; set; }
         public Command ItemTappedCommand { get; set; }
@@ -130,7 +130,7 @@ namespace CV.Mobile.ViewModels
 
         
 
-        public GastoAtracao ItemSelecionado
+        public GastoHotel ItemSelecionado
         {
             get
             {
@@ -144,16 +144,16 @@ namespace CV.Mobile.ViewModels
             }
         }
 
-        public Atracao ItemAtracao
+        public Hotel ItemHotel
         {
             get
             {
-                return _ItemAtracao;
+                return _ItemHotel;
             }
 
             set
             {
-                _ItemAtracao = value;
+                _ItemHotel = value;
             }
         }
 
@@ -172,7 +172,7 @@ namespace CV.Mobile.ViewModels
             }
             else if (action == "Novo Custo")
             {
-                var CustoAtracao = new GastoAtracao() { IdentificadorAtracao = ItemAtracao.Identificador, DataAtualizacao = DateTime.Now };
+                var CustoHotel = new GastoHotel() { IdentificadorHotel = ItemHotel.Identificador, DataAtualizacao = DateTime.Now };
                 var ItemGasto = new Gasto()
                 {
                     ApenasBaixa = false,
@@ -183,9 +183,9 @@ namespace CV.Mobile.ViewModels
                     Moeda = ItemViagem.Moeda,
                     Usuarios = new MvvmHelpers.ObservableRangeCollection<GastoDividido>(),
                     Alugueis = new MvvmHelpers.ObservableRangeCollection<AluguelGasto>(),
-                    Atracoes = new MvvmHelpers.ObservableRangeCollection<GastoAtracao>(new GastoAtracao[] { CustoAtracao}),
+                    Hoteis = new MvvmHelpers.ObservableRangeCollection<GastoHotel>(new GastoHotel[] { CustoHotel}),
                     Compras = new MvvmHelpers.ObservableRangeCollection<GastoCompra>(),
-                    Hoteis = new MvvmHelpers.ObservableRangeCollection<GastoHotel>(),
+                    Atracoes = new MvvmHelpers.ObservableRangeCollection<GastoAtracao>(),
                     Reabastecimentos = new MvvmHelpers.ObservableRangeCollection<ReabastecimentoGasto>(),
                     Refeicoes = new MvvmHelpers.ObservableRangeCollection<GastoRefeicao>(),
                     ViagenAereas = new MvvmHelpers.ObservableRangeCollection<GastoViagemAerea>()

@@ -18,6 +18,15 @@ namespace CV.Model
         {
             get { return DataSaidia.HasValue ? DataSaidia.Value.ToString("HH:mm:ss") : null; }
         }
+
+        public TimeSpan? HoraEntrada
+        {
+            get { return DataEntrada.HasValue ? DataEntrada.Value.TimeOfDay : new Nullable<TimeSpan>(); }
+        }
+        public TimeSpan? HoraSaida
+        {
+            get { return DataSaidia.HasValue ? DataSaidia.Value.TimeOfDay : new Nullable<TimeSpan>(); }
+        }
     }
 
 }

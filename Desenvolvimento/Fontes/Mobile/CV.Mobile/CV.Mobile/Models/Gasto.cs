@@ -21,7 +21,7 @@ namespace CV.Mobile.Models
         private bool _Dividido;
         private bool _ApenasBaixa;
         private ObservableRangeCollection<GastoDividido> _Usuarios = new ObservableRangeCollection<GastoDividido>();
-
+        private TimeSpan? _Hora;
 
 
 
@@ -188,5 +188,28 @@ namespace CV.Mobile.Models
                     return null;
             }
         }
+
+        public TimeSpan? Hora
+        {
+            get
+            {
+                return _Hora;
+            }
+
+            set
+            {
+                SetProperty(ref _Hora, value);
+            }
+        }
+
+        public ObservableRangeCollection<GastoAtracao> Atracoes { get; set; }
+        public ObservableRangeCollection<GastoHotel> Hoteis { get; set; }
+        public ObservableRangeCollection<GastoCompra> Compras { get; set; }
+        public ObservableRangeCollection<GastoRefeicao> Refeicoes { get; set; }
+        public ObservableRangeCollection<AluguelGasto> Alugueis { get; set; }
+        public ObservableRangeCollection<GastoViagemAerea> ViagenAereas { get; set; }
+
+        public ObservableRangeCollection<ReabastecimentoGasto> Reabastecimentos { get; set; }
+
     }
 }

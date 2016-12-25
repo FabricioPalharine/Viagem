@@ -1,6 +1,7 @@
 ﻿using CV.Mobile.Models;
 using CV.Mobile.Services;
 using CV.Mobile.Views;
+using FormsToolkit;
 using Plugin.Geolocator;
 using Plugin.Geolocator.Abstractions;
 using System;
@@ -19,6 +20,9 @@ namespace CV.Mobile.ViewModels
         private UsuarioLogado _ItemUsuario;
         private Viagem _ItemViagem;
         private IGeolocator locator;
+        private Position ultimaPosicao = null;
+        private Hotel _hotelAtual = null;
+        private bool HotelDentro = false;
 
         public MasterDetailViewModel(UsuarioLogado itemUsuario)
         {
@@ -33,6 +37,30 @@ namespace CV.Mobile.ViewModels
             MasterPage = paginaMenu;
             var paginaDetalhe = new MenuInicialPage() { BindingContext = new MenuInicialViewModel() };
             DetailPage = paginaDetalhe;
+            MessagingService.Current.Subscribe<Hotel>(MessageKeys.ManutencaoHotel, (service, item) =>
+            {
+                var hotel = _hotelAtual ?? new Hotel();
+               if (item.Identificador == (int) hotel.Identificador)
+                {
+                    if (item.DataSaidia.HasValue || item.DataExclusao.HasValue)
+                        _hotelAtual = null;
+                    else if (item.DataEntrada.HasValue)
+                    {
+                        _hotelAtual = item;
+                        HotelDentro = _hotelAtual.Eventos.Where(d => d.IdentificadorUsuario == ItemUsuarioLogado.Codigo).Where(d => !d.DataSaida.HasValue).Any();
+
+                    }
+                }
+               else
+                {
+                    if (item.DataEntrada.HasValue && !item.DataExclusao.HasValue && !item.DataSaidia.HasValue)
+                    {
+                        _hotelAtual = item;
+                        HotelDentro = _hotelAtual.Eventos.Where(d => d.IdentificadorUsuario == ItemUsuarioLogado.Codigo).Where(d => !d.DataSaida.HasValue).Any();
+
+                    }
+                }
+            });
         }
 
         private async void Locator_PositionChanged(object sender, PositionEventArgs e)
@@ -48,10 +76,28 @@ namespace CV.Mobile.ViewModels
                     Latitude = e.Position.Latitude,
                     Longitude = e.Position.Longitude,
                     Velocidade = e.Position.Speed
+                    
                 };
+                ultimaPosicao = e.Position;
                 using (ApiService srv = new ApiService())
                 {
                     await srv.SalvarPosicao(itemPosicao);
+                }
+            }
+            if (_hotelAtual != null && _hotelAtual.Raio > 0 && _hotelAtual.Latitude.HasValue && _hotelAtual.Longitude.HasValue)
+            {
+                var DistanciaAtual = GetDistanceTo(new Position() { Longitude = _hotelAtual.Longitude.Value, Latitude = _hotelAtual.Longitude.Value }, e.Position);
+                bool estaDentro = DistanciaAtual.Meters <= _hotelAtual.Raio;
+                if (estaDentro != HotelDentro)
+                {
+                    HotelEvento itemEvento = new HotelEvento() { DataEntrada = DateTime.Now, IdentificadorHotel = _hotelAtual.Identificador, IdentificadorUsuario = ItemUsuarioLogado.Codigo };
+                    if (estaDentro)
+                        itemEvento.DataSaida = DateTime.Now;
+                    using (ApiService srv = new ApiService())
+                    {
+                        await srv.SalvarHotelEvento(itemEvento);
+                    }
+
                 }
             }
         }
@@ -118,15 +164,42 @@ namespace CV.Mobile.ViewModels
             set
             {
                 SetProperty(ref _ItemViagem, value);
+                CarregarHotelAtual();
                 (masterPage.BindingContext as MenuViewModel).ItemViagem = value;
             }
+        }
+
+        private async void CarregarHotelAtual()
+        {
+            using (ApiService srv = new ApiService())
+            {
+                var Hoteis = await srv.ListarHotel(new CriterioBusca() { Situacao = 1 });
+                if (Hoteis.Any())
+                {
+                    _hotelAtual = await srv.CarregarHotel(Hoteis.OrderByDescending(d => d.DataEntrada).Select(d => d.Identificador).FirstOrDefault());
+                    HotelDentro = _hotelAtual.Eventos.Where(d => d.IdentificadorUsuario == ItemUsuarioLogado.Codigo).Where(d => !d.DataSaida.HasValue).Any();
+                }
+            }
+        }
+
+        public Xamarin.Forms.Maps.Distance GetDistanceTo(Position posicao, Position other)
+        {
+            var d1 = posicao.Latitude * (Math.PI / 180.0);
+            var num1 = posicao.Longitude * (Math.PI / 180.0);
+            var d2 = other.Latitude * (Math.PI / 180.0);
+            var num2 = other.Longitude * (Math.PI / 180.0) - num1;
+            var d3 = Math.Pow(Math.Sin((d2 - d1) / 2.0), 2.0) +
+                     Math.Cos(d1) * Math.Cos(d2) * Math.Pow(Math.Sin(num2 / 2.0), 2.0);
+
+            var meters = 6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(d3), Math.Sqrt(1.0 - d3)));
+            return Xamarin.Forms.Maps.Distance.FromMeters(meters);
         }
 
         public async Task IniciarControlePosicao()
         {
             if (locator.IsGeolocationEnabled && locator.IsGeolocationAvailable)
             {
-                if (_ItemViagem != null && _ItemViagem.Edicao && _ItemViagem.Aberto)
+                if (_ItemViagem != null && _ItemViagem.Edicao && _ItemViagem.Aberto && _ItemViagem.DataInicio < DateTime.Now)
                 {
                     if (!locator.IsListening)
                         await locator.StartListeningAsync(15, 1, true);
@@ -141,15 +214,20 @@ namespace CV.Mobile.ViewModels
 
         public async Task<Position> RetornarPosicaoGPS()
         {
-            try
+            if (ultimaPosicao == null)
             {
-                var position = await locator.GetPositionAsync(timeoutMilliseconds: 10000);
-                return position;
+                try
+                {
+                    var position = await locator.GetPositionAsync(timeoutMilliseconds: 10000);
+                    return position;
+                }
+                catch
+                {
+                    return null;
+                }
             }
-            catch 
-            {
-                return null;
-            }
+            else
+                return ultimaPosicao;
         }
 
         private bool isPresented;

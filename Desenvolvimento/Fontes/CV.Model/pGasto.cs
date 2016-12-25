@@ -19,6 +19,16 @@ namespace CV.Model
             }
         }
 
+        public TimeSpan? Hora
+        {
+            get
+            {
+                if (Data.HasValue)
+                    return Data.Value.TimeOfDay;
+                else
+                    return null;
+            }
+        }
     }
 
 }

@@ -283,6 +283,10 @@ namespace CV.Mobile.ViewModels
                 {
                     await AbrirAtracao();
                 }
+                else if (_ItemMenuSelecionado.Codigo == 2)
+                {
+                    await AbrirHotel();
+                }
                 else if (_ItemMenuSelecionado.Codigo == 8)
                 {
                     await AbrirCompraMoeda();
@@ -356,7 +360,16 @@ namespace CV.Mobile.ViewModels
 
             }
         }
+        private async Task AbrirHotel()
+        {
+            if (_ItemViagem != null)
+            {
+                var pagina = new ListagemHotelPage() { BindingContext = new ListagemHotelViewModel(_ItemViagem) };
 
+                await OnItemMenuSelecionado(pagina, false);
+
+            }
+        }
         private async Task AbrirCompraMoeda()
         {
             if (_ItemViagem != null)

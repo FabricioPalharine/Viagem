@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.EdicaoGastoPage"
+             Title="Manutenção Gasto"
+             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+             xmlns:controles="clr-namespace: CV.Mobile.Controls;assembly=CV.Mobile"
+             x:Name="this"
+             >
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <local:IntStringConverter x:Key="intStringConverter" />
+      <local:InverseBooleanConverter x:Key="boolInverterConverter" />
+
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.Behaviors>
+    <behaviors:EventHandlerBehavior EventName="Appearing">
+      <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
+    </behaviors:EventHandlerBehavior>
+  </ContentPage.Behaviors>
+  <ContentPage.ToolbarItems>
+    <ToolbarItem  Icon="save.png"  Command="{Binding SalvarCommand}" />
+    <controles:BindableToolbarItem  Icon="delete24.png" Parent="{x:Reference this}"  Command="{Binding ExcluirCommand}" IsVisible="{Binding PermiteExcluir}"   />
+
+  </ContentPage.ToolbarItems>
+  <ContentPage.Content>
+    <ScrollView>
+      <StackLayout>
+  
+        
+        <Label Text="Descrição"  />
+        <Entry Text="{Binding ItemGasto.Descricao}"/>
+        <Label Text="Data"   />
+        <controles:NullableDatePicker NullableDate="{Binding ItemGasto.Data}">
+          <controles:NullableDatePicker.Format>dd/MM/yyyy</controles:NullableDatePicker.Format>
+        </controles:NullableDatePicker>
+        <TimePicker Time="{Binding ItemAtracao.Hora}" VerticalOptions="Start" IsVisible="{Binding ExibeHora}">
+          <TimePicker.Format>HH:mm</TimePicker.Format>
+        </TimePicker>
+        <Label Text="Valor"  />
+        <controles:FormattedNumberEntry x:Name="FormattedEntry" Keyboard="Numeric" DecimalPlaces="2" Value="{Binding ItemGasto.Valor}" />
+        <Label Text="Moeda "  />
+        <controles:ExtendedPicker
+                             DisplayProperty="Descricao"
+                             KeyMemberPath="Codigo"
+                             ItemsSource="{Binding ListaMoeda}"
+                             SelectedItem="{Binding ItemGasto.Moeda, Converter={StaticResource intStringConverter}}"
+                             HorizontalOptions="FillAndExpand"
+                            />
+
+        <StackLayout Orientation="Horizontal" Spacing="10">
+          <Label Text="Espécie"  />
+          <Switch IsToggled="{Binding ItemGasto.Especie}">
+           
+          </Switch>
+        </StackLayout>
+        <Label Text="Data de Pagamento" IsVisible="{Binding PagamentoMECartao}"   />
+        <controles:NullableDatePicker NullableDate="{Binding ItemGasto.DataPagamento}" IsVisible="{Binding PagamentoMECartao}" >
+          <controles:NullableDatePicker.Format>dd/MM/yyyy</controles:NullableDatePicker.Format>
+        </controles:NullableDatePicker>
+
+        <StackLayout Orientation="Horizontal" Spacing="10">
+          <Label Text="Dividido"  />
+          <Switch IsToggled="{Binding ItemGasto.Dividido}">
+
+          </Switch>
+        </StackLayout>
+
+    <Label Text="Visitantes" IsVisible="{Binding ItemGasto.Dividido}"  />
+       
+        <ListView  SeparatorVisibility="None" ItemsSource="{Binding Participantes}" SelectedItem="{Binding ParticipanteSelecionado, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="True"  IsPullToRefreshEnabled="False" IsVisible="{Binding ItemGasto.Dividido}"  >
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <ViewCell >
+                <StackLayout Orientation="Horizontal" Spacing="10" >
+                  <Label Text="{Binding Nome}"  />
+                  <Switch IsToggled="{Binding Selecionado}"></Switch>
+                </StackLayout>
+              </ViewCell>
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>    
+  
+      </StackLayout>
+  
+    </ScrollView>
+
+  </ContentPage.Content>
+</ContentPage>
