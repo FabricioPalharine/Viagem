@@ -134,7 +134,7 @@ namespace CV.Mobile.Controls
             this._autoCompleteListView.ItemTemplate = new DataTemplate(() =>
             {
                 var cell = new TextCell();
-                cell.SetBinding(ImageCell.TextProperty, "name");
+                cell.SetBinding(ImageCell.TextProperty, "name_full");
 
                 return cell;
             });
@@ -164,7 +164,7 @@ namespace CV.Mobile.Controls
                     this._entry.Text = Text;
                 this._entry.TextChanged += SearchTextChanged;
                 this._entry.Unfocused += _entry_Unfocused;
-               
+
                 searchView = this._entry;
             }
             this.Children.Add(searchView,

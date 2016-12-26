@@ -75,6 +75,7 @@ namespace CV.Mobile.ViewModels
                     foreach (var itemMenu in ItensMenuCompleto)
                         if (itemMenu.Codigo != 0)
                             itemMenu.Visible = false;
+                   
                 }
                 ItensMenu = new ObservableCollection<ItemMenu>(ItensMenuCompleto.Where(d => d.Visible));
                 OnPropertyChanged("ItensMenu");
@@ -97,6 +98,21 @@ namespace CV.Mobile.ViewModels
                 {
                     if (itemMenu.ViagemAberta)
                         itemMenu.Visible = ItemViagem.Aberto;
+                }
+
+                if (itemMenu.Codigo == 19)
+                {
+                    if (ItemViagem.Aberto)
+                        itemMenu.Title = "Fechar Viagem";
+                    else
+                        itemMenu.Title = "Reabrir Viagem";
+                }
+                else if (itemMenu.Codigo == 20)
+                {
+                    if (ItemViagem.ControlaPosicaoGPS)
+                        itemMenu.Title = "Parar Rota";
+                    else
+                        itemMenu.Title = "Iniciar Rota";
                 }
             }
         }
@@ -268,6 +284,23 @@ namespace CV.Mobile.ViewModels
                 Visible = false,
                 ApenasParticipante = true
             });
+            ItensMenuCompleto.Add(new ItemMenu
+            {
+                Codigo = 19,
+                Title = "Fechar Viagem",
+                IconSource = "Dados.png",
+                Visible = false,
+                ApenasParticipante = true
+            });
+            ItensMenuCompleto.Add(new ItemMenu
+            {
+                Codigo = 20,
+                Title = "Iniciar Rota",
+                IconSource = "Dados.png",
+                Visible = false,
+                ApenasParticipante = true,
+                ViagemAberta = true
+            });
 
         }
 
@@ -277,7 +310,7 @@ namespace CV.Mobile.ViewModels
             {
                 if (_ItemMenuSelecionado.Codigo == 0)
                 {
-                    await OnItemMenuSelecionado(new MenuInicialPage() { BindingContext = new MenuInicialViewModel() },true);
+                    await OnItemMenuSelecionado(new MenuInicialPage() { BindingContext = new MenuInicialViewModel() }, true);
                 }
                 else if (_ItemMenuSelecionado.Codigo == 1)
                 {
@@ -287,6 +320,14 @@ namespace CV.Mobile.ViewModels
                 {
                     await AbrirHotel();
                 }
+                else if (_ItemMenuSelecionado.Codigo == 3)
+                {
+                    await AbrirRefeicao();
+                }
+                else if (_ItemMenuSelecionado.Codigo == 4)
+                {
+                    await AbrirLoja();
+                }
                 else if (_ItemMenuSelecionado.Codigo == 8)
                 {
                     await AbrirCompraMoeda();
@@ -294,6 +335,10 @@ namespace CV.Mobile.ViewModels
                 else if (_ItemMenuSelecionado.Codigo == 10)
                 {
                     await AbrirGrupoCidade();
+                }
+                else if (_ItemMenuSelecionado.Codigo == 11)
+                {
+                    await AbrirComentario();
                 }
                 else if (_ItemMenuSelecionado.Codigo == 12)
                 {
@@ -319,10 +364,18 @@ namespace CV.Mobile.ViewModels
                 {
                     await EditarViagem();
                 }
+                else if (_ItemMenuSelecionado.Codigo == 19)
+                {
+                    await TrocarSituacaoViagem();
+                }
+                else if (_ItemMenuSelecionado.Codigo == 20)
+                {
+                    await TrocarControleGPS();
+                }
                 else
                 {
                     Page pagina = new Page();
-                    await OnItemMenuSelecionado(pagina,true);
+                    await OnItemMenuSelecionado(pagina, true);
                 }
                 ItemSelecionado = null;
             }
@@ -365,6 +418,39 @@ namespace CV.Mobile.ViewModels
             if (_ItemViagem != null)
             {
                 var pagina = new ListagemHotelPage() { BindingContext = new ListagemHotelViewModel(_ItemViagem) };
+
+                await OnItemMenuSelecionado(pagina, false);
+
+            }
+        }
+
+        private async Task AbrirComentario()
+        {
+            if (_ItemViagem != null)
+            {
+                var pagina = new ListagemComentarioPage() { BindingContext = new ListagemComentarioViewModel(_ItemViagem) };
+
+                await OnItemMenuSelecionado(pagina, false);
+
+            }
+        }
+
+        private async Task AbrirRefeicao()
+        {
+            if (_ItemViagem != null)
+            {
+                var pagina = new ListagemRefeicaoPage() { BindingContext = new ListagemRefeicaoViewModel(_ItemViagem) };
+
+                await OnItemMenuSelecionado(pagina, false);
+
+            }
+        }
+
+        private async Task AbrirLoja()
+        {
+            if (_ItemViagem != null)
+            {
+                var pagina = new ListagemLojaPage() { BindingContext = new ListagemLojaViewModel(_ItemViagem) };
 
                 await OnItemMenuSelecionado(pagina, false);
 
@@ -423,6 +509,36 @@ namespace CV.Mobile.ViewModels
                 await OnItemMenuSelecionado(pagina, false);
 
             }
+        }
+
+        private async Task TrocarSituacaoViagem()
+        {
+            if (ItemViagem.Aberto)
+            {
+                ItemViagem.Aberto = false;
+                ItemViagem.ControlaPosicaoGPS = false;
+            }
+            else
+                ItemViagem.Aberto = true;
+            using (ApiService srv = new ApiService())
+            {
+                await srv.SalvarViagem(ItemViagem);
+            }
+            AjustarVisibilidadeItens();
+            ItensMenu = new ObservableCollection<ItemMenu>(ItensMenuCompleto.Where(d => d.Visible));
+            OnPropertyChanged("ItensMenu");
+        }
+
+        private async Task TrocarControleGPS()
+        {
+            ItemViagem.ControlaPosicaoGPS = !ItemViagem.ControlaPosicaoGPS;
+            var itemMenu = ItensMenu.Where(d => d.Codigo == 20).FirstOrDefault();
+            if (ItemViagem.ControlaPosicaoGPS)
+                itemMenu.Title = "Parar Rota";
+            else
+                itemMenu.Title = "Iniciar Rota";
+            var VMPai = (MasterDetailViewModel)(Application.Current?.MainPage.BindingContext);
+            await VMPai.IniciarControlePosicao();
         }
 
         private async Task<bool> VerificarOnline()

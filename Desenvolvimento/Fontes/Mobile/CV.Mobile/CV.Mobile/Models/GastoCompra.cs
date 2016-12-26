@@ -21,7 +21,7 @@ namespace CV.Mobile.Models
         public DateTime? DataExclusao { get; set; }
 
         public Gasto ItemGasto { get; set; }
-       // public ObservableRangeCollection<ItemCompra> ItensComprados { get; set; }
+        public ObservableRangeCollection<ItemCompra> ItensComprados { get; set; }
 
     }
 }

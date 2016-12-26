@@ -16,6 +16,7 @@ namespace CV.Mobile.Models
        public int? IdentificadorViagem { get; set; }
 
         public int? IdentificadorCidade { get; set; }
+        public string NomeCidade { get; set; }
 
         public string Nome { get; set; }
     
@@ -43,7 +44,7 @@ namespace CV.Mobile.Models
 
         public Viagem ItemViagem { get; set; }
 
-        public IList<HotelEvento> Eventos { get; set; }
+        public ObservableRangeCollection<HotelEvento> Eventos { get; set; }
 
         public int? Raio { get; set; }
 
@@ -107,5 +108,9 @@ namespace CV.Mobile.Models
         private TimeSpan? _HoraEntrada;
         private TimeSpan? _HoraSaida;
 
+        public Hotel Clone()
+        {
+            return (Hotel)this.MemberwiseClone();
+        }
     }
 }

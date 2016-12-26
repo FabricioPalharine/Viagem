@@ -49,7 +49,7 @@ namespace CV.Mobile.Services
         private string BuildQueryPredictions(string texto, Position posicao, string[] tipos, int raio)
         {
             var cultura = new System.Globalization.CultureInfo("en-us");
-            var Consulta = string.Format("{0}location={1},{2}&name={3}&radius={4}&key={5}", UrlPlaces, posicao.Latitude.ToString("F7", cultura),
+            var Consulta = string.Format("{0}location={1},{2}&name={3}&rankby=distance&key={5}", UrlPlaces, posicao.Latitude.ToString("F7", cultura),
                 posicao.Longitude.ToString("F7",cultura), System.Net.WebUtility.UrlEncode( texto), raio.ToString("F0"), _apiKey);
             if (tipos != null && tipos.Any())
                 Consulta += String.Concat("&types=", string.Join("|", tipos));

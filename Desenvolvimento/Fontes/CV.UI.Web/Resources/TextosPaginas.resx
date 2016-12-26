@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Home_Dashboard" xml:space="preserve">
-    <value>Dashboard</value>
+    <value>Home</value>
   </data>
   <data name="Home_Usuario" xml:space="preserve">
     <value>Usuário</value>
@@ -1466,5 +1466,17 @@
   </data>
   <data name="Visualizar" xml:space="preserve">
     <value>Visualizar</value>
+  </data>
+  <data name="Home_AbrirViagem" xml:space="preserve">
+    <value>Reabrir Viagem</value>
+  </data>
+  <data name="Home_Controle" xml:space="preserve">
+    <value>Controles</value>
+  </data>
+  <data name="Home_FecharViagem" xml:space="preserve">
+    <value>Fechar Viagem</value>
+  </data>
+  <data name="Home_Requisicoes" xml:space="preserve">
+    <value>Requisições</value>
   </data>
 </root>

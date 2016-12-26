@@ -43,8 +43,9 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
 
+              <ColumnDefinition Width="100*" />
               <ColumnDefinition Width="50*" />
- 
+
 
             </Grid.ColumnDefinitions>
             <Label Text="Nome" HorizontalTextAlignment="Center" Grid.Column="0"></Label>
@@ -62,9 +63,9 @@
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                  
+                  <ColumnDefinition Width="100*" />
                   <ColumnDefinition Width="50*" />
-                  <ColumnDefinition Width="50*" />
-                  <ColumnDefinition Width="50*" />
+
                 </Grid.ColumnDefinitions>
                 <Label Text="{Binding Nome}" HorizontalTextAlignment="Center" Grid.Column="0"></Label>
                 <Label Text="{Binding DataEntrada, StringFormat='{0:dd/MM/yyyy HH:mm}'}" HorizontalTextAlignment="Center" Grid.Column="1"></Label>

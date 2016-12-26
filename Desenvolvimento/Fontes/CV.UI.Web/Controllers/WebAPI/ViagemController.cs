@@ -80,5 +80,22 @@ namespace CV.UI.Web.Controllers.WebAPI
             var lista = biz.CarregarParticipantesViagem(token.IdentificadorViagem);
             return lista.ToList();
         }
+
+        [Authorize]
+        [ActionName("TrocarSituacaoViagem")]
+        [HttpGet]
+        public ResultadoOperacao TrocarSituacaoViagem()
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            Viagem itemViagem = biz.SelecionarViagem(token.IdentificadorViagem);
+            itemViagem.Aberto = !itemViagem.Aberto;
+            biz.SalvarViagem(itemViagem);
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+            itemResultado.Sucesso = biz.IsValid();
+            itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
+
+            return itemResultado;
+        }
+
     }
 }

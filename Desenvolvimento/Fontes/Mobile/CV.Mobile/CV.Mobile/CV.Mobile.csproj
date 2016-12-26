@@ -46,7 +46,6 @@
     <Compile Include="Controls\NullableDatePicker.cs" />
     <Compile Include="Controls\ExtendedPicker.cs" />
     <Compile Include="Controls\PlacesSearch.cs" />
-    <Compile Include="Controls\StarBehavior.cs" />
     <Compile Include="Controls\StarControl.cs" />
     <Compile Include="Helpers\IntegerImageSourceConverter.cs" />
     <Compile Include="Helpers\EnumHelperExtension.cs" />
@@ -66,7 +65,9 @@
     <Compile Include="Models\AporteDinheiro.cs" />
     <Compile Include="Models\CalendarioPrevisto.cs" />
     <Compile Include="Models\Cidade.cs" />
+    <Compile Include="Models\Comentario.cs" />
     <Compile Include="Models\CotacaoMoeda.cs" />
+    <Compile Include="Models\FotoRefeicao.cs" />
     <Compile Include="Models\FotoHotel.cs" />
     <Compile Include="Models\FotoAtracao.cs" />
     <Compile Include="Models\Gasto.cs" />
@@ -76,6 +77,8 @@
     <Compile Include="Models\Foto.cs" />
     <Compile Include="Models\Hotel.cs" />
     <Compile Include="Models\HotelEvento.cs" />
+    <Compile Include="Models\ItemCompra.cs" />
+    <Compile Include="Models\Loja.cs" />
     <Compile Include="Models\ReabastecimentoGasto.cs" />
     <Compile Include="Models\GastoCompra.cs" />
     <Compile Include="Models\GastoRefeicao.cs" />
@@ -90,6 +93,7 @@
     <Compile Include="Models\MensagemErro.cs" />
     <Compile Include="Models\PocoLogin.cs" />
     <Compile Include="Models\Posicao.cs" />
+    <Compile Include="Models\Refeicao.cs" />
     <Compile Include="Models\RefeicaoPedido.cs" />
     <Compile Include="Models\AvaliacaoLoja.cs" />
     <Compile Include="Models\HotelAvaliacao.cs" />
@@ -124,6 +128,11 @@
     <Compile Include="ViewModels\BaseNavigationViewModel.cs" />
     <Compile Include="ViewModels\EdicaoAporteDinheiroViewModel.cs" />
     <Compile Include="ViewModels\EdicaoAgendarSugestaoViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoComentarioViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoCompraViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoItemCompraViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoLojaViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoRefeicaoViewModel.cs" />
     <Compile Include="ViewModels\EdicaoHotelViewModel.cs" />
     <Compile Include="ViewModels\EdicaoGastoViewModel.cs" />
     <Compile Include="ViewModels\EdicaoSugestaoRecebidaViewModel.cs" />
@@ -136,6 +145,12 @@
     <Compile Include="ViewModels\EditarCotacaoViewModel.cs" />
     <Compile Include="ViewModels\ListagemAmigoViewModel.cs" />
     <Compile Include="ViewModels\ListagemAgrupamentoCidadeViewModel.cs" />
+    <Compile Include="ViewModels\ListagemComentarioViewModel.cs" />
+    <Compile Include="ViewModels\ListagemItemCompraViewModel.cs" />
+    <Compile Include="ViewModels\ListagemLojaViewModel.cs" />
+    <Compile Include="ViewModels\ListagemCompraCustoViewModel.cs" />
+    <Compile Include="ViewModels\ListagemRefeicaoViewModel.cs" />
+    <Compile Include="ViewModels\ListagemRefeicaoCustoViewModel.cs" />
     <Compile Include="ViewModels\ListagemHotelCustoViewModel.cs" />
     <Compile Include="ViewModels\ListagemAtracaoCustoViewModel.cs" />
     <Compile Include="ViewModels\ListagemHotelViewModel .cs" />
@@ -162,6 +177,18 @@
     </Compile>
     <Compile Include="Views\EdicaoAgrupamentoCidadePage.xaml.cs">
       <DependentUpon>EdicaoAgrupamentoCidadePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoComentarioPage.xaml.cs">
+      <DependentUpon>EdicaoComentarioPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoItemCompraPage.xaml.cs">
+      <DependentUpon>EdicaoItemCompraPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoLojaPage.xaml.cs">
+      <DependentUpon>EdicaoLojaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoRefeicaoPage.xaml.cs">
+      <DependentUpon>EdicaoRefeicaoPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EdicaoHotelPage.xaml.cs">
       <DependentUpon>EdicaoHotelPage.xaml</DependentUpon>
@@ -199,8 +226,29 @@
     <Compile Include="Views\EdicaoViagemDados.xaml.cs">
       <DependentUpon>EdicaoViagemDados.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EdicaoCompraPage.xaml.cs">
+      <DependentUpon>EdicaoCompraPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ListagemAgrupamentoCidadePage.xaml.cs">
       <DependentUpon>ListagemAgrupamentoCidadePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemComentarioPage.xaml.cs">
+      <DependentUpon>ListagemComentarioPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemCompraCustoPage.xaml.cs">
+      <DependentUpon>ListagemCompraCustoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemItemCompraPage.xaml.cs">
+      <DependentUpon>ListagemItemCompraPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemLojaPage.xaml.cs">
+      <DependentUpon>ListagemLojaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemRefeicaoPage.xaml.cs">
+      <DependentUpon>ListagemRefeicaoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemRefeicaoCustoPage.xaml.cs">
+      <DependentUpon>ListagemRefeicaoCustoPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ListagemHotelCustoPage.xaml.cs">
       <DependentUpon>ListagemHotelCustoPage.xaml</DependentUpon>
@@ -618,6 +666,72 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\EdicaoHotelPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemRefeicaoCustoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoRefeicaoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemRefeicaoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemComentarioPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoComentarioPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoLojaPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemLojaPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoCompraPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemCompraCustoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemItemCompraPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoItemCompraPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

@@ -24,7 +24,7 @@
 		vm.ListaMoeda = [];
 		vm.itemMoeda = {};
 		vm.EscopoAtualizacao = EscopoAtualizacao;
-
+		vm.ExibeHora = false;
 		vm.load = function () {
 			vm.loading = true;		
 			
@@ -69,8 +69,10 @@
 
 		vm.ajustaItem = function (item) {
 		    vm.itemGastoOriginal = item;
-		    vm.itemGasto = item;
+		    vm.itemGasto = jQuery.extend({}, item);
 		    vm.EscopoAtualizacao = $scope.$parent.itemGasto;
+		    if (item.ExibeHora)
+		        vm.ExibeHora = true;
 		};
 
 		vm.PreencherLoadItem = function()

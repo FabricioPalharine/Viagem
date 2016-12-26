@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.EdicaoLojaPage"
+             Title="Manutenção Loja"
+             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+             xmlns:controles="clr-namespace: CV.Mobile.Controls;assembly=CV.Mobile"
+             x:Name="this"
+             >
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <local:IntStringConverter x:Key="intStringConverter" />
+      <local:InverseBooleanConverter x:Key="boolInverterConverter" />
+
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.Behaviors>
+    <behaviors:EventHandlerBehavior EventName="Appearing">
+      <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
+    </behaviors:EventHandlerBehavior>
+  </ContentPage.Behaviors>
+  <ContentPage.ToolbarItems>
+    <ToolbarItem  Icon="save.png"  Command="{Binding SalvarCommand}" />
+    <controles:BindableToolbarItem  Icon="delete24.png" Parent="{x:Reference this}"  Command="{Binding ExcluirCommand}" IsVisible="{Binding PermiteExcluir}"   />
+    <controles:BindableToolbarItem  Icon="cart24.png" Parent="{x:Reference this}"  Command="{Binding AbrirCustosCommand}" IsVisible="{Binding PermiteExcluir}"   />
+
+  </ContentPage.ToolbarItems>
+  <ContentPage.Content>
+    <ScrollView>
+      <RelativeLayout  VerticalOptions="FillAndExpand" >
+      <StackLayout
+                                  RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent,
+            Property=Height,Factor=0,Constant=60}"
+                          RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width,Factor=1,Constant=0}"
+                         >
+        <Label Text="Atração Pai"  />
+        <controles:ExtendedPicker
+                              DisplayProperty="Nome"
+                              KeyMemberPath="Identificador"
+                              ItemsSource="{Binding ListaAtracaoPai}"
+                              SelectedItem="{Binding ItemLoja.IdentificadorAtracao }"
+                              HorizontalOptions="FillAndExpand"     
+                              />
+        
+       
+      
+        <Label Text="Nota" IsVisible="{Binding PossoComentar}" />
+        <controles:StarControl Orientation="Horizontal" HeightRequest="70" IsVisible="{Binding PossoComentar}" Nota="{Binding ItemAvaliacao.Nota}">
+        </controles:StarControl>
+        <Label Text="Comentário" IsVisible="{Binding PossoComentar}" />
+        <Editor Text="{Binding ItemAvaliacao.Comentario}"  HeightRequest="100" IsVisible="{Binding PossoComentar}"/>
+ 
+
+
+  
+      </StackLayout>
+      <Label Text="Nome"  RelativeLayout.YConstraint="{ConstraintExpression Constant=0}"
+     RelativeLayout.XConstraint="{ConstraintExpression  Constant=0}"/>
+
+      <controles:PlacesSearch Bounds="{Binding Bounds}" PlaceSelectedCommand="{Binding PlaceSelectedCommand}" Text="{Binding ItemLoja.Nome}" Placeholder="" Tipos="art_gallery| bicycle_store| book_store| car_dealer| clothing_store| liquor_store| convenience_store| department_store| electronics_store| florist|furniture_store|grocery_or_supermarket|hardware_store|store|shopping_mall|shoe_store|pharmacy|pet_store|jewelry_store|home_goods_store" RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent,
+            Property=Height,Factor=0,Constant=10}"
+                        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1,Constant=10}"
+     RelativeLayout.XConstraint="{ConstraintExpression  Constant=0}"
+                                    ></controles:PlacesSearch>
+      
+    </RelativeLayout>
+    </ScrollView>
+
+  </ContentPage.Content>
+</ContentPage>

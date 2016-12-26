@@ -28,6 +28,7 @@ namespace CV.Mobile.Models
         private DateTime? _DataExclusao;
         private ObservableRangeCollection<ParticipanteViagem> _Participantes = new ObservableRangeCollection<ParticipanteViagem>();
         private ObservableRangeCollection<UsuarioGasto> _UsuariosGastos = new ObservableRangeCollection<UsuarioGasto>();
+        private bool _ControlaPosicaoGPS;
         public int? Id
         {
             get
@@ -273,6 +274,19 @@ namespace CV.Mobile.Models
             set
             {
                 _UsuariosGastos = value;
+            }
+        }
+
+        public bool ControlaPosicaoGPS
+        {
+            get
+            {
+                return _ControlaPosicaoGPS;
+            }
+
+            set
+            {
+                _ControlaPosicaoGPS = value;
             }
         }
     }

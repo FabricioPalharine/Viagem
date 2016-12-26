@@ -15,7 +15,6 @@ namespace CV.Mobile.Models
 
         public int? Id { get; set; }
         public int? Identificador { get; set; }
-        public int? IdLoja { get; set; }
         public int? IdentificadorLoja { get; set; }
         public int? IdentificadorUsuario { get; set; }
         public string NomeUsuario { get; set; }

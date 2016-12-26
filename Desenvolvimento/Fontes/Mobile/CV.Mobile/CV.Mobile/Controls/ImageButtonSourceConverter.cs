@@ -41,13 +41,13 @@ namespace CV.Mobile.Controls
             return sourceType == typeof(string);
         }
 
+
         /// <summary>
         /// Converts the string value into a <see cref="ImageSource"/> either from a file or URI.
         /// </summary>
-        /// <param name="culture">The current culture being used.</param>
         /// <param name="value">The string value to convert.</param>
         /// <returns>Returns a <see cref="ImageSource"/> loaded from the value.</returns>
-        public override object ConvertFrom(CultureInfo culture, object value)
+        public override object ConvertFromInvariantString(string value)
         {
             if (value == null)
             {
@@ -66,7 +66,7 @@ namespace CV.Mobile.Controls
             }
             throw new InvalidOperationException(
                 string.Format("Cannot convert \"{0}\" into {1}",
-                    new[] { value, typeof(ImageSource) }));
+                     value, typeof(ImageSource) ));
         }
     }
 }

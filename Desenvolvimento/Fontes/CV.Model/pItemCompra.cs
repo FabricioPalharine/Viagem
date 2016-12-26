@@ -10,6 +10,13 @@ namespace CV.Model
 
 	public partial class ItemCompra
 	{
+        public string NomeUsuario
+        {
+            get
+            {
+                return (ItemUsuario ?? new Usuario()).Nome;
+            }
+        }
 	}
 
 }

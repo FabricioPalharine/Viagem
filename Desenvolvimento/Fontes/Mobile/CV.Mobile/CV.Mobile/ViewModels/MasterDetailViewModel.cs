@@ -90,7 +90,7 @@ namespace CV.Mobile.ViewModels
                 bool estaDentro = DistanciaAtual.Meters <= _hotelAtual.Raio;
                 if (estaDentro != HotelDentro)
                 {
-                    HotelEvento itemEvento = new HotelEvento() { DataEntrada = DateTime.Now, IdentificadorHotel = _hotelAtual.Identificador, IdentificadorUsuario = ItemUsuarioLogado.Codigo };
+                    HotelEvento itemEvento = new HotelEvento() { DataEntrada = DateTime.Now, IdentificadorHotel = _hotelAtual.Identificador, IdentificadorUsuario = ItemUsuarioLogado.Codigo, DataAtualizacao=DateTime.Now.ToUniversalTime() };
                     if (estaDentro)
                         itemEvento.DataSaida = DateTime.Now;
                     using (ApiService srv = new ApiService())
@@ -199,7 +199,7 @@ namespace CV.Mobile.ViewModels
         {
             if (locator.IsGeolocationEnabled && locator.IsGeolocationAvailable)
             {
-                if (_ItemViagem != null && _ItemViagem.Edicao && _ItemViagem.Aberto && _ItemViagem.DataInicio < DateTime.Now)
+                if (_ItemViagem != null && _ItemViagem.Edicao && _ItemViagem.Aberto && _ItemViagem.DataInicio < DateTime.Now && _ItemViagem.ControlaPosicaoGPS)
                 {
                     if (!locator.IsListening)
                         await locator.StartListeningAsync(15, 1, true);

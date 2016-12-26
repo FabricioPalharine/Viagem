@@ -26,8 +26,7 @@
               params: {
                   controller: 'Get'
               }
-          },
-          
+          },          
           list: {
               method: 'GET',
               params: {

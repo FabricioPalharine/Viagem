@@ -181,6 +181,14 @@ namespace CV.Mobile.Models
             }
         }
 
-        
+        public string DescricaoCombinada
+        {
+            get
+            {
+                string _Descricao = String.Format("{0} - {1}", Descricao, Marca);
+
+                return _Descricao;
+            }
+        }
     }
 }

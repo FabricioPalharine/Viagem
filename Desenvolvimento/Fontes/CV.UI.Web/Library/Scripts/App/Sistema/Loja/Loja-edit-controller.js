@@ -250,7 +250,7 @@
 		};
 
 		vm.AdicionarCompra = function () {
-		    var itemCusto = { ItensCompra: [], IdentificadorLoja: vm.itemLoja.Identificador, ItemGasto: { Usuarios: [], Especie: true, IdentificadorViagem: vm.itemLoja.IdentificadorViagem, ExibeHora: true, Data: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss"), strHora: moment(new Date()).format("HH:mm:ss"), ItemUsuario: { Identificador: Auth.currentUser.Codigo }, IdentificadorUsuario: Auth.currentUser.Codigo }, Usuarios: [] };
+		    var itemCusto = { ItensCompra: [], IdentificadorLoja: vm.itemLoja.Identificador, ItemGasto: { Usuarios: [], Especie: true, IdentificadorViagem: vm.itemLoja.IdentificadorViagem, ExibeHora: true, Data: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss"), strHora: moment(new Date()).format("HH:mm:ss"), ItemUsuario: { Identificador: Auth.currentUser.Codigo }, IdentificadorUsuario: Auth.currentUser.Codigo, Dividido: false,ApenasBaixa: false }, Usuarios: [] };
 		    $uibModal.open({
 		        templateUrl: 'Sistema/ComprasEdicao',
 		        controller: 'CompraEditCtrl',
@@ -263,10 +263,12 @@
 		};
 
 		vm.EditarCompra = function (itemCusto) {
+		    itemCusto.ItemGasto.ExibeHora = true;
 		    $uibModal.open({
 		        templateUrl: 'Sistema/ComprasEdicao',
 		        controller: 'CompraEditCtrl',
 		        controllerAs: 'itemCompraEdit',
+		       
 		        resolve: {
 		            ItemGastoCompra: function () { return itemCusto; },
 		            EscopoAtualizacao: vm

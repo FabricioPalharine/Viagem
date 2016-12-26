@@ -12,7 +12,7 @@
         vm.messages = [];
         vm.loggedUser = Auth.currentUser;
         vm.CamposInvalidos = {};
-        vm.itemCusto = { Usuarios: [], Especie: true, IdentificadorViagem: vm.EscopoAtualizacao.itemCarro.IdentificadorViagem, ExibeHora: true, Data: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss"), strHora: moment(new Date()).format("HH:mm:ss"), IdentificadorUsuario: Auth.currentUser.Codigo };
+        vm.itemCusto = { Usuarios: [], Especie: true, IdentificadorViagem: vm.EscopoAtualizacao.itemCarro.IdentificadorViagem, ExibeHora: true, Data: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss"), strHora: moment(new Date()).format("HH:mm:ss"), IdentificadorUsuario: Auth.currentUser.Codigo, Dividido: false,ApenasBaixa: false };
 
         vm.loading = false;
         vm.load = function () {

@@ -44,21 +44,30 @@
         };
 
         vm.SelecionarViagem = function (IdentificadorViagem) {
-            Auth.SelecionarViagem(IdentificadorViagem);
+            Auth.SelecionarViagem(IdentificadorViagem, function () {
+                Auth.CarregarAlertas(function (data) {
+                    vm.alertas = [];
+                    for (var i = 0; i < data.length; i++) {
+                        vm.alertas.push(data[i]);
+                    }
+                    vm.totalAlertas = vm.alertas.length;
+                })
+            });
+            $state.go('home');
+        };
+
+        $rootScope.$on('ViagemSelecionada', function (event) {
             Auth.CarregarAlertas(function (data) {
                 vm.alertas = [];
                 for (var i = 0; i < data.length; i++) {
                     vm.alertas.push(data[i]);
                 }
                 vm.totalAlertas = vm.alertas.length;
-            });
-            $state.go('home');
-        };
+            })
+        });
 
-        vm.AbrirAlerta = function(IdentificadorAlerta, TipoAlerta)
-        {
-            if (TipoAlerta == 1)
-            {
+        vm.AbrirAlerta = function (IdentificadorAlerta, TipoAlerta) {
+            if (TipoAlerta == 1) {
                 $state.go('Amigo', { AbrirAprovacao: true });
 
             }
@@ -66,7 +75,23 @@
                 $state.go('VerificarSugestao');
 
             }
-        }
-        
+        };
+
+        vm.ViagemSelecionada = function () {
+            return Auth.currentUser.IdentificadorViagem != null;
+        };
+
+        vm.PermiteEdicao = function () {
+            return Auth.currentUser.PermiteEdicao;
+        };
+
+        vm.Aberto = function () {
+            return Auth.currentUser.Aberto;
+        };
+
+        vm.TrocarSituacaoViagem = function()
+        {
+            Auth.TrocarSituacaoViagem();
+        };
     }
 }());

@@ -24,6 +24,13 @@ namespace CV.Mobile.Models
         public string[] types { get; set; }
         public string vicinity { get; set; }
 
+        public string name_full
+        {
+            get
+            {
+                return string.Concat(name, " - ", vicinity);
+            }
+        }
         public class GmsGeometry
         {
             public GmsPosition location { get; set; }

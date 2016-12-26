@@ -196,7 +196,9 @@
         };
 
         vm.SelecionarViagem = function (viagem) {
-            Auth.SelecionarViagem(viagem.Identificador);
+            Auth.SelecionarViagem(viagem.Identificador, function () {
+                $rootScope.$emit('ViagemSelecionada');
+            });
         };
 	}
 }());

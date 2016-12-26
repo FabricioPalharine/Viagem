@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.EdicaoItemCompraPage"
+             Title="Manutenção Item Compra"
+             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+             xmlns:controles="clr-namespace: CV.Mobile.Controls;assembly=CV.Mobile"
+             x:Name="this"
+             >
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <local:IntStringConverter x:Key="intStringConverter" />
+      <local:InverseBooleanConverter x:Key="boolInverterConverter" />
+      <local:IntDecimalConverter x:Key="intDecimalConverter" />
+
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.Behaviors>
+    <behaviors:EventHandlerBehavior EventName="Appearing">
+      <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
+    </behaviors:EventHandlerBehavior>
+  </ContentPage.Behaviors>
+  <ContentPage.ToolbarItems>
+    <ToolbarItem  Icon="save.png"  Command="{Binding SalvarCommand}" />
+    <controles:BindableToolbarItem  Icon="delete24.png" Parent="{x:Reference this}"  Command="{Binding ExcluirCommand}" IsVisible="{Binding PermiteExcluir}"   />
+
+  </ContentPage.ToolbarItems>
+  <ContentPage.Content>
+    <ScrollView>
+   
+      <StackLayout>
+        <StackLayout>
+          <Label Text="Item da Lista de Compra"  />
+          <controles:ExtendedPicker
+                               DisplayProperty="DescricaoCombinada"
+                               KeyMemberPath="Identificador"
+                               ItemsSource="{Binding ListaListaCompra}"
+                               SelectedItem="{Binding ItemItemCompra.IdentificadorListaCompra}"
+                               HorizontalOptions="FillAndExpand"
+                            >
+            <controles:ExtendedPicker.Behaviors>
+              <behaviors:EventHandlerBehavior EventName="SelectedIndexChanged">
+                <behaviors:InvokeCommandAction Command="{Binding SelecaoItemAlteradaCommand}"   />
+              </behaviors:EventHandlerBehavior>
+            </controles:ExtendedPicker.Behaviors>
+          </controles:ExtendedPicker>
+          <Label Text="Marca"  />
+          <Entry Text="{Binding ItemItemCompra.Marca}"/>
+          <Label Text="Descrição"  />
+          <Entry Text="{Binding ItemItemCompra.Descricao}"/>
+          <Label Text="Valor "  />
+          <controles:FormattedNumberEntry x:Name="FormattedEntry" Keyboard="Numeric" DecimalPlaces="2" Value="{Binding ItemItemCompra.Valor}" />
+
+       
+          <Label Text="Destinatário"  />
+          <StackLayout Orientation="Horizontal" Spacing="10">
+            <Label Text="Cadastrado como Amigo"  />
+            <Switch IsToggled="{Binding CadastradoComoAmigo}"></Switch>
+          </StackLayout>
+          <controles:ExtendedPicker x:Name="myPicker"
+                                        DisplayProperty="Nome"
+                                        KeyMemberPath="Identificador"
+                                        ItemsSource="{Binding ListaAmigos}"
+                                        SelectedItem="{Binding ItemItemCompra.IdentificadorUsuario}"
+                                        HorizontalOptions="FillAndExpand"
+                                     IsVisible="{Binding CadastradoComoAmigo}"
+                               />
+          <Entry Text="{Binding ItemItemCompra.Destinatario}"  IsVisible="{Binding CadastradoComoAmigo, Converter={StaticResource boolInverterConverter}}"/>
+          <StackLayout Orientation="Horizontal" Spacing="10">
+            <Label Text="Reembolsavel"  />
+            <Switch IsToggled="{Binding ItemItemCompra.Reembolsavel}"></Switch>
+          </StackLayout>
+        </StackLayout>
+
+      </StackLayout>
+ 
+    </ScrollView>
+
+  </ContentPage.Content>
+</ContentPage>

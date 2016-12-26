@@ -33,6 +33,7 @@
         AuthBase.logout = function () {
             SignalR.DesconectarUsuario(AuthBase.currentUser.Codigo);
             sessionStorage.removeItem('token');
+            $cookies.remove('IdentificadorViagem');
             AuthBase.currentUser = {};           
             $rootScope.isLogged = false;
             AuthBase.auth2.signOut();
@@ -205,6 +206,7 @@
             AuthBase.auth2.grantOfflineAccess({ 'redirect_uri': 'postmessage', 'scope': AuthBase.scopes, 'approval_prompt': 'force' }).then(function (resp) {
                 var auth_code = resp.code;
                 AuthBase.auth2.signIn().then(function (resp2) {
+                   
                     var User = AuthBase.auth2.currentUser.get();
                     var DadosRetorno = User.getAuthResponse();
                     var Nome = User.getBasicProfile().getName();
@@ -263,7 +265,7 @@
             });
         }
 
-        AuthBase.SelecionarViagem = function (IdentificadorViagem) {
+        AuthBase.SelecionarViagem = function (IdentificadorViagem, callback) {
             $http.post('./api/Acesso/SelecionarViagem', {
                 IdentificadorViagem: IdentificadorViagem
             }).
@@ -280,6 +282,8 @@
                   expireDate.setDate(expireDate.getDate() + 30);
                   // Setting a cookie
                   $cookies.put('IdentificadorViagem', data.IdentificadorViagem, { 'expires': expireDate });
+                  if (callback)
+                      callback();
               });
         };
 
@@ -290,6 +294,11 @@
               });
         };
 
+        AuthBase.TrocarSituacaoViagem = function () {
+            $http.get('./api/Viagem/TrocarSituacaoViagem').success(function (data) {
+                AuthBase.currentUser.Aberto = !AuthBase.currentUser.Aberto;
+            });
+        };
 
         $rootScope.$on('SignalRConnected', function (event) {
             if (AuthBase.currentUser.Codigo)

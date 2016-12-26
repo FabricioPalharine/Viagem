@@ -75,25 +75,26 @@ namespace CV.Mobile.ViewModels
 
         public async Task CarregarPosicao()
         {
-             await CarregarParticipantesViagem();
-          
-           
-            
-
+            await Task.Delay(100);
+            PermiteExcluir = ItemGasto.Identificador.HasValue;
+            await CarregarParticipantesViagem();
         }
 
         private async Task CarregarParticipantesViagem()
         {
-            using (ApiService srv = new ApiService())
+            if (!Participantes.Any())
             {
-                Participantes.Clear();
-                var ListaUsuario = await srv.ListarParticipantesViagem();
-                foreach (var itemUsuario in ListaUsuario)
+                using (ApiService srv = new ApiService())
                 {
-                    if (!ItemGasto.Identificador.HasValue || ItemGasto.Usuarios.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).Any())
-                        itemUsuario.Selecionado = true;
-                    if (itemUsuario.Identificador != ItemUsuarioLogado.Codigo)
-                     Participantes.Add(itemUsuario);
+                    Participantes.Clear();
+                    var ListaUsuario = await srv.ListarParticipantesViagem();
+                    foreach (var itemUsuario in ListaUsuario)
+                    {
+                        if (!ItemGasto.Identificador.HasValue || ItemGasto.Usuarios.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).Any())
+                            itemUsuario.Selecionado = true;
+                        if (itemUsuario.Identificador != ItemUsuarioLogado.Codigo)
+                            Participantes.Add(itemUsuario);
+                    }
                 }
             }
         }

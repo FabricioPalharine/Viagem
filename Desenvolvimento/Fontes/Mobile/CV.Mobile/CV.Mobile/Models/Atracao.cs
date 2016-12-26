@@ -170,7 +170,8 @@ namespace CV.Mobile.Models
                 SetProperty(ref _HoraPartida, value);
             }
         }
-
+        public int? IdentificadorCidade { get; set; }
+        public string NomeCidade { get; set; }
         public ObservableCollection<AvaliacaoAtracao> Avaliacoes { get; set; }
         public ObservableCollection<GastoAtracao> Gastos { get; set; }
         public ObservableCollection<FotoAtracao> Fotos { get; set; }

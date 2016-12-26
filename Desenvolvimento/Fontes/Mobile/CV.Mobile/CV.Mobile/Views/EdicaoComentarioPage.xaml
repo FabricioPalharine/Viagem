@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.EdicaoComentarioPage"
+             Title="Manutenção Comentário"
+             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+             xmlns:controles="clr-namespace: CV.Mobile.Controls;assembly=CV.Mobile"
+             x:Name="this"
+             >
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <local:IntStringConverter x:Key="intStringConverter" />
+      <local:InverseBooleanConverter x:Key="boolInverterConverter" />
+
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.Behaviors>
+    <behaviors:EventHandlerBehavior EventName="Appearing">
+      <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
+    </behaviors:EventHandlerBehavior>
+  </ContentPage.Behaviors>
+  <ContentPage.ToolbarItems>
+    <ToolbarItem  Icon="save.png"  Command="{Binding SalvarCommand}" />
+    <controles:BindableToolbarItem  Icon="delete24.png" Parent="{x:Reference this}"  Command="{Binding ExcluirCommand}" IsVisible="{Binding PermiteExcluir}"   />
+
+  </ContentPage.ToolbarItems>
+  <ContentPage.Content>
+
+    <StackLayout>
+
+
+      <Label Text="Comentario"  />
+      <Editor Text="{Binding ItemComentario.Texto}" VerticalOptions="FillAndExpand"/>
+
+      <Label Text="Data"   VerticalOptions="End"/>
+      <controles:NullableDatePicker NullableDate="{Binding ItemComentario.Data}"  VerticalOptions="End">
+        <controles:NullableDatePicker.Format>dd/MM/yyyy</controles:NullableDatePicker.Format>
+      </controles:NullableDatePicker>
+      <TimePicker Time="{Binding ItemComentario.Hora}" VerticalOptions="End" >
+        <TimePicker.Format>HH:mm</TimePicker.Format>
+      </TimePicker>
+
+
+    </StackLayout>
+
+
+  </ContentPage.Content>
+</ContentPage>

@@ -10,7 +10,13 @@ namespace CV.Model
 
 	public partial class Loja
 	{
-      
+        public string NomeCidade
+        {
+            get
+            {
+                return (ItemCidade ?? new Cidade()).Nome;
+            }
+        }
     }
 
 }

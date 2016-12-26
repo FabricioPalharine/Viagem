@@ -155,7 +155,7 @@ namespace CV.Mobile.ViewModels
         {
             using (ApiService srv = new ApiService())
             {
-                var Dados = await srv.ListarCidadeSugestao();
+                var Dados = await srv.ListarCidadeAtracao();
                 ListaCidades = new ObservableCollection<Cidade>(Dados);
                 OnPropertyChanged("ListaCidades");
             }

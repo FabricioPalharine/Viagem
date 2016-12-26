@@ -202,15 +202,18 @@ namespace CV.Mobile.ViewModels
 
         private async void CarregarParticipantesViagem()
         {
-            using (ApiService srv = new ApiService())
+            if (!Participantes.Any())
             {
-                Participantes.Clear();
-                var ListaUsuario = await srv.ListarParticipantesViagem();
-                foreach (var itemUsuario in ListaUsuario)
+                using (ApiService srv = new ApiService())
                 {
-                    if (!ItemAtracao.Identificador.HasValue || ItemAtracao.Avaliacoes.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).Any())
-                        itemUsuario.Selecionado = true;
-                    Participantes.Add(itemUsuario);
+                    Participantes.Clear();
+                    var ListaUsuario = await srv.ListarParticipantesViagem();
+                    foreach (var itemUsuario in ListaUsuario)
+                    {
+                        if (!ItemAtracao.Identificador.HasValue || ItemAtracao.Avaliacoes.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).Any())
+                            itemUsuario.Selecionado = true;
+                        Participantes.Add(itemUsuario);
+                    }
                 }
             }
         }
@@ -378,6 +381,7 @@ namespace CV.Mobile.ViewModels
                                 itemNovaAvaliacao.Nota = ItemAvaliacao.Nota;
                                 itemNovaAvaliacao.Comentario = ItemAvaliacao.Comentario;
                             }
+                            itemNovaAvaliacao.DataAtualizacao = DateTime.Now.ToUniversalTime();
                             ItemAtracao.Avaliacoes.Add(itemNovaAvaliacao);
                         }
                     }
@@ -414,8 +418,9 @@ namespace CV.Mobile.ViewModels
                             Cancel = "OK"
                         });
                         ItemAtracao.Identificador = Resultado.IdentificadorRegistro;
-                        var Jresultado = (JObject)Resultado.ItemRegistro;
-                        Atracao pItemAtracao = Jresultado.ToObject<Atracao>();
+                        // var Jresultado = (JObject)Resultado.ItemRegistro;
+                        //Atracao pItemAtracao = Jresultado.ToObject<Atracao>();
+                        Atracao pItemAtracao = await srv.CarregarAtracao(ItemAtracao.Identificador);
                         if (pItemAtracao.IdentificadorAtracaoPai == null)
                             pItemAtracao.IdentificadorAtracaoPai = 0;
                         if (pItemAtracao.HoraChegada == null)

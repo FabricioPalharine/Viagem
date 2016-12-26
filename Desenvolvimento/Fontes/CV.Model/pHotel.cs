@@ -27,6 +27,14 @@ namespace CV.Model
         {
             get { return DataSaidia.HasValue ? DataSaidia.Value.TimeOfDay : new Nullable<TimeSpan>(); }
         }
+
+        public string NomeCidade
+        {
+            get
+            {
+                return (ItemCidade ?? new Cidade()).Nome;
+            }
+        }
     }
 
 }

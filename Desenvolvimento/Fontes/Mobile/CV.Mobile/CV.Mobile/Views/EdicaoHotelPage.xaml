@@ -25,27 +25,26 @@
     <ToolbarItem  Icon="save.png"  Command="{Binding SalvarCommand}" />
     <controles:BindableToolbarItem  Icon="delete24.png" Parent="{x:Reference this}"  Command="{Binding ExcluirCommand}" IsVisible="{Binding PermiteExcluir}"   />
     <controles:BindableToolbarItem  Icon="dollar24.png" Parent="{x:Reference this}"  Command="{Binding AbrirCustosCommand}" IsVisible="{Binding PermiteExcluir}"   />
+    <controles:BindableToolbarItem  Text="{Binding TextoComandoTrocar}" Parent="{x:Reference this}"  Command="{Binding TrocarSituacaoCommand}" IsVisible="{Binding PermiteExcluir}" Order="Secondary"   />
 
   </ContentPage.ToolbarItems>
   <ContentPage.Content>
     <ScrollView>
       <RelativeLayout  VerticalOptions="FillAndExpand" >
-        <Label Text="Raio"  />
-
         <StackLayout
                                   RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent,
             Property=Height,Factor=0,Constant=60}"
                           RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width,Factor=1,Constant=0}"
                          >
           <Label Text="Raio"  />
-          <controles:FormattedNumberEntry x:Name="FormattedEntry" Keyboard="Numeric" DecimalPlaces="0" Value="{Binding ItemAtracao.Raio, Converter={StaticResource intDecimalConverter}}"  />
+          <controles:FormattedNumberEntry x:Name="FormattedEntry" Keyboard="Numeric" DecimalPlaces="0" Value="{Binding ItemHotel.Raio, Converter={StaticResource intDecimalConverter}}"  />
 
           <Label Text="Check In Previsto"  />
-        <controles:NullableDatePicker NullableDate="{Binding ItemAtracao.EntradaPrevista}" >
+        <controles:NullableDatePicker NullableDate="{Binding ItemHotel.EntradaPrevista}" >
           <controles:NullableDatePicker.Format>dd/MM/yyyy</controles:NullableDatePicker.Format>
         </controles:NullableDatePicker>
         <Label Text="Check Out Previsto"  />
-        <controles:NullableDatePicker NullableDate="{Binding ItemAtracao.SaidaPrevista}" >
+        <controles:NullableDatePicker NullableDate="{Binding ItemHotel.SaidaPrevista}" >
           <controles:NullableDatePicker.Format>dd/MM/yyyy</controles:NullableDatePicker.Format>
         </controles:NullableDatePicker>
         <StackLayout Orientation="Horizontal" Spacing="10">
@@ -58,10 +57,10 @@
         </Switch.Behaviors>
           </Switch>
         </StackLayout>
-        <controles:NullableDatePicker NullableDate="{Binding ItemAtracao.DataEntrada}" IsVisible="{Binding VisitaIniciada}">
+        <controles:NullableDatePicker NullableDate="{Binding ItemHotel.DataEntrada}" IsVisible="{Binding VisitaIniciada}">
           <controles:NullableDatePicker.Format>dd/MM/yyyy</controles:NullableDatePicker.Format>
         </controles:NullableDatePicker>
-        <TimePicker Time="{Binding ItemAtracao.HoraEntrada}" VerticalOptions="Start" IsVisible="{Binding VisitaIniciada}">
+        <TimePicker Time="{Binding ItemHotel.HoraEntrada}" VerticalOptions="Start" IsVisible="{Binding VisitaIniciada}">
           <TimePicker.Format>HH:mm</TimePicker.Format>
         </TimePicker>
         <StackLayout Orientation="Horizontal" Spacing="10" IsVisible="{Binding VisitaIniciada}">
@@ -74,10 +73,10 @@
         </Switch.Behaviors>
           </Switch>
         </StackLayout>
-        <controles:NullableDatePicker NullableDate="{Binding ItemAtracao.DataSaidis}" IsVisible="{Binding VisitaConcluida}">
+        <controles:NullableDatePicker NullableDate="{Binding ItemHotel.DataSaidia}" IsVisible="{Binding VisitaConcluida}">
           <controles:NullableDatePicker.Format>dd/MM/yyyy</controles:NullableDatePicker.Format>
         </controles:NullableDatePicker>
-        <TimePicker Time="{Binding ItemAtracao.HoraSaida}" VerticalOptions="Start" IsVisible="{Binding VisitaConcluida}">
+        <TimePicker Time="{Binding ItemHotel.HoraSaida}" VerticalOptions="Start" IsVisible="{Binding VisitaConcluida}">
           <TimePicker.Format>HH:mm</TimePicker.Format>
         </TimePicker>
                   
@@ -107,7 +106,7 @@
       <Label Text="Nome"  RelativeLayout.YConstraint="{ConstraintExpression Constant=0}"
      RelativeLayout.XConstraint="{ConstraintExpression  Constant=0}"/>
 
-      <controles:PlacesSearch Bounds="{Binding Bounds}" PlaceSelectedCommand="{Binding PlaceSelectedCommand}" Text="{Binding ItemAtracao.Nome}" Placeholder=""  Tipos="campground|casino|lodging"
+      <controles:PlacesSearch Bounds="{Binding Bounds}" PlaceSelectedCommand="{Binding PlaceSelectedCommand}" Text="{Binding ItemHotel.Nome}" Placeholder=""  Tipos="campground|casino|lodging"
                        RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent,
             Property=Height,Factor=0,Constant=10}"
                         RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1,Constant=10}"

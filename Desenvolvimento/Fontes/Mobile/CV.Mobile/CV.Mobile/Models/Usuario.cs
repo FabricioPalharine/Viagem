@@ -31,7 +31,21 @@ namespace CV.Mobile.Models
             }
         }
 
+        public string Complemento
+        {
+            get
+            {
+                return _Complemento;
+            }
+
+            set
+            {
+                SetProperty(ref _Complemento, value);
+            }
+        }
+
         private bool _Selecionado;
+        private string _Complemento;
         
     }
 }
