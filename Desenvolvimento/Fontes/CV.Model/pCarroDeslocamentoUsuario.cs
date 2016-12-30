@@ -10,6 +10,10 @@ namespace CV.Model
 
 	public partial class CarroDeslocamentoUsuario
 	{
-	}
+        public string NomeUsuario
+        {
+            get { return (ItemUsuario ?? new Usuario()).Nome; }
+        }
+    }
 
 }

@@ -48,7 +48,7 @@ namespace CV.Data
 			public Reabastecimento SelecionarReabastecimento (int? Identificador)
 			{
 			IQueryable<Reabastecimento> query =	 Context.Reabastecimentos
-.Include("Gastos").Include("Gastos.ItemGasto");
+.Include("Gastos").Include("Gastos.ItemGasto").Include("Gastos.ItemGasto.Usuarios").Include("Gastos.ItemGasto.Usuarios.ItemUsuario");
 					if (Identificador.HasValue)
 					query = query.Where(d=>d.Identificador == Identificador);
 					return query.FirstOrDefault();

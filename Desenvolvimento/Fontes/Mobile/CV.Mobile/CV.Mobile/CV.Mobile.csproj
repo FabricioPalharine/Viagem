@@ -64,6 +64,10 @@
     <Compile Include="Models\AgendarSugestao.cs" />
     <Compile Include="Models\AporteDinheiro.cs" />
     <Compile Include="Models\CalendarioPrevisto.cs" />
+    <Compile Include="Models\Carro.cs" />
+    <Compile Include="Models\CarroDeslocamento.cs" />
+    <Compile Include="Models\CarroDeslocamentoUsuario.cs" />
+    <Compile Include="Models\CarroEvento.cs" />
     <Compile Include="Models\Cidade.cs" />
     <Compile Include="Models\Comentario.cs" />
     <Compile Include="Models\CotacaoMoeda.cs" />
@@ -79,6 +83,7 @@
     <Compile Include="Models\HotelEvento.cs" />
     <Compile Include="Models\ItemCompra.cs" />
     <Compile Include="Models\Loja.cs" />
+    <Compile Include="Models\Reabastecimento.cs" />
     <Compile Include="Models\ReabastecimentoGasto.cs" />
     <Compile Include="Models\GastoCompra.cs" />
     <Compile Include="Models\GastoRefeicao.cs" />
@@ -115,6 +120,8 @@
     <Compile Include="Models\UsuarioGasto.cs" />
     <Compile Include="Models\UsuarioLogado.cs" />
     <Compile Include="Models\Viagem.cs" />
+    <Compile Include="Models\ViagemAerea.cs" />
+    <Compile Include="Models\ViagemAereaAeroporto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource\EnumDescription.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -128,8 +135,12 @@
     <Compile Include="ViewModels\BaseNavigationViewModel.cs" />
     <Compile Include="ViewModels\EdicaoAporteDinheiroViewModel.cs" />
     <Compile Include="ViewModels\EdicaoAgendarSugestaoViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoViagemAereaViewModel.cs" />
     <Compile Include="ViewModels\EdicaoComentarioViewModel.cs" />
     <Compile Include="ViewModels\EdicaoCompraViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoCarroDeslocamentoViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoCarroViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoReabastecimentoViewModel.cs" />
     <Compile Include="ViewModels\EdicaoItemCompraViewModel.cs" />
     <Compile Include="ViewModels\EdicaoLojaViewModel.cs" />
     <Compile Include="ViewModels\EdicaoRefeicaoViewModel.cs" />
@@ -145,7 +156,14 @@
     <Compile Include="ViewModels\EditarCotacaoViewModel.cs" />
     <Compile Include="ViewModels\ListagemAmigoViewModel.cs" />
     <Compile Include="ViewModels\ListagemAgrupamentoCidadeViewModel.cs" />
+    <Compile Include="ViewModels\ListagemViagemAereaCustoViewModel.cs" />
+    <Compile Include="ViewModels\ListagemViagemAereaViewModel.cs" />
+    <Compile Include="ViewModels\ListagemGastoViewModel.cs" />
     <Compile Include="ViewModels\ListagemComentarioViewModel.cs" />
+    <Compile Include="ViewModels\ListagemCarroCustoViewModel.cs" />
+    <Compile Include="ViewModels\ListagemCarroDeslocamentoViewModel.cs" />
+    <Compile Include="ViewModels\ListagemCarroViewModel.cs" />
+    <Compile Include="ViewModels\ListagemReabastecimentoViewModel.cs" />
     <Compile Include="ViewModels\ListagemItemCompraViewModel.cs" />
     <Compile Include="ViewModels\ListagemLojaViewModel.cs" />
     <Compile Include="ViewModels\ListagemCompraCustoViewModel.cs" />
@@ -178,8 +196,20 @@
     <Compile Include="Views\EdicaoAgrupamentoCidadePage.xaml.cs">
       <DependentUpon>EdicaoAgrupamentoCidadePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EdicaoViagemAereaPage.xaml.cs">
+      <DependentUpon>EdicaoViagemAereaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoCarroDeslocamentoPage.xaml.cs">
+      <DependentUpon>EdicaoCarroDeslocamentoPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EdicaoComentarioPage.xaml.cs">
       <DependentUpon>EdicaoComentarioPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoCarroPage.xaml.cs">
+      <DependentUpon>EdicaoCarroPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoReabastecimentoPage.xaml.cs">
+      <DependentUpon>EdicaoReabastecimentoPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EdicaoItemCompraPage.xaml.cs">
       <DependentUpon>EdicaoItemCompraPage.xaml</DependentUpon>
@@ -232,11 +262,32 @@
     <Compile Include="Views\ListagemAgrupamentoCidadePage.xaml.cs">
       <DependentUpon>ListagemAgrupamentoCidadePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ListagemViagemAereaCustoPage.xaml.cs">
+      <DependentUpon>ListagemViagemAereaCustoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemViagemAereaPage.xaml.cs">
+      <DependentUpon>ListagemViagemAereaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemGastoPage.xaml.cs">
+      <DependentUpon>ListagemGastoPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ListagemComentarioPage.xaml.cs">
       <DependentUpon>ListagemComentarioPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ListagemCompraCustoPage.xaml.cs">
       <DependentUpon>ListagemCompraCustoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemCarroCustoPage.xaml.cs">
+      <DependentUpon>ListagemCarroCustoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemCarroDeslocamentoPage.xaml.cs">
+      <DependentUpon>ListagemCarroDeslocamentoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemCarroPage.xaml.cs">
+      <DependentUpon>ListagemCarroPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemReabastecimentoPage.xaml.cs">
+      <DependentUpon>ListagemReabastecimentoPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ListagemItemCompraPage.xaml.cs">
       <DependentUpon>ListagemItemCompraPage.xaml</DependentUpon>
@@ -732,6 +783,72 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\EdicaoItemCompraPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemCarroCustoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoReabastecimentoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemReabastecimentoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoCarroDeslocamentoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoCarroPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemCarroDeslocamentoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemCarroPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemGastoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemViagemAereaPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemViagemAereaCustoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoViagemAereaPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

@@ -40,6 +40,9 @@ namespace CV.Mobile.ViewModels
 
             DeleteCommand = new Command<GastoHotel>(
                                                                    (obj) => VerificarExclusao(obj));
+            MessagingService.Current.Unsubscribe<Gasto>(MessageKeys.GastoSelecionado);
+            MessagingService.Current.Unsubscribe<GastoHotel>(MessageKeys.ManutencaoGastoHotel);
+            MessagingService.Current.Unsubscribe<Gasto>(MessageKeys.GastoIncluido);
             MessagingService.Current.Subscribe<GastoHotel>(MessageKeys.ManutencaoGastoHotel, (service, item) =>
             {
                 IsBusy = true;
@@ -61,6 +64,8 @@ namespace CV.Mobile.ViewModels
                 }
                 IsBusy = false;
             });
+            
+
             MessagingService.Current.Subscribe<Gasto>(MessageKeys.GastoSelecionado, async (service, item) =>
             {
                 var itemGravar = new GastoHotel() { IdentificadorHotel = ItemHotel.Identificador, IdentificadorGasto = item.Identificador, DataAtualizacao = DateTime.Now };

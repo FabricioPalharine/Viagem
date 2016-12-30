@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.EdicaoViagemAereaPage"
+             Title="Manutenção Deslocamento"
+             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+             xmlns:controles="clr-namespace: CV.Mobile.Controls;assembly=CV.Mobile"
+             x:Name="this"
+             >
+  <TabbedPage.Resources>
+    <ResourceDictionary>
+      <local:IntStringConverter x:Key="intStringConverter" />
+      <local:InverseBooleanConverter x:Key="boolInverterConverter" />
+
+    </ResourceDictionary>
+  </TabbedPage.Resources>
+  <TabbedPage.Behaviors>
+    <behaviors:EventHandlerBehavior EventName="Appearing">
+      <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
+    </behaviors:EventHandlerBehavior>
+  </TabbedPage.Behaviors>
+  <TabbedPage.ToolbarItems>
+    <ToolbarItem  Icon="save.png"  Command="{Binding SalvarCommand}" />
+    <controles:BindableToolbarItem  Icon="delete24.png" Parent="{x:Reference this}"  Command="{Binding ExcluirCommand}" IsVisible="{Binding PermiteExcluir}"   />
+    <controles:BindableToolbarItem  Icon="dollar24.png" Parent="{x:Reference this}"  Command="{Binding AbrirCustosCommand}" IsVisible="{Binding PermiteExcluir}"   />
+    <ToolbarItem  Text="Adicionar Escala"  Command="{Binding AdicionarEscalaCommand}" Order="Secondary" />
+
+  </TabbedPage.ToolbarItems>
+    <ContentPage Title="Dados"  xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+      <ContentPage.Content>
+      <ScrollView>
+        <StackLayout>
+          <Label Text="Descrição"  />
+          <Entry Text="{Binding ItemViagemAerea.Descricao}"/>
+          <Label Text="Companhia"  />
+          <Entry Text="{Binding ItemViagemAerea.CompanhiaAerea}"/>
+          <Label Text="Tipo"  />
+          <controles:ExtendedPicker
+                               DisplayProperty="Descricao"
+                               KeyMemberPath="Codigo"
+                               ItemsSource="{Binding ListaTipo}"
+                               SelectedItem="{Binding ItemViagemAerea.Tipo , Converter={StaticResource intStringConverter}}"
+                               HorizontalOptions="FillAndExpand"
+                              />
+
+          <Label Text="Data Início"  />
+          <controles:NullableDatePicker NullableDate="{Binding ItemViagemAerea.DataPrevista}" >
+            <controles:NullableDatePicker.Format>dd/MM/yyyy</controles:NullableDatePicker.Format>
+          </controles:NullableDatePicker>
+        
+         <Label Text="Nota" IsVisible="{Binding PossoComentar}" />
+        <controles:StarControl Orientation="Horizontal" HeightRequest="70" IsVisible="{Binding PossoComentar}" Nota="{Binding ItemAvaliacao.Nota}">
+        </controles:StarControl>
+        <Label Text="Comentário" IsVisible="{Binding PossoComentar}" />
+        <Editor Text="{Binding ItemAvaliacao.Comentario}"  HeightRequest="100" IsVisible="{Binding PossoComentar}"/>
+
+
+        <Label Text="Viajantes"   />
+
+        <ListView  SeparatorVisibility="None" ItemsSource="{Binding Participantes}" SelectedItem="{Binding ParticipanteSelecionado, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="True"  IsPullToRefreshEnabled="False" IsVisible="{Binding VisitaIniciada}" VerticalOptions="Fill"  >
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <ViewCell >
+                <StackLayout Orientation="Horizontal" Spacing="10" >
+                  <Label Text="{Binding Nome}"  />
+                  <Switch IsToggled="{Binding Selecionado}"></Switch>
+                </StackLayout>
+              </ViewCell>
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>
+
+        </StackLayout>
+      </ScrollView>
+        </ContentPage.Content>
+    </ContentPage>
+
+    <ContentPage Title="Origem"  xmlns="http://xamarin.com/schemas/2014/forms"
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+      <ContentPage.Content>
+        <ScrollView>
+          <StackLayout>
+            <Label Text="Aeroporto/Porto/Estação" />
+            <Entry Text="{Binding ItemOrigem.Aeroporto}"/>
+            <StackLayout Orientation="Horizontal" Spacing="10">
+              <Label Text="Chegada"  />
+              <Switch IsToggled="{Binding ItemOrigem.VisitaIniciada}">
+              </Switch>
+            </StackLayout>
+            <controles:NullableDatePicker NullableDate="{Binding ItemOrigem.DataChegada}" IsVisible="{Binding ItemOrigem.VisitaIniciada}">
+              <controles:NullableDatePicker.Format>dd/MM/yyyy</controles:NullableDatePicker.Format>
+            </controles:NullableDatePicker>
+            <TimePicker Time="{Binding ItemOrigem.HoraChegada}" VerticalOptions="Start" IsVisible="{Binding ItemOrigem.VisitaIniciada}">
+              <TimePicker.Format>HH:mm</TimePicker.Format>
+            </TimePicker>
+            <StackLayout Orientation="Horizontal" Spacing="10" IsVisible="{Binding ItemOrigem.VisitaIniciada}">
+              <Label Text="Partida"  />
+              <Switch IsToggled="{Binding ItemOrigem.VisitaConcluida}" >
+              </Switch>
+            </StackLayout>
+            <controles:NullableDatePicker NullableDate="{Binding ItemOrigem.DataPartida}" IsVisible="{Binding ItemOrigem.VisitaConcluida}">
+              <controles:NullableDatePicker.Format>dd/MM/yyyy</controles:NullableDatePicker.Format>
+            </controles:NullableDatePicker>
+            <TimePicker Time="{Binding ItemOrigem.HoraPartida}" VerticalOptions="Start" IsVisible="{Binding ItemOrigem.VisitaConcluida}">
+              <TimePicker.Format>HH:mm</TimePicker.Format>
+            </TimePicker>
+          </StackLayout>
+        </ScrollView>
+      </ContentPage.Content>
+    </ContentPage>
+
+    <ContentPage Title="Escalas"  xmlns="http://xamarin.com/schemas/2014/forms"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+      <ContentPage.Content>
+                 <ListView  SeparatorVisibility="None" ItemsSource="{Binding ListaDados}" SelectedItem="{Binding AeroportoSelecionado, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="True"  IsPullToRefreshEnabled="False" VerticalOptions="FillAndExpand"    >
+              <ListView.ItemTemplate>
+                <DataTemplate>
+                  <ViewCell >
+                    <StackLayout >
+                      <Label Text="Escala"  />
+                      <Label Text="Aeroporto/Porto/Estação" />
+                      <Entry Text="{Binding Aeroporto}"/>
+                      <StackLayout Orientation="Horizontal" Spacing="10">
+                        <Label Text="Chegada"  />
+                        <Switch IsToggled="{Binding VisitaIniciada}">
+                        </Switch>
+                      </StackLayout>
+                      <controles:NullableDatePicker NullableDate="{Binding DataChegada}" IsVisible="{Binding VisitaIniciada}">
+                        <controles:NullableDatePicker.Format>dd/MM/yyyy</controles:NullableDatePicker.Format>
+                      </controles:NullableDatePicker>
+                      <TimePicker Time="{Binding HoraChegada}" VerticalOptions="Start" IsVisible="{Binding VisitaIniciada}">
+                        <TimePicker.Format>HH:mm</TimePicker.Format>
+                      </TimePicker>
+                      <StackLayout Orientation="Horizontal" Spacing="10" IsVisible="{Binding VisitaIniciada}">
+                        <Label Text="Partida"  />
+                        <Switch IsToggled="{Binding VisitaConcluida}" >
+                        </Switch>
+                      </StackLayout>
+                      <controles:NullableDatePicker NullableDate="{Binding DataPartida}" IsVisible="{Binding VisitaConcluida}">
+                        <controles:NullableDatePicker.Format>dd/MM/yyyy</controles:NullableDatePicker.Format>
+                      </controles:NullableDatePicker>
+                      <TimePicker Time="{Binding HoraPartida}" VerticalOptions="Start" IsVisible="{Binding VisitaConcluida}">
+                        <TimePicker.Format>HH:mm</TimePicker.Format>
+                      </TimePicker>
+                      <controles:ImageButton
+                         ImageHeightRequest="24"
+                         ImageWidthRequest="24"
+                         Orientation="ImageToLeft"
+                         Source="delete24.png"
+                         Text="Excluir Escala"
+                         Command="{Binding Path=BindingContext.ExcluirEscalaCommand,  Source={x:Reference this}}"
+                         CommandParameter="{Binding .}"
+                         HorizontalOptions="Fill"     />
+                      <BoxView  HeightRequest="2" HorizontalOptions="FillAndExpand"  Style="{StaticResource separadorStyle}"></BoxView>
+                    </StackLayout>
+                  </ViewCell>
+                </DataTemplate>
+              </ListView.ItemTemplate>
+            </ListView>
+ 
+      </ContentPage.Content>
+    </ContentPage>
+      
+      <ContentPage Title="Destino"  xmlns="http://xamarin.com/schemas/2014/forms"
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+        <ContentPage.Content>
+          <ScrollView>
+            <StackLayout>
+              <Label Text="Destino"  />
+              <Label Text="Aeroporto/Porto/Estação" />
+              <Entry Text="{Binding ItemDestino.Aeroporto}"/>
+              <StackLayout Orientation="Horizontal" Spacing="10">
+                <Label Text="Chegada"  />
+                <Switch IsToggled="{Binding ItemDestino.VisitaIniciada}">
+                </Switch>
+              </StackLayout>
+              <controles:NullableDatePicker NullableDate="{Binding ItemDestino.DataChegada}" IsVisible="{Binding ItemDestino.VisitaIniciada}">
+                <controles:NullableDatePicker.Format>dd/MM/yyyy</controles:NullableDatePicker.Format>
+              </controles:NullableDatePicker>
+              <TimePicker Time="{Binding ItemDestino.HoraChegada}" VerticalOptions="Start" IsVisible="{Binding ItemDestino.VisitaIniciada}">
+                <TimePicker.Format>HH:mm</TimePicker.Format>
+              </TimePicker>
+              <StackLayout Orientation="Horizontal" Spacing="10" IsVisible="{Binding ItemDestino.VisitaIniciada}">
+                <Label Text="Partida"  />
+                <Switch IsToggled="{Binding ItemDestino.VisitaConcluida}" >
+                </Switch>
+              </StackLayout>
+              <controles:NullableDatePicker NullableDate="{Binding ItemDestino.DataPartida}" IsVisible="{Binding ItemDestino.VisitaConcluida}">
+                <controles:NullableDatePicker.Format>dd/MM/yyyy</controles:NullableDatePicker.Format>
+              </controles:NullableDatePicker>
+              <TimePicker Time="{Binding ItemDestino.HoraPartida}" VerticalOptions="Start" IsVisible="{Binding ItemDestino.VisitaConcluida}">
+                <TimePicker.Format>HH:mm</TimePicker.Format>
+              </TimePicker>
+            </StackLayout>
+          </ScrollView>
+        </ContentPage.Content>
+    </ContentPage>
+   
+</TabbedPage>

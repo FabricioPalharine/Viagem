@@ -41,6 +41,7 @@ namespace CV.Mobile.ViewModels
 
             DeleteCommand = new Command<GastoCompra>(
                                                                    (obj) => VerificarExclusao(obj));
+            MessagingService.Current.Unsubscribe<GastoCompra>(MessageKeys.ManutencaoGastoCompra);
             MessagingService.Current.Subscribe<GastoCompra>(MessageKeys.ManutencaoGastoCompra, (service, item) =>
             {
                 IsBusy = true;

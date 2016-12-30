@@ -40,6 +40,11 @@ namespace CV.Mobile.ViewModels
 
             DeleteCommand = new Command<GastoRefeicao>(
                                                                    (obj) => VerificarExclusao(obj));
+
+            MessagingService.Current.Unsubscribe<Gasto>(MessageKeys.GastoSelecionado);
+            MessagingService.Current.Unsubscribe<GastoRefeicao>(MessageKeys.ManutencaoGastoRefeicao);
+            MessagingService.Current.Unsubscribe<Gasto>(MessageKeys.GastoIncluido);
+
             MessagingService.Current.Subscribe<GastoRefeicao>(MessageKeys.ManutencaoGastoRefeicao, (service, item) =>
             {
                 IsBusy = true;

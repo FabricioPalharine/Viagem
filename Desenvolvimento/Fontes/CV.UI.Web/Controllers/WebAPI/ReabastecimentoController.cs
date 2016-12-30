@@ -39,7 +39,19 @@ resultado.TotalRegistros = _itens.Count();
         {
             ViagemBusiness biz = new ViagemBusiness();
             Reabastecimento itemReabastecimento = biz.SelecionarReabastecimento(id);
-          
+            if (itemReabastecimento != null)
+            {
+               foreach(var itemGasto in  itemReabastecimento.Gastos)
+                {
+                    itemGasto.ItemReabastecimento = null;
+                    if (itemGasto.ItemGasto != null)
+                    {
+                        itemGasto.ItemGasto.Reabastecimentos = null;
+                        itemGasto.ItemGasto.Alugueis = null;
+                        
+                    }
+                }
+            }
             return itemReabastecimento;
         }
         [Authorize]
@@ -49,9 +61,9 @@ resultado.TotalRegistros = _itens.Count();
             itemReabastecimento.DataAtualizacao = DateTime.Now;
             itemReabastecimento.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemReabastecimento.Latitude, itemReabastecimento.Longitude);
             itemReabastecimento.Gastos[0].ItemGasto.IdentificadorCidade = itemReabastecimento.IdentificadorCidade;
-            itemReabastecimento.Gastos[0].ItemGasto.DataAtualizacao = DateTime.Now;
-
-            biz.SalvarReabastecimento(itemReabastecimento);
+            itemReabastecimento.Gastos[0].ItemGasto.DataAtualizacao = DateTime.Now.ToUniversalTime();
+            itemReabastecimento.Gastos[0].ItemGasto.IdentificadorViagem = token.IdentificadorViagem;
+            biz.SalvarReabastecimentoCompleto(itemReabastecimento);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();

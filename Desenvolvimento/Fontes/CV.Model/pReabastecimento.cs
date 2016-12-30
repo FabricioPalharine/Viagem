@@ -10,6 +10,10 @@ namespace CV.Model
 
 	public partial class Reabastecimento
 	{
-	}
+        public TimeSpan? Hora
+        {
+            get { return Data.HasValue ? Data.Value.TimeOfDay : new Nullable<TimeSpan>(); }
+        }
+    }
 
 }

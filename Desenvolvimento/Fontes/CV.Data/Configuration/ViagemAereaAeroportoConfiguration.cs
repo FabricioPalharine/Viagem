@@ -28,7 +28,7 @@ namespace CV.Data.Configuration
 			this.Property(i => i.DataChegada).HasColumnName("DT_CHEGADA");
 			this.Property(i => i.DataPartida).HasColumnName("DT_SAIDA");
 			this.HasOptional(i => i.ItemCidade).WithMany().HasForeignKey(d=>d.IdentificadorCidade);
-			this.HasRequired(i => i.ItemViagemAerea).WithMany().HasForeignKey(d=>d.IdentificadorViagemAerea);
+			this.HasOptional(i => i.ItemViagemAerea).WithMany().HasForeignKey(d=>d.IdentificadorViagemAerea);
 			this.Property(i => i.CodigoPlace).HasColumnName("CD_PLACE");
 			this.Property(i => i.DataAtualizacao).HasColumnName("DT_ATUALIZACAO");
 			this.Property(i => i.DataExclusao).HasColumnName("DT_EXCLUSAO");

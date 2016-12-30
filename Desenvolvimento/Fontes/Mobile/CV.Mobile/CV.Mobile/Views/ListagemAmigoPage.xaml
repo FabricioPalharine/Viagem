@@ -6,7 +6,7 @@
              Title="Amigos"
              xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
              xmlns:controles="clr-namespace: CV.Mobile.Controls;assembly=CV.Mobile"
-             x:Name="paginaSelecao">
+             x:Name="paginaSelecao" >
   <TabbedPage.Resources>
     <ResourceDictionary>
       <local:BooleanImageSourceConverter x:Key="boolImageConverter" />

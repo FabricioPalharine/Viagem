@@ -62,6 +62,7 @@ namespace CV.Mobile.ViewModels
             }
             ListaMoeda = new ObservableCollection<ItemLista>(ListaMoeda.OrderBy(d => d.Descricao));
 
+            MessagingService.Current.Unsubscribe<AporteDinheiro>(MessageKeys.ManutencaoAporteDinheiro);
             MessagingService.Current.Subscribe<AporteDinheiro>(MessageKeys.ManutencaoAporteDinheiro, (service, item) =>
             {
                 IsBusy = true;

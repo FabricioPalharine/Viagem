@@ -310,7 +310,7 @@ namespace CV.Mobile.ViewModels
             {
                 if (_ItemMenuSelecionado.Codigo == 0)
                 {
-                    await OnItemMenuSelecionado(new MenuInicialPage() { BindingContext = new MenuInicialViewModel() }, true);
+                    await OnItemMenuSelecionado(new MenuInicialPage() { BindingContext = new MenuInicialViewModel() { ItemViagem = ItemViagem } }, true);
                 }
                 else if (_ItemMenuSelecionado.Codigo == 1)
                 {
@@ -327,6 +327,18 @@ namespace CV.Mobile.ViewModels
                 else if (_ItemMenuSelecionado.Codigo == 4)
                 {
                     await AbrirLoja();
+                }
+                else if (_ItemMenuSelecionado.Codigo == 5)
+                {
+                    await AbrirCarro();
+                }
+                else if (_ItemMenuSelecionado.Codigo == 6)
+                {
+                    await AbrirDeslocamento();
+                }
+                else if (_ItemMenuSelecionado.Codigo == 7)
+                {
+                    await AbrirGasto();
                 }
                 else if (_ItemMenuSelecionado.Codigo == 8)
                 {
@@ -456,6 +468,40 @@ namespace CV.Mobile.ViewModels
 
             }
         }
+
+        private async Task AbrirCarro()
+        {
+            if (_ItemViagem != null)
+            {
+                var pagina = new ListagemCarroPage() { BindingContext = new ListagemCarroViewModel(_ItemViagem) };
+
+                await OnItemMenuSelecionado(pagina, false);
+
+            }
+        }
+
+        private async Task AbrirDeslocamento()
+        {
+            if (_ItemViagem != null)
+            {
+                var pagina = new ListagemViagemAereaPage() { BindingContext = new ListagemViagemAereaViewModel(_ItemViagem) };
+
+                await OnItemMenuSelecionado(pagina, false);
+
+            }
+        }
+
+        private async Task AbrirGasto()
+        {
+            if (_ItemViagem != null)
+            {
+                var pagina = new ListagemGastoPage() { BindingContext = new ListagemGastoViewModel(_ItemViagem) };
+
+                await OnItemMenuSelecionado(pagina, false);
+
+            }
+        }
+
         private async Task AbrirCompraMoeda()
         {
             if (_ItemViagem != null)

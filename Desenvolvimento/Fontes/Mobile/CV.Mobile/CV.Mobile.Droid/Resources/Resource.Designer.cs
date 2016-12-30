@@ -3595,6 +3595,9 @@ namespace CV.Mobile.Droid
 		public partial class Style
 		{
 			
+			// aapt resource value: 0x7f0b0175
+			public const int ActionBarPopupTheme = 2131427701;
+			
 			// aapt resource value: 0x7f0b00a1
 			public const int AlertDialog_AppCompat = 2131427489;
 			

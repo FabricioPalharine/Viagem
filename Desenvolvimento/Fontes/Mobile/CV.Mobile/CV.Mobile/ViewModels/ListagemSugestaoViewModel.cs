@@ -46,6 +46,7 @@ namespace CV.Mobile.ViewModels
             ExcluirCommand = new Command<Sugestao>((item) => Excluir(item));
             EditarCommand = new Command<Sugestao>(async (item) => await Editar(item));
             AdicionarCommand = new Command(async () => await AbrirInclusao(), () => true);
+            MessagingService.Current.Unsubscribe<Sugestao>(MessageKeys.ManutencaoSugestao);
             MessagingService.Current.Subscribe<Sugestao>(MessageKeys.ManutencaoSugestao, (service, item) =>
             {
                 IsBusy = true;

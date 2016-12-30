@@ -35,7 +35,7 @@ namespace CV.Mobile.ViewModels
             ExcluirCommand = new Command<CotacaoMoeda>((itemCotacao) => Excluir(itemCotacao));
             EditarCommand = new Command<CotacaoMoeda>(async (itemCotacao) => await Editar(itemCotacao));
             AdicionarCommand = new Command(async () => await AbrirInclusao(), () => true);
-
+            MessagingService.Current.Unsubscribe<CotacaoMoeda>(MessageKeys.ManutencaoCotacaoMoeda);
             MessagingService.Current.Subscribe<CotacaoMoeda>(MessageKeys.ManutencaoCotacaoMoeda, (service, cotacao) =>
            {
                IsBusy = true;

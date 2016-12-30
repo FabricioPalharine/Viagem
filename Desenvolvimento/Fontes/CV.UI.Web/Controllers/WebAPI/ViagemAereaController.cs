@@ -51,7 +51,7 @@ namespace CV.UI.Web.Controllers.WebAPI
                 itemAeroporto.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemAeroporto.Latitude, itemAeroporto.Longitude);
                 itemAeroporto.DataAtualizacao = DateTime.Now;
             }
-            itemViagemAerea.Descricao = String.Concat(itemViagemAerea.CompanhiaAerea, " - ", itemViagemAerea.Aeroportos.Where(d => d.TipoPonto == (int)enumTipoParada.Origem).Select(d => d.Aeroporto).FirstOrDefault(), " - ", itemViagemAerea.Aeroportos.Where(d => d.TipoPonto == (int)enumTipoParada.Destino).Select(d => d.Aeroporto).FirstOrDefault());
+            //itemViagemAerea.Descricao = String.Concat(itemViagemAerea.CompanhiaAerea, " - ", itemViagemAerea.Aeroportos.Where(d => d.TipoPonto == (int)enumTipoParada.Origem).Select(d => d.Aeroporto).FirstOrDefault(), " - ", itemViagemAerea.Aeroportos.Where(d => d.TipoPonto == (int)enumTipoParada.Destino).Select(d => d.Aeroporto).FirstOrDefault());
             biz.SalvarViagemAerea(itemViagemAerea);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();

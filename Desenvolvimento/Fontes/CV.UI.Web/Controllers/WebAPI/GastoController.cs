@@ -128,7 +128,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             var itemGastoBase = biz.SelecionarGasto_Completo(itemGasto.IdentificadorGasto);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
 
-            if (itemGasto.DataExclusao.HasValue || !itemGastoBase.Atracoes.Where(f => f.IdentificadorAtracao == itemGasto.IdentificadorAtracao).Any())
+            if (itemGasto.DataExclusao.HasValue || !itemGastoBase.Atracoes.Where(f => f.IdentificadorAtracao == itemGasto.IdentificadorAtracao).Where(d => !d.DataExclusao.HasValue).Any())
             {
                 biz.SalvarGastoAtracao(itemGasto);
                 itemResultado.Sucesso = biz.IsValid();
@@ -148,7 +148,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             var itemGastoBase = biz.SelecionarGasto_Completo(itemGasto.IdentificadorGasto);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
 
-            if (itemGasto.DataExclusao.HasValue || !itemGastoBase.Refeicoes.Where(f => f.IdentificadorRefeicao == itemGasto.IdentificadorRefeicao).Any())
+            if (itemGasto.DataExclusao.HasValue || !itemGastoBase.Refeicoes.Where(f => f.IdentificadorRefeicao == itemGasto.IdentificadorRefeicao).Where(d => !d.DataExclusao.HasValue).Any())
             {
                 biz.SalvarGastoRefeicao(itemGasto);
                 itemResultado.Sucesso = biz.IsValid();
@@ -168,7 +168,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             var itemGastoBase = biz.SelecionarGasto_Completo(itemGasto.IdentificadorGasto);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
 
-            if (itemGasto.DataExclusao.HasValue || !itemGastoBase.Hoteis.Where(f => f.IdentificadorHotel == itemGasto.IdentificadorHotel).Any())
+            if (itemGasto.DataExclusao.HasValue || !itemGastoBase.Hoteis.Where(f => f.IdentificadorHotel == itemGasto.IdentificadorHotel).Where(d=>!d.DataExclusao.HasValue).Any())
             {
                 biz.SalvarGastoHotel(itemGasto);
                 itemResultado.Sucesso = biz.IsValid();
@@ -188,7 +188,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             var itemGastoBase = biz.SelecionarGasto_Completo(itemGasto.IdentificadorGasto);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
 
-            if (itemGasto.DataExclusao.HasValue || !itemGastoBase.ViagenAereas.Where(f => f.IdentificadorViagemAerea == itemGasto.IdentificadorViagemAerea).Any())
+            if (itemGasto.DataExclusao.HasValue || !itemGastoBase.ViagenAereas.Where(f => f.IdentificadorViagemAerea == itemGasto.IdentificadorViagemAerea).Where(d => !d.DataExclusao.HasValue).Any())
             {
                 biz.SalvarGastoViagemAerea(itemGasto);
                 itemResultado.Sucesso = biz.IsValid();
@@ -208,7 +208,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             var itemGastoBase = biz.SelecionarGasto_Completo(itemGasto.IdentificadorGasto);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
 
-            if (itemGasto.DataExclusao.HasValue || !itemGastoBase.Alugueis.Where(f => f.IdentificadorCarro == itemGasto.IdentificadorCarro).Any())
+            if (itemGasto.DataExclusao.HasValue || !itemGastoBase.Alugueis.Where(f => f.IdentificadorCarro == itemGasto.IdentificadorCarro).Where(d => !d.DataExclusao.HasValue).Any())
             {
                 biz.SalvarAluguelGasto(itemGasto);
                 itemResultado.Sucesso = biz.IsValid();

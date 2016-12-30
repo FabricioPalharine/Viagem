@@ -1,23 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:controles="clr-namespace: CV.Mobile.Controls;assembly=CV.Mobile"
+
              x:Class="CV.Mobile.App">
   <Application.Resources>
     <ResourceDictionary>
 
       <Style TargetType="NavigationPage">
-        <Setter Property="BarBackgroundColor" Value="#006F44"/>
+        <Setter Property="BarBackgroundColor" Value="#3c8dbc"/>
         <Setter Property="BarTextColor" Value="Color.White"/>
       </Style>
       <Style TargetType="Button">
-        <Setter Property="BackgroundColor" Value="#006F44"/>
+        <Setter Property="BackgroundColor" Value="#3c8dbc"/>
         <Setter Property="TextColor" Value="Color.White"/>
       </Style>
       <Style TargetType="ListView" x:Key="menuStyle">
-        <Setter Property="BackgroundColor" Value="#006F44" />
+        <Setter Property="BackgroundColor" Value="#3c8dbc" />
       </Style>
       <Style TargetType="Label" x:Key="menuLabelStyle">
         <Setter Property="TextColor" Value="Color.White"/>
+      </Style>
+      <Style TargetType="Label">
+        <Setter Property="TextColor" Value="#3c8dbc"/>
+      </Style>
+     <Style TargetType="TabbedPage">
+        <Setter Property="BarBackgroundColor" Value="#3c8dbc"/>
+        <Setter Property="BarTextColor" Value="Color.White"/>
+      </Style>
+    <Style TargetType="controles:ImageButton">
+        <Setter Property="BackgroundColor" Value="#3c8dbc"/>
+        <Setter Property="TextColor" Value="Color.White"/>
+      </Style>
+      <Style TargetType="BoxView" x:Key="separadorStyle">
+        <Setter Property="Color" Value="#3c8dbc" />
       </Style>
       
     </ResourceDictionary>

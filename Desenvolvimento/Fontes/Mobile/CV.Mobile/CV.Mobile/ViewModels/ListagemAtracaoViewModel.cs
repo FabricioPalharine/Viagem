@@ -53,7 +53,7 @@ namespace CV.Mobile.ViewModels
             ListaStatus.Add(new ItemLista() { Codigo = "2", Descricao = "Visitada" });
             ListaStatus.Add(new ItemLista() { Codigo = "3", Descricao = "Não Iniciada" });
             ListaStatus.Add(new ItemLista() { Codigo = "4", Descricao = "Todas" });
-
+            MessagingService.Current.Unsubscribe<Atracao>(MessageKeys.ManutencaoAtracao);
             MessagingService.Current.Subscribe<Atracao>(MessageKeys.ManutencaoAtracao, (service, item) =>
             {
                 IsBusy = true;

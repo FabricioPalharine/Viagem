@@ -24,7 +24,7 @@ namespace CV.Data.Configuration
 			this.Property(i => i.DataPrevista).HasColumnName("DT_PREVISTO");
 			this.HasRequired(i => i.ItemViagem).WithMany().HasForeignKey(d=>d.IdentificadorViagem);
 			this.HasMany(i => i.Gastos).WithRequired().HasForeignKey(d=>d.IdentificadorViagemAerea);
-			this.HasMany(i => i.Aeroportos).WithRequired().HasForeignKey(d=>d.IdentificadorViagemAerea);
+			this.HasMany(i => i.Aeroportos).WithOptional().HasForeignKey(d=>d.IdentificadorViagemAerea);
 			this.HasMany(i => i.Avaliacoes).WithRequired().HasForeignKey(d=>d.IdentificadorViagemAerea);
 			this.Property(i => i.DataAtualizacao).HasColumnName("DT_ATUALIZACAO");
 			this.Property(i => i.DataExclusao).HasColumnName("DT_EXCLUSAO");

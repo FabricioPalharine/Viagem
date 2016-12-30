@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.EdicaoCarroPage"
+             Title="Manutenção Carro"
+             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+             xmlns:controles="clr-namespace: CV.Mobile.Controls;assembly=CV.Mobile"
+             x:Name="this"
+             >
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <local:IntStringConverter x:Key="intStringConverter" />
+      <local:InverseBooleanConverter x:Key="boolInverterConverter" />
+      <local:IntDecimalConverter x:Key="intDecimalConverter" />
+
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.Behaviors>
+    <behaviors:EventHandlerBehavior EventName="Appearing">
+      <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
+    </behaviors:EventHandlerBehavior>
+  </ContentPage.Behaviors>
+  <ContentPage.ToolbarItems>
+    <ToolbarItem  Icon="save.png"  Command="{Binding SalvarCommand}" />
+    <controles:BindableToolbarItem  Icon="delete24.png" Parent="{x:Reference this}"  Command="{Binding ExcluirCommand}" IsVisible="{Binding PermiteExcluir}"   />
+    <controles:BindableToolbarItem  Icon="dollar24.png" Parent="{x:Reference this}"  Command="{Binding AbrirCustosCommand}" IsVisible="{Binding PermiteExcluir}"   />
+    <controles:BindableToolbarItem  Text="Reabastecimentos" Parent="{x:Reference this}"  Command="{Binding AbrirReabastecimentoCommand}" IsVisible="{Binding PermiteExcluir}" Order="Secondary"   />
+    <controles:BindableToolbarItem  Text="Deslocamentos" Parent="{x:Reference this}"  Command="{Binding AbrirDeslocamentoCommand}" IsVisible="{Binding PermiteExcluir}" Order="Secondary"   />
+
+  </ContentPage.ToolbarItems>
+  <ContentPage.Content>
+    <ScrollView>
+        <StackLayout >
+          <Label Text="Descrição"  />
+          <Entry Text="{Binding ItemCarro.Descricao}"/>
+          <Label Text="Modelo"  />
+          <Entry Text="{Binding ItemCarro.Modelo}"/>
+          <Label Text="Unidade "  />
+          <StackLayout Orientation="Horizontal" Spacing="10">
+            <Label Text="Milhas"  />
+            <Switch IsToggled="{Binding ItemCarro.KM}">
+            
+            </Switch>
+          <Label Text="KM"  />
+          </StackLayout>
+          <StackLayout Orientation="Horizontal" Spacing="10">
+            <Label Text="Alugado"  />
+            <Switch IsToggled="{Binding ItemCarro.Alugado}">
+            </Switch>
+          </StackLayout>
+          <Label Text="Locadora" IsVisible="{Binding ItemCarro.Alugado}"  />
+          <Entry Text="{Binding ItemCarro.Locadora}"  IsVisible="{Binding ItemCarro.Alugado}" />          
+        <Label Text="Retirada Prevista"  IsVisible="{Binding ItemCarro.Alugado}"   />
+        <controles:NullableDatePicker NullableDate="{Binding ItemCarro.DataRetirada}"  IsVisible="{Binding ItemCarro.Alugado}" >
+          <controles:NullableDatePicker.Format>dd/MM/yyyy</controles:NullableDatePicker.Format>
+        </controles:NullableDatePicker>
+        <Label Text="Devolução Prevista"   IsVisible="{Binding ItemCarro.Alugado}" />
+        <controles:NullableDatePicker NullableDate="{Binding ItemCarro.DataDevolucao}"  IsVisible="{Binding ItemCarro.Alugado}" >
+          <controles:NullableDatePicker.Format>dd/MM/yyyy</controles:NullableDatePicker.Format>
+        </controles:NullableDatePicker>
+          
+        <StackLayout Orientation="Horizontal" Spacing="10" IsVisible="{Binding ItemCarro.Alugado}" >
+          <Label Text="Retirada"  />
+          <Switch IsToggled="{Binding VisitaIniciada}">
+             <Switch.Behaviors>
+          <behaviors:EventHandlerBehavior EventName="Toggled">
+            <behaviors:InvokeCommandAction Command="{Binding VisitaIniciadaToggledCommand}"   />
+          </behaviors:EventHandlerBehavior>
+        </Switch.Behaviors>
+          </Switch>
+          
+        </StackLayout>
+        <controles:NullableDatePicker NullableDate="{Binding ItemCarro.ItemCarroEventoRetirada.Data}" IsVisible="{Binding VisitaIniciada}">
+          <controles:NullableDatePicker.Format>dd/MM/yyyy</controles:NullableDatePicker.Format>
+        </controles:NullableDatePicker>
+        <TimePicker Time="{Binding ItemCarro.ItemCarroEventoRetirada.Hora}" VerticalOptions="Start" IsVisible="{Binding VisitaIniciada}">
+          <TimePicker.Format>HH:mm</TimePicker.Format>
+        </TimePicker>
+
+          <Label Text="Odômetro"   IsVisible="{Binding VisitaIniciada}"/>
+          <controles:FormattedNumberEntry  Keyboard="Numeric" DecimalPlaces="0" Value="{Binding ItemCarro.ItemCarroEventoRetirada.Odometro, Converter={StaticResource intDecimalConverter}}"  IsVisible="{Binding VisitaIniciada}" />
+
+
+          
+          <StackLayout Orientation="Horizontal" Spacing="10" IsVisible="{Binding VisitaIniciada}">
+          <Label Text="Devolução"  />
+          <Switch IsToggled="{Binding VisitaConcluida}" >
+              <Switch.Behaviors>
+          <behaviors:EventHandlerBehavior EventName="Toggled">
+            <behaviors:InvokeCommandAction Command="{Binding VisitaConcluidaToggledCommand}"   />
+          </behaviors:EventHandlerBehavior>
+        </Switch.Behaviors>
+          </Switch>
+        </StackLayout>
+        <controles:NullableDatePicker NullableDate="{Binding ItemCarro.ItemCarroEventoDevolucao.Data}" IsVisible="{Binding VisitaConcluida}">
+          <controles:NullableDatePicker.Format>dd/MM/yyyy</controles:NullableDatePicker.Format>
+        </controles:NullableDatePicker>
+        <TimePicker Time="{Binding  ItemCarro.ItemCarroEventoDevolucao.Hora}" VerticalOptions="Start" IsVisible="{Binding VisitaConcluida}">
+          <TimePicker.Format>HH:mm</TimePicker.Format>
+        </TimePicker>
+          <Label Text="Odômetro"   IsVisible="{Binding VisitaConcluida}"/>
+          <controles:FormattedNumberEntry  Keyboard="Numeric" DecimalPlaces="0" Value="{Binding ItemCarro.ItemCarroEventoDevolucao.Odometro, Converter={StaticResource intDecimalConverter}}"  IsVisible="{Binding VisitaConcluida}" />
+
+          
+          <Label Text="Nota" IsVisible="{Binding PossoComentar}" />
+        <controles:StarControl Orientation="Horizontal" HeightRequest="70" IsVisible="{Binding PossoComentar}" Nota="{Binding ItemAvaliacao.Nota}">
+        </controles:StarControl>
+        <Label Text="Comentário" IsVisible="{Binding PossoComentar}" />
+        <Editor Text="{Binding ItemAvaliacao.Comentario}"  HeightRequest="100" IsVisible="{Binding PossoComentar}"/>
+ 
+
+    <Label Text="Ocupantes"   />
+       
+        <ListView  SeparatorVisibility="None" ItemsSource="{Binding Participantes}" SelectedItem="{Binding ParticipanteSelecionado, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="True"  IsPullToRefreshEnabled="False"   >
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <ViewCell >
+                <StackLayout Orientation="Horizontal" Spacing="10" >
+                  <Label Text="{Binding Nome}"  />
+                  <Switch IsToggled="{Binding Selecionado}"></Switch>
+                </StackLayout>
+              </ViewCell>
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>    
+  
+      </StackLayout>
+  
+    </ScrollView>
+
+  </ContentPage.Content>
+</ContentPage>

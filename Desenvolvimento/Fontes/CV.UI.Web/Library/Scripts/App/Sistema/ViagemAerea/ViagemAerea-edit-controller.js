@@ -87,7 +87,10 @@
 
 		vm.ExcluirEscala = function (itemEscala) {
 		    $scope.$parent.itemViagemAerea.modalPopupTrigger(itemEscala, $translate.instant('MensagemExclusao'), $translate.instant('Sim'), $translate.instant('Nao'), function () {
-		        itemEscala.DataExclusao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+
+
+		        var posicao = vm.itemViagemAerea.Aeroportos.indexOf(itemEscala);
+		        vm.itemViagemAerea.Aeroportos.splice(posicao, 1);
 		    });
 		};
 

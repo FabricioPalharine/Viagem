@@ -187,7 +187,7 @@
                         <input type="text" class="form-control" ng-model="itemEdit.itemCarro.Modelo" maxlength="100" empty-to-null>
                     </div>
 
-                    <div class="col-md-3 " ng-class="{ 'has-error':itemEdit.CamposInvalidos.Alugado}">
+                    <div class="col-md-3 " ng-class="{ 'has-error':itemEdit.CamposInvalidos.Carro_KM}">
                         <label>@TextosPaginas.Carro_KM</label>
                         <div class="form-inline">
 
@@ -371,7 +371,7 @@
                     <label>@TextosPaginas.Refeicao_Nota</label>
                     <div star-rating ng-model="itemEdit.ItemAvaliacao.Nota" max="5"></div>
                 </div>
-                <div class="col-md-12" ng-if="itemEdit.VerificarParticipoCarro() && itemEdit.itemPontoDestino.Data ">
+                <div class="col-md-12" ng-if="itemEdit.VerificarParticipoCarro() && itemEdit.itemCarro.ItemCarroEventoDevolucao.Data ">
                     <label>@TextosPaginas.Refeicao_Comentario</label>
                     <textarea class="form-control" rows="5" ng-model="itemEdit.ItemAvaliacao.Comentario"></textarea>
 

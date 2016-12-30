@@ -8,7 +8,7 @@
     [CD_TIPO_PONTO]             INT             NOT NULL,
     [DT_CHEGADA]                DATETIME        NULL,
     [DT_SAIDA]                  DATETIME        NULL,
-    [CD_PLACE]                  VARCHAR (50)    NOT NULL,
+    [CD_PLACE]                  VARCHAR (50)    NULL,
     [DT_ATUALIZACAO]            DATETIME        NOT NULL,
     [DT_EXCLUSAO]               DATETIME        NULL,
     CONSTRAINT [PK32] PRIMARY KEY NONCLUSTERED ([ID_VIAGEM_AEREA_AEROPORTO] ASC),

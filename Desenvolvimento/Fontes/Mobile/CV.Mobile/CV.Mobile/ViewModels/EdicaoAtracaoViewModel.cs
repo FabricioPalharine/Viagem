@@ -325,7 +325,7 @@ namespace CV.Mobile.ViewModels
                 SetProperty(ref _VisitaConcluida, value);
                 if (value)
                 {
-                   
+                   if (Participantes.Any())
                     PossoComentar = Participantes.Where(d => d.Identificador == ItemUsuarioLogado.Codigo && d.Selecionado).Any();
                 }
                 else

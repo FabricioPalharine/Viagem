@@ -54,7 +54,7 @@ namespace CV.Mobile.ViewModels
             ListaStatus.Add(new ItemLista() { Codigo = "2", Descricao = "Já Hospedado" });
             ListaStatus.Add(new ItemLista() { Codigo = "3", Descricao = "Hospedagem Futura" });
             ListaStatus.Add(new ItemLista() { Codigo = "4", Descricao = "Todas" });
-
+            MessagingService.Current.Unsubscribe<Hotel>(MessageKeys.ManutencaoHotel);
             MessagingService.Current.Subscribe<Hotel>(MessageKeys.ManutencaoHotel, (service, item) =>
             {
                 IsBusy = true;

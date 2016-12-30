@@ -14,6 +14,16 @@ namespace CV.Model
         {
             get { return Data.HasValue ? Data.Value.ToString("HH:mm:ss") : null; }
         }
+
+        public TimeSpan? Hora
+        {
+            get { return Data.HasValue ? Data.Value.TimeOfDay: new Nullable<TimeSpan>(); }
+        }
+
+        public string NomeCidade
+        {
+            get { return (ItemCidade ?? new Cidade()).Nome; }
+        }
     }
 
 }

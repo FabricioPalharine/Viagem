@@ -1246,5 +1246,69 @@ namespace CV.Data
             query = query.Union(this.Context.ViagemAereaAeroportos.Where(d => d.ItemViagemAerea.IdentificadorViagem == IdentificadorViagem).Where(d => d.IdentificadorCidade.HasValue).Select(d => d.ItemCidade));
             return query.Distinct().OrderBy(d => d.Nome);
         }
+
+        public void SalvarReabastecimentoCompleto(Reabastecimento itemGravar)
+        {
+            Reabastecimento itemBase = Context.Reabastecimentos
+.Include("Gastos").Include("Gastos.ItemGasto").Include("Gastos.ItemGasto.Usuarios").Where(f => f.Identificador == itemGravar.Identificador).FirstOrDefault();
+            if (itemBase == null)
+            {
+                itemBase = Context.Reabastecimentos.Create();
+                itemBase.Gastos = new List<ReabastecimentoGasto>();
+                Context.Entry<Reabastecimento>(itemBase).State = System.Data.Entity.EntityState.Added;
+            }
+            AtualizarPropriedades<Reabastecimento>(itemBase, itemGravar);
+            foreach (ReabastecimentoGasto itemReabastecimentoGasto in new List<ReabastecimentoGasto>(itemBase.Gastos))
+            {
+                if (!itemGravar.Gastos.Where(f => f.Identificador == itemReabastecimentoGasto.Identificador).Any())
+                {
+                    Context.Entry<ReabastecimentoGasto>(itemReabastecimentoGasto).State = EntityState.Deleted;
+                }
+            }
+            foreach (ReabastecimentoGasto itemReabastecimentoGasto in new List<ReabastecimentoGasto>(itemGravar.Gastos))
+            {
+                ReabastecimentoGasto itemBaseReabastecimentoGasto = !itemReabastecimentoGasto.Identificador.HasValue ? null : itemBase.Gastos.Where(f => f.Identificador == itemReabastecimentoGasto.Identificador).FirstOrDefault();
+                if (itemBaseReabastecimentoGasto == null)
+                {
+                    itemBaseReabastecimentoGasto = Context.ReabastecimentoGastos.Create();
+                    itemBase.Gastos.Add(itemBaseReabastecimentoGasto);
+                }
+                AtualizarPropriedades<ReabastecimentoGasto>(itemBaseReabastecimentoGasto, itemReabastecimentoGasto);
+                Gasto itemGasto = itemReabastecimentoGasto.ItemGasto;
+                Gasto itemBaseGasto = null;
+                if (itemGasto != null)
+                {
+                    itemBaseGasto = Context.Gastos.Where(f => f.Identificador == itemGasto.Identificador).FirstOrDefault();
+                    if (itemBaseGasto == null)
+                    {
+                        itemBaseGasto = Context.Gastos.Create();
+                        itemBaseGasto.Usuarios = new List<GastoDividido>();
+                        Context.Entry<Gasto>(itemBaseGasto).State = System.Data.Entity.EntityState.Added;
+                    }
+                    AtualizarPropriedades<Gasto>(itemBaseGasto, itemGasto);
+                    itemBaseReabastecimentoGasto.ItemGasto = itemBaseGasto;
+                    foreach (GastoDividido itemGastoDividido in new List<GastoDividido>(itemBaseGasto.Usuarios))
+                    {
+                        if (!itemGasto.Usuarios.Where(f => f.Identificador == itemGastoDividido.Identificador).Any())
+                        {
+                            Context.Entry<GastoDividido>(itemGastoDividido).State = EntityState.Deleted;
+                        }
+                    }
+                    foreach (GastoDividido itemGastoDividido in new List<GastoDividido>(itemGasto.Usuarios))
+                    {
+                        GastoDividido itemBaseGastoDividido = !itemGastoDividido.Identificador.HasValue ? null : itemBaseGasto.Usuarios.Where(f => f.Identificador == itemGastoDividido.Identificador).FirstOrDefault();
+                        if (itemBaseGastoDividido == null)
+                        {
+                            itemBaseGastoDividido = Context.GastoDivididos.Create();
+                            itemBaseGasto.Usuarios.Add(itemBaseGastoDividido);
+                        }
+                        AtualizarPropriedades<GastoDividido>(itemBaseGastoDividido, itemGastoDividido);
+                    }
+                }
+            }
+            Context.SaveChanges();
+            itemGravar.Identificador = itemBase.Identificador;
+        }
+
     }
 }

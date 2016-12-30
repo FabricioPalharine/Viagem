@@ -32,7 +32,7 @@ namespace CV.Mobile.ViewModels
             ReprovarAmizadeCommand = new Command<RequisicaoAmizade>((itemAmigo) => ReprovarAmizade(itemAmigo));
             AprovarAmizadeCommand = new Command<RequisicaoAmizade>(async (itemAmigo) => await AprovarAmizade(itemAmigo));
             AdicionarAmigoCommand = new Command(async () => await AdicionarAmigo(), () => true);
-
+            MessagingService.Current.Unsubscribe(MessageKeys.AdicionarAmigo);
             MessagingService.Current.Subscribe(MessageKeys.AdicionarAmigo, async (service) =>
             {
                 IsBusy = true;

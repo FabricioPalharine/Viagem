@@ -73,7 +73,7 @@
             </Switch>
           </StackLayout>
 
-          <Label Text="Visitantes" IsVisible="{Binding ItemGasto.Dividido}"  />
+          <Label Text="Amigos" IsVisible="{Binding ItemGasto.Dividido}"  />
 
           <ListView  SeparatorVisibility="None" ItemsSource="{Binding Participantes}" SelectedItem="{Binding ParticipanteSelecionado, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="True"  IsPullToRefreshEnabled="False" IsVisible="{Binding ItemGasto.Dividido}"  >
             <ListView.ItemTemplate>

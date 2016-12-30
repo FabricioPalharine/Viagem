@@ -291,6 +291,10 @@ namespace CV.Business
         }
         private void ValidarRegrasNegocioViagemAerea(ViagemAerea itemGravar)
         {
+            foreach (var itemAeroporto in itemGravar.Aeroportos)
+            {
+                ValidateService(itemAeroporto);
+            }
         }
         private void ValidarRegrasExclusaoViagemAerea(ViagemAerea itemGravar)
         {
@@ -1629,6 +1633,26 @@ namespace CV.Business
             using (ViagemRepository repositorio = new ViagemRepository())
             {
                 return repositorio.ListarCalendarioPrevisto(IdentificadorViagem);
+            }
+        }
+
+        public void SalvarReabastecimentoCompleto(Reabastecimento itemGravar)
+        {
+            LimparValidacao();
+            ValidateService(itemGravar);
+            ValidarRegrasNegocioReabastecimento(itemGravar);
+            if (IsValid())
+            {
+                using (ViagemRepository data = new ViagemRepository())
+                {
+                    data.SalvarReabastecimentoCompleto(itemGravar);
+                    Message msg = new Message();
+                    msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_SalvarReabastecimento_OK") });
+                    ServiceResult resultado = new ServiceResult();
+                    resultado.Success = true;
+                    resultado.Messages.Add(msg);
+                    serviceResult.Add(resultado);
+                }
             }
         }
     }

@@ -137,5 +137,17 @@ namespace CV.UI.Web.Controllers.WebAPI
             }
             return itemResultado;
         }
+
+        [Authorize]
+        [HttpGet]
+        [ActionName("CarregarCarroDeslocamento")]
+
+        public CarroDeslocamento CarregarCarroDeslocamento(int id)
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            var itemBase = biz.SelecionarCarroDeslocamento(id);
+            itemBase.Usuarios.ToList().ForEach(d => d.ItemCarroDeslocamento = null);
+            return itemBase;
+        }
     }
 }

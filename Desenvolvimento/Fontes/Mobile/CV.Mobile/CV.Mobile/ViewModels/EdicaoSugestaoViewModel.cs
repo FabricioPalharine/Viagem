@@ -33,7 +33,7 @@ namespace CV.Mobile.ViewModels
                                                                   },
                                                                   () => true);
             SelecionarPosicaoCommand = new Command(async () => await AbrirPosicaoMapa());
-
+            MessagingService.Current.Unsubscribe<Position>(MessageKeys.SelecaoMapaConfirmacao);
             MessagingService.Current.Subscribe<Position>(MessageKeys.SelecaoMapaConfirmacao, (service, item) =>
             {
                 Bounds = MapSpan.FromCenterAndRadius(item, new Distance(5000));

@@ -49,8 +49,8 @@ namespace CV.Mobile.ViewModels
 
             ItemTappedCommand = new Command<ItemTappedEventArgs>(
                                                                   async (obj) => await VerificarAcaoItem(obj));
-           
 
+            MessagingService.Current.Unsubscribe<Comentario>(MessageKeys.ManutencaoComentario);
             MessagingService.Current.Subscribe<Comentario>(MessageKeys.ManutencaoComentario, (service, item) =>
             {
                 IsBusy = true;

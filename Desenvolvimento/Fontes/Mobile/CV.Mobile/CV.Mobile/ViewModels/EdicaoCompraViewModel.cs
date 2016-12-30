@@ -200,25 +200,31 @@ namespace CV.Mobile.ViewModels
             SalvarCommand.ChangeCanExecute();
             try
             {
-                foreach (Usuario itemUsuario in Participantes)
+                if (ItemGasto.Dividido)
                 {
-                    if (itemUsuario.Selecionado)
+                    foreach (Usuario itemUsuario in Participantes)
                     {
-                        if (!ItemGasto.Usuarios.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).Any())
+                        if (itemUsuario.Selecionado)
                         {
-                            var itemNovaAvaliacao = new GastoDividido() { IdentificadorUsuario = itemUsuario.Identificador };                           
-                            ItemGasto.Usuarios.Add(itemNovaAvaliacao);
+                            if (!ItemGasto.Usuarios.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).Any())
+                            {
+                                var itemNovaAvaliacao = new GastoDividido() { IdentificadorUsuario = itemUsuario.Identificador };
+                                ItemGasto.Usuarios.Add(itemNovaAvaliacao);
+                            }
                         }
-                    }
-                    else
-                    {
-                        if (ItemGasto.Usuarios.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).Any())
+                        else
                         {
-                            ItemGasto.Usuarios.Remove(ItemGasto.Usuarios.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).FirstOrDefault());
+                            if (ItemGasto.Usuarios.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).Any())
+                            {
+                                ItemGasto.Usuarios.Remove(ItemGasto.Usuarios.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).FirstOrDefault());
+                            }
                         }
                     }
                 }
-              
+                else
+                    ItemGasto.Usuarios.Clear();
+
+
                 ItemGasto.Data = ItemGasto.Data.GetValueOrDefault().Date.Add(ItemGasto.Hora.GetValueOrDefault());
 
                 using (ApiService srv = new ApiService())

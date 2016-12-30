@@ -17,7 +17,6 @@ namespace CV.Model
 
 			public int? Identificador { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="ViagemAereaAeroporto_IdentificadorViagemAerea",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public int? IdentificadorViagemAerea { get; set; }
 
 			public int? IdentificadorCidade { get; set; }

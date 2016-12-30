@@ -79,6 +79,8 @@ namespace CV.Mobile.ViewModels
             ListaStatusPedido.Add(new ItemLista() { Codigo = "2", Descricao = "Ignorado" });
             ListaStatusPedido.Add(new ItemLista() { Codigo = "-1", Descricao = "Todos" });
 
+            MessagingService.Current.Unsubscribe<ListaCompra>(MessageKeys.ManutencaoListaCompra);
+            MessagingService.Current.Unsubscribe<ListaCompra>(MessageKeys.ManutencaoRequisicaoPedidoCompra);
             MessagingService.Current.Subscribe<ListaCompra>(MessageKeys.ManutencaoListaCompra, (service, cotacao) =>
             {
                 IsBusy = true;

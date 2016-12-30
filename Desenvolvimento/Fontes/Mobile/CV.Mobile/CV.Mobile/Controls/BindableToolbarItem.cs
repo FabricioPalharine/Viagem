@@ -21,7 +21,7 @@ namespace CV.Mobile.Controls
             OnIsVisibleChanged(this, false, IsVisible);
         }
 
-        public new ContentPage Parent { set; get; }
+        public new Page Parent { set; get; }
 
         public bool IsVisible
         {
@@ -38,7 +38,7 @@ namespace CV.Mobile.Controls
             if (item.Parent == null)
                 return;
 
-            var items = ((ContentPage)item.Parent).ToolbarItems;
+            var items = ((Page)item.Parent).ToolbarItems;
 
             if ((bool) newvalue && !items.Contains(item))
             {
