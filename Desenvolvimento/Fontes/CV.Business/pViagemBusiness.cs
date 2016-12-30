@@ -1061,6 +1061,14 @@ namespace CV.Business
             return itemResultado;
         }
 
+        public ResultadoOperacao CadastrarFotoDireto(UploadFoto itemFoto, Usuario itemUsuario, int? IdentificadoViagem)
+        {
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+            Viagem itemViagem = SelecionarViagem(IdentificadoViagem);
+            itemResultado.ItemRegistro = CadastrarNovaFoto(itemViagem, itemUsuario, itemFoto, false);
+            return itemResultado;
+        }
+
         private void SubirImagemPicasa(UploadFoto itemFoto, Usuario itemUsuario, Viagem itemViagem)
         {
             string Album = itemViagem.CodigoAlbum;

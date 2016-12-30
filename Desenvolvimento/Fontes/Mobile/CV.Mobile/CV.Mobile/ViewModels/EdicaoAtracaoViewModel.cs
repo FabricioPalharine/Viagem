@@ -5,6 +5,7 @@ using CV.Mobile.Views;
 using FormsToolkit;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Plugin.Media;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -156,6 +157,18 @@ namespace CV.Mobile.ViewModels
         public Command PageAppearingCommand { get; set; }
         public Command ExcluirCommand { get; set; }
         public Command AbrirCustosCommand { get; set; }
+
+        public Command OpcaoFotoCommand
+        {
+            get
+            {
+                return new Command(async () =>
+                {
+                    UploadFoto itemUpload = new UploadFoto() { IdentificadorAtracao = ItemAtracao.Identificador };
+                    await CarregarAcaoFoto(itemUpload);
+                });
+            }
+        }
         public Command<GmsSearchResults> PlaceSelectedCommand
         {
             get

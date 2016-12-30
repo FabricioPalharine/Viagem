@@ -179,6 +179,19 @@ namespace CV.Mobile.ViewModels
         public Command PageAppearingCommand { get; set; }
         public Command ExcluirCommand { get; set; }
         public Command AbrirCustosCommand { get; set; }
+
+        public Command OpcaoFotoCommand
+        {
+            get
+            {
+                return new Command(async () =>
+                {
+                    UploadFoto itemUpload = new UploadFoto() { IdentificadorHotel = ItemHotel.Identificador };
+                    await CarregarAcaoFoto(itemUpload);
+                });
+            }
+        }
+
         public Command<GmsSearchResults> PlaceSelectedCommand
         {
             get

@@ -13,6 +13,7 @@ using CV.Mobile.Droid.Services;
 using CV.Mobile.Interfaces;
 using Plugin.SecureStorage;
 using Plugin.Permissions;
+using Acr.UserDialogs;
 
 namespace CV.Mobile.Droid
 {
@@ -32,6 +33,7 @@ namespace CV.Mobile.Droid
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
             Xamarin.FormsMaps.Init(this, bundle);
+            UserDialogs.Init(this);
             LoadApplication(new App());
         }
 

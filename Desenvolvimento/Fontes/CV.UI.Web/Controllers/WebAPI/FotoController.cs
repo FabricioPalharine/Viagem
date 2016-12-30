@@ -104,6 +104,16 @@ namespace CV.UI.Web.Controllers.WebAPI
         }
 
         [Authorize]
+        [ActionName("SubirImagemDireto")]
+        public ResultadoOperacao SubirImagemDireto(UploadFoto itemFoto)
+        {
+
+            ViagemBusiness biz = new ViagemBusiness();
+            Usuario itemUsuario = biz.SelecionarUsuario(token.IdentificadorUsuario);
+            return biz.CadastrarFotoDireto(itemFoto, itemUsuario, token.IdentificadorViagem);
+        }
+
+        [Authorize]
         [ActionName("SubirVideo")]
         public ResultadoOperacao SubirVideo(UploadFoto itemFoto)
         {

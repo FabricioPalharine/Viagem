@@ -58,7 +58,7 @@ namespace CV.Mobile.ViewModels
 
         private async Task AbrirConfiguracaoURL()
         {
-
+            await Task.Delay(1);
         }
 
         private async Task<UsuarioLogado> ConectarAutenticacao()

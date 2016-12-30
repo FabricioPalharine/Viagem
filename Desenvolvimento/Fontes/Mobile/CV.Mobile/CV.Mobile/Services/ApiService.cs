@@ -213,6 +213,44 @@ namespace CV.Mobile.Services
 
             return itemResultado;
         }
+        public async Task<ResultadoOperacao> SalvarUsuario(Usuario itemUsuario)
+        {
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Usuario/Post"));
+            var json = JsonConvert.SerializeObject(itemUsuario, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            });
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = null;
+            response = await client.PostAsync(uri, content);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                itemResultado = JsonConvert.DeserializeObject<ResultadoOperacao>(resultado);
+            }
+
+
+            return itemResultado;
+        }
+
+        public async Task<Usuario> CarregarUsuario(int? Identificador)
+        {
+            var itemUsuario = new Usuario();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Usuario/get/", Identificador.GetValueOrDefault(0)));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                itemUsuario = JsonConvert.DeserializeObject<Usuario>(resultado);
+
+            }
+
+            return itemUsuario;
+        }
 
 
         public async Task<Boolean> VerificarOnLine()
@@ -2013,6 +2051,27 @@ namespace CV.Mobile.Services
             return itemResultado;
         }
 
+        public async Task<ResultadoOperacao> SubirImagem(UploadFoto itemUpload)
+        {
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Foto/SubirImagemDireto"));
+            var json = JsonConvert.SerializeObject(itemUpload, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            });
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
 
+            HttpResponseMessage response = null;
+            response = await client.PostAsync(uri, content);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                itemResultado = JsonConvert.DeserializeObject<ResultadoOperacao>(resultado);
+            }
+
+
+            return itemResultado;
+        }
     }
 }
