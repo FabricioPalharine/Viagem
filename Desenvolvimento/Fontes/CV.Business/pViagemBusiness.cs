@@ -1215,7 +1215,7 @@ namespace CV.Business
                 foreach (var itemAtracao in ListaAtracoes)
                     itemGravarFoto.Atracoes.Add(new FotoAtracao() { DataAtualizacao = DateTime.Now, IdentificadorAtracao = itemAtracao.Identificador });
             }
-            else
+            else if (!itemFoto.IdentificadorRefeicao.HasValue && !itemFoto.IdentificadorHotel.HasValue)
             {
                 List<int?> AtracoesPai = new List<int?>();
                 AtracoesPai.Add(itemFoto.IdentificadorAtracao);
@@ -1232,7 +1232,7 @@ namespace CV.Business
                 itemGravarFoto.Hoteis.Add(new FotoHotel() { DataAtualizacao = DateTime.Now, IdentificadorHotel = itemFoto.IdentificadorHotel });
 
             }
-            else
+            else if (!itemFoto.IdentificadorRefeicao.HasValue && !itemFoto.IdentificadorAtracao.HasValue)
                 foreach (var itemHotel in ListarHotelData(IdentificadorViagem, itemGravarFoto.Data))
                     itemGravarFoto.Hoteis.Add(new FotoHotel() { DataAtualizacao = DateTime.Now, IdentificadorHotel = itemHotel.Identificador });
 
@@ -1256,7 +1256,7 @@ namespace CV.Business
                         itemGravarFoto.Atracoes.Add(new FotoAtracao() { DataAtualizacao = DateTime.Now, IdentificadorAtracao = IdentificadorAtracao });
                 }
             }
-            else
+            else if (!itemFoto.IdentificadorHotel.HasValue && !itemFoto.IdentificadorAtracao.HasValue )
             {
                 DateTime dataInicio = itemGravarFoto.Data.GetValueOrDefault().AddMinutes(-5);
                 DateTime dataFim = itemGravarFoto.Data.GetValueOrDefault().AddMinutes(5);

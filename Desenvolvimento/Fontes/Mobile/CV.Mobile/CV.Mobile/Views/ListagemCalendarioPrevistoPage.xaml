@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.ListagemCalendarioPrevistoPage"
+             Title="Agenda"   
+              xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+              xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+              xmlns:controles="clr-namespace:CV.Mobile.Controls;assembly=CV.Mobile"
+              x:Name="paginaSelecao">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <local:InverseBooleanConverter x:Key="boolInverterConverter" />
+      <local:IntStringConverter x:Key="intStringConverter" />
+      <local:BooleanFileImageSourceConverter x:Key="boolImage" />
+
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.Behaviors>
+    <behaviors:EventHandlerBehavior EventName="Appearing">
+      <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
+    </behaviors:EventHandlerBehavior>
+  </ContentPage.Behaviors>
+
+ <ContentPage.ToolbarItems>
+   <ToolbarItem  Icon="{Binding ModoPesquisa, Converter={StaticResource boolImage}}"  Command="{Binding PesquisarCommand}"    />
+   <ToolbarItem x:Name="AdicionarToolbarItem" Icon="add24.png"  Command="{Binding AdicionarCommand}" />
+
+ </ContentPage.ToolbarItems>
+
+  <ContentPage.Content>
+    <StackLayout Spacing="0">
+      <ListView VerticalOptions="FillAndExpand" SeparatorVisibility="None" ItemsSource="{Binding ListaDados}" SelectedItem="{Binding ItemSelecionado, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="True"  IsPullToRefreshEnabled="true"  IsRefreshing="{Binding IsLoadingLista, Mode=TwoWay}" RefreshCommand="{Binding RecarregarListaCommand}"  IsVisible="{Binding ModoPesquisa, Converter={StaticResource boolInverterConverter}}" >
+        <ListView.Behaviors>
+          <behaviors:EventHandlerBehavior EventName="ItemTapped">
+            <behaviors:InvokeCommandAction Command="{Binding ItemTappedCommand}"   />
+          </behaviors:EventHandlerBehavior>
+        </ListView.Behaviors>
+        
+   
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ViewCell >
+              <Grid>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                 
+                  <ColumnDefinition Width="100*" />
+                  <ColumnDefinition Width="50*" />
+                  <ColumnDefinition Width="50*" />
+
+                </Grid.ColumnDefinitions>
+                <Label Text="{Binding Nome}" HorizontalTextAlignment="Center" Grid.Column="0"></Label>
+                <Label Text="{Binding DataInicio, StringFormat='{0:dd/MM/yyyy HH:mm}'}" HorizontalTextAlignment="Center" Grid.Column="1"></Label>
+                <Label Text="{Binding DataFim, StringFormat='{0:dd/MM/yyyy HH:mm}'}" HorizontalTextAlignment="Center" Grid.Column="2"></Label>
+
+              </Grid>
+            </ViewCell>
+
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+      <StackLayout  IsVisible="{Binding ModoPesquisa}">
+        <DatePicker Date="{Binding DataCalendario}" VerticalOptions="Start">
+          <DatePicker.Format>dd/MM/yyyy</DatePicker.Format>
+        </DatePicker>
+        <ScrollView>
+        <controles:CalendarioControl VerticalOptions="FillAndExpand" DataCalendario="{Binding DataCalendario}" Agendamentos="{Binding ListaDados}" AgendaSelectedCommand="{Binding AbrirAgendaCommand}">
+          
+        </controles:CalendarioControl>
+        </ScrollView>
+      </StackLayout>
+    </StackLayout>
+  </ContentPage.Content>
+  
+</ContentPage>

@@ -12,6 +12,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using FormsToolkit;
+using System.Globalization;
+using System.Collections;
+using Xamarin.Auth;
+using Google.Apis.YouTube.v3.Data;
+using Google.Apis.YouTube.v3;
+using Google.Apis.Services;
+using Google.Apis.Auth.OAuth2.Responses;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Auth.OAuth2.Flows;
+using System.Xml;
 
 namespace CV.Mobile.ViewModels
 {
@@ -196,45 +207,213 @@ namespace CV.Mobile.ViewModels
                 var retorno = await CrossMedia.Current.PickPhotoAsync(new Plugin.Media.Abstractions.PickMediaOptions() { CompressionQuality = 92 });
                 if (retorno != null)
                 {
-                    itemUpload.CaminhoLocal = retorno.Path;
-                    itemUpload.ImageMime = "image/jpeg";
-                    var Source = retorno.GetStream();
-                    var exif = ExifReader.ReadJpeg(Source);
-
-                    Source.Seek(0, SeekOrigin.Begin);
-                    itemUpload.DataArquivo = DateTime.Now;
-                    if (exif != null)
-                    {
-                        itemUpload.Latitude = (exif.DecimalLatitude());
-                        itemUpload.Longitude = (exif.DecimalLongitude());
-                    }
-                    var itemComentario = await Acr.UserDialogs.UserDialogs.Instance.PromptAsync("Comentários", "", "Ok", "Cancelar");
-                    if (itemComentario.Ok)
-                        itemUpload.Comentario = itemComentario.Value;
-                    byte[] DadosFoto = null;
-                    using (MemoryStream ms = new MemoryStream())
-                    {
-                        Source.CopyTo(ms);
-                        DadosFoto = ms.ToArray();
-                    }
-                    using (ApiService srv = new ApiService())
-                    {
-                        var ItemUsuario = await srv.CarregarUsuario(ItemUsuarioLogado.Codigo);
-                        if (ItemUsuario.DataToken.GetValueOrDefault().ToUniversalTime().AddSeconds(ItemUsuario.Lifetime.GetValueOrDefault(0) - 60) < DateTime.Now.ToUniversalTime())
-                        {
-                            using (AccountsService srvAccount = new AccountsService())
-                            {
-                                await srvAccount.AtualizarTokenUsuario(ItemUsuario);
-                            }
-                        }
-                        using (PhotosService srvFoto = new PhotosService(ItemUsuario.Token))
-                        {
-                            await srvFoto.SubirFoto(ItemViagemSelecionada.CodigoAlbum, DadosFoto, itemUpload);
-                        }
-                        await srv.SubirImagem(itemUpload);
-                    }
+                    await GravarFoto(itemUpload, retorno,false);
                 }
             }
+            else if (action == "Tirar Foto")
+            {
+                var retorno = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions() { CompressionQuality = 92, AllowCropping = true, DefaultCamera = Plugin.Media.Abstractions.CameraDevice.Rear, SaveToAlbum=true });
+                if (retorno != null)
+                {
+                    await GravarFoto(itemUpload, retorno,true);
+                }
+            }
+            else if (action == "Selecionar Video")
+            {
+                var retorno = await CrossMedia.Current.PickVideoAsync();
+                if (retorno != null)
+                {
+                    await GravarVideo(itemUpload, retorno,false);
+                }
+            }
+            else if (action == "Gravar Vídeo")
+            {
+                var retorno = await CrossMedia.Current.TakeVideoAsync(new Plugin.Media.Abstractions.StoreVideoOptions() {  AllowCropping = true, DefaultCamera = Plugin.Media.Abstractions.CameraDevice.Rear, SaveToAlbum = true });
+                if (retorno != null)
+                {
+                    await GravarVideo(itemUpload, retorno,true);
+                }
+            }
+        }
+
+        private async Task GravarFoto(UploadFoto itemUpload, Plugin.Media.Abstractions.MediaFile retorno,bool Novo)
+        {
+            itemUpload.CaminhoLocal = retorno.Path;
+            itemUpload.ImageMime = "image/jpeg";
+            var Source = retorno.GetStream();
+            var exif = ExifReader.ReadJpeg(Source);
+            
+            Source.Seek(0, SeekOrigin.Begin);
+            itemUpload.DataArquivo = DateTime.Now;
+            if (exif != null && (exif.DecimalLatitude() != 0 || exif.DecimalLongitude() != 0))
+            {
+                
+                itemUpload.Latitude = (exif.DecimalLatitude());
+                itemUpload.Longitude = (exif.DecimalLongitude());
+            }
+            else if (Novo)
+            {
+                var posicao = await RetornarPosicao();
+                if (posicao != null)
+                {
+                    itemUpload.Latitude = posicao.Latitude;
+                    itemUpload.Longitude = posicao.Longitude;
+                }
+
+            }
+            if (exif != null)
+            {
+                string Texto = exif.DateTime;
+                DateTime dataConverte;
+                if (!string.IsNullOrWhiteSpace(Texto) && DateTime.TryParseExact(Texto, "yyyy:MM:dd HH:mm:ss", CultureInfo.CurrentCulture, DateTimeStyles.None, out dataConverte))
+                    itemUpload.DataArquivo = dataConverte;
+            }
+            var VM = new TextPopupViewModel() { Title = "Comentário", Texto = "Adicionar Comentário Foto" };
+            var Pagina = new Views.TextoPopupPage() { BindingContext = VM };
+            await PushModalAsync(Pagina, true);
+            MessagingService.Current.Subscribe(MessageKeys.MensagemModalConfirmada, async (service) =>
+            {
+                MessagingService.Current.Unsubscribe(MessageKeys.MensagemModalConfirmada);
+
+                if (VM.Confirmado)
+                    itemUpload.Comentario = VM.Valor;
+                byte[] DadosFoto = null;
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    Source.CopyTo(ms);
+                    DadosFoto = ms.ToArray();
+                }
+                using (ApiService srv = new ApiService())
+                {
+                    var ItemUsuario = await srv.CarregarUsuario(ItemUsuarioLogado.Codigo);
+                    if (ItemUsuario.DataToken.GetValueOrDefault().ToUniversalTime().AddSeconds(ItemUsuario.Lifetime.GetValueOrDefault(0) - 60) < DateTime.Now.ToUniversalTime())
+                    {
+                        using (AccountsService srvAccount = new AccountsService())
+                        {
+                            await srvAccount.AtualizarTokenUsuario(ItemUsuario);
+                        }
+                    }
+                    using (PhotosService srvFoto = new PhotosService(ItemUsuario.Token))
+                    {
+                         await srvFoto.SubirFoto(ItemViagemSelecionada.CodigoAlbum, DadosFoto, itemUpload);
+                    }
+                    var resultadoAPI = await srv.SubirImagem(itemUpload);
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = "Foto Gravada com Sucesso",
+                        Cancel = "OK"
+                    });
+                }
+
+            });
+            
+        }
+
+        private async Task GravarVideo(UploadFoto itemUpload, Plugin.Media.Abstractions.MediaFile retorno, bool Novo)
+        {
+            if (Novo)
+            {
+                var posicao = await RetornarPosicao();
+                if (posicao != null)
+                {
+                    itemUpload.Latitude = posicao.Latitude;
+                    itemUpload.Longitude = posicao.Longitude;
+                }
+                
+            }
+            itemUpload.CaminhoLocal = retorno.Path;
+            itemUpload.ImageMime = "video/avi";
+
+            itemUpload.DataArquivo = DateTime.Now;
+            var Source = retorno.GetStream();
+            var VM = new TextPopupViewModel() { Title = "Comentário", Texto = "Adicionar Comentário Foto" };
+            var Pagina = new Views.TextoPopupPage() { BindingContext = VM };
+            await PushModalAsync(Pagina, true);
+            MessagingService.Current.Subscribe(MessageKeys.MensagemModalConfirmada, async (service) =>
+            {
+                MessagingService.Current.Unsubscribe(MessageKeys.MensagemModalConfirmada);
+
+                if (VM.Confirmado)
+                    itemUpload.Comentario = VM.Valor;
+               
+                using (ApiService srv = new ApiService())
+                {
+                    var ItemUsuario = await srv.CarregarUsuario(ItemUsuarioLogado.Codigo);
+                    if (ItemUsuario.DataToken.GetValueOrDefault().ToUniversalTime().AddSeconds(ItemUsuario.Lifetime.GetValueOrDefault(0) - 60) < DateTime.Now.ToUniversalTime())
+                    {
+                        using (AccountsService srvAccount = new AccountsService())
+                        {
+                            await srvAccount.AtualizarTokenUsuario(ItemUsuario);
+                        }
+                    }
+                    GravarVideoYouTube(itemUpload, Source, ItemUsuario);
+                    //using (PhotosService srvFoto = new PhotosService(ItemUsuario.Token))
+                    //{
+                    //    await srvFoto.SubirFoto(ItemViagemSelecionada.CodigoAlbum, DadosFoto, itemUpload);
+                    //}
+                   
+                }
+
+            });
+        }
+
+
+        public async void GravarVideoYouTube(UploadFoto itemUpload, Stream baseStream, Usuario itemUsuario)
+        {
+            TokenResponse tr = new TokenResponse() { AccessToken = itemUsuario.Token, ExpiresInSeconds = itemUsuario.Lifetime, Issued = DateTime.Now, RefreshToken = itemUsuario.RefreshToken };
+
+            var service = new BaseClientService.Initializer();
+            service.ApiKey = Constants.ClientAPI;
+            var secrets = new ClientSecrets() { ClientId = "id", ClientSecret = "secret" };
+            var initializer = new AuthorizationCodeFlow.Initializer("https://authorization_code.com", "https://token.com")
+            {
+                ClientSecrets = secrets,
+
+            };
+            UserCredential uc = new UserCredential(new AuthorizationCodeFlow(initializer), "103654916712612822987", tr);
+            service.HttpClientInitializer = uc;
+
+            var youtube = new YouTubeService(service);
+            
+
+            Video video = new Video();
+            video.Snippet = new VideoSnippet();
+            video.Snippet.Title = itemUpload.CaminhoLocal;
+            video.Snippet.Description = itemUpload.Comentario;
+            video.Status = new VideoStatus();
+            video.Status.PrivacyStatus = "unlisted";
+  
+            var videosInsertRequest = youtube.Videos.Insert(video, "snippet,status", baseStream, "video/*");
+            //videosInsertRequest.ProgressChanged += videosInsertRequest_ProgressChanged;
+           // videosInsertRequest.ResponseReceived += videosInsertRequest_ResponseReceived;
+            var resultado = await videosInsertRequest.UploadAsync();
+            if (resultado.Status == Google.Apis.Upload.UploadStatus.Completed)
+            {
+                var retorno = videosInsertRequest.ResponseBody;
+
+                itemUpload.CodigoGoogle = retorno.Id;
+                itemUpload.Thumbnail = retorno.Snippet.Thumbnails.Medium.Url;
+                var vidstream = youtube.Videos.List("snippet,Player,FileDetails");
+                vidstream.Id = retorno.Id;
+                VideoListResponse ser = vidstream.Execute();
+                List<Video> vid = ser.Items.ToList();
+                XmlReader xmlReader = XmlReader.Create(new StringReader(vid.FirstOrDefault().Player.EmbedHtml.Replace("allowfullscreen",null)));
+                xmlReader.MoveToContent();
+                itemUpload.LinkGoogle = xmlReader.GetAttribute("src");
+                itemUpload.ImageMime = vid.FirstOrDefault().FileDetails.FileType;
+                using (ApiService srv = new ApiService())
+                {
+                    var resultadoAPI = await srv.SubirVideo(itemUpload);
+                }
+                MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                {
+                    Title = "Sucesso",
+                    Message = "Vídeo Gravado com Sucesso",
+                    Cancel = "OK"
+                });
+            }
+
         }
         #endregion
     }

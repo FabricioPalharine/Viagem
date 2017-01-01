@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.TextoPopupPage"
+              xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+             xmlns:controles="clr-namespace: CV.Mobile.Controls;assembly=CV.Mobile"
+             >
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <local:IntStringConverter x:Key="intStringConverter" />
+    </ResourceDictionary>
+  </ContentPage.Resources>
+
+  <ContentPage.Content>
+    <StackLayout>
+      <Label Text="{Binding Texto}"  />
+      <Editor Text="{Binding Valor}"  HeightRequest="100" />
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="1*" />
+          <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <controles:ImageButton
+                          ImageHeightRequest="24"
+                          ImageWidthRequest="24"
+                          Orientation="ImageToLeft"
+                          Source="checkmark24.png"
+                          Text="Confirmar"
+                          Command="{Binding ConfirmarCommand}"
+
+                          HorizontalOptions="Fill"   Grid.Column="0" />
+
+        <controles:ImageButton
+                                ImageHeightRequest="24"
+                                ImageWidthRequest="24"
+                                Orientation="ImageToLeft"
+                                Source="cancel24.png"
+                                Text="Cancelar"
+                                Command="{Binding CancelarCommand}"
+
+                                HorizontalOptions="Fill"   Grid.Column="1" />
+
+      </Grid>
+
+
+    </StackLayout>
+
+  </ContentPage.Content>
+</ContentPage>

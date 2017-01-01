@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.EdicaoCalendarioPrevistoPage"
+             Title="Manutenção Calendário"
+             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+             xmlns:controles="clr-namespace: CV.Mobile.Controls;assembly=CV.Mobile"
+             x:Name="this"
+             >
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <local:IntStringConverter x:Key="intStringConverter" />
+      <local:InverseBooleanConverter x:Key="boolInverterConverter" />
+
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.Behaviors>
+    <behaviors:EventHandlerBehavior EventName="Appearing">
+      <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
+    </behaviors:EventHandlerBehavior>
+  </ContentPage.Behaviors>
+  <ContentPage.ToolbarItems>
+    <ToolbarItem  Icon="save.png"  Command="{Binding SalvarCommand}" />
+    <controles:BindableToolbarItem  Icon="delete24.png" Parent="{x:Reference this}"  Command="{Binding ExcluirCommand}" IsVisible="{Binding PermiteExcluir}"   />
+
+    <ToolbarItem  Icon="mapMarker24.png"  Command="{Binding SelecionarPosicaoCommand}" />
+
+  </ContentPage.ToolbarItems>
+  <ContentPage.Content>
+    <ScrollView>
+    <RelativeLayout  VerticalOptions="FillAndExpand" >
+      <StackLayout
+                                  RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent,
+            Property=Height,Factor=0,Constant=60}"
+                          RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width,Factor=1,Constant=0}"
+                        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1,Constant=60}"
+
+                         >
+
+        <Label Text="Tipo"  />
+        <Entry Text="{Binding ItemCalendarioPrevisto.Tipo}"/>
+        <DatePicker Date="{Binding ItemCalendarioPrevisto.DataInicio}" VerticalOptions="Start">
+          <DatePicker.Format>dd/MM/yyyy</DatePicker.Format>
+        </DatePicker>
+        <TimePicker Time="{Binding ItemCalendarioPrevisto.HoraInicio}" VerticalOptions="Start">
+          <TimePicker.Format>HH:mm</TimePicker.Format>
+        </TimePicker>
+        <Label Text="Data/Hora Fim"  />
+        <DatePicker Date="{Binding ItemCalendarioPrevisto.DataFim}" VerticalOptions="Start">
+          <DatePicker.Format>dd/MM/yyyy</DatePicker.Format>
+        </DatePicker>
+        <TimePicker Time="{Binding ItemCalendarioPrevisto.HoraFim}" VerticalOptions="Start">
+          <TimePicker.Format>HH:mm</TimePicker.Format>
+        </TimePicker>
+        <Label Text="Prioridade"  />
+        <controles:ExtendedPicker
+                               DisplayProperty="Descricao"
+                               KeyMemberPath="Codigo"
+                               ItemsSource="{Binding ListaStatus}"
+                               SelectedItem="{Binding ItemCalendarioPrevisto.Prioridade , Converter={StaticResource intStringConverter}}"
+                               HorizontalOptions="FillAndExpand"
+                               />
+        <StackLayout Orientation="Horizontal" Spacing="10">
+          <Label Text="Alertar Horário"  />
+          <Switch IsToggled="{Binding ItemCalendarioPrevisto.AvisarHorario}"></Switch>
+        </StackLayout>
+
+      </StackLayout>
+      <Label Text="Nome"  RelativeLayout.YConstraint="{ConstraintExpression Constant=0}"
+     RelativeLayout.XConstraint="{ConstraintExpression  Constant=0}"/>
+
+      <controles:PlacesSearch Bounds="{Binding Bounds}" PlaceSelectedCommand="{Binding PlaceSelectedCommand}" Text="{Binding ItemCalendarioPrevisto.Nome}" Placeholder=""
+                       RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent,
+            Property=Height,Factor=0,Constant=10}"
+                        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1,Constant=10}"
+     RelativeLayout.XConstraint="{ConstraintExpression  Constant=0}"
+                                    ></controles:PlacesSearch>
+      
+    </RelativeLayout>
+    </ScrollView>
+  </ContentPage.Content>
+</ContentPage>

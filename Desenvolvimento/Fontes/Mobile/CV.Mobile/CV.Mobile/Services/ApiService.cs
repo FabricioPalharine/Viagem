@@ -2073,5 +2073,28 @@ namespace CV.Mobile.Services
 
             return itemResultado;
         }
+
+        public async Task<ResultadoOperacao> SubirVideo(UploadFoto itemUpload)
+        {
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Foto/SubirVideo"));
+            var json = JsonConvert.SerializeObject(itemUpload, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            });
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = null;
+            response = await client.PostAsync(uri, content);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                itemResultado = JsonConvert.DeserializeObject<ResultadoOperacao>(resultado);
+            }
+
+
+            return itemResultado;
+        }
     }
 }

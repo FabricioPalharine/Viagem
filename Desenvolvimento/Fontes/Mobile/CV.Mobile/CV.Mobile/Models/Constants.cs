@@ -12,7 +12,7 @@ namespace CV.Mobile.Models
         public static string ClientSecret = "H1CNNlmDu-uNnGll5ylQmvgp";
         public static string ClientAPI = "AIzaSyAlUpOpwZWS_ZGlMAtB6lY76oy1QBWk97g";
 
-        public static string Scopes = "profile email https://picasaweb.google.com/data/";
+        public static string Scopes = "profile email https://picasaweb.google.com/data/ https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtube";
         public static string AppName = "CV";
 
         public static string AuthorizeUrl = "https://accounts.google.com/o/oauth2/auth";

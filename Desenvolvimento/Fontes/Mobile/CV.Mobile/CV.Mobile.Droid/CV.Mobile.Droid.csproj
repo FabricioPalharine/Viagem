@@ -273,6 +273,7 @@
     <Compile Include="MainApplication.cs" />
     <Compile Include="Renderer\AutenticacaoPageRenderer.cs" />
     <Compile Include="Renderer\FormattedNumberEntryRenderer.cs" />
+    <Compile Include="Renderer\GesturesContentViewRenderer.cs" />
     <Compile Include="Renderer\ImageButtonRenderer.cs" />
     <Compile Include="Renderer\ListButtonRenderer .cs" />
     <Compile Include="Renderer\NullableDatePickerRenderer.cs" />
@@ -348,6 +349,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\xml\file_paths.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\calendar24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\list24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets')" />

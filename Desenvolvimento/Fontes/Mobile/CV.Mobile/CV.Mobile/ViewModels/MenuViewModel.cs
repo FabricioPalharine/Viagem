@@ -344,6 +344,10 @@ namespace CV.Mobile.ViewModels
                 {
                     await AbrirCompraMoeda();
                 }
+                else if (_ItemMenuSelecionado.Codigo == 9)
+                {
+                    await AbrirCalendarioPrevisto();
+                }
                 else if (_ItemMenuSelecionado.Codigo == 10)
                 {
                     await AbrirGrupoCidade();
@@ -355,6 +359,11 @@ namespace CV.Mobile.ViewModels
                 else if (_ItemMenuSelecionado.Codigo == 12)
                 {
                     await AbrirCotacaoMoeda();
+                }
+                else if (_ItemMenuSelecionado.Codigo == 13)
+                {
+                    UploadFoto itemUpload = new UploadFoto();
+                    await CarregarAcaoFoto(itemUpload);
                 }
                 else if (_ItemMenuSelecionado.Codigo == 14)
                 {
@@ -390,6 +399,17 @@ namespace CV.Mobile.ViewModels
                     await OnItemMenuSelecionado(pagina, true);
                 }
                 ItemSelecionado = null;
+            }
+        }
+
+        private async Task AbrirCalendarioPrevisto()
+        {
+            if (_ItemViagem != null)
+            {
+                var pagina = new ListagemCalendarioPrevistoPage() { BindingContext = new ListagemCalendarioPrevistoViewModel(_ItemViagem) };
+
+                await OnItemMenuSelecionado(pagina, false);
+
             }
         }
 

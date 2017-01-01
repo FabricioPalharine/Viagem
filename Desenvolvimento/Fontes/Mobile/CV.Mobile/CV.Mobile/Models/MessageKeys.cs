@@ -41,6 +41,7 @@ namespace CV.Mobile.Models
         public const string ManutencaoCarroDeslocamento = "ManutencaoCarroDeslocamento";
         public const string ManutencaoGastoViagemAerea = "ManutencaoGastoViagemAerea";
         public const string TrocarPosicaoVA = "TrocarPosicaoVA";
-
+        public const string MensagemModalConfirmada = "MensagemModalConfirmada";
+        public const string ManutencaoCalendarioPrevisto = "ManutencaoCalendarioPrevisto";
     }
 }
