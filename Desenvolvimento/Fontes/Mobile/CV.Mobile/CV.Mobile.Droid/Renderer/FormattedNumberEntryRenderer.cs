@@ -5,6 +5,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using CV.Mobile.Controls;
 using CV.Mobile.Droid.Renderer;
+using Android.Widget;
 
 [assembly: ExportRenderer(typeof(FormattedNumberEntry), typeof(FormattedNumberEntryRenderer))]
 
@@ -23,6 +24,12 @@ namespace CV.Mobile.Droid.Renderer
             if (e.NewElement != null)
             {
                 Control.AfterTextChanged += Control_AfterTextChanged;
+            }
+            if (e.NewElement.Keyboard == Keyboard.Numeric)
+            {
+                var native = Control as EditText;
+                native.InputType = InputTypes.ClassNumber;
+                native.KeyListener = Android.Text.Method.DigitsKeyListener.GetInstance("1234567890.,");
             }
         }
 
