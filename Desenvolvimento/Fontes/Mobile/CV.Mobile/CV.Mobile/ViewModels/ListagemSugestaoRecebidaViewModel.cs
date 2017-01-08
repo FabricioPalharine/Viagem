@@ -152,31 +152,57 @@ namespace CV.Mobile.ViewModels
 
         private async Task CarregarListaCidades()
         {
-            using (ApiService srv = new ApiService())
+            List<Cidade> Dados = new List<Cidade>();
+            if (Conectado)
             {
-                var Dados = await srv.ListarCidadeSugestao();
-                ListaCidades = new ObservableCollection<Cidade>(Dados);
-                OnPropertyChanged("ListaCidades");
+                using (ApiService srv = new ApiService())
+                {
+                    Dados = await srv.ListarCidadeSugestao();
+
+                }
             }
+            else
+            {
+                Dados = await DatabaseService.Database.ListarCidade_Tipo("S");
+            }
+            ListaCidades = new ObservableCollection<Cidade>(Dados);
+            OnPropertyChanged("ListaCidades");
         }
         private async Task CarregarListaAmigos()
         {
-            using (ApiService srv = new ApiService())
+            List<Usuario> Dados = new List<Usuario>();
+            if (Conectado)
             {
-                var Dados = await srv.ListarAmigos();
-                ListaAmigos = new ObservableCollection<Usuario>(Dados);
-                OnPropertyChanged("ListaAmigos");
+                using (ApiService srv = new ApiService())
+                {
+                    Dados = await srv.ListarAmigos();
+
+                }
             }
+            else
+            {
+                Dados = await DatabaseService.Database.ListarAmigos();
+            }
+            ListaAmigos = new ObservableCollection<Usuario>(Dados);
+            OnPropertyChanged("ListaAmigos");
         }
 
         private async Task CarregarListaPedidos()
         {
-            using (ApiService srv = new ApiService())
+            List<Sugestao> Dados = new List<Sugestao>();
+            if (Conectado)
             {
-                var Dados = await srv.ListarSugestaoRecebida(ItemCriterioBusca);
-                ListaDados = new ObservableCollection<Sugestao>(Dados);
-                OnPropertyChanged("ListaDados");
+                using (ApiService srv = new ApiService())
+                {
+                    Dados = await srv.ListarSugestaoRecebida(ItemCriterioBusca);
+
+                }
             }
+            else
+                Dados = await DatabaseService.Database.ListarSugestao(ItemCriterioBusca);
+
+            ListaDados = new ObservableCollection<Sugestao>(Dados);
+            OnPropertyChanged("ListaDados");
             await Task.Delay(100);
             IsLoadingLista = false;
         }
@@ -186,6 +212,8 @@ namespace CV.Mobile.ViewModels
             var Pagina = new EdicaoSugestaoRecebidaPage() { BindingContext = new EdicaoSugestaoRecebidaViewModel((Sugestao)itemSelecionado.Item) };
             await PushAsync(Pagina);
         }
+
+      
 
 
     }

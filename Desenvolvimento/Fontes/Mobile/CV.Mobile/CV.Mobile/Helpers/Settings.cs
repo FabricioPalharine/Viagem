@@ -24,20 +24,19 @@ namespace CV.Mobile.Helpers
         private const string CVBaseWebApiKey = "CVBaseWebApiKey";
         private static readonly string CVBaseWebApiDefault = "http://192.168.0.17/CV/";
 
-        private const string CVModoAtualizacaoKey = "CVModoAtualizacaoKey";
-        private static readonly string CVModoAtualizacaoDefault = "N";
+        private const string CVModoSincronizacaoKey = "CVModoSincronizacaoKey";
+        private static readonly string CVModoSincronizacaoDefault = "1";
 
         private const string CVModoImagemKey = "CVModoImagemKey";
-        private static readonly string CVModoImagemDefault = "N";
+        private static readonly string CVModoImagemDefault = "1";
 
-        private const string CVControleGPSKey = "CVControleGPSKey";
-        private static readonly string CVControleGPSDefault = "A";
+        private const string CVModoVideoKey = "CVModoVideoKey";
+        private static readonly string CVModoVideoDefault = "2";
 
         private const string CVAcompanhamnentoOnlineKey = "CVAcompanhamnentoOnlineKey";
-        private static readonly string CVAcompanhamnentoOnlineDefault = "S";
+        private static readonly string CVAcompanhamnentoOnlineDefault = "1";
 
-        private const string CVGeofencingHotelKey = "CVGeofencingHotelKey";
-        private static readonly string CVGeofencingHotelDefault = "S";
+       
 
         #endregion
 
@@ -54,15 +53,15 @@ namespace CV.Mobile.Helpers
             }
         }
 
-        public static string ModoAtualizacao
+        public static string ModoSincronizacao
         {
             get
             {
-                return AppSettings.GetValueOrDefault<string>(CVModoAtualizacaoKey, CVModoAtualizacaoDefault);
+                return AppSettings.GetValueOrDefault<string>(CVModoSincronizacaoKey, CVModoSincronizacaoDefault);
             }
             set
             {
-                AppSettings.AddOrUpdateValue<string>(CVModoAtualizacaoKey, value);
+                AppSettings.AddOrUpdateValue<string>(CVModoSincronizacaoKey, value);
             }
         }
 
@@ -78,29 +77,19 @@ namespace CV.Mobile.Helpers
             }
         }
 
-        public static string ControleGPS
+        public static string ModoVideo
         {
             get
             {
-                return AppSettings.GetValueOrDefault<string>(CVControleGPSKey, CVControleGPSDefault);
+                return AppSettings.GetValueOrDefault<string>(CVModoVideoKey, CVModoVideoDefault);
             }
             set
             {
-                AppSettings.AddOrUpdateValue<string>(CVControleGPSKey, value);
+                AppSettings.AddOrUpdateValue<string>(CVModoVideoKey, value);
             }
         }
 
-        public static string GeofencingHotel
-        {
-            get
-            {
-                return AppSettings.GetValueOrDefault<string>(CVGeofencingHotelKey, CVGeofencingHotelDefault);
-            }
-            set
-            {
-                AppSettings.AddOrUpdateValue<string>(CVGeofencingHotelKey, value);
-            }
-        }
+       
 
         public static string AcompanhamentoOnline
         {

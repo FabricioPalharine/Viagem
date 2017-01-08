@@ -33,7 +33,7 @@ namespace CV.Mobile.ViewModels
                                                        () => true);
 
             ExcluirCommand = new Command<CotacaoMoeda>((itemCotacao) => Excluir(itemCotacao));
-            EditarCommand = new Command<CotacaoMoeda>(async (itemCotacao) => await Editar(itemCotacao));
+            EditarCommand = new Command<ItemTappedEventArgs>(async (itemCotacao) => await Editar(itemCotacao));
             AdicionarCommand = new Command(async () => await AbrirInclusao(), () => true);
             MessagingService.Current.Unsubscribe<CotacaoMoeda>(MessageKeys.ManutencaoCotacaoMoeda);
             MessagingService.Current.Subscribe<CotacaoMoeda>(MessageKeys.ManutencaoCotacaoMoeda, (service, cotacao) =>
@@ -96,12 +96,19 @@ namespace CV.Mobile.ViewModels
 
         private async Task CarregarListaCotacoes()
         {
-            using (ApiService srv = new ApiService())
+            List<CotacaoMoeda> Dados = new List<CotacaoMoeda>();
+            if (Conectado)
             {
-                var Dados = await srv.ListarCotacaoMoeda();
-                Cotacoes = new ObservableCollection<CotacaoMoeda>(Dados);
-                OnPropertyChanged("Cotacoes");
+                using (ApiService srv = new ApiService())
+                {
+                    Dados = await srv.ListarCotacaoMoeda();
+
+                }
             }
+            else
+                Dados = await DatabaseService.Database.ListarCotacaoMoeda(new CriterioBusca());
+            Cotacoes = new ObservableCollection<CotacaoMoeda>(Dados);
+            OnPropertyChanged("Cotacoes");
             IsLoadingCotacao = false;
         }
 
@@ -116,34 +123,57 @@ namespace CV.Mobile.ViewModels
                 OnCompleted = new Action<bool>(async result =>
                 {
                     if (!result) return;
-                    using (ApiService srv = new ApiService())
+                    ResultadoOperacao Resultado = new ResultadoOperacao();
+                    if (Conectado)
                     {
-                        var Resultado = await srv.ExcluirCotacaoMoeda(itemCotacao.Identificador);
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        using (ApiService srv = new ApiService())
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-                        if (Cotacoes.Where(d => d.Identificador == itemCotacao.Identificador).Any())
-                        {
-                            var Posicao = Cotacoes.IndexOf(Cotacoes.Where(d => d.Identificador == itemCotacao.Identificador).FirstOrDefault());
-                            Cotacoes.RemoveAt(Posicao);
+                            Resultado = await srv.ExcluirCotacaoMoeda(itemCotacao.Identificador);
+                            var itemAjustar = await DatabaseService.Database.RetornarCotacaoMoeda(itemCotacao.Identificador);
+                            itemAjustar.DataExclusao = DateTime.Now.ToUniversalTime();
+                            await DatabaseService.Database.SalvarCotacaoMoeda(itemAjustar);
+                            
+
                         }
+                    }
+                    else
+                    {
+                        itemCotacao.DataExclusao = DateTime.Now.ToUniversalTime();
+                        await DatabaseService.Database.SalvarCotacaoMoeda(itemCotacao);
+                        var itemCV = await DatabaseService.Database.GetControleSincronizacaoAsync();
+                        if (itemCV.SincronizadoEnvio)
+                        {
+                            itemCV.SincronizadoEnvio = false;
+                            await DatabaseService.Database.SalvarControleSincronizacao(itemCV);
+                        }
+                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Cotação de Moeda Gravada com Sucesso" } };
+
+
+                    }
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+                    if (Cotacoes.Where(d => d.Identificador == itemCotacao.Identificador).Any())
+                    {
+                        var Posicao = Cotacoes.IndexOf(Cotacoes.Where(d => d.Identificador == itemCotacao.Identificador).FirstOrDefault());
+                        Cotacoes.RemoveAt(Posicao);
                     }
 
                 })
             });
         }
 
-        private async Task Editar(CotacaoMoeda itemCotacao)
+        private async Task Editar(ItemTappedEventArgs itemCotacao)
         {
-            using (ApiService srv = new ApiService())
-            {
-                var itemEditar = await srv.CarregarCotacaoMoeda(itemCotacao.Identificador);
-                EdicaoCotacaoPage pagina = new EdicaoCotacaoPage() { BindingContext = new EditarCotacaoViewModel(itemEditar) };
-                await PushAsync(pagina);
-            }
+
+            var itemEditar = ((CotacaoMoeda)itemCotacao.Item).Clone();
+            EdicaoCotacaoPage pagina = new EdicaoCotacaoPage() { BindingContext = new EditarCotacaoViewModel(itemEditar) };
+            await PushAsync(pagina);
+
         }
 
         private async Task AbrirInclusao()

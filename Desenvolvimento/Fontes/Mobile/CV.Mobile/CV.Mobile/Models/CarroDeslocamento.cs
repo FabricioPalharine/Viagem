@@ -1,4 +1,5 @@
 ﻿using MvvmHelpers;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace CV.Mobile.Models
 {
     public class CarroDeslocamento: ObservableObject
     {
+        [PrimaryKey, AutoIncrement]
+
         public int? Id { get; set; }
 
         public int? Identificador { get; set; }
@@ -18,11 +21,11 @@ namespace CV.Mobile.Models
         public int? IdentificadorCarroEventoPartida { get; set; }
 
         public int? IdentificadorCarroEventoChegada { get; set; }
-
+        [Ignore]
         public CarroEvento ItemCarroEventoPartida { get; set; }
-
+        [Ignore]
         public CarroEvento ItemCarroEventoChegada { get; set; }
-
+        [Ignore]
         public ObservableRangeCollection<CarroDeslocamentoUsuario> Usuarios { get; set; }
 
         public DateTime? DataAtualizacao { get; set; }
@@ -30,8 +33,6 @@ namespace CV.Mobile.Models
         public DateTime? DataExclusao { get; set; }
 
         public string Observacao { get; set; }
-
-        public Carro ItemCarro { get; set; }
 
         public CarroDeslocamento Clone()
         {

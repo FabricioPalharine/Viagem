@@ -274,7 +274,7 @@ namespace CV.Mobile.ViewModels
                 Title = "Sugestão",
                 IconSource = "Dados.png",
                 Visible = false,
-                ApenasAmigo = true
+                ApenasAmigo = false
             });
             ItensMenuCompleto.Add(new ItemMenu
             {
@@ -590,6 +590,7 @@ namespace CV.Mobile.ViewModels
             {
                 await srv.SalvarViagem(ItemViagem);
             }
+            await DatabaseService.Database.SalvarViagemAsync(ItemViagem);
             AjustarVisibilidadeItens();
             ItensMenu = new ObservableCollection<ItemMenu>(ItensMenuCompleto.Where(d => d.Visible));
             OnPropertyChanged("ItensMenu");
@@ -598,6 +599,7 @@ namespace CV.Mobile.ViewModels
         private async Task TrocarControleGPS()
         {
             ItemViagem.ControlaPosicaoGPS = !ItemViagem.ControlaPosicaoGPS;
+            await DatabaseService.Database.SalvarViagemAsync(ItemViagem);
             var itemMenu = ItensMenu.Where(d => d.Codigo == 20).FirstOrDefault();
             if (ItemViagem.ControlaPosicaoGPS)
                 itemMenu.Title = "Parar Rota";

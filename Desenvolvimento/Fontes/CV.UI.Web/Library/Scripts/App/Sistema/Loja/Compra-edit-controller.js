@@ -67,7 +67,7 @@
 
         vm.RemoverItemCompra = function (itemCompra) {
             vm.EscopoAtualizacao.ChamarExclusao(itemCompra,  function () {
-                itemCompra.DataExclusao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+                itemCompra.DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
                 Loja.SalvarItemCompra(itemCompra);
             }, function () { });
         };

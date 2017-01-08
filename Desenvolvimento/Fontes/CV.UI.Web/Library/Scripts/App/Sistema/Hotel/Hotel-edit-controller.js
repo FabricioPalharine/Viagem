@@ -118,13 +118,13 @@
 		            var itens =
                          $.grep(vm.itemHotel.Avaliacoes, function (e) { return e.IdentificadorUsuario == item.Identificador && !e.DataExclusao });
 		            if (item.Selecionado && itens.length == 0) {
-		                var NovoItem = { IdentificadorUsuario: item.Identificador, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss") }
+		                var NovoItem = { IdentificadorUsuario: item.Identificador, DataAtualizacao: moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss") }
 		                vm.itemHotel.Avaliacoes.push(NovoItem);
 		            }
 		            else if (!item.Selecionado && itens.length > 0) {
 		                //var posicao = vmEdit.itemFoto.Hoteis.indexOf(itens[0]);
 		                //vmEdit.itemFoto.Hoteis.splice(posicao, 1);
-		                item.DataExclusao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+		                item.DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
 		            }
 
 		        });
@@ -142,7 +142,7 @@
 		        var MinhaAvaliacao =
                          $.grep(vm.itemHotel.Avaliacoes, function (e) { return e.IdentificadorUsuario == Auth.currentUser.Codigo && !e.DataExclusao });
 		        if (MinhaAvaliacao.length > 0) {
-		            MinhaAvaliacao[0].DataAtualizacao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+		            MinhaAvaliacao[0].DataAtualizacao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
 		            MinhaAvaliacao[0].Comentario = vm.ItemAvaliacao.Comentario;
 		            MinhaAvaliacao[0].Nota = vm.ItemAvaliacao.Nota;
 		        }
@@ -152,7 +152,7 @@
 		            angular.forEach(vm.itemHotel.Avaliacoes, function (item) {
 		                if (!item.DataExclusao)
 		                {
-		                    var itemEvento = { IdentificadorUsuario: item.IdentificadorUsuario, DataEntrada: vm.itemHotel.DataEntrada, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss") };
+		                    var itemEvento = { IdentificadorUsuario: item.IdentificadorUsuario, DataEntrada: vm.itemHotel.DataEntrada, DataAtualizacao: moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss") };
 		                    vm.itemHotel.Eventos.push(itemEvento);
 		                }
 		            });
@@ -162,7 +162,7 @@
 		            angular.forEach(vm.itemHotel.Eventos, function (item) {
 		                if (!item.DataExclusao && !item.DataSaida) {
 		                    item.DataSaida = vm.itemHotel.DataSaidia;
-		                    item.DataAtualizacao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+		                    item.DataAtualizacao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
 		                }
 		            });
 		        }
@@ -294,7 +294,7 @@
 
 		vm.RemoverCusto = function (itemCusto) {
 		    $scope.$parent.itemHotel.modalPopupTrigger(itemCusto, $translate.instant('MensagemExclusao'), $translate.instant('Sim'), $translate.instant('Nao'), function () {
-		        itemCusto.DataExclusao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+		        itemCusto.DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
 		        Gasto.SalvarCustoHotel(itemCusto);
 		    });
 
@@ -412,7 +412,7 @@
 		                Foto.SubirVideo(itemFoto, function (data) {
 		                    itemArquivo.Situacao = $translate.instant('Foto_Sucesso');
 		                    itemArquivo.CodigoSituacao = 1;
-		                    vm.itemHotel.Fotos.push({ IdentificadorFoto: data.ItemRegistro.Identificador, ItemFoto: data.ItemRegistro, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss"), Identificador: $.grep(data.ItemRegistro.Hoteis, function (e) { return e.IdentificadorHotel == vm.itemHotel.Identificador && !e.DataExclusao })[0].Identificador });
+		                    vm.itemHotel.Fotos.push({ IdentificadorFoto: data.ItemRegistro.Identificador, ItemFoto: data.ItemRegistro, DataAtualizacao: moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss"), Identificador: $.grep(data.ItemRegistro.Hoteis, function (e) { return e.IdentificadorHotel == vm.itemHotel.Identificador && !e.DataExclusao })[0].Identificador });
 		                    vm.RecarregarFotos();
 		                    SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'F', data.ItemRegistro.Identificador, true);
 
@@ -481,7 +481,7 @@
                     Foto.SubirImagem(itemFoto, function (data) {
                         itemArquivo.Situacao = $translate.instant('Foto_Sucesso');
                         itemArquivo.CodigoSituacao = 1;
-                        vm.itemHotel.Fotos.push({ IdentificadorFoto: data.ItemRegistro.Identificador, ItemFoto: data.ItemRegistro, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss"), Identificador: $.grep(data.ItemRegistro.Hoteis, function (e) { return e.IdentificadorHotel == vm.itemHotel.Identificador && !e.DataExclusao })[0].Identificador });
+                        vm.itemHotel.Fotos.push({ IdentificadorFoto: data.ItemRegistro.Identificador, ItemFoto: data.ItemRegistro, DataAtualizacao: moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss"), Identificador: $.grep(data.ItemRegistro.Hoteis, function (e) { return e.IdentificadorHotel == vm.itemHotel.Identificador && !e.DataExclusao })[0].Identificador });
                         vm.RecarregarFotos();
                         SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'F', data.ItemRegistro.Identificador, true);
 
@@ -576,7 +576,7 @@
 
 		vm.RemoverEvento = function (itemEvento) {
 		    $scope.$parent.itemHotel.modalPopupTrigger(itemEvento, $translate.instant('MensagemExclusao'), $translate.instant('Sim'), $translate.instant('Nao'), function () {
-		        itemEvento.DataExclusao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+		        itemEvento.DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
 		        Hotel.SalvarHotelEvento(itemEvento);
 		    });
 		};
@@ -632,7 +632,7 @@
 		        itemEvento.DataSaida += (itemEvento.strHoraSaida) ? itemEvento.strHoraSaida : "00:00:00";
 
 		    }
-		    itemEvento.DataAtualizacao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+		    itemEvento.DataAtualizacao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
 		    vm.loading = true;
 		    vm.messages = [];
 		    Hotel.SalvarHotelEvento(itemEvento, function (data) {
@@ -783,7 +783,7 @@
 		    };
 
 		    vmSelecao.SelecionarCusto = function (itemCusto) {
-		        var itemGravar = { IdentificadorHotel: vm.itemHotel.Identificador, IdentificadorGasto: itemCusto.Identificador, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss") };
+		        var itemGravar = { IdentificadorHotel: vm.itemHotel.Identificador, IdentificadorGasto: itemCusto.Identificador, DataAtualizacao: moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss") };
 		        Gasto.SalvarCustoHotel(itemGravar, function (data) {
 		            if (data.Sucesso) {
 		                var itemPush = { Identificador: data.IdentificadorRegistro, ItemGasto: itemCusto };

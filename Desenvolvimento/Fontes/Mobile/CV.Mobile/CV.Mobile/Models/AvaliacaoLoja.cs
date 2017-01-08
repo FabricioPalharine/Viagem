@@ -1,4 +1,5 @@
 ﻿using MvvmHelpers;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +12,14 @@ namespace CV.Mobile.Models
     {
         private string _Comentario;
         private int? _Nota;
-        
 
+        [PrimaryKey, AutoIncrement]
         public int? Id { get; set; }
         public int? Identificador { get; set; }
         public int? IdentificadorLoja { get; set; }
         public int? IdentificadorUsuario { get; set; }
         public string NomeUsuario { get; set; }
+        [Ignore]
         public Usuario ItemUsuario { get; set; }
         public DateTime? DataAtualizacao { get; set; }
         public DateTime? DataExclusao { get; set; }

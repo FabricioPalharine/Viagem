@@ -49,7 +49,7 @@ namespace CV.Mobile.iOS
 
             builder.RegisterInstance(new ValidarAutenticacaoService()).As<IValidaAutenticacao>();
 
-            //builder.RegisterInstance(new Geolocator()).As<IGeolocator>();
+            builder.RegisterInstance(new FileHelper()).As<IFileHelper>();
 
             //builder.RegisterInstance(new FechaAplicacaoService()).As<IFechaAplicacao>();
 

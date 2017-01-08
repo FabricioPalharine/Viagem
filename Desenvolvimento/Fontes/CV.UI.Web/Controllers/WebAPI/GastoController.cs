@@ -60,7 +60,7 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             ViagemBusiness biz = new ViagemBusiness();
             itemGasto.IdentificadorViagem = token.IdentificadorViagem;
-            itemGasto.DataAtualizacao = DateTime.Now;
+            itemGasto.DataAtualizacao = DateTime.Now.ToUniversalTime();
             itemGasto.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemGasto.Latitude, itemGasto.Longitude);
             biz.SalvarGasto_Completo(itemGasto);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
@@ -94,21 +94,21 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             ViagemBusiness biz = new ViagemBusiness();
             Gasto itemGasto = biz.SelecionarGasto_Completo(id);
-            itemGasto.DataExclusao = DateTime.Now;
+            itemGasto.DataExclusao = DateTime.Now.ToUniversalTime();
             foreach (var item in itemGasto.Alugueis.Where(d => !d.DataExclusao.HasValue))
-                item.DataExclusao = DateTime.Now;
+                item.DataExclusao = DateTime.Now.ToUniversalTime();
             foreach (var item in itemGasto.Atracoes.Where(d => !d.DataExclusao.HasValue))
-                item.DataExclusao = DateTime.Now;
+                item.DataExclusao = DateTime.Now.ToUniversalTime();
             foreach (var item in itemGasto.Compras.Where(d => !d.DataExclusao.HasValue))
-                item.DataExclusao = DateTime.Now;
+                item.DataExclusao = DateTime.Now.ToUniversalTime();
             foreach (var item in itemGasto.Hoteis.Where(d => !d.DataExclusao.HasValue))
-                item.DataExclusao = DateTime.Now;
+                item.DataExclusao = DateTime.Now.ToUniversalTime();
             foreach (var item in itemGasto.Reabastecimentos.Where(d => !d.DataExclusao.HasValue))
-                item.DataExclusao = DateTime.Now;
+                item.DataExclusao = DateTime.Now.ToUniversalTime();
             foreach (var item in itemGasto.Refeicoes.Where(d => !d.DataExclusao.HasValue))
-                item.DataExclusao = DateTime.Now;           
+                item.DataExclusao = DateTime.Now.ToUniversalTime();           
             foreach (var item in itemGasto.ViagenAereas.Where(d => !d.DataExclusao.HasValue))
-                item.DataExclusao = DateTime.Now;
+                item.DataExclusao = DateTime.Now.ToUniversalTime();
 
 
             biz.SalvarGasto_Completo(itemGasto);

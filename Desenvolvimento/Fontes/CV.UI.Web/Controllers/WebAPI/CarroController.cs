@@ -56,16 +56,16 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             ViagemBusiness biz = new ViagemBusiness();
             itemCarro.IdentificadorViagem = token.IdentificadorViagem;
-            itemCarro.DataAtualizacao = DateTime.Now;
+            itemCarro.DataAtualizacao = DateTime.Now.ToUniversalTime();
             if (itemCarro.ItemCarroEventoDevolucao != null)
             {
                 itemCarro.ItemCarroEventoDevolucao.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemCarro.ItemCarroEventoDevolucao.Latitude, itemCarro.ItemCarroEventoDevolucao.Longitude);
-                itemCarro.ItemCarroEventoDevolucao.DataAtualizacao = DateTime.Now;
+                itemCarro.ItemCarroEventoDevolucao.DataAtualizacao = DateTime.Now.ToUniversalTime();
             }
             if (itemCarro.ItemCarroEventoRetirada != null)
             {
                 itemCarro.ItemCarroEventoRetirada.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemCarro.ItemCarroEventoRetirada.Latitude, itemCarro.ItemCarroEventoRetirada.Longitude);
-                itemCarro.ItemCarroEventoRetirada.DataAtualizacao = DateTime.Now;
+                itemCarro.ItemCarroEventoRetirada.DataAtualizacao = DateTime.Now.ToUniversalTime();
 
             }
             biz.SalvarCarro_Evento(itemCarro);
@@ -86,16 +86,16 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             ViagemBusiness biz = new ViagemBusiness();
             Carro itemCarro = biz.SelecionarCarro_Completo(id);
-            itemCarro.DataExclusao = DateTime.Now;
-            itemCarro.Avaliacoes.ToList().ForEach(d => d.DataExclusao = DateTime.Now);
-            itemCarro.Gastos.ToList().ForEach(d => d.DataExclusao = DateTime.Now);
-            itemCarro.Deslocamentos.ToList().ForEach(d => d.DataExclusao = DateTime.Now);
+            itemCarro.DataExclusao = DateTime.Now.ToUniversalTime();
+            itemCarro.Avaliacoes.ToList().ForEach(d => d.DataExclusao = DateTime.Now.ToUniversalTime());
+            itemCarro.Gastos.ToList().ForEach(d => d.DataExclusao = DateTime.Now.ToUniversalTime());
+            itemCarro.Deslocamentos.ToList().ForEach(d => d.DataExclusao = DateTime.Now.ToUniversalTime());
             foreach (var item in itemCarro.Reabastecimentos)
             {
-                item.DataExclusao = DateTime.Now;
+                item.DataExclusao = DateTime.Now.ToUniversalTime();
                 foreach (var itemGasto in item.Gastos)
                 {
-                    itemGasto.DataExclusao = DateTime.Now;
+                    itemGasto.DataExclusao = DateTime.Now.ToUniversalTime();
                 }
             }
             biz.SalvarCarro_Completo(itemCarro);
@@ -112,16 +112,16 @@ namespace CV.UI.Web.Controllers.WebAPI
         public ResultadoOperacao SalvarCarroDeslocamento([FromBody] CarroDeslocamento itemCarroDeslocamento)
         {
             ViagemBusiness biz = new ViagemBusiness();
-            itemCarroDeslocamento.DataAtualizacao = DateTime.Now;
+            itemCarroDeslocamento.DataAtualizacao = DateTime.Now.ToUniversalTime();
             if (itemCarroDeslocamento.ItemCarroEventoChegada != null)
             {
                 itemCarroDeslocamento.ItemCarroEventoChegada.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemCarroDeslocamento.ItemCarroEventoChegada.Latitude, itemCarroDeslocamento.ItemCarroEventoChegada.Longitude);
-                itemCarroDeslocamento.ItemCarroEventoChegada.DataAtualizacao = DateTime.Now;
+                itemCarroDeslocamento.ItemCarroEventoChegada.DataAtualizacao = DateTime.Now.ToUniversalTime();
             }
             if (itemCarroDeslocamento.ItemCarroEventoPartida != null)
             {
                 itemCarroDeslocamento.ItemCarroEventoPartida.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemCarroDeslocamento.ItemCarroEventoPartida.Latitude, itemCarroDeslocamento.ItemCarroEventoPartida.Longitude);
-                itemCarroDeslocamento.ItemCarroEventoPartida.DataAtualizacao = DateTime.Now;
+                itemCarroDeslocamento.ItemCarroEventoPartida.DataAtualizacao = DateTime.Now.ToUniversalTime();
             }
 
             biz.SalvarCarroDeslocamento_Evento(itemCarroDeslocamento);

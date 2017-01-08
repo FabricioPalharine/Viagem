@@ -107,35 +107,59 @@ namespace CV.Mobile.ViewModels
             try
             {
                 ItemAporteDinheiro.ItemGasto = _ItemGasto;
-                using (ApiService srv = new ApiService())
+                ResultadoOperacao Resultado = new ResultadoOperacao();
+                if (Conectado)
                 {
-                    
-                    var Resultado = await srv.SalvarAporteDinheiro(ItemAporteDinheiro);
-                    if (Resultado.Sucesso)
+                    using (ApiService srv = new ApiService())
                     {
 
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        Resultado = await srv.SalvarAporteDinheiro(ItemAporteDinheiro);
+                        if (Resultado.Sucesso)
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-                        ItemAporteDinheiro.Identificador = Resultado.IdentificadorRegistro;
-                        // ItemAporteDinheiro = JsonConvert.DeserializeXNode < AporteDinheiro >()
-                        MessagingService.Current.SendMessage<AporteDinheiro>(MessageKeys.ManutencaoAporteDinheiro, ItemAporteDinheiro);
-                        await PopAsync();
-                    }
-                    else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
-                    {
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
-                        {
-                            Title = "Problemas Validação",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-
+                            base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "AD", ItemAporteDinheiro.Identificador.GetValueOrDefault(Resultado.IdentificadorRegistro.GetValueOrDefault()), !ItemAporteDinheiro.Identificador.HasValue);
+                            var itemAporte = await srv.CarregarAporteDinheiro(ItemAporteDinheiro.Identificador.GetValueOrDefault(Resultado.IdentificadorRegistro.GetValueOrDefault()));
+                            var itemLocal = await DatabaseService.Database.RetornarAporteDinheiro(itemAporte.Identificador);
+                            if (itemLocal != null)
+                                itemAporte.Id = itemLocal.Id;
+                            if (itemAporte.ItemGasto != null)
+                            {
+                                var itemGL = await DatabaseService.Database.RetornarGasto(itemAporte.ItemGasto.Identificador);
+                                if (itemGL != null)
+                                    itemAporte.ItemGasto.Id = itemGL.Id;
+                            }
+                            await DatabaseService.GravarDadosAporte(itemAporte);
+                        }
                     }
                 }
+                else
+                {
+                    Resultado = await DatabaseService.SalvarAporteDinheiro(ItemAporteDinheiro);
+                }
+                if (Resultado.Sucesso)
+                {
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+                    ItemAporteDinheiro.Identificador = Resultado.IdentificadorRegistro;
+                    // ItemAporteDinheiro = JsonConvert.DeserializeXNode < AporteDinheiro >()
+                    MessagingService.Current.SendMessage<AporteDinheiro>(MessageKeys.ManutencaoAporteDinheiro, ItemAporteDinheiro);
+                    await PopAsync();
+                }
+                else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
+                {
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Problemas Validação",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+
+                }
+
             }
             finally
             {

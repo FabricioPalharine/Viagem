@@ -108,13 +108,13 @@
                     var itens =
                          $.grep(vm.itemAtracao.Avaliacoes, function (e) { return e.IdentificadorUsuario == item.Identificador && !e.DataExclusao });
                     if (item.Selecionado && itens.length == 0) {
-                        var NovoItem = { IdentificadorUsuario: item.Identificador, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss") }
+                        var NovoItem = { IdentificadorUsuario: item.Identificador, DataAtualizacao: moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss") }
                         vm.itemAtracao.Avaliacoes.push(NovoItem);
                     }
                     else if (!item.Selecionado && itens.length > 0) {
                         //var posicao = vmEdit.itemFoto.Hoteis.indexOf(itens[0]);
                         //vmEdit.itemFoto.Hoteis.splice(posicao, 1);
-                        item.DataExclusao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+                        item.DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
                     }
 
                 });
@@ -133,7 +133,7 @@
                          $.grep(vm.itemAtracao.Avaliacoes, function (e) { return e.IdentificadorUsuario == Auth.currentUser.Codigo && !e.DataExclusao });
                 if (MinhaAvaliacao.length > 0)
                 {
-                    MinhaAvaliacao[0].DataAtualizacao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+                    MinhaAvaliacao[0].DataAtualizacao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
                     MinhaAvaliacao[0].Comentario = vm.ItemAvaliacao.Comentario;
                     MinhaAvaliacao[0].Nota = vm.ItemAvaliacao.Nota;
                 }
@@ -269,7 +269,7 @@
 
         vm.RemoverCusto = function (itemCusto) {
             $scope.$parent.itemAtracao.modalPopupTrigger(itemCusto, $translate.instant('MensagemExclusao'), $translate.instant('Sim'), $translate.instant('Nao'), function () {
-                itemCusto.DataExclusao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+                itemCusto.DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
                 Gasto.SalvarCustoAtracao(itemCusto);
             });
 
@@ -387,7 +387,7 @@
                         Foto.SubirVideo(itemFoto, function (data) {
                             itemArquivo.Situacao = $translate.instant('Foto_Sucesso');
                             itemArquivo.CodigoSituacao = 1;
-                            vm.itemAtracao.Fotos.push({ IdentificadorFoto: data.ItemRegistro.Identificador, ItemFoto: data.ItemRegistro, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss"), Identificador: $.grep(data.ItemRegistro.Atracoes, function (e) { return e.IdentificadorAtracao == vm.itemAtracao.Identificador && !e.DataExclusao })[0].Identificador });
+                            vm.itemAtracao.Fotos.push({ IdentificadorFoto: data.ItemRegistro.Identificador, ItemFoto: data.ItemRegistro, DataAtualizacao: moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss"), Identificador: $.grep(data.ItemRegistro.Atracoes, function (e) { return e.IdentificadorAtracao == vm.itemAtracao.Identificador && !e.DataExclusao })[0].Identificador });
                             vm.RecarregarFotos();
                             SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'F', data.ItemRegistro.Identificador, true);
 
@@ -456,7 +456,7 @@
                     Foto.SubirImagem(itemFoto, function (data) {
                         itemArquivo.Situacao = $translate.instant('Foto_Sucesso');
                         itemArquivo.CodigoSituacao = 1;
-                        vm.itemAtracao.Fotos.push({ IdentificadorFoto: data.ItemRegistro.Identificador, ItemFoto: data.ItemRegistro, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss"), Identificador: $.grep(data.ItemRegistro.Atracoes, function (e) { return e.IdentificadorAtracao == vm.itemAtracao.Identificador && !e.DataExclusao })[0].Identificador });
+                        vm.itemAtracao.Fotos.push({ IdentificadorFoto: data.ItemRegistro.Identificador, ItemFoto: data.ItemRegistro, DataAtualizacao: moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss"), Identificador: $.grep(data.ItemRegistro.Atracoes, function (e) { return e.IdentificadorAtracao == vm.itemAtracao.Identificador && !e.DataExclusao })[0].Identificador });
                         vm.RecarregarFotos();
                         SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'F', data.ItemRegistro.Identificador, true);
 
@@ -678,7 +678,7 @@
             };
 
             vmSelecao.SelecionarCusto = function (itemCusto) {
-                var itemGravar = { IdentificadorAtracao: vm.itemAtracao.Identificador, IdentificadorGasto: itemCusto.Identificador, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss") };
+                var itemGravar = { IdentificadorAtracao: vm.itemAtracao.Identificador, IdentificadorGasto: itemCusto.Identificador, DataAtualizacao: moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss") };
                 Gasto.SalvarCustoAtracao(itemGravar, function (data) {
                     if (data.Sucesso)
                     {

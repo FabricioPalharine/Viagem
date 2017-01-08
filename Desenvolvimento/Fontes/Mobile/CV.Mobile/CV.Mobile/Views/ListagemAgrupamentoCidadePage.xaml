@@ -23,6 +23,13 @@
   </ContentPage.ToolbarItems>
   <ContentPage.Content>
     <ListView  VerticalOptions="FillAndExpand" SeparatorVisibility="None" ItemsSource="{Binding ListaDados}" SelectedItem="{Binding ItemSelecionado, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="True"  IsPullToRefreshEnabled="true"  IsRefreshing="{Binding IsLoadingLista, Mode=TwoWay}" RefreshCommand="{Binding RecarregarListaCommand}"  >
+
+      <ListView.Behaviors>
+        <behaviors:EventHandlerBehavior EventName="ItemTapped">
+          <behaviors:InvokeCommandAction Command="{Binding EditarCommand}"   />
+        </behaviors:EventHandlerBehavior>
+      </ListView.Behaviors>
+      
       <ListView.Header>
         <Grid>
 
@@ -30,15 +37,14 @@
             <RowDefinition Height="Auto" />
           </Grid.RowDefinitions>
           <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20" />
-            <ColumnDefinition Width="20" />
+           
             <ColumnDefinition Width="50*" />
             <ColumnDefinition Width="50*" />
             <ColumnDefinition Width="50*" />
           </Grid.ColumnDefinitions>
-          <Label Text="Cidade" HorizontalTextAlignment="Center" Grid.Column="2"></Label>
-          <Label Text="Estado" HorizontalTextAlignment="Center" Grid.Column="3"></Label>
-          <Label Text="País" HorizontalTextAlignment="Center" Grid.Column="4"></Label>
+          <Label Text="Cidade" HorizontalTextAlignment="Center" Grid.Column="0"></Label>
+          <Label Text="Estado" HorizontalTextAlignment="Center" Grid.Column="1"></Label>
+          <Label Text="País" HorizontalTextAlignment="Center" Grid.Column="2"></Label>
 
         </Grid>
       </ListView.Header>
@@ -46,38 +52,24 @@
       <ListView.ItemTemplate>
         <DataTemplate>
           <ViewCell >
+            <ViewCell.ContextActions>
+              <MenuItem Text="Excluir" Command="{Binding Source={x:Reference paginaSelecao}, Path=BindingContext.ExcluirCommand}" Icon="delete24.png"  CommandParameter="{Binding .}"/>
+            </ViewCell.ContextActions>
             <Grid>
               <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
               </Grid.RowDefinitions>
               <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="20" />
-                <ColumnDefinition Width="20" />
+               
                 <ColumnDefinition Width="50*" />
                 <ColumnDefinition Width="50*" />
                 <ColumnDefinition Width="50*" />
               </Grid.ColumnDefinitions>
-              <Label Text="{Binding Nome}" HorizontalTextAlignment="Center" Grid.Column="2"></Label>
-              <Label Text="{Binding Estado}" HorizontalTextAlignment="Center" Grid.Column="3"></Label>
-              <Label Text="{Binding NomePais}" HorizontalTextAlignment="Center" Grid.Column="4"></Label>
+              <Label Text="{Binding Nome}" HorizontalTextAlignment="Center" Grid.Column="0"></Label>
+              <Label Text="{Binding Estado}" HorizontalTextAlignment="Center" Grid.Column="1"></Label>
+              <Label Text="{Binding NomePais}" HorizontalTextAlignment="Center" Grid.Column="2"></Label>
 
-              <Image Source="{local:ImageResource CV.Mobile.Icones.pencil24.png}" Aspect="AspectFit" HeightRequest="16" WidthRequest="16" Grid.Column="0">
-                <Image.GestureRecognizers>
-                  <TapGestureRecognizer
-                       Command="{Binding Path=BindingContext.EditarCommand,  Source={x:Reference paginaSelecao}}"
-                        CommandParameter="{Binding .}"
-                       NumberOfTapsRequired="1"/>
-                </Image.GestureRecognizers>
-              </Image>
-
-              <Image Source="{local:ImageResource CV.Mobile.Icones.delete24.png}" Aspect="AspectFit" HeightRequest="16" WidthRequest="16" Grid.Column="1">
-                <Image.GestureRecognizers>
-                  <TapGestureRecognizer
-                       Command="{Binding Path=BindingContext.ExcluirCommand,  Source={x:Reference paginaSelecao}}"
-                        CommandParameter="{Binding .}"
-                       NumberOfTapsRequired="1"/>
-                </Image.GestureRecognizers>
-              </Image>
+              
             </Grid>
           </ViewCell>
 

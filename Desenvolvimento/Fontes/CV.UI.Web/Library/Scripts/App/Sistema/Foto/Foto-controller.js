@@ -541,13 +541,13 @@
                   $.grep(vmEdit.itemFoto.Atracoes, function (e) { return e.IdentificadorAtracao == item.Identificador && !e.DataExclusao });
                 if (item.Selecionado && itens.length == 0)
                 {
-                    vmEdit.itemFoto.Atracoes.push({ IdentificadorAtracao: item.Identificador, ItemAtracao: item, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss" ) });
+                    vmEdit.itemFoto.Atracoes.push({ IdentificadorAtracao: item.Identificador, ItemAtracao: item, DataAtualizacao: moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss") });
                 }
                 else if (!item.Selecionado && itens.length > 0)
                 {
                     //var posicao = vmEdit.itemFoto.Atracoes.indexOf(itens[0]);
                     //vmEdit.itemFoto.Atracoes.splice(posicao, 1);
-                    item.DataExclusao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+                    item.DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
                 }
             };
 
@@ -557,12 +557,12 @@
                 var itens =
                   $.grep(vmEdit.itemFoto.Hoteis, function (e) { return e.IdentificadorHotel == item.Identificador && !e.DataExclusao });
                 if (item.Selecionado && itens.length == 0) {
-                    vmEdit.itemFoto.Hoteis.push({ IdentificadorHotel: item.Identificador, ItemHotel: item, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss")  });
+                    vmEdit.itemFoto.Hoteis.push({ IdentificadorHotel: item.Identificador, ItemHotel: item, DataAtualizacao: moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss") });
                 }
                 else if (!item.Selecionado && itens.length > 0) {
                     //var posicao = vmEdit.itemFoto.Hoteis.indexOf(itens[0]);
                     //vmEdit.itemFoto.Hoteis.splice(posicao, 1);
-                    item.DataExclusao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+                    item.DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
                 }
             };
 
@@ -572,12 +572,12 @@
                 var itens =
                   $.grep(vmEdit.itemFoto.Refeicoes, function (e) { return e.IdentificadorRefeicao == item.Identificador && !e.DataExclusao });
                 if (item.Selecionado && itens.length == 0) {
-                    vmEdit.itemFoto.Refeicoes.push({ IdentificadorRefeicao: item.Identificador, ItemRefeicao: item, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss") });
+                    vmEdit.itemFoto.Refeicoes.push({ IdentificadorRefeicao: item.Identificador, ItemRefeicao: item, DataAtualizacao: moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss") });
                 }
                 else if (!item.Selecionado && itens.length > 0) {
                     //var posicao = vmEdit.itemFoto.Refeicoes.indexOf(itens[0]);
                     //vmEdit.itemFoto.Refeicoes.splice(posicao, 1);
-                    item.DataExclusao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+                    item.DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
                 }
             };
 
@@ -588,10 +588,10 @@
                 var itens =
                  $.grep(vmEdit.itemFoto.ItensCompra, function (e) { return e.IdentificadorItemCompra == item.Identificador && !e.DataExclusao });
                 if (item.Selecionado && itens.length == 0) {
-                    vmEdit.itemFoto.ItensCompra.push({ IdentificadorItemCompra: item.Identificador, ItemItemCompra: item, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss")  });
+                    vmEdit.itemFoto.ItensCompra.push({ IdentificadorItemCompra: item.Identificador, ItemItemCompra: item, DataAtualizacao: moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss") });
                 }
                 else if (!item.Selecionado && itens.length > 0) {
-                    item.DataExclusao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+                    item.DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
                     //var posicao = vmEdit.itemFoto.ItensCompra.indexOf(itens[0]);
                     //vmEdit.itemFoto.ItensCompra.splice(posicao, 1);
                 }

@@ -1,4 +1,5 @@
 ﻿using MvvmHelpers;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,8 @@ namespace CV.Mobile.Models
         public int? IdentificadorHotel { get; set; }
         public int? IdentificadorUsuario { get; set; }
         public string NomeUsuario { get; set; }
+        [Ignore]
+
         public Usuario ItemUsuario { get; set; }
         public DateTime? DataAtualizacao { get; set; }
         public DateTime? DataExclusao { get; set; }

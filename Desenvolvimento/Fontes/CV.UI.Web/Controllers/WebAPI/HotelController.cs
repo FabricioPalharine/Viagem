@@ -47,7 +47,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             ViagemBusiness biz = new ViagemBusiness();
             itemHotel.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemHotel.Latitude, itemHotel.Longitude);
             itemHotel.IdentificadorViagem = token.IdentificadorViagem;
-            itemHotel.DataAtualizacao = DateTime.Now;
+            itemHotel.DataAtualizacao = DateTime.Now.ToUniversalTime();
             biz.SalvarHotel(itemHotel);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
@@ -66,11 +66,11 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             ViagemBusiness biz = new ViagemBusiness();
             Hotel itemHotel = biz.SelecionarHotel_Completo(id);
-            itemHotel.DataExclusao = DateTime.Now;
-            itemHotel.Avaliacoes.ToList().ForEach(d => d.DataExclusao = DateTime.Now);
-            itemHotel.Gastos.ToList().ForEach(d => d.DataExclusao = DateTime.Now);
-            itemHotel.Fotos.ToList().ForEach(d => d.DataExclusao = DateTime.Now);
-            itemHotel.Eventos.ToList().ForEach(d => d.DataExclusao = DateTime.Now);
+            itemHotel.DataExclusao = DateTime.Now.ToUniversalTime();
+            itemHotel.Avaliacoes.ToList().ForEach(d => d.DataExclusao = DateTime.Now.ToUniversalTime());
+            itemHotel.Gastos.ToList().ForEach(d => d.DataExclusao = DateTime.Now.ToUniversalTime());
+            itemHotel.Fotos.ToList().ForEach(d => d.DataExclusao = DateTime.Now.ToUniversalTime());
+            itemHotel.Eventos.ToList().ForEach(d => d.DataExclusao = DateTime.Now.ToUniversalTime());
 
             biz.SalvarHotel_Completo(itemHotel);
             ResultadoOperacao itemResultado = new ResultadoOperacao();

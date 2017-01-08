@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SQLite;
 
 namespace CV.Mobile.Models
 {
@@ -22,7 +23,7 @@ namespace CV.Mobile.Models
         private TimeSpan? _HoraChegada;
         private TimeSpan? _HoraPartida;
 
-
+        [PrimaryKey, AutoIncrement]
         public int? Id { get; set; }
         public int? Identificador { get; set; }
         public int? IdentificadorViagem { get; set; }
@@ -172,8 +173,11 @@ namespace CV.Mobile.Models
         }
         public int? IdentificadorCidade { get; set; }
         public string NomeCidade { get; set; }
+        [Ignore]
         public ObservableCollection<AvaliacaoAtracao> Avaliacoes { get; set; }
+        [Ignore]
         public ObservableCollection<GastoAtracao> Gastos { get; set; }
+        [Ignore]
         public ObservableCollection<FotoAtracao> Fotos { get; set; }
 
     }

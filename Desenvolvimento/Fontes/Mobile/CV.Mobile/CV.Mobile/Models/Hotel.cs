@@ -1,4 +1,5 @@
 ﻿using MvvmHelpers;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace CV.Mobile.Models
 {
     public class Hotel: ObservableObject
     {
+        [PrimaryKey, AutoIncrement]
+
         public int? Id { get; set; }
 
         public int? Identificador { get; set; }
@@ -33,16 +36,19 @@ namespace CV.Mobile.Models
         public DateTime? EntradaPrevista { get; set; }
 
         public DateTime? SaidaPrevista { get; set; }
-
+        [Ignore]
         public Cidade ItemCidade { get; set; }
+        [Ignore]
 
         public ObservableRangeCollection<FotoHotel> Fotos { get; set; }
+        [Ignore]
 
         public ObservableRangeCollection<GastoHotel> Gastos { get; set; }
+        [Ignore]
 
         public ObservableRangeCollection<HotelAvaliacao> Avaliacoes { get; set; }
+        [Ignore]
 
-        public Viagem ItemViagem { get; set; }
 
         public ObservableRangeCollection<HotelEvento> Eventos { get; set; }
 

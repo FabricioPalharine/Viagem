@@ -2,9 +2,9 @@
     'use strict';
     angular
 		.module('Sistema')
-		.controller('AporteDinheiroEditCtrl', ['Error', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', 'Usuario', 'Viagem', 'AporteDinheiro', 'Dominio', '$uibModalInstance', 'EscopoAtualizacao', 'ItemAporteDinheiro', AporteDinheiroEditCtrl]);
+		.controller('AporteDinheiroEditCtrl', ['Error', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', 'Usuario', 'Viagem', 'AporteDinheiro', 'Dominio', '$uibModalInstance', 'EscopoAtualizacao', 'ItemAporteDinheiro','SignalR', AporteDinheiroEditCtrl]);
 
-    function AporteDinheiroEditCtrl(Error, $state, $translate, $scope, Auth, $rootScope, $stateParams, Usuario, Viagem, AporteDinheiro, Dominio, $uibModalInstance, EscopoAtualizacao, ItemAporteDinheiro) {
+    function AporteDinheiroEditCtrl(Error, $state, $translate, $scope, Auth, $rootScope, $stateParams, Usuario, Viagem, AporteDinheiro, Dominio, $uibModalInstance, EscopoAtualizacao, ItemAporteDinheiro, SignalR) {
         var vm = this;
         vm.itemAporteDinheiro = jQuery.extend({}, ItemAporteDinheiro);
         vm.itemOriginal = ItemAporteDinheiro;
@@ -68,6 +68,8 @@
                 if (data.Sucesso) {
                     Error.showError('success', $translate.instant("Sucesso"), data.Mensagens[0].Mensagem, true);
                     vm.close();
+                    SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'AD', data.IdentificadorRegistro, !vm.itemOriginal.Identificador);
+
                     vm.EscopoAtualizacao.AtualizarItemSalvo(data.ItemRegistro, vm.itemOriginal);
                 } else {
                     vm.messages = data.Mensagens;

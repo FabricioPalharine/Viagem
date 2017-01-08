@@ -44,7 +44,7 @@ namespace CV.Mobile.ViewModels
                                                       () => true);
 
             ExcluirCommand = new Command<ListaCompra>((itemCotacao) => Excluir(itemCotacao));
-            EditarCommand = new Command<ListaCompra>(async (itemCotacao) => await Editar(itemCotacao));
+            EditarCommand = new Command<ItemTappedEventArgs>(async (itemCotacao) => await Editar(itemCotacao));
             AdicionarCommand = new Command(async () => await AbrirInclusao(), () => true);
             MessagingService.Current.Unsubscribe<ListaCompra>(MessageKeys.ManutencaoPedidoCompra);
             MessagingService.Current.Subscribe<ListaCompra>(MessageKeys.ManutencaoPedidoCompra, (service, cotacao) =>
@@ -179,6 +179,8 @@ namespace CV.Mobile.ViewModels
                     using (ApiService srv = new ApiService())
                     {
                         var Resultado = await srv.ExcluirListaCompra(itemListaCompra.Identificador);
+                        base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "LC", itemListaCompra.Identificador.GetValueOrDefault(), false);
+
                         MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
                         {
                             Title = "Sucesso",
@@ -196,11 +198,11 @@ namespace CV.Mobile.ViewModels
             });
         }
 
-        private async Task Editar(ListaCompra itemLista)
+        private async Task Editar(ItemTappedEventArgs itemLista)
         {
             using (ApiService srv = new ApiService())
             {
-                var itemEditar = await srv.CarregarListaCompra(itemLista.Identificador);
+                var itemEditar = await srv.CarregarListaCompra(((ListaCompra)itemLista.Item).Identificador);
                 EdicaoPedidoCompraPage pagina = new EdicaoPedidoCompraPage() { BindingContext = new EdicaoPedidoCompraViewModel(itemEditar, ListaAmigos) };
                 await PushAsync(pagina);
             }

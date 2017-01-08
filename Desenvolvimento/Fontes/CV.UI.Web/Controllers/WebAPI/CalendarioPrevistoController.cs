@@ -41,7 +41,7 @@ namespace CV.UI.Web.Controllers.WebAPI
         public ResultadoOperacao Post([FromBody] CalendarioPrevisto itemCalendarioPrevisto)
         {
             ViagemBusiness biz = new ViagemBusiness();
-            itemCalendarioPrevisto.DataAtualizacao = DateTime.Now;
+            itemCalendarioPrevisto.DataAtualizacao = DateTime.Now.ToUniversalTime();
             itemCalendarioPrevisto.IdentificadorViagem = token.IdentificadorViagem;
             biz.SalvarCalendarioPrevisto(itemCalendarioPrevisto);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
@@ -57,7 +57,7 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             ViagemBusiness biz = new ViagemBusiness();
             CalendarioPrevisto itemCalendarioPrevisto = biz.SelecionarCalendarioPrevisto(id);
-            itemCalendarioPrevisto.DataExclusao = DateTime.Now;
+            itemCalendarioPrevisto.DataExclusao = DateTime.Now.ToUniversalTime();
             biz.SalvarCalendarioPrevisto(itemCalendarioPrevisto);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();

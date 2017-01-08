@@ -51,8 +51,29 @@ namespace CV.Mobile.ViewModels
         {
             if (await VerificarOnline())
             {
-                var Pagina = new SelecionarViagemPage() { BindingContext = new SelecionarViagemViewModel() };
-                await PushAsync(Pagina);
+                ControleSincronizacao itemSincronizacao = await DatabaseService.Database.GetControleSincronizacaoAsync();
+                if (itemSincronizacao != null && !itemSincronizacao.SincronizadoEnvio)
+                {
+
+                    MessagingService.Current.SendMessage<MessagingServiceQuestion>(MessageKeys.DisplayQuestion, new MessagingServiceQuestion()
+                    {
+                        Title = "Confirmação",
+                        Question = String.Format("Existem dados não sincronizados com o servidor, caso seja feita a troca de viagem esses dados serão perdidos. Deseja Continuar?"),
+                        Positive = "Sim",
+                        Negative = "Não",
+                        OnCompleted = new Action<bool>(async result =>
+                        {
+                            if (!result) return;
+                            var Pagina = new SelecionarViagemPage() { BindingContext = new SelecionarViagemViewModel() };
+                            await PushAsync(Pagina);
+                        })
+                    });
+                }
+                else
+                {
+                    var Pagina = new SelecionarViagemPage() { BindingContext = new SelecionarViagemViewModel() };
+                    await PushAsync(Pagina);
+                }
             }
         }
 
@@ -93,7 +114,19 @@ namespace CV.Mobile.ViewModels
         public Command CriarViagemCommand { get; set; }
         public Command EntrarViagemCommand { get; set; }
         public Command AbrirRankingCommand { get; set; }
-        public Command AbrirConfiguracaoCommand { get; set; }
+        public Command AbrirConfiguracaoCommand
+        {
+            get
+            {
+
+                return new Command(async () =>
+                {
+                    ConfiguracaoViewModel vm = new ConfiguracaoViewModel();
+                    var Pagina = new ConfiguracaoPage() { BindingContext = vm };
+                    await PushAsync(Pagina);
+                });
+            }
+        }
         public Command DeslogarCommand { get; set; }
 
         public bool ViagemSelecionada
@@ -144,9 +177,16 @@ namespace CV.Mobile.ViewModels
         private async Task<bool> VerificarOnline()
         {
             bool Online = false;
-            using (ApiService srv = new ApiService())
+            try
             {
-                Online = await srv.VerificarOnLine();
+                using (ApiService srv = new ApiService())
+                {
+                    Online = await srv.VerificarOnLine();
+                }
+            }
+            catch
+            {
+
             }
             if (!Online)
                 ExibirAlertaOffLine();

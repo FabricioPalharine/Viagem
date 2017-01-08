@@ -50,7 +50,7 @@ namespace CV.Mobile.ViewModels
 
           
             ExcluirCommand = new Command<AporteDinheiro>((item) => Excluir(item));
-            EditarCommand = new Command<AporteDinheiro>(async (item) => await Editar(item));
+            EditarCommand = new Command<ItemTappedEventArgs>(async (item) => await Editar(item));
             AdicionarCommand = new Command(async () => await AbrirInclusao(), () => true);
 
             ListaMoeda = new ObservableCollection<ItemLista>();
@@ -168,12 +168,19 @@ namespace CV.Mobile.ViewModels
 
         private async Task CarregarListaDados()
         {
-            using (ApiService srv = new ApiService())
+            List<AporteDinheiro> Dados = new List<AporteDinheiro>();
+            if (Conectado)
             {
-                var Dados = await srv.ListarAporteDinheiro(ItemCriterioBusca);
-                ListaDados = new ObservableCollection<AporteDinheiro>(Dados);
-                OnPropertyChanged("ListaDados");
+                using (ApiService srv = new ApiService())
+                {
+                    Dados = await srv.ListarAporteDinheiro(ItemCriterioBusca);
+                }
             }
+            else
+                Dados = await DatabaseService.Database.ListarAporteDinheiro(ItemCriterioBusca);
+            ListaDados = new ObservableCollection<AporteDinheiro>(Dados);
+            OnPropertyChanged("ListaDados");
+
             IsLoadingLista = false;
         }
 
@@ -190,34 +197,59 @@ namespace CV.Mobile.ViewModels
                 OnCompleted = new Action<bool>(async result =>
                 {
                     if (!result) return;
-                    using (ApiService srv = new ApiService())
+                    ResultadoOperacao Resultado = new ResultadoOperacao();
+                    if (Conectado)
                     {
-                        var Resultado = await srv.ExcluirAporteDinheiro(item.Identificador);
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        using (ApiService srv = new ApiService())
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-                        if (ListaDados.Where(d => d.Identificador == item.Identificador).Any())
-                        {
-                            var Posicao = ListaDados.IndexOf(ListaDados.Where(d => d.Identificador == item.Identificador).FirstOrDefault());
-                            ListaDados.RemoveAt(Posicao);
+                            Resultado = await srv.ExcluirAporteDinheiro(item.Identificador);
+                            base.AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "AP", item.Identificador.GetValueOrDefault(), false);
+                            await DatabaseService.ExcluirAporteDinheiro(item);
+
                         }
                     }
-
+                    else
+                    {
+                        var itemCV = await DatabaseService.Database.GetControleSincronizacaoAsync();
+                        if (itemCV.SincronizadoEnvio)
+                        {
+                            itemCV.SincronizadoEnvio = false;
+                            await DatabaseService.Database.SalvarControleSincronizacao(itemCV);
+                        }
+                        await DatabaseService.ExcluirAporteDinheiro(item);
+                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Aporte Dinheiro Gravado com Sucesso " } };
+                    }
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+                    if (ListaDados.Where(d => d.Identificador == item.Identificador).Any())
+                    {
+                        var Posicao = ListaDados.IndexOf(ListaDados.Where(d => d.Identificador == item.Identificador).FirstOrDefault());
+                        ListaDados.RemoveAt(Posicao);
+                    }
                 })
             });
         }
 
-        private async Task Editar(AporteDinheiro itemLista)
+        private async Task Editar(ItemTappedEventArgs itemLista)
         {
-            using (ApiService srv = new ApiService())
+            AporteDinheiro itemEditar = null;
+            if (Conectado)
             {
-                var itemEditar = await srv.CarregarAporteDinheiro(itemLista.Identificador);
+                using (ApiService srv = new ApiService())
+                {
+                    itemEditar = await srv.CarregarAporteDinheiro(((AporteDinheiro)itemLista.Item).Identificador);
+                }
+            }
+            else
+
+                itemEditar = await DatabaseService.CarregarAporteDinheiro(((AporteDinheiro)itemLista.Item).Identificador);
                 var pagina = new EdicaoAporteDinheiro() { BindingContext = new EdicaoAporteDinheiroViewModel(itemEditar) };
                 await PushAsync(pagina);
-            }
+            
         }
 
         private async Task AbrirInclusao()

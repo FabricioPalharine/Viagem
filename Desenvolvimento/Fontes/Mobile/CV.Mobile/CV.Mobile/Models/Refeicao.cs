@@ -1,4 +1,5 @@
 ﻿using MvvmHelpers;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace CV.Mobile.Models
         private TimeSpan? _Hora;
 
 
+        [PrimaryKey, AutoIncrement]
 
         public int? Id { get; set; }
         public int? Identificador { get; set; }
@@ -136,9 +138,11 @@ namespace CV.Mobile.Models
 
         public int? IdentificadorCidade { get; set; }
         public string NomeCidade { get; set; }
-
+        [Ignore]
         public ObservableRangeCollection<RefeicaoPedido> Pedidos { get; set; }
+        [Ignore]
         public ObservableRangeCollection<GastoRefeicao> Gastos { get; set; }
+        [Ignore]
         public ObservableRangeCollection<FotoRefeicao> Fotos { get; set; }
     }
 }

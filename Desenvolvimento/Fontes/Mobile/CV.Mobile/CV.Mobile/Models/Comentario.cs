@@ -1,4 +1,5 @@
 ﻿using MvvmHelpers;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,6 @@ namespace CV.Mobile.Models
 {
     public class Comentario : ObservableObject
     {
-        private string _Nome;
         private double? _Latitude;
         private double? _Longitude;
         private DateTime? _Data;
@@ -17,25 +17,14 @@ namespace CV.Mobile.Models
         private TimeSpan? _Hora;
         private string _Texto;
 
+        [PrimaryKey, AutoIncrement]
 
         public int? Id { get; set; }
         public int? Identificador { get; set; }
         public int? IdentificadorViagem { get; set; }
         public DateTime? DataAtualizacao { get; set; }
         public DateTime? DataExclusao { get; set; }
-        public string Nome
-        {
-            get
-            {
-                return _Nome;
-            }
-
-            set
-            {
-                SetProperty(ref _Nome, value);
-            }
-        }
-
+        
         public double? Latitude
         {
             get
@@ -109,6 +98,11 @@ namespace CV.Mobile.Models
                 SetProperty(ref _Texto, value);
 
             }
+        }
+
+        public Comentario Clone()
+        {
+            return (Comentario)this.MemberwiseClone();
         }
     }
 }

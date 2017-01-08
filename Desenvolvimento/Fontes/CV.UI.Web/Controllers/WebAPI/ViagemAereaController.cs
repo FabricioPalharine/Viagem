@@ -45,11 +45,11 @@ namespace CV.UI.Web.Controllers.WebAPI
             ViagemBusiness biz = new ViagemBusiness();
 
             itemViagemAerea.IdentificadorViagem = token.IdentificadorViagem;
-            itemViagemAerea.DataAtualizacao = DateTime.Now;
+            itemViagemAerea.DataAtualizacao = DateTime.Now.ToUniversalTime();
             foreach (var itemAeroporto in itemViagemAerea.Aeroportos)
             {
                 itemAeroporto.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemAeroporto.Latitude, itemAeroporto.Longitude);
-                itemAeroporto.DataAtualizacao = DateTime.Now;
+                itemAeroporto.DataAtualizacao = DateTime.Now.ToUniversalTime();
             }
             //itemViagemAerea.Descricao = String.Concat(itemViagemAerea.CompanhiaAerea, " - ", itemViagemAerea.Aeroportos.Where(d => d.TipoPonto == (int)enumTipoParada.Origem).Select(d => d.Aeroporto).FirstOrDefault(), " - ", itemViagemAerea.Aeroportos.Where(d => d.TipoPonto == (int)enumTipoParada.Destino).Select(d => d.Aeroporto).FirstOrDefault());
             biz.SalvarViagemAerea(itemViagemAerea);
@@ -70,10 +70,10 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             ViagemBusiness biz = new ViagemBusiness();
             ViagemAerea itemViagemAerea = biz.SelecionarViagemAerea_Completa(id);
-            itemViagemAerea.DataExclusao = DateTime.Now;
-            itemViagemAerea.Avaliacoes.ToList().ForEach(d => d.DataExclusao = DateTime.Now);
-            itemViagemAerea.Gastos.ToList().ForEach(d => d.DataExclusao = DateTime.Now);
-            itemViagemAerea.Aeroportos.ToList().ForEach(d => d.DataExclusao = DateTime.Now);
+            itemViagemAerea.DataExclusao = DateTime.Now.ToUniversalTime();
+            itemViagemAerea.Avaliacoes.ToList().ForEach(d => d.DataExclusao = DateTime.Now.ToUniversalTime());
+            itemViagemAerea.Gastos.ToList().ForEach(d => d.DataExclusao = DateTime.Now.ToUniversalTime());
+            itemViagemAerea.Aeroportos.ToList().ForEach(d => d.DataExclusao = DateTime.Now.ToUniversalTime());
             biz.SalvarViagemAerea_Completa(itemViagemAerea);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();

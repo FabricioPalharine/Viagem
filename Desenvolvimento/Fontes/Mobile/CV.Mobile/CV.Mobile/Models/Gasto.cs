@@ -1,5 +1,6 @@
 ﻿using CV.Mobile.Helpers;
 using MvvmHelpers;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,12 +25,14 @@ namespace CV.Mobile.Models
         private TimeSpan? _Hora;
 
 
+        [PrimaryKey, AutoIncrement]
 
         public int? Id { get; set; }
         public int? Identificador { get; set; }
         public int? IdentificadorViagem { get; set; }
         public int? IdentificadorUsuario { get; set; }
         public string NomeUsuario { get; set; }
+        [Ignore]
         public Usuario ItemUsuario { get; set; }
         public DateTime? DataAtualizacao { get; set; }
         public DateTime? DataExclusao { get; set; }
@@ -86,6 +89,7 @@ namespace CV.Mobile.Models
                 SetProperty(ref _Data, value);
             }
         }
+        [Ignore]
 
         public ObservableRangeCollection<GastoDividido> Usuarios
         {
@@ -177,6 +181,7 @@ namespace CV.Mobile.Models
                 SetProperty(ref _ApenasBaixa, value);
             }
         }
+        [Ignore]
 
         public string SiglaMoeda
         {
@@ -201,14 +206,26 @@ namespace CV.Mobile.Models
                 SetProperty(ref _Hora, value);
             }
         }
+        [Ignore]
 
         public ObservableRangeCollection<GastoAtracao> Atracoes { get; set; }
+        [Ignore]
+
         public ObservableRangeCollection<GastoHotel> Hoteis { get; set; }
+        [Ignore]
+
         public ObservableRangeCollection<GastoCompra> Compras { get; set; }
+        [Ignore]
+
         public ObservableRangeCollection<GastoRefeicao> Refeicoes { get; set; }
+        [Ignore]
+
         public ObservableRangeCollection<AluguelGasto> Alugueis { get; set; }
+        [Ignore]
+
         public ObservableRangeCollection<GastoViagemAerea> ViagenAereas { get; set; }
 
+        [Ignore]
         public ObservableRangeCollection<ReabastecimentoGasto> Reabastecimentos { get; set; }
 
     }

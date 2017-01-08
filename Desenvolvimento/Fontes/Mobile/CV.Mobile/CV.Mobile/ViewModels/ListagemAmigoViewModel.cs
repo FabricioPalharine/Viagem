@@ -185,6 +185,10 @@ namespace CV.Mobile.ViewModels
         {
             using (ApiService srv = new ApiService())
             {
+                if (itemAmigo.Acao == 1 || itemAmigo.Acao == 2)
+                {
+                    DatabaseService.AjustarAmigo(itemAmigo);
+                }
                 var Resultado = await srv.RequisicaoAmizade(itemAmigo);
                 MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
                 {

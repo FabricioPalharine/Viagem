@@ -64,7 +64,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             ViagemBusiness biz = new ViagemBusiness();
             itemLoja.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemLoja.Latitude, itemLoja.Longitude);
             itemLoja.IdentificadorViagem = token.IdentificadorViagem;
-            itemLoja.DataAtualizacao = DateTime.Now;
+            itemLoja.DataAtualizacao = DateTime.Now.ToUniversalTime();
             biz.SalvarLoja(itemLoja);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
@@ -83,23 +83,23 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             ViagemBusiness biz = new ViagemBusiness();
             Loja itemLoja = biz.SelecionarLoja_Completo(id);
-            itemLoja.DataExclusao = DateTime.Now;
+            itemLoja.DataExclusao = DateTime.Now.ToUniversalTime();
             foreach (var item in itemLoja.Compras.Where(d => !d.DataExclusao.HasValue))
             {
-                item.DataExclusao = DateTime.Now;
-                item.ItemGasto.DataExclusao = DateTime.Now;
+                item.DataExclusao = DateTime.Now.ToUniversalTime();
+                item.ItemGasto.DataExclusao = DateTime.Now.ToUniversalTime();
                 foreach (var itemItemCompra in item.ItensComprados)
                 {
-                    itemItemCompra.DataExclusao = DateTime.Now;
+                    itemItemCompra.DataExclusao = DateTime.Now.ToUniversalTime();
                     foreach (var itemFoto in itemItemCompra.Fotos)
                     {
-                        itemFoto.DataExclusao = DateTime.Now;
+                        itemFoto.DataExclusao = DateTime.Now.ToUniversalTime();
                     }
                 }
             }
             foreach (var item in itemLoja.Avaliacoes.Where(d=>!d.DataExclusao.HasValue))
             {
-                item.DataExclusao = DateTime.Now;
+                item.DataExclusao = DateTime.Now.ToUniversalTime();
             }
 
             biz.SalvarLoja_Completo(itemLoja);
@@ -125,8 +125,8 @@ namespace CV.UI.Web.Controllers.WebAPI
         public ResultadoOperacao saveCompra(GastoCompra itemCompra)
         {
             ViagemBusiness biz = new ViagemBusiness();
-            itemCompra.DataAtualizacao = DateTime.Now;
-            itemCompra.ItemGasto.DataAtualizacao = DateTime.Now;
+            itemCompra.DataAtualizacao = DateTime.Now.ToUniversalTime();
+            itemCompra.ItemGasto.DataAtualizacao = DateTime.Now.ToUniversalTime();
 
             biz.SalvarGastoCompra_Completo(itemCompra);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
@@ -159,14 +159,14 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             ViagemBusiness biz = new ViagemBusiness();
             GastoCompra item = biz.SelecionarGastoCompra(itemCompra.Identificador);
-            itemCompra.DataExclusao = DateTime.Now;
-            itemCompra.ItemGasto.DataExclusao = DateTime.Now;
+            itemCompra.DataExclusao = DateTime.Now.ToUniversalTime();
+            itemCompra.ItemGasto.DataExclusao = DateTime.Now.ToUniversalTime();
             foreach (var itemItemCompra in item.ItensComprados)
             {
-                itemItemCompra.DataExclusao = DateTime.Now;
+                itemItemCompra.DataExclusao = DateTime.Now.ToUniversalTime();
                 foreach (var itemFoto in itemItemCompra.Fotos)
                 {
-                    itemFoto.DataExclusao = DateTime.Now;
+                    itemFoto.DataExclusao = DateTime.Now.ToUniversalTime();
                 }
             }
             biz.SalvarGastoCompra_Item_Completo(itemCompra);
@@ -185,7 +185,7 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             ViagemBusiness biz = new ViagemBusiness();
             ItemCompra itemOriginal = null;
-            itemItemCompra.DataAtualizacao = DateTime.Now;
+            itemItemCompra.DataAtualizacao = DateTime.Now.ToUniversalTime();
             if (itemItemCompra.Identificador.HasValue)
                 itemOriginal = biz.SelecionarItemCompra(itemItemCompra.Identificador);
 

@@ -58,7 +58,7 @@ resultado.TotalRegistros = _itens.Count();
         public ResultadoOperacao Post([FromBody] Reabastecimento itemReabastecimento)
         {
             ViagemBusiness biz = new ViagemBusiness();
-            itemReabastecimento.DataAtualizacao = DateTime.Now;
+            itemReabastecimento.DataAtualizacao = DateTime.Now.ToUniversalTime();
             itemReabastecimento.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemReabastecimento.Latitude, itemReabastecimento.Longitude);
             itemReabastecimento.Gastos[0].ItemGasto.IdentificadorCidade = itemReabastecimento.IdentificadorCidade;
             itemReabastecimento.Gastos[0].ItemGasto.DataAtualizacao = DateTime.Now.ToUniversalTime();
@@ -76,11 +76,11 @@ resultado.TotalRegistros = _itens.Count();
         {
             ViagemBusiness biz = new ViagemBusiness();
             Reabastecimento itemReabastecimento = biz.SelecionarReabastecimento(id);
-            itemReabastecimento.DataExclusao = DateTime.Now;
+            itemReabastecimento.DataExclusao = DateTime.Now.ToUniversalTime();
             foreach (var item in itemReabastecimento.Gastos)
             {
-                item.DataExclusao = DateTime.Now;
-                item.ItemGasto.DataExclusao = DateTime.Now;
+                item.DataExclusao = DateTime.Now.ToUniversalTime();
+                item.ItemGasto.DataExclusao = DateTime.Now.ToUniversalTime();
             }
             biz.SalvarReabastecimento(itemReabastecimento);
             ResultadoOperacao itemResultado = new ResultadoOperacao();

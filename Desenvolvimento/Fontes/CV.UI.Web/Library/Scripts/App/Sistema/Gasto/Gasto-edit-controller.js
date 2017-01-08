@@ -94,27 +94,27 @@
 
 		    if (Referencias) {
 		        if (Referencias.IdentificadorAtracao) {
-		            var item = { IdentificadorAtracao: Referencias.IdentificadorAtracao, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss") }
+		            var item = { IdentificadorAtracao: Referencias.IdentificadorAtracao, DataAtualizacao: moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss") }
 		            vm.itemGasto.Atracoes.push(item);
 		        }
 		        if (Referencias.IdentificadorHotel) {
-		            var item = { IdentificadorHotel: Referencias.IdentificadorHotel, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss") }
+		            var item = { IdentificadorHotel: Referencias.IdentificadorHotel, DataAtualizacao: moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss") }
 		            vm.itemGasto.Hoteis.push(item);
 		        }
 		        if (Referencias.IdentificadorRefeicao) {
-		            var item = { IdentificadorRefeicao: Referencias.IdentificadorRefeicao, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss") }
+		            var item = { IdentificadorRefeicao: Referencias.IdentificadorRefeicao, DataAtualizacao: moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss") }
 		            vm.itemGasto.Refeicoes.push(item);
 		        }
 		        if (Referencias.IdentificadorCarro) {
-		            var item = { IdentificadorCarro: Referencias.IdentificadorCarro, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss") }
+		            var item = { IdentificadorCarro: Referencias.IdentificadorCarro, DataAtualizacao: moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss") }
 		            vm.itemGasto.Alugueis.push(item);
 		        }
 		        if (Referencias.IdentificadorViagemAerea) {
-		            var item = { IdentificadorViagemAerea: Referencias.IdentificadorViagemAerea, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss") }
+		            var item = { IdentificadorViagemAerea: Referencias.IdentificadorViagemAerea, DataAtualizacao: moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss") }
 		            vm.itemGasto.ViagenAereas.push(item);
 		        }
 		        if (Referencias.IdentificadorReabastecimento) {
-		            var item = { IdentificadorReabastecimento: Referencias.IdentificadorReabastecimento, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss") }
+		            var item = { IdentificadorReabastecimento: Referencias.IdentificadorReabastecimento, DataAtualizacao: moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss") }
 		            vm.itemGasto.Reabastecimentos.push(item);
 		        }
 		    }
@@ -167,7 +167,7 @@
 				        var item = $.grep(vm.itemGasto.Usuarios, function (e) { return e.IdentificadorUsuario == c.Identificador; });
 				        if (c.Selecionado && c.Identificador != vm.itemGasto.IdentificadorUsuario) {
 				            if (item.length == 0)
-				                vm.itemGasto.Usuarios.push({ IdentificadorUsuario: c.Identificador, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss") })
+				                vm.itemGasto.Usuarios.push({ IdentificadorUsuario: c.Identificador, DataAtualizacao: moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss") })
 				        }
 				        else if (item.length > 0) {
 				            var posicao = vm.itemGasto.Usuarios.indexOf(item[0]);

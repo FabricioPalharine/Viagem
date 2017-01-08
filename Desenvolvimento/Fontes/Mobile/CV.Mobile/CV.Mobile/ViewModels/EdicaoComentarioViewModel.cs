@@ -128,36 +128,56 @@ namespace CV.Mobile.ViewModels
             {
                 
                 ItemComentario.Data = ItemComentario.Data.GetValueOrDefault().Date.Add(ItemComentario.Hora.GetValueOrDefault());
-
-                using (ApiService srv = new ApiService())
+                ResultadoOperacao Resultado = new ResultadoOperacao();
+                if (Conectado)
                 {
-                    var Resultado = await srv.SalvarComentario(ItemComentario);
-                    if (Resultado.Sucesso)
+                    using (ApiService srv = new ApiService())
                     {
-
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        bool Inclusao = !ItemComentario.Identificador.HasValue;
+                        Resultado = await srv.SalvarComentario(ItemComentario);
+                        if (Resultado.Sucesso)
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-                        ItemComentario.Identificador = Resultado.IdentificadorRegistro;
-   
-                        MessagingService.Current.SendMessage<Comentario>(MessageKeys.ManutencaoComentario, ItemComentario);
-                            PermiteExcluir = true;
-                        await PopAsync();
+                            base.AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "T", ItemComentario.Identificador.GetValueOrDefault(Resultado.IdentificadorRegistro.GetValueOrDefault()), Inclusao);
+                            var itembase = await srv.CarregarComentario(ItemComentario.Identificador.GetValueOrDefault(Resultado.IdentificadorRegistro.GetValueOrDefault()));
+                            var itemAjustar = await DatabaseService.Database.RetornarComentario(ItemComentario.Identificador);
+                            if (itemAjustar != null)
+                                itembase.Id = itemAjustar.Id;
+                            itemAjustar.DataExclusao = DateTime.Now.ToUniversalTime();
+                            await DatabaseService.Database.SalvarComentario(itembase);
+
+                        }
                     }
-                    else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
+                    
+                }
+                else
+                {
+                    Resultado = await DatabaseService.SalvarComentario(ItemComentario);
+                }
+
+                if (Resultado.Sucesso)
+                {
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
                     {
-                           MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
-                        {
-                            Title = "Problemas Validação",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+                    ItemComentario.Identificador = Resultado.IdentificadorRegistro;
 
-                    }
-                   
+                    MessagingService.Current.SendMessage<Comentario>(MessageKeys.ManutencaoComentario, ItemComentario);
+                    PermiteExcluir = true;
+                    await PopAsync();
+                }
+                else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
+                {
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Problemas Validação",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+
                 }
             }
             finally
@@ -178,17 +198,38 @@ namespace CV.Mobile.ViewModels
                 OnCompleted = new Action<bool>(async result =>
                 {
                     if (!result) return;
-                    using (ApiService srv = new ApiService())
+                    ItemComentario.DataExclusao = DateTime.Now.ToUniversalTime();
+                    ResultadoOperacao Resultado = new ResultadoOperacao();
+                    if (Conectado)
                     {
-                        ItemComentario.DataExclusao = DateTime.Now;
-                        var Resultado = await srv.ExcluirComentario(ItemComentario.Identificador);
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        using (ApiService srv = new ApiService())
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
+                            Resultado = await srv.ExcluirComentario(ItemComentario.Identificador);
+                            base.AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "T", ItemComentario.Identificador.GetValueOrDefault(), false);
+                            var itemAjustar = await DatabaseService.Database.RetornarComentario(ItemComentario.Identificador);
+                            itemAjustar.DataExclusao = DateTime.Now.ToUniversalTime();
+                            await DatabaseService.Database.SalvarComentario(itemAjustar);
+                            
+                        }
                     }
+                    else
+                    {
+                        var itemCV = await DatabaseService.Database.GetControleSincronizacaoAsync();
+                        if (itemCV.SincronizadoEnvio)
+                        {
+                            itemCV.SincronizadoEnvio = false;
+                            await DatabaseService.Database.SalvarControleSincronizacao(itemCV);
+                        }
+                        await DatabaseService.Database.SalvarComentario(ItemComentario);
+                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Comentário Gravado com Sucesso " } };
+                    }
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
                     MessagingService.Current.SendMessage<Comentario>(MessageKeys.ManutencaoComentario, ItemComentario);
                     await PopAsync();
 

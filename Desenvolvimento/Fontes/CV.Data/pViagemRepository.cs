@@ -431,7 +431,7 @@ namespace CV.Data
 
         public List<Amigo> ListarAmigo(Expression<Func<Amigo, bool>> predicate)
         {
-            return Context.Amigos.Where(predicate).ToList();
+            return Context.Amigos.Include("ItemAmigo").Where(predicate).ToList();
         }
 
 

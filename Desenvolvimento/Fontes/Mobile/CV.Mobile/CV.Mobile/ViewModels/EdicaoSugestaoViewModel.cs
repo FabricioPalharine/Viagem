@@ -126,6 +126,7 @@ namespace CV.Mobile.ViewModels
                     var Resultado = await srv.SalvarSugestao(ItemSugestao);
                     if (Resultado.Sucesso)
                     {
+                        base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "T", Resultado.IdentificadorRegistro.GetValueOrDefault(), !ItemSugestao.Identificador.HasValue);
 
                         MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
                         {

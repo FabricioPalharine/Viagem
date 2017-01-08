@@ -50,6 +50,8 @@ namespace CV.Mobile.iOS.Renderer
                 {
                     itemUsuario = await srv.LogarUsuario(token);
                 }
+                if (itemUsuario.Codigo > 0)
+                    await (App.Current as App).GravarUsuario(itemUsuario.Codigo);
                 if (!string.IsNullOrEmpty(itemUsuario.CodigoGoogle))
                 {
                     e.Account.Username = itemUsuario.CodigoGoogle;

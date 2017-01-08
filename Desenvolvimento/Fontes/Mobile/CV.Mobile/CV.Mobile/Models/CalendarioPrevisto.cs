@@ -1,4 +1,5 @@
 ﻿using MvvmHelpers;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace CV.Mobile.Models
 {
     public class CalendarioPrevisto: ObservableObject
     {
+        [PrimaryKey, AutoIncrement]
         public int? Id { get; set; }
 
         public int? Identificador { get; set; }

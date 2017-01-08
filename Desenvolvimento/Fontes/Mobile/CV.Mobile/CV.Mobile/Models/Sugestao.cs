@@ -1,4 +1,5 @@
 ﻿using MvvmHelpers;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace CV.Mobile.Models
 {
     public class Sugestao: ObservableObject
     {
+        [PrimaryKey, AutoIncrement]
+
         public int? Id { get; set; }
         public int? Identificador { get; set; }
         private string _Local;
@@ -20,6 +23,7 @@ namespace CV.Mobile.Models
 
         public int? IdentificadorUsuario { get; set; }
         private int? _Status;
+        [Ignore]
         public Usuario ItemUsuario { get; set; }       
         public string Tipo { get; set; }
         public DateTime? DataAtualizacao { get; set; }
@@ -41,7 +45,7 @@ namespace CV.Mobile.Models
                 OnPropertyChanged("PermiteAcao");
             }
         }
-
+        [Ignore]
         public bool PermiteAcao
         {
             get

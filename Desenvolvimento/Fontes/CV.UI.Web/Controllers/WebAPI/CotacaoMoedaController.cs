@@ -41,7 +41,7 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             ViagemBusiness biz = new ViagemBusiness();
             itemCotacaoMoeda.IdentificadorViagem = token.IdentificadorViagem;
-            itemCotacaoMoeda.DataAtualizacao = DateTime.Now;
+            itemCotacaoMoeda.DataAtualizacao = DateTime.Now.ToUniversalTime();
             biz.SalvarCotacaoMoeda(itemCotacaoMoeda);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
@@ -58,7 +58,7 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             ViagemBusiness biz = new ViagemBusiness();
             CotacaoMoeda itemCotacaoMoeda = biz.SelecionarCotacaoMoeda(id);
-            itemCotacaoMoeda.DataExclusao = DateTime.Now;
+            itemCotacaoMoeda.DataExclusao = DateTime.Now.ToUniversalTime();
             biz.SalvarCotacaoMoeda(itemCotacaoMoeda);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();

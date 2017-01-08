@@ -1,5 +1,6 @@
 ﻿using CV.Mobile.Helpers;
 using MvvmHelpers;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace CV.Mobile.Models
         private string _Destinatario;
         private int? _Status;
 
+        [PrimaryKey, AutoIncrement]
 
         public int? Id { get; set; }
         public int? IdViagem { get; set; }
@@ -146,14 +148,15 @@ namespace CV.Mobile.Models
 
         public DateTime? DataAtualizacao { get; set; }
         public DateTime? DataExclusao { get; set; }
-
+        [Ignore]
         public Usuario ItemUsuario { get; set; }
+        [Ignore]
         public Usuario ItemUsuarioPedido { get; set; }
 
         public string NomeUsuario { get; set; }
         public string NomeUsuarioPedido { get; set; }
 
-
+        [Ignore]
         public string MoedaSigla
         {
             get
@@ -161,7 +164,7 @@ namespace CV.Mobile.Models
                 return Moeda.HasValue ? ((enumMoeda)Moeda.Value).ToString() : null;
             }
         }
-
+        [Ignore]
         public string DestinatarioSelecao
         {
             get
@@ -172,7 +175,7 @@ namespace CV.Mobile.Models
                     return Destinatario;
             }
         }
-
+        [Ignore]
         public string Comprado
         {
             get
@@ -180,7 +183,7 @@ namespace CV.Mobile.Models
                 return (Status.GetValueOrDefault(-1) == (int)enumStatusListaCompra.Comprado) ?"Sim":"Não";
             }
         }
-
+        [Ignore]
         public string DescricaoCombinada
         {
             get

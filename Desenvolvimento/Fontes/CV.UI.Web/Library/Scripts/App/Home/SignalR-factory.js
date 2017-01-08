@@ -66,9 +66,7 @@
             EnviarAlertaRequisicao: function (callback) {
                 $hub.client.enviarAlertaRequisicao = callback;
             },
-            EnviarAlertaSugestao: function (callback) {
-                $hub.client.enviarAlertaSugestao = callback;
-            },
+         
             AvisarAlertaAtualizacao: function (callback) {
                 $hub.client.avisarAlertaAtualizacao = callback;
             },

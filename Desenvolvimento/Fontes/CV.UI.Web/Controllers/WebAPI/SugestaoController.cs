@@ -40,7 +40,7 @@ namespace CV.UI.Web.Controllers.WebAPI
         public ResultadoOperacao Post([FromBody] Sugestao itemSugestao)
         {
             ViagemBusiness biz = new ViagemBusiness();
-            itemSugestao.DataAtualizacao = DateTime.Now;
+            itemSugestao.DataAtualizacao = DateTime.Now.ToUniversalTime();
             itemSugestao.IdentificadorViagem = token.IdentificadorViagem;
             if (!itemSugestao.IdentificadorUsuario.HasValue)
                 itemSugestao.IdentificadorUsuario = token.IdentificadorUsuario;
@@ -58,7 +58,7 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             ViagemBusiness biz = new ViagemBusiness();
             Sugestao itemSugestao = biz.SelecionarSugestao(id);
-            itemSugestao.DataExclusao = DateTime.Now;
+            itemSugestao.DataExclusao = DateTime.Now.ToUniversalTime();
             biz.SalvarSugestao(itemSugestao);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
@@ -96,7 +96,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             itemAgendar.itemCalendario.CodigoPlace = itemAgendar.itemSugestao.CodigoPlace;
 
             itemAgendar.itemCalendario.IdentificadorViagem = token.IdentificadorViagem;
-            itemAgendar.itemCalendario.DataAtualizacao = DateTime.Now;
+            itemAgendar.itemCalendario.DataAtualizacao = DateTime.Now.ToUniversalTime();
             biz.SalvarCalendarioPrevisto(itemAgendar.itemCalendario);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
@@ -105,7 +105,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             {
                 itemResultado.IdentificadorRegistro = itemAgendar.itemCalendario.Identificador;
                 itemAgendar.itemSugestao.Status = 2;
-                itemAgendar.itemSugestao.DataAtualizacao = DateTime.Now;
+                itemAgendar.itemSugestao.DataAtualizacao = DateTime.Now.ToUniversalTime();
                 biz.SalvarSugestao(itemAgendar.itemSugestao);
             }
             return itemResultado;

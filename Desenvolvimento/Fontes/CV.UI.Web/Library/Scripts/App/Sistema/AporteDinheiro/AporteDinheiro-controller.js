@@ -2,9 +2,9 @@
 	'use strict';
 	angular
 		.module('Sistema')
-		.controller('AporteDinheiroCtrl',['$uibModal', 'Error', '$timeout', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', '$window', 'i18nService','Usuario','Viagem','AporteDinheiro','Dominio', AporteDinheiroCtrl]);
+		.controller('AporteDinheiroCtrl',['$uibModal', 'Error', '$timeout', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', '$window', 'i18nService','Usuario','Viagem','AporteDinheiro','Dominio','SignalR', AporteDinheiroCtrl]);
 
-	function AporteDinheiroCtrl($uibModal, Error, $timeout, $state, $translate, $scope, Auth, $rootScope, $stateParams, $window, i18nService, Usuario, Viagem, AporteDinheiro, Dominio) {
+	function AporteDinheiroCtrl($uibModal, Error, $timeout, $state, $translate, $scope, Auth, $rootScope, $stateParams, $window, i18nService, Usuario, Viagem, AporteDinheiro, Dominio,SignalR) {
 		var vm = this;
 		vm.filtro = {  Index: 0, Count: 0 };
 		vm.filtroAtualizacao = {  Index: 0, Count: 0 };
@@ -27,6 +27,8 @@
 			AporteDinheiro.delete({ id: itemForDelete.Identificador }, function (data) {
 				
 			    if (data.Sucesso) {
+			        SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'AD', itemForDelete.Identificador, false);
+
 			        callback(data);
 			        var Posicao = vm.ListaDados.indexOf(itemForDelete);
 				    vm.ListaDados.splice(Posicao, 1);

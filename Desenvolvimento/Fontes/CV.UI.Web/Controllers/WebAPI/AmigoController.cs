@@ -83,5 +83,14 @@ namespace CV.UI.Web.Controllers.WebAPI
             
             return itemResultado;
         }
+        [Authorize]
+        [ActionName("ListarAmigos")]
+        [HttpGet]
+        public List<Amigo> ListarAmigos()
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            return biz.ListarAmigo(d => d.IdentificadorUsuario == token.IdentificadorUsuario && d.IdentificadorAmigo.HasValue);
+
+        }
     }
 }

@@ -25,21 +25,23 @@
   </ContentPage.ToolbarItems>  
   <ContentPage.Content>
     <StackLayout Spacing="0">
+      <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="Blue" />
+
       <ListView x:Name="listView" VerticalOptions="FillAndExpand" SeparatorVisibility="None" ItemsSource="{Binding Viagens}" SelectedItem="{Binding ViagemSelecionada, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="false"  IsPullToRefreshEnabled="true"  IsRefreshing="{Binding IsBusy, Mode=OneWay}" RefreshCommand="{Binding AtualizarListaCommand}" IsVisible="{Binding ModoPesquisa, Converter={StaticResource boolInverterConverter}}" >
+
+        <ListView.Behaviors>
+          <behaviors:EventHandlerBehavior EventName="ItemTapped">
+            <behaviors:InvokeCommandAction Command="{Binding SelecionarCommand}"   />
+          </behaviors:EventHandlerBehavior>
+        </ListView.Behaviors>
+        
         <ListView.ItemTemplate>
           
           <DataTemplate>
             <ViewCell >
               <ContentView >
                 <StackLayout Orientation="Horizontal" Spacing="10">
-                  <Image Source="{local:ImageResource CV.Mobile.Icones.checkmark24.png}" Aspect="AspectFit" HeightRequest="24" WidthRequest="24" >
-                    <Image.GestureRecognizers>
-                      <TapGestureRecognizer
-                           Command="{Binding Path=BindingContext.SelecionarCommand,  Source={x:Reference paginaSelecao}}"
-                            CommandParameter="{Binding Identificador}"
-                           NumberOfTapsRequired="1"/>
-                    </Image.GestureRecognizers>
-                  </Image>
+                 
                   <StackLayout>
                     <Label Text="{Binding Nome}"  VerticalTextAlignment="End" LineBreakMode="TailTruncation" />
                     <StackLayout Orientation="Horizontal" Spacing="10">

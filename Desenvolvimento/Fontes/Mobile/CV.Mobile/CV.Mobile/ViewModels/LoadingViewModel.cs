@@ -4,6 +4,7 @@ using CV.Mobile.Services;
 using CV.Mobile.Views;
 using Microsoft.Practices.ServiceLocation;
 using MvvmHelpers;
+using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,9 +70,14 @@ namespace CV.Mobile.ViewModels
             if (autenticacao != null)
             {
                 itemUsuario = new UsuarioLogado();
+               
                 using (ApiService srv = new ApiService())
                 {
-                    itemUsuario = await srv.CarregarDadosAplicativo(new UsuarioLogado() { CodigoGoogle = autenticacao.Username });
+                    if (CrossConnectivity.Current.IsConnected && await srv.VerificarOnLine())
+                    {
+                        itemUsuario = await srv.CarregarDadosAplicativo(new UsuarioLogado() { CodigoGoogle = autenticacao.Username });
+                        SalvarAmigosLocal(itemUsuario);
+                    }
                     if (string.IsNullOrEmpty(itemUsuario.CodigoGoogle))
                     {
                         itemUsuario.AuthenticationToken = autenticacao.Properties["AuthenticationToken"];
@@ -87,6 +93,20 @@ namespace CV.Mobile.ViewModels
             }
             LoadFinished = true;
             return itemUsuario;
+        }
+
+        private async void SalvarAmigosLocal(UsuarioLogado itemUsuario)
+        {
+            using (ApiService srv = new ApiService())
+            {
+
+                if (!string.IsNullOrEmpty(itemUsuario.CodigoGoogle))
+                {
+                    var ListaAmigos = await srv.ListarAmigosUsuario();
+                    await DatabaseService.SalvarAmigos(ListaAmigos);
+                }
+            }
+
         }
     }
 }

@@ -50,7 +50,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             ViagemBusiness biz = new ViagemBusiness();
             itemAtracao.IdentificadorCidade =  biz.RetornarCidadeGeocoding(itemAtracao.Latitude, itemAtracao.Longitude);
             itemAtracao.IdentificadorViagem = token.IdentificadorViagem;
-            itemAtracao.DataAtualizacao = DateTime.Now;
+            itemAtracao.DataAtualizacao = DateTime.Now.ToUniversalTime();
             biz.SalvarAtracao(itemAtracao);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
@@ -68,10 +68,10 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             ViagemBusiness biz = new ViagemBusiness();
             Atracao itemAtracao = biz.SelecionarAtracao_Completo(id);
-            itemAtracao.DataExclusao = DateTime.Now;
-            itemAtracao.Avaliacoes.ToList().ForEach(d => d.DataExclusao = DateTime.Now);
-            itemAtracao.Gastos.ToList().ForEach(d => d.DataExclusao = DateTime.Now);
-            itemAtracao.Fotos.ToList().ForEach(d => d.DataExclusao = DateTime.Now);
+            itemAtracao.DataExclusao = DateTime.Now.ToUniversalTime();
+            itemAtracao.Avaliacoes.ToList().ForEach(d => d.DataExclusao = DateTime.Now.ToUniversalTime());
+            itemAtracao.Gastos.ToList().ForEach(d => d.DataExclusao = DateTime.Now.ToUniversalTime());
+            itemAtracao.Fotos.ToList().ForEach(d => d.DataExclusao = DateTime.Now.ToUniversalTime());
             biz.SalvarAtracao_Completo(itemAtracao);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();

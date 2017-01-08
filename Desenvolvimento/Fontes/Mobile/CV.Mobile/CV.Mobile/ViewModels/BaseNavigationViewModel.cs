@@ -23,6 +23,9 @@ using Google.Apis.Auth.OAuth2.Responses;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Auth.OAuth2.Flows;
 using System.Xml;
+using Microsoft.Practices.ServiceLocation;
+using CV.Mobile.Interfaces;
+using Plugin.Connectivity;
 
 namespace CV.Mobile.ViewModels
 {
@@ -43,25 +46,57 @@ namespace CV.Mobile.ViewModels
 
         public async Task AtualizarViagem(int? Identificador)
         {
+            IsBusy = true;
             using (ApiService srv = new ApiService())
             {
+                await DatabaseService.Database.LimparBancoViagem();
                 Viagem itemViagem = await srv.CarregarViagem(Identificador);
                 var DadosViagem = await srv.SelecionarViagem(itemViagem.Identificador);
                 itemViagem.VejoGastos = DadosViagem.VerCustos;
                 itemViagem.Edicao = DadosViagem.PermiteEdicao;
                 itemViagem.Aberto = DadosViagem.Aberto;
+
+                ControleSincronizacao itemCS = new ControleSincronizacao();
+                itemCS.IdentificadorViagem = itemViagem.Identificador;
+                itemCS.SincronizadoEnvio = true;
+                itemCS.UltimaDataEnvio = DateTime.Now.ToUniversalTime();
+                itemCS.UltimaDataRecepcao = new DateTime(1900, 01, 01);
+                await DatabaseService.Database.SalvarControleSincronizacao(itemCS);
+                await DatabaseService.Database.SalvarViagemAsync(itemViagem);
+                DatabaseService.SincronizarParticipanteViagem(itemViagem, itemCS);
+                ConectarViagem(itemViagem.Identificador.GetValueOrDefault(), itemViagem.Edicao);
+
                 if (Application.Current?.MainPage is MasterDetailPage)
                 {
                     ((MasterDetailViewModel)Application.Current?.MainPage.BindingContext).ItemViagem = itemViagem;
                 }
-                foreach (var Pagina in NavigationStack)
+                PreencherPaginasViagem(itemViagem);
+            }
+            IsBusy = false;
+        }
+
+        public void PreencherPaginasViagem(Viagem itemViagem)
+        {
+            foreach (var Pagina in NavigationStack)
+            {
+                if (Pagina.BindingContext is MenuInicialViewModel)
                 {
-                    if (Pagina.BindingContext is MenuInicialViewModel)
-                    {
-                        ((MenuInicialViewModel)Pagina.BindingContext).ViagemSelecionada = true;
-                        ((MenuInicialViewModel)Pagina.BindingContext).ItemViagem = itemViagem;
-                    }
+                    ((MenuInicialViewModel)Pagina.BindingContext).ViagemSelecionada = true;
+                    ((MenuInicialViewModel)Pagina.BindingContext).ItemViagem = itemViagem;
                 }
+            }
+        }
+
+        public bool Conectado
+        {
+            get
+            {
+                if (Application.Current?.MainPage is MasterDetailPage)
+                {
+                    return ((MasterDetailViewModel)Application.Current?.MainPage.BindingContext).ConectadoPrincipal;
+                }
+                else
+                    return false;
             }
         }
 
@@ -96,6 +131,42 @@ namespace CV.Mobile.ViewModels
                     return null;
             }
         }
+
+        #region SignalR
+
+        public async void ConectarUsuario(int IdentificadorUsuario)
+        {
+            await (((MasterDetailPage)Application.Current?.MainPage).BindingContext as MasterDetailViewModel).ConectarUsuario( IdentificadorUsuario);
+        }
+        public async void DesconectarUsuario(int IdentificadorUsuario)
+        {
+            await (((MasterDetailPage)Application.Current?.MainPage).BindingContext as MasterDetailViewModel).DesconectarUsuario(IdentificadorUsuario);
+
+        }
+
+        public async void RequisitarAmizade(int IdentificadorUsuario, int IdentificadorRequisicao)
+        {
+            await (((MasterDetailPage)Application.Current?.MainPage).BindingContext as MasterDetailViewModel).RequisitarAmizade(IdentificadorUsuario,IdentificadorRequisicao);
+        }
+
+        public async void ConectarViagem(int IdentificadorViagem, bool Edicao)
+        {
+            await (((MasterDetailPage)Application.Current?.MainPage).BindingContext as MasterDetailViewModel).ConectarViagem(IdentificadorViagem,Edicao);
+
+        }
+        public async void SugerirVisitaViagem(Sugestao itemSugestao)
+        {
+            await (((MasterDetailPage)Application.Current?.MainPage).BindingContext as MasterDetailViewModel).SugerirVisitaViagem(itemSugestao);
+        }
+
+        public async void AtualizarViagem(int IdentificadorViagem, string TipoAtualizacao, int Identificador, bool Inclusao)
+        {
+            await (((MasterDetailPage)Application.Current?.MainPage).BindingContext as MasterDetailViewModel).AtualizarViagem(IdentificadorViagem,TipoAtualizacao,Identificador,Inclusao);
+
+        }
+
+
+        #endregion
 
         #region INavigation implementation
 
@@ -261,6 +332,10 @@ namespace CV.Mobile.ViewModels
                 }
 
             }
+            else
+            {
+                itemUpload.DataArquivo = ServiceLocator.Current.GetInstance<IFileHelper>().RetornarDataArquivo(retorno.Path);
+            }
             if (exif != null)
             {
                 string Texto = exif.DateTime;
@@ -277,34 +352,43 @@ namespace CV.Mobile.ViewModels
 
                 if (VM.Confirmado)
                     itemUpload.Comentario = VM.Valor;
-                byte[] DadosFoto = null;
-                using (MemoryStream ms = new MemoryStream())
+                if (CrossConnectivity.Current.IsConnected && Settings.ModoImagem != "3" &&
+                     (Settings.ModoImagem == "1" || CrossConnectivity.Current.ConnectionTypes.Contains(Plugin.Connectivity.Abstractions.ConnectionType.Desktop) ||
+                   CrossConnectivity.Current.ConnectionTypes.Contains(Plugin.Connectivity.Abstractions.ConnectionType.Wimax) ||
+                   CrossConnectivity.Current.ConnectionTypes.Contains(Plugin.Connectivity.Abstractions.ConnectionType.WiFi)))
                 {
-                    Source.CopyTo(ms);
-                    DadosFoto = ms.ToArray();
-                }
-                using (ApiService srv = new ApiService())
-                {
-                    var ItemUsuario = await srv.CarregarUsuario(ItemUsuarioLogado.Codigo);
-                    if (ItemUsuario.DataToken.GetValueOrDefault().ToUniversalTime().AddSeconds(ItemUsuario.Lifetime.GetValueOrDefault(0) - 60) < DateTime.Now.ToUniversalTime())
+
+                    byte[] DadosFoto = null;
+                    using (MemoryStream ms = new MemoryStream())
                     {
-                        using (AccountsService srvAccount = new AccountsService())
+                        Source.CopyTo(ms);
+                        DadosFoto = ms.ToArray();
+                    }
+                    using (ApiService srv = new ApiService())
+                    {
+                        var ItemUsuario = await srv.CarregarUsuario(ItemUsuarioLogado.Codigo);
+                        if (ItemUsuario.DataToken.GetValueOrDefault().AddSeconds(ItemUsuario.Lifetime.GetValueOrDefault(0) - 60) < DateTime.Now.ToUniversalTime())
                         {
-                            await srvAccount.AtualizarTokenUsuario(ItemUsuario);
+                            using (AccountsService srvAccount = new AccountsService())
+                            {
+                                await srvAccount.AtualizarTokenUsuario(ItemUsuario);
+                            }
                         }
+                        using (PhotosService srvFoto = new PhotosService(ItemUsuario.Token))
+                        {
+                            await srvFoto.SubirFoto(ItemViagemSelecionada.CodigoAlbum, DadosFoto, itemUpload);
+                        }
+                        var resultadoAPI = await srv.SubirImagem(itemUpload);
+                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        {
+                            Title = "Sucesso",
+                            Message = "Foto Gravada com Sucesso",
+                            Cancel = "OK"
+                        });
                     }
-                    using (PhotosService srvFoto = new PhotosService(ItemUsuario.Token))
-                    {
-                         await srvFoto.SubirFoto(ItemViagemSelecionada.CodigoAlbum, DadosFoto, itemUpload);
-                    }
-                    var resultadoAPI = await srv.SubirImagem(itemUpload);
-                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
-                    {
-                        Title = "Sucesso",
-                        Message = "Foto Gravada com Sucesso",
-                        Cancel = "OK"
-                    });
                 }
+                else
+                    await DatabaseService.Database.SalvarUploadFoto(itemUpload);
 
             });
             
@@ -312,6 +396,9 @@ namespace CV.Mobile.ViewModels
 
         private async Task GravarVideo(UploadFoto itemUpload, Plugin.Media.Abstractions.MediaFile retorno, bool Novo)
         {
+            itemUpload.DataArquivo = DateTime.Now;
+
+            itemUpload.Video = true;
             if (Novo)
             {
                 var posicao = await RetornarPosicao();
@@ -322,10 +409,13 @@ namespace CV.Mobile.ViewModels
                 }
                 
             }
+            else
+            {
+                itemUpload.DataArquivo = ServiceLocator.Current.GetInstance<IFileHelper>().RetornarDataArquivo(retorno.Path);
+            }
             itemUpload.CaminhoLocal = retorno.Path;
             itemUpload.ImageMime = "video/avi";
 
-            itemUpload.DataArquivo = DateTime.Now;
             var Source = retorno.GetStream();
             var VM = new TextPopupViewModel() { Title = "Comentário", Texto = "Adicionar Comentário Foto" };
             var Pagina = new Views.TextoPopupPage() { BindingContext = VM };
@@ -336,30 +426,35 @@ namespace CV.Mobile.ViewModels
 
                 if (VM.Confirmado)
                     itemUpload.Comentario = VM.Valor;
-               
-                using (ApiService srv = new ApiService())
+
+                if (CrossConnectivity.Current.IsConnected && Settings.ModoImagem != "3" &&
+                     (Settings.ModoImagem == "1" || CrossConnectivity.Current.ConnectionTypes.Contains(Plugin.Connectivity.Abstractions.ConnectionType.Desktop) ||
+                   CrossConnectivity.Current.ConnectionTypes.Contains(Plugin.Connectivity.Abstractions.ConnectionType.Wimax) ||
+                   CrossConnectivity.Current.ConnectionTypes.Contains(Plugin.Connectivity.Abstractions.ConnectionType.WiFi)))
                 {
-                    var ItemUsuario = await srv.CarregarUsuario(ItemUsuarioLogado.Codigo);
-                    if (ItemUsuario.DataToken.GetValueOrDefault().ToUniversalTime().AddSeconds(ItemUsuario.Lifetime.GetValueOrDefault(0) - 60) < DateTime.Now.ToUniversalTime())
+                    using (ApiService srv = new ApiService())
                     {
-                        using (AccountsService srvAccount = new AccountsService())
+                        var ItemUsuario = await srv.CarregarUsuario(ItemUsuarioLogado.Codigo);
+                        if (ItemUsuario.DataToken.GetValueOrDefault().AddSeconds(ItemUsuario.Lifetime.GetValueOrDefault(0) - 60) < DateTime.Now.ToUniversalTime())
                         {
-                            await srvAccount.AtualizarTokenUsuario(ItemUsuario);
+                            using (AccountsService srvAccount = new AccountsService())
+                            {
+                                await srvAccount.AtualizarTokenUsuario(ItemUsuario);
+                            }
                         }
+                        GravarVideoYouTube(itemUpload, Source, ItemUsuario);
+
+
                     }
-                    GravarVideoYouTube(itemUpload, Source, ItemUsuario);
-                    //using (PhotosService srvFoto = new PhotosService(ItemUsuario.Token))
-                    //{
-                    //    await srvFoto.SubirFoto(ItemViagemSelecionada.CodigoAlbum, DadosFoto, itemUpload);
-                    //}
-                   
                 }
+                else
+                    await DatabaseService.Database.SalvarUploadFoto(itemUpload);
 
             });
         }
 
 
-        public async void GravarVideoYouTube(UploadFoto itemUpload, Stream baseStream, Usuario itemUsuario)
+        public static async void GravarVideoYouTube(UploadFoto itemUpload, Stream baseStream, Usuario itemUsuario)
         {
             TokenResponse tr = new TokenResponse() { AccessToken = itemUsuario.Token, ExpiresInSeconds = itemUsuario.Lifetime, Issued = DateTime.Now, RefreshToken = itemUsuario.RefreshToken };
 
@@ -402,16 +497,18 @@ namespace CV.Mobile.ViewModels
                 xmlReader.MoveToContent();
                 itemUpload.LinkGoogle = xmlReader.GetAttribute("src");
                 itemUpload.ImageMime = vid.FirstOrDefault().FileDetails.FileType;
-                using (ApiService srv = new ApiService())
-                {
-                    var resultadoAPI = await srv.SubirVideo(itemUpload);
-                }
-                MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
-                {
-                    Title = "Sucesso",
-                    Message = "Vídeo Gravado com Sucesso",
-                    Cancel = "OK"
-                });
+               
+                    using (ApiService srv = new ApiService())
+                    {
+                        var resultadoAPI = await srv.SubirVideo(itemUpload);
+                    }
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = "Vídeo Gravado com Sucesso",
+                        Cancel = "OK"
+                    });
+                
             }
 
         }

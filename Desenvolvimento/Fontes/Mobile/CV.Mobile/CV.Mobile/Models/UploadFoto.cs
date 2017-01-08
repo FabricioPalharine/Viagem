@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,9 @@ namespace CV.Mobile.Models
 {
     public class UploadFoto
     {
-        public string Base64 { get; set; }
+
+        [PrimaryKey, AutoIncrement]
+        public int? Id { get; set; }
         public string ImageMime { get; set; }
         public DateTime DataArquivo { get; set; }
 
@@ -28,5 +31,7 @@ namespace CV.Mobile.Models
         public int? IdentificadorAtracao { get; set; }
         public int? IdentificadorItemCompra { get; set; }
         public string CaminhoLocal { get; set; }
+
+        public bool Video { get; set; }
     }
 }

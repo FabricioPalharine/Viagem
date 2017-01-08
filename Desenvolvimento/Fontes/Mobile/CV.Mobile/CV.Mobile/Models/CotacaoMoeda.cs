@@ -1,4 +1,5 @@
 ﻿using CV.Mobile.Helpers;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace CV.Mobile.Models
 {
     public class CotacaoMoeda
     {
+        [PrimaryKey, AutoIncrement]
+
         public int? Id { get; set; }
         public int? Identificador { get; set; }
         public int? Moeda { get; set; }
@@ -18,6 +21,8 @@ namespace CV.Mobile.Models
         public DateTime? DataAtualizacao { get; set; }
 
         public DateTime? DataExclusao { get; set; }
+        [Ignore]
+
         public string SiglaMoeda
         {
             get
@@ -27,6 +32,11 @@ namespace CV.Mobile.Models
                 else
                     return null;
             }
+        }
+
+        public CotacaoMoeda Clone()
+        {
+            return (CotacaoMoeda)this.MemberwiseClone();
         }
     }
 }

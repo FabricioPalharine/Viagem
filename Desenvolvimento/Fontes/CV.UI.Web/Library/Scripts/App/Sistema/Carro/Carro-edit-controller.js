@@ -97,12 +97,12 @@
 		            var itens =
                          $.grep(vm.itemCarro.Avaliacoes, function (e) { return e.IdentificadorUsuario == item.Identificador && !e.DataExclusao });
 		            if (item.Selecionado && itens.length == 0) {
-		                var NovoItem = { IdentificadorUsuario: item.Identificador, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss") }
+		                var NovoItem = { IdentificadorUsuario: item.Identificador, DataAtualizacao: moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss") }
 		                vm.itemCarro.Avaliacoes.push(NovoItem);
 		            }
 		            else if (!item.Selecionado && itens.length > 0) {
 
-		                item.DataExclusao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+		                item.DataExclusao.utc = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
 		            }
 
 		        });
@@ -132,7 +132,7 @@
 		        var MinhaAvaliacao =
                          $.grep(vm.itemCarro.Avaliacoes, function (e) { return e.IdentificadorUsuario == Auth.currentUser.Codigo && !e.DataExclusao });
 		        if (MinhaAvaliacao.length > 0) {
-		            MinhaAvaliacao[0].DataAtualizacao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+		            MinhaAvaliacao[0].DataAtualizacao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
 		            MinhaAvaliacao[0].Comentario = vm.ItemAvaliacao.Comentario;
 		            MinhaAvaliacao[0].Nota = vm.ItemAvaliacao.Nota;
 		        }
@@ -184,7 +184,7 @@
 
 		vm.RemoverCusto = function (itemCusto) {
 		    $scope.$parent.itemCarro.modalPopupTrigger(itemCusto, $translate.instant('MensagemExclusao'), $translate.instant('Sim'), $translate.instant('Nao'), function () {
-		        itemCusto.DataExclusao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+		        itemCusto.DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
 		        Gasto.SalvarCustoCarro(itemCusto);
 		    });
 
@@ -237,14 +237,14 @@
 
 		vm.RemoverReabastecimento = function (itemCusto) {
 		    $scope.$parent.itemCarro.modalPopupTrigger(itemCusto, $translate.instant('MensagemExclusao'), $translate.instant('Sim'), $translate.instant('Nao'), function () {
-		        itemCusto.DataExclusao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+		        itemCusto.DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
 		        Reabastecimento.delete(itemCusto.Identificador);
 		    });
 		};
 
 		vm.RemoverDeslocamento = function (itemCusto) {
 		    $scope.$parent.itemCarro.modalPopupTrigger(itemCusto, $translate.instant('MensagemExclusao'), $translate.instant('Sim'), $translate.instant('Nao'), function () {
-		        itemCusto.DataExclusao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+		        itemCusto.DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
 		        Carro.SalvarCarroDeslocamento(itemCusto);
 		    });
 
@@ -364,7 +364,7 @@
 		    };
 
 		    vmSelecao.SelecionarCusto = function (itemCusto) {
-		        var itemGravar = { IdentificadorCarro: vm.itemCarro.Identificador, IdentificadorGasto: itemCusto.Identificador, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss") };
+		        var itemGravar = { IdentificadorCarro: vm.itemCarro.Identificador, IdentificadorGasto: itemCusto.Identificador, DataAtualizacao.utc: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss") };
 		        Gasto.SalvarCustoCarro(itemGravar, function (data) {
 		            if (data.Sucesso) {
 		                var itemPush = { Identificador: data.IdentificadorRegistro, ItemGasto: itemCusto };

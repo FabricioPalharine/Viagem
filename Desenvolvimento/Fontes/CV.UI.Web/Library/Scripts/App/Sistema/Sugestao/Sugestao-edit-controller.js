@@ -44,6 +44,8 @@
 					    vm.itemSugestao.Identificador = data.IdentificadorRegistro;
 					    if (!vm.itemOriginal.Identificador)
 					        SignalR.SugerirVisitaViagem(vm.itemSugestao);
+					    SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'S', data.IdentificadorRegistro, !vm.itemOriginal.Identificador);
+
 					    vm.EscopoAtualizacao.AtualizarItemSalvo(vm.itemSugestao, vm.itemOriginal);
 						vm.close();
 					} else {

@@ -24,7 +24,7 @@ namespace CV.Mobile.ViewModels
                                                                         await CarregarListaViagens();
                                                                     },
                                                                     () => true);
-            SelecionarCommand = new Command<int>(async (Identificador) => await Selecionar(Identificador));
+            SelecionarCommand = new Command<ItemTappedEventArgs>(async (Identificador) => await Selecionar(Identificador));
             PesquisarCommand = new Command(
                                                                     async () => await VerificarPesquisa(),
                                                                     () => true);
@@ -94,9 +94,9 @@ namespace CV.Mobile.ViewModels
             }
         }
 
-        private async Task Selecionar(int Identificador)
+        private async Task Selecionar(ItemTappedEventArgs Item)
         {
-            await AtualizarViagem(Identificador);
+            await AtualizarViagem(((Viagem)Item.Item).Identificador.GetValueOrDefault());
             await PopAsync();
         }
 

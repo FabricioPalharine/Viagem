@@ -33,7 +33,7 @@ namespace CV.Mobile.ViewModels
                                                        () => true);
 
             ExcluirCommand = new Command<Cidade>((item) => Excluir(item));
-            EditarCommand = new Command<Cidade>(async (item) => await Editar(item));
+            EditarCommand = new Command<ItemTappedEventArgs>(async (item) => await Editar(item));
             AdicionarCommand = new Command(async () => await AbrirInclusao(), () => true);
             MessagingService.Current.Unsubscribe<Cidade>(MessageKeys.ManutencaoAgrupamentoCidade);
             MessagingService.Current.Subscribe<Cidade>(MessageKeys.ManutencaoAgrupamentoCidade, (service, cotacao) =>
@@ -133,14 +133,12 @@ namespace CV.Mobile.ViewModels
             });
         }
 
-        private async Task Editar(Cidade item)
+        private async Task Editar(ItemTappedEventArgs item)
         {
             using (ApiService srv = new ApiService())
             {
-                var itemEditar = await srv.CarregarCidadeGrupo(item.Identificador);
+                var itemEditar = await srv.CarregarCidadeGrupo(((Cidade) item.Item).Identificador);
                 await AbirTela(itemEditar);
-                //EdicaoCotacaoPage pagina = new EdicaoCotacaoPage() { BindingContext = new EditarCotacaoViewModel(itemEditar) };
-                //await PushAsync(pagina);
             }
         }
 

@@ -44,7 +44,7 @@ namespace CV.Mobile.ViewModels
                                                       () => true);
 
             ExcluirCommand = new Command<Sugestao>((item) => Excluir(item));
-            EditarCommand = new Command<Sugestao>(async (item) => await Editar(item));
+            EditarCommand = new Command<ItemTappedEventArgs>(async (item) => await Editar(item));
             AdicionarCommand = new Command(async () => await AbrirInclusao(), () => true);
             MessagingService.Current.Unsubscribe<Sugestao>(MessageKeys.ManutencaoSugestao);
             MessagingService.Current.Subscribe<Sugestao>(MessageKeys.ManutencaoSugestao, (service, item) =>
@@ -196,11 +196,11 @@ namespace CV.Mobile.ViewModels
             });
         }
 
-        private async Task Editar(Sugestao item)
+        private async Task Editar(ItemTappedEventArgs item)
         {
             using (ApiService srv = new ApiService())
             {
-                var itemEditar = await srv.CarregarSugestao(item.Identificador);
+                var itemEditar = await srv.CarregarSugestao(((Sugestao)item.Item).Identificador);
                 var pagina = new EdicaoSugestaoPage() { BindingContext = new EdicaoSugestaoViewModel(itemEditar) };
                 await PushAsync(pagina);
             }

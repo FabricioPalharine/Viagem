@@ -66,11 +66,11 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             ViagemBusiness biz = new ViagemBusiness();
             Foto itemFoto = biz.SelecionarFoto_Completa(id);
-            itemFoto.DataExclusao = DateTime.Now;
-            itemFoto.Atracoes.ToList().ForEach(d => d.DataExclusao = DateTime.Now);
-            itemFoto.Hoteis.ToList().ForEach(d => d.DataExclusao = DateTime.Now);
-            itemFoto.Refeicoes.ToList().ForEach(d => d.DataExclusao = DateTime.Now);
-            itemFoto.ItensCompra.ToList().ForEach(d => d.DataExclusao = DateTime.Now);
+            itemFoto.DataExclusao = DateTime.Now.ToUniversalTime();
+            itemFoto.Atracoes.ToList().ForEach(d => d.DataExclusao = DateTime.Now.ToUniversalTime());
+            itemFoto.Hoteis.ToList().ForEach(d => d.DataExclusao = DateTime.Now.ToUniversalTime());
+            itemFoto.Refeicoes.ToList().ForEach(d => d.DataExclusao = DateTime.Now.ToUniversalTime());
+            itemFoto.ItensCompra.ToList().ForEach(d => d.DataExclusao = DateTime.Now.ToUniversalTime());
             biz.SalvarFoto_Completa(itemFoto);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();

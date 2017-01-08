@@ -60,7 +60,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             ViagemBusiness biz = new ViagemBusiness();
             itemRefeicao.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemRefeicao.Latitude, itemRefeicao.Longitude);
             itemRefeicao.IdentificadorViagem = token.IdentificadorViagem;
-            itemRefeicao.DataAtualizacao = DateTime.Now;
+            itemRefeicao.DataAtualizacao = DateTime.Now.ToUniversalTime();
             biz.SalvarRefeicao(itemRefeicao);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
@@ -78,10 +78,10 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             ViagemBusiness biz = new ViagemBusiness();
             Refeicao itemRefeicao = biz.SelecionarRefeicao_Completa(id);
-            itemRefeicao.DataExclusao = DateTime.Now;
-            itemRefeicao.Pedidos.ToList().ForEach(d => d.DataExclusao = DateTime.Now);
-            itemRefeicao.Gastos.ToList().ForEach(d => d.DataExclusao = DateTime.Now);
-            itemRefeicao.Fotos.ToList().ForEach(d => d.DataExclusao = DateTime.Now);
+            itemRefeicao.DataExclusao = DateTime.Now.ToUniversalTime();
+            itemRefeicao.Pedidos.ToList().ForEach(d => d.DataExclusao = DateTime.Now.ToUniversalTime());
+            itemRefeicao.Gastos.ToList().ForEach(d => d.DataExclusao = DateTime.Now.ToUniversalTime());
+            itemRefeicao.Fotos.ToList().ForEach(d => d.DataExclusao = DateTime.Now.ToUniversalTime());
             biz.SalvarRefeicao_Completo(itemRefeicao);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();

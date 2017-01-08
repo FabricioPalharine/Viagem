@@ -84,12 +84,12 @@
 		            var itens =
                          $.grep(vm.itemLoja.Avaliacoes, function (e) { return e.IdentificadorUsuario == item.Identificador && !e.DataExclusao });
 		            if (item.Selecionado && itens.length == 0) {
-		                var NovoItem = { IdentificadorUsuario: item.Identificador, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss"), Pedido: item.Pedido }
+		                var NovoItem = { IdentificadorUsuario: item.Identificador, DataAtualizacao: moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss"), Pedido: item.Pedido }
 		                vm.itemLoja.Avaliacoes.push(NovoItem);
 		            }
 		            else if (!item.Selecionado && itens.length > 0) {
 
-		                item.DataExclusao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+		                item.DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
 		            }
 
 		        });
@@ -100,7 +100,7 @@
 		        var MinhaAvaliacao =
                          $.grep(vm.itemLoja.Avaliacoes, function (e) { return e.IdentificadorUsuario == Auth.currentUser.Codigo && !e.DataExclusao });
 		        if (MinhaAvaliacao.length > 0) {
-		            MinhaAvaliacao[0].DataAtualizacao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+		            MinhaAvaliacao[0].DataAtualizacao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
 		            MinhaAvaliacao[0].Comentario = vm.ItemAvaliacao.Comentario;
 		            MinhaAvaliacao[0].Nota = vm.ItemAvaliacao.Nota;
 		        }
@@ -229,7 +229,7 @@
 
 		vm.RemoverCusto = function (itemCusto) {
 		    $scope.$parent.itemLoja.modalPopupTrigger(itemCusto, $translate.instant('MensagemExclusao'), $translate.instant('Sim'), $translate.instant('Nao'), function () {
-		        itemCusto.DataExclusao = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+		        itemCusto.DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
 		        Loja.excluirCompra(itemCusto);
 		    });
 

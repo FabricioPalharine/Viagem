@@ -43,7 +43,7 @@ namespace CV.UI.Web.Controllers.WebAPI
         public ResultadoOperacao Post([FromBody] Comentario itemComentario)
         {
             ViagemBusiness biz = new ViagemBusiness();
-            itemComentario.DataAtualizacao = DateTime.Now;
+            itemComentario.DataAtualizacao = DateTime.Now.ToUniversalTime();
             itemComentario.IdentificadorUsuario = token.IdentificadorUsuario;
             itemComentario.IdentificadorViagem = token.IdentificadorViagem;
             itemComentario.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemComentario.Latitude, itemComentario.Longitude);
@@ -61,7 +61,7 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             ViagemBusiness biz = new ViagemBusiness();
             Comentario itemComentario = biz.SelecionarComentario(id);
-            itemComentario.DataExclusao = DateTime.Now;
+            itemComentario.DataExclusao = DateTime.Now.ToUniversalTime();
             biz.SalvarComentario(itemComentario);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();

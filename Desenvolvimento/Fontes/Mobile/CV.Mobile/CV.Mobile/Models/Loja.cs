@@ -1,4 +1,5 @@
 ﻿using MvvmHelpers;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace CV.Mobile.Models
         private int? _IdentificadorAtracaoPai;
 
 
+        [PrimaryKey, AutoIncrement]
 
         public int? Id { get; set; }
         public int? Identificador { get; set; }
@@ -93,7 +95,9 @@ namespace CV.Mobile.Models
 
         public int? IdentificadorCidade { get; set; }
         public string NomeCidade { get; set; }
+        [Ignore]
         public ObservableRangeCollection<GastoCompra> Compras { get; set; }
+        [Ignore]
         public ObservableRangeCollection<AvaliacaoLoja> Avaliacoes { get; set; }
     }
 }

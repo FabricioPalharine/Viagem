@@ -1,4 +1,5 @@
 ﻿using MvvmHelpers;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace CV.Mobile.Models
 {
     public class CarroDeslocamentoUsuario : ObservableObject
     {
+        [PrimaryKey, AutoIncrement]
+
         public int? Id { get; set; }
         public string NomeUsuario { get; set; }
 
@@ -17,9 +20,7 @@ namespace CV.Mobile.Models
         public int? IdentificadorCarroDeslocamento { get; set; }
 
         public int? IdentificadorUsuario { get; set; }
-
-        public CarroDeslocamento ItemCarroDeslocamento { get; set; }
-
+        [Ignore]
         public Usuario ItemUsuario { get; set; }
         public CarroDeslocamentoUsuario Clone()
         {

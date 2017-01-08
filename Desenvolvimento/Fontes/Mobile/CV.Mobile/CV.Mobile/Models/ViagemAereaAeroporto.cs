@@ -1,4 +1,5 @@
 ﻿using MvvmHelpers;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,6 +44,7 @@ namespace CV.Mobile.Models
                 SetProperty(ref _HoraSaida, value);
             }
         }
+        [PrimaryKey, AutoIncrement]
 
         public int? Id { get; set; }
         public int? Identificador { get; set; }
@@ -62,11 +64,10 @@ namespace CV.Mobile.Models
         private DateTime? dataChegada;
 
         private DateTime? dataPartida;
-
+        [Ignore]
         public Cidade ItemCidade { get; set; }
 
-        public ViagemAerea ItemViagemAerea { get; set; }
-
+      
         public string CodigoPlace { get; set; }
 
         public DateTime? DataAtualizacao { get; set; }
@@ -123,7 +124,7 @@ namespace CV.Mobile.Models
                 SetProperty(ref dataPartida, value);
             }
         }
-
+        [Ignore]
         public bool VisitaIniciada
         {
             get
@@ -151,7 +152,7 @@ namespace CV.Mobile.Models
                 OnPropertyChanged("DataChegada");
             }
         }
-
+        [Ignore]
         public bool VisitaConcluida
         {
             get
@@ -179,7 +180,7 @@ namespace CV.Mobile.Models
             }
         }
 
-
+        [Ignore]
         public Command<GmsSearchResults> PlaceSelectedCommand
         {
             get
@@ -191,7 +192,7 @@ namespace CV.Mobile.Models
                 });
             }
         }
-
+        [Ignore]
         public MapSpan Bounds
         {
             get

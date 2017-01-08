@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.ConfiguracaoPage"
+             Title="Configurações"
+              xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+             xmlns:controles="clr-namespace: CV.Mobile.Controls;assembly=CV.Mobile"
+             >
+
+  <ContentPage.ToolbarItems>
+    <ToolbarItem  Icon="save.png"  Command="{Binding SalvarCommand}" />
+  </ContentPage.ToolbarItems>
+  <ContentPage.Content>
+    <StackLayout>
+   
+      <Label Text="Manter OnLine" />
+      <controles:ExtendedPicker
+                           DisplayProperty="Descricao"
+                           KeyMemberPath="Codigo"
+                           ItemsSource="{Binding ListaTipoOnline}"
+                           SelectedItem="{Binding ManterOnline}"
+                           HorizontalOptions="FillAndExpand"
+                            />
+
+      <Label Text="Sincronizar Dados" />
+      <controles:ExtendedPicker
+                           DisplayProperty="Descricao"
+                           KeyMemberPath="Codigo"
+                           ItemsSource="{Binding TiposAtualizacao}"
+                           SelectedItem="{Binding SincronizarDados}"
+                           HorizontalOptions="FillAndExpand"
+                            />
+      <Label Text="Enviar Imagens" />
+      <controles:ExtendedPicker
+                           DisplayProperty="Descricao"
+                           KeyMemberPath="Codigo"
+                           ItemsSource="{Binding TiposAtualizacao}"
+                           SelectedItem="{Binding EnviarImagens}"
+                           HorizontalOptions="FillAndExpand"
+                            />
+
+      <Label Text="Enviar Vídeos" />
+      <controles:ExtendedPicker
+                           DisplayProperty="Descricao"
+                           KeyMemberPath="Codigo"
+                           ItemsSource="{Binding TiposAtualizacao}"
+                           SelectedItem="{Binding EnviarVideos}"
+                           HorizontalOptions="FillAndExpand"
+                            />
+    </StackLayout>
+
+  </ContentPage.Content>
+</ContentPage>

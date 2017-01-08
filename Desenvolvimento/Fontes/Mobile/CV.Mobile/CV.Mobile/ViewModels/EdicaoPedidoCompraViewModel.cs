@@ -63,6 +63,7 @@ namespace CV.Mobile.ViewModels
                     var Resultado = await srv.SalvarListaCompra(ItemListaCompra);
                     if (Resultado.Sucesso)
                     {
+                        base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "LC", ItemListaCompra.Identificador.GetValueOrDefault( Resultado.IdentificadorRegistro.GetValueOrDefault()), !ItemListaCompra.Identificador.HasValue);
 
                         MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
                         {

@@ -58,10 +58,36 @@ namespace CV.Mobile.ViewModels
                 ItemAgenda.DataInicio = ItemAgenda.DataInicio.GetValueOrDefault().Date.Add(ItemAgenda.HoraInicio.Value);
                 ItemAgenda.DataFim = ItemAgenda.DataFim.GetValueOrDefault().Date.Add(ItemAgenda.HoraFim.Value);
                 itemAgenda.itemCalendario = ItemAgenda;
-                using (ApiService srv = new ApiService())
+                ResultadoOperacao Resultado = new ResultadoOperacao();
+                if (Conectado)
                 {
-                    var Resultado = await srv.SalvarAgendarSugestao(itemAgenda);
-                    if (Resultado.Sucesso)
+                    using (ApiService srv = new ApiService())
+                    {
+                        Resultado = await srv.SalvarAgendarSugestao(itemAgenda);
+                        if (Resultado.Sucesso)
+                        {
+                            base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "CP", Resultado.IdentificadorRegistro.GetValueOrDefault(), true);
+                            ItemAgenda.Identificador = Resultado.IdentificadorRegistro;
+
+                            await DatabaseService.Database.SalvarCalendarioPrevisto(ItemAgenda);
+                            var itemSugestao = await DatabaseService.Database.RetornarSugestao(ItemSugestao.Identificador);
+                            if (itemSugestao != null)
+                            {
+                                ItemSugestao.Id = itemSugestao.Id;
+                            }
+                            ItemSugestao.Status = 2;
+                            ItemSugestao.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                            await DatabaseService.Database.SalvarSugestao(ItemSugestao);
+                          
+                        }
+                    }
+                }
+                else
+                {
+                    Resultado = await DatabaseService.SalvarAgendamentoSugestao(itemAgenda);
+                }
+
+                if (Resultado.Sucesso)
                     {
 
                         MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
@@ -72,7 +98,6 @@ namespace CV.Mobile.ViewModels
                         });
                         ItemSugestao.Status = 2;
                         // ItemListaCompra = JsonConvert.DeserializeXNode < ListaCompra >()
-                        ItemAgenda.Identificador = Resultado.IdentificadorRegistro;
                         MessagingService.Current.SendMessage<Sugestao>(MessageKeys.ManutencaoSugestao, ItemSugestao);
                         MessagingService.Current.SendMessage<CalendarioPrevisto>(MessageKeys.ManutencaoCalendario, ItemAgenda);
 
@@ -89,7 +114,7 @@ namespace CV.Mobile.ViewModels
                         });
 
                     }
-                }
+                
             }
             finally
             {

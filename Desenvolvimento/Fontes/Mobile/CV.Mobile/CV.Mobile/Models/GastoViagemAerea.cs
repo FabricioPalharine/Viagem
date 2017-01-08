@@ -1,4 +1,5 @@
 ﻿using MvvmHelpers;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace CV.Mobile.Models
 {
     public class GastoViagemAerea : ObservableObject
     {
+        [PrimaryKey, AutoIncrement]
+
         public int? Id { get; set; }
         public int? Identificador { get; set; }
         public int? IdentificadorGasto { get; set; }
@@ -17,7 +20,7 @@ namespace CV.Mobile.Models
         public DateTime? DataAtualizacao { get; set; }
 
         public DateTime? DataExclusao { get; set; }
-
+        [Ignore]
         public Gasto ItemGasto { get; set; }
 
     }

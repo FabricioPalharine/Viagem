@@ -167,7 +167,8 @@ namespace CV.Mobile.ViewModels
                     var Resultado = await srv.SalvarViagem(ItemViagem);
                     if (Resultado.Sucesso)
                     {
-                        await AtualizarViagem(Resultado.IdentificadorRegistro);
+                        if (!ItemViagem.Identificador.HasValue)
+                            await AtualizarViagem(Resultado.IdentificadorRegistro);
                         MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
                         {
                             Title = "Sucesso",

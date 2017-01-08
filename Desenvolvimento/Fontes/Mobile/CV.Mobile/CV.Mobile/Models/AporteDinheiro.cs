@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SQLite;
 
 namespace CV.Mobile.Models
 {
@@ -14,6 +15,7 @@ namespace CV.Mobile.Models
         private int? _Moeda;
         private DateTime? _DataAporte;
         private decimal? _Cotacao;
+        [PrimaryKey, AutoIncrement]
         public int? Id { get; set; }
         public int? Identificador { get; set; }
         public int? IdentificadorViagem { get; set; }
@@ -78,14 +80,22 @@ namespace CV.Mobile.Models
 
         public int? IdGasto { get; set; }
         public int? IdentificadorGasto { get; set; }
+        [Ignore]
         public Gasto ItemGasto { get; set; }
+        [Ignore]
         public Usuario ItemUsuario { get; set; }
+        [Ignore]
         public string MoedaSigla
         {
             get
             {
                 return Moeda.HasValue ? ((enumMoeda)Moeda.Value).ToString() : null;
             }
+        }
+
+        public AporteDinheiro Clone()
+        {
+            return (AporteDinheiro)this.MemberwiseClone();
         }
     }
 }

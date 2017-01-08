@@ -1,23 +1,35 @@
 ﻿using MvvmHelpers;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace CV.Mobile.Models
 {
     public class Usuario: ObservableObject
     {
+        [PrimaryKey, AutoIncrement]
+
+        public int? Id { get; set; }
+
         public int? Identificador { get; set; }
+        [Ignore]
         public string EMail { get; set; }
         public string Nome { get; set; }
+        [Ignore]
         public string Token { get; set; }
+        [Ignore]
         public string RefreshToken { get; set; }
+        [Ignore]
         public DateTime? DataToken { get; set; }
+        [Ignore]
         public int? Lifetime { get; set; }
+        [Ignore]
         public string Codigo { get; set; }
-
+        [Ignore]
         public bool Selecionado
         {
             get
@@ -30,6 +42,7 @@ namespace CV.Mobile.Models
                 SetProperty(ref _Selecionado, value);
             }
         }
+        [Ignore]
 
         public string Complemento
         {

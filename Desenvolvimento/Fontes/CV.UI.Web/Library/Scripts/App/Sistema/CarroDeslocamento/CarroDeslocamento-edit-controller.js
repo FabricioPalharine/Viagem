@@ -90,7 +90,7 @@
                 var itens =
                      $.grep(vm.itemCarroDeslocamento.Usuarios, function (e) { return e.IdentificadorUsuario == item.Identificador  });
                 if (item.Selecionado && itens.length == 0) {
-                    var NovoItem = { IdentificadorUsuario: item.Identificador, DataAtualizacao: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss") }
+                    var NovoItem = { IdentificadorUsuario: item.Identificador, DataAtualizacao: moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss") }
                     vm.itemCarroDeslocamento.Usuarios.push(NovoItem);
                 }
                 else if (!item.Selecionado && itens.length > 0) {

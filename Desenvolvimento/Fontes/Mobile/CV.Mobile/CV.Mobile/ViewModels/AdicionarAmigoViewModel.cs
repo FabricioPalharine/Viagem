@@ -77,7 +77,10 @@ namespace CV.Mobile.ViewModels
                     var Resultado = await srv.SalvarAmigo(ItemAmigo);
                     if (Resultado.Sucesso)
                     {
-                        
+                        if (ItemAmigo.Seguidor && ItemAmigo.IdentificadorUsuario.HasValue)
+                        {
+                            DatabaseService.AdicionarAmigoBase(ItemAmigo);
+                        }
                         MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
                         {
                             Title = "Sucesso",

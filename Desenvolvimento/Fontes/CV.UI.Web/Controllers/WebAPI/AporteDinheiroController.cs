@@ -43,10 +43,10 @@ namespace CV.UI.Web.Controllers.WebAPI
             ViagemBusiness biz = new ViagemBusiness();
             itemAporteDinheiro.IdentificadorViagem = token.IdentificadorViagem;
             itemAporteDinheiro.IdentificadorUsuario = token.IdentificadorUsuario;
-            itemAporteDinheiro.DataAtualizacao = DateTime.Now;
+            itemAporteDinheiro.DataAtualizacao = DateTime.Now.ToUniversalTime();
             if (itemAporteDinheiro.ItemGasto != null)
             {
-                itemAporteDinheiro.ItemGasto.DataAtualizacao = DateTime.Now;
+                itemAporteDinheiro.ItemGasto.DataAtualizacao = DateTime.Now.ToUniversalTime();
                 itemAporteDinheiro.ItemGasto.IdentificadorUsuario = token.IdentificadorUsuario;
                 itemAporteDinheiro.ItemGasto.IdentificadorViagem = token.IdentificadorViagem;
                 itemAporteDinheiro.ItemGasto.Data = itemAporteDinheiro.DataAporte;
@@ -69,7 +69,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             AporteDinheiro itemAporteDinheiro = biz.SelecionarAporteDinheiro(id);
             itemAporteDinheiro.DataExclusao = null;
             if (itemAporteDinheiro.ItemGasto != null)
-                itemAporteDinheiro.ItemGasto.DataExclusao = DateTime.Now;
+                itemAporteDinheiro.ItemGasto.DataExclusao = DateTime.Now.ToUniversalTime();
             biz.ExcluirAporteDinheiro(itemAporteDinheiro);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();

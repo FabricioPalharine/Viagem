@@ -48,7 +48,7 @@ namespace CV.UI.Web.Controllers.WebAPI
         public ResultadoOperacao Post([FromBody] Viagem itemViagem)
         {
             ViagemBusiness biz = new ViagemBusiness();
-            itemViagem.DataAlteracao = DateTime.Now;
+            itemViagem.DataAlteracao = DateTime.Now.ToUniversalTime();
             biz.SalvarViagem_Completa_Album(itemViagem);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();

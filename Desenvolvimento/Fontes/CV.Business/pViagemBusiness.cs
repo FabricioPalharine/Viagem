@@ -641,7 +641,7 @@ namespace CV.Business
 
         public void AtualizarTokenUsuario(Usuario ItemUsuario)
         {
-            if (ItemUsuario.DataToken.GetValueOrDefault().AddSeconds(ItemUsuario.Lifetime.GetValueOrDefault(0) - 60) < DateTime.Now)
+            if (ItemUsuario.DataToken.GetValueOrDefault().AddSeconds(ItemUsuario.Lifetime.GetValueOrDefault(0) - 60) < DateTime.Now.ToUniversalTime())
             {
                 WebClient client = new WebClient();
                 // creates the post data for the POST request
@@ -661,7 +661,7 @@ namespace CV.Business
 
                 ItemUsuario.Token = retornoCompleto.access_token;
                 ItemUsuario.Lifetime = retornoCompleto.expires_in;
-                ItemUsuario.DataToken = DateTime.Now;
+                ItemUsuario.DataToken = DateTime.Now.ToUniversalTime();
                 SalvarUsuario(ItemUsuario);
             }
         }
@@ -774,7 +774,7 @@ namespace CV.Business
                     amigos.Add(itemParticipante);
                 }
             }
-            ItemUsuario.DataToken = DateTime.Now;
+            ItemUsuario.DataToken = DateTime.Now.ToUniversalTime();
             ItemUsuario.Token = access_token;
             ItemUsuario.RefreshToken = refresh_token;
             ItemUsuario.Lifetime = expires_in;

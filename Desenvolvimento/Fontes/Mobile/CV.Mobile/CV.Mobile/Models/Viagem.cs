@@ -1,4 +1,5 @@
 ﻿using MvvmHelpers;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,9 @@ namespace CV.Mobile.Models
         private ObservableRangeCollection<ParticipanteViagem> _Participantes = new ObservableRangeCollection<ParticipanteViagem>();
         private ObservableRangeCollection<UsuarioGasto> _UsuariosGastos = new ObservableRangeCollection<UsuarioGasto>();
         private bool _ControlaPosicaoGPS;
+
+        [PrimaryKey, AutoIncrement]
+
         public int? Id
         {
             get
@@ -250,7 +254,7 @@ namespace CV.Mobile.Models
                 _DataExclusao = value;
             }
         }
-
+        [Ignore]
         public ObservableRangeCollection<ParticipanteViagem> Participantes
         {
             get
@@ -263,7 +267,7 @@ namespace CV.Mobile.Models
                 SetProperty(ref _Participantes, value);
             }
         }
-
+        [Ignore]
         public ObservableRangeCollection<UsuarioGasto> UsuariosGastos
         {
             get

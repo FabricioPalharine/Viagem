@@ -30,7 +30,7 @@
     <StackLayout>
 
 
-      <Label Text="Comentario"  />
+      <Label Text="Comentário"  />
       <Editor Text="{Binding ItemComentario.Texto}" VerticalOptions="FillAndExpand"/>
 
       <Label Text="Data"   VerticalOptions="End"/>

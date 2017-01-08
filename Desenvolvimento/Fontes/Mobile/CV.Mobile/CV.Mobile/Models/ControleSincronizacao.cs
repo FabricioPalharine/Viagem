@@ -1,4 +1,5 @@
 ﻿using MvvmHelpers;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace CV.Mobile.Models
         private int? _IdentificadorViagem;
         private DateTime? ultimaDataEnvio;
         private DateTime? ultimaDataRecepcao;
-
+        [PrimaryKey, AutoIncrement]
         public int? Id
         {
             get
@@ -65,5 +66,7 @@ namespace CV.Mobile.Models
                 ultimaDataRecepcao = value;
             }
         }
+
+        public bool SincronizadoEnvio { get; set; }
     }
 }

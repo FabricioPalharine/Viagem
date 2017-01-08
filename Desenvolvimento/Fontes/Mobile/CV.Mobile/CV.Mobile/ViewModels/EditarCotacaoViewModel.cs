@@ -56,32 +56,55 @@ namespace CV.Mobile.ViewModels
             SalvarCommand.ChangeCanExecute();
             try
             {
-                using (ApiService srv = new ApiService())
+                ResultadoOperacao Resultado = new ResultadoOperacao();
+                if (Conectado)
                 {
-                    var Resultado = await srv.SalvarCotacaoMoeda(ItemCotacao);
-                    if (Resultado.Sucesso)
+                    using (ApiService srv = new ApiService())
                     {
+                        Resultado = await srv.SalvarCotacaoMoeda(ItemCotacao);
+                        if (Resultado.Sucesso)
+                        {
+                            base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "CM", ItemCotacao.Identificador.GetValueOrDefault(Resultado.IdentificadorRegistro.GetValueOrDefault()), !ItemCotacao.Identificador.HasValue);
+                            ItemCotacao = await srv.CarregarCotacaoMoeda(ItemCotacao.Identificador.GetValueOrDefault(Resultado.IdentificadorRegistro.GetValueOrDefault()));
 
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
-                        {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-                        ItemCotacao.Identificador = Resultado.IdentificadorRegistro;
-                        MessagingService.Current.SendMessage<CotacaoMoeda>(MessageKeys.ManutencaoCotacaoMoeda, ItemCotacao);
-                        await PopAsync();
-                    }
-                    else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
-                    {
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
-                        {
-                            Title = "Problemas Validação",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
+                            var itemAjustar = await DatabaseService.Database.RetornarCotacaoMoeda(ItemCotacao.Identificador.GetValueOrDefault(Resultado.IdentificadorRegistro.GetValueOrDefault()));
+                            if (itemAjustar != null)
+                                ItemCotacao.Id = itemAjustar.Id;
+                            itemAjustar.DataExclusao = DateTime.Now.ToUniversalTime();
+                            await DatabaseService.Database.SalvarCotacaoMoeda(ItemCotacao);
+                            
+
+                        }
 
                     }
+                }
+                else
+                {
+                    ItemCotacao.DataCotacao = DateTime.Now.ToUniversalTime();
+                    Resultado = await DatabaseService.SalvarCotacaoMoeda(ItemCotacao);
+                }
+                if (Resultado.Sucesso)
+                {
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+                    ItemCotacao.Identificador = Resultado.IdentificadorRegistro;
+                    MessagingService.Current.SendMessage<CotacaoMoeda>(MessageKeys.ManutencaoCotacaoMoeda, ItemCotacao);
+                    await PopAsync();
+                }
+                else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
+                {
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Problemas Validação",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+
                 }
             }
             finally

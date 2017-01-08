@@ -149,41 +149,66 @@ namespace CV.Mobile.ViewModels
 
         private async Task CarregarListaCidades()
         {
-            using (ApiService srv = new ApiService())
+            List<Cidade> Dados = new List<Cidade>();
+            if (Conectado)
             {
-                var Dados = await srv.ListarCidadeComentario();
-                ListaCidades = new ObservableCollection<Cidade>(Dados);
-                OnPropertyChanged("ListaCidades");
+                using (ApiService srv = new ApiService())
+                {
+                    Dados = await srv.ListarCidadeComentario();
+
+                }
             }
+            else
+            {
+                Dados = await DatabaseService.Database.ListarCidade_Tipo("CO");
+            }
+
+            ListaCidades = new ObservableCollection<Cidade>(Dados);
+            OnPropertyChanged("ListaCidades");
         }
       
 
         private async Task CarregarListaDados()
         {
-            using (ApiService srv = new ApiService())
+            List<Comentario> Dados = new List<Comentario>();
+            if (Conectado)
             {
-                var Dados = await srv.ListarComentario(ItemCriterioBusca);
-                ListaDados = new ObservableCollection<Comentario>(Dados);
-                OnPropertyChanged("ListaDados");
+                using (ApiService srv = new ApiService())
+                {
+                    Dados = await srv.ListarComentario(ItemCriterioBusca);
+
+                }
             }
+            else
+            {
+                Dados = await DatabaseService.Database.ListarComentario(ItemCriterioBusca);
+            }
+
+            ListaDados = new ObservableCollection<Comentario>(Dados);
+            OnPropertyChanged("ListaDados");
             IsLoadingLista = false;
         }
 
         private async Task VerificarAcaoItem(ItemTappedEventArgs itemSelecionado)
         {
-            using (ApiService srv = new ApiService())
+            Comentario ItemComentario = ((Comentario)itemSelecionado.Item).Clone();
+            if (Conectado)
             {
-                var ItemComentario = await srv.CarregarComentario(((Comentario)itemSelecionado.Item).Identificador);
-                var Pagina = new EdicaoComentarioPage() { BindingContext = new EdicaoComentarioViewModel(ItemComentario,ItemViagem) };
-                await PushAsync(Pagina);
+                using (ApiService srv = new ApiService())
+                {
+                    ItemComentario = await srv.CarregarComentario(((Comentario)itemSelecionado.Item).Identificador);
+
+                }
             }
+            var Pagina = new EdicaoComentarioPage() { BindingContext = new EdicaoComentarioViewModel(ItemComentario, ItemViagem) };
+            await PushAsync(Pagina);
         }
         private async Task Adicionar()
         {
             var ItemComentario = new Comentario() { Data=DateTime.Now, Hora = DateTime.Now.TimeOfDay  } ;
            
-                    var Pagina = new EdicaoComentarioPage() { BindingContext = new EdicaoComentarioViewModel(ItemComentario, ItemViagem) };
-                    await PushAsync(Pagina);
+            var Pagina = new EdicaoComentarioPage() { BindingContext = new EdicaoComentarioViewModel(ItemComentario, ItemViagem) };
+            await PushAsync(Pagina);
                 
             
         }

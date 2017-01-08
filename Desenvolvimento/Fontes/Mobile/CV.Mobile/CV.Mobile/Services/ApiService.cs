@@ -255,17 +255,22 @@ namespace CV.Mobile.Services
 
         public async Task<Boolean> VerificarOnLine()
         {
+            
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Acesso/VerificaOnline"));
             bool retorno = false;
-            HttpResponseMessage response = null;
-            response = await client.GetAsync(uri);
-            var resultado = await response.Content.ReadAsStringAsync();
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                retorno = JsonConvert.DeserializeObject<bool>(resultado);
-            }
+                HttpResponseMessage response = null;
+                response = await client.GetAsync(uri);
+                var resultado = await response.Content.ReadAsStringAsync();
 
+                if (response.IsSuccessStatusCode)
+                {
+                    retorno = JsonConvert.DeserializeObject<bool>(resultado);
+                }
+            }
+            catch
+            { }
 
             return retorno;
         }
@@ -281,6 +286,21 @@ namespace CV.Mobile.Services
             {
                 var itemResultado = JsonConvert.DeserializeObject<ResultadoConsultaTipo<ConsultaAmigo>>(resultado);
                 ListaAmigos = itemResultado.Lista;
+            }
+
+            return ListaAmigos;
+        }
+
+        public async Task<List<Amigo>> ListarAmigosUsuario()
+        {
+            var ListaAmigos = new List<Amigo>();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Amigo/ListarAmigos"));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                ListaAmigos = JsonConvert.DeserializeObject<List<Amigo>>(resultado);
             }
 
             return ListaAmigos;

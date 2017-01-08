@@ -42,7 +42,7 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             ViagemBusiness biz = new ViagemBusiness();
             itemListaCompra.IdentificadorViagem = token.IdentificadorViagem;
-            itemListaCompra.DataAtualizacao = DateTime.Now;
+            itemListaCompra.DataAtualizacao = DateTime.Now.ToUniversalTime();
             biz.SalvarListaCompra(itemListaCompra);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
@@ -90,7 +90,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             foreach (var itemLista in _itens.Where(d => d.Status == (int)enumStatusListaCompra.NaoVisto))
             {
                 itemLista.Status = (int)enumStatusListaCompra.Pendente;
-                itemLista.DataAtualizacao = DateTime.Now;
+                itemLista.DataAtualizacao = DateTime.Now.ToUniversalTime();
                 biz.SalvarListaCompra(itemLista);
             }
             return _itens;
