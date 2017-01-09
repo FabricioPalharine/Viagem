@@ -81,6 +81,19 @@ namespace CV.Mobile.Models
         private DateTime? _DataEntrada;
 
         private DateTime? _DataSaidia;
+        private bool _Atualizado = true;
 
+        public bool AtualizadoBanco
+        {
+            get
+            {
+                return _Atualizado;
+            }
+
+            set
+            {
+                _Atualizado = value;
+            }
+        }
     }
 }

@@ -80,7 +80,8 @@ namespace CV.Mobile.ViewModels
                 }
                 else
                 {
-                    ItemCotacao.DataCotacao = DateTime.Now.ToUniversalTime();
+                    ItemCotacao.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                    ItemCotacao.AtualizadoBanco = false;
                     Resultado = await DatabaseService.SalvarCotacaoMoeda(ItemCotacao);
                 }
                 if (Resultado.Sucesso)

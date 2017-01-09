@@ -50,5 +50,20 @@ namespace CV.Mobile.Models
                 SetProperty(ref _Nota, value);
             }
         }
+
+        private bool _Atualizado = true;
+
+        public bool AtualizadoBanco
+        {
+            get
+            {
+                return _Atualizado;
+            }
+
+            set
+            {
+                _Atualizado = value;
+            }
+        }
     }
 }

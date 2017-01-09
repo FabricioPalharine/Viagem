@@ -168,7 +168,7 @@ namespace CV.Mobile.ViewModels
                     if (Resultado.Sucesso)
                     {
                         if (!ItemViagem.Identificador.HasValue)
-                            await AtualizarViagem(Resultado.IdentificadorRegistro);
+                            await GravarViagem(Resultado.IdentificadorRegistro);
                         MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
                         {
                             Title = "Sucesso",
@@ -196,6 +196,20 @@ namespace CV.Mobile.ViewModels
             }
         }
 
+        private async Task GravarViagem(int? Identificador)
+        {
+            IsBusy = true;
+            using (ApiService srv = new ApiService())
+            {
+                 Viagem itemViagem = await srv.CarregarViagem(Identificador);
+                var itemViagemBanco = await DatabaseService.Database.GetViagemAtualAsync();
+                itemViagem.Id = itemViagemBanco?.Id;
+                await DatabaseService.Database.SalvarViagemAsync(itemViagem);
+                DatabaseService.SincronizarParticipanteViagem(itemViagem);
+
+            }
+            IsBusy = false;
+        }
 
         private void ExcluirParticipante(ParticipanteViagem ItemParticipante)
         {

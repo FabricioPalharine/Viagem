@@ -133,6 +133,9 @@ namespace CV.Mobile.ViewModels
                 }
                 else
                 {
+                    ItemAporteDinheiro.AtualizadoBanco = false;
+                    if (ItemAporteDinheiro.ItemGasto != null)
+                        ItemAporteDinheiro.ItemGasto.AtualizadoBanco = false;
                     Resultado = await DatabaseService.SalvarAporteDinheiro(ItemAporteDinheiro);
                 }
                 if (Resultado.Sucesso)

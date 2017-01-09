@@ -74,6 +74,21 @@ namespace CV.Mobile.Models
         private TimeSpan? _Hora;
 
         private int? _Odometro;
+
+        private bool _Atualizado = true;
+
+        public bool AtualizadoBanco
+        {
+            get
+            {
+                return _Atualizado;
+            }
+
+            set
+            {
+                _Atualizado = value;
+            }
+        }
         public CarroEvento Clone()
         {
             return (CarroEvento)this.MemberwiseClone();

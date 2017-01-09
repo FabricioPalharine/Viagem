@@ -36,6 +36,19 @@ namespace CV.Mobile.Models
         public int? Tipo { get; set; }
 
         public string Descricao { get; set; }
+        private bool _Atualizado = true;
 
+        public bool AtualizadoBanco
+        {
+            get
+            {
+                return _Atualizado;
+            }
+
+            set
+            {
+                _Atualizado = value;
+            }
+        }
     }
 }

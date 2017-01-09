@@ -204,19 +204,14 @@ namespace CV.Mobile.ViewModels
                         {
                             Resultado = await srv.ExcluirAporteDinheiro(item.Identificador);
                             base.AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "AP", item.Identificador.GetValueOrDefault(), false);
-                            await DatabaseService.ExcluirAporteDinheiro(item);
+                            await DatabaseService.ExcluirAporteDinheiro(item,true);
 
                         }
                     }
                     else
                     {
-                        var itemCV = await DatabaseService.Database.GetControleSincronizacaoAsync();
-                        if (itemCV.SincronizadoEnvio)
-                        {
-                            itemCV.SincronizadoEnvio = false;
-                            await DatabaseService.Database.SalvarControleSincronizacao(itemCV);
-                        }
-                        await DatabaseService.ExcluirAporteDinheiro(item);
+                       
+                        await DatabaseService.ExcluirAporteDinheiro(item, false);
                         Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Aporte Dinheiro Gravado com Sucesso " } };
                     }
                     MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()

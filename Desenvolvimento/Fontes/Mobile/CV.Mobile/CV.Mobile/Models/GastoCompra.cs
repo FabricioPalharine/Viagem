@@ -26,6 +26,19 @@ namespace CV.Mobile.Models
         public Gasto ItemGasto { get; set; }
         [Ignore]
         public ObservableRangeCollection<ItemCompra> ItensComprados { get; set; }
+        private bool _Atualizado = true;
 
+        public bool AtualizadoBanco
+        {
+            get
+            {
+                return _Atualizado;
+            }
+
+            set
+            {
+                _Atualizado = value;
+            }
+        }
     }
 }

@@ -63,7 +63,7 @@ namespace CV.Mobile.ViewModels
                 itemCS.UltimaDataRecepcao = new DateTime(1900, 01, 01);
                 await DatabaseService.Database.SalvarControleSincronizacao(itemCS);
                 await DatabaseService.Database.SalvarViagemAsync(itemViagem);
-                DatabaseService.SincronizarParticipanteViagem(itemViagem, itemCS);
+                DatabaseService.SincronizarParticipanteViagem(itemViagem);
                 ConectarViagem(itemViagem.Identificador.GetValueOrDefault(), itemViagem.Edicao);
 
                 if (Application.Current?.MainPage is MasterDetailPage)
@@ -74,6 +74,8 @@ namespace CV.Mobile.ViewModels
             }
             IsBusy = false;
         }
+
+       
 
         public void PreencherPaginasViagem(Viagem itemViagem)
         {

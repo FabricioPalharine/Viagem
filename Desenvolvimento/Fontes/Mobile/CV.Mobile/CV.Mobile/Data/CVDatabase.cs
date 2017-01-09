@@ -550,6 +550,73 @@ namespace CV.Mobile.Data
         {
             return await database.Table<Sugestao>().Where(d => d.Identificador == Identificador).FirstOrDefaultAsync();
         }
+
+        public async Task<List<ListaCompra>> ListarListaCompra_Requisicao(CriterioBusca itemBusca, int IdentificadorUsuario)
+        {
+            var query = database.Table<ListaCompra>();//.Where(d=>!d.DataExclusao.HasValue);
+            query = query.Where(d => d.IdentificadorUsuarioPedido == IdentificadorUsuario);
+            if (itemBusca.IdentificadorParticipante.HasValue)
+                query = query.Where(d => d.IdentificadorUsuario == itemBusca.IdentificadorParticipante);
+            if (itemBusca.Situacao.GetValueOrDefault(-1) >= 0)
+            {
+                 if (itemBusca.Situacao == 1)
+                        query = query.Where(d => d.Status <= itemBusca.Situacao);
+                    else
+                        query = query.Where(d => d.Status == itemBusca.Situacao);
+                
+            }
+            if (!string.IsNullOrEmpty(itemBusca.Tipo))
+                query = query.Where(d => d.Marca.Contains(itemBusca.Tipo));
+            if (!string.IsNullOrEmpty(itemBusca.Comentario))
+                query = query.Where(d => d.Descricao.Contains(itemBusca.Comentario));
+            return (await query.ToListAsync()).Where(d => !d.DataExclusao.HasValue).ToList();
+        }
+
+        public async Task<List<ListaCompra>> ListarListaCompra(CriterioBusca itemBusca, int IdentificadorUsuario)
+        {
+            var query = database.Table<ListaCompra>();//.Where(d=>!d.DataExclusao.HasValue);
+            query = query.Where(d => d.IdentificadorUsuario == IdentificadorUsuario);
+             if (itemBusca.Situacao.GetValueOrDefault(-1) >= 0)
+            {
+                if (itemBusca.Situacao == 1)
+                    query = query.Where(d => d.Status <= itemBusca.Situacao);
+                else
+                    query = query.Where(d => d.Status == itemBusca.Situacao);
+
+            }
+            if (!string.IsNullOrEmpty(itemBusca.Tipo))
+                query = query.Where(d => d.Marca.Contains(itemBusca.Tipo));
+            if (!string.IsNullOrEmpty(itemBusca.Nome))
+                query = query.Where(d => d.Destinatario.Contains(itemBusca.Nome) || d.NomeUsuarioPedido.Contains(itemBusca.Nome));
+            if (!string.IsNullOrEmpty(itemBusca.Comentario))
+                query = query.Where(d => d.Descricao.Contains(itemBusca.Comentario));
+            return (await query.ToListAsync()).Where(d => !d.DataExclusao.HasValue).ToList();
+        }
+
+        public async Task<ListaCompra> RetornarListaCompra(int? Identificador)
+        {
+            return await database.Table<ListaCompra>().Where(d => d.Identificador == Identificador).FirstOrDefaultAsync();
+        }
+
+        public async Task SalvarListaCompra(ListaCompra itemListaCompra)
+        {
+            await database.InsertOrReplaceAsync(itemListaCompra);
+            if (!itemListaCompra.Identificador.HasValue)
+            {
+                itemListaCompra.Identificador = itemListaCompra.Id * -1;
+                await database.InsertOrReplaceAsync(itemListaCompra);
+            }
+        }
+
+        public async Task ExcluirListaCompra(ListaCompra itemExcluir)
+        {
+            await database.DeleteAsync(itemExcluir);
+        }
+
+        public async Task ExcluirCotacaoMoeda(CotacaoMoeda item)
+        {
+            await database.DeleteAsync(item);
+        }
     }
 
 }

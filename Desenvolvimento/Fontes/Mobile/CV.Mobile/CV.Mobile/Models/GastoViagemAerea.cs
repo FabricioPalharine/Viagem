@@ -22,6 +22,19 @@ namespace CV.Mobile.Models
         public DateTime? DataExclusao { get; set; }
         [Ignore]
         public Gasto ItemGasto { get; set; }
+        private bool _Atualizado = true;
 
+        public bool AtualizadoBanco
+        {
+            get
+            {
+                return _Atualizado;
+            }
+
+            set
+            {
+                _Atualizado = value;
+            }
+        }
     }
 }

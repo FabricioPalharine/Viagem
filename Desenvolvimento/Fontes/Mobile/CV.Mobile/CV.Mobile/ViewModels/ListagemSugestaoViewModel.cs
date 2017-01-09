@@ -185,6 +185,8 @@ namespace CV.Mobile.ViewModels
                             Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
                             Cancel = "OK"
                         });
+                        base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "S",item.Identificador.GetValueOrDefault(),false);
+
                         if (ListaDados.Where(d => d.Identificador == item.Identificador).Any())
                         {
                             var Posicao = ListaDados.IndexOf(ListaDados.Where(d => d.Identificador == item.Identificador).FirstOrDefault());

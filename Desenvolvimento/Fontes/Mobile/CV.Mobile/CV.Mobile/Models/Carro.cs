@@ -62,7 +62,20 @@ namespace CV.Mobile.Models
                 SetProperty(ref _Alugado, value);
             }
         }
+        private bool _Atualizado = true;
 
+        public bool AtualizadoBanco
+        {
+            get
+            {
+                return _Atualizado;
+            }
+
+            set
+            {
+                _Atualizado = value;
+            }
+        }
         public Carro Clone()
         {
             return (Carro)this.MemberwiseClone();

@@ -113,7 +113,20 @@ namespace CV.Mobile.Models
 
         private TimeSpan? _HoraEntrada;
         private TimeSpan? _HoraSaida;
+        private bool _Atualizado = true;
 
+        public bool AtualizadoBanco
+        {
+            get
+            {
+                return _Atualizado;
+            }
+
+            set
+            {
+                _Atualizado = value;
+            }
+        }
         public Hotel Clone()
         {
             return (Hotel)this.MemberwiseClone();

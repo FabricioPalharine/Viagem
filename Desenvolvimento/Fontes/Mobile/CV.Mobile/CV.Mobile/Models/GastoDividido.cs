@@ -21,6 +21,19 @@ namespace CV.Mobile.Models
         public string NomeUsuario { get; set; }
         [Ignore]
         public Usuario ItemUsuario { get; set; }
+        private bool _Atualizado = true;
 
+        public bool AtualizadoBanco
+        {
+            get
+            {
+                return _Atualizado;
+            }
+
+            set
+            {
+                _Atualizado = value;
+            }
+        }
     }
 }

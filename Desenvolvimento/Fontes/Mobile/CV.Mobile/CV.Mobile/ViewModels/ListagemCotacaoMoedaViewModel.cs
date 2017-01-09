@@ -130,21 +130,24 @@ namespace CV.Mobile.ViewModels
                         {
                             Resultado = await srv.ExcluirCotacaoMoeda(itemCotacao.Identificador);
                             var itemAjustar = await DatabaseService.Database.RetornarCotacaoMoeda(itemCotacao.Identificador);
-                            itemAjustar.DataExclusao = DateTime.Now.ToUniversalTime();
-                            await DatabaseService.Database.SalvarCotacaoMoeda(itemAjustar);
+                            if (itemAjustar != null)
+                            await DatabaseService.Database.ExcluirCotacaoMoeda(itemAjustar);
                             
 
                         }
                     }
                     else
                     {
-                        itemCotacao.DataExclusao = DateTime.Now.ToUniversalTime();
-                        await DatabaseService.Database.SalvarCotacaoMoeda(itemCotacao);
-                        var itemCV = await DatabaseService.Database.GetControleSincronizacaoAsync();
-                        if (itemCV.SincronizadoEnvio)
+                        if (itemCotacao.Identificador > 0)
                         {
-                            itemCV.SincronizadoEnvio = false;
-                            await DatabaseService.Database.SalvarControleSincronizacao(itemCV);
+                            itemCotacao.DataExclusao = DateTime.Now.ToUniversalTime();
+                            itemCotacao.AtualizadoBanco = false;
+                            await DatabaseService.Database.SalvarCotacaoMoeda(itemCotacao);
+                        }
+                        else
+                        {
+                            await DatabaseService.Database.ExcluirCotacaoMoeda(itemCotacao);
+
                         }
                         Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Cotação de Moeda Gravada com Sucesso" } };
 

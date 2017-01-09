@@ -42,5 +42,20 @@ namespace CV.Mobile.Models
         public TimeSpan? HoraInicio { get; set; }
         public TimeSpan? HoraFim { get; set; }
 
+        private bool _Atualizado = true;
+
+        public bool AtualizadoBanco
+        {
+            get
+            {
+                return _Atualizado;
+            }
+
+            set
+            {
+                _Atualizado = value;
+            }
+        }
+
     }
 }

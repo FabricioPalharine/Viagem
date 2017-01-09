@@ -33,7 +33,20 @@ namespace CV.Mobile.Models
         public DateTime? DataExclusao { get; set; }
 
         public string Observacao { get; set; }
+        private bool _Atualizado = true;
 
+        public bool AtualizadoBanco
+        {
+            get
+            {
+                return _Atualizado;
+            }
+
+            set
+            {
+                _Atualizado = value;
+            }
+        }
         public CarroDeslocamento Clone()
         {
             return (CarroDeslocamento)this.MemberwiseClone();

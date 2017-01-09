@@ -33,7 +33,20 @@ namespace CV.Mobile.Models
                     return null;
             }
         }
+        private bool _Atualizado = true;
 
+        public bool AtualizadoBanco
+        {
+            get
+            {
+                return _Atualizado;
+            }
+
+            set
+            {
+                _Atualizado = value;
+            }
+        }
         public CotacaoMoeda Clone()
         {
             return (CotacaoMoeda)this.MemberwiseClone();

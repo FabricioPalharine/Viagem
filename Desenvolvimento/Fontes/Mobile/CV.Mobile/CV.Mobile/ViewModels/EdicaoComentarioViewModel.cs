@@ -142,7 +142,7 @@ namespace CV.Mobile.ViewModels
                             var itemAjustar = await DatabaseService.Database.RetornarComentario(ItemComentario.Identificador);
                             if (itemAjustar != null)
                                 itembase.Id = itemAjustar.Id;
-                            itemAjustar.DataExclusao = DateTime.Now.ToUniversalTime();
+                            itemAjustar.DataExclusao = DateTime.Now.ToUniversalTime();                           
                             await DatabaseService.Database.SalvarComentario(itembase);
 
                         }
@@ -151,6 +151,7 @@ namespace CV.Mobile.ViewModels
                 }
                 else
                 {
+                    ItemComentario.AtualizadoBanco = false;
                     Resultado = await DatabaseService.SalvarComentario(ItemComentario);
                 }
 
@@ -207,6 +208,7 @@ namespace CV.Mobile.ViewModels
                             Resultado = await srv.ExcluirComentario(ItemComentario.Identificador);
                             base.AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "T", ItemComentario.Identificador.GetValueOrDefault(), false);
                             var itemAjustar = await DatabaseService.Database.RetornarComentario(ItemComentario.Identificador);
+                            itemAjustar.AtualizadoBanco = true;
                             itemAjustar.DataExclusao = DateTime.Now.ToUniversalTime();
                             await DatabaseService.Database.SalvarComentario(itemAjustar);
                             
@@ -214,12 +216,7 @@ namespace CV.Mobile.ViewModels
                     }
                     else
                     {
-                        var itemCV = await DatabaseService.Database.GetControleSincronizacaoAsync();
-                        if (itemCV.SincronizadoEnvio)
-                        {
-                            itemCV.SincronizadoEnvio = false;
-                            await DatabaseService.Database.SalvarControleSincronizacao(itemCV);
-                        }
+                        ItemComentario.AtualizadoBanco = false;                        
                         await DatabaseService.Database.SalvarComentario(ItemComentario);
                         Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Comentário Gravado com Sucesso " } };
                     }

@@ -71,17 +71,41 @@ namespace CV.Mobile.ViewModels
                 OnCompleted = new Action<bool>(async result =>
                 {
                     if (!result) return;
-                    using (ApiService srv = new ApiService())
+
+                    ResultadoOperacao Resultado = new ResultadoOperacao();
+                    ItemListaCompra.Status = (int)enumStatusListaCompra.NaoComprar;
+                    ItemListaCompra.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                    if (Conectado)
                     {
-                        ItemListaCompra.Status = (int)enumStatusListaCompra.NaoComprar;
-                        var Resultado = await srv.SalvarListaCompra(ItemListaCompra);
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        using (ApiService srv = new ApiService())
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });                       
+                            Resultado = await  srv.SalvarListaCompra(ItemListaCompra);
+                            base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "LC", ItemListaCompra.Identificador.GetValueOrDefault(), false);
+
+                            var itemBanco = await DatabaseService.Database.RetornarListaCompra(ItemListaCompra.Identificador);
+                            if (itemBanco != null)
+                            {
+                                ItemListaCompra.Id = itemBanco.Id;
+
+                            }
+                            await DatabaseService.Database.SalvarListaCompra(ItemListaCompra);
+                        }
                     }
+                    else
+                    {
+                          ItemListaCompra.AtualizadoBanco = false;
+                           await DatabaseService.Database.SalvarListaCompra(ItemListaCompra);
+                       
+
+                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Lista Compra Salva com Sucesso" } };
+                    }
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
                     MessagingService.Current.SendMessage<ListaCompra>(MessageKeys.ManutencaoRequisicaoPedidoCompra, ItemListaCompra);
                     await PopAsync();
 

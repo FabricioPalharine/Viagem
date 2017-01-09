@@ -22,5 +22,22 @@ namespace CV.Mobile.Models
         [Ignore]
         public Gasto ItemGasto { get; set; }
 
+        private bool _Atualizado = true;
+
+        public bool AtualizadoBanco
+        {
+            get
+            {
+                return _Atualizado;
+            }
+
+            set
+            {
+                _Atualizado = value;
+            }
+        }
+
+
+
     }
 }

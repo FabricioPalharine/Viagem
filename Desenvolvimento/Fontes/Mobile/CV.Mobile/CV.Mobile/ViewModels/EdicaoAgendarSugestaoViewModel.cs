@@ -76,6 +76,7 @@ namespace CV.Mobile.ViewModels
                                 ItemSugestao.Id = itemSugestao.Id;
                             }
                             ItemSugestao.Status = 2;
+                            ItemSugestao.AtualizadoBanco = true;
                             ItemSugestao.DataAtualizacao = DateTime.Now.ToUniversalTime();
                             await DatabaseService.Database.SalvarSugestao(ItemSugestao);
                           
@@ -84,6 +85,8 @@ namespace CV.Mobile.ViewModels
                 }
                 else
                 {
+                    itemAgenda.itemSugestao.AtualizadoBanco = false;
+                    itemAgenda.itemCalendario.AtualizadoBanco = false;
                     Resultado = await DatabaseService.SalvarAgendamentoSugestao(itemAgenda);
                 }
 

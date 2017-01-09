@@ -138,17 +138,46 @@ namespace CV.Mobile.ViewModels
                 OnCompleted = new Action<bool>(async result =>
                 {
                     if (!result) return;
-                    using (ApiService srv = new ApiService())
+                    ResultadoOperacao Resultado = new ResultadoOperacao();
+                    ItemSugestao.Status = 3;
+                    ItemSugestao.DataAtualizacao = DateTime.Now.ToUniversalTime();
+
+                    if (Conectado)
                     {
-                        ItemSugestao.Status = 3;
-                        var Resultado = await srv.SalvarSugestao(ItemSugestao);
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        using (ApiService srv = new ApiService())
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });                       
+                           
+                            Resultado = await srv.SalvarSugestao(ItemSugestao);
+
+                            var itemSugestao = await DatabaseService.Database.RetornarSugestao(ItemSugestao.Identificador);
+                            if (itemSugestao != null)
+                            {
+                                ItemSugestao.Id = itemSugestao.Id;
+                            }
+                            ItemSugestao.AtualizadoBanco = true;
+                            
+                            await DatabaseService.Database.SalvarSugestao(ItemSugestao);
+
+                        }
                     }
+                    else
+                    {
+                        ItemSugestao.AtualizadoBanco = false;
+                        var itemSugestao = await DatabaseService.Database.RetornarSugestao(ItemSugestao.Identificador);
+                        if (itemSugestao != null)
+                        {
+                            ItemSugestao.Id = itemSugestao.Id;
+                        }
+                        await DatabaseService.Database.SalvarSugestao(ItemSugestao);
+                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Sugestão salva com Sucesso" } };
+                    }
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
                     MessagingService.Current.SendMessage<Sugestao>(MessageKeys.ManutencaoSugestao, ItemSugestao);
                     await PopAsync();
 

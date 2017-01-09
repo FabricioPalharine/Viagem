@@ -227,6 +227,19 @@ namespace CV.Mobile.Models
 
         [Ignore]
         public ObservableRangeCollection<ReabastecimentoGasto> Reabastecimentos { get; set; }
+        private bool _Atualizado = true;
 
+        public bool AtualizadoBanco
+        {
+            get
+            {
+                return _Atualizado;
+            }
+
+            set
+            {
+                _Atualizado = value;
+            }
+        }
     }
 }

@@ -66,7 +66,7 @@ namespace CV.Mobile.ViewModels
                                                       () => true);
 
             ExcluirCommand = new Command<ListaCompra>((itemCotacao) => Excluir(itemCotacao));
-            EditarCommand = new Command<ListaCompra>(async (itemCotacao) => await Editar(itemCotacao));
+            EditarCommand = new Command<ItemTappedEventArgs>(async (itemCotacao) => await Editar(itemCotacao));
             AdicionarCommand = new Command(async () => await AbrirInclusao(), () => true);
             ListaStatus = new ObservableCollection<ItemLista>();
             ListaStatus.Add(new ItemLista() { Codigo = "3", Descricao = "Comprado" });
@@ -270,34 +270,61 @@ namespace CV.Mobile.ViewModels
 
         private async Task CarregarListaAmigos()
         {
-            using (ApiService srv = new ApiService())
+            List<Usuario> Dados = new List<Usuario>();
+            if (Conectado)
             {
-                var Dados = await srv.ListarAmigos();
-                ListaAmigos = new ObservableCollection<Usuario>(Dados);
-                OnPropertyChanged("ListaAmigos");
+                using (ApiService srv = new ApiService())
+                {
+                    Dados = await srv.ListarAmigos();
+
+                }
             }
+            else
+                Dados = await DatabaseService.Database.ListarAmigos();
+            ListaAmigos = new ObservableCollection<Usuario>(Dados);
+
+            OnPropertyChanged("ListaAmigos");
         }
 
 
         private async Task CarregarListaPedidos()
         {
-            using (ApiService srv = new ApiService())
+            List<ListaCompra> Dados = new List<Models.ListaCompra>();
+            if (Conectado)
             {
-                var Dados = await srv.ListarListaCompra(ItemCriterioBusca);
-                ListaCompra = new ObservableCollection<ListaCompra>(Dados);
-                OnPropertyChanged("ListaCompra");
+                using (ApiService srv = new ApiService())
+                {
+                    Dados = await srv.ListarListaCompra(ItemCriterioBusca);
+
+                }
             }
+            else
+            {
+                Dados = await DatabaseService.Database.ListarListaCompra(ItemCriterioBuscaPedido, ItemUsuarioLogado.Codigo);
+
+            }
+            ListaCompra = new ObservableCollection<ListaCompra>(Dados);
+            OnPropertyChanged("ListaCompra");
             IsLoadingLista = false;
         }
 
         private async Task CarregarListaRequisicao()
         {
-            using (ApiService srv = new ApiService())
+            List<ListaCompra> Dados = new List<Models.ListaCompra>();
+            if (Conectado)
             {
-                var Dados = await srv.ListarPedidosCompraRecebido(ItemCriterioBuscaPedido);
-                PedidosCompra = new ObservableCollection<ListaCompra>(Dados);
-                OnPropertyChanged("PedidosCompra");
+                using (ApiService srv = new ApiService())
+                {
+                    Dados = await srv.ListarPedidosCompraRecebido(ItemCriterioBuscaPedido);
+
+                }
             }
+            else
+            {
+                Dados = await DatabaseService.Database.ListarListaCompra_Requisicao(ItemCriterioBuscaPedido, ItemUsuarioLogado.Codigo);
+            }
+            PedidosCompra = new ObservableCollection<ListaCompra>(Dados);
+            OnPropertyChanged("PedidosCompra");
             IsLoadingLista = false;
         }
 
@@ -312,34 +339,67 @@ namespace CV.Mobile.ViewModels
                 OnCompleted = new Action<bool>(async result =>
                 {
                     if (!result) return;
-                    using (ApiService srv = new ApiService())
+                    ResultadoOperacao Resultado = new ResultadoOperacao();
+                    if (Conectado)
                     {
-                        var Resultado = await srv.ExcluirListaCompra(itemListaCompra.Identificador);
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        using (ApiService srv = new ApiService())
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-                        if (ListaCompra.Where(d => d.Identificador == itemListaCompra.Identificador).Any())
-                        {
-                            var Posicao = ListaCompra.IndexOf(ListaCompra.Where(d => d.Identificador == itemListaCompra.Identificador).FirstOrDefault());
-                            ListaCompra.RemoveAt(Posicao);
+                            Resultado = await srv.ExcluirListaCompra(itemListaCompra.Identificador);
+                            base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "LC", itemListaCompra.Identificador.GetValueOrDefault(), false);
+
+                            var itemBanco = await DatabaseService.Database.RetornarListaCompra(itemListaCompra.Identificador);
+                            if (itemBanco != null)
+                            {
+                                await DatabaseService.Database.ExcluirListaCompra(itemBanco);
+                            }
                         }
+                    }
+                    else
+                    {
+                        if (itemListaCompra.Identificador > 0)
+                        {
+                            itemListaCompra.DataExclusao = DateTime.Now.ToUniversalTime();
+                            itemListaCompra.AtualizadoBanco = false;
+                            await DatabaseService.Database.SalvarListaCompra(itemListaCompra);
+                        }
+                        else
+                            await DatabaseService.Database.ExcluirListaCompra(itemListaCompra);
+
+                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Lista Compra Salva com Sucesso" } };
+                    }
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+                    if (ListaCompra.Where(d => d.Identificador == itemListaCompra.Identificador).Any())
+                    {
+                        var Posicao = ListaCompra.IndexOf(ListaCompra.Where(d => d.Identificador == itemListaCompra.Identificador).FirstOrDefault());
+                        ListaCompra.RemoveAt(Posicao);
                     }
 
                 })
             });
         }
 
-        private async Task Editar(ListaCompra itemLista)
+        private async Task Editar(ItemTappedEventArgs itemLista)
         {
-            using (ApiService srv = new ApiService())
+            ListaCompra itemEditar = new Models.ListaCompra();
+            if (Conectado)
             {
-                var itemEditar = await srv.CarregarListaCompra(itemLista.Identificador);
-                EdicaoListaCompraPage pagina = new EdicaoListaCompraPage() { BindingContext = new EdicaoListaCompraViewModel(itemEditar, ListaAmigos) };
-                await PushAsync(pagina);
+                using (ApiService srv = new ApiService())
+                {
+                    itemEditar = await srv.CarregarListaCompra(((ListaCompra)itemLista.Item).Identificador);
+
+                }
             }
+            else
+            {
+                itemEditar = await DatabaseService.Database.RetornarListaCompra(((ListaCompra)itemLista.Item).Identificador);
+            }
+            EdicaoListaCompraPage pagina = new EdicaoListaCompraPage() { BindingContext = new EdicaoListaCompraViewModel(itemEditar, ListaAmigos) };
+            await PushAsync(pagina);
         }
 
         private async Task AbrirInclusao()

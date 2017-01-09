@@ -29,7 +29,7 @@ namespace CV.Mobile.Services
             }
         }
 
-        public static async void SincronizarParticipanteViagem(Viagem itemViagem, ControleSincronizacao itemCS)
+        public static async void SincronizarParticipanteViagem(Viagem itemViagem)
         {
             List<ParticipanteViagem> listaParticipantes = await Database.ListarParticipanteViagemAsync();
             foreach (var itemParticipante in itemViagem.Participantes)
@@ -228,54 +228,69 @@ namespace CV.Mobile.Services
             return itemGasto;
         }
 
-        internal static async Task ExcluirAporteDinheiro(AporteDinheiro item)
+        internal static async Task ExcluirAporteDinheiro(AporteDinheiro item, bool AtualizadoBanco)
         {
            
             var itemAporte = await CarregarAporteDinheiro(item.Identificador);
             itemAporte.DataExclusao = DateTime.Now.ToUniversalTime();
+            itemAporte.AtualizadoBanco = AtualizadoBanco;
             await Database.SalvarAporteDinheiro(itemAporte);
             if (itemAporte.ItemGasto != null)
             {
-                await ExcluirGasto(itemAporte.ItemGasto);
+                await ExcluirGasto(itemAporte.ItemGasto, AtualizadoBanco);
             }
         }
 
-        private static async Task ExcluirGasto(Gasto itemGasto)
+        private static async Task ExcluirGasto(Gasto itemGasto, bool AtualizadoBanco)
         {
+            itemGasto.AtualizadoBanco = AtualizadoBanco;
             itemGasto.DataExclusao = DateTime.Now.ToUniversalTime();
             await Database.SalvarGasto(itemGasto);
             foreach (var item in itemGasto.Alugueis)
             {
+                item.AtualizadoBanco = AtualizadoBanco;
                 item.DataExclusao = DateTime.Now.ToUniversalTime();
                 await Database.SalvarAluguelGasto(item);
             }
             foreach (var item in itemGasto.Compras)
             {
+                item.AtualizadoBanco = AtualizadoBanco;
+
                 item.DataExclusao = DateTime.Now.ToUniversalTime();
                 await Database.SalvarGastoCompra(item);
             }
             foreach (var item in itemGasto.Atracoes)
             {
+                item.AtualizadoBanco = AtualizadoBanco;
+
                 item.DataExclusao = DateTime.Now.ToUniversalTime();
                 await Database.SalvarGastoAtracao(item);
             }
             foreach (var item in itemGasto.Hoteis)
             {
+                item.AtualizadoBanco = AtualizadoBanco;
+
                 item.DataExclusao = DateTime.Now.ToUniversalTime();
                 await Database.SalvarGastoHotel(item);
             }
             foreach (var item in itemGasto.Reabastecimentos)
             {
+                item.AtualizadoBanco = AtualizadoBanco;
+
                 item.DataExclusao = DateTime.Now.ToUniversalTime();
                 await Database.SalvarReabastecimentoGasto(item);
             }
             foreach (var item in itemGasto.Refeicoes)
             {
+                item.AtualizadoBanco = AtualizadoBanco;
+
                 item.DataExclusao = DateTime.Now.ToUniversalTime();
                 await Database.SalvarGastoRefeicao(item);
             }
             foreach (var item in itemGasto.ViagenAereas)
             {
+                item.AtualizadoBanco = AtualizadoBanco;
+
                 item.DataExclusao = DateTime.Now.ToUniversalTime();
                 await Database.SalvarGastoViagemAerea(item);
             }

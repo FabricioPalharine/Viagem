@@ -103,7 +103,20 @@ namespace CV.Mobile.Models
                 SetProperty(ref _IdentificadorListaCompra, value);
             }
         }
+        private bool _Atualizado = true;
 
+        public bool AtualizadoBanco
+        {
+            get
+            {
+                return _Atualizado;
+            }
+
+            set
+            {
+                _Atualizado = value;
+            }
+        }
         public ItemCompra Clone()
         {
             return (ItemCompra)this.MemberwiseClone();

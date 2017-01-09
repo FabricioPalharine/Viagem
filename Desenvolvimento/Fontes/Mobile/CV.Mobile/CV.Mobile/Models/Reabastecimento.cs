@@ -62,7 +62,20 @@ namespace CV.Mobile.Models
 
         private DateTime? _Data;
         private TimeSpan? _Hora;
+        private bool _Atualizado = true;
 
+        public bool AtualizadoBanco
+        {
+            get
+            {
+                return _Atualizado;
+            }
+
+            set
+            {
+                _Atualizado = value;
+            }
+        }
 
         public Reabastecimento Clone()
         {

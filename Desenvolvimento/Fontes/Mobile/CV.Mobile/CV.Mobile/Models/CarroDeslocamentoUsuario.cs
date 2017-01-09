@@ -22,6 +22,22 @@ namespace CV.Mobile.Models
         public int? IdentificadorUsuario { get; set; }
         [Ignore]
         public Usuario ItemUsuario { get; set; }
+
+        private bool _Atualizado = true;
+
+        public bool AtualizadoBanco
+        {
+            get
+            {
+                return _Atualizado;
+            }
+
+            set
+            {
+                _Atualizado = value;
+            }
+        }
+
         public CarroDeslocamentoUsuario Clone()
         {
             return (CarroDeslocamentoUsuario)this.MemberwiseClone();

@@ -126,15 +126,19 @@ namespace CV.Mobile.ViewModels
                     var Resultado = await srv.SalvarSugestao(ItemSugestao);
                     if (Resultado.Sucesso)
                     {
-                        base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "T", Resultado.IdentificadorRegistro.GetValueOrDefault(), !ItemSugestao.Identificador.HasValue);
-
+                        base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "S", Resultado.IdentificadorRegistro.GetValueOrDefault(), !ItemSugestao.Identificador.HasValue);
+                       
                         MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
                         {
                             Title = "Sucesso",
                             Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
                             Cancel = "OK"
                         });
-                        ItemSugestao.Identificador = Resultado.IdentificadorRegistro;
+                        if (!ItemSugestao.Identificador.HasValue)
+                        {
+                            ItemSugestao.Identificador = Resultado.IdentificadorRegistro;
+                            base.SugerirVisitaViagem(ItemSugestao);
+                        }
                         // ItemListaCompra = JsonConvert.DeserializeXNode < ListaCompra >()
                         MessagingService.Current.SendMessage<Sugestao>(MessageKeys.ManutencaoSugestao, ItemSugestao);
                         await PopAsync();
