@@ -68,7 +68,7 @@ namespace CV.Mobile.ViewModels
             });
             MessagingService.Current.Subscribe<Gasto>(MessageKeys.GastoSelecionado, async (service, item) =>
             {
-                var itemGravar = new GastoRefeicao() { IdentificadorRefeicao = ItemRefeicao.Identificador, IdentificadorGasto = item.Identificador, DataAtualizacao = DateTime.Now };
+                var itemGravar = new GastoRefeicao() { IdentificadorRefeicao = ItemRefeicao.Identificador, IdentificadorGasto = item.Identificador, DataAtualizacao = DateTime.Now.ToUniversalTime() };
                 using (ApiService srv = new ApiService())
                 {
                     var Resultado = await srv.SalvarGastoRefeicao(itemGravar);
@@ -83,7 +83,7 @@ namespace CV.Mobile.ViewModels
             });
             MessagingService.Current.Subscribe<Gasto>(MessageKeys.GastoIncluido,  (service, item) =>
             {
-                var itemGravar = new GastoRefeicao() { IdentificadorRefeicao = ItemRefeicao.Identificador, IdentificadorGasto = item.Identificador, DataAtualizacao = DateTime.Now };
+                var itemGravar = new GastoRefeicao() { IdentificadorRefeicao = ItemRefeicao.Identificador, IdentificadorGasto = item.Identificador, DataAtualizacao = DateTime.Now.ToUniversalTime() };
                
                         itemGravar.Identificador = item.Atracoes.Select(d => d.Identificador).FirstOrDefault();
                         itemGravar.ItemGasto = item;
@@ -177,7 +177,7 @@ namespace CV.Mobile.ViewModels
             }
             else if (action == "Novo Custo")
             {
-                var CustoRefeicao = new GastoRefeicao() { IdentificadorRefeicao = ItemRefeicao.Identificador, DataAtualizacao = DateTime.Now };
+                var CustoRefeicao = new GastoRefeicao() { IdentificadorRefeicao = ItemRefeicao.Identificador, DataAtualizacao = DateTime.Now.ToUniversalTime() };
                 var ItemGasto = new Gasto()
                 {
                     ApenasBaixa = false,

@@ -64,35 +64,53 @@ namespace CV.Mobile.ViewModels
             {
                 ItemCalendarioPrevisto.DataInicio = ItemCalendarioPrevisto.DataInicio.GetValueOrDefault().Date.Add(ItemCalendarioPrevisto.HoraInicio.Value);
                 ItemCalendarioPrevisto.DataFim = ItemCalendarioPrevisto.DataFim.GetValueOrDefault().Date.Add(ItemCalendarioPrevisto.HoraFim.Value);
-                using (ApiService srv = new ApiService())
+                ResultadoOperacao Resultado = new ResultadoOperacao();
+                if (Conectado)
                 {
-                    var Resultado = await srv.SalvarCalendarioPrevisto(ItemCalendarioPrevisto);
-                    if (Resultado.Sucesso)
+                    using (ApiService srv = new ApiService())
                     {
-
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        Resultado = await srv.SalvarCalendarioPrevisto(ItemCalendarioPrevisto);
+                        if (Resultado.Sucesso)
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-
-                        // ItemListaCompra = JsonConvert.DeserializeXNode < ListaCompra >()
-                        ItemCalendarioPrevisto.Identificador = Resultado.IdentificadorRegistro;
-                        MessagingService.Current.SendMessage<CalendarioPrevisto>(MessageKeys.ManutencaoCalendarioPrevisto, ItemCalendarioPrevisto);
-                        PermiteExcluir = true;
-                    }
-                    else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
-                    {
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
-                        {
-                            Title = "Problemas Validação",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-
+                            var itemRetorno = await srv.CarregarCalendarioPrevisto(Resultado.IdentificadorRegistro);
+                            var itemBase = await DatabaseService.Database.CarregarCalendarioPrevisto(Resultado.IdentificadorRegistro.GetValueOrDefault());
+                            if (itemBase != null)
+                                itemRetorno.Id = itemBase.Id;
+                            await DatabaseService.Database.SalvarCalendarioPrevisto(itemRetorno);
+                            base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "CP", itemRetorno.Identificador.GetValueOrDefault(), !ItemCalendarioPrevisto.Identificador.HasValue);
+                        }
                     }
                 }
+                else
+                {
+                    Resultado = await DatabaseService.SalvarCalendarioPrevisto(ItemCalendarioPrevisto);
+                }
+                if (Resultado.Sucesso)
+                {
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+
+                    // ItemListaCompra = JsonConvert.DeserializeXNode < ListaCompra >()
+                    ItemCalendarioPrevisto.Identificador = Resultado.IdentificadorRegistro;
+                    MessagingService.Current.SendMessage<CalendarioPrevisto>(MessageKeys.ManutencaoCalendarioPrevisto, ItemCalendarioPrevisto);
+                    PermiteExcluir = true;
+                }
+                else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
+                {
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Problemas Validação",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+
+                }
+
             }
             finally
             {
@@ -213,17 +231,46 @@ namespace CV.Mobile.ViewModels
                 OnCompleted = new Action<bool>(async result =>
                 {
                     if (!result) return;
-                    using (ApiService srv = new ApiService())
+                    ItemCalendarioPrevisto.DataExclusao = DateTime.Now.ToUniversalTime();
+                    ResultadoOperacao Resultado = new ResultadoOperacao();
+                    if (Conectado)
                     {
-                        ItemCalendarioPrevisto.DataExclusao = DateTime.Now.ToUniversalTime();
-                        var Resultado = await srv.ExcluirCalendarioPrevisto(ItemCalendarioPrevisto.Identificador);
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        using (ApiService srv = new ApiService())
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });                       
+                            Resultado = await srv.ExcluirCalendarioPrevisto(ItemCalendarioPrevisto.Identificador);
+                            var itemBase = await DatabaseService.Database.CarregarCalendarioPrevisto(ItemCalendarioPrevisto.Identificador.GetValueOrDefault());
+                            if (itemBase != null)
+
+                                await DatabaseService.Database.ExcluirCalendarioPrevisto(itemBase);
+                            base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "CP", ItemCalendarioPrevisto.Identificador.GetValueOrDefault(),false);
+
+                        }
                     }
+                    else
+                    {
+                        var itemBase = await DatabaseService.Database.CarregarCalendarioPrevisto(ItemCalendarioPrevisto.Identificador.GetValueOrDefault());
+                        if (itemBase != null)
+                        {
+                            if (itemBase.Identificador > 0)
+                            {
+                                itemBase.AtualizadoBanco = false;
+                                itemBase.DataExclusao = DateTime.Now.ToUniversalTime();
+                                await DatabaseService.Database.SalvarCalendarioPrevisto(itemBase);
+                            }
+                            else
+                                await DatabaseService.Database.ExcluirCalendarioPrevisto(itemBase);
+
+                            Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Agendamento Excluído com Sucesso " } };
+
+                        }
+                    }
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
                     MessagingService.Current.SendMessage<CalendarioPrevisto>(MessageKeys.ManutencaoCalendarioPrevisto, ItemCalendarioPrevisto);
                     await PopAsync();
 

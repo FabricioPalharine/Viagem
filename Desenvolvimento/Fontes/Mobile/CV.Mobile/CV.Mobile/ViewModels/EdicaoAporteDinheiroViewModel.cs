@@ -135,7 +135,11 @@ namespace CV.Mobile.ViewModels
                 {
                     ItemAporteDinheiro.AtualizadoBanco = false;
                     if (ItemAporteDinheiro.ItemGasto != null)
+
+                    {
                         ItemAporteDinheiro.ItemGasto.AtualizadoBanco = false;
+                        ItemAporteDinheiro.ItemGasto.IdentificadorUsuario = ItemUsuarioLogado.Codigo;
+                    }
                     Resultado = await DatabaseService.SalvarAporteDinheiro(ItemAporteDinheiro);
                 }
                 if (Resultado.Sucesso)

@@ -68,7 +68,7 @@ namespace CV.Mobile.Services
         {
             if (itemAmigo.Acao == 1)
             {
-                 AdicionarAmigoBase(itemAmigo);
+                AdicionarAmigoBase(itemAmigo);
             }
             else
             {
@@ -108,6 +108,56 @@ namespace CV.Mobile.Services
             }
             itemResultado.Mensagens = Erros.ToArray();
 
+            return itemResultado;
+        }
+
+        internal async static Task<ResultadoOperacao> SalvarCalendarioPrevisto(CalendarioPrevisto itemCalendarioPrevisto)
+        {
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+            List<MensagemErro> Erros = new List<MensagemErro>();
+            if (string.IsNullOrEmpty(itemCalendarioPrevisto.Nome))
+            {
+                Erros.Add(new MensagemErro() { Mensagem = "O campo nome é obrigatório" });
+            }
+            itemResultado.Sucesso = !Erros.Any();
+            if (itemResultado.Sucesso)
+            {
+                itemCalendarioPrevisto.AtualizadoBanco = false;
+                itemCalendarioPrevisto.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                await Database.SalvarCalendarioPrevisto(itemCalendarioPrevisto);
+                itemResultado.IdentificadorRegistro = itemCalendarioPrevisto.Identificador;
+                Erros.Add(new MensagemErro() { Mensagem = "Agendamento salvo com sucesso" });
+
+            }
+            itemResultado.Mensagens = Erros.ToArray();
+            return itemResultado;
+        }
+
+        internal static async Task<ResultadoOperacao> SalvarListaCompra(ListaCompra itemListaCompra)
+        {
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+            List<MensagemErro> Erros = new List<MensagemErro>();
+            if (string.IsNullOrEmpty(itemListaCompra.Descricao))
+            {
+                Erros.Add(new MensagemErro() { Mensagem = "O campo Modelo é obrigatório" });
+            }
+            if (string.IsNullOrEmpty(itemListaCompra.Marca))
+            {
+                Erros.Add(new MensagemErro() { Mensagem = "O campo Marca é obrigatório" });
+            }
+            if (!itemListaCompra.Moeda.HasValue)
+                Erros.Add(new MensagemErro() { Mensagem = "O campo Moeda é obrigatório" });
+            itemResultado.Sucesso = !Erros.Any();
+            if (itemResultado.Sucesso)
+            {
+                itemListaCompra.AtualizadoBanco = false;
+                itemListaCompra.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                await Database.SalvarListaCompra(itemListaCompra);
+                itemResultado.IdentificadorRegistro = itemListaCompra.Identificador;
+                Erros.Add(new MensagemErro() { Mensagem = "Lista de Compra salva com sucesso" });
+
+            }
+            itemResultado.Mensagens = Erros.ToArray();
             return itemResultado;
         }
 
@@ -154,8 +204,136 @@ namespace CV.Mobile.Services
             if (itemResultado.Sucesso)
             {
                 await GravarDadosAporte(itemAporteDinheiro);
+                itemResultado.IdentificadorRegistro = itemAporteDinheiro.Identificador;
                 Erros.Add(new MensagemErro() { Mensagem = "Aporte de Dinheiro salvo com sucesso" });
 
+            }
+            itemResultado.Mensagens = Erros.ToArray();
+
+
+            return itemResultado;
+        }
+
+        internal static async void SalvarGastoSincronizado(Gasto itemGasto)
+        {
+            await Database.Excluir_Gasto_Filhos(itemGasto.Identificador.GetValueOrDefault());
+            var itemBase = await Database.RetornarGasto(itemGasto.Identificador);
+            if (itemBase != null)
+                itemGasto.Id = itemBase.Id;
+            foreach (var item in itemGasto.Alugueis)
+            {
+                await Database.SalvarAluguelGasto(item);
+            }
+            foreach (var item in itemGasto.Compras)
+            {
+                await Database.SalvarGastoCompra(item);
+            }
+            foreach (var item in itemGasto.Atracoes)
+            {
+                await Database.SalvarGastoAtracao(item);
+            }
+            foreach (var item in itemGasto.Hoteis)
+            {
+                await Database.SalvarGastoHotel(item);
+            }
+            foreach (var item in itemGasto.Reabastecimentos)
+            {
+                await Database.SalvarReabastecimentoGasto(item);
+            }
+            foreach (var item in itemGasto.Refeicoes)
+            {
+                await Database.SalvarGastoRefeicao(item);
+            }
+            foreach (var item in itemGasto.ViagenAereas)
+            {
+                await Database.SalvarGastoViagemAerea(item);
+            }
+
+            foreach (var item in itemGasto.Usuarios)
+            {
+                await Database.SalvarGastoDividido(item);
+            }
+        }
+
+        public static async Task<ResultadoOperacao> SalvarGasto(Gasto itemGasto)
+        {
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+            List<MensagemErro> Erros = new List<MensagemErro>();
+
+            if (!itemGasto.Moeda.HasValue)
+                Erros.Add(new MensagemErro() { Mensagem = "O campo Moeda é obrigatório." });
+            if (!itemGasto.Valor.HasValue)
+                Erros.Add(new MensagemErro() { Mensagem = "O campo Valor é obrigatório." });
+            if (string.IsNullOrWhiteSpace(itemGasto.Descricao))
+                Erros.Add(new MensagemErro() { Mensagem = "O campo Descrição é obrigatório." });
+
+            itemResultado.Sucesso = !Erros.Any();
+            if (itemResultado.Sucesso)
+            {
+                itemGasto.AtualizadoBanco = false;
+                itemGasto.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                await Database.SalvarGasto(itemGasto);
+                itemResultado.IdentificadorRegistro = itemGasto.Identificador;
+
+
+                foreach (var item in itemGasto.Alugueis.Where(d=>!d.DataExclusao.HasValue || d.Identificador > 0))
+                {
+                    item.AtualizadoBanco = false;
+                    item.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                    item.IdentificadorGasto = itemGasto.Identificador;
+                    await Database.SalvarAluguelGasto(item);
+                }
+                foreach (var item in itemGasto.Compras.Where(d => !d.DataExclusao.HasValue || d.Identificador > 0))
+                {
+                    item.AtualizadoBanco = false;
+                    item.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                    item.IdentificadorGasto = itemGasto.Identificador;
+                    await Database.SalvarGastoCompra(item);
+                }
+                foreach (var item in itemGasto.Atracoes.Where(d => !d.DataExclusao.HasValue || d.Identificador > 0))
+                {
+                    item.AtualizadoBanco = false;
+                    item.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                    item.IdentificadorGasto = itemGasto.Identificador;
+                    await Database.SalvarGastoAtracao(item);
+                }
+                foreach (var item in itemGasto.Hoteis.Where(d => !d.DataExclusao.HasValue || d.Identificador > 0))
+                {
+                    item.AtualizadoBanco = false;
+                    item.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                    item.IdentificadorGasto = itemGasto.Identificador;
+                    await Database.SalvarGastoHotel(item);
+                }
+                foreach (var item in itemGasto.Reabastecimentos.Where(d => !d.DataExclusao.HasValue || d.Identificador > 0))
+                {
+                    item.AtualizadoBanco = false;
+                    item.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                    item.IdentificadorGasto = itemGasto.Identificador;
+                    await Database.SalvarReabastecimentoGasto(item);
+                }
+                foreach (var item in itemGasto.Refeicoes.Where(d => !d.DataExclusao.HasValue || d.Identificador > 0))
+                {
+                    item.AtualizadoBanco = false;
+                    item.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                    item.IdentificadorGasto = itemGasto.Identificador;
+                    await Database.SalvarGastoRefeicao(item);
+                }
+                foreach (var item in itemGasto.ViagenAereas.Where(d => !d.DataExclusao.HasValue || d.Identificador > 0))
+                {
+                    item.AtualizadoBanco = false;
+                    item.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                    item.IdentificadorGasto = itemGasto.Identificador;
+                    await Database.SalvarGastoViagemAerea(item);
+                }
+
+                foreach (var item in itemGasto.Usuarios)
+                {
+                    item.AtualizadoBanco = false;
+                    item.IdentificadorGasto = itemGasto.Identificador;
+                    await Database.SalvarGastoDividido(item);
+                }
+
+                Erros.Add(new MensagemErro() { Mensagem = "Gasto salvo com sucesso" });
             }
             itemResultado.Mensagens = Erros.ToArray();
 
@@ -189,14 +367,9 @@ namespace CV.Mobile.Services
             if (itemResultado.Sucesso)
             {
                 itemComentario.DataAtualizacao = DateTime.Now.ToUniversalTime();
-                await Database.SalvarComentario(itemComentario) ;
+                await Database.SalvarComentario(itemComentario);
 
-                var itemCV = await Database.GetControleSincronizacaoAsync();
-                if (itemCV.SincronizadoEnvio)
-                {
-                    itemCV.SincronizadoEnvio = false;
-                    await Database.SalvarControleSincronizacao(itemCV);
-                }
+                itemResultado.IdentificadorRegistro = itemComentario.Identificador;
                 Erros.Add(new MensagemErro() { Mensagem = "Comentário salvo com sucesso" });
             }
             itemResultado.Mensagens = Erros.ToArray();
@@ -205,7 +378,7 @@ namespace CV.Mobile.Services
             return itemResultado;
         }
 
-        internal  static async Task<AporteDinheiro> CarregarAporteDinheiro(int? identificador)
+        internal static async Task<AporteDinheiro> CarregarAporteDinheiro(int? identificador)
         {
             var itemAporte = await Database.RetornarAporteDinheiro(identificador);
             if (itemAporte.IdentificadorGasto.HasValue)
@@ -213,10 +386,10 @@ namespace CV.Mobile.Services
             return itemAporte;
         }
 
-        private static async Task<Gasto> CarregarGasto(int? identificadorGasto)
+        public static async Task<Gasto> CarregarGasto(int? identificadorGasto)
         {
             var itemGasto = await Database.RetornarGasto(identificadorGasto);
-            itemGasto.Alugueis = new ObservableRangeCollection<AluguelGasto>( await Database.ListarAluguelGasto_IdentificadorGasto(identificadorGasto));
+            itemGasto.Alugueis = new ObservableRangeCollection<AluguelGasto>(await Database.ListarAluguelGasto_IdentificadorGasto(identificadorGasto));
             itemGasto.Atracoes = new ObservableRangeCollection<GastoAtracao>(await Database.ListarGastoAtracao_IdentificadorGasto(identificadorGasto));
             itemGasto.Compras = new ObservableRangeCollection<GastoCompra>(await Database.ListarGastoCompra_IdentificadorGasto(identificadorGasto));
             itemGasto.Hoteis = new ObservableRangeCollection<GastoHotel>(await Database.ListarGastoHotel_IdentificadorGasto(identificadorGasto));
@@ -230,78 +403,89 @@ namespace CV.Mobile.Services
 
         internal static async Task ExcluirAporteDinheiro(AporteDinheiro item, bool AtualizadoBanco)
         {
-           
+
             var itemAporte = await CarregarAporteDinheiro(item.Identificador);
             itemAporte.DataExclusao = DateTime.Now.ToUniversalTime();
             itemAporte.AtualizadoBanco = AtualizadoBanco;
-            await Database.SalvarAporteDinheiro(itemAporte);
+            if (itemAporte.Identificador > 0 && !AtualizadoBanco)
+                await Database.SalvarAporteDinheiro(itemAporte);
+            else
+                await Database.ExcluirAporteDinheiro(itemAporte);
             if (itemAporte.ItemGasto != null)
             {
                 await ExcluirGasto(itemAporte.ItemGasto, AtualizadoBanco);
             }
         }
 
-        private static async Task ExcluirGasto(Gasto itemGasto, bool AtualizadoBanco)
+        public static async Task ExcluirGasto(Gasto itemGasto, bool AtualizadoBanco)
         {
-            itemGasto.AtualizadoBanco = AtualizadoBanco;
-            itemGasto.DataExclusao = DateTime.Now.ToUniversalTime();
-            await Database.SalvarGasto(itemGasto);
-            foreach (var item in itemGasto.Alugueis)
+            if (itemGasto.Identificador > 0 && !AtualizadoBanco)
             {
-                item.AtualizadoBanco = AtualizadoBanco;
-                item.DataExclusao = DateTime.Now.ToUniversalTime();
-                await Database.SalvarAluguelGasto(item);
-            }
-            foreach (var item in itemGasto.Compras)
-            {
-                item.AtualizadoBanco = AtualizadoBanco;
+                itemGasto.AtualizadoBanco = AtualizadoBanco;
+                itemGasto.DataExclusao = DateTime.Now.ToUniversalTime();
+                await Database.SalvarGasto(itemGasto);
+                foreach (var item in itemGasto.Alugueis)
+                {
+                    item.AtualizadoBanco = AtualizadoBanco;
+                    item.DataExclusao = DateTime.Now.ToUniversalTime();
+                    await Database.SalvarAluguelGasto(item);
+                }
+                foreach (var item in itemGasto.Compras)
+                {
+                    item.AtualizadoBanco = AtualizadoBanco;
 
-                item.DataExclusao = DateTime.Now.ToUniversalTime();
-                await Database.SalvarGastoCompra(item);
-            }
-            foreach (var item in itemGasto.Atracoes)
-            {
-                item.AtualizadoBanco = AtualizadoBanco;
+                    item.DataExclusao = DateTime.Now.ToUniversalTime();
+                    await Database.SalvarGastoCompra(item);
+                }
+                foreach (var item in itemGasto.Atracoes)
+                {
+                    item.AtualizadoBanco = AtualizadoBanco;
 
-                item.DataExclusao = DateTime.Now.ToUniversalTime();
-                await Database.SalvarGastoAtracao(item);
-            }
-            foreach (var item in itemGasto.Hoteis)
-            {
-                item.AtualizadoBanco = AtualizadoBanco;
+                    item.DataExclusao = DateTime.Now.ToUniversalTime();
+                    await Database.SalvarGastoAtracao(item);
+                }
+                foreach (var item in itemGasto.Hoteis)
+                {
+                    item.AtualizadoBanco = AtualizadoBanco;
 
-                item.DataExclusao = DateTime.Now.ToUniversalTime();
-                await Database.SalvarGastoHotel(item);
-            }
-            foreach (var item in itemGasto.Reabastecimentos)
-            {
-                item.AtualizadoBanco = AtualizadoBanco;
+                    item.DataExclusao = DateTime.Now.ToUniversalTime();
+                    await Database.SalvarGastoHotel(item);
+                }
+                foreach (var item in itemGasto.Reabastecimentos)
+                {
+                    item.AtualizadoBanco = AtualizadoBanco;
 
-                item.DataExclusao = DateTime.Now.ToUniversalTime();
-                await Database.SalvarReabastecimentoGasto(item);
-            }
-            foreach (var item in itemGasto.Refeicoes)
-            {
-                item.AtualizadoBanco = AtualizadoBanco;
+                    item.DataExclusao = DateTime.Now.ToUniversalTime();
+                    await Database.SalvarReabastecimentoGasto(item);
+                }
+                foreach (var item in itemGasto.Refeicoes)
+                {
+                    item.AtualizadoBanco = AtualizadoBanco;
 
-                item.DataExclusao = DateTime.Now.ToUniversalTime();
-                await Database.SalvarGastoRefeicao(item);
-            }
-            foreach (var item in itemGasto.ViagenAereas)
-            {
-                item.AtualizadoBanco = AtualizadoBanco;
+                    item.DataExclusao = DateTime.Now.ToUniversalTime();
+                    await Database.SalvarGastoRefeicao(item);
+                }
+                foreach (var item in itemGasto.ViagenAereas)
+                {
+                    item.AtualizadoBanco = AtualizadoBanco;
 
-                item.DataExclusao = DateTime.Now.ToUniversalTime();
-                await Database.SalvarGastoViagemAerea(item);
+                    item.DataExclusao = DateTime.Now.ToUniversalTime();
+                    await Database.SalvarGastoViagemAerea(item);
+                }
             }
-            
+            else
+            {
+                await Database.ExcluirGasto(itemGasto);
+                await Database.Excluir_Gasto_Filhos(itemGasto.Identificador.GetValueOrDefault());
+            }
+
         }
 
         internal static async Task<ResultadoOperacao> SalvarCotacaoMoeda(CotacaoMoeda itemCotacaoMoeda)
         {
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             List<MensagemErro> Erros = new List<MensagemErro>();
-           
+
             if (!itemCotacaoMoeda.Moeda.HasValue)
                 Erros.Add(new MensagemErro() { Mensagem = "O campo Moeda é obrigatório." });
             if (!itemCotacaoMoeda.ValorCotacao.HasValue)
@@ -311,19 +495,125 @@ namespace CV.Mobile.Services
             {
                 itemCotacaoMoeda.DataAtualizacao = DateTime.Now.ToUniversalTime();
                 await Database.SalvarCotacaoMoeda(itemCotacaoMoeda);
+                itemResultado.IdentificadorRegistro = itemCotacaoMoeda.Identificador;
 
-                var itemCV = await Database.GetControleSincronizacaoAsync();
-                if (itemCV.SincronizadoEnvio)
-                {
-                    itemCV.SincronizadoEnvio = false;
-                    await Database.SalvarControleSincronizacao(itemCV);
-                }
                 Erros.Add(new MensagemErro() { Mensagem = "Cotação de Moeda salva com sucesso" });
             }
             itemResultado.Mensagens = Erros.ToArray();
 
 
             return itemResultado;
+        }
+
+        internal static async Task<Atracao> CarregarAtracao(int? Identificador)
+        {
+            Atracao item = await Database.RetornarAtracao(Identificador);
+            item.Avaliacoes = new System.Collections.ObjectModel.ObservableCollection<AvaliacaoAtracao>(await Database.ListarAvaliacaoAtracao_IdentificadorAtracao(Identificador));
+            item.Gastos = new System.Collections.ObjectModel.ObservableCollection<GastoAtracao>(await Database.ListarGastoAtracao_IdentificadorAtracao(Identificador));
+            foreach (var itemGastoAtracao in item.Gastos)
+            {
+                itemGastoAtracao.ItemGasto = await Database.RetornarGasto(itemGastoAtracao.IdentificadorGasto);
+            }
+            return item;
+        }
+
+        internal static async Task ExcluirAtracao(int? Identificador, bool Sincronizado)
+        {
+            var itemBanco = await CarregarAtracao(Identificador);
+            if (itemBanco != null)
+            {
+                if (itemBanco.Identificador > 0 && !Sincronizado)
+                {
+                    itemBanco.DataExclusao = DateTime.Now.ToUniversalTime();
+                    itemBanco.AtualizadoBanco = false;
+                    await Database.SalvarAtracao(itemBanco);
+                    foreach (var itemAvaliacao in itemBanco.Avaliacoes)
+                    {
+                        if (itemAvaliacao.Identificador > 0)
+                        {
+                            itemAvaliacao.DataExclusao = DateTime.Now.ToUniversalTime();
+                            itemAvaliacao.AtualizadoBanco = false;
+                            await Database.SalvarAvaliacaoAtracao(itemAvaliacao);
+                        }
+                        else
+                            await Database.ExcluirAvaliacaoAtracao(itemAvaliacao);
+                    }
+                    foreach (var itemGasto in itemBanco.Gastos)
+                    {
+                        if (itemGasto.Identificador > 0)
+                        {
+                            itemGasto.DataExclusao = DateTime.Now.ToUniversalTime();
+                            itemGasto.AtualizadoBanco = false;
+                            await Database.SalvarGastoAtracao(itemGasto);
+                        }
+                        else
+                            await Database.ExcluirGastoAtracao(itemGasto);
+                    }
+                }
+            }
+            else
+            {
+                foreach (var itemAvaliacao in itemBanco.Avaliacoes)
+                    await Database.ExcluirAvaliacaoAtracao(itemAvaliacao);
+                foreach (var itemGasto in itemBanco.Gastos)
+                    await Database.ExcluirGastoAtracao(itemGasto);
+                await Database.ExcluirAtracao(itemBanco);
+            }
+        }
+
+        internal static async Task<ResultadoOperacao> SalvarAtracao(Atracao itemAtracao)
+        {
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+            List<MensagemErro> Erros = new List<MensagemErro>();
+            if (string.IsNullOrEmpty(itemAtracao.Nome))
+            {
+                Erros.Add(new MensagemErro() { Mensagem = "O campo Nome é obrigatório" });
+            }
+
+
+            itemResultado.Sucesso = !Erros.Any();
+            if (itemResultado.Sucesso)
+            {
+                itemAtracao.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                itemAtracao.AtualizadoBanco = false;
+                await Database.SalvarAtracao(itemAtracao);
+                foreach (var itemAvaliacao in itemAtracao.Avaliacoes)
+                {
+                    itemAvaliacao.IdentificadorAtracao = itemAtracao.Identificador;
+                    itemAvaliacao.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                    itemAvaliacao.AtualizadoBanco = false;
+                    await Database.SalvarAvaliacaoAtracao(itemAvaliacao);
+                }
+                itemResultado.IdentificadorRegistro = itemAtracao.Identificador;
+                Erros.Add(new MensagemErro() { Mensagem = "Atração salva com sucesso" });
+            }
+            itemResultado.Mensagens = Erros.ToArray();
+
+            return itemResultado;
+        }
+
+        internal static async Task SalvarAtracaoReplicada(Atracao itemAtracao)
+        {
+            var itemAtracaoBase = await Database.RetornarAtracao(itemAtracao.Identificador);
+            if (itemAtracaoBase != null)
+                itemAtracao.Id = itemAtracaoBase.Id;
+            await DatabaseService.SalvarAtracao(itemAtracao);
+            foreach (var itemAvaliacao in itemAtracao.Avaliacoes)
+            {
+                var itemAvaliacaoBase = await Database.RetornarGastoAtracao(itemAvaliacao.Identificador);
+                if (itemAvaliacao.DataExclusao.HasValue)
+                {
+                    if (itemAvaliacaoBase != null)
+                        await Database.ExcluirGastoAtracao(itemAvaliacaoBase);
+                }
+                else
+                {
+                    if (itemAvaliacaoBase != null)
+                        itemAvaliacao.Id = itemAvaliacaoBase.Id;
+                    await Database.SalvarAvaliacaoAtracao(itemAvaliacao);
+                }
+            }
+
         }
     }
 }

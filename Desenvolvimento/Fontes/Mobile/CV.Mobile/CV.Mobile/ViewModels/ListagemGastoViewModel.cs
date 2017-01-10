@@ -150,23 +150,42 @@ namespace CV.Mobile.ViewModels
 
         private async Task CarregarListaDados()
         {
-            using (ApiService srv = new ApiService())
+            List<Gasto> Dados = new List<Gasto>();
+            if (Conectado)
             {
-                var Dados = await srv.ListarGasto(ItemCriterioBusca);
-                ListaDados = new ObservableCollection<Gasto>(Dados);
-                OnPropertyChanged("ListaDados");
+                using (ApiService srv = new ApiService())
+                {
+                    Dados = await srv.ListarGasto(ItemCriterioBusca);
+
+                }
             }
+            else
+                Dados = await DatabaseService.Database.ListarGasto(ItemCriterioBusca);
+
+            ListaDados = new ObservableCollection<Gasto>(Dados);
+            OnPropertyChanged("ListaDados");
             IsLoadingLista = false;
+
+           
         }
 
         private async Task VerificarAcaoItem(ItemTappedEventArgs itemSelecionado)
         {
-            using (ApiService srv = new ApiService())
+            Gasto ItemGasto = null;
+            if (Conectado)
             {
-                var ItemGasto = await srv.CarregarGasto(((Gasto)itemSelecionado.Item).Identificador);
-                var Pagina = new EdicaoGastoPage() { BindingContext = new EdicaoGastoViewModel(ItemGasto) };
-                await PushAsync(Pagina);
+                using (ApiService srv = new ApiService())
+                {
+                    ItemGasto = await srv.CarregarGasto(((Gasto)itemSelecionado.Item).Identificador);
+
+                }
             }
+            else
+            {
+                ItemGasto = await DatabaseService.CarregarGasto(((Gasto)itemSelecionado.Item).Identificador);
+            }
+            var Pagina = new EdicaoGastoPage() { BindingContext = new EdicaoGastoViewModel(ItemGasto) };
+            await PushAsync(Pagina);
         }
         private async Task Adicionar()
         {
@@ -187,12 +206,11 @@ namespace CV.Mobile.ViewModels
                 Refeicoes = new MvvmHelpers.ObservableRangeCollection<GastoRefeicao>(),
                 ViagenAereas = new MvvmHelpers.ObservableRangeCollection<GastoViagemAerea>()
             };
-            using (ApiService srv = new ApiService())
-            {
+  
                 var Pagina = new EdicaoGastoPage() { BindingContext = new EdicaoGastoViewModel(ItemGasto) };
                 await PushAsync(Pagina);
 
-            }
+            
         }
 
     }

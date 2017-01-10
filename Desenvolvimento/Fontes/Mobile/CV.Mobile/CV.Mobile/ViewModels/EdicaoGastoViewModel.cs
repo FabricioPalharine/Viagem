@@ -98,18 +98,27 @@ namespace CV.Mobile.ViewModels
         {
             if (!Participantes.Any())
             {
-                using (ApiService srv = new ApiService())
+                Participantes.Clear();
+                List<Usuario> ListaUsuario = new List<Usuario>();
+                if (Conectado)
                 {
-                    Participantes.Clear();
-                    var ListaUsuario = await srv.ListarParticipantesViagem();
-                    foreach (var itemUsuario in ListaUsuario)
+                    using (ApiService srv = new ApiService())
                     {
-                        if (!ItemGasto.Identificador.HasValue || ItemGasto.Usuarios.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).Any())
-                            itemUsuario.Selecionado = true;
-                        if (itemUsuario.Identificador != ItemUsuarioLogado.Codigo)
-                            Participantes.Add(itemUsuario);
+
+                        ListaUsuario = await srv.ListarParticipantesViagem();
                     }
                 }
+                else
+                {
+                    ListaUsuario = await DatabaseService.Database.ListarParticipanteViagem();
+                }
+                foreach (var itemUsuario in ListaUsuario)
+                {
+                    if (!ItemGasto.Identificador.HasValue || ItemGasto.Usuarios.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).Any())
+                        itemUsuario.Selecionado = true;
+                    Participantes.Add(itemUsuario);
+                }
+
             }
         }
 
@@ -229,9 +238,28 @@ namespace CV.Mobile.ViewModels
                 {
                     ItemGasto.Data = ItemGasto.Data.GetValueOrDefault().Date.Add(ItemGasto.Hora.GetValueOrDefault());
                 }
-                using (ApiService srv = new ApiService())
+                ResultadoOperacao Resultado = null;
+                Gasto pItemGasto = null;
+                if (Conectado)
                 {
-                    var Resultado = await srv.SalvarGasto(ItemGasto);
+                    using (ApiService srv = new ApiService())
+                    {
+                        Resultado = await srv.SalvarGasto(ItemGasto);
+                        if (Resultado.Sucesso)
+                        {
+                            var Jresultado = (JObject)Resultado.ItemRegistro;
+                            pItemGasto = Jresultado.ToObject<Gasto>();
+                            AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "G", pItemGasto.Identificador.GetValueOrDefault(), !ItemGasto.Identificador.HasValue);
+                            DatabaseService.SalvarGastoSincronizado(pItemGasto);
+                        }
+
+                    }
+                }
+                else
+                {
+                    await DatabaseService.SalvarGasto(ItemGasto);
+                    pItemGasto = ItemGasto;
+                }
                     if (Resultado.Sucesso)
                     {
                         MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
@@ -240,9 +268,8 @@ namespace CV.Mobile.ViewModels
                             Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
                             Cancel = "OK"
                         });
-                        ItemGasto.Identificador = Resultado.IdentificadorRegistro;
-                        var Jresultado = (JObject)Resultado.ItemRegistro;
-                        Gasto pItemGasto = Jresultado.ToObject<Gasto>();
+                        //ItemGasto.Identificador = Resultado.IdentificadorRegistro;
+                        
 
                         ItemGasto = pItemGasto;
                         MessagingService.Current.SendMessage<Gasto>(MessageKeys.ManutencaoGasto, ItemGasto);
@@ -264,8 +291,8 @@ namespace CV.Mobile.ViewModels
                         });
 
                     }
-                   
-                }
+                
+
             }
             finally
             {
@@ -285,17 +312,34 @@ namespace CV.Mobile.ViewModels
                 OnCompleted = new Action<bool>(async result =>
                 {
                     if (!result) return;
-                    using (ApiService srv = new ApiService())
+                    ResultadoOperacao Resultado = new ResultadoOperacao();
+                    ItemGasto.DataExclusao = DateTime.Now.ToUniversalTime();
+
+                    if (Conectado)
                     {
-                        ItemGasto.DataExclusao = DateTime.Now;
-                        var Resultado = await srv.ExcluirGasto(ItemGasto.Identificador);
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        using (ApiService srv = new ApiService())
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
+                            Resultado = await srv.ExcluirGasto(ItemGasto.Identificador);
+                            AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "G", ItemGasto.Identificador.GetValueOrDefault(), false);
+                            var itemBase = await DatabaseService.CarregarGasto(ItemGasto.Identificador);
+                            if (itemBase != null)
+                                await DatabaseService.ExcluirGasto(itemBase, true);
+                        }
                     }
+                    else
+                    {
+                        await DatabaseService.ExcluirGasto(ItemGasto, true);
+                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Gasto excluído com sucesso " } };
+
+                    }
+
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
                     MessagingService.Current.SendMessage<Gasto>(MessageKeys.ManutencaoGasto, ItemGasto);
                     await PopAsync();
 

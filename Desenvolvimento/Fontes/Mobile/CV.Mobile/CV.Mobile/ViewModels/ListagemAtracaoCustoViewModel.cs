@@ -67,26 +67,37 @@ namespace CV.Mobile.ViewModels
             });
             MessagingService.Current.Subscribe<Gasto>(MessageKeys.GastoSelecionado, async (service, item) =>
             {
-                var itemGravar = new GastoAtracao() { IdentificadorAtracao = ItemAtracao.Identificador, IdentificadorGasto = item.Identificador, DataAtualizacao = DateTime.Now };
-                using (ApiService srv = new ApiService())
+                var itemGravar = new GastoAtracao() { IdentificadorAtracao = ItemAtracao.Identificador, IdentificadorGasto = item.Identificador, DataAtualizacao = DateTime.Now.ToUniversalTime() };
+                if (Conectado)
                 {
-                    var Resultado = await srv.SalvarGastoAtracao(itemGravar);
-                    if (Resultado.Sucesso)
+                    using (ApiService srv = new ApiService())
                     {
-                        itemGravar.Identificador = Resultado.IdentificadorRegistro;
-                        itemGravar.ItemGasto = item;
-                        MessagingService.Current.SendMessage<GastoAtracao>(MessageKeys.ManutencaoGastoAtracao, itemGravar);
+                        var Resultado = await srv.SalvarGastoAtracao(itemGravar);
+                        if (Resultado.Sucesso)
+                        {
+                            itemGravar.Identificador = Resultado.IdentificadorRegistro;
+                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "GA", itemGravar.Identificador.GetValueOrDefault(), true);
+                            itemGravar.ItemGasto = item;
+                            await DatabaseService.Database.SalvarGastoAtracao(itemGravar);
+                            MessagingService.Current.SendMessage<GastoAtracao>(MessageKeys.ManutencaoGastoAtracao, itemGravar);
+                        }
                     }
+                }
+                else
+                {
+                    itemGravar.AtualizadoBanco = false;
+                    await DatabaseService.Database.SalvarGastoAtracao(itemGravar);
+
                 }
 
             });
             MessagingService.Current.Subscribe<Gasto>(MessageKeys.GastoIncluido,  (service, item) =>
             {
-                var itemGravar = new GastoAtracao() { IdentificadorAtracao = ItemAtracao.Identificador, IdentificadorGasto = item.Identificador, DataAtualizacao = DateTime.Now };
-               
-                        itemGravar.Identificador = item.Atracoes.Select(d => d.Identificador).FirstOrDefault();
-                        itemGravar.ItemGasto = item;
-                        MessagingService.Current.SendMessage<GastoAtracao>(MessageKeys.ManutencaoGastoAtracao, itemGravar);
+                var itemGravar = new GastoAtracao() { IdentificadorAtracao = ItemAtracao.Identificador, IdentificadorGasto = item.Identificador, DataAtualizacao = DateTime.Now.ToUniversalTime() };
+                itemGravar.Identificador = item.Atracoes.Select(d => d.Identificador).FirstOrDefault();
+                itemGravar.ItemGasto = item;
+
+                MessagingService.Current.SendMessage<GastoAtracao>(MessageKeys.ManutencaoGastoAtracao, itemGravar);
                    
                 
 
@@ -104,20 +115,38 @@ namespace CV.Mobile.ViewModels
                 OnCompleted = new Action<bool>(async result =>
                 {
                     if (!result) return;
-                    using (ApiService srv = new ApiService())
+                    ResultadoOperacao Resultado = new ResultadoOperacao();
+                    obj.DataExclusao = DateTime.Now.ToUniversalTime();
+                    if (Conectado)
                     {
-                        obj.DataExclusao = DateTime.Now;
-                        var Resultado = await srv.SalvarGastoAtracao(obj);
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        using (ApiService srv = new ApiService())
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-                        ListaDados.Remove(obj);
+                            Resultado = await srv.SalvarGastoAtracao(obj);
+                            var itemBase = await DatabaseService.Database.RetornarGastoAtracao(obj.Identificador);
+                            if (itemBase != null)
+                                await DatabaseService.Database.ExcluirGastoAtracao(itemBase);
+                        }
                     }
-                    
+                    else
+                    {
+                        obj.AtualizadoBanco = false;
+                        if (obj.Identificador > 0)
+                        {
+                            await DatabaseService.Database.SalvarGastoAtracao(obj);
+                        }
+                        else
+                            await DatabaseService.Database.ExcluirGastoAtracao(obj);
+                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Gasto excluído com sucesso " } };
 
+                    }
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+                    ListaDados.Remove(obj);
                 })
             });
         }
@@ -176,7 +205,7 @@ namespace CV.Mobile.ViewModels
             }
             else if (action == "Novo Custo")
             {
-                var CustoAtracao = new GastoAtracao() { IdentificadorAtracao = ItemAtracao.Identificador, DataAtualizacao = DateTime.Now };
+                var CustoAtracao = new GastoAtracao() { IdentificadorAtracao = ItemAtracao.Identificador, DataAtualizacao = DateTime.Now.ToUniversalTime() };
                 var ItemGasto = new Gasto()
                 {
                     ApenasBaixa = false,

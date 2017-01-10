@@ -168,44 +168,70 @@ namespace CV.Mobile.ViewModels
 
         private async Task CarregarListaDados()
         {
-            using (ApiService srv = new ApiService())
+            List<CalendarioPrevisto> Dados = new List<CalendarioPrevisto>();
+            if (Conectado)
             {
-                var Dados = await srv.ListarCalendarioPrevisto(ItemCriterioBusca);
-                ListaDados = new ObservableRangeCollection<CalendarioPrevisto>(Dados);
-                OnPropertyChanged("ListaDados");
+                using (ApiService srv = new ApiService())
+                {
+                    Dados = await srv.ListarCalendarioPrevisto(ItemCriterioBusca);
+
+                }
             }
+            else
+                Dados = await DatabaseService.Database.ListarCalendarioPrevisto(ItemCriterioBusca);
+            ListaDados = new ObservableRangeCollection<CalendarioPrevisto>(Dados);
+            OnPropertyChanged("ListaDados");
             IsLoadingLista = false;
         }
 
         private async Task VerificarAcaoItem(ItemTappedEventArgs itemSelecionado)
         {
-            using (ApiService srv = new ApiService())
+            CalendarioPrevisto ItemCalendarioPrevisto = new CalendarioPrevisto();
+
+            if (Conectado)
             {
-                var ItemCalendarioPrevisto = await srv.CarregarCalendarioPrevisto(((CalendarioPrevisto)itemSelecionado.Item).Identificador);
-                var Pagina = new EdicaoCalendarioPrevistoPage() { BindingContext = new EdicaoCalendarioPrevistoViewModel(ItemCalendarioPrevisto) };
-                await PushAsync(Pagina);
+                using (ApiService srv = new ApiService())
+                {
+                    ItemCalendarioPrevisto = await srv.CarregarCalendarioPrevisto(((CalendarioPrevisto)itemSelecionado.Item).Identificador);
+                }
+
             }
+            else
+            {
+                ItemCalendarioPrevisto = ((CalendarioPrevisto)itemSelecionado.Item).Clone();
+            }
+            var Pagina = new EdicaoCalendarioPrevistoPage() { BindingContext = new EdicaoCalendarioPrevistoViewModel(ItemCalendarioPrevisto) };
+            await PushAsync(Pagina);
         }
 
         private async Task VerificarAcaoItem(int? itemSelecionado)
         {
-            using (ApiService srv = new ApiService())
+            CalendarioPrevisto ItemCalendarioPrevisto = new CalendarioPrevisto();
+            if (Conectado)
             {
-                var ItemCalendarioPrevisto = await srv.CarregarCalendarioPrevisto(itemSelecionado);
-                var Pagina = new EdicaoCalendarioPrevistoPage() { BindingContext = new EdicaoCalendarioPrevistoViewModel(ItemCalendarioPrevisto) };
-                await PushAsync(Pagina);
+                using (ApiService srv = new ApiService())
+                {
+                    ItemCalendarioPrevisto = await srv.CarregarCalendarioPrevisto(itemSelecionado);
+
+                }
             }
+            else
+            {
+                ItemCalendarioPrevisto = await DatabaseService.Database.CarregarCalendarioPrevisto(itemSelecionado.GetValueOrDefault());
+            }
+
+            var Pagina = new EdicaoCalendarioPrevistoPage() { BindingContext = new EdicaoCalendarioPrevistoViewModel(ItemCalendarioPrevisto) };
+            await PushAsync(Pagina);
         }
         private async Task Adicionar()
         {
             var ItemCalendarioPrevisto = new CalendarioPrevisto() { DataInicio = DateTime.Today, HoraInicio = new TimeSpan(), DataFim = DateTime.Today, HoraFim = new TimeSpan(), Prioridade = 1, AvisarHorario=false };
-            using (ApiService srv = new ApiService())
-            {
+            
 
                 var Pagina = new EdicaoCalendarioPrevistoPage() { BindingContext = new EdicaoCalendarioPrevistoViewModel(ItemCalendarioPrevisto) };
                 await PushAsync(Pagina);
 
-            }
+            
 
 
         }

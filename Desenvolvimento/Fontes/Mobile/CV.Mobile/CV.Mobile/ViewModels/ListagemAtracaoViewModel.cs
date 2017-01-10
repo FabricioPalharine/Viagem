@@ -153,68 +153,103 @@ namespace CV.Mobile.ViewModels
 
         private async Task CarregarListaCidades()
         {
-            using (ApiService srv = new ApiService())
+            List<Cidade> Dados = new List<Cidade>();
+            if (Conectado)
             {
-                var Dados = await srv.ListarCidadeAtracao();
-                ListaCidades = new ObservableCollection<Cidade>(Dados);
-                OnPropertyChanged("ListaCidades");
+                using (ApiService srv = new ApiService())
+                {
+                    Dados = await srv.ListarCidadeAtracao();
+
+                }
             }
+            else
+            {
+                Dados = await DatabaseService.Database.ListarCidade_Tipo("A");
+            }
+            ListaCidades = new ObservableCollection<Cidade>(Dados);
+            OnPropertyChanged("ListaCidades");
         }
       
 
         private async Task CarregarListaDados()
         {
-            using (ApiService srv = new ApiService())
+            List<Atracao> Dados = new List<Atracao>();
+            if (Conectado)
             {
-                var Dados = await srv.ListarAtracao(ItemCriterioBusca);
-                ListaDados = new ObservableCollection<Atracao>(Dados);
-                OnPropertyChanged("ListaDados");
+                using (ApiService srv = new ApiService())
+                {
+                    Dados = await srv.ListarAtracao(ItemCriterioBusca);
+
+                }
             }
+            else
+            {
+                Dados = await DatabaseService.Database.ListarAtracao(ItemCriterioBusca);
+            }
+            ListaDados = new ObservableCollection<Atracao>(Dados);
+            OnPropertyChanged("ListaDados");
             IsLoadingLista = false;
         }
 
         private async Task VerificarAcaoItem(ItemTappedEventArgs itemSelecionado)
         {
-            using (ApiService srv = new ApiService())
+            Atracao ItemAtracao = null;
+            if (Conectado)
             {
-                var ItemAtracao = await srv.CarregarAtracao(((Atracao)itemSelecionado.Item).Identificador);
-                var Pagina = new EdicaoAtracaoPage() { BindingContext = new EdicaoAtracaoViewModel(ItemAtracao,ItemViagem) };
-                await PushAsync(Pagina);
+                using (ApiService srv = new ApiService())
+                {
+                     ItemAtracao = await srv.CarregarAtracao(((Atracao)itemSelecionado.Item).Identificador);
+
+                }
             }
+            else
+                ItemAtracao = await DatabaseService.CarregarAtracao(((Atracao)itemSelecionado.Item).Identificador);
+
+            var Pagina = new EdicaoAtracaoPage() { BindingContext = new EdicaoAtracaoViewModel(ItemAtracao, ItemViagem) };
+            await PushAsync(Pagina);
         }
         private async Task Adicionar()
         {
-            var ItemAtracao = new Atracao() { Avaliacoes = new ObservableCollection<AvaliacaoAtracao>() } ;
-            using (ApiService srv = new ApiService())
+            var ItemAtracao = new Atracao() { Avaliacoes = new ObservableCollection<AvaliacaoAtracao>() };
+            Atracao AtracaoAberto = null;
+            if (Conectado)
             {
-                var AtracaoAberto = await srv.VerificarAtracaoAberto();
-                if (AtracaoAberto != null)
+                using (ApiService srv = new ApiService())
                 {
-                    MessagingService.Current.SendMessage<MessagingServiceQuestion>(MessageKeys.DisplayQuestion, new MessagingServiceQuestion()
-                    {
-                        Title = "Confirmação",
-                        Question = String.Format("A atração {0} está sendo visitada, deseja associar a nova atração como filha dela?", AtracaoAberto.Nome),
-                        Positive = "Sim",
-                        Negative = "Não",
-                        OnCompleted = new Action<bool>(async result =>
-                        {
-                            if (result)
-                            {
-                                ItemAtracao.IdentificadorAtracaoPai = AtracaoAberto.Identificador;
-                            }
-                            var Pagina2 = new EdicaoAtracaoPage() { BindingContext = new EdicaoAtracaoViewModel(ItemAtracao, ItemViagem) };
-                            await PushAsync(Pagina2);
-
-
-                        })
-                    });
-                }
-                else
-                {
-                    var Pagina = new EdicaoAtracaoPage() { BindingContext = new EdicaoAtracaoViewModel(ItemAtracao, ItemViagem) };
-                    await PushAsync(Pagina);
+                    AtracaoAberto = await srv.VerificarAtracaoAberto();
                 }
             }
+            else
+            {
+                AtracaoAberto = await DatabaseService.Database.RetornarAtracaoAberta();
+            }
+            if (AtracaoAberto != null)
+            {
+                MessagingService.Current.SendMessage<MessagingServiceQuestion>(MessageKeys.DisplayQuestion, new MessagingServiceQuestion()
+                {
+                    Title = "Confirmação",
+                    Question = String.Format("A atração {0} está sendo visitada, deseja associar a nova atração como filha dela?", AtracaoAberto.Nome),
+                    Positive = "Sim",
+                    Negative = "Não",
+                    OnCompleted = new Action<bool>(async result =>
+                    {
+                        if (result)
+                        {
+                            ItemAtracao.IdentificadorAtracaoPai = AtracaoAberto.Identificador;
+                        }
+                        var Pagina2 = new EdicaoAtracaoPage() { BindingContext = new EdicaoAtracaoViewModel(ItemAtracao, ItemViagem) };
+                        await PushAsync(Pagina2);
+
+
+                    })
+                });
+            }
+            else
+            {
+                var Pagina = new EdicaoAtracaoPage() { BindingContext = new EdicaoAtracaoViewModel(ItemAtracao, ItemViagem) };
+                await PushAsync(Pagina);
+            }
+
         }
 
     }

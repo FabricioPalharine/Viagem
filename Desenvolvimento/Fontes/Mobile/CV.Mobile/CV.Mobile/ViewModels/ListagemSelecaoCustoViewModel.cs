@@ -130,23 +130,38 @@ namespace CV.Mobile.ViewModels
 
         private async Task CarregarListaAmigos()
         {
-            using (ApiService srv = new ApiService())
+            List<Usuario> Dados = new List<Usuario>();
+            if (Conectado)
             {
-                var Dados = await srv.ListarParticipantesViagem();
-                ListaAmigos = new ObservableCollection<Usuario>(Dados);
-                OnPropertyChanged("ListaAmigos");
+                using (ApiService srv = new ApiService())
+                {
+                    Dados = await srv.ListarParticipantesViagem();
+                    
+                }
             }
+            else
+                Dados = await DatabaseService.Database.ListarParticipanteViagem();
+            ListaAmigos = new ObservableCollection<Usuario>(Dados);
+            OnPropertyChanged("ListaAmigos");
         }
       
 
         private async Task CarregarListaDados()
         {
-            using (ApiService srv = new ApiService())
+            List<Gasto> Dados = new List<Gasto>();
+            if (Conectado)
             {
-                var Dados = await srv.ListarGasto(ItemCriterioBusca);
-                ListaDados = new ObservableCollection<Gasto>(Dados);
-                OnPropertyChanged("ListaDados");
+                using (ApiService srv = new ApiService())
+                {
+                    Dados = await srv.ListarGasto(ItemCriterioBusca);
+
+                }
             }
+            else
+                Dados = await DatabaseService.Database.ListarGasto(ItemCriterioBusca);
+
+            ListaDados = new ObservableCollection<Gasto>(Dados);
+            OnPropertyChanged("ListaDados");
             IsLoadingLista = false;
         }
 

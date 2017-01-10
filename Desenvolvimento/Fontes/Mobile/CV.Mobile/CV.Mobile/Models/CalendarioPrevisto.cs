@@ -57,5 +57,10 @@ namespace CV.Mobile.Models
             }
         }
 
+        public CalendarioPrevisto Clone()
+        {
+            return (CalendarioPrevisto)this.MemberwiseClone();
+        }
+
     }
 }

@@ -841,6 +841,8 @@ namespace CV.Data
             return query.ToList();
         }
 
+
+
         public List<Gasto> ListarGasto(int IdentificadorViagem, DateTime? DataDe, DateTime? DataAte, string Descricao,
             int? IdentificadorUsuario, int? IdentificadorGasto)
         {

@@ -58,6 +58,7 @@ namespace CV.Mobile.ViewModels
             SalvarCommand.ChangeCanExecute();
             try
             {
+
                 using (ApiService srv = new ApiService())
                 {
                     var Resultado = await srv.SalvarListaCompra(ItemListaCompra);

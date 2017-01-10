@@ -131,7 +131,7 @@ namespace CV.Mobile.ViewModels
                             Resultado = await srv.ExcluirCotacaoMoeda(itemCotacao.Identificador);
                             var itemAjustar = await DatabaseService.Database.RetornarCotacaoMoeda(itemCotacao.Identificador);
                             if (itemAjustar != null)
-                            await DatabaseService.Database.ExcluirCotacaoMoeda(itemAjustar);
+                                await DatabaseService.Database.ExcluirCotacaoMoeda(itemAjustar);
                             
 
                         }

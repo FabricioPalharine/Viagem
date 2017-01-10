@@ -77,34 +77,56 @@ namespace CV.Mobile.ViewModels
             SalvarCommand.ChangeCanExecute();
             try
             {
-                using (ApiService srv = new ApiService())
+                ResultadoOperacao Resultado = new ResultadoOperacao();
+                if (ItemListaCompra.IdentificadorUsuarioPedido.HasValue)
+                    ItemListaCompra.NomeUsuarioPedido = ListaAmigos.Where(d => d.Identificador == ItemListaCompra.IdentificadorUsuarioPedido).Select(d => d.Nome).FirstOrDefault();
+                if (Conectado)
                 {
-                    var Resultado = await srv.SalvarListaCompra(ItemListaCompra);
-                    if (Resultado.Sucesso)
+                    using (ApiService srv = new ApiService())
                     {
-
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        Resultado = await srv.SalvarListaCompra(ItemListaCompra);
+                        base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "LC", ItemListaCompra.Identificador.GetValueOrDefault(Resultado.IdentificadorRegistro.GetValueOrDefault()), !ItemListaCompra.Identificador.HasValue);
+                        var itemBanco = await DatabaseService.Database.RetornarListaCompra(Resultado.IdentificadorRegistro);
+                        if (itemBanco != null)
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-                        ItemListaCompra.Identificador = Resultado.IdentificadorRegistro;
-                        // ItemListaCompra = JsonConvert.DeserializeXNode < ListaCompra >()
-                        MessagingService.Current.SendMessage<ListaCompra>(MessageKeys.ManutencaoListaCompra, ItemListaCompra);
-                        await PopAsync();
-                    }
-                    else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
-                    {
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
-                        {
-                            Title = "Problemas Validação",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
+                            ItemListaCompra.Id = itemBanco.Id;
 
+                        }
+                        ItemListaCompra.AtualizadoBanco = true;
+                        ItemListaCompra.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                        await DatabaseService.Database.SalvarListaCompra(ItemListaCompra);
                     }
                 }
+                else
+                {
+                    Resultado = await DatabaseService.SalvarListaCompra(ItemListaCompra);
+                }
+
+                if (Resultado.Sucesso)
+                {
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+                    ItemListaCompra.Identificador = Resultado.IdentificadorRegistro;
+                    // ItemListaCompra = JsonConvert.DeserializeXNode < ListaCompra >()
+                    MessagingService.Current.SendMessage<ListaCompra>(MessageKeys.ManutencaoListaCompra, ItemListaCompra);
+                    await PopAsync();
+                }
+                else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
+                {
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Problemas Validação",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+
+                }
+                
             }
             finally
             {
