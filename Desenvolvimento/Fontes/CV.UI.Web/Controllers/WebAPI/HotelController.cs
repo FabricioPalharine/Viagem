@@ -128,6 +128,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             if (itemResultado.Sucesso)
             {
                 itemResultado.IdentificadorRegistro = itemEvento.Identificador;
+                itemResultado.ItemRegistro = itemEvento;
             }
             return itemResultado;
         }

@@ -154,35 +154,64 @@ namespace CV.Mobile.ViewModels
 
         private async Task CarregarListaCidades()
         {
-            using (ApiService srv = new ApiService())
+            List<Cidade> Dados = new List<Cidade>();
+            if (Conectado)
             {
-                var Dados = await srv.ListarCidadeHotel();
-                ListaCidades = new ObservableCollection<Cidade>(Dados);
-                OnPropertyChanged("ListaCidades");
+                using (ApiService srv = new ApiService())
+                {
+                    Dados = await srv.ListarCidadeHotel();
+
+                }
             }
+            else
+            {
+                Dados = await DatabaseService.Database.ListarCidade_Tipo("H");
+            }
+            ListaCidades = new ObservableCollection<Cidade>(Dados);
+            OnPropertyChanged("ListaCidades");
+
+           
         }
       
 
         private async Task CarregarListaDados()
         {
-            using (ApiService srv = new ApiService())
+            List<Hotel> Dados = new List<Hotel>();
+            if (Conectado)
             {
-                var Dados = await srv.ListarHotel(ItemCriterioBusca);
-                ListaDados = new ObservableCollection<Hotel>(Dados);
-                OnPropertyChanged("ListaDados");
+                using (ApiService srv = new ApiService())
+                {
+                    Dados = await srv.ListarHotel(ItemCriterioBusca);
+
+                }
             }
+            else
+            {
+                Dados = await DatabaseService.Database.ListarHotel(ItemCriterioBusca);
+            }
+            ListaDados = new ObservableCollection<Hotel>(Dados);
+            OnPropertyChanged("ListaDados");
             IsLoadingLista = false;
         }
 
         private async Task VerificarAcaoItem(ItemTappedEventArgs itemSelecionado)
         {
-            using (ApiService srv = new ApiService())
+            Hotel ItemHotel = null;
+            if (Conectado)
             {
-                var ItemHotel = await srv.CarregarHotel(((Hotel)itemSelecionado.Item).Identificador);
-                var Pagina = new EdicaoHotelPage() { BindingContext = new EdicaoHotelViewModel(ItemHotel,ItemViagem) };
-                await PushAsync(Pagina);
+                using (ApiService srv = new ApiService())
+                {
+                    ItemHotel = await srv.CarregarHotel(((Hotel)itemSelecionado.Item).Identificador);
+
+                }
             }
+            else
+                ItemHotel = await DatabaseService.CarregarHotel(((Hotel)itemSelecionado.Item).Identificador);
+
+            var Pagina = new EdicaoHotelPage() { BindingContext = new EdicaoHotelViewModel(ItemHotel, ItemViagem) };
+            await PushAsync(Pagina);
         }
+
         private async Task Adicionar()
         {
             var ItemHotel = new Hotel() { Avaliacoes = new ObservableRangeCollection<HotelAvaliacao>(), Eventos= new ObservableRangeCollection<HotelEvento>()  } ;

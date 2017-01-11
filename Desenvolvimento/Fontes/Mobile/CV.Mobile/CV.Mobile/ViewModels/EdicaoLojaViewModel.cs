@@ -25,20 +25,20 @@ namespace CV.Mobile.ViewModels
         private MapSpan _Bounds;
         private bool _PermiteExcluir = true;
         private bool _PossoComentar = false;
-   
+
         private AvaliacaoLoja _ItemAvaliacao = new AvaliacaoLoja();
         private readonly DateTime _dataMinima = new DateTime(1900, 01, 01);
         public EdicaoLojaViewModel(Loja pItemLoja, Viagem pItemViagem)
         {
             if (pItemLoja.IdentificadorAtracao == null)
                 pItemLoja.IdentificadorAtracao = 0;
-          
-             ItemLoja = pItemLoja;
+
+            ItemLoja = pItemLoja;
 
             PossoComentar = true;
             ItemViagem = pItemViagem;
-            
-            
+
+
             SalvarCommand = new Command(
                                 async () => await Salvar(),
                                 () => true);
@@ -49,12 +49,12 @@ namespace CV.Mobile.ViewModels
                                                                   },
                                                                   () => true);
 
- 
-            ExcluirCommand = new Command(() =>  Excluir());
+
+            ExcluirCommand = new Command(() => Excluir());
             AbrirCustosCommand = new Command(async () => await AbrirJanelaCustos());
-           
+
         }
-           public Command SalvarCommand { get; set; }
+        public Command SalvarCommand { get; set; }
         public Command PageAppearingCommand { get; set; }
         public Command ExcluirCommand { get; set; }
         public Command AbrirCustosCommand { get; set; }
@@ -83,7 +83,7 @@ namespace CV.Mobile.ViewModels
             if (_ItemLoja.Latitude.HasValue && _ItemLoja.Longitude.HasValue)
             {
                 Bounds = MapSpan.FromCenterAndRadius(new Position(_ItemLoja.Latitude.Value, _ItemLoja.Longitude.Value), new Distance(5000));
-               
+
 
             }
             else
@@ -95,24 +95,32 @@ namespace CV.Mobile.ViewModels
                 ItemLoja.Longitude = posicao.Longitude;
                 ItemLoja.Latitude = posicao.Latitude;
             }
-           
-            
+
+
 
         }
 
         public async void CarregarAtracoesPai()
         {
-            using (ApiService srv = new ApiService())
+            List<Atracao> ListaDados = new List<Atracao>();
+            if (Conectado)
             {
-                var ListaDados = await srv.ListarAtracao(new CriterioBusca());
-                ListaDados.Insert(0, new Atracao() { Identificador = 0, Nome = "Sem Atração Pai" });
-                ListaAtracaoPai = new ObservableCollection<Atracao>(ListaDados);
-                OnPropertyChanged("ListaAtracaoPai");
-                int? IdentificadorLojaSelecionada = ItemLoja.IdentificadorAtracao;
-                ItemLoja.IdentificadorAtracao = int.MinValue;
-                await Task.Delay(100);
-                ItemLoja.IdentificadorAtracao = IdentificadorLojaSelecionada.GetValueOrDefault(0);
+                using (ApiService srv = new ApiService())
+                {
+                    ListaDados = await srv.ListarAtracao(new CriterioBusca());
+
+                }
             }
+            else
+                ListaDados = await DatabaseService.Database.ListarAtracao(new CriterioBusca());
+            ListaDados.Insert(0, new Atracao() { Identificador = 0, Nome = "Sem Atração Pai" });
+            ListaAtracaoPai = new ObservableCollection<Atracao>(ListaDados);
+            OnPropertyChanged("ListaAtracaoPai");
+            int? IdentificadorLojaSelecionada = ItemLoja.IdentificadorAtracao;
+            ItemLoja.IdentificadorAtracao = int.MinValue;
+            await Task.Delay(100);
+            ItemLoja.IdentificadorAtracao = IdentificadorLojaSelecionada.GetValueOrDefault(0);
+
         }
 
 
@@ -170,7 +178,7 @@ namespace CV.Mobile.ViewModels
             }
         }
 
-      
+
 
         public AvaliacaoLoja ItemAvaliacao
         {
@@ -185,7 +193,7 @@ namespace CV.Mobile.ViewModels
             }
         }
 
-     
+
 
         private async Task Salvar()
         {
@@ -214,48 +222,67 @@ namespace CV.Mobile.ViewModels
                         ItemLoja.Avaliacoes.Remove(itemAvaliacaoAtual);
                     }
                 }
-               
+
                 if (ItemLoja.IdentificadorAtracao == 0)
                     ItemLoja.IdentificadorAtracao = null;
-               
-   
-                using (ApiService srv = new ApiService())
+
+                ResultadoOperacao Resultado = new ResultadoOperacao();
+                Loja pItemLoja = null;
+                if (Conectado)
                 {
-                    var Resultado = await srv.SalvarLoja(ItemLoja);
-                    if (Resultado.Sucesso)
+                    using (ApiService srv = new ApiService())
                     {
-
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        Resultado = await srv.SalvarLoja(ItemLoja);
+                        if (Resultado.Sucesso)
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-                        ItemLoja.Identificador = Resultado.IdentificadorRegistro;
-                        // var Jresultado = (JObject)Resultado.ItemRegistro;
-                        // Loja pItemLoja = Jresultado.ToObject<Loja>();
-                        Loja pItemLoja = await srv.CarregarLoja(Resultado.IdentificadorRegistro);
-                        if (pItemLoja.IdentificadorAtracao == null)
-                            pItemLoja.IdentificadorAtracao = 0;
-            
-                        ItemLoja = pItemLoja;
-                        MessagingService.Current.SendMessage<Loja>(MessageKeys.ManutencaoLoja, ItemLoja);
-                            PermiteExcluir = true;
+                            pItemLoja = await srv.CarregarLoja(Resultado.IdentificadorRegistro);
+                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "L", Resultado.IdentificadorRegistro.GetValueOrDefault(), !ItemLoja.Identificador.HasValue);
+                            await DatabaseService.SalvarLojaReplicada(pItemLoja);
+                        }
                     }
-                    else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
-                    {
-                        if (ItemLoja.IdentificadorAtracao == null)
-                            ItemLoja.IdentificadorAtracao = 0;
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
-                        {
-                            Title = "Problemas Validação",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-
-                    }
-                   
                 }
+                else
+                {
+                    Resultado = await DatabaseService.SalvarLoja(ItemLoja);
+                    if (Resultado.Sucesso)
+                        pItemLoja = await DatabaseService.CarregarLoja(ItemLoja.Identificador);
+                }
+
+
+                if (Resultado.Sucesso)
+                {
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+                    ItemLoja.Identificador = Resultado.IdentificadorRegistro;
+                    // var Jresultado = (JObject)Resultado.ItemRegistro;
+                    // Loja pItemLoja = Jresultado.ToObject<Loja>();
+                  
+                    if (pItemLoja.IdentificadorAtracao == null)
+                        pItemLoja.IdentificadorAtracao = 0;
+
+                    ItemLoja = pItemLoja;
+                    MessagingService.Current.SendMessage<Loja>(MessageKeys.ManutencaoLoja, ItemLoja);
+                    PermiteExcluir = true;
+                }
+                else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
+                {
+                    if (ItemLoja.IdentificadorAtracao == null)
+                        ItemLoja.IdentificadorAtracao = 0;
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Problemas Validação",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+
+                }
+
+
             }
             finally
             {
@@ -275,17 +302,33 @@ namespace CV.Mobile.ViewModels
                 OnCompleted = new Action<bool>(async result =>
                 {
                     if (!result) return;
-                    using (ApiService srv = new ApiService())
+
+                    ResultadoOperacao Resultado = new ResultadoOperacao();
+                    ItemLoja.DataExclusao = DateTime.Now.ToUniversalTime();
+                    if (Conectado)
                     {
-                        ItemLoja.DataExclusao = DateTime.Now;
-                        var Resultado = await srv.ExcluirLoja(ItemLoja.Identificador);
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        using (ApiService srv = new ApiService())
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
+                            Resultado = await srv.ExcluirLoja(ItemLoja.Identificador);
+                            await DatabaseService.ExcluirLoja(ItemLoja.Identificador, true);
+                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "L", ItemLoja.Identificador.GetValueOrDefault(), false);
+                        }
                     }
+                    else
+                    {
+                        await DatabaseService.ExcluirLoja(ItemLoja.Identificador, false);
+                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Refeição Excluída com Sucesso " } };
+
+                    }
+
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+
                     MessagingService.Current.SendMessage<Loja>(MessageKeys.ManutencaoLoja, ItemLoja);
                     await PopAsync();
 
@@ -297,8 +340,8 @@ namespace CV.Mobile.ViewModels
 
         private async Task AbrirJanelaCustos()
         {
-           var Pagina = new ListagemCompraCustoPage() { BindingContext = new ListagemCompraCustoViewModel(ItemViagem, ItemLoja) };
-           await PushAsync(Pagina);
+            var Pagina = new ListagemCompraCustoPage() { BindingContext = new ListagemCompraCustoViewModel(ItemViagem, ItemLoja) };
+            await PushAsync(Pagina);
         }
     }
 }

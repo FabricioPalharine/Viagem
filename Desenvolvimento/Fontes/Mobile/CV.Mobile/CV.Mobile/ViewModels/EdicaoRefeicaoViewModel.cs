@@ -25,7 +25,7 @@ namespace CV.Mobile.ViewModels
         private MapSpan _Bounds;
         private bool _PermiteExcluir = true;
         private bool _PossoComentar = false;
-   
+
         private RefeicaoPedido _ItemAvaliacao = new RefeicaoPedido();
         private Usuario _ParticipanteSelecionado;
         private readonly DateTime _dataMinima = new DateTime(1900, 01, 01);
@@ -33,15 +33,15 @@ namespace CV.Mobile.ViewModels
         {
             if (pItemRefeicao.IdentificadorAtracao == null)
                 pItemRefeicao.IdentificadorAtracao = 0;
-          
-             ItemRefeicao = pItemRefeicao;
+
+            ItemRefeicao = pItemRefeicao;
 
             Participantes = new ObservableCollection<Usuario>();
             Participantes.CollectionChanged += Participantes_CollectionChanged;
-            PossoComentar = !pItemRefeicao.Identificador.HasValue ||  pItemRefeicao.Pedidos.Where(d => d.IdentificadorUsuario == ItemUsuarioLogado.Codigo).Any() ;
+            PossoComentar = !pItemRefeicao.Identificador.HasValue || pItemRefeicao.Pedidos.Where(d => d.IdentificadorUsuario == ItemUsuarioLogado.Codigo).Any();
             ItemViagem = pItemViagem;
-            
-            
+
+
             SalvarCommand = new Command(
                                 async () => await Salvar(),
                                 () => true);
@@ -52,12 +52,12 @@ namespace CV.Mobile.ViewModels
                                                                   },
                                                                   () => true);
 
- 
-            ExcluirCommand = new Command(() =>  Excluir());
+
+            ExcluirCommand = new Command(() => Excluir());
             AbrirCustosCommand = new Command(async () => await AbrirJanelaCustos());
-           
+
         }
-       private void Participantes_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void Participantes_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Remove)
             {
@@ -134,7 +134,7 @@ namespace CV.Mobile.ViewModels
             if (_ItemRefeicao.Latitude.HasValue && _ItemRefeicao.Longitude.HasValue)
             {
                 Bounds = MapSpan.FromCenterAndRadius(new Position(_ItemRefeicao.Latitude.Value, _ItemRefeicao.Longitude.Value), new Distance(5000));
-               
+
 
             }
             else
@@ -146,8 +146,8 @@ namespace CV.Mobile.ViewModels
                 ItemRefeicao.Longitude = posicao.Longitude;
                 ItemRefeicao.Latitude = posicao.Latitude;
             }
-           
-            
+
+
 
         }
 
@@ -155,38 +155,57 @@ namespace CV.Mobile.ViewModels
         {
             if (!Participantes.Any())
             {
-                using (ApiService srv = new ApiService())
+
+                Participantes.Clear();
+                List<Usuario> ListaUsuario = new List<Usuario>();
+                if (Conectado)
                 {
-                    Participantes.Clear();
-                    var ListaUsuario = await srv.ListarParticipantesViagem();
-                    foreach (var itemUsuario in ListaUsuario)
+                    using (ApiService srv = new ApiService())
                     {
-                        var itemPedido = ItemRefeicao.Pedidos.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).FirstOrDefault();
-                        if (!ItemRefeicao.Identificador.HasValue || itemPedido != null)
-                        {
-                            itemUsuario.Selecionado = true;
-                            if (itemPedido != null)
-                                itemUsuario.Complemento = itemPedido.Pedido;
-                        }
-                        Participantes.Add(itemUsuario);
+
+                        ListaUsuario = await srv.ListarParticipantesViagem();
                     }
                 }
+                else
+                {
+                    ListaUsuario = await DatabaseService.Database.ListarParticipanteViagem();
+                }
+                foreach (var itemUsuario in ListaUsuario)
+                {
+                    var itemPedido = ItemRefeicao.Pedidos.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).FirstOrDefault();
+                    if (!ItemRefeicao.Identificador.HasValue || itemPedido != null)
+                    {
+                        itemUsuario.Selecionado = true;
+                        if (itemPedido != null)
+                            itemUsuario.Complemento = itemPedido.Pedido;
+                    }
+                    Participantes.Add(itemUsuario);
+                }
+
             }
         }
 
         public async void CarregarAtracoesPai()
         {
-            using (ApiService srv = new ApiService())
+            List<Atracao> ListaDados = new List<Atracao>();
+            if (Conectado)
             {
-                var ListaDados = await srv.ListarAtracao(new CriterioBusca());
-                ListaDados.Insert(0, new Atracao() { Identificador = 0, Nome = "Sem Atração Pai" });
-                ListaAtracaoPai = new ObservableCollection<Atracao>(ListaDados);
-                OnPropertyChanged("ListaAtracaoPai");
-                int? IdentificadorRefeicaoSelecionada = ItemRefeicao.IdentificadorAtracao;
-                ItemRefeicao.IdentificadorAtracao = int.MinValue;
-                await Task.Delay(100);
-                ItemRefeicao.IdentificadorAtracao = IdentificadorRefeicaoSelecionada.GetValueOrDefault(0);
+                using (ApiService srv = new ApiService())
+                {
+                    ListaDados = await srv.ListarAtracao(new CriterioBusca());
+
+                }
             }
+            else
+                ListaDados = await DatabaseService.Database.ListarAtracao(new CriterioBusca());
+            ListaDados.Insert(0, new Atracao() { Identificador = 0, Nome = "Sem Atração Pai" });
+            ListaAtracaoPai = new ObservableCollection<Atracao>(ListaDados);
+            OnPropertyChanged("ListaAtracaoPai");
+            int? IdentificadorRefeicaoSelecionada = ItemRefeicao.IdentificadorAtracao;
+            ItemRefeicao.IdentificadorAtracao = int.MinValue;
+            await Task.Delay(100);
+            ItemRefeicao.IdentificadorAtracao = IdentificadorRefeicaoSelecionada.GetValueOrDefault(0);
+
         }
 
 
@@ -245,7 +264,7 @@ namespace CV.Mobile.ViewModels
             }
         }
 
-      
+
 
         public RefeicaoPedido ItemAvaliacao
         {
@@ -314,46 +333,65 @@ namespace CV.Mobile.ViewModels
                 }
                 if (ItemRefeicao.IdentificadorAtracao == 0)
                     ItemRefeicao.IdentificadorAtracao = null;
-               
+
                 ItemRefeicao.Data = ItemRefeicao.Data.GetValueOrDefault().Date.Add(ItemRefeicao.Hora.GetValueOrDefault());
 
-                using (ApiService srv = new ApiService())
+                ResultadoOperacao Resultado = new ResultadoOperacao();
+                Refeicao pItemRefeicao = null;
+                if (Conectado)
                 {
-                    var Resultado = await srv.SalvarRefeicao(ItemRefeicao);
-                    if (Resultado.Sucesso)
+                    using (ApiService srv = new ApiService())
                     {
-
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        Resultado = await srv.SalvarRefeicao(ItemRefeicao);
+                        if (Resultado.Sucesso)
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-                        ItemRefeicao.Identificador = Resultado.IdentificadorRegistro;
-                        var Jresultado = (JObject)Resultado.ItemRegistro;
-                        Refeicao pItemRefeicao = Jresultado.ToObject<Refeicao>();
-                        if (pItemRefeicao.IdentificadorAtracao == null)
-                            pItemRefeicao.IdentificadorAtracao = 0;
-                        if (pItemRefeicao.Gastos == null)
-                            pItemRefeicao.Gastos = new MvvmHelpers.ObservableRangeCollection<GastoRefeicao>();
-                        ItemRefeicao = pItemRefeicao;
-                        MessagingService.Current.SendMessage<Refeicao>(MessageKeys.ManutencaoRefeicao, ItemRefeicao);
-                            PermiteExcluir = true;
+                            var Jresultado = (JObject)Resultado.ItemRegistro;
+                            pItemRefeicao = Jresultado.ToObject<Refeicao>();
+                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "R", Resultado.IdentificadorRegistro.GetValueOrDefault(), !ItemRefeicao.Identificador.HasValue);
+                            await DatabaseService.SalvarRefeicaoReplicada(pItemRefeicao);
+                        }
                     }
-                    else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
-                    {
-                        if (ItemRefeicao.IdentificadorAtracao == null)
-                            ItemRefeicao.IdentificadorAtracao = 0;
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
-                        {
-                            Title = "Problemas Validação",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-
-                    }
-                   
                 }
+                else
+                {
+                    Resultado = await DatabaseService.SalvarRefeicao(ItemRefeicao);
+                    if (Resultado.Sucesso)
+                        pItemRefeicao = await DatabaseService.CarregarRefeicao(ItemRefeicao.Identificador);
+                }
+
+                if (Resultado.Sucesso)
+                {
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+                    ItemRefeicao.Identificador = Resultado.IdentificadorRegistro;
+
+                    if (pItemRefeicao.IdentificadorAtracao == null)
+                        pItemRefeicao.IdentificadorAtracao = 0;
+                    if (pItemRefeicao.Gastos == null)
+                        pItemRefeicao.Gastos = new MvvmHelpers.ObservableRangeCollection<GastoRefeicao>();
+                    ItemRefeicao = pItemRefeicao;
+                    MessagingService.Current.SendMessage<Refeicao>(MessageKeys.ManutencaoRefeicao, ItemRefeicao);
+                    PermiteExcluir = true;
+                }
+                else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
+                {
+                    if (ItemRefeicao.IdentificadorAtracao == null)
+                        ItemRefeicao.IdentificadorAtracao = 0;
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Problemas Validação",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+
+                }
+
+
             }
             finally
             {
@@ -373,17 +411,33 @@ namespace CV.Mobile.ViewModels
                 OnCompleted = new Action<bool>(async result =>
                 {
                     if (!result) return;
-                    using (ApiService srv = new ApiService())
+
+                    ResultadoOperacao Resultado = new ResultadoOperacao();
+                    ItemRefeicao.DataExclusao = DateTime.Now.ToUniversalTime();
+                    if (Conectado)
                     {
-                        ItemRefeicao.DataExclusao = DateTime.Now;
-                        var Resultado = await srv.ExcluirRefeicao(ItemRefeicao.Identificador);
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        using (ApiService srv = new ApiService())
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
+                            Resultado = await srv.ExcluirRefeicao(ItemRefeicao.Identificador);
+                            await DatabaseService.ExcluirRefeicao(ItemRefeicao.Identificador, true);
+                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "R", ItemRefeicao.Identificador.GetValueOrDefault(), false);
+                        }
                     }
+                    else
+                    {
+                        await DatabaseService.ExcluirRefeicao(ItemRefeicao.Identificador, false);
+                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Refeição Excluída com Sucesso " } };
+
+                    }
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+
+
                     MessagingService.Current.SendMessage<Refeicao>(MessageKeys.ManutencaoRefeicao, ItemRefeicao);
                     await PopAsync();
 

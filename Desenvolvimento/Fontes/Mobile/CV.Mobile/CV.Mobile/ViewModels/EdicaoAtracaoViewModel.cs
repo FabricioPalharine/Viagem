@@ -518,7 +518,7 @@ namespace CV.Mobile.ViewModels
                 {
                     if (!result) return;
                     ResultadoOperacao Resultado = new ResultadoOperacao();
-                    ItemAtracao.DataExclusao = DateTime.Now;
+                    ItemAtracao.DataExclusao = DateTime.Now.ToUniversalTime();
                     if (Conectado)
                     {
                         using (ApiService srv = new ApiService())

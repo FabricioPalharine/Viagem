@@ -54,7 +54,7 @@ namespace CV.Mobile.ViewModels
             MessagingService.Current.Subscribe<Loja>(MessageKeys.ManutencaoLoja, (service, item) =>
             {
                 IsBusy = true;
-                
+
                 if (ListaDados.Where(d => d.Identificador == item.Identificador).Any())
                 {
                     var Posicao = ListaDados.IndexOf(ListaDados.Where(d => d.Identificador == item.Identificador).FirstOrDefault());
@@ -149,71 +149,114 @@ namespace CV.Mobile.ViewModels
 
         private async Task CarregarListaCidades()
         {
-            using (ApiService srv = new ApiService())
+
+            List<Cidade> Dados = new List<Cidade>();
+            if (Conectado)
             {
-                var Dados = await srv.ListarCidadeLoja();
-                ListaCidades = new ObservableCollection<Cidade>(Dados);
-                OnPropertyChanged("ListaCidades");
+                using (ApiService srv = new ApiService())
+                {
+                    Dados = await srv.ListarCidadeLoja();
+
+                }
             }
+            else
+            {
+                Dados = await DatabaseService.Database.ListarCidade_Tipo("L");
+            }
+            ListaCidades = new ObservableCollection<Cidade>(Dados);
+            OnPropertyChanged("ListaCidades");
+
+
         }
-      
+
 
         private async Task CarregarListaDados()
         {
-            using (ApiService srv = new ApiService())
+            List<Loja> Dados = new List<Loja>();
+            if (Conectado)
             {
-                var Dados = await srv.ListarLoja(ItemCriterioBusca);
-                ListaDados = new ObservableCollection<Loja>(Dados);
-                OnPropertyChanged("ListaDados");
+                using (ApiService srv = new ApiService())
+                {
+                    Dados = await srv.ListarLoja(ItemCriterioBusca);
+
+                }
             }
+            else
+            {
+                Dados = await DatabaseService.Database.ListarLoja(ItemCriterioBusca);
+            }
+            ListaDados = new ObservableCollection<Loja>(Dados);
+            OnPropertyChanged("ListaDados");
             IsLoadingLista = false;
+
         }
 
         private async Task VerificarAcaoItem(ItemTappedEventArgs itemSelecionado)
         {
-            using (ApiService srv = new ApiService())
+
+            Loja ItemLoja = null;
+            if (Conectado)
             {
-                var ItemLoja = await srv.CarregarLoja(((Loja)itemSelecionado.Item).Identificador);
-                var Pagina = new EdicaoLojaPage() { BindingContext = new EdicaoLojaViewModel(ItemLoja,ItemViagem) };
-                await PushAsync(Pagina);
+                using (ApiService srv = new ApiService())
+                {
+                    ItemLoja = await srv.CarregarLoja(((Loja)itemSelecionado.Item).Identificador);
+
+                }
             }
+            else
+                ItemLoja = await DatabaseService.CarregarLoja(((Loja)itemSelecionado.Item).Identificador);
+
+
+            var Pagina = new EdicaoLojaPage() { BindingContext = new EdicaoLojaViewModel(ItemLoja, ItemViagem) };
+            await PushAsync(Pagina);
+
         }
         private async Task Adicionar()
         {
-            var ItemLoja = new Loja() { Avaliacoes = new ObservableRangeCollection<AvaliacaoLoja>() } ;
-            using (ApiService srv = new ApiService())
+            var ItemLoja = new Loja() { Avaliacoes = new ObservableRangeCollection<AvaliacaoLoja>() };
+
+            Atracao AtracaoAberto = null;
+            if (Conectado)
             {
-                var AtracaoAberto = await srv.VerificarAtracaoAberto();
-                if (AtracaoAberto != null)
+                using (ApiService srv = new ApiService())
                 {
-                    MessagingService.Current.SendMessage<MessagingServiceQuestion>(MessageKeys.DisplayQuestion, new MessagingServiceQuestion()
+                    AtracaoAberto = await srv.VerificarAtracaoAberto();
+                }
+            }
+            else
+            {
+                AtracaoAberto = await DatabaseService.Database.RetornarAtracaoAberta();
+            }
+            if (AtracaoAberto != null)
+            {
+                MessagingService.Current.SendMessage<MessagingServiceQuestion>(MessageKeys.DisplayQuestion, new MessagingServiceQuestion()
+                {
+                    Title = "Confirmação",
+                    Question = String.Format("A atração {0} está sendo visitada, deseja associar a refeição como filha dela?", AtracaoAberto.Nome),
+                    Positive = "Sim",
+                    Negative = "Não",
+                    OnCompleted = new Action<bool>(async result =>
                     {
-                        Title = "Confirmação",
-                        Question = String.Format("A atração {0} está sendo visitada, deseja associar a refeição como filha dela?", AtracaoAberto.Nome),
-                        Positive = "Sim",
-                        Negative = "Não",
-                        OnCompleted = new Action<bool>(async result =>
+                        if (result)
                         {
-                            if (result)
-                            {
-                                ItemLoja.IdentificadorAtracao = AtracaoAberto.Identificador;
-                            }
-                            var Pagina = new EdicaoLojaPage() { BindingContext = new EdicaoLojaViewModel(ItemLoja, ItemViagem) };
-                            await PushAsync(Pagina);
+                            ItemLoja.IdentificadorAtracao = AtracaoAberto.Identificador;
+                        }
+                        var Pagina = new EdicaoLojaPage() { BindingContext = new EdicaoLojaViewModel(ItemLoja, ItemViagem) };
+                        await PushAsync(Pagina);
 
 
-                        })
-                    });
-                }
-                else
-                {
-                    var Pagina = new EdicaoLojaPage() { BindingContext = new EdicaoLojaViewModel(ItemLoja, ItemViagem) };
-                    await PushAsync(Pagina);
-                }
-            }       
-                
-            
+                    })
+                });
+            }
+            else
+            {
+                var Pagina = new EdicaoLojaPage() { BindingContext = new EdicaoLojaViewModel(ItemLoja, ItemViagem) };
+                await PushAsync(Pagina);
+            }
         }
+
+
+
 
     }
 }

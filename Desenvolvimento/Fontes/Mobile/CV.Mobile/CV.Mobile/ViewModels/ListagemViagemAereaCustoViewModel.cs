@@ -69,16 +69,34 @@ namespace CV.Mobile.ViewModels
             MessagingService.Current.Subscribe<Gasto>(MessageKeys.GastoSelecionado, async (service, item) =>
             {
                 var itemGravar = new GastoViagemAerea() { IdentificadorViagemAerea = ItemViagemAerea.Identificador, IdentificadorGasto = item.Identificador, DataAtualizacao = DateTime.Now.ToUniversalTime() };
-                using (ApiService srv = new ApiService())
+
+                if (Conectado)
                 {
-                    var Resultado = await srv.SalvarGastoViagemAerea(itemGravar);
-                    if (Resultado.Sucesso)
+                    using (ApiService srv = new ApiService())
                     {
-                        itemGravar.Identificador = Resultado.IdentificadorRegistro;
-                        itemGravar.ItemGasto = item;
-                        MessagingService.Current.SendMessage<GastoViagemAerea>(MessageKeys.ManutencaoGastoViagemAerea, itemGravar);
+                        var Resultado = await srv.SalvarGastoViagemAerea(itemGravar);
+                        if (Resultado.Sucesso)
+                        {
+                            itemGravar.Identificador = Resultado.IdentificadorRegistro;
+                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "GV", itemGravar.Identificador.GetValueOrDefault(), true);
+                            itemGravar.ItemGasto = item;
+                            await DatabaseService.Database.SalvarGastoViagemAerea(itemGravar);
+                            MessagingService.Current.SendMessage<GastoViagemAerea>(MessageKeys.ManutencaoGastoViagemAerea, itemGravar);
+
+                        }
                     }
                 }
+                else
+                {
+                    if (!(await DatabaseService.Database.ListarGastoViagemAerea_IdentificadorGasto(item.Identificador)).Where(d => !d.DataExclusao.HasValue).Any())
+                    {
+                        itemGravar.AtualizadoBanco = false;
+                        await DatabaseService.Database.SalvarGastoViagemAerea(itemGravar);
+                        MessagingService.Current.SendMessage<GastoViagemAerea>(MessageKeys.ManutencaoGastoViagemAerea, itemGravar);
+
+                    }
+                }
+
 
             });
             MessagingService.Current.Subscribe<Gasto>(MessageKeys.GastoIncluido,  (service, item) =>
@@ -105,19 +123,43 @@ namespace CV.Mobile.ViewModels
                 OnCompleted = new Action<bool>(async result =>
                 {
                     if (!result) return;
-                    using (ApiService srv = new ApiService())
+
+                    ResultadoOperacao Resultado = new ResultadoOperacao();
+                    obj.DataExclusao = DateTime.Now.ToUniversalTime();
+                    if (Conectado)
                     {
-                        obj.DataExclusao = DateTime.Now;
-                        var Resultado = await srv.SalvarGastoViagemAerea(obj);
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        using (ApiService srv = new ApiService())
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-                        ListaDados.Remove(obj);
+                            Resultado = await srv.SalvarGastoViagemAerea(obj);
+                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "Gv", obj.Identificador.GetValueOrDefault(), false);
+
+                            var itemBase = await DatabaseService.Database.RetornarGastoViagemAerea(obj.Identificador);
+                            if (itemBase != null)
+                                await DatabaseService.Database.ExcluirGastoViagemAerea(itemBase);
+
+                        }
                     }
-                    
+                    else
+                    {
+                        obj.AtualizadoBanco = false;
+                        if (obj.Identificador > 0)
+                        {
+                            await DatabaseService.Database.SalvarGastoViagemAerea(obj);
+                        }
+                        else
+                            await DatabaseService.Database.ExcluirGastoViagemAerea(obj);
+                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Gasto excluído com sucesso " } };
+
+                    }
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+                    ListaDados.Remove(obj);
+
+
 
                 })
             });

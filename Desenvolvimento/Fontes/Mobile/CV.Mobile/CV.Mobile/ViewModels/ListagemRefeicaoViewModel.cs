@@ -149,71 +149,109 @@ namespace CV.Mobile.ViewModels
 
         private async Task CarregarListaCidades()
         {
-            using (ApiService srv = new ApiService())
+
+            List<Cidade> Dados = new List<Cidade>();
+            if (Conectado)
             {
-                var Dados = await srv.ListarCidadeRefeicao();
-                ListaCidades = new ObservableCollection<Cidade>(Dados);
-                OnPropertyChanged("ListaCidades");
+                using (ApiService srv = new ApiService())
+                {
+                    Dados = await srv.ListarCidadeRefeicao();
+
+                }
             }
+            else
+            {
+                Dados = await DatabaseService.Database.ListarCidade_Tipo("R");
+            }
+            ListaCidades = new ObservableCollection<Cidade>(Dados);
+            OnPropertyChanged("ListaCidades");
+
+          
         }
       
 
         private async Task CarregarListaDados()
         {
-            using (ApiService srv = new ApiService())
+            List<Refeicao> Dados = new List<Refeicao>();
+            if (Conectado)
             {
-                var Dados = await srv.ListarRefeicao(ItemCriterioBusca);
-                ListaDados = new ObservableCollection<Refeicao>(Dados);
-                OnPropertyChanged("ListaDados");
+                using (ApiService srv = new ApiService())
+                {
+                    Dados = await srv.ListarRefeicao(ItemCriterioBusca);
+
+                }
             }
+            else
+            {
+                Dados = await DatabaseService.Database.ListarRefeicao(ItemCriterioBusca);
+            }
+            ListaDados = new ObservableCollection<Refeicao>(Dados);
+            OnPropertyChanged("ListaDados");
             IsLoadingLista = false;
+
+            
         }
 
         private async Task VerificarAcaoItem(ItemTappedEventArgs itemSelecionado)
         {
-            using (ApiService srv = new ApiService())
+
+            Refeicao ItemRefeicao = null;
+            if (Conectado)
             {
-                var ItemRefeicao = await srv.CarregarRefeicao(((Refeicao)itemSelecionado.Item).Identificador);
-                var Pagina = new EdicaoRefeicaoPage() { BindingContext = new EdicaoRefeicaoViewModel(ItemRefeicao,ItemViagem) };
-                await PushAsync(Pagina);
+                using (ApiService srv = new ApiService())
+                {
+                    ItemRefeicao = await srv.CarregarRefeicao(((Refeicao)itemSelecionado.Item).Identificador);
+
+                }
             }
+            else
+                ItemRefeicao = await DatabaseService.CarregarRefeicao(((Refeicao)itemSelecionado.Item).Identificador);
+
+              var Pagina = new EdicaoRefeicaoPage() { BindingContext = new EdicaoRefeicaoViewModel(ItemRefeicao,ItemViagem) };
+                await PushAsync(Pagina);
+            
         }
         private async Task Adicionar()
         {
-            var ItemRefeicao = new Refeicao() { Pedidos = new ObservableRangeCollection<RefeicaoPedido>(), Data=DateTime.Now, Hora = DateTime.Now.TimeOfDay  } ;
-            using (ApiService srv = new ApiService())
+            var ItemRefeicao = new Refeicao() { Pedidos = new ObservableRangeCollection<RefeicaoPedido>(), Data = DateTime.Now, Hora = DateTime.Now.TimeOfDay };
+            Atracao AtracaoAberto = null;
+            if (Conectado)
             {
-                var AtracaoAberto = await srv.VerificarAtracaoAberto();
-                if (AtracaoAberto != null)
+                using (ApiService srv = new ApiService())
                 {
-                    MessagingService.Current.SendMessage<MessagingServiceQuestion>(MessageKeys.DisplayQuestion, new MessagingServiceQuestion()
-                    {
-                        Title = "Confirmação",
-                        Question = String.Format("A atração {0} está sendo visitada, deseja associar a refeição como filha dela?", AtracaoAberto.Nome),
-                        Positive = "Sim",
-                        Negative = "Não",
-                        OnCompleted = new Action<bool>(async result =>
-                        {
-                            if (result)
-                            {
-                                ItemRefeicao.IdentificadorAtracao = AtracaoAberto.Identificador;
-                            }
-                            var Pagina = new EdicaoRefeicaoPage() { BindingContext = new EdicaoRefeicaoViewModel(ItemRefeicao, ItemViagem) };
-                            await PushAsync(Pagina);
-
-
-                        })
-                    });
-                }
-                else
-                {
-                    var Pagina = new EdicaoRefeicaoPage() { BindingContext = new EdicaoRefeicaoViewModel(ItemRefeicao, ItemViagem) };
-                    await PushAsync(Pagina);
+                    AtracaoAberto = await srv.VerificarAtracaoAberto();
                 }
             }
-            
-                
-            
+            else
+            {
+                AtracaoAberto = await DatabaseService.Database.RetornarAtracaoAberta();
+            }
+            if (AtracaoAberto != null)
+            {
+                MessagingService.Current.SendMessage<MessagingServiceQuestion>(MessageKeys.DisplayQuestion, new MessagingServiceQuestion()
+                {
+                    Title = "Confirmação",
+                    Question = String.Format("A atração {0} está sendo visitada, deseja associar a refeição como filha dela?", AtracaoAberto.Nome),
+                    Positive = "Sim",
+                    Negative = "Não",
+                    OnCompleted = new Action<bool>(async result =>
+                    {
+                        if (result)
+                        {
+                            ItemRefeicao.IdentificadorAtracao = AtracaoAberto.Identificador;
+                        }
+                        var Pagina = new EdicaoRefeicaoPage() { BindingContext = new EdicaoRefeicaoViewModel(ItemRefeicao, ItemViagem) };
+                        await PushAsync(Pagina);
+
+
+                    })
+                });
+            }
+            else
+            {
+                var Pagina = new EdicaoRefeicaoPage() { BindingContext = new EdicaoRefeicaoViewModel(ItemRefeicao, ItemViagem) };
+                await PushAsync(Pagina);
+            }
         }
 
     }

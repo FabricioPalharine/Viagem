@@ -187,7 +187,11 @@ namespace CV.Mobile.Data
             return await database.DeleteAsync(item);
 
         }
+        public async Task SalvarPosicao(Posicao item)
+        {
+            await database.InsertOrReplaceAsync(item);
 
+        }
         public async Task<int> SalvarUsuarioGastoAsync(UsuarioGasto item)
         {
             if (item.Id.HasValue)
@@ -568,11 +572,11 @@ namespace CV.Mobile.Data
                 query = query.Where(d => d.IdentificadorUsuario == itemBusca.IdentificadorParticipante);
             if (itemBusca.Situacao.GetValueOrDefault(-1) >= 0)
             {
-                 if (itemBusca.Situacao == 1)
-                        query = query.Where(d => d.Status <= itemBusca.Situacao);
-                    else
-                        query = query.Where(d => d.Status == itemBusca.Situacao);
-                
+                if (itemBusca.Situacao == 1)
+                    query = query.Where(d => d.Status <= itemBusca.Situacao);
+                else
+                    query = query.Where(d => d.Status == itemBusca.Situacao);
+
             }
             if (!string.IsNullOrEmpty(itemBusca.Tipo))
                 query = query.Where(d => d.Marca.Contains(itemBusca.Tipo));
@@ -585,7 +589,7 @@ namespace CV.Mobile.Data
         {
             var query = database.Table<ListaCompra>();//.Where(d=>!d.DataExclusao.HasValue);
             query = query.Where(d => d.IdentificadorUsuario == IdentificadorUsuario);
-             if (itemBusca.Situacao.GetValueOrDefault(-1) >= 0)
+            if (itemBusca.Situacao.GetValueOrDefault(-1) >= 0)
             {
                 if (itemBusca.Situacao == 1)
                     query = query.Where(d => d.Status <= itemBusca.Situacao);
@@ -675,7 +679,7 @@ namespace CV.Mobile.Data
         public async Task<List<CalendarioPrevisto>> ListarCalendarioPrevisto(CriterioBusca itemBuscao)
         {
             var query = database.Table<CalendarioPrevisto>();//.Where(d=>!d.DataExclusao.HasValue);
-          
+
             return (await query.ToListAsync()).Where(d => !d.DataExclusao.HasValue).ToList();
         }
 
@@ -713,7 +717,7 @@ namespace CV.Mobile.Data
             else if (itemBusca.Situacao == 2)
                 ListaResultado = ListaResultado.Where(d => d.Chegada.HasValue && d.Partida.HasValue).ToList();
             else if (itemBusca.Situacao == 3)
-                ListaResultado = ListaResultado.Where(d => !d.Chegada.HasValue ).ToList();
+                ListaResultado = ListaResultado.Where(d => !d.Chegada.HasValue).ToList();
 
 
             return ListaResultado;
@@ -804,18 +808,343 @@ namespace CV.Mobile.Data
 
         public async Task Excluir_Gasto_Filhos(int IdentificadorGasto)
         {
-            await database.ExecuteAsync("Delete from AluguelGasto Where IdentificadorGasto = ?", IdentificadorGasto);          
+            await database.ExecuteAsync("Delete from AluguelGasto Where IdentificadorGasto = ?", IdentificadorGasto);
             await database.ExecuteAsync("Delete from GastoAtracao Where IdentificadorGasto = ?", IdentificadorGasto);
             await database.ExecuteAsync("Delete from GastoCompra Where IdentificadorGasto = ?", IdentificadorGasto);
             await database.ExecuteAsync("Delete from GastoDividido Where IdentificadorGasto = ?", IdentificadorGasto);
             await database.ExecuteAsync("Delete from GastoHotel Where IdentificadorGasto = ?", IdentificadorGasto);
             await database.ExecuteAsync("Delete from GastoRefeicao Where IdentificadorGasto = ?", IdentificadorGasto);
-            await database.ExecuteAsync("Delete from GastoViagemAerea Where IdentificadorGasto = ?", IdentificadorGasto);           
+            await database.ExecuteAsync("Delete from GastoViagemAerea Where IdentificadorGasto = ?", IdentificadorGasto);
             await database.ExecuteAsync("Delete from ReabastecimentoGasto  Where IdentificadorGasto = ?", IdentificadorGasto);
 
 
         }
 
-    }
 
+        public async Task<List<Refeicao>> ListarRefeicao(CriterioBusca itemBusca)
+        {
+            var query = database.Table<Refeicao>();//.Where(d=>!d.DataExclusao.HasValue);
+            if (itemBusca.DataInicioDe.HasValue)
+                query = query.Where(d => d.Data >= itemBusca.DataInicioDe);
+            if (itemBusca.DataInicioAte.HasValue)
+                query = query.Where(d => d.Data <= itemBusca.DataInicioAte);
+
+
+            if (!string.IsNullOrEmpty(itemBusca.Tipo))
+                query = query.Where(d => d.Tipo.Contains(itemBusca.Tipo));
+            if (!string.IsNullOrEmpty(itemBusca.Nome))
+                query = query.Where(d => d.Nome.Contains(itemBusca.Nome));
+            if (itemBusca.IdentificadorCidade.HasValue)
+                query = query.Where(d => d.IdentificadorCidade == itemBusca.IdentificadorCidade);
+            var ListaResultado = (await query.ToListAsync()).Where(d => !d.DataExclusao.HasValue).ToList();
+
+
+
+            return ListaResultado;
+        }
+
+
+        public async Task ExcluirRefeicao(Refeicao item)
+        {
+            await database.DeleteAsync(item);
+        }
+        public async Task<Refeicao> RetornarRefeicao(int? Id)
+        {
+            return await database.Table<Refeicao>().Where(d => d.Identificador == Id).FirstOrDefaultAsync();
+        }
+
+
+        public async Task<GastoRefeicao> RetornarGastoRefeicao(int? Id)
+        {
+            return await database.Table<GastoRefeicao>().Where(d => d.Identificador == Id).FirstOrDefaultAsync();
+        }
+
+        public async Task<HotelEvento> RetornarHotelEvento(int? Id)
+        {
+            return await database.Table<HotelEvento>().Where(d => d.Identificador == Id).FirstOrDefaultAsync();
+        }
+
+        public async Task SalvarRefeicao(Refeicao item)
+        {
+            await database.InsertOrReplaceAsync(item);
+            if (!item.Identificador.HasValue)
+            {
+                item.Identificador = item.Id * -1;
+                await database.InsertOrReplaceAsync(item);
+            }
+        }
+
+        public async Task<List<RefeicaoPedido>> ListarRefeicaoPedido_IdentificadorRefeicao(int? IdentificadorRefeicao)
+        {
+            var query = database.Table<RefeicaoPedido>().Where(d => d.IdentificadorRefeicao == IdentificadorRefeicao);
+            return (await query.ToListAsync());//.Where(d => !d.DataExclusao.HasValue).ToList();
+        }
+
+        public async Task<List<GastoRefeicao>> ListarGastoRefeicao_IdentificadorRefeicao(int? IdentificadorRefeicao)
+        {
+            var query = database.Table<GastoRefeicao>().Where(d => d.IdentificadorRefeicao == IdentificadorRefeicao);
+            return (await query.ToListAsync());//.Where(d => !d.DataExclusao.HasValue).ToList();
+        }
+
+        public async Task ExcluirRefeicaoPedido(RefeicaoPedido item)
+        {
+            await database.DeleteAsync(item);
+        }
+
+        public async Task SalvarRefeicaoPedido(RefeicaoPedido item)
+        {
+            await database.InsertOrReplaceAsync(item);
+            if (!item.Identificador.HasValue)
+            {
+                item.Identificador = item.Id * -1;
+                await database.InsertOrReplaceAsync(item);
+            }
+        }
+
+
+
+        public async Task<List<Hotel>> ListarHotel(CriterioBusca itemBusca)
+        {
+            var query = database.Table<Hotel>();//.Where(d=>!d.DataExclusao.HasValue);
+            if (itemBusca.DataInicioDe.HasValue)
+                query = query.Where(d => d.EntradaPrevista >= itemBusca.DataInicioDe);
+            if (itemBusca.DataInicioAte.HasValue)
+                query = query.Where(d => d.EntradaPrevista <= itemBusca.DataInicioAte);
+
+            if (itemBusca.DataFimDe.HasValue)
+                query = query.Where(d => d.SaidaPrevista >= itemBusca.DataFimDe);
+            if (itemBusca.DataFimAte.HasValue)
+                query = query.Where(d => d.SaidaPrevista <= itemBusca.DataFimAte);
+            if (!string.IsNullOrEmpty(itemBusca.Nome))
+                query = query.Where(d => d.Nome.Contains(itemBusca.Nome));
+            if (itemBusca.IdentificadorCidade.HasValue)
+                query = query.Where(d => d.IdentificadorCidade == itemBusca.IdentificadorCidade);
+            var ListaResultado = (await query.ToListAsync()).Where(d => !d.DataExclusao.HasValue).ToList();
+            if (itemBusca.Situacao == 1)
+                ListaResultado = ListaResultado.Where(d => d.DataEntrada.HasValue && !d.DataSaidia.HasValue).ToList();
+            else if (itemBusca.Situacao == 2)
+                ListaResultado = ListaResultado.Where(d => d.DataEntrada.HasValue && d.DataSaidia.HasValue).ToList();
+            else if (itemBusca.Situacao == 3)
+                ListaResultado = ListaResultado.Where(d => !d.DataEntrada.HasValue).ToList();
+
+
+            return ListaResultado;
+        }
+
+
+        public async Task ExcluirHotel(Hotel item)
+        {
+            await database.DeleteAsync(item);
+        }
+        public async Task<Hotel> RetornarHotel(int? Id)
+        {
+            return await database.Table<Hotel>().Where(d => d.Identificador == Id).FirstOrDefaultAsync();
+        }
+
+
+        public async Task<GastoHotel> RetornarGastoHotel(int? Id)
+        {
+            return await database.Table<GastoHotel>().Where(d => d.Identificador == Id).FirstOrDefaultAsync();
+        }
+
+        public async Task SalvarHotel(Hotel item)
+        {
+            await database.InsertOrReplaceAsync(item);
+            if (!item.Identificador.HasValue)
+            {
+                item.Identificador = item.Id * -1;
+                await database.InsertOrReplaceAsync(item);
+            }
+        }
+
+        public async Task<List<HotelAvaliacao>> ListarHotelAvaliacao_IdentificadorHotel(int? IdentificadorHotel)
+        {
+            var query = database.Table<HotelAvaliacao>().Where(d => d.IdentificadorHotel == IdentificadorHotel);
+            return (await query.ToListAsync());//.Where(d => !d.DataExclusao.HasValue).ToList();
+        }
+
+        public async Task<List<GastoHotel>> ListarGastoHotel_IdentificadorHotel(int? IdentificadorHotel)
+        {
+            var query = database.Table<GastoHotel>().Where(d => d.IdentificadorHotel == IdentificadorHotel);
+            return (await query.ToListAsync());//.Where(d => !d.DataExclusao.HasValue).ToList();
+        }
+
+        public async Task<List<HotelEvento>> ListarHotelEvento_IdentificadorHotel(int? IdentificadorHotel)
+        {
+            var query = database.Table<HotelEvento>().Where(d => d.IdentificadorHotel == IdentificadorHotel);
+            return (await query.ToListAsync());//.Where(d => !d.DataExclusao.HasValue).ToList();
+        }
+
+        public async Task ExcluirHotelAvaliacao(HotelAvaliacao item)
+        {
+            await database.DeleteAsync(item);
+        }
+
+        public async Task ExcluirHotelEvento(HotelEvento item)
+        {
+            await database.DeleteAsync(item);
+        }
+
+        public async Task SalvarHotelAvaliacao(HotelAvaliacao item)
+        {
+            await database.InsertOrReplaceAsync(item);
+            if (!item.Identificador.HasValue)
+            {
+                item.Identificador = item.Id * -1;
+                await database.InsertOrReplaceAsync(item);
+            }
+        }
+
+     
+
+        public async Task SalvarHotelEvento(HotelEvento item)
+        {
+            await database.InsertOrReplaceAsync(item);
+            if (!item.Identificador.HasValue)
+            {
+                item.Identificador = item.Id * -1;
+                await database.InsertOrReplaceAsync(item);
+            }
+        }
+
+        public async Task<HotelEvento> RetornarUltimoHotelEvento_IdentificadorHotel_IdentificadorUsuario(int? IdentificadorHotel, int? IdentificadorUsuario)
+        {
+            var Lista = await database.Table<HotelEvento>().Where(d => d.IdentificadorHotel == IdentificadorHotel).Where(d => d.IdentificadorUsuario == IdentificadorUsuario).ToListAsync();
+            Lista = Lista.Where(d => !d.DataExclusao.HasValue).Where(d => !d.DataSaida.HasValue).OrderByDescending(d => d.DataEntrada).ToList();
+            return Lista.FirstOrDefault();
+        }
+
+        public async Task<AluguelGasto> RetornarAluguelGasto(int? Id)
+        {
+            return await database.Table<AluguelGasto>().Where(d => d.Identificador == Id).FirstOrDefaultAsync();
+        }
+
+        public async Task<GastoViagemAerea> RetornarGastoViagemAerea(int? Id)
+        {
+            return await database.Table<GastoViagemAerea>().Where(d => d.Identificador == Id).FirstOrDefaultAsync();
+        }
+
+        public async Task<List<Loja>> ListarLoja(CriterioBusca itemBusca)
+        {
+            var query = database.Table<Loja>();//.Where(d=>!d.DataExclusao.HasValue);
+            
+            if (!string.IsNullOrEmpty(itemBusca.Nome))
+                query = query.Where(d => d.Nome.Contains(itemBusca.Nome));
+            if (itemBusca.IdentificadorCidade.HasValue)
+                query = query.Where(d => d.IdentificadorCidade == itemBusca.IdentificadorCidade);
+            var ListaResultado = (await query.ToListAsync()).Where(d => !d.DataExclusao.HasValue).ToList();
+            if (itemBusca.DataInicioDe.HasValue || itemBusca.DataInicioAte.HasValue)
+            {
+                var listaLojas = ListaResultado.Select(d => d.Identificador).ToList();
+                var listaCompra = await database.Table<GastoCompra>().Where(d => listaLojas.Contains(d.Identificador)).ToListAsync();
+                foreach (var itemCompra in listaCompra)
+                    itemCompra.ItemGasto = await RetornarGasto(itemCompra.IdentificadorGasto);
+                if (itemBusca.DataInicioDe.HasValue)
+                    listaCompra = listaCompra.Where(d => d.ItemGasto.Data >= itemBusca.DataInicioDe).ToList();
+                if (itemBusca.DataInicioAte.HasValue)
+                    listaCompra = listaCompra.Where(d => d.ItemGasto.Data < itemBusca.DataInicioAte.Value.AddDays(1)).ToList();
+
+                ListaResultado = ListaResultado.Where(d => listaCompra.Where(e => e.IdentificadorLoja == d.Identificador).Any()).ToList();            }
+            return ListaResultado;
+        }     
+
+        public async Task ExcluirLoja(Loja item)
+        {
+            await database.DeleteAsync(item);
+        }
+        public async Task<Loja> RetornarLoja(int? Id)
+        {
+            return await database.Table<Loja>().Where(d => d.Identificador == Id).FirstOrDefaultAsync();
+        }
+
+
+        public async Task<GastoCompra> RetornarGastoCompra(int? Id)
+        {
+            return await database.Table<GastoCompra>().Where(d => d.Identificador == Id).FirstOrDefaultAsync();
+        }
+
+        public async Task<AvaliacaoLoja> RetornarAvaliacaoLoja(int? Id)
+        {
+            return await database.Table<AvaliacaoLoja>().Where(d => d.Identificador == Id).FirstOrDefaultAsync();
+        }
+
+        public async Task<AvaliacaoAtracao> RetornarAvaliacaoAtracao(int? Id)
+        {
+            return await database.Table<AvaliacaoAtracao>().Where(d => d.Identificador == Id).FirstOrDefaultAsync();
+        }
+
+        public async Task<HotelAvaliacao> RetornarHotelAvaliacao(int? Id)
+        {
+            return await database.Table<HotelAvaliacao>().Where(d => d.Identificador == Id).FirstOrDefaultAsync();
+        }
+
+
+        public async Task<RefeicaoPedido> RetornarRefeicaoPedido(int? Id)
+        {
+            return await database.Table<RefeicaoPedido>().Where(d => d.Identificador == Id).FirstOrDefaultAsync();
+        }
+
+        public async Task SalvarLoja(Loja item)
+        {
+            await database.InsertOrReplaceAsync(item);
+            if (!item.Identificador.HasValue)
+            {
+                item.Identificador = item.Id * -1;
+                await database.InsertOrReplaceAsync(item);
+            }
+        }
+
+        public async Task<List<AvaliacaoLoja>> ListarAvaliacaoLoja_IdentificadorLoja(int? IdentificadorLoja)
+        {
+            var query = database.Table<AvaliacaoLoja>().Where(d => d.IdentificadorLoja == IdentificadorLoja);
+            return (await query.ToListAsync());//.Where(d => !d.DataExclusao.HasValue).ToList();
+        }
+
+        public async Task<List<GastoCompra>> ListarGastoCompra_IdentificadorLoja(int? IdentificadorLoja)
+        {
+            var query = database.Table<GastoCompra>().Where(d => d.IdentificadorLoja == IdentificadorLoja);
+            return (await query.ToListAsync());//.Where(d => !d.DataExclusao.HasValue).ToList();
+        }
+
+        public async Task<List<ItemCompra>> ListarItemCompra_IdentificadorGastoCompra(int? IdentificadorGastoCompra)
+        {
+            var query = database.Table<ItemCompra>().Where(d => d.IdentificadorGastoCompra == IdentificadorGastoCompra);
+            return (await query.ToListAsync());//.Where(d => !d.DataExclusao.HasValue).ToList();
+        }
+
+        internal async Task ExcluirItemCompra_IdentificadorGastoCompra(int? identificador)
+        {
+            await database.ExecuteAsync("Delete from ItemCompra Where IdentificadorGastoCompra = ?", identificador);
+        }
+
+        public async Task ExcluirAvaliacaoLoja(AvaliacaoLoja item)
+        {
+            await database.DeleteAsync(item);
+        }
+
+        public async Task SalvarAvaliacaoLoja(AvaliacaoLoja item)
+        {
+            await database.InsertOrReplaceAsync(item);
+            if (!item.Identificador.HasValue)
+            {
+                item.Identificador = item.Id * -1;
+                await database.InsertOrReplaceAsync(item);
+            }
+        }
+
+        public async Task ExcluirItemCompra(ItemCompra item)
+        {
+            await database.DeleteAsync(item);
+        }
+
+        public async Task SalvarItemCompra(ItemCompra item)
+        {
+            await database.InsertOrReplaceAsync(item);
+            if (!item.Identificador.HasValue)
+            {
+                item.Identificador = item.Id * -1;
+                await database.InsertOrReplaceAsync(item);
+            }
+        }
+    }
 }

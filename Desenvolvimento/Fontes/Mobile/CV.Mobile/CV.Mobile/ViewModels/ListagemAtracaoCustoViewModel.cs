@@ -80,14 +80,20 @@ namespace CV.Mobile.ViewModels
                             itemGravar.ItemGasto = item;
                             await DatabaseService.Database.SalvarGastoAtracao(itemGravar);
                             MessagingService.Current.SendMessage<GastoAtracao>(MessageKeys.ManutencaoGastoAtracao, itemGravar);
+
                         }
                     }
                 }
                 else
                 {
-                    itemGravar.AtualizadoBanco = false;
-                    await DatabaseService.Database.SalvarGastoAtracao(itemGravar);
 
+                    if (!(await DatabaseService.Database.ListarGastoAtracao_IdentificadorGasto(item.Identificador)).Where(d => !d.DataExclusao.HasValue).Any())
+                    {
+                        itemGravar.AtualizadoBanco = false;
+                        await DatabaseService.Database.SalvarGastoAtracao(itemGravar);
+                        MessagingService.Current.SendMessage<GastoAtracao>(MessageKeys.ManutencaoGastoAtracao, itemGravar);
+
+                    }
                 }
 
             });
@@ -122,9 +128,12 @@ namespace CV.Mobile.ViewModels
                         using (ApiService srv = new ApiService())
                         {
                             Resultado = await srv.SalvarGastoAtracao(obj);
+                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "GA", obj.Identificador.GetValueOrDefault(), false);
+
                             var itemBase = await DatabaseService.Database.RetornarGastoAtracao(obj.Identificador);
                             if (itemBase != null)
                                 await DatabaseService.Database.ExcluirGastoAtracao(itemBase);
+
                         }
                     }
                     else

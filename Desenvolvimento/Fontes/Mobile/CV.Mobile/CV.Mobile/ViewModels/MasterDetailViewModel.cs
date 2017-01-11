@@ -7,6 +7,7 @@ using FormsToolkit;
 using Microsoft.AspNet.SignalR.Client;
 using Microsoft.Practices.ServiceLocation;
 using MvvmHelpers;
+using Newtonsoft.Json.Linq;
 using Plugin.Connectivity;
 using Plugin.Geolocator;
 using Plugin.Geolocator.Abstractions;
@@ -50,7 +51,8 @@ namespace CV.Mobile.ViewModels
             MasterPage = paginaMenu;
             var paginaDetalhe = new MenuInicialPage() { BindingContext = new MenuInicialViewModel() };
             DetailPage = paginaDetalhe;
-            MessagingService.Current.Subscribe<Hotel>(MessageKeys.ManutencaoHotel, (service, item) =>
+            MessagingService.Current.Unsubscribe<Hotel>(MessageKeys.ManutencaoHotelSelecao);
+            MessagingService.Current.Subscribe<Hotel>(MessageKeys.ManutencaoHotelSelecao, (service, item) =>
             {
                 var hotel = _hotelAtual ?? new Hotel();
                 if (item.Identificador == (int)hotel.Identificador)
@@ -143,7 +145,7 @@ namespace CV.Mobile.ViewModels
                    CrossConnectivity.Current.ConnectionTypes.Contains(Plugin.Connectivity.Abstractions.ConnectionType.WiFi)))
             {
                 var ListaFotos = await DatabaseService.Database.ListarUploadFoto_Video(true);
-                foreach (var itemFoto in ListaFotos)
+                foreach (var itemFoto in ListaFotos.Where(d=>d.IdentificadorAtracao.GetValueOrDefault(0) >= 0 && d.IdentificadorHotel.GetValueOrDefault(0) >= 0 && d.IdentificadorRefeicao.GetValueOrDefault(0) >= 0))
                 {
                     byte[] DadosFoto = ServiceLocator.Current.GetInstance<IFileHelper>().CarregarDadosFile(itemFoto.CaminhoLocal);
                     using (ApiService srv = new ApiService())
@@ -182,7 +184,7 @@ namespace CV.Mobile.ViewModels
         public async Task EnviarFotos()
         {
             var ListaFotos = await DatabaseService.Database.ListarUploadFoto_Video(false);
-            foreach (var itemFoto in ListaFotos)
+            foreach (var itemFoto in ListaFotos.Where(d => d.IdentificadorAtracao.GetValueOrDefault(0) >= 0 && d.IdentificadorHotel.GetValueOrDefault(0) >= 0 && d.IdentificadorRefeicao.GetValueOrDefault(0) >= 0))
             {
                 byte[] DadosFoto = ServiceLocator.Current.GetInstance<IFileHelper>().CarregarDadosFile(itemFoto.CaminhoLocal);
                 using (ApiService srv = new ApiService())
@@ -238,10 +240,15 @@ namespace CV.Mobile.ViewModels
                     
                 };
                 ultimaPosicao = e.Position;
-                using (ApiService srv = new ApiService())
+                if (ConectadoPrincipal)
                 {
-                    await srv.SalvarPosicao(itemPosicao);
+                    using (ApiService srv = new ApiService())
+                    {
+                        await srv.SalvarPosicao(itemPosicao);
+                    }
                 }
+                else
+                    await DatabaseService.Database.SalvarPosicao(itemPosicao);
             }
             if (_hotelAtual != null && _hotelAtual.Raio > 0 && _hotelAtual.Latitude.HasValue && _hotelAtual.Longitude.HasValue)
             {
@@ -250,11 +257,37 @@ namespace CV.Mobile.ViewModels
                 if (estaDentro != HotelDentro)
                 {
                     HotelEvento itemEvento = new HotelEvento() { DataEntrada = DateTime.Now, IdentificadorHotel = _hotelAtual.Identificador, IdentificadorUsuario = ItemUsuario.Codigo, DataAtualizacao=DateTime.Now.ToUniversalTime() };
-                    if (estaDentro)
+                    if (!estaDentro)
                         itemEvento.DataSaida = DateTime.Now;
-                    using (ApiService srv = new ApiService())
+                    if (ConectadoPrincipal)
                     {
-                        await srv.SalvarHotelEvento(itemEvento);
+                        using (ApiService srv = new ApiService())
+                        {
+                            var Resultado = await srv.SalvarHotelEvento(itemEvento);
+                            var Jresultado = (JObject)Resultado.ItemRegistro;
+                            var pItemEvento = Jresultado.ToObject<HotelEvento>();
+                            var itemBanco = await DatabaseService.Database.RetornarHotelEvento(pItemEvento.Identificador);
+                            if (itemBanco != null)
+                                pItemEvento.Id = itemBanco.Id;
+                            await DatabaseService.Database.SalvarHotelEvento(pItemEvento);
+                        }
+                    }
+                    else
+                    {
+                        var itemAtual = await DatabaseService.Database.RetornarUltimoHotelEvento_IdentificadorHotel_IdentificadorUsuario(_hotelAtual.Identificador, ItemUsuario.Codigo);
+                        if (itemAtual != null && !estaDentro)
+                        {
+                            itemAtual.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                            itemAtual.AtualizadoBanco = false;
+                            itemAtual.DataSaida = DateTime.Now;
+                            await DatabaseService.Database.SalvarHotelEvento(itemAtual);
+                        }
+                        else if (itemAtual == null && estaDentro)
+                        {
+                            itemEvento.AtualizadoBanco = false;
+                            await DatabaseService.Database.SalvarHotelEvento(itemEvento);
+                        }
+
                     }
 
                 }
@@ -343,13 +376,26 @@ namespace CV.Mobile.ViewModels
 
         private async void CarregarHotelAtual()
         {
-            using (ApiService srv = new ApiService())
+            if (ConectadoPrincipal)
             {
-                var Hoteis = await srv.ListarHotel(new CriterioBusca() { Situacao = 1 });
+                using (ApiService srv = new ApiService())
+                {
+                    var Hoteis = await srv.ListarHotel(new CriterioBusca() { Situacao = 1 });
+                    if (Hoteis.Any())
+                    {
+                        _hotelAtual = await srv.CarregarHotel(Hoteis.OrderByDescending(d => d.DataEntrada).Select(d => d.Identificador).FirstOrDefault());
+                        HotelDentro = _hotelAtual.Eventos.Where(d => d.IdentificadorUsuario == ItemUsuario.Codigo).Where(d => !d.DataSaida.HasValue).Any();
+                    }
+                }
+            }
+            else
+            {
+                var Hoteis = await DatabaseService.Database.ListarHotel(new CriterioBusca() { Situacao = 1 });
                 if (Hoteis.Any())
                 {
-                    _hotelAtual = await srv.CarregarHotel(Hoteis.OrderByDescending(d => d.DataEntrada).Select(d => d.Identificador).FirstOrDefault());
+                    _hotelAtual = await DatabaseService.CarregarHotel(Hoteis.OrderByDescending(d => d.DataEntrada).Select(d => d.Identificador).FirstOrDefault());
                     HotelDentro = _hotelAtual.Eventos.Where(d => d.IdentificadorUsuario == ItemUsuario.Codigo).Where(d => !d.DataSaida.HasValue).Any();
+
                 }
             }
         }

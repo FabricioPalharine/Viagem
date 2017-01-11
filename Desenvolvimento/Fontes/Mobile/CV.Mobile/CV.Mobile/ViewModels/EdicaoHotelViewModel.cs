@@ -52,8 +52,8 @@ namespace CV.Mobile.ViewModels
             VisitaIniciada = pItemHotel.DataEntrada.GetValueOrDefault(_dataMinima) != _dataMinima;
             PossoComentar = VisitaConcluida && pItemHotel.Avaliacoes.Where(d => d.IdentificadorUsuario == ItemUsuarioLogado.Codigo).Any();
             ItemViagem = pItemViagem;
-            
-            
+
+
             SalvarCommand = new Command(
                                 async () => await Salvar(),
                                 () => true);
@@ -65,13 +65,13 @@ namespace CV.Mobile.ViewModels
                                                                   () => true);
 
             VisitaConcluidaToggledCommand = new Command<ToggledEventArgs>(
-                                                                   (obj) =>  VerificarAcaoConcluidoItem(obj));
+                                                                   (obj) => VerificarAcaoConcluidoItem(obj));
 
             VisitaIniciadaToggledCommand = new Command<ToggledEventArgs>(
                                                                    (obj) => VerificarAcaoIniciadaItem(obj));
             TrocarSituacaoCommand = new Command(async () => await TrocarSituacaoEvento());
 
-            ExcluirCommand = new Command(() =>  Excluir());
+            ExcluirCommand = new Command(() => Excluir());
             AbrirCustosCommand = new Command(async () => await AbrirJanelaCustos());
             if (ItemHotel.Eventos != null)
             {
@@ -82,36 +82,61 @@ namespace CV.Mobile.ViewModels
 
         private async Task TrocarSituacaoEvento()
         {
-            using (ApiService srv = new ApiService())
+            if (Conectado)
             {
-                var itemHotel = await srv.CarregarHotel(_ItemHotel.Identificador);
-                bool NoHotel = itemHotel.Eventos.Where(d => d.IdentificadorUsuario == ItemUsuarioLogado.Codigo).Where(d => !d.DataSaida.HasValue).Any();
-                HotelEvento itemEvento = new HotelEvento() { DataEntrada = DateTime.Now, IdentificadorHotel = itemHotel.Identificador, IdentificadorUsuario = ItemUsuarioLogado.Codigo , DataAtualizacao = DateTime.Now.ToUniversalTime()};
-                if (NoHotel)
+                using (ApiService srv = new ApiService())
+                {
+                    var itemHotel = await srv.CarregarHotel(_ItemHotel.Identificador);
+                    bool NoHotel = itemHotel.Eventos.Where(d => d.IdentificadorUsuario == ItemUsuarioLogado.Codigo).Where(d => !d.DataSaida.HasValue).Any();
+                    HotelEvento itemEvento = new HotelEvento() { DataEntrada = DateTime.Now, IdentificadorHotel = itemHotel.Identificador, IdentificadorUsuario = ItemUsuarioLogado.Codigo, DataAtualizacao = DateTime.Now.ToUniversalTime() };
+                    if (NoHotel)
+                        itemEvento.DataSaida = DateTime.Now;
+                    var Resultado = await srv.SalvarHotelEvento(itemEvento);
+                    TextoComandoTrocar = NoHotel ? "Cheguei Hotel" : "Deixei Hotel";
+                    var Jresultado = (JObject)Resultado.ItemRegistro;
+                    var pItemEvento = Jresultado.ToObject<HotelEvento>();
+                    var itemBanco = await DatabaseService.Database.RetornarHotelEvento(pItemEvento.Identificador);
+                    if (itemBanco != null)
+                        pItemEvento.Id = itemBanco.Id;
+                    await DatabaseService.Database.SalvarHotelEvento(pItemEvento);
+
+                }
+            }
+            else
+            {
+                var itemHotel = await DatabaseService.CarregarHotel(_ItemHotel.Identificador);
+                var itemEvento = itemHotel.Eventos.Where(d => d.IdentificadorUsuario == ItemUsuarioLogado.Codigo).Where(d => !d.DataSaida.HasValue).OrderByDescending(d => d.DataEntrada).FirstOrDefault();
+                if (itemEvento == null)
+                    itemEvento = new HotelEvento() { DataEntrada = DateTime.Now, IdentificadorHotel = itemHotel.Identificador, IdentificadorUsuario = ItemUsuarioLogado.Codigo, DataAtualizacao = DateTime.Now.ToUniversalTime(), AtualizadoBanco = false };
+                else
+                {
                     itemEvento.DataSaida = DateTime.Now;
-                await srv.SalvarHotelEvento(itemEvento);
-                TextoComandoTrocar = NoHotel ? "Cheguei Hotel" : "Deixei Hotel";
+                    itemEvento.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                    itemEvento.AtualizadoBanco = false;
+                }
+                await DatabaseService.Database.SalvarHotelEvento(itemEvento);
+
             }
         }
 
         private void VerificarAcaoConcluidoItem(ToggledEventArgs obj)
         {
- 
-                if (obj.Value)
-                {
-                    if (ItemHotel.DataSaidia.GetValueOrDefault(_dataMinima) == _dataMinima)
-                    {
 
-                        ItemHotel.DataSaidia = DateTime.Today;
-                        ItemHotel.HoraSaida = DateTime.Now.TimeOfDay;
-                    }
-                }
-                else
+            if (obj.Value)
+            {
+                if (ItemHotel.DataSaidia.GetValueOrDefault(_dataMinima) == _dataMinima)
                 {
-                    PossoComentar = false;
-                    ItemHotel.DataSaidia = _dataMinima;
-                    ItemHotel.HoraSaida = new TimeSpan();
+
+                    ItemHotel.DataSaidia = DateTime.Today;
+                    ItemHotel.HoraSaida = DateTime.Now.TimeOfDay;
                 }
+            }
+            else
+            {
+                PossoComentar = false;
+                ItemHotel.DataSaidia = _dataMinima;
+                ItemHotel.HoraSaida = new TimeSpan();
+            }
         }
 
 
@@ -217,7 +242,7 @@ namespace CV.Mobile.ViewModels
             if (_ItemHotel.Latitude.HasValue && _ItemHotel.Longitude.HasValue)
             {
                 Bounds = MapSpan.FromCenterAndRadius(new Position(_ItemHotel.Latitude.Value, _ItemHotel.Longitude.Value), new Distance(5000));
-               
+
 
             }
             else
@@ -229,8 +254,8 @@ namespace CV.Mobile.ViewModels
                 ItemHotel.Longitude = posicao.Longitude;
                 ItemHotel.Latitude = posicao.Latitude;
             }
-           
-            
+
+
 
         }
 
@@ -238,21 +263,33 @@ namespace CV.Mobile.ViewModels
         {
             if (!Participantes.Any())
             {
-                using (ApiService srv = new ApiService())
+
+                Participantes.Clear();
+
+                List<Usuario> ListaUsuario = new List<Usuario>();
+                if (Conectado)
                 {
-                    Participantes.Clear();
-                    var ListaUsuario = await srv.ListarParticipantesViagem();
-                    foreach (var itemUsuario in ListaUsuario)
+                    using (ApiService srv = new ApiService())
                     {
-                        if (!ItemHotel.Identificador.HasValue || ItemHotel.Avaliacoes.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).Any())
-                            itemUsuario.Selecionado = true;
-                        Participantes.Add(itemUsuario);
+
+                        ListaUsuario = await srv.ListarParticipantesViagem();
                     }
                 }
+                else
+                {
+                    ListaUsuario = await DatabaseService.Database.ListarParticipanteViagem();
+                }
+                foreach (var itemUsuario in ListaUsuario)
+                {
+                    if (!ItemHotel.Identificador.HasValue || ItemHotel.Avaliacoes.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).Any())
+                        itemUsuario.Selecionado = true;
+                    Participantes.Add(itemUsuario);
+                }
+
             }
         }
 
-       
+
 
 
         public Hotel ItemHotel
@@ -322,13 +359,13 @@ namespace CV.Mobile.ViewModels
                 SetProperty(ref _VisitaIniciada, value);
                 if (value)
                 {
-                  
-                   
+
+
                 }
                 else
                 {
                     VisitaConcluida = false;
-                    
+
                 }
             }
         }
@@ -345,13 +382,13 @@ namespace CV.Mobile.ViewModels
                 SetProperty(ref _VisitaConcluida, value);
                 if (value)
                 {
-                    if (Participantes.Any())  
-                    PossoComentar = Participantes.Where(d => d.Identificador == ItemUsuarioLogado.Codigo && d.Selecionado).Any();
+                    if (Participantes.Any())
+                        PossoComentar = Participantes.Where(d => d.Identificador == ItemUsuarioLogado.Codigo && d.Selecionado).Any();
                 }
                 else
                 {
                     PossoComentar = false;
-                   
+
                 }
             }
         }
@@ -402,111 +439,140 @@ namespace CV.Mobile.ViewModels
             SalvarCommand.ChangeCanExecute();
             try
             {
-                using (ApiService srv = new ApiService())
+
+                Hotel pItemHotel = new Hotel();
+                if (ItemHotel.Identificador.HasValue)
                 {
-
-                    Hotel pItemHotel = new Hotel();
-                    if (ItemHotel.Identificador.HasValue)
+                    using (ApiService srv = new ApiService())
+                    {
                         pItemHotel = await srv.CarregarHotel(ItemHotel.Identificador.GetValueOrDefault(-1));
-                    ItemHotel.Eventos = pItemHotel.Eventos;
-                    foreach (Usuario itemUsuario in Participantes)
+                    }
+                }
+                else
+                {
+                    pItemHotel = await DatabaseService.CarregarHotel(ItemHotel.Identificador.GetValueOrDefault(-1));
+                }
+                ItemHotel.Eventos = pItemHotel.Eventos;
+                foreach (Usuario itemUsuario in Participantes)
+                {
+                    if (itemUsuario.Selecionado)
                     {
-                        if (itemUsuario.Selecionado)
+                        if (!ItemHotel.Avaliacoes.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).Any())
                         {
-                            if (!ItemHotel.Avaliacoes.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).Any())
+                            var itemNovaAvaliacao = new HotelAvaliacao() { IdentificadorUsuario = itemUsuario.Identificador };
+                            if (itemUsuario.Identificador == ItemUsuarioLogado.Codigo)
                             {
-                                var itemNovaAvaliacao = new HotelAvaliacao() { IdentificadorUsuario = itemUsuario.Identificador };
-                                if (itemUsuario.Identificador == ItemUsuarioLogado.Codigo)
-                                {
-                                    itemNovaAvaliacao.Nota = ItemAvaliacao.Nota;
-                                    itemNovaAvaliacao.Comentario = ItemAvaliacao.Comentario;
-                                }
-                                itemNovaAvaliacao.DataAtualizacao = DateTime.Now.ToUniversalTime();
-                                ItemHotel.Avaliacoes.Add(itemNovaAvaliacao);
+                                itemNovaAvaliacao.Nota = ItemAvaliacao.Nota;
+                                itemNovaAvaliacao.Comentario = ItemAvaliacao.Comentario;
                             }
-                        }
-                        else
-                        {
-                            if (ItemHotel.Avaliacoes.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).Any())
-                            {
-                                ItemHotel.Avaliacoes.Remove(ItemHotel.Avaliacoes.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).FirstOrDefault());
-                                ItemAvaliacao = new HotelAvaliacao();
-                            }
+                            itemNovaAvaliacao.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                            ItemHotel.Avaliacoes.Add(itemNovaAvaliacao);
                         }
                     }
-                    if (ItemHotel.Eventos == null)
-                        ItemHotel.Eventos = new MvvmHelpers.ObservableRangeCollection<HotelEvento>();
-                    if (VisitaIniciada && !_ItemHotelOriginal.DataEntrada.HasValue && !VisitaConcluida)
-                    {
-                        foreach (var item in ItemHotel.Avaliacoes.Where(d => !d.DataExclusao.HasValue))
-                        {
-                            var itemEvento = new HotelEvento() { DataAtualizacao = DateTime.Now.ToUniversalTime(), DataEntrada = DateTime.Now, IdentificadorUsuario = item.IdentificadorUsuario };
-                            ItemHotel.Eventos.Add(itemEvento);
-                        }
-                        TextoComandoTrocar = "Deixei Hotel";
-
-                    }
-                    if (!VisitaIniciada)
-                        ItemHotel.DataEntrada = null;
                     else
-                        ItemHotel.DataEntrada = ItemHotel.DataEntrada.GetValueOrDefault().Date.Add(ItemHotel.HoraEntrada.GetValueOrDefault());
-
-                    if (!VisitaConcluida)
-                        ItemHotel.DataSaidia = null;
-                    else
-                        ItemHotel.DataSaidia = ItemHotel.DataEntrada.GetValueOrDefault().Date.Add(ItemHotel.HoraSaida.GetValueOrDefault());
-
-                    if (VisitaConcluida && !_ItemHotelOriginal.DataSaidia.HasValue && ItemHotel.Eventos != null)
                     {
-                        foreach (var item in ItemHotel.Eventos.Where(d => !d.DataSaida.HasValue && !d.DataExclusao.HasValue))
+                        if (ItemHotel.Avaliacoes.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).Any())
                         {
-                            item.DataSaida = DateTime.Now;
-                            item.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                            ItemHotel.Avaliacoes.Remove(ItemHotel.Avaliacoes.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).FirstOrDefault());
+                            ItemAvaliacao = new HotelAvaliacao();
                         }
                     }
-
-                    var Resultado = await srv.SalvarHotel(ItemHotel);
-                    if (Resultado.Sucesso)
+                }
+                if (ItemHotel.Eventos == null)
+                    ItemHotel.Eventos = new MvvmHelpers.ObservableRangeCollection<HotelEvento>();
+                if (VisitaIniciada && !_ItemHotelOriginal.DataEntrada.HasValue && !VisitaConcluida)
+                {
+                    foreach (var item in ItemHotel.Avaliacoes.Where(d => !d.DataExclusao.HasValue))
                     {
-
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
-                        {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-                        ItemHotel.Identificador = Resultado.IdentificadorRegistro;
-                        // var Jresultado = (JObject)Resultado.ItemRegistro;
-                        pItemHotel = await srv.CarregarHotel(Resultado.IdentificadorRegistro);
-                        if (pItemHotel.Gastos == null)
-                            pItemHotel.Gastos = new MvvmHelpers.ObservableRangeCollection<GastoHotel>();
-                        if (pItemHotel.Eventos == null)
-                            pItemHotel.Eventos = new MvvmHelpers.ObservableRangeCollection<HotelEvento>();
-                        if (pItemHotel.HoraEntrada == null)
-                            pItemHotel.HoraEntrada = new TimeSpan();
-                        if (pItemHotel.HoraSaida == null)
-                            pItemHotel.HoraSaida = new TimeSpan();
-                        if (!pItemHotel.DataEntrada.HasValue)
-                            pItemHotel.DataEntrada = _dataMinima;
-                        if (!pItemHotel.DataSaidia.HasValue)
-                            pItemHotel.DataSaidia = _dataMinima;
-                        ItemHotel = pItemHotel;
-                        MessagingService.Current.SendMessage<Hotel>(MessageKeys.ManutencaoHotel, ItemHotel);
-                        PermiteExcluir = true;
+                        var itemEvento = new HotelEvento() { DataAtualizacao = DateTime.Now.ToUniversalTime(), DataEntrada = DateTime.Now, IdentificadorUsuario = item.IdentificadorUsuario };
+                        ItemHotel.Eventos.Add(itemEvento);
                     }
-                    else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
-                    {
-
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
-                        {
-                            Title = "Problemas Validação",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-
-                    }
+                    TextoComandoTrocar = "Deixei Hotel";
 
                 }
+                if (!VisitaIniciada)
+                    ItemHotel.DataEntrada = null;
+                else
+                    ItemHotel.DataEntrada = ItemHotel.DataEntrada.GetValueOrDefault().Date.Add(ItemHotel.HoraEntrada.GetValueOrDefault());
+
+                if (!VisitaConcluida)
+                    ItemHotel.DataSaidia = null;
+                else
+                    ItemHotel.DataSaidia = ItemHotel.DataEntrada.GetValueOrDefault().Date.Add(ItemHotel.HoraSaida.GetValueOrDefault());
+
+                if (VisitaConcluida && !_ItemHotelOriginal.DataSaidia.HasValue && ItemHotel.Eventos != null)
+                {
+                    foreach (var item in ItemHotel.Eventos.Where(d => !d.DataSaida.HasValue && !d.DataExclusao.HasValue))
+                    {
+                        item.DataSaida = DateTime.Now;
+                        item.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                    }
+                }
+                ResultadoOperacao Resultado = new ResultadoOperacao();
+
+                if (Conectado)
+                {
+                    using (ApiService srv = new ApiService())
+                    {
+                        Resultado = await srv.SalvarHotel(ItemHotel);
+                        if (Resultado.Sucesso)
+                        {
+                            pItemHotel = await srv.CarregarHotel(Resultado.IdentificadorRegistro);
+                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "H", Resultado.IdentificadorRegistro.GetValueOrDefault(), !ItemHotel.Identificador.HasValue);
+                            await DatabaseService.SalvarHotelReplicada(pItemHotel);
+                        }
+                    }
+                }
+                else
+                {
+                    Resultado = await DatabaseService.SalvarHotel(ItemHotel);
+                    if (Resultado.Sucesso)
+                        pItemHotel = await DatabaseService.CarregarHotel(ItemHotel.Identificador);
+                }
+
+
+                if (Resultado.Sucesso)
+                {
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+                    ItemHotel.Identificador = Resultado.IdentificadorRegistro;
+                    // var Jresultado = (JObject)Resultado.ItemRegistro;
+                    if (pItemHotel.Gastos == null)
+                        pItemHotel.Gastos = new MvvmHelpers.ObservableRangeCollection<GastoHotel>();
+                    if (pItemHotel.Eventos == null)
+                        pItemHotel.Eventos = new MvvmHelpers.ObservableRangeCollection<HotelEvento>();
+                    if (pItemHotel.HoraEntrada == null)
+                        pItemHotel.HoraEntrada = new TimeSpan();
+                    if (pItemHotel.HoraSaida == null)
+                        pItemHotel.HoraSaida = new TimeSpan();
+                    if (!pItemHotel.DataEntrada.HasValue)
+                        pItemHotel.DataEntrada = _dataMinima;
+                    if (!pItemHotel.DataSaidia.HasValue)
+                        pItemHotel.DataSaidia = _dataMinima;
+                    ItemHotel = pItemHotel;
+                    MessagingService.Current.SendMessage<Hotel>(MessageKeys.ManutencaoHotel, ItemHotel);
+                    MessagingService.Current.SendMessage<Hotel>(MessageKeys.ManutencaoHotelSelecao, ItemHotel);
+
+                    PermiteExcluir = true;
+                }
+                else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
+                {
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Problemas Validação",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+
+                }
+
+
             }
             finally
             {
@@ -526,18 +592,33 @@ namespace CV.Mobile.ViewModels
                 OnCompleted = new Action<bool>(async result =>
                 {
                     if (!result) return;
-                    using (ApiService srv = new ApiService())
+                    ResultadoOperacao Resultado = new ResultadoOperacao();
+                    ItemHotel.DataExclusao = DateTime.Now.ToUniversalTime();
+                    if (Conectado)
                     {
-                        ItemHotel.DataExclusao = DateTime.Now;
-                        var Resultado = await srv.ExcluirHotel(ItemHotel.Identificador);
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        using (ApiService srv = new ApiService())
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
+                            Resultado = await srv.ExcluirHotel(ItemHotel.Identificador);
+                            await DatabaseService.ExcluirHotel(ItemHotel.Identificador, true);
+                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "H", ItemHotel.Identificador.GetValueOrDefault(), false);
+                        }
                     }
+                    else
+                    {
+                        await DatabaseService.ExcluirHotel(ItemHotel.Identificador, false);
+                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Hotel Excluído com Sucesso " } };
+
+                    }
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+
                     MessagingService.Current.SendMessage<Hotel>(MessageKeys.ManutencaoHotel, ItemHotel);
+                    MessagingService.Current.SendMessage<Hotel>(MessageKeys.ManutencaoHotelSelecao, ItemHotel);
+
                     await PopAsync();
 
                 })

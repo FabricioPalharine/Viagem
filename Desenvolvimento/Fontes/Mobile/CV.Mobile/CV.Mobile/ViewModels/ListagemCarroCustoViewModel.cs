@@ -68,17 +68,38 @@ namespace CV.Mobile.ViewModels
 
             MessagingService.Current.Subscribe<Gasto>(MessageKeys.GastoSelecionado, async (service, item) =>
             {
+
+
                 var itemGravar = new AluguelGasto() { IdentificadorCarro = ItemCarro.Identificador, IdentificadorGasto = item.Identificador, DataAtualizacao = DateTime.Now.ToUniversalTime() };
-                using (ApiService srv = new ApiService())
+
+                if (Conectado)
                 {
-                    var Resultado = await srv.SalvarAluguelGasto(itemGravar);
-                    if (Resultado.Sucesso)
+                    using (ApiService srv = new ApiService())
                     {
-                        itemGravar.Identificador = Resultado.IdentificadorRegistro;
-                        itemGravar.ItemGasto = item;
-                        MessagingService.Current.SendMessage<AluguelGasto>(MessageKeys.ManutencaoAluguelGasto, itemGravar);
+                        var Resultado = await srv.SalvarAluguelGasto(itemGravar);
+                        if (Resultado.Sucesso)
+                        {
+                            itemGravar.Identificador = Resultado.IdentificadorRegistro;
+                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "GC", itemGravar.Identificador.GetValueOrDefault(), true);
+                            itemGravar.ItemGasto = item;
+                            await DatabaseService.Database.SalvarAluguelGasto(itemGravar);
+                            MessagingService.Current.SendMessage<AluguelGasto>(MessageKeys.ManutencaoAluguelGasto, itemGravar);
+
+                        }
                     }
                 }
+                else
+                {
+                    if (!(await DatabaseService.Database.ListarAluguelGasto_IdentificadorGasto(item.Identificador)).Where(d => !d.DataExclusao.HasValue).Any())
+                    {
+                        itemGravar.AtualizadoBanco = false;
+                        await DatabaseService.Database.SalvarAluguelGasto(itemGravar);
+                        MessagingService.Current.SendMessage<AluguelGasto>(MessageKeys.ManutencaoAluguelGasto, itemGravar);
+
+                    }
+                }
+
+                
 
             });
             MessagingService.Current.Subscribe<Gasto>(MessageKeys.GastoIncluido,  (service, item) =>
@@ -105,18 +126,43 @@ namespace CV.Mobile.ViewModels
                 OnCompleted = new Action<bool>(async result =>
                 {
                     if (!result) return;
-                    using (ApiService srv = new ApiService())
+
+                    ResultadoOperacao Resultado = new ResultadoOperacao();
+                    obj.DataExclusao = DateTime.Now.ToUniversalTime();
+                    if (Conectado)
                     {
-                        obj.DataExclusao = DateTime.Now;
-                        var Resultado = await srv.SalvarAluguelGasto(obj);
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        using (ApiService srv = new ApiService())
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-                        ListaDados.Remove(obj);
+                            Resultado = await srv.SalvarAluguelGasto(obj);
+                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "GC", obj.Identificador.GetValueOrDefault(), false);
+
+                            var itemBase = await DatabaseService.Database.RetornarAluguelGasto(obj.Identificador);
+                            if (itemBase != null)
+                                await DatabaseService.Database.ExcluirAluguelGasto(itemBase);
+
+                        }
                     }
+                    else
+                    {
+                        obj.AtualizadoBanco = false;
+                        if (obj.Identificador > 0)
+                        {
+                            await DatabaseService.Database.SalvarAluguelGasto(obj);
+                        }
+                        else
+                            await DatabaseService.Database.ExcluirAluguelGasto(obj);
+                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Gasto excluído com sucesso " } };
+
+                    }
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+                    ListaDados.Remove(obj);
+
+                   
                     
 
                 })

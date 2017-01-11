@@ -76,18 +76,36 @@ namespace CV.Mobile.ViewModels
                 OnCompleted = new Action<bool>(async result =>
                 {
                     if (!result) return;
-                    using (ApiService srv = new ApiService())
+
+                    ResultadoOperacao Resultado = new ResultadoOperacao();
+                    obj.DataExclusao = DateTime.Now.ToUniversalTime();
+                    if (Conectado)
                     {
-                        obj.DataExclusao = DateTime.Now;
-                        var Resultado = await srv.ExcluirGastoCompra(obj);
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        using (ApiService srv = new ApiService())
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-                        ListaDados.Remove(obj);
+                            Resultado = await srv.ExcluirGastoCompra(obj);
+                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "GL", obj.Identificador.GetValueOrDefault(), false);
+
+                           await DatabaseService.ExcluirGastoCompra(obj.Identificador,true);
+                        }
                     }
+                    else
+                    {
+                        await DatabaseService.ExcluirGastoCompra(obj.Identificador, false);
+
+                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Gasto excluído com sucesso " } };
+
+                    }
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+                    ListaDados.Remove(obj);
+
+                   
 
 
                 })
@@ -136,12 +154,11 @@ namespace CV.Mobile.ViewModels
 
         private async Task VerificarAcaoItem(ItemTappedEventArgs itemSelecionado)
         {
-            using (ApiService srv = new ApiService())
-            {
+           
                 var Item = ((GastoCompra)itemSelecionado.Item);
                 var Pagina = new EdicaoCompraPage() { BindingContext = new EdicaoCompraViewModel(Item) };
                 await PushAsync(Pagina);
-            }
+            
         }
 
         private async Task Adicionar()

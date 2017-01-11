@@ -15,7 +15,7 @@ namespace CV.Mobile.ViewModels
 {
     public class ListagemRefeicaoCustoViewModel : BaseNavigationViewModel
     {
-       
+
         private GastoRefeicao _ItemSelecionado;
         private Refeicao _ItemRefeicao;
 
@@ -69,29 +69,48 @@ namespace CV.Mobile.ViewModels
             MessagingService.Current.Subscribe<Gasto>(MessageKeys.GastoSelecionado, async (service, item) =>
             {
                 var itemGravar = new GastoRefeicao() { IdentificadorRefeicao = ItemRefeicao.Identificador, IdentificadorGasto = item.Identificador, DataAtualizacao = DateTime.Now.ToUniversalTime() };
-                using (ApiService srv = new ApiService())
+
+                if (Conectado)
                 {
-                    var Resultado = await srv.SalvarGastoRefeicao(itemGravar);
-                    if (Resultado.Sucesso)
+                    using (ApiService srv = new ApiService())
                     {
-                        itemGravar.Identificador = Resultado.IdentificadorRegistro;
-                        itemGravar.ItemGasto = item;
+                        var Resultado = await srv.SalvarGastoRefeicao(itemGravar);
+                        if (Resultado.Sucesso)
+                        {
+                            itemGravar.Identificador = Resultado.IdentificadorRegistro;
+                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "GR", itemGravar.Identificador.GetValueOrDefault(), true);
+                            itemGravar.ItemGasto = item;
+                            await DatabaseService.Database.SalvarGastoRefeicao(itemGravar);
+                            MessagingService.Current.SendMessage<GastoRefeicao>(MessageKeys.ManutencaoGastoRefeicao, itemGravar);
+
+                        }
+                    }
+                }
+                else
+                {
+                    if (!(await DatabaseService.Database.ListarGastoRefeicao_IdentificadorGasto(item.Identificador)).Where(d => !d.DataExclusao.HasValue).Any())
+                    {
+                        itemGravar.AtualizadoBanco = false;
+                        await DatabaseService.Database.SalvarGastoRefeicao(itemGravar);
                         MessagingService.Current.SendMessage<GastoRefeicao>(MessageKeys.ManutencaoGastoRefeicao, itemGravar);
+
                     }
                 }
 
-            });
-            MessagingService.Current.Subscribe<Gasto>(MessageKeys.GastoIncluido,  (service, item) =>
-            {
-                var itemGravar = new GastoRefeicao() { IdentificadorRefeicao = ItemRefeicao.Identificador, IdentificadorGasto = item.Identificador, DataAtualizacao = DateTime.Now.ToUniversalTime() };
-               
-                        itemGravar.Identificador = item.Atracoes.Select(d => d.Identificador).FirstOrDefault();
-                        itemGravar.ItemGasto = item;
-                        MessagingService.Current.SendMessage<GastoRefeicao>(MessageKeys.ManutencaoGastoRefeicao, itemGravar);
-                   
-                
+
 
             });
+            MessagingService.Current.Subscribe<Gasto>(MessageKeys.GastoIncluido, (service, item) =>
+           {
+               var itemGravar = new GastoRefeicao() { IdentificadorRefeicao = ItemRefeicao.Identificador, IdentificadorGasto = item.Identificador, DataAtualizacao = DateTime.Now.ToUniversalTime() };
+
+               itemGravar.Identificador = item.Atracoes.Select(d => d.Identificador).FirstOrDefault();
+               itemGravar.ItemGasto = item;
+               MessagingService.Current.SendMessage<GastoRefeicao>(MessageKeys.ManutencaoGastoRefeicao, itemGravar);
+
+
+
+           });
         }
 
         private void VerificarExclusao(GastoRefeicao obj)
@@ -105,26 +124,50 @@ namespace CV.Mobile.ViewModels
                 OnCompleted = new Action<bool>(async result =>
                 {
                     if (!result) return;
-                    using (ApiService srv = new ApiService())
+
+                    ResultadoOperacao Resultado = new ResultadoOperacao();
+                    obj.DataExclusao = DateTime.Now.ToUniversalTime();
+                    if (Conectado)
                     {
-                        obj.DataExclusao = DateTime.Now;
-                        var Resultado = await srv.SalvarGastoRefeicao(obj);
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        using (ApiService srv = new ApiService())
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-                        ListaDados.Remove(obj);
+                            Resultado = await srv.SalvarGastoRefeicao(obj);
+                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "GR", obj.Identificador.GetValueOrDefault(), false);
+
+                            var itemBase = await DatabaseService.Database.RetornarGastoRefeicao(obj.Identificador);
+
+                            if (itemBase != null)
+                                await DatabaseService.Database.ExcluirGastoRefeicao(itemBase);
+                        }
                     }
-                    
+                    else
+                    {
+                        obj.AtualizadoBanco = false;
+                        if (obj.Identificador > 0)
+                        {
+                            await DatabaseService.Database.SalvarGastoRefeicao(obj);
+                        }
+                        else
+                            await DatabaseService.Database.ExcluirGastoRefeicao(obj);
+                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Gasto excluído com sucesso " } };
+
+                    }
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+                    ListaDados.Remove(obj);
+
 
                 })
             });
         }
 
         public Viagem ItemViagem { get; set; }
-           
+
 
 
         public ObservableCollection<GastoRefeicao> ListaDados { get; set; }
@@ -133,7 +176,7 @@ namespace CV.Mobile.ViewModels
         public Command ItemTappedCommand { get; set; }
         public Command AdicionarCommand { get; set; }
 
-        
+
 
         public GastoRefeicao ItemSelecionado
         {
@@ -162,11 +205,11 @@ namespace CV.Mobile.ViewModels
             }
         }
 
-       
-      
+
+
         private async Task Adicionar()
         {
-            var action = await Application.Current.MainPage.DisplayActionSheet(string.Empty,"Cancelar",null,
+            var action = await Application.Current.MainPage.DisplayActionSheet(string.Empty, "Cancelar", null,
                        "Novo Custo",
                        "Custo Existente"
                       );
@@ -188,7 +231,7 @@ namespace CV.Mobile.ViewModels
                     Moeda = ItemViagem.Moeda,
                     Usuarios = new MvvmHelpers.ObservableRangeCollection<GastoDividido>(),
                     Alugueis = new MvvmHelpers.ObservableRangeCollection<AluguelGasto>(),
-                    Refeicoes = new MvvmHelpers.ObservableRangeCollection<GastoRefeicao>(new GastoRefeicao[] { CustoRefeicao}),
+                    Refeicoes = new MvvmHelpers.ObservableRangeCollection<GastoRefeicao>(new GastoRefeicao[] { CustoRefeicao }),
                     Compras = new MvvmHelpers.ObservableRangeCollection<GastoCompra>(),
                     Atracoes = new MvvmHelpers.ObservableRangeCollection<GastoAtracao>(),
                     Reabastecimentos = new MvvmHelpers.ObservableRangeCollection<ReabastecimentoGasto>(),
