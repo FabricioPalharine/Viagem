@@ -231,6 +231,8 @@
 		    $scope.$parent.itemLoja.modalPopupTrigger(itemCusto, $translate.instant('MensagemExclusao'), $translate.instant('Sim'), $translate.instant('Nao'), function () {
 		        itemCusto.DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
 		        Loja.excluirCompra(itemCusto);
+		        SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'GL', itemCusto.Identificador, false);
+
 		    });
 
 		};

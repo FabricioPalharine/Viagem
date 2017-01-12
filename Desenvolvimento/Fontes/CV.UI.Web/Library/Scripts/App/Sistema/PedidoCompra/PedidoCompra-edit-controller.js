@@ -2,9 +2,9 @@
 	'use strict';
 	angular
 		.module('Sistema')
-		.controller('PedidoCompraEditCtrl', ['$uibModalInstance', 'Error', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', 'Usuario', 'Viagem', 'ListaCompra', 'Dominio', 'EscopoAtualizacao', 'ItemListaCompra', PedidoCompraEditCtrl]);
+		.controller('PedidoCompraEditCtrl', ['$uibModalInstance', 'Error', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', 'Usuario', 'Viagem', 'ListaCompra', 'Dominio', 'EscopoAtualizacao', 'ItemListaCompra','SignalR', PedidoCompraEditCtrl]);
 
-	function PedidoCompraEditCtrl($uibModalInstance, Error, $state, $translate, $scope, Auth, $rootScope, $stateParams, Usuario, Viagem, ListaCompra, Dominio, EscopoAtualizacao, ItemListaCompra) {
+	function PedidoCompraEditCtrl($uibModalInstance, Error, $state, $translate, $scope, Auth, $rootScope, $stateParams, Usuario, Viagem, ListaCompra, Dominio, EscopoAtualizacao, ItemListaCompra,SignalR) {
 	    var vm = this;
 	    vm.itemOriginal = jQuery.extend({}, ItemListaCompra);
 	    vm.itemListaCompra = ItemListaCompra;
@@ -63,6 +63,8 @@
 	        ListaCompra.save(vm.itemListaCompra, function (data) {
 	            vm.loading = false;
 	            if (data.Sucesso) {
+	                SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'LC', data.IdentificadorRegistro, vm.itemListaCompra.Identificador == null);
+
 	                vm.itemListaCompra = data.ItemRegistro;
 	                vm.EscopoAtualizacao.AtualizarListaCompra(vm.itemOriginal, vm.itemListaCompra);
 	                vm.close();

@@ -270,7 +270,10 @@
         vm.RemoverCusto = function (itemCusto) {
             $scope.$parent.itemAtracao.modalPopupTrigger(itemCusto, $translate.instant('MensagemExclusao'), $translate.instant('Sim'), $translate.instant('Nao'), function () {
                 itemCusto.DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+
                 Gasto.SalvarCustoAtracao(itemCusto);
+                SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'GA', itemCusto.Identificador, false);
+
             });
 
         };
@@ -684,6 +687,8 @@
                     {
                         var itemPush = { Identificador: data.IdentificadorRegistro, ItemGasto: itemCusto };
                         vm.itemAtracao.Gastos.push(itemPush);
+                        SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'GA', data.IdentificadorRegistro, true);
+
                     }
                     $uibModalInstance.close();
                 });

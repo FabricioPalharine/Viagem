@@ -186,6 +186,8 @@
 		    $scope.$parent.itemCarro.modalPopupTrigger(itemCusto, $translate.instant('MensagemExclusao'), $translate.instant('Sim'), $translate.instant('Nao'), function () {
 		        itemCusto.DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
 		        Gasto.SalvarCustoCarro(itemCusto);
+		        SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'GC', itemCusto.Identificador, false);
+
 		    });
 
 		};
@@ -239,6 +241,8 @@
 		    $scope.$parent.itemCarro.modalPopupTrigger(itemCusto, $translate.instant('MensagemExclusao'), $translate.instant('Sim'), $translate.instant('Nao'), function () {
 		        itemCusto.DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
 		        Reabastecimento.delete(itemCusto.Identificador);
+		        SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'R', itemCusto.Identificador, false);
+
 		    });
 		};
 
@@ -246,6 +250,8 @@
 		    $scope.$parent.itemCarro.modalPopupTrigger(itemCusto, $translate.instant('MensagemExclusao'), $translate.instant('Sim'), $translate.instant('Nao'), function () {
 		        itemCusto.DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
 		        Carro.SalvarCarroDeslocamento(itemCusto);
+		        SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'CD', itemCusto.Identificador, false);
+
 		    });
 
 		};
@@ -253,6 +259,8 @@
 		vm.AtualizarDeslocamentoSalvo = function (itemDeslocamento, ItemRegistro) {
 		    var Posicao = vm.itemCarro.Deslocamentos.indexOf(itemDeslocamento);
 		    vm.itemCarro.Deslocamentos.splice(Posicao, 1, ItemRegistro);
+		    SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'CD', ItemRegistro.Identificador, itemDeslocamento.Identificador == null);
+
 		};
 
 		vm.EditarDeslocamento = function (itemCusto) {
@@ -364,11 +372,13 @@
 		    };
 
 		    vmSelecao.SelecionarCusto = function (itemCusto) {
-		        var itemGravar = { IdentificadorCarro: vm.itemCarro.Identificador, IdentificadorGasto: itemCusto.Identificador, DataAtualizacao.utc: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss") };
+		        var itemGravar = { IdentificadorCarro: vm.itemCarro.Identificador, IdentificadorGasto: itemCusto.Identificador, DataAtualizacao: moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss") };
 		        Gasto.SalvarCustoCarro(itemGravar, function (data) {
 		            if (data.Sucesso) {
 		                var itemPush = { Identificador: data.IdentificadorRegistro, ItemGasto: itemCusto };
 		                vm.itemCarro.Gastos.push(itemPush);
+		                SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'GC', data.IdentificadorRegistro, true);
+
 		            }
 		            $uibModalInstance.close();
 		        });

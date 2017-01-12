@@ -30,6 +30,7 @@
 				    callback(data);
 				    var Posicao = vm.ListaDados.indexOf(itemForDelete);
 				    vm.ListaDados.splice(Posicao, 1);
+				    SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'S', itemForDelete.Identificador, false);
 
 					Error.showError('success', $translate.instant("Sucesso"), data.Mensagens[0].Mensagem, true);
 				}

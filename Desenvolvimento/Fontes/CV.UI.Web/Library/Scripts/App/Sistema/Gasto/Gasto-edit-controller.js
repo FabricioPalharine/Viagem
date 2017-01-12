@@ -2,9 +2,9 @@
 	'use strict';
 	angular
 		.module('Sistema')
-		.controller('GastoEditCtrl',[ '$uibModalInstance', 'Error', '$uibModal', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams','Viagem','Gasto', 'Dominio','Referencias','EscopoAtualizacao', GastoEditCtrl]);
+		.controller('GastoEditCtrl',[ '$uibModalInstance', 'Error', '$uibModal', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams','Viagem','Gasto', 'Dominio','Referencias','EscopoAtualizacao','SignalR', GastoEditCtrl]);
 
-	function GastoEditCtrl($uibModalInstance, Error,$uibModal, $state, $translate, $scope, Auth, $rootScope, $stateParams, Viagem, Gasto, Dominio, Referencias, EscopoAtualizacao) {
+	function GastoEditCtrl($uibModalInstance, Error,$uibModal, $state, $translate, $scope, Auth, $rootScope, $stateParams, Viagem, Gasto, Dominio, Referencias, EscopoAtualizacao,SignalR) {
 		var vm = this;
 		vm.filtroConsulta = { };
 		vm.itemGasto = {
@@ -184,6 +184,8 @@
 				Gasto.save(vm.itemGasto, function (data) {
 					vm.loading = false;
 					if (data.Sucesso) {
+					    SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'G', data.ItemRegistro, vm.itemGastoOriginal.Identificador==null);
+
 					    vm.EscopoAtualizacao.AtualizarGasto(data.ItemRegistro, vm.itemGastoOriginal);
 					    vm.close();
 					} else {

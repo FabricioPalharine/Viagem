@@ -19,9 +19,11 @@ namespace CV.Mobile.ViewModels
         private bool _CadastradoComoAmigo;
         private bool _PermiteExcluir = true;
         private bool _Loading = true;
+        private int? _IdentificadorListaCompraInicial = null;
         public EdicaoItemCompraViewModel(ItemCompra pItemItemCompra )
         {
             ItemItemCompra = pItemItemCompra.Clone();
+            _IdentificadorListaCompraInicial = pItemItemCompra.IdentificadorListaCompra;
             CadastradoComoAmigo = ItemItemCompra.IdentificadorUsuario.HasValue;
             SalvarCommand = new Command(
                                 async () => await Salvar(),
@@ -127,11 +129,58 @@ namespace CV.Mobile.ViewModels
                 OnCompleted = new Action<bool>(async result =>
                 {
                     if (!result) return;
-                    using (ApiService srv = new ApiService())
+
+                    ResultadoOperacao Resultado = new ResultadoOperacao();
+                    ItemItemCompra.DataExclusao = DateTime.Now.ToUniversalTime();
+                    if (Conectado)
                     {
-                        ItemItemCompra.DataExclusao = DateTime.Now;
-                        var Resultado = await srv.SalvarItemCompra(ItemItemCompra);
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        using (ApiService srv = new ApiService())
+                        {
+                            Resultado = await srv.SalvarItemCompra(ItemItemCompra);
+                            AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "IC", ItemItemCompra.Identificador.GetValueOrDefault(), false);
+                            if (ItemItemCompra.IdentificadorListaCompra.HasValue)
+                            {
+                                AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "LC", ItemItemCompra.IdentificadorListaCompra.GetValueOrDefault(), false);
+                                var ItemListaCompra = await srv.CarregarListaCompra(ItemItemCompra.Identificador);
+                                var itemLCBase = await DatabaseService.Database.RetornarListaCompra(ItemListaCompra.Identificador);
+                                if (itemLCBase != null)
+                                    ItemListaCompra.Id = itemLCBase.Id;
+                                await DatabaseService.Database.SalvarListaCompra(ItemListaCompra);
+                            }
+                            var itemBase = await DatabaseService.Database.RetornarItemCompra(ItemItemCompra.Identificador);
+                            if (itemBase != null)
+                                await DatabaseService.Database.ExcluirItemCompra(itemBase);
+
+                        }
+                    }
+                    else
+                    {
+                        ItemItemCompra.AtualizadoBanco = false;
+                        if (ItemItemCompra.IdentificadorListaCompra.HasValue)
+                        {
+                            var itemLCBase = await DatabaseService.Database.RetornarListaCompra(ItemItemCompra.IdentificadorListaCompra);
+                            if (itemLCBase != null)
+                            {
+                                itemLCBase.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                                itemLCBase.AtualizadoBanco = false;
+                                await DatabaseService.Database.SalvarListaCompra(itemLCBase);
+
+                            }
+                        }
+                        if (ItemItemCompra.Identificador > 0)
+                        {
+
+                            await DatabaseService.Database.SalvarItemCompra(ItemItemCompra);
+                        }
+                        else
+                            await DatabaseService.Database.ExcluirItemCompra(ItemItemCompra);
+                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Item excluído com sucesso" } };
+
+                    }
+
+
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
                         {
                             Title = "Sucesso",
                             Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
@@ -139,7 +188,7 @@ namespace CV.Mobile.ViewModels
                         });
                         MessagingService.Current.SendMessage<ItemCompra>(MessageKeys.ManutencaoItemCompra, ItemItemCompra);
                         await PopAsync();
-                    }
+                    
 
 
                 })
@@ -157,36 +206,48 @@ namespace CV.Mobile.ViewModels
 
         private async void CarregarParticipantesViagem()
         {
-
-            using (ApiService srv = new ApiService())
+            List<Usuario> ListaUsuario = new List<Usuario>();
+            if (Conectado)
             {
+                using (ApiService srv = new ApiService())
+                {
 
-                var ListaUsuario = await srv.ListarAmigos();
-                ListaAmigos = new ObservableCollection<Usuario>(ListaUsuario);
-                OnPropertyChanged("ListaAmigos");
-                int? IdentificadorRefeicaoSelecionada = ItemItemCompra.IdentificadorUsuario;
-                ItemItemCompra.IdentificadorUsuario = null;
-                await Task.Delay(100);
-                ItemItemCompra.IdentificadorUsuario = IdentificadorRefeicaoSelecionada;
-
+                    ListaUsuario = await srv.ListarParticipantesViagem();
+                }
             }
-
+            else
+            {
+                ListaUsuario = await DatabaseService.Database.ListarParticipanteViagem();
+            }
+            ListaAmigos = new ObservableCollection<Usuario>(ListaUsuario);
+            OnPropertyChanged("ListaAmigos");
+            int? IdentificadorRefeicaoSelecionada = ItemItemCompra.IdentificadorUsuario;
+            ItemItemCompra.IdentificadorUsuario = null;
+            await Task.Delay(100);
+            ItemItemCompra.IdentificadorUsuario = IdentificadorRefeicaoSelecionada;
         }
 
         public async void CarregarListaCompra()
         {
-            using (ApiService srv = new ApiService())
+            List<ListaCompra> ListaDados = new List<ListaCompra>();
+            if (Conectado)
             {
-                var ListaDados = await srv.CarregarListaPedidos(new CriterioBusca() { IdentificadorParticipante = ItemUsuarioLogado.Codigo });
-                ListaListaCompra = new ObservableCollection<ListaCompra>(ListaDados);
-                OnPropertyChanged("ListaListaCompra");
-                int? IdentificadorRefeicaoSelecionada = ItemItemCompra.IdentificadorListaCompra;
-                ItemItemCompra.IdentificadorListaCompra = null;
-                await Task.Delay(100);
-                ItemItemCompra.IdentificadorListaCompra = IdentificadorRefeicaoSelecionada;
-                await Task.Delay(100);
-                _Loading = false;
+                using (ApiService srv = new ApiService())
+                {
+                    ListaDados = await srv.CarregarListaPedidos(new CriterioBusca() { IdentificadorParticipante = ItemUsuarioLogado.Codigo });
+                }
             }
+            else
+                ListaDados = await DatabaseService.Database.ListarListaCompra(ItemUsuarioLogado.Codigo);
+            ListaListaCompra = new ObservableCollection<ListaCompra>(ListaDados);
+            OnPropertyChanged("ListaListaCompra");
+            int? IdentificadorRefeicaoSelecionada = ItemItemCompra.IdentificadorListaCompra;
+            ItemItemCompra.IdentificadorListaCompra = null;
+            await Task.Delay(100);
+            ItemItemCompra.IdentificadorListaCompra = IdentificadorRefeicaoSelecionada;
+            await Task.Delay(100);
+            _Loading = false;
+
         }
 
 
@@ -196,10 +257,16 @@ namespace CV.Mobile.ViewModels
             SalvarCommand.ChangeCanExecute();
             try
             {
-                using (ApiService srv = new ApiService())
+                ResultadoOperacao Resultado = new ResultadoOperacao();
+                if (Conectado)
                 {
-                    var Resultado = await srv.SalvarItemCompra(ItemItemCompra);
-                    if (Resultado.Sucesso)
+                    Resultado = await SalvarItemCompraConectado();
+                }
+                else
+                {
+                    Resultado = await DatabaseService.SalvarItemCompra(ItemItemCompra, _IdentificadorListaCompraInicial);
+                }
+                if (Resultado.Sucesso)
                     {
 
                         MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
@@ -222,13 +289,56 @@ namespace CV.Mobile.ViewModels
                         });
 
                     }
-                }
+                
             }
             finally
             {
                 SalvarCommand.ChangeCanExecute();
                 IsBusy = false;
             }
+        }
+
+        private async Task<ResultadoOperacao> SalvarItemCompraConectado()
+        {
+            ResultadoOperacao Resultado = null;
+            using (ApiService srv = new ApiService())
+            {
+                Resultado = await srv.SalvarItemCompra(ItemItemCompra);
+                if (Resultado.Sucesso)
+                {
+                    var itemCompra = await srv.CarregarItemCompra(Resultado.IdentificadorRegistro);
+                    AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "IC", Resultado.IdentificadorRegistro.GetValueOrDefault(), !ItemItemCompra.Identificador.HasValue);
+                    var itemBase = await DatabaseService.Database.RetornarItemCompra(Resultado.IdentificadorRegistro);
+                    if (itemBase != null)
+                    {
+                        itemCompra.Id = itemBase.Id;
+                    }
+                    await DatabaseService.Database.SalvarItemCompra(itemCompra);
+                    if (_IdentificadorListaCompraInicial.GetValueOrDefault(0) != ItemItemCompra.IdentificadorListaCompra.GetValueOrDefault())
+                    {
+                        if (ItemItemCompra.IdentificadorListaCompra.HasValue)
+                        {
+                            AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "LC", ItemItemCompra.IdentificadorListaCompra.GetValueOrDefault(), false);
+                            var itemLC = await DatabaseService.Database.RetornarItemCompra(ItemItemCompra.IdentificadorListaCompra.GetValueOrDefault());
+                            var itemLCServer = await srv.CarregarListaCompra(ItemItemCompra.IdentificadorListaCompra);
+                            if (itemLC != null)
+                                itemLCServer.Id = itemLC.Id;
+                            await DatabaseService.Database.SalvarListaCompra(itemLCServer);
+                        }
+                        if (_IdentificadorListaCompraInicial.HasValue)
+                        {
+                            AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "LC", _IdentificadorListaCompraInicial.GetValueOrDefault(), false);
+                            var itemLC = await DatabaseService.Database.RetornarItemCompra(_IdentificadorListaCompraInicial.GetValueOrDefault());
+                            var itemLCServer = await srv.CarregarListaCompra(_IdentificadorListaCompraInicial);
+                            if (itemLC != null)
+                                itemLCServer.Id = itemLC.Id;
+                            await DatabaseService.Database.SalvarListaCompra(itemLCServer);
+                        }
+                    }
+                }
+            }
+
+            return Resultado;
         }
     }
 }

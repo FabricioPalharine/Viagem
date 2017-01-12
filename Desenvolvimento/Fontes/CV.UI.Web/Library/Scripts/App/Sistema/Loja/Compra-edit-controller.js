@@ -2,9 +2,9 @@
     'use strict';
     angular
 		.module('Sistema')
-		.controller('CompraEditCtrl', ['$uibModalInstance', 'Error', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams',  'Loja', 'EscopoAtualizacao','ItemGastoCompra', 'Viagem', '$uibModal','Usuario', CompraEditCtrl]);
+		.controller('CompraEditCtrl', ['$uibModalInstance', 'Error', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams',  'Loja', 'EscopoAtualizacao','ItemGastoCompra', 'Viagem', '$uibModal','Usuario','SignalR', CompraEditCtrl]);
 
-    function CompraEditCtrl($uibModalInstance, Error, $state, $translate, $scope, Auth, $rootScope, $stateParams, Loja, EscopoAtualizacao, ItemGastoCompra, Viagem, $uibModal, Usuario) {
+    function CompraEditCtrl($uibModalInstance, Error, $state, $translate, $scope, Auth, $rootScope, $stateParams, Loja, EscopoAtualizacao, ItemGastoCompra, Viagem, $uibModal, Usuario,SignalR) {
         var vm = this;
         vm.itemCompra = jQuery.extend({}, ItemGastoCompra);
         vm.itemOriginal = ItemGastoCompra;
@@ -26,6 +26,8 @@
             Loja.saveCompra(vm.itemCompra, function (data) {
                 vm.loading = false;
                 if (data.Sucesso) {
+                    
+                    SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'GL', data.ItemRegistro, vm.itemCompra.Identificador==null);
                     vm.itemCompra = data.ItemRegistro;
                     vm.EscopoAtualizacao.AtualizarCompra(vm.itemOriginal, vm.itemCompra);
                 } else {
@@ -69,6 +71,11 @@
             vm.EscopoAtualizacao.ChamarExclusao(itemCompra,  function () {
                 itemCompra.DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
                 Loja.SalvarItemCompra(itemCompra);
+                SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'IC', itemCompra.Identificador, false);
+                if (itemCompra.IdentificadorListaCompra)
+                    SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'LC', itemCompra.IdentificadorListaCompra,false);
+
+
             }, function () { });
         };
 

@@ -118,34 +118,34 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Viagem_SalvarAluguelGasto_OK" xml:space="preserve">
-    <value>Gravação de AluguelGasto foi realizada com sucesso</value>
+    <value>Gasto salvo com sucesso</value>
   </data>
   <data name="Viagem_ExcluirAluguelGasto_OK" xml:space="preserve">
-    <value>Exclusão de AluguelGasto foi realizada com sucesso</value>
+    <value>Gasto excluído com sucesso</value>
   </data>
   <data name="Viagem_SalvarReabastecimento_OK" xml:space="preserve">
-    <value>Gravação de AluguelReabastecimento foi realizada com sucesso</value>
+    <value>Reabastecimento salvo com sucesso</value>
   </data>
   <data name="Viagem_ExcluirReabastecimento_OK" xml:space="preserve">
-    <value>Exclusão de AluguelReabastecimento foi realizada com sucesso</value>
+    <value>Reabastecimento excluído com sucesso</value>
   </data>
   <data name="Viagem_SalvarAmigo_OK" xml:space="preserve">
-    <value>Gravação de Amigo foi realizada com sucesso</value>
+    <value>Amigo salvo com sucesso</value>
   </data>
   <data name="Viagem_ExcluirAmigo_OK" xml:space="preserve">
-    <value>Exclusão de Amigo foi realizada com sucesso</value>
+    <value>Amigo excluído com sucesso</value>
   </data>
   <data name="Viagem_SalvarAporteDinheiro_OK" xml:space="preserve">
-    <value>Gravação de AporteDinheiro foi realizada com sucesso</value>
+    <value>Aporte de Dinheiro salvo com sucesso</value>
   </data>
   <data name="Viagem_ExcluirAporteDinheiro_OK" xml:space="preserve">
-    <value>Exclusão de AporteDinheiro foi realizada com sucesso</value>
+    <value>Aporte de Dinheiro excluído com sucesso</value>
   </data>
   <data name="Viagem_SalvarAtracao_OK" xml:space="preserve">
-    <value>Gravação de Atracao foi realizada com sucesso</value>
+    <value>Atração salva com sucesso</value>
   </data>
   <data name="Viagem_ExcluirAtracao_OK" xml:space="preserve">
-    <value>Exclusão de Atracao foi realizada com sucesso</value>
+    <value>Atração excluída com sucesso</value>
   </data>
   <data name="Viagem_SalvarAvaliacaoAerea_OK" xml:space="preserve">
     <value>Gravação de AvaliacaoAerea foi realizada com sucesso</value>
@@ -166,16 +166,16 @@
     <value>Exclusão de AvaliacaoAtracao foi realizada com sucesso</value>
   </data>
   <data name="Viagem_SalvarCalendarioPrevisto_OK" xml:space="preserve">
-    <value>Gravação de CalendarioPrevisto foi realizada com sucesso</value>
+    <value>Agendamento salvo com sucesso.</value>
   </data>
   <data name="Viagem_ExcluirCalendarioPrevisto_OK" xml:space="preserve">
-    <value>Exclusão de CalendarioPrevisto foi realizada com sucesso</value>
+    <value>Agemdamento excluído com sucesso</value>
   </data>
   <data name="Viagem_SalvarCarro_OK" xml:space="preserve">
-    <value>Gravação de Carro foi realizada com sucesso</value>
+    <value>Carro salvo com sucesso</value>
   </data>
   <data name="Viagem_ExcluirCarro_OK" xml:space="preserve">
-    <value>Exclusão de Carro foi realizada com sucesso</value>
+    <value>Carro excluído com sucesso</value>
   </data>
   <data name="Viagem_SalvarCarroEvento_OK" xml:space="preserve">
     <value>Gravação de CarroEvento foi realizada com sucesso</value>
@@ -196,22 +196,22 @@
     <value>Exclusão de CidadeGrupo foi realizada com sucesso</value>
   </data>
   <data name="Viagem_SalvarComentario_OK" xml:space="preserve">
-    <value>Gravação de Comentario foi realizada com sucesso</value>
+    <value>Comentário salvo com sucesso</value>
   </data>
   <data name="Viagem_ExcluirComentario_OK" xml:space="preserve">
-    <value>Exclusão de Comentario foi realizada com sucesso</value>
+    <value>Comentário excluído com sucesso</value>
   </data>
   <data name="Viagem_SalvarCotacaoMoeda_OK" xml:space="preserve">
-    <value>Gravação de CotacaoMoeda foi realizada com sucesso</value>
+    <value>Cotação de Moeda salva com sucesso</value>
   </data>
   <data name="Viagem_ExcluirCotacaoMoeda_OK" xml:space="preserve">
-    <value>Exclusão de CotacaoMoeda foi realizada com sucesso</value>
+    <value>Cotação de Moeda excluída com sucesso</value>
   </data>
   <data name="Viagem_SalvarFoto_OK" xml:space="preserve">
-    <value>Gravação de Foto foi realizada com sucesso</value>
+    <value>Foto salvar com sucesso</value>
   </data>
   <data name="Viagem_ExcluirFoto_OK" xml:space="preserve">
-    <value>Exclusão de Foto foi realizada com sucesso</value>
+    <value>Foto excluída com sucesso</value>
   </data>
   <data name="Viagem_SalvarFotoAtracao_OK" xml:space="preserve">
     <value>Gravação de FotoAtracao foi realizada com sucesso</value>
@@ -238,40 +238,40 @@
     <value>Exclusão de FotoRefeicao foi realizada com sucesso</value>
   </data>
   <data name="Viagem_SalvarGasto_OK" xml:space="preserve">
-    <value>Gravação de Gasto foi realizada com sucesso</value>
+    <value>Gasto salvo com sucesso</value>
   </data>
   <data name="Viagem_ExcluirGasto_OK" xml:space="preserve">
-    <value>Exclusão de Gasto foi realizada com sucesso</value>
+    <value>Gasto excluído com sucesso</value>
   </data>
   <data name="Viagem_SalvarGastoCompra_OK" xml:space="preserve">
-    <value>Gravação de GastoCompra foi realizada com sucesso</value>
+    <value>Compra salva com sucesso</value>
   </data>
   <data name="Viagem_ExcluirGastoCompra_OK" xml:space="preserve">
-    <value>Exclusão de GastoCompra foi realizada com sucesso</value>
+    <value>Compra excluída com sucesso</value>
   </data>
   <data name="Viagem_SalvarGastoHotel_OK" xml:space="preserve">
-    <value>Gravação de GastoHotel foi realizada com sucesso</value>
+    <value>Gasto salvo com sucesso</value>
   </data>
   <data name="Viagem_ExcluirGastoHotel_OK" xml:space="preserve">
-    <value>Exclusão de GastoHotel foi realizada com sucesso</value>
+    <value>Gasto excluído com sucesso</value>
   </data>
   <data name="Viagem_SalvarGastoPosicao_OK" xml:space="preserve">
-    <value>Gravação de GastoPosicao foi realizada com sucesso</value>
+    <value>Gasto salvo com sucesso</value>
   </data>
   <data name="Viagem_ExcluirGastoPosicao_OK" xml:space="preserve">
-    <value>Exclusão de GastoPosicao foi realizada com sucesso</value>
+    <value>Gasto excluído com sucesso</value>
   </data>
   <data name="Viagem_SalvarGastoRefeicao_OK" xml:space="preserve">
-    <value>Gravação de GastoRefeicao foi realizada com sucesso</value>
+    <value>Gasto salvo com sucesso</value>
   </data>
   <data name="Viagem_ExcluirGastoRefeicao_OK" xml:space="preserve">
-    <value>Exclusão de GastoRefeicao foi realizada com sucesso</value>
+    <value>Gasto excluído com sucesso</value>
   </data>
   <data name="Viagem_SalvarGastoViagemAerea_OK" xml:space="preserve">
-    <value>Gravação de GastoViagemAerea foi realizada com sucesso</value>
+    <value>Gasto salvo com sucesso</value>
   </data>
   <data name="Viagem_ExcluirGastoViagemAerea_OK" xml:space="preserve">
-    <value>Exclusão de GastoViagemAerea foi realizada com sucesso</value>
+    <value>Gasto excluído com sucesso</value>
   </data>
   <data name="Viagem_SalvarHotel_OK" xml:space="preserve">
     <value>Gravação de Hotel foi realizada com sucesso</value>
@@ -484,10 +484,10 @@
     <value>Viagem Aérea</value>
   </data>
   <data name="Viagem_SalvarHotelEvento_OK" xml:space="preserve">
-    <value>Gravação de HotelEvento foi realizada com sucesso</value>
+    <value>Evento salvo com sucesso</value>
   </data>
   <data name="Viagem_ExcluirHotelEvento_OK" xml:space="preserve">
-    <value>Exclusão de HotelEvento foi realizada com sucesso</value>
+    <value>Evento excluído com sucesso</value>
   </data>
   <data name="AlertaRequisicaoAmizade" xml:space="preserve">
     <value>{0} deseja ser seu amigo para visualizar suas viagens.</value>
@@ -538,10 +538,10 @@
     <value>Gravação de Atracao foi realizada com sucesso</value>
   </data>
   <data name="Viagem_SalvarGastoAtracao_OK" xml:space="preserve">
-    <value>Gravação de GastoAtracao foi realizada com sucesso</value>
+    <value>Gasto salvo com sucesso</value>
   </data>
   <data name="Viagem_ExcluirGastoAtracao_OK" xml:space="preserve">
-    <value>Exclusão de GastoAtracao foi realizada com sucesso</value>
+    <value>Gasto excluído com sucesso</value>
   </data>
   <data name="Viagem_SalvarGastoDividido_OK" xml:space="preserve">
     <value>Gravação de Gasto Dividido foi realizada com sucesso</value>
@@ -565,10 +565,10 @@
     <value>Gravação de Carro foi realizada com sucesso</value>
   </data>
   <data name="Viagem_SalvarCarroDeslocamento_OK" xml:space="preserve">
-    <value>Gravação de Deslocamentos foi realizada com sucesso</value>
+    <value>Deslocamento salvo com sucesso.</value>
   </data>
   <data name="Viagem_ExcluirCarroDeslocamento_OK" xml:space="preserve">
-    <value>Exclusão de Deslocamentos foi realizada com sucesso</value>
+    <value>Deslocamento excluído com sucesso</value>
   </data>
   <data name="CarroDeslocamento_DataPartida_Obrigatoria" xml:space="preserve">
     <value>Favor definir a data de Partida</value>
@@ -580,10 +580,10 @@
     <value>Favor definir a posição de Partida</value>
   </data>
   <data name="Viagem_SalvarLoja_Completo_OK" xml:space="preserve">
-    <value>Gravação de Loja foi realizada com sucesso</value>
+    <value>Loja salva com sucesso</value>
   </data>
   <data name="Viagem_SalvarGastoCompra_Item_Completo_OK" xml:space="preserve">
-    <value>Gravação de GastoCompra foi realizada com sucesso</value>
+    <value>Compra salva com sucesso</value>
   </data>
   <data name="PedidoCompra_PedirParaObrigatorio" xml:space="preserve">
     <value>O campo Pedir Para é obrigatório</value>
@@ -595,10 +595,10 @@
     <value>O campo Valor Baixa é obrigatório.</value>
   </data>
   <data name="Viagem_SalvarCidadeGrupo_Lista_OK" xml:space="preserve">
-    <value>Gravação de CidadeGrupo foi realizada com sucesso</value>
+    <value>Agrupamento de Cidade salvo com sucesso</value>
   </data>
   <data name="Viagem_ExcluirCidadeGrupo_Lista_OK" xml:space="preserve">
-    <value>Exclusão de Agrupamento de Cidades foi realizada com sucesso</value>
+    <value>Agrupamento de Cidades excluído com sucesso</value>
   </data>
   <data name="CidadeGrupo_CidadeFilhaAssociada" xml:space="preserve">
     <value>Deve ser selecionada ao menos uma cidade como pertencente ao grupo</value>

@@ -30,14 +30,14 @@ namespace CV.Mobile.ViewModels
 
         public EdicaoCompraViewModel(GastoCompra pItemCompra)
         {
-           
+
             ItemGasto = pItemCompra.ItemGasto;
             ItemCompra = pItemCompra;
 
             Participantes = new ObservableCollection<Usuario>();
             PagamentoMECartao = !ItemGasto.Especie && ItemGasto.Moeda != (int)enumMoeda.BRL;
             ItemGasto.PropertyChanged += ItemGasto_PropertyChanged;
-            
+
             SalvarCommand = new Command(
                                 async () => await Salvar(),
                                 () => true);
@@ -48,7 +48,7 @@ namespace CV.Mobile.ViewModels
                                                                   },
                                                                   () => true);
 
-            ExcluirCommand = new Command(() =>  Excluir());
+            ExcluirCommand = new Command(() => Excluir());
             ListaMoeda = new ObservableCollection<ItemLista>();
             List<ItemLista> lista = new List<ItemLista>();
             foreach (var enumerador in Enum.GetValues(typeof(enumMoeda)))
@@ -73,7 +73,7 @@ namespace CV.Mobile.ViewModels
 
         }
 
-       public Command SalvarCommand { get; set; }
+        public Command SalvarCommand { get; set; }
         public Command PageAppearingCommand { get; set; }
         public Command ExcluirCommand { get; set; }
         public Command AbrirCustosCommand { get; set; }
@@ -87,7 +87,7 @@ namespace CV.Mobile.ViewModels
         {
             await Task.Delay(100);
             PermiteExcluir = ItemCompra.Identificador.HasValue;
-            await CarregarParticipantesViagem();          
+            await CarregarParticipantesViagem();
 
         }
 
@@ -95,22 +95,33 @@ namespace CV.Mobile.ViewModels
         {
             if (!Participantes.Any())
             {
-                using (ApiService srv = new ApiService())
+
+                Participantes.Clear();
+                List<Usuario> ListaUsuario = new List<Usuario>();
+                if (Conectado)
                 {
-                    Participantes.Clear();
-                    var ListaUsuario = await srv.ListarParticipantesViagem();
-                    foreach (var itemUsuario in ListaUsuario)
+                    using (ApiService srv = new ApiService())
                     {
-                        if (!ItemGasto.Identificador.HasValue || ItemGasto.Usuarios.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).Any())
-                            itemUsuario.Selecionado = true;
-                        if (itemUsuario.Identificador != ItemUsuarioLogado.Codigo)
-                            Participantes.Add(itemUsuario);
+
+                        ListaUsuario = await srv.ListarParticipantesViagem();
                     }
                 }
+                else
+                {
+                    ListaUsuario = await DatabaseService.Database.ListarParticipanteViagem();
+                }
+                foreach (var itemUsuario in ListaUsuario)
+                {
+                    if (!ItemGasto.Identificador.HasValue || ItemGasto.Usuarios.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).Any())
+                        itemUsuario.Selecionado = true;
+                    if (itemUsuario.Identificador != ItemUsuarioLogado.Codigo)
+                        Participantes.Add(itemUsuario);
+                }
+
             }
         }
 
-      
+
         public Gasto ItemGasto
         {
             get
@@ -124,7 +135,7 @@ namespace CV.Mobile.ViewModels
             }
         }
 
-   
+
 
         public bool PermiteExcluir
         {
@@ -152,7 +163,7 @@ namespace CV.Mobile.ViewModels
             }
         }
 
-     
+
         public Usuario ParticipanteSelecionado
         {
             get
@@ -227,51 +238,69 @@ namespace CV.Mobile.ViewModels
 
                 ItemGasto.Data = ItemGasto.Data.GetValueOrDefault().Date.Add(ItemGasto.Hora.GetValueOrDefault());
 
-                using (ApiService srv = new ApiService())
+                ResultadoOperacao Resultado = new ResultadoOperacao();
+                GastoCompra pItemGasto = null;
+                if (Conectado)
                 {
-                    var Resultado = await srv.SalvarGastoCompra(ItemCompra);
-                    if (Resultado.Sucesso)
+                    using (ApiService srv = new ApiService())
                     {
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        Resultado = await srv.SalvarGastoCompra(ItemCompra);
+                        if (Resultado.Sucesso)
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-                        ItemGasto.Identificador = Resultado.IdentificadorRegistro;
-                        var Jresultado = (JObject)Resultado.ItemRegistro;
-                        GastoCompra pItemGasto = Jresultado.ToObject<GastoCompra>();
+                            var Jresultado = (JObject)Resultado.ItemRegistro;
+                            pItemGasto = Jresultado.ToObject<GastoCompra>();
+                            AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "GL", Resultado.IdentificadorRegistro.GetValueOrDefault(), !ItemCompra.Identificador.HasValue);
 
-                        ItemGasto.Identificador = pItemGasto.ItemGasto.Identificador; ;
-                        ItemCompra.Identificador = pItemGasto.Identificador;
-                        if (ItemCompra.ItensComprados == null)
-                            ItemCompra.ItensComprados = new MvvmHelpers.ObservableRangeCollection<Models.ItemCompra>();
-                        if (!ListaPaginas.Any())
-                        {
-                            ObservableCollection<Page> itens = new ObservableCollection<Page>();
-                            var VM = new ListagemItemCompraViewModel(ItemCompra);
-                            var Pagina = new ListagemItemCompraPage() { BindingContext = VM };
-                            itens.Add(Pagina);
-                            ListaPaginas = null;
-                            ListaPaginas = itens;
-                            OnPropertyChanged("ListaPaginas");
+                            await DatabaseService.SalvarGastoCompra(pItemGasto);
+
                         }
-                        MessagingService.Current.SendMessage<GastoCompra>(MessageKeys.ManutencaoGastoCompra, ItemCompra);
-                        PermiteExcluir = true;
-
                     }
-                    else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
+                }
+                else
+                {
+                    Resultado = await DatabaseService.SalvarGastoCompra(ItemCompra);
+                    if (Resultado.Sucesso)
+                        pItemGasto = await DatabaseService.CarregarGastoCompra(ItemCompra.Identificador);
+                }
+                if (Resultado.Sucesso)
+                {
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
                     {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+                    ItemGasto.Identificador = Resultado.IdentificadorRegistro;
 
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
-                        {
-                            Title = "Problemas Validação",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
 
+                    ItemGasto.Identificador = pItemGasto.ItemGasto.Identificador; ;
+                    ItemCompra.Identificador = pItemGasto.Identificador;
+                    if (ItemCompra.ItensComprados == null)
+                        ItemCompra.ItensComprados = new MvvmHelpers.ObservableRangeCollection<Models.ItemCompra>();
+                    if (!ListaPaginas.Any())
+                    {
+                        ObservableCollection<Page> itens = new ObservableCollection<Page>();
+                        var VM = new ListagemItemCompraViewModel(ItemCompra);
+                        var Pagina = new ListagemItemCompraPage() { BindingContext = VM };
+                        itens.Add(Pagina);
+                        ListaPaginas = null;
+                        ListaPaginas = itens;
+                        OnPropertyChanged("ListaPaginas");
                     }
-                   
+                    MessagingService.Current.SendMessage<GastoCompra>(MessageKeys.ManutencaoGastoCompra, ItemCompra);
+                    PermiteExcluir = true;
+
+                }
+                else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
+                {
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Problemas Validação",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+
                 }
             }
             finally
@@ -292,17 +321,35 @@ namespace CV.Mobile.ViewModels
                 OnCompleted = new Action<bool>(async result =>
                 {
                     if (!result) return;
-                    using (ApiService srv = new ApiService())
+
+                    ResultadoOperacao Resultado = new ResultadoOperacao();
+                    ItemCompra.DataExclusao = DateTime.Now.ToUniversalTime();
+                    if (Conectado)
                     {
-                        ItemCompra.DataExclusao = DateTime.Now;
-                        var Resultado = await srv.ExcluirGastoCompra(ItemCompra);
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        using (ApiService srv = new ApiService())
                         {
-                            Title = "Sucesso",
-                            Message = "Compra Excluída com Sucesso",
-                            Cancel = "OK"
-                        });
+                            Resultado = await srv.ExcluirGastoCompra(ItemCompra);
+                            AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "GL", ItemCompra.Identificador.GetValueOrDefault(), false);
+
+                            await DatabaseService.ExcluirGastoCompra(ItemCompra.Identificador, true);
+                        }
                     }
+                    else
+                    {
+                        await DatabaseService.ExcluirGastoCompra(ItemCompra.Identificador, false);
+
+                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Compra excluída com sucesso " } };
+
+                    }
+
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = "Compra Excluída com Sucesso",
+                        Cancel = "OK"
+                    });
+
                     MessagingService.Current.SendMessage<GastoCompra>(MessageKeys.ManutencaoGastoCompra, ItemCompra);
                     await PopAsync();
 
@@ -312,6 +359,6 @@ namespace CV.Mobile.ViewModels
 
         }
 
-      
+
     }
 }

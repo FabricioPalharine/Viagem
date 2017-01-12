@@ -19,31 +19,7 @@
 			
 			vm.CarregarDadosWebApi();
 
-			SignalR.AvisarAlertaAtualizacao = function (TipoAtualizacao, Identificador, Inclusao) {
-			    if (TipoAtualizacao == "CP") {
-			        CalendarioPrevisto.get({ id: Identificador }, function (data) {
-			            var itens = $.grep(vm.ListaDados, function (e) { return e.id == Identificador; });
-			            if (data.DataExclusao)
-			            {
-			                if (itens.length > 0) {
-			                    var Posicao = vm.ListaDados.indexOf(itens[0]);
-			                    vm.ListaDados.splice(Posicao, 1);
-			                }
-			            }
-			            else
-			            {
-			                if (itens.length == 0 && Inclusao) {
-			                    vm.ListaDados.push(vm.TransformarCalendario(data));
-			                }
-			                else if (itens.length > 0) {
-			                    var Posicao = vm.ListaDados.indexOf(itens[0]);
-			                    vm.ListaDados.splice(Posicao, 1, vm.TransformarCalendario(data));
-			                }
-			            }
-			        });
 
-			    }
-			};
 		};
 
 		vm.delete = function (itemForDelete,  callback) {

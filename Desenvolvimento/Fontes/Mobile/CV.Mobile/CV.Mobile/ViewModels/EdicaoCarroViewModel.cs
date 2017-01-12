@@ -213,17 +213,28 @@ namespace CV.Mobile.ViewModels
         {
             if (!Participantes.Any())
             {
-                using (ApiService srv = new ApiService())
+
+                Participantes.Clear();
+                List<Usuario> ListaUsuario = new List<Usuario>();
+                if (Conectado)
                 {
-                    Participantes.Clear();
-                    var ListaUsuario = await srv.ListarParticipantesViagem();
-                    foreach (var itemUsuario in ListaUsuario)
+                    using (ApiService srv = new ApiService())
                     {
-                        if (!ItemCarro.Identificador.HasValue || ItemCarro.Avaliacoes.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).Any())
-                            itemUsuario.Selecionado = true;
-                        Participantes.Add(itemUsuario);
+
+                        ListaUsuario = await srv.ListarParticipantesViagem();
                     }
                 }
+                else
+                {
+                    ListaUsuario = await DatabaseService.Database.ListarParticipanteViagem();
+                }
+                foreach (var itemUsuario in ListaUsuario)
+                {
+                    if (!ItemCarro.Identificador.HasValue || ItemCarro.Avaliacoes.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).Any())
+                        itemUsuario.Selecionado = true;
+                    Participantes.Add(itemUsuario);
+                }
+
             }
         }
 
@@ -355,121 +366,140 @@ namespace CV.Mobile.ViewModels
             SalvarCommand.ChangeCanExecute();
             try
             {
-                using (ApiService srv = new ApiService())
+
+
+                foreach (Usuario itemUsuario in Participantes)
                 {
-
-                     foreach (Usuario itemUsuario in Participantes)
+                    if (itemUsuario.Selecionado)
                     {
-                        if (itemUsuario.Selecionado)
+                        if (!ItemCarro.Avaliacoes.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).Any())
                         {
-                            if (!ItemCarro.Avaliacoes.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).Any())
+                            var itemNovaAvaliacao = new AvaliacaoAluguel() { IdentificadorUsuario = itemUsuario.Identificador };
+                            if (itemUsuario.Identificador == ItemUsuarioLogado.Codigo)
                             {
-                                var itemNovaAvaliacao = new AvaliacaoAluguel() { IdentificadorUsuario = itemUsuario.Identificador };
-                                if (itemUsuario.Identificador == ItemUsuarioLogado.Codigo)
-                                {
-                                    itemNovaAvaliacao.Nota = ItemAvaliacao.Nota;
-                                    itemNovaAvaliacao.Comentario = ItemAvaliacao.Comentario;
-                                }
-                                itemNovaAvaliacao.DataAtualizacao = DateTime.Now.ToUniversalTime();
-                                ItemCarro.Avaliacoes.Add(itemNovaAvaliacao);
+                                itemNovaAvaliacao.Nota = ItemAvaliacao.Nota;
+                                itemNovaAvaliacao.Comentario = ItemAvaliacao.Comentario;
                             }
+                            itemNovaAvaliacao.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                            ItemCarro.Avaliacoes.Add(itemNovaAvaliacao);
                         }
-                        else
-                        {
-                            if (ItemCarro.Avaliacoes.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).Any())
-                            {
-                                ItemCarro.Avaliacoes.Remove(ItemCarro.Avaliacoes.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).FirstOrDefault());
-                                ItemAvaliacao = new AvaliacaoAluguel();
-                            }
-                        }
-                    }
-                    if (ItemCarro.Alugado)
-                    {
-                        if (!VisitaIniciada)
-                        {
-                            ItemCarro.ItemCarroEventoRetirada.Data = null;
-                            ItemCarro.ItemCarroEventoRetirada.Latitude = ItemCarro.ItemCarroEventoDevolucao.Longitude = null;
-                            ItemCarro.ItemCarroEventoRetirada.Odometro = null;
-                        }
-                        else
-                        {
-                            ItemCarro.ItemCarroEventoRetirada.Data = ItemCarro.ItemCarroEventoRetirada.Data.GetValueOrDefault().Date.Add(ItemCarro.ItemCarroEventoRetirada.Hora.GetValueOrDefault());
-                            if (_UltimaPosicao != null)
-                            {
-                                ItemCarro.ItemCarroEventoRetirada.Latitude = _UltimaPosicao.Latitude;
-                                ItemCarro.ItemCarroEventoRetirada.Latitude = _UltimaPosicao.Longitude;
-                            }
-                        }
-
-                        if (!VisitaConcluida)
-                        {
-                            ItemCarro.ItemCarroEventoDevolucao.Data = null;
-                            ItemCarro.ItemCarroEventoDevolucao.Latitude = ItemCarro.ItemCarroEventoDevolucao.Longitude = null;
-                            ItemCarro.ItemCarroEventoDevolucao.Odometro = null;
-                        }
-                        else
-                        {
-                            ItemCarro.ItemCarroEventoDevolucao.Data = ItemCarro.ItemCarroEventoDevolucao.Data.GetValueOrDefault().Date.Add(ItemCarro.ItemCarroEventoDevolucao.Hora.GetValueOrDefault());
-                            if (_UltimaPosicao != null)
-                            {
-                                ItemCarro.ItemCarroEventoDevolucao.Latitude = _UltimaPosicao.Latitude;
-                                ItemCarro.ItemCarroEventoDevolucao.Latitude = _UltimaPosicao.Longitude;
-                            }
-                        }
-
                     }
                     else
+                    {
+                        if (ItemCarro.Avaliacoes.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).Any())
+                        {
+                            ItemCarro.Avaliacoes.Remove(ItemCarro.Avaliacoes.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).FirstOrDefault());
+                            ItemAvaliacao = new AvaliacaoAluguel();
+                        }
+                    }
+                }
+                if (ItemCarro.Alugado)
+                {
+                    if (!VisitaIniciada)
                     {
                         ItemCarro.ItemCarroEventoRetirada.Data = null;
                         ItemCarro.ItemCarroEventoRetirada.Latitude = ItemCarro.ItemCarroEventoDevolucao.Longitude = null;
                         ItemCarro.ItemCarroEventoRetirada.Odometro = null;
+                    }
+                    else
+                    {
+                        ItemCarro.ItemCarroEventoRetirada.Data = ItemCarro.ItemCarroEventoRetirada.Data.GetValueOrDefault().Date.Add(ItemCarro.ItemCarroEventoRetirada.Hora.GetValueOrDefault());
+                        if (_UltimaPosicao != null)
+                        {
+                            ItemCarro.ItemCarroEventoRetirada.Latitude = _UltimaPosicao.Latitude;
+                            ItemCarro.ItemCarroEventoRetirada.Latitude = _UltimaPosicao.Longitude;
+                        }
+                    }
+
+                    if (!VisitaConcluida)
+                    {
                         ItemCarro.ItemCarroEventoDevolucao.Data = null;
                         ItemCarro.ItemCarroEventoDevolucao.Latitude = ItemCarro.ItemCarroEventoDevolucao.Longitude = null;
                         ItemCarro.ItemCarroEventoDevolucao.Odometro = null;
                     }
-
-
-                   
-
-                    var Resultado = await srv.SalvarCarro(ItemCarro);
-                    if (Resultado.Sucesso)
+                    else
                     {
-
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        ItemCarro.ItemCarroEventoDevolucao.Data = ItemCarro.ItemCarroEventoDevolucao.Data.GetValueOrDefault().Date.Add(ItemCarro.ItemCarroEventoDevolucao.Hora.GetValueOrDefault());
+                        if (_UltimaPosicao != null)
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-                        ItemCarro.Identificador = Resultado.IdentificadorRegistro;
-                        // var Jresultado = (JObject)Resultado.ItemRegistro;
-                        var pItemCarro = await srv.CarregarCarro(Resultado.IdentificadorRegistro);
-                        
-                        if (pItemCarro.ItemCarroEventoRetirada.Hora == null)
-                            pItemCarro.ItemCarroEventoRetirada.Hora = new TimeSpan();
-                        if (pItemCarro.ItemCarroEventoDevolucao.Hora == null)
-                            pItemCarro.ItemCarroEventoDevolucao.Hora = new TimeSpan();
-                        if (!pItemCarro.ItemCarroEventoRetirada.Data.HasValue)
-                            pItemCarro.ItemCarroEventoRetirada.Data = _dataMinima;
-                        if (!pItemCarro.ItemCarroEventoDevolucao.Data.HasValue)
-                            pItemCarro.ItemCarroEventoDevolucao.Data = _dataMinima;
-                        ItemCarro = pItemCarro;
-                        MessagingService.Current.SendMessage<Carro>(MessageKeys.ManutencaoCarro, ItemCarro);
-                        PermiteExcluir = true;
-                    }
-                    else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
-                    {
-
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
-                        {
-                            Title = "Problemas Validação",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-
+                            ItemCarro.ItemCarroEventoDevolucao.Latitude = _UltimaPosicao.Latitude;
+                            ItemCarro.ItemCarroEventoDevolucao.Latitude = _UltimaPosicao.Longitude;
+                        }
                     }
 
                 }
+                else
+                {
+                    ItemCarro.ItemCarroEventoRetirada.Data = null;
+                    ItemCarro.ItemCarroEventoRetirada.Latitude = ItemCarro.ItemCarroEventoDevolucao.Longitude = null;
+                    ItemCarro.ItemCarroEventoRetirada.Odometro = null;
+                    ItemCarro.ItemCarroEventoDevolucao.Data = null;
+                    ItemCarro.ItemCarroEventoDevolucao.Latitude = ItemCarro.ItemCarroEventoDevolucao.Longitude = null;
+                    ItemCarro.ItemCarroEventoDevolucao.Odometro = null;
+                }
+
+
+
+                ResultadoOperacao Resultado = null;
+                Carro pItemCarro = null;
+                if (Conectado)
+                {
+                    using (ApiService srv = new ApiService())
+                    {
+                        Resultado = await srv.SalvarCarro(ItemCarro);
+                        if (Resultado.Sucesso)
+                        {
+
+                            pItemCarro = await srv.CarregarCarro(Resultado.IdentificadorRegistro);
+                            AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "C", pItemCarro.Identificador.GetValueOrDefault(), !ItemCarro.Identificador.HasValue);
+                            await DatabaseService.SalvarCarroReplicada(pItemCarro);
+                        }
+
+                    }
+                }
+                else
+                {
+                    Resultado = await DatabaseService.SalvarCarro(ItemCarro);
+                    pItemCarro = await DatabaseService.CarregarCarro(ItemCarro.Identificador);
+                }
+                if (Resultado.Sucesso)
+                {
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+                    ItemCarro.Identificador = Resultado.IdentificadorRegistro;
+                    // var Jresultado = (JObject)Resultado.ItemRegistro;
+
+
+                    if (pItemCarro.ItemCarroEventoRetirada.Hora == null)
+                        pItemCarro.ItemCarroEventoRetirada.Hora = new TimeSpan();
+                    if (pItemCarro.ItemCarroEventoDevolucao.Hora == null)
+                        pItemCarro.ItemCarroEventoDevolucao.Hora = new TimeSpan();
+                    if (!pItemCarro.ItemCarroEventoRetirada.Data.HasValue)
+                        pItemCarro.ItemCarroEventoRetirada.Data = _dataMinima;
+                    if (!pItemCarro.ItemCarroEventoDevolucao.Data.HasValue)
+                        pItemCarro.ItemCarroEventoDevolucao.Data = _dataMinima;
+                    ItemCarro = pItemCarro;
+                    MessagingService.Current.SendMessage<Carro>(MessageKeys.ManutencaoCarro, ItemCarro);
+                    PermiteExcluir = true;
+                }
+                else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
+                {
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Problemas Validação",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+
+                }
+
+
             }
             finally
             {
@@ -489,17 +519,33 @@ namespace CV.Mobile.ViewModels
                 OnCompleted = new Action<bool>(async result =>
                 {
                     if (!result) return;
-                    using (ApiService srv = new ApiService())
+                    ResultadoOperacao Resultado = new ResultadoOperacao();
+                    ItemCarro.DataExclusao = DateTime.Now.ToUniversalTime();
+
+                    if (Conectado)
                     {
-                        ItemCarro.DataExclusao = DateTime.Now;
-                        var Resultado = await srv.ExcluirCarro(ItemCarro.Identificador);
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        using (ApiService srv = new ApiService())
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
+                            Resultado = await srv.ExcluirCarro(ItemCarro.Identificador);
+                            AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "C", ItemCarro.Identificador.GetValueOrDefault(), false);
+
+                            await DatabaseService.ExcluirCarro(ItemCarro.Identificador, true);
+                        }
                     }
+                    else
+                    {
+                        await DatabaseService.ExcluirCarro(ItemCarro.Identificador, false);
+                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Carro excluído com sucesso " } };
+
+                    }
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+
                     MessagingService.Current.SendMessage<Carro>(MessageKeys.ManutencaoCarro, ItemCarro);
                     await PopAsync();
 

@@ -36,7 +36,7 @@ namespace CV.Mobile.ViewModels
             Participantes = new ObservableCollection<Usuario>();
             PagamentoMECartao = !ItemGasto.Especie && ItemGasto.Moeda != (int)enumMoeda.BRL;
             ItemGasto.PropertyChanged += ItemGasto_PropertyChanged;
-            
+
             SalvarCommand = new Command(
                                 async () => await Salvar(),
                                 () => true);
@@ -47,7 +47,7 @@ namespace CV.Mobile.ViewModels
                                                                   },
                                                                   () => true);
 
-            ExcluirCommand = new Command(() =>  Excluir());
+            ExcluirCommand = new Command(() => Excluir());
             ListaMoeda = new ObservableCollection<ItemLista>();
             List<ItemLista> lista = new List<ItemLista>();
             foreach (var enumerador in Enum.GetValues(typeof(enumMoeda)))
@@ -65,7 +65,7 @@ namespace CV.Mobile.ViewModels
 
         }
 
-       public Command SalvarCommand { get; set; }
+        public Command SalvarCommand { get; set; }
         public Command PageAppearingCommand { get; set; }
         public Command ExcluirCommand { get; set; }
         public Command AbrirCustosCommand { get; set; }
@@ -81,7 +81,7 @@ namespace CV.Mobile.ViewModels
             await CarregarParticipantesViagem();
 
             if (_ItemReabastecimento.Latitude.HasValue && _ItemReabastecimento.Longitude.HasValue)
-            {   
+            {
 
             }
             else
@@ -98,22 +98,33 @@ namespace CV.Mobile.ViewModels
         {
             if (!Participantes.Any())
             {
-                using (ApiService srv = new ApiService())
+
+                Participantes.Clear();
+                List<Usuario> ListaUsuario = new List<Usuario>();
+                if (Conectado)
                 {
-                    Participantes.Clear();
-                    var ListaUsuario = await srv.ListarParticipantesViagem();
-                    foreach (var itemUsuario in ListaUsuario)
+                    using (ApiService srv = new ApiService())
                     {
-                        if (!ItemGasto.Identificador.HasValue || ItemGasto.Usuarios.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).Any())
-                            itemUsuario.Selecionado = true;
-                        if (itemUsuario.Identificador != ItemUsuarioLogado.Codigo)
-                            Participantes.Add(itemUsuario);
+
+                        ListaUsuario = await srv.ListarParticipantesViagem();
                     }
                 }
+                else
+                {
+                    ListaUsuario = await DatabaseService.Database.ListarParticipanteViagem();
+                }
+                foreach (var itemUsuario in ListaUsuario)
+                {
+                    if (!ItemGasto.Identificador.HasValue || ItemGasto.Usuarios.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).Any())
+                        itemUsuario.Selecionado = true;
+                    if (itemUsuario.Identificador != ItemUsuarioLogado.Codigo)
+                        Participantes.Add(itemUsuario);
+                }
+
             }
         }
 
-      
+
         public Gasto ItemGasto
         {
             get
@@ -127,7 +138,7 @@ namespace CV.Mobile.ViewModels
             }
         }
 
-   
+
 
         public bool PermiteExcluir
         {
@@ -155,7 +166,7 @@ namespace CV.Mobile.ViewModels
             }
         }
 
-     
+
         public Usuario ParticipanteSelecionado
         {
             get
@@ -170,7 +181,7 @@ namespace CV.Mobile.ViewModels
             }
         }
 
-       
+
 
         public Reabastecimento ItemReabastecimento
         {
@@ -219,37 +230,59 @@ namespace CV.Mobile.ViewModels
                 ItemGasto.Longitude = ItemReabastecimento.Longitude;
                 if (ItemReabastecimento.Gastos.Any())
                     ItemReabastecimento.Gastos.FirstOrDefault().DataAtualizacao = DateTime.Now.ToUniversalTime();
-                using (ApiService srv = new ApiService())
+
+                ResultadoOperacao Resultado = null;
+
+                if (Conectado)
                 {
-                    var Resultado = await srv.SalvarReabastecimento(ItemReabastecimento);
-                    if (Resultado.Sucesso)
+                    using (ApiService srv = new ApiService())
                     {
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        Resultado = await srv.SalvarReabastecimento(ItemReabastecimento);
+                        if (Resultado.Sucesso)
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-  
-                        ItemReabastecimento = await srv.CarregarReabastecimento(Resultado.IdentificadorRegistro);
-                        PermiteExcluir = true;                        
-                        await PopAsync();
-                        MessagingService.Current.SendMessage<Reabastecimento>(MessageKeys.ManutencaoReabastecimento, ItemReabastecimento);
-                        
-                    }
-                    else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
-                    {
 
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
-                        {
-                            Title = "Problemas Validação",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
+                            AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "R", Resultado.IdentificadorRegistro.GetValueOrDefault(), !ItemReabastecimento.Identificador.HasValue);
+                            ItemReabastecimento = await srv.CarregarReabastecimento(Resultado.IdentificadorRegistro);
+
+                            await DatabaseService.SalvarReabastecimentoReplicada(ItemReabastecimento);
+                        }
 
                     }
-                   
                 }
+                else
+                {
+                    Resultado = await DatabaseService.SalvarReabastecimento(ItemReabastecimento);
+                    if (Resultado.Sucesso)
+                        ItemReabastecimento = await DatabaseService.CarregarReabastecimento(Resultado.IdentificadorRegistro);
+                }
+
+                if (Resultado.Sucesso)
+                {
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+
+                    PermiteExcluir = true;
+                    await PopAsync();
+                    MessagingService.Current.SendMessage<Reabastecimento>(MessageKeys.ManutencaoReabastecimento, ItemReabastecimento);
+
+                }
+                else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
+                {
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Problemas Validação",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+
+                }
+
+
             }
             finally
             {
@@ -269,17 +302,32 @@ namespace CV.Mobile.ViewModels
                 OnCompleted = new Action<bool>(async result =>
                 {
                     if (!result) return;
-                    using (ApiService srv = new ApiService())
+                    ResultadoOperacao Resultado = new ResultadoOperacao();
+                    ItemReabastecimento.DataExclusao = DateTime.Now.ToUniversalTime();
+                    if (Conectado)
                     {
-                        ItemGasto.DataExclusao = DateTime.Now;
-                        var Resultado = await srv.ExcluirReabastecimento(ItemReabastecimento.Identificador);
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        using (ApiService srv = new ApiService())
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
+                            Resultado = await srv.ExcluirReabastecimento(ItemReabastecimento.Identificador);
+                            AtualizarViagem(ItemReabastecimento.Identificador.GetValueOrDefault(), "R", ItemReabastecimento.Identificador.GetValueOrDefault(), false);
+
+                            await DatabaseService.ExcluirReabastecimento(ItemReabastecimento.Identificador, true);
+
+                        }
                     }
+                    else
+                    {
+                        ItemReabastecimento.AtualizadoBanco = false;
+                        await DatabaseService.ExcluirReabastecimento(ItemReabastecimento.Identificador, false);
+                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Reabastecimento excluído com sucesso " } };
+                    }
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+
                     MessagingService.Current.SendMessage<Reabastecimento>(MessageKeys.ManutencaoReabastecimento, ItemReabastecimento);
                     await PopAsync();
 
@@ -289,6 +337,6 @@ namespace CV.Mobile.ViewModels
 
         }
 
-      
+
     }
 }

@@ -28,7 +28,7 @@ namespace CV.Mobile.ViewModels
         private AvaliacaoAerea _ItemAvaliacao = new AvaliacaoAerea();
         private Usuario _ParticipanteSelecionado;
         private ViagemAereaAeroporto _AeroportoSelecionado;
-    
+
         private readonly DateTime _dataMinima = new DateTime(1900, 01, 01);
         private Plugin.Geolocator.Abstractions.Position _PosicaoAtual = null;
         public ObservableRangeCollection<ViagemAereaAeroporto> ListaDados { get; set; }
@@ -71,13 +71,13 @@ namespace CV.Mobile.ViewModels
                                                                   },
                                                                   () => true);
 
-       
-            ExcluirCommand = new Command(() =>  Excluir());
+
+            ExcluirCommand = new Command(() => Excluir());
             ExcluirEscalaCommand = new Command<ViagemAereaAeroporto>((obj) => ExcluirEscala(obj));
             AdicionarEscalaCommand = new Command(async () => await AdicionarEscala());
 
             AbrirCustosCommand = new Command(async () => await AbrirJanelaCustos());
-           
+
         }
 
         private void ListaDados_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -134,7 +134,7 @@ namespace CV.Mobile.ViewModels
                     else
                         PossoComentar = false;
                 }
-                else if (item.VisitaIniciada )
+                else if (item.VisitaIniciada)
                 {
                     if (_PosicaoAtual != null)
                     {
@@ -208,9 +208,9 @@ namespace CV.Mobile.ViewModels
             if (posicao == null)
                 posicao = new Plugin.Geolocator.Abstractions.Position() { Latitude = -23.6040963, Longitude = -46.6178018 };
             _PosicaoAtual = posicao;
-            
-                        
-            
+
+
+
 
         }
 
@@ -218,21 +218,32 @@ namespace CV.Mobile.ViewModels
         {
             if (!Participantes.Any())
             {
-                using (ApiService srv = new ApiService())
+
+                Participantes.Clear();
+                List<Usuario> ListaUsuario = new List<Usuario>();
+                if (Conectado)
                 {
-                    Participantes.Clear();
-                    var ListaUsuario = await srv.ListarParticipantesViagem();
-                    foreach (var itemUsuario in ListaUsuario)
+                    using (ApiService srv = new ApiService())
                     {
-                        if (!ItemViagemAerea.Identificador.HasValue || ItemViagemAerea.Avaliacoes.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).Any())
-                            itemUsuario.Selecionado = true;
-                        Participantes.Add(itemUsuario);
+
+                        ListaUsuario = await srv.ListarParticipantesViagem();
                     }
                 }
+                else
+                {
+                    ListaUsuario = await DatabaseService.Database.ListarParticipanteViagem();
+                }
+                foreach (var itemUsuario in ListaUsuario)
+                {
+                    if (!ItemViagemAerea.Identificador.HasValue || ItemViagemAerea.Avaliacoes.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).Any())
+                        itemUsuario.Selecionado = true;
+                    Participantes.Add(itemUsuario);
+                }
+
             }
         }
 
-        
+
 
 
         public ViagemAerea ItemViagemAerea
@@ -336,7 +347,7 @@ namespace CV.Mobile.ViewModels
 
             set
             {
-                SetProperty(ref _ItemOrigem ,value);
+                SetProperty(ref _ItemOrigem, value);
             }
         }
 
@@ -394,48 +405,70 @@ namespace CV.Mobile.ViewModels
                     AjustarDadosAeroporto(ListaAvaliacoesAlteradas, itemAeroporto);
                 }
                 ItemViagemAerea.Aeroportos = new ObservableRangeCollection<ViagemAereaAeroporto>(ListaAvaliacoesAlteradas);
-               
-                using (ApiService srv = new ApiService())
+                ViagemAerea pItemViagemAerea = null;
+                ResultadoOperacao Resultado = null;
+
+                if (Conectado)
                 {
-                    var Resultado = await srv.SalvarViagemAerea(ItemViagemAerea);
-                    if (Resultado.Sucesso)
+                    using (ApiService srv = new ApiService())
                     {
-
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        Resultado = await srv.SalvarViagemAerea(ItemViagemAerea);
+                        if (Resultado.Sucesso)
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-                        ItemViagemAerea.Identificador = Resultado.IdentificadorRegistro;
-                        // var Jresultado = (JObject)Resultado.ItemRegistro;
-                        //ViagemAerea pItemViagemAerea = Jresultado.ToObject<ViagemAerea>();
-                        ViagemAerea pItemViagemAerea = await srv.CarregarViagemAerea(ItemViagemAerea.Identificador);
-                        AjustarDadosDataHora(pItemViagemAerea);
-                        ListaDados = new ObservableRangeCollection<ViagemAereaAeroporto>(pItemViagemAerea.Aeroportos.Where(d => d.TipoPonto == (int)enumTipoParada.Escala).Where(d => !d.DataExclusao.HasValue).OrderBy(d => Math.Abs(d.Identificador.GetValueOrDefault(0))));
-                        OnPropertyChanged("ListaDados");
-                        ItemViagemAerea = pItemViagemAerea;
-                        ItemOrigem = ItemViagemAerea.Aeroportos.Where(d => d.TipoPonto == (int)enumTipoParada.Origem).FirstOrDefault();
-                        ItemDestino = ItemViagemAerea.Aeroportos.Where(d => d.TipoPonto == (int)enumTipoParada.Destino).FirstOrDefault();
-                        ItemOrigem.PropertyChanged += ItemDestino_PropertyChanged;
-                        ItemDestino.PropertyChanged += ItemDestino_PropertyChanged;
-                        ListaDados.CollectionChanged += ListaDados_CollectionChanged;
 
-                        MessagingService.Current.SendMessage<ViagemAerea>(MessageKeys.ManutencaoViagemAerea, ItemViagemAerea);
-                            PermiteExcluir = true;
-                    }
-                    else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
-                    {
-                         MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
-                        {
-                            Title = "Problemas Validação",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
+                            AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "VA", Resultado.IdentificadorRegistro.GetValueOrDefault(), !ItemViagemAerea.Identificador.HasValue);
+                            pItemViagemAerea = await srv.CarregarViagemAerea(Resultado.IdentificadorRegistro);
+
+                            await DatabaseService.SalvarViagemAereaReplicada(pItemViagemAerea);
+                        }
 
                     }
-                   
                 }
+                else
+                {
+                    Resultado = await DatabaseService.SalvarViagemAerea(ItemViagemAerea);
+                    if (Resultado.Sucesso)
+                        pItemViagemAerea = await DatabaseService.CarregarViagemAerea(Resultado.IdentificadorRegistro);
+                }
+
+
+                if (Resultado.Sucesso)
+                {
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+                    ItemViagemAerea.Identificador = Resultado.IdentificadorRegistro;
+                    // var Jresultado = (JObject)Resultado.ItemRegistro;
+                    //ViagemAerea pItemViagemAerea = Jresultado.ToObject<ViagemAerea>();
+                    AjustarDadosDataHora(pItemViagemAerea);
+                    ListaDados = new ObservableRangeCollection<ViagemAereaAeroporto>(pItemViagemAerea.Aeroportos.Where(d => d.TipoPonto == (int)enumTipoParada.Escala).Where(d => !d.DataExclusao.HasValue).OrderBy(d => Math.Abs(d.Identificador.GetValueOrDefault(0))));
+                    OnPropertyChanged("ListaDados");
+                    ItemViagemAerea = pItemViagemAerea;
+                    ItemOrigem = ItemViagemAerea.Aeroportos.Where(d => d.TipoPonto == (int)enumTipoParada.Origem).FirstOrDefault();
+                    ItemDestino = ItemViagemAerea.Aeroportos.Where(d => d.TipoPonto == (int)enumTipoParada.Destino).FirstOrDefault();
+                    ItemOrigem.PropertyChanged += ItemDestino_PropertyChanged;
+                    ItemDestino.PropertyChanged += ItemDestino_PropertyChanged;
+                    ListaDados.CollectionChanged += ListaDados_CollectionChanged;
+
+                    MessagingService.Current.SendMessage<ViagemAerea>(MessageKeys.ManutencaoViagemAerea, ItemViagemAerea);
+                    PermiteExcluir = true;
+                }
+                else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
+                {
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Problemas Validação",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+
+                }
+
+
             }
             finally
             {
@@ -508,15 +541,15 @@ namespace CV.Mobile.ViewModels
                 Question = String.Format("Deseja excluir essa Escala?"),
                 Positive = "Sim",
                 Negative = "Não",
-                OnCompleted = new Action<bool>( result =>
-                {
-                    if (!result) return;
-                    obj.DataExclusao = DateTime.Now.ToUniversalTime();
-                    ListaDados.Remove(obj);
-                    ItemViagemAerea.Aeroportos.Remove(obj);
-                    OnPropertyChanged("TemEscala");
+                OnCompleted = new Action<bool>(result =>
+               {
+                   if (!result) return;
+                   obj.DataExclusao = DateTime.Now.ToUniversalTime();
+                   ListaDados.Remove(obj);
+                   ItemViagemAerea.Aeroportos.Remove(obj);
+                   OnPropertyChanged("TemEscala");
 
-                })
+               })
             });
 
 
@@ -533,17 +566,37 @@ namespace CV.Mobile.ViewModels
                 OnCompleted = new Action<bool>(async result =>
                 {
                     if (!result) return;
-                    using (ApiService srv = new ApiService())
+
+                    ResultadoOperacao Resultado = new ResultadoOperacao();
+                    ItemViagemAerea.DataExclusao = DateTime.Now.ToUniversalTime();
+                    if (Conectado)
                     {
-                        ItemViagemAerea.DataExclusao = DateTime.Now;
-                        var Resultado = await srv.ExcluirViagemAerea(ItemViagemAerea.Identificador);
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        using (ApiService srv = new ApiService())
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
+                            Resultado = await srv.ExcluirViagemAerea(ItemViagemAerea.Identificador);
+                            AtualizarViagem(ItemViagemAerea.Identificador.GetValueOrDefault(), "VA", ItemViagemAerea.Identificador.GetValueOrDefault(), false);
+
+                            await DatabaseService.ExcluirViagemAerea(ItemViagemAerea.Identificador, true);
+
+                        }
                     }
+                    else
+                    {
+                        ItemViagemAerea.AtualizadoBanco = false;
+                        await DatabaseService.ExcluirViagemAerea(ItemViagemAerea.Identificador, false);
+                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Deslocamento excluído com sucesso " } };
+                    }
+
+
+
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+
                     MessagingService.Current.SendMessage<ViagemAerea>(MessageKeys.ManutencaoViagemAerea, ItemViagemAerea);
                     await PopAsync();
 

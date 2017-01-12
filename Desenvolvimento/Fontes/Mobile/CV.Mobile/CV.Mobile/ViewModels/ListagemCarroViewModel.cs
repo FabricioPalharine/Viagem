@@ -26,7 +26,7 @@ namespace CV.Mobile.ViewModels
         public ListagemCarroViewModel(Viagem pitemViagem)
         {
             ItemViagem = pitemViagem;
-            ItemCriterioBusca = new CriterioBusca() { Situacao=1};
+            ItemCriterioBusca = new CriterioBusca() { Situacao = 1 };
             PageAppearingCommand = new Command(
                                                                    async () =>
                                                                    {
@@ -48,11 +48,11 @@ namespace CV.Mobile.ViewModels
 
             ItemTappedCommand = new Command<ItemTappedEventArgs>(
                                                                   async (obj) => await VerificarAcaoItem(obj));
-             MessagingService.Current.Unsubscribe<Carro>(MessageKeys.ManutencaoCarro);
+            MessagingService.Current.Unsubscribe<Carro>(MessageKeys.ManutencaoCarro);
             MessagingService.Current.Subscribe<Carro>(MessageKeys.ManutencaoCarro, (service, item) =>
             {
                 IsBusy = true;
-                
+
                 if (ListaDados.Where(d => d.Identificador == item.Identificador).Any())
                 {
                     var Posicao = ListaDados.IndexOf(ListaDados.Where(d => d.Identificador == item.Identificador).FirstOrDefault());
@@ -144,36 +144,50 @@ namespace CV.Mobile.ViewModels
 
         }
 
-   
+
 
         private async Task CarregarListaDados()
         {
-            using (ApiService srv = new ApiService())
+            List<Carro> Dados = new List<Carro>();
+            if (Conectado)
             {
-                var Dados = await srv.ListarCarro(ItemCriterioBusca);
-                ListaDados = new ObservableCollection<Carro>(Dados);
-                OnPropertyChanged("ListaDados");
+                using (ApiService srv = new ApiService())
+                {
+                    Dados = await srv.ListarCarro(ItemCriterioBusca);
+                }
             }
+            else
+                Dados = await DatabaseService.Database.ListarCarro(ItemCriterioBusca);
+            ListaDados = new ObservableCollection<Carro>(Dados);
+            OnPropertyChanged("ListaDados");
+
             IsLoadingLista = false;
         }
 
         private async Task VerificarAcaoItem(ItemTappedEventArgs itemSelecionado)
         {
-            using (ApiService srv = new ApiService())
+            Carro ItemCarro = null;
+            if (Conectado)
             {
-                var ItemCarro = await srv.CarregarCarro(((Carro)itemSelecionado.Item).Identificador);
-                var Pagina = new EdicaoCarroPage() { BindingContext = new EdicaoCarroViewModel(ItemCarro,ItemViagem) };
-                await PushAsync(Pagina);
+                using (ApiService srv = new ApiService())
+                {
+                    ItemCarro = await srv.CarregarCarro(((Carro)itemSelecionado.Item).Identificador);
+                }
             }
+            else
+                ItemCarro = await DatabaseService.CarregarCarro(((Carro)itemSelecionado.Item).Identificador);
+            var Pagina = new EdicaoCarroPage() { BindingContext = new EdicaoCarroViewModel(ItemCarro, ItemViagem) };
+            await PushAsync(Pagina);
+
         }
         private async Task Adicionar()
         {
-            var ItemCarro = new Carro() { Avaliacoes = new ObservableRangeCollection<AvaliacaoAluguel>(), Alugado=true, KM = ItemViagem.UnidadeMetrica, ItemCarroEventoDevolucao = new CarroEvento() { Inicio = false }, ItemCarroEventoRetirada=new CarroEvento() { Inicio = true }  } ;
-           
-                    var Pagina = new EdicaoCarroPage() { BindingContext = new EdicaoCarroViewModel(ItemCarro, ItemViagem) };
-                    await PushAsync(Pagina);
-                
-            
+            var ItemCarro = new Carro() { Avaliacoes = new ObservableRangeCollection<AvaliacaoAluguel>(), Alugado = true, KM = ItemViagem.UnidadeMetrica, ItemCarroEventoDevolucao = new CarroEvento() { Inicio = false }, ItemCarroEventoRetirada = new CarroEvento() { Inicio = true } };
+
+            var Pagina = new EdicaoCarroPage() { BindingContext = new EdicaoCarroViewModel(ItemCarro, ItemViagem) };
+            await PushAsync(Pagina);
+
+
         }
 
     }

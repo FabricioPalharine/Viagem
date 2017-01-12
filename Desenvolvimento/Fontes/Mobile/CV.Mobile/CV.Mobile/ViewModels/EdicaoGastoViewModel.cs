@@ -29,13 +29,13 @@ namespace CV.Mobile.ViewModels
         private Usuario _ParticipanteSelecionado;
         public EdicaoGastoViewModel(Gasto pItemGasto)
         {
-           
+
             ItemGasto = pItemGasto;
 
             Participantes = new ObservableCollection<Usuario>();
             PagamentoMECartao = !pItemGasto.Especie && pItemGasto.Moeda != (int)enumMoeda.BRL;
             ItemGasto.PropertyChanged += ItemGasto_PropertyChanged;
-            
+
             SalvarCommand = new Command(
                                 async () => await Salvar(),
                                 () => true);
@@ -46,7 +46,7 @@ namespace CV.Mobile.ViewModels
                                                                   },
                                                                   () => true);
 
-            ExcluirCommand = new Command(() =>  Excluir());
+            ExcluirCommand = new Command(() => Excluir());
             ListaMoeda = new ObservableCollection<ItemLista>();
             List<ItemLista> lista = new List<ItemLista>();
             foreach (var enumerador in Enum.GetValues(typeof(enumMoeda)))
@@ -64,7 +64,7 @@ namespace CV.Mobile.ViewModels
 
         }
 
-       public Command SalvarCommand { get; set; }
+        public Command SalvarCommand { get; set; }
         public Command PageAppearingCommand { get; set; }
         public Command ExcluirCommand { get; set; }
         public Command AbrirCustosCommand { get; set; }
@@ -122,7 +122,7 @@ namespace CV.Mobile.ViewModels
             }
         }
 
-      
+
         public Gasto ItemGasto
         {
             get
@@ -136,7 +136,7 @@ namespace CV.Mobile.ViewModels
             }
         }
 
-   
+
 
         public bool PermiteExcluir
         {
@@ -164,7 +164,7 @@ namespace CV.Mobile.ViewModels
             }
         }
 
-     
+
         public Usuario ParticipanteSelecionado
         {
             get
@@ -257,41 +257,43 @@ namespace CV.Mobile.ViewModels
                 }
                 else
                 {
-                    await DatabaseService.SalvarGasto(ItemGasto);
+                    if (!ItemGasto.IdentificadorUsuario.HasValue)
+                        ItemGasto.IdentificadorUsuario = ItemUsuarioLogado.Codigo;
+                    Resultado = await DatabaseService.SalvarGasto(ItemGasto);
                     pItemGasto = ItemGasto;
                 }
-                    if (Resultado.Sucesso)
+                if (Resultado.Sucesso)
+                {
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
                     {
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
-                        {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-                        //ItemGasto.Identificador = Resultado.IdentificadorRegistro;
-                        
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+                    //ItemGasto.Identificador = Resultado.IdentificadorRegistro;
 
-                        ItemGasto = pItemGasto;
-                        MessagingService.Current.SendMessage<Gasto>(MessageKeys.ManutencaoGasto, ItemGasto);
-                        PermiteExcluir = true;
-                        if (VoltarPagina)
-                        {
-                            await PopAsync();
-                            MessagingService.Current.SendMessage<Gasto>(MessageKeys.GastoIncluido, ItemGasto);
-                        }
-                    }
-                    else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
+
+                    ItemGasto = pItemGasto;
+                    MessagingService.Current.SendMessage<Gasto>(MessageKeys.ManutencaoGasto, ItemGasto);
+                    PermiteExcluir = true;
+                    if (VoltarPagina)
                     {
-
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
-                        {
-                            Title = "Problemas Validação",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-
+                        await PopAsync();
+                        MessagingService.Current.SendMessage<Gasto>(MessageKeys.GastoIncluido, ItemGasto);
                     }
-                
+                }
+                else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
+                {
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Problemas Validação",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+
+                }
+
 
             }
             finally
@@ -328,7 +330,7 @@ namespace CV.Mobile.ViewModels
                     }
                     else
                     {
-                        await DatabaseService.ExcluirGasto(ItemGasto, true);
+                        await DatabaseService.ExcluirGasto(ItemGasto, false);
                         Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Gasto excluído com sucesso " } };
 
                     }
@@ -349,6 +351,6 @@ namespace CV.Mobile.ViewModels
 
         }
 
-      
+
     }
 }

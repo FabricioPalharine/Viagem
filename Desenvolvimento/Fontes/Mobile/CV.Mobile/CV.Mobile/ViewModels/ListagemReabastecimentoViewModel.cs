@@ -76,11 +76,29 @@ namespace CV.Mobile.ViewModels
                 Negative = "Não",
                 OnCompleted = new Action<bool>(async result =>
                 {
+
                     if (!result) return;
-                    using (ApiService srv = new ApiService())
+                    ResultadoOperacao Resultado = new ResultadoOperacao();
+                    obj.DataExclusao = DateTime.Now.ToUniversalTime();
+                    if (Conectado)
                     {
-                        obj.DataExclusao = DateTime.Now;
-                        var Resultado = await srv.ExcluirReabastecimento(obj.Identificador);
+                        using (ApiService srv = new ApiService())
+                        {
+                            Resultado = await srv.ExcluirReabastecimento(obj.Identificador);
+                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "R", obj.Identificador.GetValueOrDefault(), false);
+
+                            await DatabaseService.ExcluirReabastecimento(obj.Identificador, true);
+
+                        }
+                    }
+                    else
+                    {
+                        obj.AtualizadoBanco = false;
+                        await DatabaseService.ExcluirReabastecimento(obj.Identificador, false);
+                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Reabastecimento excluído com sucesso " } };
+                    }
+
+                   
                         MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
                         {
                             Title = "Sucesso",
@@ -88,7 +106,7 @@ namespace CV.Mobile.ViewModels
                             Cancel = "OK"
                         });
                         ListaDados.Remove(obj);
-                    }
+                    
 
 
                 })

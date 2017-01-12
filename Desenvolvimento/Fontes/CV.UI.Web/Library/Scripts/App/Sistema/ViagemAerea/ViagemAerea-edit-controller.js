@@ -302,6 +302,8 @@
 		    $scope.$parent.itemViagemAerea.modalPopupTrigger(itemCusto, $translate.instant('MensagemExclusao'), $translate.instant('Sim'), $translate.instant('Nao'), function () {
 		        itemCusto.DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
 		        Gasto.SalvarCustoViagemAerea(itemCusto);
+		        SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'GV', itemCusto.Identificador, false);
+
 		    });
 
 		};
@@ -404,6 +406,8 @@
 		            if (data.Sucesso) {
 		                var itemPush = { Identificador: data.IdentificadorRegistro, ItemGasto: itemCusto };
 		                vm.itemViagemAerea.Gastos.push(itemPush);
+		                SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'GV', data.IdentificadorRegistro, true);
+
 		            }
 		            $uibModalInstance.close();
 		        });

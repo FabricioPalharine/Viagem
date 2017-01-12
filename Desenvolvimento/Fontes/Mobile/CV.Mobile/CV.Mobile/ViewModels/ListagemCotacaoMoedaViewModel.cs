@@ -129,6 +129,8 @@ namespace CV.Mobile.ViewModels
                         using (ApiService srv = new ApiService())
                         {
                             Resultado = await srv.ExcluirCotacaoMoeda(itemCotacao.Identificador);
+                            base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "CM", itemCotacao.Identificador.GetValueOrDefault(Resultado.IdentificadorRegistro.GetValueOrDefault()), false);
+
                             var itemAjustar = await DatabaseService.Database.RetornarCotacaoMoeda(itemCotacao.Identificador);
                             if (itemAjustar != null)
                                 await DatabaseService.Database.ExcluirCotacaoMoeda(itemAjustar);

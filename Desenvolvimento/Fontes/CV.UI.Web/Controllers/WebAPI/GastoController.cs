@@ -115,7 +115,8 @@ namespace CV.UI.Web.Controllers.WebAPI
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
-
+            if (itemResultado.Sucesso)
+                itemResultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = MensagemBusiness.RetornaMensagens("Viagem_ExcluirGasto_OK") } };
             return itemResultado;
         }
 
@@ -134,7 +135,12 @@ namespace CV.UI.Web.Controllers.WebAPI
                 itemResultado.Sucesso = biz.IsValid();
                 itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
                 if (itemResultado.Sucesso)
+                {
                     itemResultado.IdentificadorRegistro = itemGasto.Identificador;
+                    if (itemGasto.DataExclusao.HasValue)
+                        itemResultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = MensagemBusiness.RetornaMensagens("Viagem_ExcluirGastoAtracao_OK") } };
+
+                }
             }
             return itemResultado;
         }
@@ -154,7 +160,11 @@ namespace CV.UI.Web.Controllers.WebAPI
                 itemResultado.Sucesso = biz.IsValid();
                 itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
                 if (itemResultado.Sucesso)
+                {
                     itemResultado.IdentificadorRegistro = itemGasto.Identificador;
+                    if (itemGasto.DataExclusao.HasValue)
+                        itemResultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = MensagemBusiness.RetornaMensagens("Viagem_ExcluirGastoRefeicao_OK") } };
+                }
             }
             return itemResultado;
         }
@@ -174,7 +184,11 @@ namespace CV.UI.Web.Controllers.WebAPI
                 itemResultado.Sucesso = biz.IsValid();
                 itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
                 if (itemResultado.Sucesso)
+                {
                     itemResultado.IdentificadorRegistro = itemGasto.Identificador;
+                    if (itemGasto.DataExclusao.HasValue)
+                        itemResultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = MensagemBusiness.RetornaMensagens("Viagem_ExcluirGastoHotel_OK") } };
+                }
             }
             return itemResultado;
         }
@@ -194,7 +208,11 @@ namespace CV.UI.Web.Controllers.WebAPI
                 itemResultado.Sucesso = biz.IsValid();
                 itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
                 if (itemResultado.Sucesso)
+                {
                     itemResultado.IdentificadorRegistro = itemGasto.Identificador;
+                    if (itemGasto.DataExclusao.HasValue)
+                        itemResultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = MensagemBusiness.RetornaMensagens("Viagem_ExcluirGastoViagemAerea_OK") } };
+                }
             }
             return itemResultado;
         }
@@ -214,7 +232,11 @@ namespace CV.UI.Web.Controllers.WebAPI
                 itemResultado.Sucesso = biz.IsValid();
                 itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
                 if (itemResultado.Sucesso)
+                {
                     itemResultado.IdentificadorRegistro = itemGasto.Identificador;
+                    if (itemGasto.DataExclusao.HasValue)
+                        itemResultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = MensagemBusiness.RetornaMensagens("Viagem_ExcluirAluguelGasto_OK") } };
+                }
             }
             return itemResultado;
         }

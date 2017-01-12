@@ -102,7 +102,7 @@ namespace CV.Mobile.ViewModels
 
         }
 
-        internal void VerificarConectividade(bool VerificarSincronizacao)
+        internal async void VerificarConectividade(bool VerificarSincronizacao)
         {
             bool Conectado = false;
             if (CrossConnectivity.Current.IsConnected && Settings.AcompanhamentoOnline != "3")
@@ -116,6 +116,15 @@ namespace CV.Mobile.ViewModels
                     CrossConnectivity.Current.ConnectionTypes.Contains(Plugin.Connectivity.Abstractions.ConnectionType.WiFi))
                 {
                     Conectado = true;
+                }
+            }
+            if (!Conectado)
+            {
+                var itemControle = await DatabaseService.Database.GetControleSincronizacaoAsync();
+                if (itemControle.SincronizadoEnvio)
+                {
+                    itemControle.SincronizadoEnvio = false;
+                    await DatabaseService.Database.SalvarControleSincronizacao(itemControle);
                 }
             }
             _ConectadoPrincipal = Conectado;
@@ -264,12 +273,17 @@ namespace CV.Mobile.ViewModels
                         using (ApiService srv = new ApiService())
                         {
                             var Resultado = await srv.SalvarHotelEvento(itemEvento);
-                            var Jresultado = (JObject)Resultado.ItemRegistro;
-                            var pItemEvento = Jresultado.ToObject<HotelEvento>();
-                            var itemBanco = await DatabaseService.Database.RetornarHotelEvento(pItemEvento.Identificador);
-                            if (itemBanco != null)
-                                pItemEvento.Id = itemBanco.Id;
-                            await DatabaseService.Database.SalvarHotelEvento(pItemEvento);
+                            if (Resultado.Sucesso)
+                            {
+                                var Jresultado = (JObject)Resultado.ItemRegistro;
+                                var pItemEvento = Jresultado.ToObject<HotelEvento>();
+                                var itemBanco = await DatabaseService.Database.RetornarHotelEvento(pItemEvento.Identificador);
+                                if (itemBanco != null)
+                                    pItemEvento.Id = itemBanco.Id;
+                                await DatabaseService.Database.SalvarHotelEvento(pItemEvento);
+                               await AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "HE", pItemEvento.Identificador.GetValueOrDefault(), false);
+
+                            }
                         }
                     }
                     else
@@ -532,8 +546,15 @@ namespace CV.Mobile.ViewModels
         public async Task AtualizarViagem(int IdentificadorViagem, string TipoAtualizacao, int Identificador, bool Inclusao)
         {
             if (cvHubConnection.State == ConnectionState.Connected)
-
-                await cvHubProxy.Invoke("viagemAtualizada", IdentificadorViagem, TipoAtualizacao,Identificador,Inclusao);
+            {
+                var itemControle = await DatabaseService.Database.GetControleSincronizacaoAsync();
+                if (itemControle.SincronizadoEnvio)
+                {
+                    itemControle.UltimaDataRecepcao = DateTime.Now.ToUniversalTime();
+                    await DatabaseService.Database.SalvarControleSincronizacao(itemControle);
+                }
+                await cvHubProxy.Invoke("viagemAtualizada", IdentificadorViagem, TipoAtualizacao, Identificador, Inclusao);
+            }
         }
   
 

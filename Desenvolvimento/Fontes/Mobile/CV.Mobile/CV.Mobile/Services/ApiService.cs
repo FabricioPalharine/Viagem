@@ -2007,6 +2007,22 @@ namespace CV.Mobile.Services
             return itemViagemAerea;
         }
 
+        public async Task<ItemCompra> CarregarItemCompra(int? Identificador)
+        {
+            var itemViagemAerea = new ItemCompra();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Loja/CarregarItemCompra/", Identificador.GetValueOrDefault(0)));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                itemViagemAerea = JsonConvert.DeserializeObject<ItemCompra>(resultado);
+
+            }
+
+            return itemViagemAerea;
+        }
+
         public async Task<ResultadoOperacao> ExcluirViagemAerea(int? Identificador)
         {
             ResultadoOperacao itemResultado = new ResultadoOperacao();

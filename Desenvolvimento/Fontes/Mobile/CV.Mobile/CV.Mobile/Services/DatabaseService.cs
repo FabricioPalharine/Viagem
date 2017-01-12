@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CV.Mobile.Models;
 using MvvmHelpers;
+using CV.Mobile.Helpers;
 
 namespace CV.Mobile.Services
 {
@@ -255,6 +256,67 @@ namespace CV.Mobile.Services
             }
         }
 
+        internal async static Task<ResultadoOperacao> SalvarItemCompra(ItemCompra itemItemCompra, int? _IdentificadorListaCompraInicial)
+        {
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+            List<MensagemErro> Erros = new List<MensagemErro>();
+            if (string.IsNullOrEmpty(itemItemCompra.Descricao))
+            {
+                Erros.Add(new MensagemErro() { Mensagem = "O campo Modelo é obrigatório" });
+            }
+            if (string.IsNullOrEmpty(itemItemCompra.Marca))
+            {
+                Erros.Add(new MensagemErro() { Mensagem = "O campo Marca é obrigatório" });
+            }
+            if (!itemItemCompra.Valor.HasValue)
+                Erros.Add(new MensagemErro() { Mensagem = "O campo Valor é obrigatório" });
+            itemResultado.Sucesso = !Erros.Any();
+            if (itemResultado.Sucesso)
+            {
+                itemItemCompra.AtualizadoBanco = false;
+                itemItemCompra.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                if (itemItemCompra.IdentificadorUsuario.HasValue)
+                {
+                    var usuario = await Database.CarregarUsuario(itemItemCompra.IdentificadorUsuario.Value);
+                    if (usuario != null)
+                        itemItemCompra.NomeUsuario = usuario.Nome;
+                }
+                await Database.SalvarItemCompra(itemItemCompra);
+                itemResultado.IdentificadorRegistro = itemItemCompra.Identificador;
+                if (itemItemCompra.IdentificadorListaCompra.GetValueOrDefault(0) != _IdentificadorListaCompraInicial.GetValueOrDefault(0))
+                {
+                    if (itemItemCompra.IdentificadorListaCompra.HasValue)
+                    {
+                        var itemLC = await Database.RetornarListaCompra(itemItemCompra.IdentificadorListaCompra.Value);
+                        if (itemLC != null)
+                        {
+                            itemLC.Status = (int)enumStatusListaCompra.Comprado;
+                            itemLC.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                            itemLC.AtualizadoBanco = false;
+                            await Database.SalvarListaCompra(itemLC);
+                        }
+                    }
+
+                    if (_IdentificadorListaCompraInicial.HasValue)
+                    {
+                        var itemLC = await Database.RetornarListaCompra(_IdentificadorListaCompraInicial);
+                        if (itemLC != null)
+                        {
+                            itemLC.Status = (int)enumStatusListaCompra.Pendente;
+                            itemLC.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                            itemLC.AtualizadoBanco = false;
+                            await Database.SalvarListaCompra(itemLC);
+                        }
+                    }
+                }
+
+                Erros.Add(new MensagemErro() { Mensagem = "Item da Compra salvo com sucesso" });
+
+            }
+            itemResultado.Mensagens = Erros.ToArray();
+            return itemResultado;
+        }
+
         public static async Task<ResultadoOperacao> SalvarGasto(Gasto itemGasto)
         {
             ResultadoOperacao itemResultado = new ResultadoOperacao();
@@ -276,7 +338,7 @@ namespace CV.Mobile.Services
                 itemResultado.IdentificadorRegistro = itemGasto.Identificador;
 
 
-                foreach (var item in itemGasto.Alugueis.Where(d=>!d.DataExclusao.HasValue || d.Identificador > 0))
+                foreach (var item in itemGasto.Alugueis.Where(d => !d.DataExclusao.HasValue || d.Identificador > 0))
                 {
                     item.AtualizadoBanco = false;
                     item.DataAtualizacao = DateTime.Now.ToUniversalTime();
@@ -325,7 +387,7 @@ namespace CV.Mobile.Services
                     item.IdentificadorGasto = itemGasto.Identificador;
                     await Database.SalvarGastoViagemAerea(item);
                 }
-
+                await Database.ExcluirGastoDividido_IdentificadorGasto(itemGasto.Identificador.GetValueOrDefault());
                 foreach (var item in itemGasto.Usuarios)
                 {
                     item.AtualizadoBanco = false;
@@ -513,6 +575,8 @@ namespace CV.Mobile.Services
             foreach (var itemGastoAtracao in item.Gastos)
             {
                 itemGastoAtracao.ItemGasto = await Database.RetornarGasto(itemGastoAtracao.IdentificadorGasto);
+                itemGastoAtracao.ItemGasto.Usuarios = new ObservableRangeCollection<GastoDividido>(await Database.ListarGastoDividido_IdentificadorGasto(itemGastoAtracao.IdentificadorGasto));
+
             }
             return item;
         }
@@ -620,11 +684,13 @@ namespace CV.Mobile.Services
         internal static async Task<Refeicao> CarregarRefeicao(int? Identificador)
         {
             Refeicao item = await Database.RetornarRefeicao(Identificador);
-            item.Pedidos = new  ObservableRangeCollection<RefeicaoPedido>(await Database.ListarRefeicaoPedido_IdentificadorRefeicao(Identificador));
+            item.Pedidos = new ObservableRangeCollection<RefeicaoPedido>(await Database.ListarRefeicaoPedido_IdentificadorRefeicao(Identificador));
             item.Gastos = new ObservableRangeCollection<GastoRefeicao>(await Database.ListarGastoRefeicao_IdentificadorRefeicao(Identificador));
             foreach (var itemGastoRefeicao in item.Gastos)
             {
                 itemGastoRefeicao.ItemGasto = await Database.RetornarGasto(itemGastoRefeicao.IdentificadorGasto);
+                itemGastoRefeicao.ItemGasto.Usuarios = new ObservableRangeCollection<GastoDividido>(await Database.ListarGastoDividido_IdentificadorGasto(itemGastoRefeicao.IdentificadorGasto));
+
             }
             return item;
         }
@@ -737,6 +803,8 @@ namespace CV.Mobile.Services
             foreach (var itemGastoHotel in item.Gastos)
             {
                 itemGastoHotel.ItemGasto = await Database.RetornarGasto(itemGastoHotel.IdentificadorGasto);
+                itemGastoHotel.ItemGasto.Usuarios = new ObservableRangeCollection<GastoDividido>(await Database.ListarGastoDividido_IdentificadorGasto(itemGastoHotel.IdentificadorGasto));
+
             }
             return item;
         }
@@ -886,7 +954,9 @@ namespace CV.Mobile.Services
             foreach (var itemGastoLoja in item.Compras)
             {
                 itemGastoLoja.ItemGasto = await Database.RetornarGasto(itemGastoLoja.IdentificadorGasto);
-                itemGastoLoja.ItensComprados = new ObservableRangeCollection<ItemCompra>( await Database.ListarItemCompra_IdentificadorGastoCompra(itemGastoLoja.Identificador));
+                itemGastoLoja.ItemGasto.Usuarios = new ObservableRangeCollection<GastoDividido>(await Database.ListarGastoDividido_IdentificadorGasto(itemGastoLoja.IdentificadorGasto));
+
+                itemGastoLoja.ItensComprados = new ObservableRangeCollection<ItemCompra>(await Database.ListarItemCompra_IdentificadorGastoCompra(itemGastoLoja.Identificador));
             }
             return item;
         }
@@ -1024,6 +1094,708 @@ namespace CV.Mobile.Services
                 }
             }
 
+        }
+
+
+        internal static async Task<GastoCompra> CarregarGastoCompra(int? Identificador)
+        {
+            GastoCompra item = await Database.RetornarGastoCompra(Identificador);
+            item.ItemGasto = await Database.RetornarGasto(item.IdentificadorGasto);
+            item.ItensComprados = new ObservableRangeCollection<ItemCompra>(await Database.ListarItemCompra_IdentificadorGastoCompra(item.Identificador));
+            item.ItemGasto.Usuarios = new ObservableRangeCollection<GastoDividido>(await Database.ListarGastoDividido_IdentificadorGasto(item.ItemGasto.Identificador));
+            return item;
+        }
+
+        internal static async Task SalvarGastoCompraReplicada(GastoCompra itemGasto)
+        {
+            var itemBase = await Database.RetornarLoja(itemGasto.Identificador);
+            if (itemBase != null)
+                itemGasto.Id = itemBase.Id;
+            var itemBaseCompra = await Database.RetornarGasto(itemGasto.IdentificadorGasto);
+            if (itemBaseCompra != null)
+            {
+
+                itemGasto.ItemGasto.Id = itemBaseCompra.Id;
+            }
+            await Database.Excluir_Gasto_Filhos(itemGasto.IdentificadorGasto.GetValueOrDefault());
+            await Database.SalvarGasto(itemGasto.ItemGasto);
+            foreach (var item in itemGasto.ItemGasto.Usuarios)
+            {
+                await Database.SalvarGastoDividido(item);
+            }
+            await Database.SalvarGastoCompra(itemGasto);
+
+
+        }
+
+        public static async Task<ResultadoOperacao> SalvarGastoCompra(GastoCompra itemGastoCompra)
+        {
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+            List<MensagemErro> Erros = new List<MensagemErro>();
+            var itemGasto = itemGastoCompra.ItemGasto;
+            if (!itemGasto.Moeda.HasValue)
+                Erros.Add(new MensagemErro() { Mensagem = "O campo Moeda é obrigatório." });
+            if (!itemGasto.Valor.HasValue)
+                Erros.Add(new MensagemErro() { Mensagem = "O campo Valor é obrigatório." });
+            if (string.IsNullOrWhiteSpace(itemGasto.Descricao))
+                Erros.Add(new MensagemErro() { Mensagem = "O campo Descrição é obrigatório." });
+
+            itemResultado.Sucesso = !Erros.Any();
+            if (itemResultado.Sucesso)
+            {
+                itemGasto.AtualizadoBanco = false;
+                itemGasto.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                itemGastoCompra.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                itemGastoCompra.AtualizadoBanco = false;
+                await Database.SalvarGasto(itemGasto);
+                itemResultado.IdentificadorRegistro = itemGasto.Identificador;
+                itemGastoCompra.IdentificadorGasto = itemGasto.Identificador;
+                await Database.SalvarGastoCompra(itemGastoCompra);
+                await Database.ExcluirGastoDividido_IdentificadorGasto(itemGasto.Identificador.GetValueOrDefault());
+
+                foreach (var item in itemGasto.Usuarios)
+                {
+                    item.AtualizadoBanco = false;
+                    item.IdentificadorGasto = itemGasto.Identificador;
+                    await Database.SalvarGastoDividido(item);
+                }
+
+                Erros.Add(new MensagemErro() { Mensagem = "Compra salva com sucesso" });
+            }
+            itemResultado.Mensagens = Erros.ToArray();
+
+
+            return itemResultado;
+        }
+
+        internal static async Task<Carro> CarregarCarro(int? Identificador)
+        {
+            Carro item = await Database.RetornarCarro(Identificador);
+            if (item.IdentificadorCarroEventoDevolucao.HasValue)
+                item.ItemCarroEventoDevolucao = await Database.RetornarCarroEvento(item.IdentificadorCarroEventoDevolucao);
+            if (item.IdentificadorCarroEventoRetirada.HasValue)
+                item.ItemCarroEventoRetirada = await Database.RetornarCarroEvento(item.IdentificadorCarroEventoRetirada);
+            item.Avaliacoes = new ObservableRangeCollection<AvaliacaoAluguel>(await Database.ListarAvaliacaoAluguel_IdentificadorCarro(Identificador));
+            item.Gastos = new ObservableRangeCollection<AluguelGasto>(await Database.ListarAluguelGasto_IdentificadorCarro(Identificador));
+            item.Deslocamentos = new ObservableRangeCollection<CarroDeslocamento>(await Database.ListarCarroDeslocamento_IdentificadorCarro(Identificador));
+            item.Reabastecimentos = new ObservableRangeCollection<Reabastecimento>(await Database.ListarReabastecimento_IdentificadorCarro(Identificador));
+            foreach (var itemGastoCarro in item.Gastos)
+            {
+                itemGastoCarro.ItemGasto = await Database.RetornarGasto(itemGastoCarro.IdentificadorGasto);
+                itemGastoCarro.ItemGasto.Usuarios = new ObservableRangeCollection<GastoDividido>(await Database.ListarGastoDividido_IdentificadorGasto(itemGastoCarro.IdentificadorGasto));
+            }
+            foreach (var itemDeslocamento in item.Deslocamentos)
+            {
+                if (itemDeslocamento.IdentificadorCarroEventoPartida.HasValue)
+                    itemDeslocamento.ItemCarroEventoPartida = await Database.RetornarCarroEvento(itemDeslocamento.IdentificadorCarroEventoPartida);
+                if (itemDeslocamento.IdentificadorCarroEventoChegada.HasValue)
+                    itemDeslocamento.ItemCarroEventoChegada = await Database.RetornarCarroEvento(itemDeslocamento.IdentificadorCarroEventoChegada);
+                itemDeslocamento.Usuarios = new ObservableRangeCollection<CarroDeslocamentoUsuario>(await Database.ListarCarroDeslocamentoUsuario_IdentificadorCarroDeslocamento(itemDeslocamento.Identificador));
+            }
+            foreach (var itemReabastecimento in item.Reabastecimentos)
+            {
+                itemReabastecimento.Gastos = new ObservableRangeCollection<ReabastecimentoGasto>(await Database.ListarReabastecimentoGasto_IdentificadorReabastecimento(itemReabastecimento.Identificador));
+                foreach (var itemGastoCarro in itemReabastecimento.Gastos)
+                {
+                    itemGastoCarro.ItemGasto = await Database.RetornarGasto(itemGastoCarro.IdentificadorGasto);
+                    itemGastoCarro.ItemGasto.Usuarios = new ObservableRangeCollection<GastoDividido>(await Database.ListarGastoDividido_IdentificadorGasto(itemGastoCarro.IdentificadorGasto));
+
+                }
+            }
+
+
+            return item;
+        }
+
+        internal static async Task ExcluirCarro(int? Identificador, bool Sincronizado)
+        {
+            var itemBanco = await CarregarCarro(Identificador);
+            if (itemBanco != null)
+            {
+                if (itemBanco.Identificador > 0 && !Sincronizado)
+                {
+                    itemBanco.DataExclusao = DateTime.Now.ToUniversalTime();
+                    itemBanco.AtualizadoBanco = false;
+                    await Database.SalvarCarro(itemBanco);
+                    foreach (var itemAvaliacao in itemBanco.Avaliacoes)
+                    {
+                        if (itemAvaliacao.Identificador > 0)
+                        {
+                            itemAvaliacao.DataExclusao = DateTime.Now.ToUniversalTime();
+                            itemAvaliacao.AtualizadoBanco = false;
+                            await Database.SalvarAvaliacaoAluguel(itemAvaliacao);
+                        }
+                        else
+                            await Database.ExcluirAvaliacaoAluguel(itemAvaliacao);
+                    }
+                    foreach (var itemGasto in itemBanco.Gastos)
+                    {
+                        if (itemGasto.Identificador > 0)
+                        {
+                            itemGasto.DataExclusao = DateTime.Now.ToUniversalTime();
+                            itemGasto.AtualizadoBanco = false;
+                            await Database.SalvarAluguelGasto(itemGasto);
+                        }
+                        else
+                            await Database.ExcluirAluguelGasto(itemGasto);
+                    }
+                    foreach (var itemDeslocamento in itemBanco.Deslocamentos)
+                    {
+                        foreach (var itemUsuario in itemDeslocamento.Usuarios)
+                            await Database.ExcluirCarroDeslocamentoUsuario(itemUsuario);
+                        if (itemDeslocamento.Identificador > 0)
+                        {
+                            itemDeslocamento.DataExclusao = DateTime.Now.ToUniversalTime();
+                            itemDeslocamento.AtualizadoBanco = false;
+                            await Database.SalvarCarroDeslocamento(itemDeslocamento);
+                        }
+                        else
+                            await Database.ExcluirCarroDeslocamento(itemDeslocamento);
+                    }
+
+                    foreach (var itemReabastecimento in itemBanco.Reabastecimentos)
+                    {
+                        foreach (var itemGasto in itemReabastecimento.Gastos)
+                        {
+                            await Database.ExcluirGastoDividido_IdentificadorGasto(itemGasto.IdentificadorGasto.GetValueOrDefault());
+                            await Database.ExcluirGasto(itemGasto.ItemGasto);
+                            await Database.ExcluirReabastecimentoGasto(itemGasto);
+                        }
+                        if (itemReabastecimento.Identificador > 0)
+                        {
+                            itemReabastecimento.DataExclusao = DateTime.Now.ToUniversalTime();
+                            itemReabastecimento.AtualizadoBanco = false;
+                            await Database.SalvarReabastecimento(itemReabastecimento);
+                        }
+                        else
+                            await Database.ExcluirReabastecimento(itemReabastecimento);
+                    }
+
+                }
+            }
+            else
+            {
+                foreach (var itemAvaliacao in itemBanco.Avaliacoes)
+                    await Database.ExcluirAvaliacaoAluguel(itemAvaliacao);
+                foreach (var itemGasto in itemBanco.Gastos)
+                    await Database.ExcluirAluguelGasto(itemGasto);
+                foreach (var itemDeslocamento in itemBanco.Deslocamentos)
+                {
+                    foreach (var itemUsuario in itemDeslocamento.Usuarios)
+                        await Database.ExcluirCarroDeslocamentoUsuario(itemUsuario);
+                    await Database.ExcluirCarroDeslocamento(itemDeslocamento);
+                }
+                foreach (var itemReabastecimento in itemBanco.Reabastecimentos)
+                {
+                    foreach (var itemGasto in itemReabastecimento.Gastos)
+                    {
+                        await Database.ExcluirGastoDividido_IdentificadorGasto(itemGasto.IdentificadorGasto.GetValueOrDefault());
+                        await Database.ExcluirGasto(itemGasto.ItemGasto);
+                        await Database.ExcluirReabastecimentoGasto(itemGasto);
+                    }
+                    await Database.ExcluirReabastecimento(itemReabastecimento);
+                }
+                await Database.ExcluirCarro(itemBanco);
+            }
+        }
+
+        internal static async Task<ResultadoOperacao> SalvarCarro(Carro itemCarro)
+        {
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+            List<MensagemErro> Erros = new List<MensagemErro>();
+            if (string.IsNullOrEmpty(itemCarro.Modelo))
+            {
+                Erros.Add(new MensagemErro() { Mensagem = "O campo Modelo é obrigatório" });
+            }
+            if (string.IsNullOrEmpty(itemCarro.Descricao))
+            {
+                Erros.Add(new MensagemErro() { Mensagem = "O campo Descrição é obrigatório" });
+            }
+            if (itemCarro.Alugado && !string.IsNullOrEmpty(itemCarro.Locadora))
+            {
+                Erros.Add(new MensagemErro() { Mensagem = "O campo Locadora é obrigatório" });
+            }
+
+
+            itemResultado.Sucesso = !Erros.Any();
+            if (itemResultado.Sucesso)
+            {
+                itemCarro.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                itemCarro.AtualizadoBanco = false;
+                if (itemCarro.ItemCarroEventoRetirada != null)
+                {
+                    await Database.SalvarCarroEvento(itemCarro.ItemCarroEventoRetirada);
+                    itemCarro.IdentificadorCarroEventoRetirada = itemCarro.ItemCarroEventoRetirada.Identificador;
+                }
+                else
+                    itemCarro.IdentificadorCarroEventoRetirada = null;
+
+                if (itemCarro.ItemCarroEventoDevolucao != null)
+                {
+                    await Database.SalvarCarroEvento(itemCarro.ItemCarroEventoDevolucao);
+                    itemCarro.IdentificadorCarroEventoDevolucao = itemCarro.ItemCarroEventoDevolucao.Identificador;
+                }
+                else
+                    itemCarro.IdentificadorCarroEventoDevolucao = null;
+                await Database.SalvarCarro(itemCarro);
+                foreach (var itemAvaliacao in itemCarro.Avaliacoes)
+                {
+                    itemAvaliacao.IdentificadorCarro = itemCarro.Identificador;
+                    itemAvaliacao.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                    itemAvaliacao.AtualizadoBanco = false;
+                    await Database.SalvarAvaliacaoAluguel(itemAvaliacao);
+                }
+                itemResultado.IdentificadorRegistro = itemCarro.Identificador;
+                Erros.Add(new MensagemErro() { Mensagem = "Carro salvo com sucesso" });
+            }
+            itemResultado.Mensagens = Erros.ToArray();
+
+            return itemResultado;
+        }
+
+        internal static async Task SalvarCarroReplicada(Carro itemCarro)
+        {
+            var itemCarroBase = await Database.RetornarCarro(itemCarro.Identificador);
+            if (itemCarroBase != null)
+                itemCarro.Id = itemCarroBase.Id;
+            await DatabaseService.SalvarCarro(itemCarro);
+            if (itemCarro.ItemCarroEventoRetirada != null)
+            {
+                var itemCarroEvento = await Database.RetornarCarroEvento(itemCarro.IdentificadorCarroEventoRetirada);
+                if (itemCarroEvento != null)
+                    itemCarro.ItemCarroEventoRetirada.Id = itemCarroEvento.Id;
+                await Database.SalvarCarroEvento(itemCarro.ItemCarroEventoRetirada);
+            }
+            if (itemCarro.ItemCarroEventoDevolucao != null)
+            {
+                var itemCarroEvento = await Database.RetornarCarroEvento(itemCarro.IdentificadorCarroEventoDevolucao);
+                if (itemCarroEvento != null)
+                    itemCarro.ItemCarroEventoDevolucao.Id = itemCarroEvento.Id;
+                await Database.SalvarCarroEvento(itemCarro.ItemCarroEventoDevolucao);
+            }
+
+            foreach (var itemAvaliacao in itemCarro.Avaliacoes)
+            {
+                var itemAvaliacaoBase = await Database.RetornarAvaliacaoAluguel(itemAvaliacao.Identificador);
+                if (itemAvaliacao.DataExclusao.HasValue)
+                {
+                    if (itemAvaliacaoBase != null)
+                        await Database.ExcluirAvaliacaoAluguel(itemAvaliacaoBase);
+                }
+                else
+                {
+                    if (itemAvaliacaoBase != null)
+                        itemAvaliacao.Id = itemAvaliacaoBase.Id;
+                    await Database.SalvarAvaliacaoAluguel(itemAvaliacao);
+                }
+            }
+
+        }
+
+
+        internal static async Task ExcluirCarroDeslocamento(int? Identificador, bool Sincronizado)
+        {
+            var itemBanco = await Database.RetornarCarroDeslocamento(Identificador);
+            if (itemBanco != null)
+            {
+                if (itemBanco.Identificador > 0 && !Sincronizado)
+                {
+                    itemBanco.DataExclusao = DateTime.Now.ToUniversalTime();
+                    itemBanco.AtualizadoBanco = false;
+                    await Database.SalvarCarroDeslocamento(itemBanco);
+                    foreach (var itemUsuario in await Database.ListarCarroDeslocamentoUsuario_IdentificadorCarroDeslocamento(itemBanco.Identificador))
+                        await Database.ExcluirCarroDeslocamentoUsuario(itemUsuario);
+
+                }
+
+                else
+                {
+                    foreach (var itemUsuario in await Database.ListarCarroDeslocamentoUsuario_IdentificadorCarroDeslocamento(itemBanco.Identificador))
+                        await Database.ExcluirCarroDeslocamentoUsuario(itemUsuario);
+
+                    await Database.ExcluirCarroDeslocamento(itemBanco);
+
+                }
+            }
+        }
+
+        internal static async Task SalvarCarroDeslocamentoReplicada(CarroDeslocamento itemCarro)
+        {
+            var itemCarroBase = await Database.RetornarCarroDeslocamento(itemCarro.Identificador);
+            if (itemCarroBase != null)
+            {
+                itemCarro.Id = itemCarroBase.Id;
+                foreach (var itemUsuario in await Database.ListarCarroDeslocamentoUsuario_IdentificadorCarroDeslocamento(itemCarroBase.Identificador))
+                    await Database.ExcluirCarroDeslocamentoUsuario(itemUsuario);
+
+            }
+
+            await DatabaseService.Database.SalvarCarroDeslocamento(itemCarro);
+            if (itemCarro.ItemCarroEventoPartida != null)
+            {
+                var itemCarroEvento = await Database.RetornarCarroEvento(itemCarro.IdentificadorCarroEventoPartida);
+                if (itemCarroEvento != null)
+                    itemCarro.ItemCarroEventoPartida.Id = itemCarroEvento.Id;
+                await Database.SalvarCarroEvento(itemCarro.ItemCarroEventoPartida);
+            }
+            if (itemCarro.ItemCarroEventoChegada != null)
+            {
+                var itemCarroEvento = await Database.RetornarCarroEvento(itemCarro.IdentificadorCarroEventoChegada);
+                if (itemCarroEvento != null)
+                    itemCarro.ItemCarroEventoChegada.Id = itemCarroEvento.Id;
+                await Database.SalvarCarroEvento(itemCarro.ItemCarroEventoChegada);
+            }
+
+            foreach (var itemUsuario in itemCarro.Usuarios)
+            {
+                await Database.SalvarCarroDeslocamentoUsuario(itemUsuario);
+            }
+
+        }
+        internal static async Task<ResultadoOperacao> SalvarCarroDeslocamento(CarroDeslocamento itemCarro)
+        {
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+            List<MensagemErro> Erros = new List<MensagemErro>();
+
+
+            itemResultado.Sucesso = !Erros.Any();
+            if (itemResultado.Sucesso)
+            {
+                itemCarro.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                itemCarro.AtualizadoBanco = false;
+                if (itemCarro.ItemCarroEventoPartida != null)
+                {
+                    await Database.SalvarCarroEvento(itemCarro.ItemCarroEventoPartida);
+                    itemCarro.IdentificadorCarroEventoPartida = itemCarro.ItemCarroEventoPartida.Identificador;
+                }
+                else
+                    itemCarro.IdentificadorCarroEventoPartida = null;
+
+                if (itemCarro.ItemCarroEventoChegada != null)
+                {
+                    await Database.SalvarCarroEvento(itemCarro.ItemCarroEventoChegada);
+                    itemCarro.IdentificadorCarroEventoChegada = itemCarro.ItemCarroEventoChegada.Identificador;
+                }
+                else
+                    itemCarro.IdentificadorCarroEventoChegada = null;
+                await Database.SalvarCarroDeslocamento(itemCarro);
+                await Database.ExcluirCarroDeslocamentoUsuario_IdentificadorCarroDeslocamento(itemCarro.Identificador.GetValueOrDefault());
+                foreach (var itemUsuario in itemCarro.Usuarios)
+                {
+                    itemUsuario.IdentificadorUsuario = itemCarro.Identificador;
+                    itemUsuario.AtualizadoBanco = false;
+                    await Database.SalvarCarroDeslocamentoUsuario(itemUsuario);
+                }
+                itemResultado.IdentificadorRegistro = itemCarro.Identificador;
+                Erros.Add(new MensagemErro() { Mensagem = "Deslocamento salvo com sucesso" });
+            }
+            itemResultado.Mensagens = Erros.ToArray();
+
+            return itemResultado;
+        }
+        internal static async Task<CarroDeslocamento> CarregarCarroDeslocamento(int? Identificador)
+        {
+            CarroDeslocamento itemDeslocamento = await DatabaseService.Database.RetornarCarroDeslocamento(Identificador);
+          
+                if (itemDeslocamento.IdentificadorCarroEventoPartida.HasValue)
+                    itemDeslocamento.ItemCarroEventoPartida = await Database.RetornarCarroEvento(itemDeslocamento.IdentificadorCarroEventoPartida);
+                if (itemDeslocamento.IdentificadorCarroEventoChegada.HasValue)
+                    itemDeslocamento.ItemCarroEventoChegada = await Database.RetornarCarroEvento(itemDeslocamento.IdentificadorCarroEventoChegada);
+                itemDeslocamento.Usuarios = new ObservableRangeCollection<CarroDeslocamentoUsuario>(await Database.ListarCarroDeslocamentoUsuario_IdentificadorCarroDeslocamento(itemDeslocamento.Identificador));
+           
+
+            return itemDeslocamento;
+        }
+
+
+        internal static async Task<Reabastecimento> CarregarReabastecimento(int? Identificador)
+        {
+            Reabastecimento itemReabastecimento = await DatabaseService.Database.RetornarReabastecimento    (Identificador);
+            itemReabastecimento.Gastos = new ObservableRangeCollection<ReabastecimentoGasto>(await Database.ListarReabastecimentoGasto_IdentificadorReabastecimento(itemReabastecimento.Identificador));
+            foreach (var itemGastoCarro in itemReabastecimento.Gastos)
+            {
+                itemGastoCarro.ItemGasto = await Database.RetornarGasto(itemGastoCarro.IdentificadorGasto);
+                itemGastoCarro.ItemGasto.Usuarios = new ObservableRangeCollection<GastoDividido>(await Database.ListarGastoDividido_IdentificadorGasto(itemGastoCarro.IdentificadorGasto));
+
+            }
+  
+
+            return itemReabastecimento;
+        }
+
+        internal static async Task ExcluirReabastecimento(int? Identificador, bool Sincronizado)
+        {
+            var itemBanco = await CarregarReabastecimento(Identificador);
+            if (itemBanco != null)
+            {
+                if (itemBanco.Identificador > 0 && !Sincronizado)
+                {
+                    itemBanco.DataExclusao = DateTime.Now.ToUniversalTime();
+                    itemBanco.AtualizadoBanco = false;
+                    await Database.SalvarReabastecimento(itemBanco);
+                    foreach (var itemGasto in itemBanco.Gastos)
+                    {
+
+                        await Database.ExcluirGastoDividido_IdentificadorGasto(itemGasto.IdentificadorGasto.GetValueOrDefault());
+                        itemGasto.ItemGasto.DataExclusao = DateTime.Now.ToUniversalTime();
+                        itemGasto.ItemGasto.AtualizadoBanco = false;
+                        await Database.SalvarGasto(itemGasto.ItemGasto);
+                        itemGasto.DataExclusao = DateTime.Now.ToUniversalTime();
+                        itemGasto.AtualizadoBanco = false;
+                        await Database.SalvarReabastecimentoGasto(itemGasto);
+                    }
+
+                }
+
+                else
+                {
+                    foreach (var itemGasto in itemBanco.Gastos)
+                    {
+
+                        await Database.ExcluirGastoDividido_IdentificadorGasto(itemGasto.IdentificadorGasto.GetValueOrDefault());
+                        await Database.ExcluirGasto(itemGasto.ItemGasto);
+                        await Database.ExcluirReabastecimentoGasto(itemGasto);
+                    }
+                }
+
+                
+            }
+        }
+
+
+        internal static async Task SalvarReabastecimentoReplicada(Reabastecimento itemCarro)
+        {
+            var itemCarroBase = await Database.RetornarReabastecimento(itemCarro.Identificador);
+            if (itemCarroBase != null)
+            {
+                itemCarro.Id = itemCarroBase.Id;            
+
+            }
+            await DatabaseService.Database.SalvarReabastecimento(itemCarro);
+            foreach (var itemGasto in itemCarro.Gastos)
+            {
+                var itemBaseGastoReabastecimento = await Database.RetornarReabastecimentoGasto(itemGasto.Identificador);
+                if (itemBaseGastoReabastecimento != null)
+                    itemGasto.Id = itemBaseGastoReabastecimento.Id;
+                await Database.SalvarReabastecimentoGasto(itemGasto);
+                await Database.ExcluirGastoDividido_IdentificadorGasto(itemGasto.IdentificadorGasto.GetValueOrDefault());
+                var itemBaseGasto = await Database.RetornarGasto(itemGasto.IdentificadorGasto);
+                if (itemBaseGasto != null)
+                    itemGasto.ItemGasto.Id = itemBaseGasto.Id;
+                await Database.SalvarGasto(itemGasto.ItemGasto);
+                foreach (var itemUsuario in itemGasto.ItemGasto.Usuarios)
+                    await Database.SalvarGastoDividido(itemUsuario);
+            }
+
+           
+
+        }
+        internal static async Task<ResultadoOperacao> SalvarReabastecimento(Reabastecimento itemReabastecimento)
+        {
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+            List<MensagemErro> Erros = new List<MensagemErro>();
+            foreach (var itemGastoReabastecimento in itemReabastecimento.Gastos)
+            {
+                var itemGasto = itemGastoReabastecimento.ItemGasto;
+                if (!itemGasto.Moeda.HasValue)
+                    Erros.Add(new MensagemErro() { Mensagem = "O campo Moeda é obrigatório." });
+                if (!itemGasto.Valor.HasValue)
+                    Erros.Add(new MensagemErro() { Mensagem = "O campo Valor é obrigatório." });
+                if (string.IsNullOrWhiteSpace(itemGasto.Descricao))
+                    Erros.Add(new MensagemErro() { Mensagem = "O campo Descrição é obrigatório." });
+
+            }
+
+            itemResultado.Sucesso = !Erros.Any();
+            if (itemResultado.Sucesso)
+            {
+                itemReabastecimento.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                itemReabastecimento.AtualizadoBanco = false;
+                await Database.SalvarReabastecimento(itemReabastecimento);
+                foreach (var itemGastoReabastecimento in itemReabastecimento.Gastos)
+                {
+                    var itemGasto = itemGastoReabastecimento.ItemGasto;
+                    itemGasto.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                    itemGasto.AtualizadoBanco = false;
+                    await Database.SalvarGasto(itemGasto);
+                    await Database.ExcluirGastoDividido_IdentificadorGasto(itemGasto.Identificador.GetValueOrDefault());
+                    foreach (var itemUsuario in itemGasto.Usuarios)
+                    {
+                        itemUsuario.IdentificadorGasto = itemGasto.Identificador;
+                        await Database.SalvarGastoDividido(itemUsuario);
+                    }
+                    itemGastoReabastecimento.IdentificadorGasto = itemGasto.Identificador;
+                    itemGastoReabastecimento.IdentificadorReabastecimento = itemReabastecimento.Identificador;
+                    itemGastoReabastecimento.AtualizadoBanco = false;
+                    itemGastoReabastecimento.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                    await Database.SalvarReabastecimentoGasto(itemGastoReabastecimento);
+                }                  
+                itemResultado.IdentificadorRegistro = itemReabastecimento.Identificador;
+                Erros.Add(new MensagemErro() { Mensagem = "Reabastecimento salvo com sucesso" });
+            }
+            itemResultado.Mensagens = Erros.ToArray();
+
+            return itemResultado;
+        }
+
+
+        internal static async Task<ViagemAerea> CarregarViagemAerea(int? Identificador)
+        {
+            ViagemAerea item = await Database.RetornarViagemAerea(Identificador);
+            item.Avaliacoes = new ObservableRangeCollection<AvaliacaoAerea>(await Database.ListarAvaliacaoAerea_IdentificadorViagemAerea(Identificador));
+            item.Gastos = new ObservableRangeCollection<GastoViagemAerea>(await Database.ListarGastoViagemAerea_IdentificadorViagemAerea(Identificador));
+            foreach (var itemGastoAtracao in item.Gastos)
+            {
+                itemGastoAtracao.ItemGasto = await Database.RetornarGasto(itemGastoAtracao.IdentificadorGasto);
+                //itemGastoAtracao.ItemGasto.Usuarios = new ObservableRangeCollection<GastoDividido>(await Database.ListarGastoDividido_IdentificadorGasto(itemGastoAtracao.IdentificadorGasto));
+
+            }
+            item.Aeroportos = new ObservableRangeCollection<ViagemAereaAeroporto>(await Database.ListarViagemAereaAeroporto_IdentificadorViagemAerea(Identificador));
+            return item;
+        }
+
+
+        internal static async Task ExcluirViagemAerea(int? Identificador, bool Sincronizado)
+        {
+            var itemBanco = await CarregarViagemAerea(Identificador);
+            if (itemBanco != null)
+            {
+                if (itemBanco.Identificador > 0 && !Sincronizado)
+                {
+                    itemBanco.DataExclusao = DateTime.Now.ToUniversalTime();
+                    itemBanco.AtualizadoBanco = false;
+                    await Database.SalvarViagemAerea(itemBanco);
+                    foreach (var itemAvaliacao in itemBanco.Avaliacoes)
+                    {
+                        if (itemAvaliacao.Identificador > 0)
+                        {
+                            itemAvaliacao.DataExclusao = DateTime.Now.ToUniversalTime();
+                            itemAvaliacao.AtualizadoBanco = false;
+                            await Database.SalvarAvaliacaoAerea(itemAvaliacao);
+                        }
+                        else
+                            await Database.ExcluirAvaliacaoAerea(itemAvaliacao);
+                    }
+                    foreach (var itemGasto in itemBanco.Gastos)
+                    {
+                        if (itemGasto.Identificador > 0)
+                        {
+                            itemGasto.DataExclusao = DateTime.Now.ToUniversalTime();
+                            itemGasto.AtualizadoBanco = false;
+                            await Database.SalvarGastoViagemAerea(itemGasto);
+                        }
+                        else
+                            await Database.ExcluirGastoViagemAerea(itemGasto);
+                    }
+
+                    foreach (var itemAeroporto in itemBanco.Aeroportos)
+                    {
+                        if (itemAeroporto.Identificador > 0)
+                        {
+                            itemAeroporto.DataExclusao = DateTime.Now.ToUniversalTime();
+                            itemAeroporto.AtualizadoBanco = false;
+                            await Database.SalvarViagemAereaAeroporto(itemAeroporto);
+                        }
+                        else
+                            await Database.ExcluirViagemAereaAeroporto(itemAeroporto);
+                    }
+                }
+            }
+            else
+            {
+                foreach (var itemAvaliacao in itemBanco.Avaliacoes)
+                    await Database.ExcluirAvaliacaoAerea(itemAvaliacao);
+                foreach (var itemGasto in itemBanco.Gastos)
+                    await Database.ExcluirGastoViagemAerea(itemGasto);
+                foreach (var itemAeroporto in itemBanco.Aeroportos)
+                    await Database.ExcluirViagemAereaAeroporto(itemAeroporto);
+                await Database.ExcluirViagemAerea(itemBanco);
+            }
+        }
+
+        internal static async Task<ResultadoOperacao> SalvarViagemAerea(ViagemAerea itemViagemAerea)
+        {
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+            List<MensagemErro> Erros = new List<MensagemErro>();
+            if (string.IsNullOrEmpty(itemViagemAerea.Descricao))
+            {
+                Erros.Add(new MensagemErro() { Mensagem = "O campo Descrição é obrigatório" });
+            }
+            if (string.IsNullOrEmpty(itemViagemAerea.CompanhiaAerea))
+            {
+                Erros.Add(new MensagemErro() { Mensagem = "O campo Companhia é obrigatório" });
+            }
+            foreach (var itemAeroporto in itemViagemAerea.Aeroportos)
+            {
+                if (string.IsNullOrEmpty(itemAeroporto.Aeroporto))
+                    Erros.Add(new MensagemErro() { Mensagem = "O campo Aeroporto/Porto/Estação é obrigatório" });
+
+            }
+
+            itemResultado.Sucesso = !Erros.Any();
+            if (itemResultado.Sucesso)
+            {
+                itemViagemAerea.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                itemViagemAerea.AtualizadoBanco = false;
+                await Database.SalvarViagemAerea(itemViagemAerea);
+                foreach (var itemAvaliacao in itemViagemAerea.Avaliacoes)
+                {
+                    itemAvaliacao.IdentificadorViagemAerea = itemViagemAerea.Identificador;
+                    itemAvaliacao.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                    itemAvaliacao.AtualizadoBanco = false;
+                    await Database.SalvarAvaliacaoAerea(itemAvaliacao);
+                }
+                foreach (var itemAeroporto in itemViagemAerea.Aeroportos)
+                {
+                    itemAeroporto.IdentificadorViagemAerea = itemViagemAerea.Identificador;
+                    itemAeroporto.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                    itemAeroporto.AtualizadoBanco = false;
+                    await Database.SalvarViagemAereaAeroporto(itemAeroporto);
+                }
+                itemResultado.IdentificadorRegistro = itemViagemAerea.Identificador;
+                Erros.Add(new MensagemErro() { Mensagem = "Deslocamento salvo com sucesso" });
+            }
+            itemResultado.Mensagens = Erros.ToArray();
+
+            return itemResultado;
+        }
+
+        internal static async Task SalvarViagemAereaReplicada(ViagemAerea itemViagemAerea)
+        {
+            var itemViagemAereaBase = await Database.RetornarViagemAerea(itemViagemAerea.Identificador);
+            if (itemViagemAereaBase != null)
+                itemViagemAerea.Id = itemViagemAereaBase.Id;
+            await DatabaseService.SalvarViagemAerea(itemViagemAerea);
+            foreach (var itemAvaliacao in itemViagemAerea.Avaliacoes)
+            {
+                var itemAvaliacaoBase = await Database.RetornarAvaliacaoAerea(itemAvaliacao.Identificador);
+                if (itemAvaliacao.DataExclusao.HasValue)
+                {
+                    if (itemAvaliacaoBase != null)
+                        await Database.ExcluirAvaliacaoAerea(itemAvaliacaoBase);
+                }
+                else
+                {
+                    if (itemAvaliacaoBase != null)
+                        itemAvaliacao.Id = itemAvaliacaoBase.Id;
+                    await Database.SalvarAvaliacaoAerea(itemAvaliacao);
+                }
+            }
+            foreach (var itemAeroporto in itemViagemAerea.Aeroportos)
+            {
+                var itemAeroportoBase = await Database.RetornarViagemAereaAeroporto(itemAeroporto.Identificador);
+                if (itemAeroporto.DataExclusao.HasValue)
+                {
+                    if (itemAeroportoBase != null)
+                        await Database.ExcluirViagemAereaAeroporto(itemAeroportoBase);
+                }
+                else
+                {
+                    if (itemAeroportoBase != null)
+                        itemAeroporto.Id = itemAeroportoBase.Id;
+                    await Database.SalvarViagemAereaAeroporto(itemAeroporto);
+                }
+            }
         }
 
     }

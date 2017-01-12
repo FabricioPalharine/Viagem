@@ -93,13 +93,16 @@ namespace CV.Mobile.ViewModels
                         itemEvento.DataSaida = DateTime.Now;
                     var Resultado = await srv.SalvarHotelEvento(itemEvento);
                     TextoComandoTrocar = NoHotel ? "Cheguei Hotel" : "Deixei Hotel";
-                    var Jresultado = (JObject)Resultado.ItemRegistro;
-                    var pItemEvento = Jresultado.ToObject<HotelEvento>();
-                    var itemBanco = await DatabaseService.Database.RetornarHotelEvento(pItemEvento.Identificador);
-                    if (itemBanco != null)
-                        pItemEvento.Id = itemBanco.Id;
-                    await DatabaseService.Database.SalvarHotelEvento(pItemEvento);
-
+                    if (Resultado.Sucesso)
+                    {
+                        var Jresultado = (JObject)Resultado.ItemRegistro;
+                        var pItemEvento = Jresultado.ToObject<HotelEvento>();
+                        var itemBanco = await DatabaseService.Database.RetornarHotelEvento(pItemEvento.Identificador);
+                        if (itemBanco != null)
+                            pItemEvento.Id = itemBanco.Id;
+                        await DatabaseService.Database.SalvarHotelEvento(pItemEvento);
+                        AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "HE", pItemEvento.Identificador.GetValueOrDefault(), false);
+                    }
                 }
             }
             else

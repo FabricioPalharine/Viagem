@@ -203,7 +203,7 @@ namespace CV.Mobile.ViewModels
                         using (ApiService srv = new ApiService())
                         {
                             Resultado = await srv.ExcluirAporteDinheiro(item.Identificador);
-                            base.AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "AP", item.Identificador.GetValueOrDefault(), false);
+                            base.AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "AD", item.Identificador.GetValueOrDefault(), false);
                             await DatabaseService.ExcluirAporteDinheiro(item,true);
 
                         }

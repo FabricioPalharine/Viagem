@@ -34,6 +34,8 @@
 		    itemForDelete.Status = 3;
 		    Sugestao.save(itemForDelete, function (data) {
 		        if (data.Sucesso) {
+		            SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'S', itemForDelete.Identificador, false);
+
 		            callback(data);
 		            Error.showError('success', $translate.instant("Sucesso"), data.Mensagens[0].Mensagem, true);
 		        }

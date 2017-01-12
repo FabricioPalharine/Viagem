@@ -33,14 +33,14 @@ namespace CV.Mobile.ViewModels
             ItemCarroDeslocamento = pItemCarroDeslocamento;
             if (pItemCarroDeslocamento.ItemCarroEventoChegada != null && pItemCarroDeslocamento.ItemCarroEventoChegada.Hora == null)
                 pItemCarroDeslocamento.ItemCarroEventoChegada.Hora = new TimeSpan();
-        
+
             if (pItemCarroDeslocamento.ItemCarroEventoChegada != null && !pItemCarroDeslocamento.ItemCarroEventoChegada.Data.HasValue)
                 pItemCarroDeslocamento.ItemCarroEventoChegada.Data = _dataMinima;
 
             VisitaConcluida = pItemCarroDeslocamento.ItemCarroEventoChegada != null && pItemCarroDeslocamento.ItemCarroEventoChegada.Data.GetValueOrDefault(_dataMinima) != _dataMinima;
 
             Participantes = new ObservableCollection<Usuario>();
-            
+
             SalvarCommand = new Command(
                                 async () => await Salvar(),
                                 () => true);
@@ -51,7 +51,7 @@ namespace CV.Mobile.ViewModels
                                                                   },
                                                                   () => true);
 
-            ExcluirCommand = new Command(() =>  Excluir());
+            ExcluirCommand = new Command(() => Excluir());
             VisitaConcluidaToggledCommand = new Command<ToggledEventArgs>(
                                                         (obj) => VerificarAcaoConcluidoItem(obj));
 
@@ -111,24 +111,35 @@ namespace CV.Mobile.ViewModels
         {
             if (!Participantes.Any())
             {
-                using (ApiService srv = new ApiService())
+
+                Participantes.Clear();
+                List<Usuario> ListaUsuario = new List<Usuario>();
+                if (Conectado)
                 {
-                    Participantes.Clear();
-                    var ListaUsuario = await srv.ListarParticipantesViagem();
-                    foreach (var itemUsuario in ListaUsuario)
+                    using (ApiService srv = new ApiService())
                     {
-                        if ( ItemCarroDeslocamento.Usuarios.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).Any())
-                            itemUsuario.Selecionado = true;
-                        Participantes.Add(itemUsuario);
+
+                        ListaUsuario = await srv.ListarParticipantesViagem();
                     }
                 }
+                else
+                {
+                    ListaUsuario = await DatabaseService.Database.ListarParticipanteViagem();
+                }
+                foreach (var itemUsuario in ListaUsuario)
+                {
+                    if (ItemCarroDeslocamento.Usuarios.Where(d => d.IdentificadorUsuario == itemUsuario.Identificador).Any())
+                        itemUsuario.Selecionado = true;
+                    Participantes.Add(itemUsuario);
+                }
+
             }
         }
 
-      
-      
 
-   
+
+
+
 
         public bool PermiteExcluir
         {
@@ -156,7 +167,7 @@ namespace CV.Mobile.ViewModels
             }
         }
 
-     
+
         public Usuario ParticipanteSelecionado
         {
             get
@@ -171,7 +182,7 @@ namespace CV.Mobile.ViewModels
             }
         }
 
-       
+
 
         public CarroDeslocamento ItemCarroDeslocamento
         {
@@ -231,38 +242,60 @@ namespace CV.Mobile.ViewModels
                     ItemSalvar.ItemCarroEventoChegada.Longitude = null;
                 }
 
-                using (ApiService srv = new ApiService())
+                CarroDeslocamento pItemCarroDeslocamento = null;
+                ResultadoOperacao Resultado = null;
+
+                if (Conectado)
                 {
-                    var Resultado = await srv.SalvarCarroDeslocamento(ItemSalvar);
-                    if (Resultado.Sucesso)
+                    using (ApiService srv = new ApiService())
                     {
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        Resultado = await srv.SalvarCarroDeslocamento(ItemCarroDeslocamento);
+                        if (Resultado.Sucesso)
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-  
-                        var pItemCarroDeslocamento = await srv.CarregarCarroDeslocamento(Resultado.IdentificadorRegistro);
 
-                        PermiteExcluir = true;                        
-                        await PopAsync();
-                        MessagingService.Current.SendMessage<CarroDeslocamento>(MessageKeys.ManutencaoCarroDeslocamento, pItemCarroDeslocamento);
-                        
-                    }
-                    else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
-                    {
-
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
-                        {
-                            Title = "Problemas Validação",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
+                            pItemCarroDeslocamento = await srv.CarregarCarroDeslocamento(Resultado.IdentificadorRegistro);
+                            AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "CD", pItemCarroDeslocamento.Identificador.GetValueOrDefault(), !ItemCarroDeslocamento.Identificador.HasValue);
+                            await DatabaseService.SalvarCarroDeslocamentoReplicada(pItemCarroDeslocamento);
+                        }
 
                     }
-                   
                 }
+                else
+                {
+                    Resultado = await DatabaseService.SalvarCarroDeslocamento(ItemCarroDeslocamento);
+                    pItemCarroDeslocamento = await DatabaseService.CarregarCarroDeslocamento(ItemCarroDeslocamento.Identificador);
+                }
+
+
+                if (Resultado.Sucesso)
+                {
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+
+
+
+                    PermiteExcluir = true;
+                    await PopAsync();
+                    MessagingService.Current.SendMessage<CarroDeslocamento>(MessageKeys.ManutencaoCarroDeslocamento, pItemCarroDeslocamento);
+
+                }
+                else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
+                {
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Problemas Validação",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+
+                }
+
+
             }
             finally
             {
@@ -282,17 +315,32 @@ namespace CV.Mobile.ViewModels
                 OnCompleted = new Action<bool>(async result =>
                 {
                     if (!result) return;
-                    using (ApiService srv = new ApiService())
+                    ResultadoOperacao Resultado = new ResultadoOperacao();
+                    ItemCarroDeslocamento.DataExclusao = DateTime.Now.ToUniversalTime();
+                    if (Conectado)
                     {
-                        ItemCarroDeslocamento.DataExclusao = DateTime.Now.ToUniversalTime();
-                        var Resultado = await srv.SalvarCarroDeslocamento(ItemCarroDeslocamento);
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        using (ApiService srv = new ApiService())
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
+                            Resultado = await srv.SalvarCarroDeslocamento(ItemCarroDeslocamento);
+                            AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "CD", ItemCarroDeslocamento.Identificador.GetValueOrDefault(), false);
+
+                            await DatabaseService.ExcluirCarroDeslocamento(ItemCarroDeslocamento.Identificador, true);
+
+                        }
                     }
+                    else
+                    {
+                        ItemCarroDeslocamento.AtualizadoBanco = false;
+                        await DatabaseService.ExcluirCarroDeslocamento(ItemCarroDeslocamento.Identificador, false);
+                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Deslocamento excluído com sucesso " } };
+                    }
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+
                     MessagingService.Current.SendMessage<CarroDeslocamento>(MessageKeys.ManutencaoCarroDeslocamento, ItemCarroDeslocamento);
                     await PopAsync();
 
@@ -302,6 +350,6 @@ namespace CV.Mobile.ViewModels
 
         }
 
-      
+
     }
 }

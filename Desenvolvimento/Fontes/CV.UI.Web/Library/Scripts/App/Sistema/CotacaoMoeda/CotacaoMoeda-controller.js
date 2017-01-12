@@ -1,60 +1,62 @@
 (function () {
-	'use strict';
-	angular
+    'use strict';
+    angular
 		.module('Sistema')
-		.controller('CotacaoMoedaCtrl',['$uibModal', 'Error', '$timeout', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', '$window', 'i18nService','Viagem','CotacaoMoeda','Dominio', CotacaoMoedaCtrl]);
+		.controller('CotacaoMoedaCtrl', ['$uibModal', 'Error', '$timeout', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', '$window', 'i18nService', 'Viagem', 'CotacaoMoeda', 'Dominio', 'SignalR', CotacaoMoedaCtrl]);
 
-	function CotacaoMoedaCtrl($uibModal, Error, $timeout, $state, $translate, $scope, Auth, $rootScope, $stateParams, $window, i18nService, Viagem, CotacaoMoeda, Dominio) {
-		var vm = this;
-		vm.filtro = {  Index: 0, Count: 0 };
-		vm.filtroAtualizacao = {  Index: 0, Count: 0 };
-		vm.loading = false;
-		vm.showModal = false;		
-		vm.modalDelete = {};
-		vm.ListaDados = [];
-		vm.gridApi = null;
-		vm.messages = [];
+    function CotacaoMoedaCtrl($uibModal, Error, $timeout, $state, $translate, $scope, Auth, $rootScope, $stateParams, $window, i18nService, Viagem, CotacaoMoeda, Dominio, SignalR) {
+        var vm = this;
+        vm.filtro = { Index: 0, Count: 0 };
+        vm.filtroAtualizacao = { Index: 0, Count: 0 };
+        vm.loading = false;
+        vm.showModal = false;
+        vm.modalDelete = {};
+        vm.ListaDados = [];
+        vm.gridApi = null;
+        vm.messages = [];
 
-		vm.load = function () {
-		    vm.loading = true;
+        vm.load = function () {
+            vm.loading = true;
 
-		    Dominio.CarregaMoedas(function (data) {
-		        vm.ListaMoeda = data;
-		    });
+            Dominio.CarregaMoedas(function (data) {
+                vm.ListaMoeda = data;
+            });
 
-			vm.CarregarDadosWebApi();
-		};
+            vm.CarregarDadosWebApi();
+        };
 
-		vm.delete = function (itemForDelete, callback) {
-			vm.loading = true;
-			CotacaoMoeda.delete({ id: itemForDelete.Identificador }, function (data) {
-				callback(data);
-				if (data.Sucesso) {
-				    var Posicao = vm.ListaDados.indexOf(itemForDelete);
-				    vm.ListaDados.splice(Posicao, 1);
-					Error.showError('success', $translate.instant("Sucesso"), data.Mensagens[0].Mensagem, true);
-				}
-				else {
-					var Mensagens = new Array();
-					$(data.Mensagens).each(function (j, jitem) {
-						Mensagens.push(jitem.Mensagem);
-					});
-				Error.showError('warning', $translate.instant("Alerta"), Mensagens.join("<br/>"), true);
-				}
-				vm.loading = false;
-			},
+        vm.delete = function (itemForDelete, callback) {
+            vm.loading = true;
+            CotacaoMoeda.delete({ id: itemForDelete.Identificador }, function (data) {
+                callback(data);
+                if (data.Sucesso) {
+                    var Posicao = vm.ListaDados.indexOf(itemForDelete);
+                    vm.ListaDados.splice(Posicao, 1);
+                    Error.showError('success', $translate.instant("Sucesso"), data.Mensagens[0].Mensagem, true);
+                    SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'CM', itemForDelete.Identificador, false);
+
+                }
+                else {
+                    var Mensagens = new Array();
+                    $(data.Mensagens).each(function (j, jitem) {
+                        Mensagens.push(jitem.Mensagem);
+                    });
+                    Error.showError('warning', $translate.instant("Alerta"), Mensagens.join("<br/>"), true);
+                }
+                vm.loading = false;
+            },
 			function (err) {
-				$uibModalInstance.close();
-				Error.showError('error', 'Ops!', $translate.instant("ErroExcluir"), true);
-				vm.loading = false;
+			    $uibModalInstance.close();
+			    Error.showError('error', 'Ops!', $translate.instant("ErroExcluir"), true);
+			    vm.loading = false;
 			})
-		};
+        };
 
-		vm.RemoverMoeda = function (itemForDelete) {
+        vm.RemoverMoeda = function (itemForDelete) {
             // $uibModalInstance.close();
             $uibModal.open({
                 templateUrl: 'modalDelete.html',
-                controller: ['$uibModalInstance', 'item',  vm.DeleteModalCtrl],
+                controller: ['$uibModalInstance', 'item', vm.DeleteModalCtrl],
                 controllerAs: 'vmDelete',
                 resolve: {
                     item: function () { return itemForDelete; },
@@ -80,15 +82,15 @@
                     $uibModalInstance.close();
                 });
             };
-        }; 
+        };
 
         vm.AjustarDadosPagina = function (data) {
             vm.ListaDados = [];
-            angular.forEach(            data.Lista, function (itemLista) {
+            angular.forEach(data.Lista, function (itemLista) {
                 itemLista.ItemMoeda = { Codigo: itemLista.Moeda };
                 vm.ListaDados.push(itemLista);
             });
-           
+
             if (!$scope.$$phase) {
                 $scope.$apply();
             }
@@ -115,12 +117,12 @@
                     vm.messages = data.Mensagens;
                 }
 
-               
+
                 vm.loading = false;
             }, function (err) {
                 vm.loading = false;
                 Error.showError('error', 'Ops!', $translate.instant('ErroRequisicao'), true);
-                
+
                 vm.loading = false;
             });
         };
@@ -166,9 +168,10 @@
                 if (data.Sucesso) {
                     var itemNovo = data.ItemRegistro;
                     itemNovo.ItemMoeda = { Codigo: itemNovo.Moeda };
-                       var Posicao = vm.ListaDados.indexOf(itemCotacao);
-                        vm.ListaDados.splice(Posicao, 1, itemNovo);
-                            
+                    var Posicao = vm.ListaDados.indexOf(itemCotacao);
+                    vm.ListaDados.splice(Posicao, 1, itemNovo);
+                    SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'CM', data.ItemRegistro, itemCotacao.Identificador == null);
+
 
 
                 } else {
@@ -179,5 +182,5 @@
                 Error.showError('error', 'Ops!', $translate.instant("ErroSalvar"), true);
             });
         };
-	}
+    }
 }());

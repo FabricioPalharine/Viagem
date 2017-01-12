@@ -2,9 +2,9 @@
 	'use strict';
 	angular
 		.module('Sistema')
-		.controller('ListaCompraCtrl',['$uibModal', 'Error', '$timeout', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', '$window', 'i18nService','Usuario','Viagem','ListaCompra', ListaCompraCtrl]);
+		.controller('ListaCompraCtrl',['$uibModal', 'Error', '$timeout', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', '$window', 'i18nService','Usuario','Viagem','ListaCompra','SignalR', ListaCompraCtrl]);
 
-	function ListaCompraCtrl($uibModal,  Error, $timeout, $state, $translate, $scope, Auth, $rootScope, $stateParams, $window, i18nService,Usuario,Viagem,ListaCompra) {
+	function ListaCompraCtrl($uibModal, Error, $timeout, $state, $translate, $scope, Auth, $rootScope, $stateParams, $window, i18nService, Usuario, Viagem, ListaCompra, SignalR) {
 		var vm = this;
 		vm.filtro = {  Index: 0, Count: 0, Situacao:1 };
 		vm.filtroAtualizacao = { Index: 0, Count: 0, Situacao: 1 };
@@ -42,7 +42,9 @@
 			ListaCompra.delete({ id: itemForDelete.Identificador }, function (data) {
 				callback(data);
 				if (data.Sucesso) {
-					vm.CarregarDadosWebApi(vm.pagingOptions.pageSize, vm.pagingOptions.currentPage);
+				    vm.CarregarDadosWebApi(vm.pagingOptions.pageSize, vm.pagingOptions.currentPage);
+				    SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'LC', itemForDelete.Identificador, false);
+
 					Error.showError('success', $translate.instant("Sucesso"), data.Mensagens[0].Mensagem, true);
 				}
 				else {

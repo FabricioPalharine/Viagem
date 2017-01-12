@@ -234,6 +234,8 @@
 	        $scope.$parent.itemRefeicao.modalPopupTrigger(itemCusto, $translate.instant('MensagemExclusao'), $translate.instant('Sim'), $translate.instant('Nao'), function () {
 	            itemCusto.DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
 	            Gasto.SalvarCustoRefeicao(itemCusto);
+	            SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'GR', itemCusto.Identificador, false);
+
 	        });
 
 	    };
@@ -645,6 +647,8 @@
 	                if (data.Sucesso) {
 	                    var itemPush = { Identificador: data.IdentificadorRegistro, ItemGasto: itemCusto };
 	                    vm.itemRefeicao.Gastos.push(itemPush);
+	                    SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'GR', data.IdentificadorRegistro, true);
+
 	                }
 	                $uibModalInstance.close();
 	            });

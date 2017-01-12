@@ -71,24 +71,39 @@ namespace CV.Mobile.ViewModels
             MessagingService.Current.SendMessage<MessagingServiceQuestion>(MessageKeys.DisplayQuestion, new MessagingServiceQuestion()
             {
                 Title = "Confirmação",
-                Question = String.Format("Deseja excluir o CarroDeslocamento selecionado?"),
+                Question = String.Format("Deseja excluir o Deslocamento selecionado?"),
                 Positive = "Sim",
                 Negative = "Não",
                 OnCompleted = new Action<bool>(async result =>
                 {
                     if (!result) return;
-                    using (ApiService srv = new ApiService())
+                    ResultadoOperacao Resultado = new ResultadoOperacao();
+                    obj.DataExclusao = DateTime.Now.ToUniversalTime();
+                    if (Conectado)
                     {
-                        obj.DataExclusao = DateTime.Now;
-                        var Resultado = await srv.SalvarCarroDeslocamento(obj);
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        using (ApiService srv = new ApiService())
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-                        ListaDados.Remove(obj);
+                            Resultado = await srv.SalvarCarroDeslocamento(obj);
+                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "CD", obj.Identificador.GetValueOrDefault(), false);
+
+                            await DatabaseService.ExcluirCarroDeslocamento(obj.Identificador, true);
+
+                        }
                     }
+                    else
+                    {
+                        obj.AtualizadoBanco = false;
+                        await DatabaseService.ExcluirCarroDeslocamento(obj.Identificador, false);
+                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Deslocamento excluído com sucesso " } };
+                    }
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+                    ListaDados.Remove(obj);
+
 
 
                 })

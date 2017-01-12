@@ -15,15 +15,15 @@ namespace CV.Mobile.ViewModels
 {
     public class ListagemItemCompraViewModel : BaseNavigationViewModel
     {
-       
+
         private ItemCompra _ItemSelecionado;
         private GastoCompra _ItemGastoCompra;
 
-        public ListagemItemCompraViewModel( GastoCompra pItemGastoCompra)
+        public ListagemItemCompraViewModel(GastoCompra pItemGastoCompra)
         {
             ItemGastoCompra = pItemGastoCompra;
             ListaDados = new ObservableCollection<ItemCompra>(pItemGastoCompra.ItensComprados.Where(d => !d.DataExclusao.HasValue));
-        
+
 
             AdicionarCommand = new Command(
                                                                    async () => await Adicionar(),
@@ -70,32 +70,78 @@ namespace CV.Mobile.ViewModels
                 OnCompleted = new Action<bool>(async result =>
                 {
                     if (!result) return;
-                    using (ApiService srv = new ApiService())
+
+                    ResultadoOperacao Resultado = new ResultadoOperacao();
+                    obj.DataExclusao = DateTime.Now.ToUniversalTime();
+                    if (Conectado)
                     {
-                        obj.DataExclusao = DateTime.Now;
-                        var Resultado = await srv.SalvarItemCompra(obj);
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        using (ApiService srv = new ApiService())
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-                        ListaDados.Remove(obj);
+                            Resultado = await srv.SalvarItemCompra(obj);
+                            AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "IC", obj.Identificador.GetValueOrDefault(), false);
+                            if (obj.IdentificadorListaCompra.HasValue)
+                            {
+                                AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "LC", obj.IdentificadorListaCompra.GetValueOrDefault(), false);
+                                var ItemListaCompra = await srv.CarregarListaCompra(obj.Identificador);
+                                var itemLCBase = await DatabaseService.Database.RetornarListaCompra(ItemListaCompra.Identificador);
+                                if (itemLCBase != null)
+                                    ItemListaCompra.Id = itemLCBase.Id;
+                                await DatabaseService.Database.SalvarListaCompra(ItemListaCompra);
+                            }
+                            var itemBase = await DatabaseService.Database.RetornarItemCompra(obj.Identificador);
+                            if (itemBase != null)
+                                await DatabaseService.Database.ExcluirItemCompra(itemBase);
+
+                        }
                     }
-                    
+                    else
+                    {
+                        obj.AtualizadoBanco = false;
+                        if (obj.IdentificadorListaCompra.HasValue)
+                        {
+                            var itemLCBase = await DatabaseService.Database.RetornarListaCompra(obj.IdentificadorListaCompra);
+                            if (itemLCBase != null)
+                            {
+                                itemLCBase.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                                itemLCBase.AtualizadoBanco = false;
+                                await DatabaseService.Database.SalvarListaCompra(itemLCBase);
+
+                            }
+                        }
+                        if (obj.Identificador > 0)
+                        {
+                           
+                                await DatabaseService.Database.SalvarItemCompra(obj);
+                        }
+                        else
+                            await DatabaseService.Database.ExcluirItemCompra(obj);
+                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Item excluído com sucesso" } };
+
+                    }
+
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+                    ListaDados.Remove(obj);
+
+
 
                 })
             });
         }
 
-      
+
 
         public ObservableCollection<ItemCompra> ListaDados { get; set; }
         public Command DeleteCommand { get; set; }
         public Command ItemTappedCommand { get; set; }
         public Command AdicionarCommand { get; set; }
 
-        
+
 
         public ItemCompra ItemSelecionado
         {
@@ -127,16 +173,16 @@ namespace CV.Mobile.ViewModels
 
         private async Task VerificarAcaoItem(ItemTappedEventArgs itemSelecionado)
         {
-         
-                var Item = ((ItemCompra)itemSelecionado.Item);
-                var Pagina = new EdicaoItemCompraPage() { BindingContext = new EdicaoItemCompraViewModel(Item) };
-                await PushAsync(Pagina);
-            
+
+            var Item = ((ItemCompra)itemSelecionado.Item);
+            var Pagina = new EdicaoItemCompraPage() { BindingContext = new EdicaoItemCompraViewModel(Item) };
+            await PushAsync(Pagina);
+
         }
 
         private async Task Adicionar()
         {
-            var Item = new ItemCompra() { Reembolsavel=false, IdentificadorGastoCompra = ItemGastoCompra.Identificador };
+            var Item = new ItemCompra() { Reembolsavel = false, IdentificadorGastoCompra = ItemGastoCompra.Identificador };
             var Pagina = new EdicaoItemCompraPage() { BindingContext = new EdicaoItemCompraViewModel(Item) };
             await PushAsync(Pagina);
 

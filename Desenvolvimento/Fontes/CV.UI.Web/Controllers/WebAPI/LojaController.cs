@@ -119,6 +119,16 @@ namespace CV.UI.Web.Controllers.WebAPI
             return biz.ListarItemCompra(d => d.ItemGastoCompra.ItemLoja.IdentificadorViagem == token.IdentificadorViagem);
         }
 
+
+        [Authorize]
+        [ActionName("CarregarItemCompra")]
+        [HttpGet]
+        public ItemCompra CarregarItemCompra(int? Id)
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            return biz.SelecionarItemCompra(Id);
+        }
+
         [Authorize]
         [ActionName("saveCompra")]
         [HttpPost]
@@ -203,12 +213,15 @@ namespace CV.UI.Web.Controllers.WebAPI
                 {
                     ListaCompra itemLista = biz.SelecionarListaCompra(IdentificadorListaCompra);
                     itemLista.Status = (int)enumStatusListaCompra.Pendente;
+                    itemLista.DataAtualizacao = DateTime.Now.ToUniversalTime();
                     biz.SalvarListaCompra(itemLista);
                 }
                 else if (itemItemCompra.IdentificadorListaCompra.HasValue && !itemItemCompra.DataExclusao.HasValue && itemItemCompra.IdentificadorListaCompra != IdentificadorListaCompra)
                 {
                     ListaCompra itemLista = biz.SelecionarListaCompra(itemItemCompra.IdentificadorListaCompra);
-                    itemLista.Status = (int)enumStatusListaCompra.Pendente;
+                    itemLista.Status = (int)enumStatusListaCompra.Comprado;
+                    itemLista.DataAtualizacao = DateTime.Now.ToUniversalTime();
+
                     biz.SalvarListaCompra(itemLista);
                 }
             }

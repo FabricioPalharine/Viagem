@@ -24,28 +24,7 @@
 			    vm.ListaParticipantes = lista;
 			});
 			vm.CarregarDadosWebApi();
-			SignalR.AvisarAlertaAtualizacao = function (TipoAtualizacao, Identificador, Inclusao) {
-			    if (TipoAtualizacao == "G") {
-			        var itemPesquisa = { Index: 0, Count: 1, Identificador: Identificador };
-
-			        var itens = $.grep(vm.ListaDados, function (e) { return e.Identificador == Identificador; });
-			        if (itens.length == 0 && Inclusao) {
-			            Gasto.list({ json: JSON.stringify(itemPesquisa) }, function (data) {
-			                vm.ListaDados.unshift(data.Lista[0]);
-			            }, function (err) {
-			                Error.showError('error', 'Ops!', $translate.instant('ErroRequisicao'), true);
-			            });
-			        }
-			        else if (itens.length > 0) {
-			            var Posicao = vm.ListaDados.indexOf(itens[0]);
-			            Gasto.list({ json: JSON.stringify(itemPesquisa) }, function (data) {
-			                vm.ListaDados.splice(Posicao, 1, data.Lista[0]);
-			            }, function (err) {
-			                Error.showError('error', 'Ops!', $translate.instant('ErroRequisicao'), true);
-			            });
-			        }
-			    }
-			};
+			
 		};
 
 		vm.CriarNovoGasto = function () {
@@ -63,6 +42,8 @@
 		            var posicao = vm.ListaDados.indexOf(itemForDelete);
 		            vm.ListaDados.splice(posicao, 1);
 		            Error.showError('success', $translate.instant("Sucesso"), data.Mensagens[0].Mensagem, true);
+		            SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'G', itemForDelete.Identificador, false);
+
 		        }
 		        else {
 		            var Mensagens = new Array();

@@ -164,34 +164,62 @@ namespace CV.Mobile.ViewModels
 
         private async Task CarregarListaCidades()
         {
-            using (ApiService srv = new ApiService())
+            List<Cidade> Dados = new List<Cidade>();
+            if (Conectado)
             {
-                var Dados = await srv.ListarCidadeViagemAerea();
-                ListaCidades = new ObservableCollection<Cidade>(Dados);
-                OnPropertyChanged("ListaCidades");
+                using (ApiService srv = new ApiService())
+                {
+                    Dados = await srv.ListarCidadeViagemAerea();
+                }
             }
+            else
+            {
+                Dados = await DatabaseService.Database.ListarCidade_Tipo("V");
+            }
+            ListaCidades = new ObservableCollection<Cidade>(Dados);
+            OnPropertyChanged("ListaCidades");
+
         }
-      
+
 
         private async Task CarregarListaDados()
         {
-            using (ApiService srv = new ApiService())
+            List<ViagemAerea> Dados = new List<ViagemAerea>();
+            if (Conectado)
             {
-                var Dados = await srv.ListarViagemAerea(ItemCriterioBusca);
-                ListaDados = new ObservableCollection<ViagemAerea>(Dados);
-                OnPropertyChanged("ListaDados");
+                using (ApiService srv = new ApiService())
+                {
+                     Dados = await srv.ListarViagemAerea(ItemCriterioBusca);
+
+                }
             }
+            else
+            {
+                Dados = await DatabaseService.Database.ListarViagemAerea(ItemCriterioBusca);
+            }
+            ListaDados = new ObservableCollection<ViagemAerea>(Dados);
+            OnPropertyChanged("ListaDados");
             IsLoadingLista = false;
         }
 
         private async Task VerificarAcaoItem(ItemTappedEventArgs itemSelecionado)
         {
-            using (ApiService srv = new ApiService())
+            ViagemAerea ItemViagemAerea = null;
+            if (Conectado)
             {
-                var ItemViagemAerea = await srv.CarregarViagemAerea(((ViagemAerea)itemSelecionado.Item).Identificador);
-                var Pagina = new EdicaoViagemAereaPage() { BindingContext = new EdicaoViagemAereaViewModel(ItemViagemAerea,ItemViagem) };
-                await PushAsync(Pagina);
+                using (ApiService srv = new ApiService())
+                {
+                    ItemViagemAerea = await srv.CarregarViagemAerea(((ViagemAerea)itemSelecionado.Item).Identificador);
+
+                }
             }
+            else
+            {
+                ItemViagemAerea = await DatabaseService.CarregarViagemAerea(((ViagemAerea)itemSelecionado.Item).Identificador);
+
+            }
+            var Pagina = new EdicaoViagemAereaPage() { BindingContext = new EdicaoViagemAereaViewModel(ItemViagemAerea, ItemViagem) };
+            await PushAsync(Pagina);
         }
         private async Task Adicionar()
         {

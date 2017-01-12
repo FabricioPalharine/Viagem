@@ -63,7 +63,8 @@ namespace CV.UI.Web.Controllers.WebAPI
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
-
+            if (itemResultado.Sucesso)
+                itemResultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = MensagemBusiness.RetornaMensagens("Viagem_ExcluirCotacaoMoeda_OK") } };
             return itemResultado;
         }
     }

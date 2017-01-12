@@ -93,7 +93,7 @@ namespace CV.Mobile.ViewModels
                     {
                         await DatabaseService.ExcluirGastoCompra(obj.Identificador, false);
 
-                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Gasto excluído com sucesso " } };
+                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Compra excluída com sucesso " } };
 
                     }
 

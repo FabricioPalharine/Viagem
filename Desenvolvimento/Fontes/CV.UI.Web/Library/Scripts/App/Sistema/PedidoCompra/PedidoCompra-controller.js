@@ -2,9 +2,9 @@
 	'use strict';
 	angular
 		.module('Sistema')
-		.controller('PedidoCompraCtrl', ['$uibModal', 'Error', '$timeout', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', '$window', 'i18nService', 'Usuario', 'Viagem', 'ListaCompra', PedidoCompraCtrl]);
+		.controller('PedidoCompraCtrl', ['$uibModal', 'Error', '$timeout', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', '$window', 'i18nService', 'Usuario', 'Viagem', 'ListaCompra','SignalR', PedidoCompraCtrl]);
 
-	function PedidoCompraCtrl($uibModal, Error, $timeout, $state, $translate, $scope, Auth, $rootScope, $stateParams, $window, i18nService, Usuario, Viagem, ListaCompra) {
+	function PedidoCompraCtrl($uibModal, Error, $timeout, $state, $translate, $scope, Auth, $rootScope, $stateParams, $window, i18nService, Usuario, Viagem, ListaCompra,SignalR) {
 		var vm = this;
 		vm.filtro = {  Index: 0, Count: 0 };
 		vm.filtroAtualizacao = { Index: 0, Count: 0 };
@@ -36,6 +36,8 @@
 				if (data.Sucesso) {
 					vm.CarregarDadosWebApi(vm.pagingOptions.pageSize, vm.pagingOptions.currentPage);
 					Error.showError('success', $translate.instant("Sucesso"), data.Mensagens[0].Mensagem, true);
+					SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'LC', itemForDelete.Identificador, false);
+
 				}
 				else {
 					var Mensagens = new Array();

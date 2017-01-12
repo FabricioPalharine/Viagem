@@ -2,9 +2,9 @@
     'use strict';
     angular
 		.module('Sistema')
-		.controller('ItemCompraEditCtrl', ['$uibModalInstance', 'Error', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', 'Loja', 'EscopoAtualizacao', 'ItemItemCompra','ItemGastoCompra', 'Viagem', '$uibModal', 'Usuario','ListaCompra', ItemCompraEditCtrl]);
+		.controller('ItemCompraEditCtrl', ['$uibModalInstance', 'Error', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', 'Loja', 'EscopoAtualizacao', 'ItemItemCompra','ItemGastoCompra', 'Viagem', '$uibModal', 'Usuario','ListaCompra','SignalR', ItemCompraEditCtrl]);
 
-    function ItemCompraEditCtrl($uibModalInstance, Error, $state, $translate, $scope, Auth, $rootScope, $stateParams, Loja, EscopoAtualizacao, ItemItemCompra,ItemGastoCompra, Viagem, $uibModal, Usuario, ListaCompra) {
+    function ItemCompraEditCtrl($uibModalInstance, Error, $state, $translate, $scope, Auth, $rootScope, $stateParams, Loja, EscopoAtualizacao, ItemItemCompra,ItemGastoCompra, Viagem, $uibModal, Usuario, ListaCompra,SignalR) {
         var vm = this;
         vm.itemItemCompra = jQuery.extend({}, ItemItemCompra);
         vm.itemOriginal = ItemItemCompra;
@@ -17,6 +17,7 @@
         vm.itemListaCompra = {};
         vm.itemUsuario = {};
         vm.ListaUsuario = [];
+        vm.IdentificadorListaCompraOriginal = null;
 
         vm.CadastradoAmigo = false;
         vm.loading = false;
@@ -27,9 +28,10 @@
             {
                 vm.itemUsuario = { Identificador: vm.itemItemCompra.IdentificadorUsuario };
             }
-            if (vm.itemItemCompra.IdentificadorListaCompra)
+            if (vm.itemItemCompra.IdentificadorListaCompra) {
                 vm.itemListaCompra = { Identificador: vm.itemItemCompra.IdentificadorListaCompra };
-
+                vm.IdentificadorListaCompraOriginal = vm.itemItemCompra.IdentificadorListaCompra;
+            }
             ListaCompra.CarregarListaPedidos({ json: JSON.stringify({ IdentificadorParticipante: vm.ItemGastoCompra.ItemGasto.IdentificadorUsuario }) }, function (data) {
                 vm.ListaItensCompra = data;
             }, function (err) {
@@ -70,7 +72,7 @@
             vm.messages = [];
             vm.loading = true;
             vm.CamposInvalidos = {};            
-                             
+                           
             if (vm.CadastradoAmigo) {
                 if (vm.itemUsuario && vm.itemUsuario.Identificador)
                     vm.itemItemCompra.IdentificadorUsuario = vm.itemUsuario.Identificador;
@@ -89,6 +91,16 @@
             Loja.SalvarItemCompra(vm.itemItemCompra, function (data) {
                 vm.loading = false;
                 if (data.Sucesso) {
+                    if (vm.IdentificadorListaCompraOriginal != vm.itemItemCompra.IdentificadorListaCompra)
+                    {
+                        if (vm.IdentificadorListaCompraOriginal)
+                            SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'LC', vm.IdentificadorListaCompraOriginal, false);
+                        if (vm.itemItemCompra.IdentificadorListaCompra)
+                            SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'LC', vm.itemItemCompra.IdentificadorListaCompra, false);
+
+                    }
+                    SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'IC', data.IdentificadorRegistro, vm.itemItemCompra.Identificador == null);
+
                     vm.itemItemCompra.Identificador = data.IdentificadorRegistro;
                     vm.EscopoAtualizacao.AtualizarItemCompra(vm.itemOriginal, vm.itemItemCompra);
                     vm.close();

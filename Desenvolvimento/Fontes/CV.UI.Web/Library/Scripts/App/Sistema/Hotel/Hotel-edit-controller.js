@@ -296,6 +296,8 @@
 		    $scope.$parent.itemHotel.modalPopupTrigger(itemCusto, $translate.instant('MensagemExclusao'), $translate.instant('Sim'), $translate.instant('Nao'), function () {
 		        itemCusto.DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
 		        Gasto.SalvarCustoHotel(itemCusto);
+		        SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'CH', itemCusto.Identificador, false);
+
 		    });
 
 		};
@@ -578,6 +580,8 @@
 		    $scope.$parent.itemHotel.modalPopupTrigger(itemEvento, $translate.instant('MensagemExclusao'), $translate.instant('Sim'), $translate.instant('Nao'), function () {
 		        itemEvento.DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
 		        Hotel.SalvarHotelEvento(itemEvento);
+		        SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'HE', itemEvento.Identificador, false);
+
 		    });
 		};
         
@@ -638,8 +642,11 @@
 		    Hotel.SalvarHotelEvento(itemEvento, function (data) {
                 vm.loading = false;
                 if (data.Sucesso) {
-                    if (!itemEvento.Identificador)
+                    if (!itemEvento.Identificador) {
                         itemEvento.Identificador = data.IdentificadorRegistro;
+                        SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'HE', itemEvento.Identificador, false);
+
+                    }
                     itemEvento.Edicao = false;
                     itemEvento.Original = null;
                 } else {
@@ -788,6 +795,8 @@
 		            if (data.Sucesso) {
 		                var itemPush = { Identificador: data.IdentificadorRegistro, ItemGasto: itemCusto };
 		                vm.itemHotel.Gastos.push(itemPush);
+		                SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'CH', data.IdentificadorRegistro, false);
+
 		            }
 		            $uibModalInstance.close();
 		        });

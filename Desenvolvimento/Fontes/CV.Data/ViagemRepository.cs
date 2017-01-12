@@ -1110,8 +1110,8 @@ namespace CV.Data
 			}
 			public ItemCompra SelecionarItemCompra (int? Identificador)
 			{
-			IQueryable<ItemCompra> query =	 Context.ItemCompras
-;
+            IQueryable<ItemCompra> query = Context.ItemCompras.Include("ItemUsuario");
+
 					if (Identificador.HasValue)
 					query = query.Where(d=>d.Identificador == Identificador);
 					return query.FirstOrDefault();

@@ -2,9 +2,9 @@
     'use strict';
     angular
 		.module('Sistema')
-		.controller('ReabastecimentoEditCtrl', ['$uibModalInstance', 'Error', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', 'Carro',  'Reabastecimento', 'EscopoAtualizacao', 'Viagem', '$uibModal', ReabastecimentoEditCtrl]);
+		.controller('ReabastecimentoEditCtrl', ['$uibModalInstance', 'Error', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', 'Carro',  'Reabastecimento', 'EscopoAtualizacao', 'Viagem', '$uibModal','SignalR', ReabastecimentoEditCtrl]);
 
-    function ReabastecimentoEditCtrl($uibModalInstance, Error, $state, $translate, $scope, Auth, $rootScope, $stateParams, Carro, Reabastecimento, EscopoAtualizacao, Viagem, $uibModal) {
+    function ReabastecimentoEditCtrl($uibModalInstance, Error, $state, $translate, $scope, Auth, $rootScope, $stateParams, Carro, Reabastecimento, EscopoAtualizacao, Viagem, $uibModal,SignalR) {
         var vm = this;
 
         vm.EscopoAtualizacao = EscopoAtualizacao;
@@ -32,9 +32,12 @@
             Reabastecimento.save(vm.itemReabastecimento, function (data) {
                 vm.loading = false;
                 if (data.Sucesso) {
+                    SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'R', data.IdentificadorRegistro, vm.itemReabastecimento.Identificador == null);
                     vm.itemReabastecimento.Identificador = data.IdentificadorRegistro;
                     vm.EscopoAtualizacao.AtualizarReabastecimento(vm.itemReabastecimento);
                     vm.close();
+                   
+
                 } else {
                     vm.messages = data.Mensagens;
                     vm.verificaCampoInvalido();

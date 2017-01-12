@@ -28,28 +28,6 @@
 		    });
 		    vm.CarregarDadosWebApi( vm.AjustarDadosPagina);
 
-		    SignalR.AvisarAlertaAtualizacao = function (TipoAtualizacao, Identificador, Inclusao) {
-		        if (TipoAtualizacao == "H") {
-		            var itemPesquisa = { Index: 0, Count: 1, Identificador: Identificador };
-
-		            var itens = $.grep(vm.ListaDados, function (e) { return e.Identificador == Identificador; });
-		            if (itens.length == 0 && Inclusao ) {
-		                Hotel.list({ json: JSON.stringify(itemPesquisa) }, function (data) {
-		                    vm.ListaDados.unshift(data.Lista[0]);
-		                }, function (err) {
-		                    Error.showError('error', 'Ops!', $translate.instant('ErroRequisicao'), true);
-		                });
-		            }
-		            else if (itens.length > 0) {
-		                var Posicao = vm.ListaDados.indexOf(itens[0]);
-		                Hotel.list({ json: JSON.stringify(itemPesquisa) }, function (data) {
-		                    vm.ListaDados.splice(Posicao, 1, data.Lista[0]);
-		                }, function (err) {
-		                    Error.showError('error', 'Ops!', $translate.instant('ErroRequisicao'), true);
-		                });
-		            }
-		        }
-		    };
 		};
 
 		vm.Excluir = function (itemForDelete) {
@@ -58,6 +36,8 @@
 		        if (data.Sucesso) {
 		            var posicao = vm.ListaDados.indexOf(itemForDelete);
 		            vm.ListaDados.splice(posicao, 1);
+		            SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'H', itemForDelete.Identificador, false);
+
 		            Error.showError('success', $translate.instant("Sucesso"), data.Mensagens[0].Mensagem, true);
 		        }
 		        else {

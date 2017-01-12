@@ -76,7 +76,8 @@ namespace CV.UI.Web.Controllers.WebAPI
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
-
+            if (itemResultado.Sucesso)
+                itemResultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = MensagemBusiness.RetornaMensagens("Viagem_ExcluirHotel_OK") } };
             return itemResultado;
         }
 
@@ -103,6 +104,9 @@ namespace CV.UI.Web.Controllers.WebAPI
             if (itemResultado.Sucesso)
             {
                 itemResultado.IdentificadorRegistro = itemEvento.Identificador;
+                if (itemEvento.DataExclusao.HasValue)
+                    itemResultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = MensagemBusiness.RetornaMensagens("Viagem_ExcluirHotelEvento_OK") } };
+
             }
             return itemResultado;
         }

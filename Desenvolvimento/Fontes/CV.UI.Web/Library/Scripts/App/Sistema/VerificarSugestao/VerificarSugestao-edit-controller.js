@@ -49,6 +49,7 @@
                     Error.showError('success', $translate.instant("Sucesso"), data.Mensagens[0].Mensagem, true);
                     vm.itemSugestao.Identificador = data.IdentificadorRegistro;
                     SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'CP', data.IdentificadorRegistro, true);
+                    SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'S', vm.itemSugestao.Identificador, false);
 
                     vm.close();
                 } else {
