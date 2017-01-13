@@ -201,6 +201,7 @@ namespace CV.Mobile.ViewModels
             SalvarCommand.ChangeCanExecute();
             try
             {
+                ItemAvaliacao.DataAtualizacao = DateTime.Now.ToUniversalTime();
                 var itemAvaliacaoAtual = ItemLoja.Avaliacoes.Where(d => d.IdentificadorUsuario == ItemUsuarioLogado.Codigo).FirstOrDefault();
 
                 if (ItemAvaliacao.Nota.HasValue || !string.IsNullOrWhiteSpace(ItemAvaliacao.Comentario))

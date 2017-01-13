@@ -58,7 +58,7 @@ namespace CV.Mobile.ViewModels
 
                 ControleSincronizacao itemCS = new ControleSincronizacao();
                 itemCS.IdentificadorViagem = itemViagem.Identificador;
-                itemCS.SincronizadoEnvio = true;
+                itemCS.SincronizadoEnvio = false;
                 itemCS.UltimaDataEnvio = DateTime.Now.ToUniversalTime();
                 itemCS.UltimaDataRecepcao = new DateTime(1900, 01, 01);
                 await DatabaseService.Database.SalvarControleSincronizacao(itemCS);
@@ -132,6 +132,11 @@ namespace CV.Mobile.ViewModels
                 else
                     return null;
             }
+        }
+
+        public async Task SincronizarDados(bool exibeAlerta)
+        {
+            await (((MasterDetailPage)Application.Current?.MainPage).BindingContext as MasterDetailViewModel).SincronizarDados(exibeAlerta);
         }
 
         #region SignalR

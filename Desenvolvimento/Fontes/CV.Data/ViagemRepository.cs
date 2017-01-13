@@ -1568,6 +1568,7 @@ namespace CV.Data
 			}
 			public void SalvarViagemAerea (ViagemAerea itemGravar)
 			{
+            Dictionary<ViagemAereaAeroporto, ViagemAereaAeroporto> DeParaCodigos = new Dictionary<ViagemAereaAeroporto, ViagemAereaAeroporto>();
 				ViagemAerea itemBase =  Context.ViagemAereas
 .Include("Aeroportos").Include("Avaliacoes")				.Where(f=>f.Identificador == itemGravar.Identificador).FirstOrDefault();
 				if (itemBase == null)
@@ -1585,16 +1586,17 @@ namespace CV.Data
 						Context.Entry<ViagemAereaAeroporto>(itemViagemAereaAeroporto).State = EntityState.Deleted;
 					}
 				}
-				foreach (ViagemAereaAeroporto itemViagemAereaAeroporto in new List<ViagemAereaAeroporto>( itemGravar.Aeroportos))
-				{
-				ViagemAereaAeroporto itemBaseViagemAereaAeroporto = !itemViagemAereaAeroporto.Identificador.HasValue?null: itemBase.Aeroportos.Where(f=>f.Identificador == itemViagemAereaAeroporto.Identificador).FirstOrDefault();
-				if (itemBaseViagemAereaAeroporto == null)
-				{
-				itemBaseViagemAereaAeroporto = Context.ViagemAereaAeroportos.Create();
- 			itemBase.Aeroportos.Add(itemBaseViagemAereaAeroporto);
-				}
- 			AtualizarPropriedades<ViagemAereaAeroporto>(itemBaseViagemAereaAeroporto, itemViagemAereaAeroporto);
-				}
+            foreach (ViagemAereaAeroporto itemViagemAereaAeroporto in new List<ViagemAereaAeroporto>(itemGravar.Aeroportos))
+            {
+                ViagemAereaAeroporto itemBaseViagemAereaAeroporto = !itemViagemAereaAeroporto.Identificador.HasValue ? null : itemBase.Aeroportos.Where(f => f.Identificador == itemViagemAereaAeroporto.Identificador).FirstOrDefault();
+                if (itemBaseViagemAereaAeroporto == null)
+                {
+                    itemBaseViagemAereaAeroporto = Context.ViagemAereaAeroportos.Create();
+                    itemBase.Aeroportos.Add(itemBaseViagemAereaAeroporto);
+                }
+                AtualizarPropriedades<ViagemAereaAeroporto>(itemBaseViagemAereaAeroporto, itemViagemAereaAeroporto);
+                DeParaCodigos.Add(itemViagemAereaAeroporto, itemBaseViagemAereaAeroporto);
+            }
 				foreach (AvaliacaoAerea itemAvaliacaoAerea in new List<AvaliacaoAerea>( itemBase.Avaliacoes))
 				{
 					if (!itemGravar.Avaliacoes.Where(f=>f.Identificador == itemAvaliacaoAerea.Identificador).Any())
@@ -1614,6 +1616,8 @@ namespace CV.Data
 				}
 			Context.SaveChanges();
 				itemGravar.Identificador = itemBase.Identificador;
+            foreach (var ParDados in DeParaCodigos)
+                ParDados.Key.Identificador = ParDados.Value.Identificador;
 			}
 			public void ExcluirViagemAerea (ViagemAerea itemGravar)
 			{

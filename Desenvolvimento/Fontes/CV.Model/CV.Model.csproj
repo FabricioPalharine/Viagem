@@ -62,6 +62,7 @@
     <Compile Include="Dominio\enumTipoTransporte.cs" />
     <Compile Include="pAgendarSugestao.cs" />
     <Compile Include="pClasseSincronizacao.cs" />
+    <Compile Include="pDeParaIdentificador.cs" />
     <Compile Include="pManutencaoCidadeGrupo.cs" />
     <Compile Include="UploadFoto.cs" />
     <Compile Include="pItemLista.cs" />

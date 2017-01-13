@@ -113,6 +113,8 @@ namespace CV.Mobile.Models
                 _Atualizado = value;
             }
         }
+
+        public int? IdentificadorUsuario { get; set; }
         public Comentario Clone()
         {
             return (Comentario)this.MemberwiseClone();

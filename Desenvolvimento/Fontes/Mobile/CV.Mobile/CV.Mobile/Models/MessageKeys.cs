@@ -45,5 +45,7 @@ namespace CV.Mobile.Models
         public const string TrocarPosicaoVA = "TrocarPosicaoVA";
         public const string MensagemModalConfirmada = "MensagemModalConfirmada";
         public const string ManutencaoCalendarioPrevisto = "ManutencaoCalendarioPrevisto";
+
+        public const string AtualizarConsulta = "AtualizarConsulta";
     }
 }

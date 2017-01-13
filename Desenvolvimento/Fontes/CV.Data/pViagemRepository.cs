@@ -414,6 +414,22 @@ namespace CV.Data
 
         #endregion
 
+
+        public void SalvarAtracaoSimples(Atracao itemGravar)
+        {
+            Atracao itemBase = Context.Atracoes.Where(f => f.Identificador == itemGravar.Identificador).FirstOrDefault();
+            if (itemBase == null)
+            {
+                itemBase = Context.Atracoes.Create();
+                itemBase.Avaliacoes = new List<AvaliacaoAtracao>();
+                Context.Entry<Atracao>(itemBase).State = System.Data.Entity.EntityState.Added;
+            }
+            AtualizarPropriedades<Atracao>(itemBase, itemGravar);
+        
+            Context.SaveChanges();
+            itemGravar.Identificador = itemBase.Identificador;
+        }
+
         public List<Usuario> ListarUsuario(Expression<Func<Usuario, bool>> predicate)
         {
             return Context.Usuarios.Where(predicate).ToList();

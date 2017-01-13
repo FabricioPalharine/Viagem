@@ -127,18 +127,26 @@ namespace CV.Mobile.ViewModels
                     await DatabaseService.Database.SalvarControleSincronizacao(itemControle);
                 }
             }
+            bool ConectadoAnterior = _ConectadoPrincipal;
             _ConectadoPrincipal = Conectado;
             if (VerificarSincronizacao)
             {
                 VerificarEnvioFotos();
                 VerificarEnvioVideos();
-                VerificarSincronizacaoDados();
+                if (!ConectadoAnterior)
+                    VerificarSincronizacaoDados();
             }
         }
 
         public async void VerificarSincronizacaoDados()
         {
-            await Task.Delay(100);
+            if (CrossConnectivity.Current.IsConnected && Settings.ModoSincronizacao != "3" &&
+         (Settings.ModoSincronizacao == "1" || CrossConnectivity.Current.ConnectionTypes.Contains(Plugin.Connectivity.Abstractions.ConnectionType.Desktop) ||
+                 CrossConnectivity.Current.ConnectionTypes.Contains(Plugin.Connectivity.Abstractions.ConnectionType.Wimax) ||
+                 CrossConnectivity.Current.ConnectionTypes.Contains(Plugin.Connectivity.Abstractions.ConnectionType.WiFi)))
+            {
+                await SincronizarDados(false);
+            }
         }
 
         public async void VerificarEnvioVideos()
@@ -500,8 +508,9 @@ namespace CV.Mobile.ViewModels
             if (cvHubConnection.State != ConnectionState.Connected)
             {
                 cvHubProxy = cvHubConnection.CreateHubProxy("Viagem");
-                cvHubProxy.On<string, int, bool>("avisarAlertaAtualizacao", (Tipo, Identificador, Inclusao) =>
+                cvHubProxy.On<string, int, bool>("avisarAlertaAtualizacao",  (Tipo, Identificador, Inclusao) =>
                 {
+                     VerificarAcaoAlteracao(Tipo, Identificador);
                 });
 
                 cvHubProxy.On<AlertaUsuario>("enviarAlertaRequisicao", (itemAlerta) =>
@@ -511,6 +520,16 @@ namespace CV.Mobile.ViewModels
                 await ConectarUsuario(ItemUsuario.Codigo);
             }
         }
+
+        private async void VerificarAcaoAlteracao(string tipo, int identificador)
+        {
+            if (ItemViagem.Edicao)
+            {
+                await DatabaseService.AtualizarBancoRecepcaoAcao(tipo, identificador, ItemUsuario);
+            }
+            MessagingService.Current.SendMessage<AtualizacaoConsulta>(MessageKeys.AtualizarConsulta, new AtualizacaoConsulta() { Identificador = identificador, Tipo = tipo }); ;
+        }
+
         public async Task ConectarUsuario(int IdentificadorUsuario)
         {
             if ( cvHubConnection.State == ConnectionState.Connected )
@@ -565,6 +584,43 @@ namespace CV.Mobile.ViewModels
                 cvHubConnection.Stop();
         }
 
+        public async Task SincronizarDados(bool exibeAlerta)
+        {
+            using (ApiService srv = new ApiService())
+            {
+                if (CrossConnectivity.Current.IsConnected && await srv.VerificarOnLine())
+                {
+
+                    var itemCS = await DatabaseService.Database.GetControleSincronizacaoAsync();
+                    var DataSincronizacao =DateTime.Now.ToUniversalTime();
+                    var DadosSincronizar = await srv.RetornarAtualizacoes(new CriterioBusca() { DataInicioDe = itemCS.UltimaDataRecepcao });
+                    
+                    await DatabaseService.SincronizarDadosServidorLocal(itemCS, DadosSincronizar, ItemUsuario, DataSincronizacao);
+                    var itemEnvio = await DatabaseService.CarregarDadosEnvioSincronizar();
+                    var resultadoSincronizacao = await srv.SincronizarDados(itemEnvio);
+                    itemCS.UltimaDataEnvio = DateTime.Now.ToUniversalTime();
+                    await DatabaseService.AjustarDePara(itemEnvio, resultadoSincronizacao, itemCS);
+                    if (exibeAlerta)
+                    {
+                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        {
+                            Title = "Sincronização",
+                            Message = "Dados Sincronizados com o servidor",
+                            Cancel = "OK"
+                        });
+                    }
+                }
+                else
+                {
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Conexão Off-Line",
+                        Message = "Essa funcionalidade necessita que a conexão esteja com acesso a internet",
+                        Cancel = "OK"
+                    });
+                }
+            }
+        }
 
     }
 }

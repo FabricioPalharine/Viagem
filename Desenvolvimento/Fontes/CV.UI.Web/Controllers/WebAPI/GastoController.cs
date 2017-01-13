@@ -55,6 +55,7 @@ namespace CV.UI.Web.Controllers.WebAPI
                 item.ItemGasto = null;
             return itemGasto;
         }
+
         [Authorize]
         public ResultadoOperacao Post([FromBody] Gasto itemGasto)
         {
@@ -193,6 +194,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             return itemResultado;
         }
 
+        [Authorize]
 
         [HttpPost]
         [ActionName("SalvarCustoViagemAerea")]
@@ -217,6 +219,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             return itemResultado;
         }
 
+        [Authorize]
 
         [HttpPost]
         [ActionName("SalvarCustoCarro")]
@@ -239,6 +242,63 @@ namespace CV.UI.Web.Controllers.WebAPI
                 }
             }
             return itemResultado;
+        }
+
+        [HttpGet]
+        [Authorize]
+        [ActionName("getGastoAtracao")]
+        public GastoAtracao getGastoAtracao (int Identificador)
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            return biz.SelecionarGastoAtracao(Identificador);
+        }
+
+        [HttpGet]
+        [Authorize]
+        [ActionName("getGastoHotel")]
+        public GastoHotel getGastoHotel(int Identificador)
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            return biz.SelecionarGastoHotel(Identificador);
+        }
+
+        [HttpGet]
+        [Authorize]
+        [ActionName("getGastoRefeicao")]
+        public GastoRefeicao getGastoRefeicao(int Identificador)
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            return biz.SelecionarGastoRefeicao(Identificador);
+        }
+
+        [HttpGet]
+        [Authorize]
+        [ActionName("getGastoViagemAerea")]
+        public GastoViagemAerea getGastoViagemAerea(int Identificador)
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            return biz.SelecionarGastoViagemAerea(Identificador);
+        }
+
+        [HttpGet]
+        [Authorize]
+        [ActionName("getAluguelGasto")]
+        public AluguelGasto getAluguelGasto(int Identificador)
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            return biz.SelecionarAluguelGasto(Identificador);
+        }
+
+        [HttpGet]
+        [Authorize]
+        [ActionName("getGastoCompra")]
+        public GastoCompra getGastoCompra(int Identificador)
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            var item = biz.SelecionarGastoCompra(Identificador);
+            item.ItemGasto.Compras = null;
+            item.ItensComprados = null;
+            return item;
         }
     }
 }

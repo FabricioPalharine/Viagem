@@ -1441,6 +1441,22 @@ namespace CV.Mobile.Services
             return itemResultado;
         }
 
+        public async Task<HotelEvento> CarregarHotelEvento(int? Identificador)
+        {
+            var itemRefeicao = new HotelEvento();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Hotel/getHotelEvento/", Identificador.GetValueOrDefault(0)));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                itemRefeicao = JsonConvert.DeserializeObject<HotelEvento>(resultado);
+
+            }
+
+            return itemRefeicao;
+        }
+
         public async Task<List<Refeicao>> ListarRefeicao(CriterioBusca criterioBusca)
         {
             var ListaAmigos = new List<Refeicao>();
@@ -2149,6 +2165,125 @@ namespace CV.Mobile.Services
             }
 
             return itemRetorno;
+        }
+
+        public async Task<List<DeParaIdentificador>> SincronizarDados(ClasseSincronizacao itemSincronizar)
+        {
+            List<DeParaIdentificador> itemResultado = new List<DeParaIdentificador>();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Sincronizacao/SincronizarDados"));
+            var json = JsonConvert.SerializeObject(itemSincronizar, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            });
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = null;
+            response = await client.PostAsync(uri, content);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                itemResultado = JsonConvert.DeserializeObject<List<DeParaIdentificador>>(resultado);
+            }
+
+
+            return itemResultado;
+        }
+
+        public async Task<GastoAtracao> CarregarGastoAtracao(int? Identificador)
+        {
+            var itemRefeicao = new GastoAtracao();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Gasto/getGastoAtracao/", Identificador.GetValueOrDefault(0)));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                itemRefeicao = JsonConvert.DeserializeObject<GastoAtracao>(resultado);
+
+            }
+
+            return itemRefeicao;
+        }
+
+        public async Task<GastoHotel> CarregarGastoHotel(int? Identificador)
+        {
+            var itemRefeicao = new GastoHotel();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Gasto/getGastoHotel/", Identificador.GetValueOrDefault(0)));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                itemRefeicao = JsonConvert.DeserializeObject<GastoHotel>(resultado);
+
+            }
+
+            return itemRefeicao;
+        }
+
+        public async Task<GastoCompra> CarregarGastoCompra(int? Identificador)
+        {
+            var itemRefeicao = new GastoCompra();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Gasto/getGastoCompra/", Identificador.GetValueOrDefault(0)));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                itemRefeicao = JsonConvert.DeserializeObject<GastoCompra>(resultado);
+
+            }
+
+            return itemRefeicao;
+        }
+
+        public async Task<GastoRefeicao> CarregarGastoRefeicao(int? Identificador)
+        {
+            var itemRefeicao = new GastoRefeicao();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Gasto/getGastoRefeicao/", Identificador.GetValueOrDefault(0)));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                itemRefeicao = JsonConvert.DeserializeObject<GastoRefeicao>(resultado);
+
+            }
+
+            return itemRefeicao;
+        }
+
+        public async Task<GastoViagemAerea> CarregarGastoViagemAerea(int? Identificador)
+        {
+            var itemRefeicao = new GastoViagemAerea();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Gasto/getGastoViagemAerea/", Identificador.GetValueOrDefault(0)));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                itemRefeicao = JsonConvert.DeserializeObject<GastoViagemAerea>(resultado);
+
+            }
+
+            return itemRefeicao;
+        }
+
+        public async Task<AluguelGasto> CarregarAluguelGasto(int? Identificador)
+        {
+            var itemRefeicao = new AluguelGasto();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Gasto/getAluguelGasto/", Identificador.GetValueOrDefault(0)));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                itemRefeicao = JsonConvert.DeserializeObject<AluguelGasto>(resultado);
+
+            }
+
+            return itemRefeicao;
         }
     }
 }

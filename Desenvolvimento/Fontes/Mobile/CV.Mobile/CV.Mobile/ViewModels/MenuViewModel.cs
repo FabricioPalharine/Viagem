@@ -301,6 +301,15 @@ namespace CV.Mobile.ViewModels
                 ApenasParticipante = true,
                 ViagemAberta = true
             });
+            ItensMenuCompleto.Add(new ItemMenu
+            {
+                Codigo = 22,
+                Title = "Sincronizar Dados",
+                IconSource = "Dados.png",
+                Visible = false,
+                ApenasParticipante = true,
+                ViagemAberta = true
+            });
 
         }
 
@@ -393,6 +402,10 @@ namespace CV.Mobile.ViewModels
                 {
                     await TrocarControleGPS();
                 }
+                else if (_ItemMenuSelecionado.Codigo == 21)
+                {
+                    await SincronizarDados(true);
+                }
                 else
                 {
                     Page pagina = new Page();
@@ -401,6 +414,8 @@ namespace CV.Mobile.ViewModels
                 ItemSelecionado = null;
             }
         }
+
+       
 
         private async Task AbrirCalendarioPrevisto()
         {

@@ -70,6 +70,7 @@
     <Compile Include="Models\AlertaUsuario.cs" />
     <Compile Include="Models\Amigo.cs" />
     <Compile Include="Models\AporteDinheiro.cs" />
+    <Compile Include="Models\AtualizacaoConsulta.cs" />
     <Compile Include="Models\CalendarioPrevisto.cs" />
     <Compile Include="Models\Carro.cs" />
     <Compile Include="Models\CarroDeslocamento.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Models\ClasseSincronizacao.cs" />
     <Compile Include="Models\Comentario.cs" />
     <Compile Include="Models\CotacaoMoeda.cs" />
+    <Compile Include="Models\DeParaIdentificador.cs" />
     <Compile Include="Models\FotoRefeicao.cs" />
     <Compile Include="Models\FotoHotel.cs" />
     <Compile Include="Models\FotoAtracao.cs" />

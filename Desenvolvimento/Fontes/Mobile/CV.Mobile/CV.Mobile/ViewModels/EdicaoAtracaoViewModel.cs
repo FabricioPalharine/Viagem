@@ -400,6 +400,7 @@ namespace CV.Mobile.ViewModels
             SalvarCommand.ChangeCanExecute();
             try
             {
+                ItemAvaliacao.DataAtualizacao = DateTime.Now.ToUniversalTime();
                 foreach (Usuario itemUsuario in Participantes)
                 {
                     if (itemUsuario.Selecionado)
@@ -415,6 +416,7 @@ namespace CV.Mobile.ViewModels
                             itemNovaAvaliacao.DataAtualizacao = DateTime.Now.ToUniversalTime();
                             ItemAtracao.Avaliacoes.Add(itemNovaAvaliacao);
                         }
+                        
                     }
                     else
                     {

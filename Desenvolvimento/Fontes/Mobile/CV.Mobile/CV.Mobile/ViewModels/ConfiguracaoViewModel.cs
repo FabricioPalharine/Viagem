@@ -15,7 +15,7 @@ namespace CV.Mobile.ViewModels
         public ObservableRangeCollection<ItemLista> TiposAtualizacao { get; set; }
         public ObservableRangeCollection<ItemLista> ListaTipoOnline { get; set; }
 
-        public string SincronizarDados { get; set; }
+        public new string SincronizarDados { get; set; }
         public string EnviarImagens { get; set; }
         public string EnviarVideos { get; set; }
         public string ManterOnline { get; set; }

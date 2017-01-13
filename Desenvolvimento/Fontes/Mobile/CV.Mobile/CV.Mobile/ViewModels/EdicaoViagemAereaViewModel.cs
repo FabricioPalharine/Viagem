@@ -371,6 +371,7 @@ namespace CV.Mobile.ViewModels
             SalvarCommand.ChangeCanExecute();
             try
             {
+                ItemAvaliacao.DataAtualizacao = DateTime.Now.ToUniversalTime();
                 foreach (Usuario itemUsuario in Participantes)
                 {
                     if (itemUsuario.Selecionado)

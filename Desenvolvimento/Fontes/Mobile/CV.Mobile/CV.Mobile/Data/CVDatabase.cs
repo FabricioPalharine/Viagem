@@ -155,6 +155,16 @@ namespace CV.Mobile.Data
 
         }
 
+        public async Task ExcluirCidades()
+        {
+            await database.ExecuteAsync("Delete from Cidade");
+        }
+
+        public async Task IncluirCidades(List<Cidade> ListaCidades)
+        {
+            await database.InsertAllAsync(ListaCidades);
+        }
+
         public async Task<Usuario> CarregarUsuario(int Id)
         {
             return await database.Table<Usuario>().Where(d => d.Identificador == Id).FirstOrDefaultAsync();
@@ -281,6 +291,11 @@ namespace CV.Mobile.Data
             await database.DeleteAsync(itemComentario);
         }
 
+
+        public async Task ExcluirSugestao(Sugestao item)
+        {
+            await database.DeleteAsync(item);
+        }
         public async Task<Comentario> RetornarComentario(int? Identificador)
         {
             return await database.Table<Comentario>().Where(d => d.Identificador == Identificador).FirstOrDefaultAsync();
@@ -321,6 +336,21 @@ namespace CV.Mobile.Data
         public async Task<List<UploadFoto>> ListarUploadFoto_Video(bool Video)
         {
             return await database.Table<UploadFoto>().Where(d => d.Video == Video).ToListAsync();
+        }
+
+        public async Task<List<UploadFoto>> ListarUploadFoto_IdentificadorRefeicao(int? IdentificadorRefeicao)
+        {
+            return await database.Table<UploadFoto>().Where(d => d.IdentificadorRefeicao == IdentificadorRefeicao).ToListAsync();
+        }
+
+        public async Task<List<UploadFoto>> ListarUploadFoto_IdentificadorHotel(int? IdentificadorHotel)
+        {
+            return await database.Table<UploadFoto>().Where(d => d.IdentificadorHotel == IdentificadorHotel).ToListAsync();
+        }
+
+        public async Task<List<UploadFoto>> ListarUploadFoto_IdentificadorAtracao(int? IdentificadorAtracao)
+        {
+            return await database.Table<UploadFoto>().Where(d => d.IdentificadorAtracao == IdentificadorAtracao).ToListAsync();
         }
 
         public async Task<List<Sugestao>> ListarSugestao(CriterioBusca itemBusca)
@@ -1126,7 +1156,7 @@ namespace CV.Mobile.Data
             await database.ExecuteAsync("Delete from ItemCompra Where IdentificadorGastoCompra = ?", identificador);
         }
 
-        public async Task ExcluirCarroDeslocamentoUsuario_IdentificadorCarroDeslocamento(int IdentificadorCarroDeslocamento)
+        public async Task ExcluirCarroDeslocamentoUsuario_IdentificadorCarroDeslocamento(int? IdentificadorCarroDeslocamento)
         {
             await database.ExecuteAsync("Delete from CarroDeslocamentoUsuario Where IdentificadorCarroDeslocamento = ?", IdentificadorCarroDeslocamento);
 
@@ -1494,5 +1524,192 @@ namespace CV.Mobile.Data
             return (await query.ToListAsync());//.Where(d => !d.DataExclusao.HasValue).ToList();
         }
 
+
+        internal async Task ExcluirAvaliacaoAtracao_IdentificadorAtracao(int? identificador)
+        {
+            await database.ExecuteAsync("Delete from AvaliacaoAtracao Where IdentificadorAtracao = ?", identificador);
+        }
+        public async Task IncluirAvaliacaoAtracao(List<AvaliacaoAtracao> Lista)
+        {
+            await database.InsertAllAsync(Lista);
+        }
+
+        internal async Task ExcluirAvaliacaoLoja_IdentificadorLoja(int? identificador)
+        {
+            await database.ExecuteAsync("Delete from AvaliacaoLoja Where IdentificadorLoja = ?", identificador);
+        }
+        public async Task IncluirAvaliacaoLoja(List<AvaliacaoLoja> Lista)
+        {
+            await database.InsertAllAsync(Lista);
+        }
+
+        internal async Task ExcluirHotelAvaliacao_IdentificadorHotel(int? identificador)
+        {
+            await database.ExecuteAsync("Delete from HotelAvaliacao Where IdentificadorHotel = ?", identificador);
+        }
+        public async Task IncluirHotelAvaliacao(List<HotelAvaliacao> Lista)
+        {
+            await database.InsertAllAsync(Lista);
+        }
+
+        internal async Task ExcluirAvaliacaoAluguel_IdentificadorCarro(int? identificador)
+        {
+            await database.ExecuteAsync("Delete from AvaliacaoAluguel Where IdentificadorCarro = ?", identificador);
+        }
+        public async Task IncluirAvaliacaoAluguel(List<AvaliacaoAluguel> Lista)
+        {
+            await database.InsertAllAsync(Lista);
+        }
+
+        internal async Task ExcluirRefeicaoPedido_IdentificadorRefeicao(int? identificador)
+        {
+            await database.ExecuteAsync("Delete from RefeicaoPedido Where IdentificadorRefeicao = ?", identificador);
+        }
+
+        public async Task IncluirRefeicaoPedido(List<RefeicaoPedido> Lista)
+        {
+            await database.InsertAllAsync(Lista);
+        }
+
+        internal async Task ExcluirAvaliacaoAerea_IdentificadorViagemAerea(int? identificador)
+        {
+            await database.ExecuteAsync("Delete from AvaliacaoAerea Where IdentificadorViagemAerea = ?", identificador);
+        }
+        public async Task IncluirAvaliacaoAerea(List<AvaliacaoAerea> Lista)
+        {
+            await database.InsertAllAsync(Lista);
+        }
+
+        internal async Task ExcluirViagemAereaAeroporto_IdentificadorViagemAerea(int? identificador)
+        {
+            await database.ExecuteAsync("Delete from ViagemAereaAeroporto Where IdentificadorViagemAerea = ?", identificador);
+        }
+        public async Task IncluirViagemAereaAeroporto(List<ViagemAereaAeroporto> Lista)
+        {
+            await database.InsertAllAsync(Lista);
+        }
+        public async Task IncluirGastoDividido(List<GastoDividido> Lista)
+        {
+            await database.InsertAllAsync(Lista);
+        }
+        public async Task IncluirCarroDeslocamentoUsuario(List<CarroDeslocamentoUsuario> Lista)
+        {
+            await database.InsertAllAsync(Lista);
+        }
+
+        public async Task<List<AporteDinheiro>> ListarAporteDinheiro_Pendente()
+        {
+            return await database.Table<AporteDinheiro>().Where(d => !d.AtualizadoBanco).ToListAsync();
+        }
+
+        public async Task<List<CotacaoMoeda>> ListarCotacaoMoeda_Pendente()
+        {
+            return await database.Table<CotacaoMoeda>().Where(d => !d.AtualizadoBanco).ToListAsync();
+        }
+
+        public async Task<List<Atracao>> ListarAtracao_Pendente()
+        {
+            return await database.Table<Atracao>().Where(d => !d.AtualizadoBanco).ToListAsync();
+        }
+
+        public async Task<List<Gasto>> ListarGasto_Pendente(List<int?> ListaIdentificadoresIgnorar)
+        {
+            return await database.Table<Gasto>().Where(d => !ListaIdentificadoresIgnorar.Contains(d.Identificador)).Where(d=>!d.ApenasBaixa).ToListAsync();
+        }
+
+        public async Task<List<CalendarioPrevisto>> ListarCalendarioPrevisto_Pendente()
+        {
+            return await database.Table<CalendarioPrevisto>().Where(d => !d.AtualizadoBanco).ToListAsync();
+        }
+
+        public async Task<List<Carro>> ListarCarro_Pendente()
+        {
+            return await database.Table<Carro>().Where(d => !d.AtualizadoBanco).ToListAsync();
+        }
+
+        public async Task<List<CarroDeslocamento>> ListarCarroDeslocamento_Pendente()
+        {
+            return await database.Table<CarroDeslocamento>().Where(d => !d.AtualizadoBanco).ToListAsync();
+        }
+
+        public async Task<List<Comentario>> ListarComentario_Pendente()
+        {
+            return await database.Table<Comentario>().Where(d => !d.AtualizadoBanco).ToListAsync();
+        }
+
+        public async Task<List<Reabastecimento>> ListarReabastecimento_Pendente()
+        {
+            return await database.Table<Reabastecimento>().Where(d => !d.AtualizadoBanco).ToListAsync();
+        }
+
+        public async Task<List<GastoCompra>> ListarGastoCompra_Pendente()
+        {
+            return await database.Table<GastoCompra>().Where(d => !d.AtualizadoBanco).ToListAsync();
+        }
+
+        public async Task<List<AluguelGasto>> ListarAluguelGasto_Pendente()
+        {
+            return await database.Table<AluguelGasto>().Where(d => !d.AtualizadoBanco).ToListAsync();
+        }
+
+        public async Task<List<GastoAtracao>> ListarGastoAtracao_Pendente()
+        {
+            return await database.Table<GastoAtracao>().Where(d => !d.AtualizadoBanco).ToListAsync();
+        }
+
+        public async Task<List<GastoHotel>> ListarGastoHotel_Pendente()
+        {
+            return await database.Table<GastoHotel>().Where(d => !d.AtualizadoBanco).ToListAsync();
+        }
+
+        public async Task<List<GastoRefeicao>> ListarGastoRefeicao_Pendente()
+        {
+            return await database.Table<GastoRefeicao>().Where(d => !d.AtualizadoBanco).ToListAsync();
+        }
+
+        public async Task<List<GastoViagemAerea>> ListarGastoViagemAerea_Pendente()
+        {
+            return await database.Table<GastoViagemAerea>().Where(d => !d.AtualizadoBanco).ToListAsync();
+        }
+
+        public async Task<List<ItemCompra>> ListarItemCompra_Pendente()
+        {
+            return await database.Table<ItemCompra>().Where(d => !d.AtualizadoBanco).ToListAsync();
+        }
+
+        public async Task<List<ListaCompra>> ListarListaCompra_Pendente()
+        {
+            return await database.Table<ListaCompra>().Where(d => !d.AtualizadoBanco).ToListAsync();
+        }
+
+        public async Task<List<Sugestao>> ListarSugestao_Pendente()
+        {
+            return await database.Table<Sugestao>().Where(d => !d.AtualizadoBanco).ToListAsync();
+        }
+
+        public async Task<List<ViagemAerea>> ListarViagemAerea_Pendente()
+        {
+            return await database.Table<ViagemAerea>().Where(d => !d.AtualizadoBanco).ToListAsync();
+        }
+
+        public async Task<List<Loja>> ListarLoja_Pendente()
+        {
+            return await database.Table<Loja>().Where(d => !d.AtualizadoBanco).ToListAsync();
+        }
+
+        public async Task<List<Hotel>> ListarHotel_Pendente()
+        {
+            return await database.Table<Hotel>().Where(d => !d.AtualizadoBanco).ToListAsync();
+        }
+
+        public async Task<List<HotelEvento>> ListarHotelEvento_Pendente()
+        {
+            return await database.Table<HotelEvento>().Where(d => !d.AtualizadoBanco).ToListAsync();
+        }
+
+        public async Task<List<Refeicao>> ListarRefeicao_Pendente()
+        {
+            return await database.Table<Refeicao>().Where(d => !d.AtualizadoBanco).ToListAsync();
+        }
     }
 }

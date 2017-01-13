@@ -442,7 +442,7 @@ namespace CV.Mobile.ViewModels
             SalvarCommand.ChangeCanExecute();
             try
             {
-
+                ItemAvaliacao.DataAtualizacao = DateTime.Now.ToUniversalTime();
                 Hotel pItemHotel = new Hotel();
                 if (ItemHotel.Identificador.HasValue)
                 {

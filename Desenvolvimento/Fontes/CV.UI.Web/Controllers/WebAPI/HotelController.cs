@@ -112,6 +112,16 @@ namespace CV.UI.Web.Controllers.WebAPI
         }
 
         [Authorize]
+        [ActionName("getHotelEvento")]
+        [HttpPost]
+        public HotelEvento getHotelEvento(int id)
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            HotelEvento itemHotel = biz.SelecionarHotelEvento(id);
+             return itemHotel;
+        }
+
+        [Authorize]
         [ActionName("SalvarHotelEventoVerificacao")]
         [HttpPost]
         public ResultadoOperacao SalvarHotelEventoVerificacao(HotelEvento itemEvento)
