@@ -106,6 +106,8 @@ namespace CV.UI.Web.Controllers.WebAPI
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
+            if (itemResultado.Sucesso)
+                itemResultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = MensagemBusiness.RetornaMensagens("Viagem_ExcluirLoja_OK") } };
 
             return itemResultado;
         }
@@ -184,6 +186,8 @@ namespace CV.UI.Web.Controllers.WebAPI
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
+            if (itemResultado.Sucesso)
+                itemResultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = MensagemBusiness.RetornaMensagens("Viagem_ExcluirGastoCompra_OK") } };
 
             return itemResultado;
         }
@@ -225,6 +229,9 @@ namespace CV.UI.Web.Controllers.WebAPI
                     biz.SalvarListaCompra(itemLista);
                 }
             }
+            if (itemResultado.Sucesso && itemItemCompra.DataExclusao.HasValue)
+                itemResultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = MensagemBusiness.RetornaMensagens("Viagem_ExcluirItemCompra_OK") } };
+
             return itemResultado;
             
             

@@ -771,6 +771,138 @@ namespace CV.Data
             return Context.CotacaoMoedas.Where(predicate).ToList();
         }
 
+        public List<Comentario> ListarComentario(Expression<Func<Comentario, bool>> predicate)
+        {
+            return Context.Comentarios.Include("ItemCidade").Where(predicate).ToList();
+        }
+
+
+        public List<AporteDinheiro> ListarAporteDinheiro(Expression<Func<AporteDinheiro, bool>> predicate)
+        {
+            return Context.AporteDinheiros.Include("ItemGasto").Where(predicate).ToList();
+        }
+
+        public List<Sugestao> ListarSugestao(Expression<Func<Sugestao, bool>> predicate)
+        {
+            return Context.Sugestoes.Include("ItemCidade").Include("ItemUsuario").Where(predicate).ToList();
+        }
+
+        public List<CalendarioPrevisto> ListarCalendarioPrevisto(Expression<Func<CalendarioPrevisto, bool>> predicate)
+        {
+            return Context.CalendarioPrevistos.Where(predicate).ToList();
+        }
+
+        public List<ListaCompra> ListarListaCompra(int? IdentificadorUsuario, Expression<Func<ListaCompra, bool>> predicate)
+        {
+            return Context.ListaCompras.Include("ItemUsuario").Include("ItemUsuarioPedido").Where(d=>d.IdentificadorUsuario == IdentificadorUsuario || d.IdentificadorUsuarioPedido == IdentificadorUsuario)
+                .Where(predicate).ToList();
+        }
+
+        public List<Gasto> ListarGasto(Expression<Func<Gasto, bool>> predicate)
+        {
+            return Context.Gastos.Include("Usuarios")
+                         .Where(d => !d.Compras.Any()).Where(d => !d.Reabastecimentos.Any()).Where(d => !d.ApenasBaixa.Value).Where(predicate).ToList();
+        }
+
+
+        public List<Atracao> ListarAtracao_Completo(Expression<Func<Atracao, bool>> predicate)
+        {
+            return Context.Atracoes.Include("ItemCidade").Include("Avaliacoes")
+                        .Where(predicate).ToList();
+        }
+
+        public List<Hotel> ListarHotel_Completo(Expression<Func<Hotel, bool>> predicate)
+        {
+            return Context.Hoteis.Include("ItemCidade").Include("Avaliacoes").Where(predicate).ToList();
+        }
+
+        public List<Refeicao> ListarRefeicao_Completo(Expression<Func<Refeicao, bool>> predicate)
+        {
+            return Context.Refeicoes.Include("ItemCidade").Include("Pedidos").Where(predicate).ToList();
+        }
+
+        public List<Loja> ListarLoja(Expression<Func<Loja, bool>> predicate)
+        {
+            return Context.Lojas.Include("ItemCidade").Include("Avaliacoes").Where(predicate).ToList();
+        }
+
+        public List<Carro> ListarCarro(Expression<Func<Carro, bool>> predicate)
+        {
+            return Context.Carros.Include("Avaliacoes").Include("ItemCarroEventoDevolucao").Include("ItemCarroEventoRetirada").Where(predicate).ToList();
+        }
+
+        public List<ViagemAerea> ListarViagemAerea(Expression<Func<ViagemAerea, bool>> predicate)
+        {
+            return Context.ViagemAereas.Include("ItemCidade").Include("Aeroportos").Include("Aeroportos.ItemCidade").Where(predicate).ToList();
+        }
+
+        public List<GastoCompra> ListarGastoCompra(int? IdentificadorViagem, Expression<Func<GastoCompra, bool>> predicate)
+        {
+            return Context.GastoCompras
+                .Where(d=>d.ItemLoja.IdentificadorViagem == IdentificadorViagem)
+                .Where(predicate).ToList();
+        }
+
+        public List<Reabastecimento> ListarReabastecimento(int? IdentificadorViagem, Expression<Func<Reabastecimento, bool>> predicate)
+        {
+            return Context.Reabastecimentos.Include("Gastos").Include("Gastos.ItemGasto").Include("Gastos.ItemGasto.Usuarios")
+                .Where(d => d.ItemCarro.IdentificadorViagem == IdentificadorViagem)
+                .Where(predicate).ToList();
+        }
+
+        public List<HotelEvento> ListarHotelEvento(int? IdentificadorViagem, Expression<Func<HotelEvento, bool>> predicate)
+        {
+            return Context.HotelEventos
+                .Where(d => d.ItemHotel.IdentificadorViagem == IdentificadorViagem)
+                .Where(predicate).ToList();
+        }
+
+        public List<CarroDeslocamento> ListarCarroDeslocamento(int? IdentificadorViagem, Expression<Func<CarroDeslocamento, bool>> predicate)
+        {
+            return Context.CarroDeslocamentos.Include("ItemCarroEventoPartida").Include("ItemCarroEventoChegada").Include("Usuarios")
+                .Where(d => d.ItemCarro.IdentificadorViagem == IdentificadorViagem )
+                .Where(predicate).ToList();
+        }
+
+        public List<ItemCompra> ListarItemCompra(int? IdentificadorViagem, Expression<Func<ItemCompra, bool>> predicate)
+        {
+            return Context.ItemCompras.Include("ItemUsuario")
+                .Where(d => d.ItemGastoCompra.ItemLoja.IdentificadorViagem == IdentificadorViagem)
+                .Where(predicate).ToList();
+        }
+
+        public List<AluguelGasto> ListarAluguelGasto(int? IdentificadorViagem, Expression<Func<AluguelGasto, bool>> predicate)
+        {
+            return Context.AluguelGastos
+                .Where(d => d.ItemGasto.IdentificadorViagem == IdentificadorViagem)
+                .Where(predicate).ToList();
+        }
+
+        public List<GastoAtracao> ListarGastoAtracao(int? IdentificadorViagem, Expression<Func<GastoAtracao, bool>> predicate)
+        {
+            return Context.GastoAtracoes
+                .Where(d => d.ItemGasto.IdentificadorViagem == IdentificadorViagem)
+                .Where(predicate).ToList();
+        }
+        public List<GastoHotel> ListarGastoHotel(int? IdentificadorViagem, Expression<Func<GastoHotel, bool>> predicate)
+        {
+            return Context.GastoHoteis
+                .Where(d => d.ItemGasto.IdentificadorViagem == IdentificadorViagem)
+                .Where(predicate).ToList();
+        }
+
+        public List<GastoRefeicao> ListarGastoRefeicao(int? IdentificadorViagem, Expression<Func<GastoRefeicao, bool>> predicate)
+        {
+            return Context.GastoRefeicoes
+                .Where(d => d.ItemGasto.IdentificadorViagem == IdentificadorViagem)
+                .Where(predicate).ToList();
+        }
+        public List<GastoViagemAerea> ListarGastoViagemAerea(int? IdentificadorViagem, Expression<Func<GastoViagemAerea, bool>> predicate)
+        {
+            return Context.GastoViagemAereas
+                .Where(d => d.ItemGasto.IdentificadorViagem == IdentificadorViagem)
+                .Where(predicate).ToList();
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -1143,6 +1275,7 @@ namespace CV.Data
             }
             return query.OrderBy(d => d.Marca).ThenBy(d => d.Descricao).ToList();
         }
+
 
 
         public List<AporteDinheiro> ListarAporteDinheiro(int? IdentificadorUsuario, int? IdentificadorViagem, int? Moeda, DateTime? DataDe, DateTime? DataAte)

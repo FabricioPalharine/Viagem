@@ -835,7 +835,7 @@ namespace CV.Business.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exclusão de ItemCompra foi realizada com sucesso.
+        ///   Looks up a localized string similar to Item da Compra excluído com sucesso.
         /// </summary>
         internal static string Viagem_ExcluirItemCompra_OK {
             get {
@@ -844,7 +844,7 @@ namespace CV.Business.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exclusão de ListaCompra foi realizada com sucesso.
+        ///   Looks up a localized string similar to Lista excluída com sucesso.
         /// </summary>
         internal static string Viagem_ExcluirListaCompra_OK {
             get {
@@ -853,7 +853,7 @@ namespace CV.Business.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exclusão de Loja foi realizada com sucesso.
+        ///   Looks up a localized string similar to Loja excluída com sucesso.
         /// </summary>
         internal static string Viagem_ExcluirLoja_OK {
             get {
@@ -907,7 +907,7 @@ namespace CV.Business.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exclusão de Refeicao foi realizada com sucesso.
+        ///   Looks up a localized string similar to Refeição excluída com sucesso.
         /// </summary>
         internal static string Viagem_ExcluirRefeicao_OK {
             get {
@@ -934,7 +934,7 @@ namespace CV.Business.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exclusão de Sugestao foi realizada com sucesso.
+        ///   Looks up a localized string similar to Sugestão excluída com sucesso.
         /// </summary>
         internal static string Viagem_ExcluirSugestao_OK {
             get {
@@ -961,7 +961,7 @@ namespace CV.Business.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exclusão de Viagem foi realizada com sucesso.
+        ///   Looks up a localized string similar to Viagem excluída com sucesso.
         /// </summary>
         internal static string Viagem_ExcluirViagem_OK {
             get {
@@ -970,7 +970,7 @@ namespace CV.Business.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exclusão de ViagemAerea foi realizada com sucesso.
+        ///   Looks up a localized string similar to Deslocamento excluído com sucesso.
         /// </summary>
         internal static string Viagem_ExcluirViagemAerea_OK {
             get {
@@ -1348,7 +1348,7 @@ namespace CV.Business.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gravação de ItemCompra foi realizada com sucesso.
+        ///   Looks up a localized string similar to Item da Compra salvo com sucesso.
         /// </summary>
         internal static string Viagem_SalvarItemCompra_OK {
             get {
@@ -1357,7 +1357,7 @@ namespace CV.Business.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gravação de ListaCompra foi realizada com sucesso.
+        ///   Looks up a localized string similar to Lista de Compra salva com sucesso.
         /// </summary>
         internal static string Viagem_SalvarListaCompra_OK {
             get {
@@ -1375,7 +1375,7 @@ namespace CV.Business.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gravação de Loja foi realizada com sucesso.
+        ///   Looks up a localized string similar to Loja salva com sucesso.
         /// </summary>
         internal static string Viagem_SalvarLoja_OK {
             get {
@@ -1438,7 +1438,7 @@ namespace CV.Business.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gravação de Refeicao foi realizada com sucesso.
+        ///   Looks up a localized string similar to  Refeição salva com sucesso.
         /// </summary>
         internal static string Viagem_SalvarRefeicao_OK {
             get {
@@ -1465,7 +1465,7 @@ namespace CV.Business.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gravação de Sugestao foi realizada com sucesso.
+        ///   Looks up a localized string similar to Sugestão salva com sucesso.
         /// </summary>
         internal static string Viagem_SalvarSugestao_OK {
             get {
@@ -1501,7 +1501,7 @@ namespace CV.Business.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gravação de Viagem foi realizada com sucesso.
+        ///   Looks up a localized string similar to Viagem salva com sucesso.
         /// </summary>
         internal static string Viagem_SalvarViagem_OK {
             get {
@@ -1519,7 +1519,7 @@ namespace CV.Business.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gravação de ViagemAerea foi realizada com sucesso.
+        ///   Looks up a localized string similar to Deslocamento salvo com sucesso.
         /// </summary>
         internal static string Viagem_SalvarViagemAerea_OK {
             get {

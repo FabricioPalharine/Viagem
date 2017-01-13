@@ -170,6 +170,7 @@
     <Compile Include="Controllers\WebAPI\AcessoController.cs" />
     <Compile Include="Controllers\WebAPI\BaseApiController.cs" />
     <Compile Include="Controllers\WebAPI\DominioController.cs" />
+    <Compile Include="Controllers\WebAPI\SincronizacaoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

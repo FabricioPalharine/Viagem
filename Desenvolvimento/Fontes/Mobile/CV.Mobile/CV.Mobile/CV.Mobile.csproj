@@ -76,6 +76,7 @@
     <Compile Include="Models\CarroDeslocamentoUsuario.cs" />
     <Compile Include="Models\CarroEvento.cs" />
     <Compile Include="Models\Cidade.cs" />
+    <Compile Include="Models\ClasseSincronizacao.cs" />
     <Compile Include="Models\Comentario.cs" />
     <Compile Include="Models\CotacaoMoeda.cs" />
     <Compile Include="Models\FotoRefeicao.cs" />

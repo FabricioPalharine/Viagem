@@ -286,22 +286,22 @@
     <value>Exclusão de HotelAvaliacao foi realizada com sucesso</value>
   </data>
   <data name="Viagem_SalvarItemCompra_OK" xml:space="preserve">
-    <value>Gravação de ItemCompra foi realizada com sucesso</value>
+    <value>Item da Compra salvo com sucesso</value>
   </data>
   <data name="Viagem_ExcluirItemCompra_OK" xml:space="preserve">
-    <value>Exclusão de ItemCompra foi realizada com sucesso</value>
+    <value>Item da Compra excluído com sucesso</value>
   </data>
   <data name="Viagem_SalvarListaCompra_OK" xml:space="preserve">
-    <value>Gravação de ListaCompra foi realizada com sucesso</value>
+    <value>Lista de Compra salva com sucesso</value>
   </data>
   <data name="Viagem_ExcluirListaCompra_OK" xml:space="preserve">
-    <value>Exclusão de ListaCompra foi realizada com sucesso</value>
+    <value>Lista excluída com sucesso</value>
   </data>
   <data name="Viagem_SalvarLoja_OK" xml:space="preserve">
-    <value>Gravação de Loja foi realizada com sucesso</value>
+    <value>Loja salva com sucesso</value>
   </data>
   <data name="Viagem_ExcluirLoja_OK" xml:space="preserve">
-    <value>Exclusão de Loja foi realizada com sucesso</value>
+    <value>Loja excluída com sucesso</value>
   </data>
   <data name="Viagem_SalvarPais_OK" xml:space="preserve">
     <value>Gravação de Pais foi realizada com sucesso</value>
@@ -328,10 +328,10 @@
     <value>Exclusão de ReabastecimentoGasto foi realizada com sucesso</value>
   </data>
   <data name="Viagem_SalvarRefeicao_OK" xml:space="preserve">
-    <value>Gravação de Refeicao foi realizada com sucesso</value>
+    <value> Refeição salva com sucesso</value>
   </data>
   <data name="Viagem_ExcluirRefeicao_OK" xml:space="preserve">
-    <value>Exclusão de Refeicao foi realizada com sucesso</value>
+    <value>Refeição excluída com sucesso</value>
   </data>
   <data name="Viagem_SalvarRequisicaoAmizade_OK" xml:space="preserve">
     <value>Gravação de RequisicaoAmizade foi realizada com sucesso</value>
@@ -340,10 +340,10 @@
     <value>Exclusão de RequisicaoAmizade foi realizada com sucesso</value>
   </data>
   <data name="Viagem_SalvarSugestao_OK" xml:space="preserve">
-    <value>Gravação de Sugestao foi realizada com sucesso</value>
+    <value>Sugestão salva com sucesso</value>
   </data>
   <data name="Viagem_ExcluirSugestao_OK" xml:space="preserve">
-    <value>Exclusão de Sugestao foi realizada com sucesso</value>
+    <value>Sugestão excluída com sucesso</value>
   </data>
   <data name="Viagem_SalvarUsuario_OK" xml:space="preserve">
     <value>Gravação de Usuario foi realizada com sucesso</value>
@@ -352,16 +352,16 @@
     <value>Exclusão de Usuario foi realizada com sucesso</value>
   </data>
   <data name="Viagem_SalvarViagem_OK" xml:space="preserve">
-    <value>Gravação de Viagem foi realizada com sucesso</value>
+    <value>Viagem salva com sucesso</value>
   </data>
   <data name="Viagem_ExcluirViagem_OK" xml:space="preserve">
-    <value>Exclusão de Viagem foi realizada com sucesso</value>
+    <value>Viagem excluída com sucesso</value>
   </data>
   <data name="Viagem_SalvarViagemAerea_OK" xml:space="preserve">
-    <value>Gravação de ViagemAerea foi realizada com sucesso</value>
+    <value>Deslocamento salvo com sucesso</value>
   </data>
   <data name="Viagem_ExcluirViagemAerea_OK" xml:space="preserve">
-    <value>Exclusão de ViagemAerea foi realizada com sucesso</value>
+    <value>Deslocamento excluído com sucesso</value>
   </data>
   <data name="Viagem_SalvarViagemAereaAeroporto_OK" xml:space="preserve">
     <value>Gravação de ViagemAereaAeroporto foi realizada com sucesso</value>

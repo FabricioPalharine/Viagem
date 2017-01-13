@@ -59,10 +59,13 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             ViagemBusiness biz = new ViagemBusiness();
             ListaCompra itemListaCompra = biz.SelecionarListaCompra(id);
-            biz.ExcluirListaCompra(itemListaCompra);
+            itemListaCompra.DataExclusao = DateTime.Now.ToUniversalTime();
+            biz.SalvarListaCompra(itemListaCompra);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
+            if (itemResultado.Sucesso)
+                itemResultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = MensagemBusiness.RetornaMensagens("Viagem_ExcluirListaCompra_OK") } };
 
             return itemResultado;
         }

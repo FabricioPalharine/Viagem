@@ -2132,5 +2132,23 @@ namespace CV.Mobile.Services
 
             return itemResultado;
         }
+
+        public async Task<ClasseSincronizacao> RetornarAtualizacoes(CriterioBusca criterioBusca)
+        {
+            ClasseSincronizacao itemRetorno = null;
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Sincronizacao/RetornarAtualizacoes?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            })));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                itemRetorno = JsonConvert.DeserializeObject<ClasseSincronizacao>(resultado);
+            }
+
+            return itemRetorno;
+        }
     }
 }

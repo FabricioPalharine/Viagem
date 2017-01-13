@@ -1471,6 +1471,179 @@ namespace CV.Business
             }
         }
 
+        public List<Comentario> ListarComentario(Expression<Func<Comentario, bool>> predicate)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarComentario(predicate);
+            }
+        }
+
+        public List<AporteDinheiro> ListarAporteDinheiro(Expression<Func<AporteDinheiro, bool>> predicate)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarAporteDinheiro(predicate);
+            }
+        }
+
+        public List<Gasto> ListarGasto(Expression<Func<Gasto, bool>> predicate)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarGasto(predicate);
+            }
+        }
+
+        public List<ListaCompra> ListarListaCompra(int? IdentificadorUsuario, Expression<Func<ListaCompra, bool>> predicate)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarListaCompra(IdentificadorUsuario, predicate);
+            }
+        }
+
+        public List<Sugestao> ListarSugestao(Expression<Func<Sugestao, bool>> predicate)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarSugestao(predicate);
+            }
+        }
+
+        public List<CalendarioPrevisto> ListarCalendarioPrevisto(Expression<Func<CalendarioPrevisto, bool>> predicate)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarCalendarioPrevisto(predicate);
+            }
+        }
+
+        public List<Atracao> ListarAtracao_Completo(Expression<Func<Atracao, bool>> predicate)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarAtracao_Completo(predicate);
+            }
+        }
+
+        public List<Hotel> ListarHotel_Completo(Expression<Func<Hotel, bool>> predicate)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarHotel_Completo(predicate);
+            }
+        }
+
+        public List<Refeicao> ListarRefeicao_Completo(Expression<Func<Refeicao, bool>> predicate)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarRefeicao_Completo(predicate);
+            }
+        }
+
+        public List<Loja> ListarLoja(Expression<Func<Loja, bool>> predicate)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarLoja(predicate);
+            }
+        }
+
+        public List<Carro> ListarCarro(Expression<Func<Carro, bool>> predicate)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarCarro(predicate);
+            }
+        }
+
+        public List<ViagemAerea> ListarViagemAerea(Expression<Func<ViagemAerea, bool>> predicate)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarViagemAerea(predicate);
+            }
+        }
+
+        public List<GastoCompra> ListarGastoCompra(int? IdentificadorViagem, Expression<Func<GastoCompra, bool>> predicate)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarGastoCompra(IdentificadorViagem, predicate);
+            }
+        }
+
+        public List<Reabastecimento> ListarReabastecimento(int? IdentificadorViagem, Expression<Func<Reabastecimento, bool>> predicate)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarReabastecimento(IdentificadorViagem, predicate);
+            }
+        }
+        public List<CarroDeslocamento> ListarCarroDeslocamento(int? IdentificadorViagem, Expression<Func<CarroDeslocamento, bool>> predicate)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarCarroDeslocamento(IdentificadorViagem, predicate);
+            }
+        }
+        public List<HotelEvento> ListarHotelEvento(int? IdentificadorViagem, Expression<Func<HotelEvento, bool>> predicate)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarHotelEvento(IdentificadorViagem, predicate);
+            }
+        }
+
+        public List<ItemCompra> ListarItemCompra(int? IdentificadorViagem, Expression<Func<ItemCompra, bool>> predicate)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarItemCompra(IdentificadorViagem, predicate);
+            }
+        }
+
+
+        public List<AluguelGasto> ListarAluguelGasto(int? IdentificadorViagem, Expression<Func<AluguelGasto, bool>> predicate)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarAluguelGasto(IdentificadorViagem, predicate);
+            }
+        }
+
+        public List<GastoAtracao> ListarGastoAtracao(int? IdentificadorViagem, Expression<Func<GastoAtracao, bool>> predicate)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarGastoAtracao(IdentificadorViagem, predicate);
+            }
+        }
+        public List<GastoHotel> ListarGastoHotel(int? IdentificadorViagem, Expression<Func<GastoHotel, bool>> predicate)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarGastoHotel(IdentificadorViagem, predicate);
+            }
+        }
+
+        public List<GastoRefeicao> ListarGastoRefeicao(int? IdentificadorViagem, Expression<Func<GastoRefeicao, bool>> predicate)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarGastoRefeicao(IdentificadorViagem, predicate);
+            }
+        }
+        public List<GastoViagemAerea> ListarGastoViagemAerea(int? IdentificadorViagem, Expression<Func<GastoViagemAerea, bool>> predicate)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarGastoViagemAerea(IdentificadorViagem, predicate);
+            }
+        }
+
         public IList<Usuario> CarregarParticipantesViagem(int? IdentificadorViagem)
         {
             using (ViagemRepository repositorio = new ViagemRepository())
