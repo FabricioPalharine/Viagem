@@ -72,6 +72,8 @@
 		    vm.messages = [];
 		    vm.submitted = true;
 		    vm.loading = true;
+		    var insertEvento = false
+		    var listaEventosAjustados = [];
 		    vm.CamposInvalidos = {};
 		    {
 		        if (vm.itemHotel.EntradaPrevista) {
@@ -152,6 +154,7 @@
 		            angular.forEach(vm.itemHotel.Avaliacoes, function (item) {
 		                if (!item.DataExclusao)
 		                {
+		                    insertEvento = true;
 		                    var itemEvento = { IdentificadorUsuario: item.IdentificadorUsuario, DataEntrada: vm.itemHotel.DataEntrada, DataAtualizacao: moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss") };
 		                    vm.itemHotel.Eventos.push(itemEvento);
 		                }
@@ -163,6 +166,7 @@
 		                if (!item.DataExclusao && !item.DataSaida) {
 		                    item.DataSaida = vm.itemHotel.DataSaidia;
 		                    item.DataAtualizacao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+		                    listaEventosAjustados.push(item);
 		                }
 		            });
 		        }
@@ -177,6 +181,20 @@
 		            if (data.Sucesso) {
 		                Error.showError('success', $translate.instant("Sucesso"), data.Mensagens[0].Mensagem, true);
 		                $scope.$parent.itemHotel.AjustarHotelSalvo(vm.itemOriginal, data.ItemRegistro);
+		                angular.forEach(listaEventosAjustados, function (item) {
+		                    SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'HE', item.Identificador, false);
+
+		                });
+		                if (insertEvento)
+		                {
+		                    Hotel.get({ id: data.IdentificadorRegistro }, function (data2) {
+		                        angular.forEach(data2.Eventos, function (item) {
+		                            SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'HE', item.Identificador, true);
+
+		                        });
+		                    });
+
+		                }
 		            } else {
 		                vm.messages = data.Mensagens;
 		                vm.verificaCampoInvalido();
@@ -571,7 +589,12 @@
 		};
 
 		vm.AdicionarEvento = function (itemEvento) {
-		    var itemEvento = {IdentificadorHotel: vm.itemHotel.Identificador,  Edicao: true, Original: null, ItemUsuario: $.grep(vm.ListaParticipante, function (e) { return e.Identificador == Auth.currentUser.Codigo })[0], DataEntrada: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss"), strHoraEntrada: moment(new Date()).format("HH:mm:ss") }
+		    var itemEvento = {
+		        IdentificadorHotel: vm.itemHotel.Identificador, Edicao: true, Original: null,
+		        ItemUsuario: $.grep(vm.ListaParticipante, function (e) { return e.Identificador == Auth.currentUser.Codigo })[0],
+		        IdentificadorUsuario: Auth.currentUser.Codigo,
+		        DataEntrada: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss"), strHoraEntrada: moment(new Date()).format("HH:mm:ss")
+		    }
 		    vm.itemHotel.Eventos.push(itemEvento);
 		   
 		};

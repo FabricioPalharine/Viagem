@@ -12,6 +12,7 @@ using Microsoft.Practices.ServiceLocation;
 using CV.Mobile.Views;
 using FormsToolkit;
 using CV.Mobile.Services;
+using Plugin.Connectivity;
 
 namespace CV.Mobile.ViewModels
 {
@@ -51,8 +52,8 @@ namespace CV.Mobile.ViewModels
         {
             if (await VerificarOnline())
             {
-                ControleSincronizacao itemSincronizacao = await DatabaseService.Database.GetControleSincronizacaoAsync();
-                if (itemSincronizacao != null && !itemSincronizacao.SincronizadoEnvio)
+                
+                if (ItemViagem != null && await DatabaseService.ExisteEnvioPendente())
                 {
 
                     MessagingService.Current.SendMessage<MessagingServiceQuestion>(MessageKeys.DisplayQuestion, new MessagingServiceQuestion()
@@ -181,7 +182,7 @@ namespace CV.Mobile.ViewModels
             {
                 using (ApiService srv = new ApiService())
                 {
-                    Online = await srv.VerificarOnLine();
+                    Online = CrossConnectivity.Current.IsConnected && await srv.VerificarOnLine();
                 }
             }
             catch

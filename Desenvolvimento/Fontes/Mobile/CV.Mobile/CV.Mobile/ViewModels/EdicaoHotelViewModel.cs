@@ -109,6 +109,7 @@ namespace CV.Mobile.ViewModels
             {
                 var itemHotel = await DatabaseService.CarregarHotel(_ItemHotel.Identificador);
                 var itemEvento = itemHotel.Eventos.Where(d => d.IdentificadorUsuario == ItemUsuarioLogado.Codigo).Where(d => !d.DataSaida.HasValue).OrderByDescending(d => d.DataEntrada).FirstOrDefault();
+                bool NoHotel = itemEvento != null;
                 if (itemEvento == null)
                     itemEvento = new HotelEvento() { DataEntrada = DateTime.Now, IdentificadorHotel = itemHotel.Identificador, IdentificadorUsuario = ItemUsuarioLogado.Codigo, DataAtualizacao = DateTime.Now.ToUniversalTime(), AtualizadoBanco = false };
                 else
@@ -118,6 +119,7 @@ namespace CV.Mobile.ViewModels
                     itemEvento.AtualizadoBanco = false;
                 }
                 await DatabaseService.Database.SalvarHotelEvento(itemEvento);
+                TextoComandoTrocar = NoHotel ? "Cheguei Hotel" : "Deixei Hotel";
 
             }
         }
@@ -455,7 +457,10 @@ namespace CV.Mobile.ViewModels
                 {
                     pItemHotel = await DatabaseService.CarregarHotel(ItemHotel.Identificador.GetValueOrDefault(-1));
                 }
-                ItemHotel.Eventos = pItemHotel.Eventos;
+                if (pItemHotel != null)
+                    ItemHotel.Eventos = pItemHotel.Eventos;
+                List<HotelEvento> EventosAlerta = new List<HotelEvento>();
+                bool NovoCheckin = false;
                 foreach (Usuario itemUsuario in Participantes)
                 {
                     if (itemUsuario.Selecionado)
@@ -485,8 +490,10 @@ namespace CV.Mobile.ViewModels
                     ItemHotel.Eventos = new MvvmHelpers.ObservableRangeCollection<HotelEvento>();
                 if (VisitaIniciada && !_ItemHotelOriginal.DataEntrada.HasValue && !VisitaConcluida)
                 {
+
                     foreach (var item in ItemHotel.Avaliacoes.Where(d => !d.DataExclusao.HasValue))
                     {
+                        NovoCheckin = true;
                         var itemEvento = new HotelEvento() { DataAtualizacao = DateTime.Now.ToUniversalTime(), DataEntrada = DateTime.Now, IdentificadorUsuario = item.IdentificadorUsuario };
                         ItemHotel.Eventos.Add(itemEvento);
                     }
@@ -509,6 +516,7 @@ namespace CV.Mobile.ViewModels
                     {
                         item.DataSaida = DateTime.Now;
                         item.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                        EventosAlerta.Add(item);
                     }
                 }
                 ResultadoOperacao Resultado = new ResultadoOperacao();
@@ -523,6 +531,15 @@ namespace CV.Mobile.ViewModels
                             pItemHotel = await srv.CarregarHotel(Resultado.IdentificadorRegistro);
                             AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "H", Resultado.IdentificadorRegistro.GetValueOrDefault(), !ItemHotel.Identificador.HasValue);
                             await DatabaseService.SalvarHotelReplicada(pItemHotel);
+                            if (NovoCheckin)
+                                foreach (var itemEvento in pItemHotel.Eventos)
+                                {
+                                    AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "HE", itemEvento.Identificador.GetValueOrDefault(), true);
+
+                                }
+                            foreach (var itemEvento in EventosAlerta)
+                                AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "HE", itemEvento.Identificador.GetValueOrDefault(), false);
+
                         }
                     }
                 }

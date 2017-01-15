@@ -816,8 +816,8 @@ namespace CV.Data
 
         public List<Gasto> ListarGasto(Expression<Func<Gasto, bool>> predicate)
         {
-            return Context.Gastos.Include("Usuarios")
-                         .Where(d => !d.Compras.Any()).Where(d => !d.Reabastecimentos.Any()).Where(d => !d.ApenasBaixa.Value).Where(predicate).ToList();
+            return Context.Gastos.Include("Usuarios").Include("Alugueis").Include("Atracoes").Include("Hoteis").Include("Refeicoes").Include("ViagenAereas")
+                         .Where(d => !d.Compras.Any()).Where(d => !d.Reabastecimentos.Any()).Where(d =>  !d.ApenasBaixa.Value).Where(predicate).ToList();
         }
 
 
@@ -849,13 +849,15 @@ namespace CV.Data
 
         public List<ViagemAerea> ListarViagemAerea(Expression<Func<ViagemAerea, bool>> predicate)
         {
-            return Context.ViagemAereas.Include("ItemCidade").Include("Aeroportos").Include("Aeroportos.ItemCidade").Where(predicate).ToList();
+            return Context.ViagemAereas.Include("Avaliacoes").Include("Aeroportos").Include("Aeroportos.ItemCidade").Where(predicate).ToList();
         }
 
-        public List<GastoCompra> ListarGastoCompra(int? IdentificadorViagem, Expression<Func<GastoCompra, bool>> predicate)
+        public List<GastoCompra> ListarGastoCompra(int? IdentificadorViagem,int? IdentificadorUsuario, Expression<Func<GastoCompra, bool>> predicate)
         {
-            return Context.GastoCompras
+            return Context.GastoCompras.Include("ItemGasto")
                 .Where(d=>d.ItemLoja.IdentificadorViagem == IdentificadorViagem)
+                .Where(d => d.ItemGasto.IdentificadorUsuario == IdentificadorUsuario)
+
                 .Where(predicate).ToList();
         }
 

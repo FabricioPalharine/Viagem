@@ -1,4 +1,5 @@
-﻿using CV.Mobile.Interfaces;
+﻿using CV.Mobile.Helpers;
+using CV.Mobile.Interfaces;
 using CV.Mobile.Models;
 using CV.Mobile.Services;
 using CV.Mobile.Views;
@@ -20,8 +21,10 @@ namespace CV.Mobile.ViewModels
     {
         public LoadingViewModel()
         {
+            IsBusy = true;
+            CaminhoBase = Settings.BaseWebApi;
             TapCommand = new Command(
-                                                                       async () => await AbrirConfiguracaoURL(),
+                                                                       () =>  AbrirConfiguracaoURL(),
                                                                        () => true);
 
             PageAppearingCommand = new Command(
@@ -36,14 +39,20 @@ namespace CV.Mobile.ViewModels
             {
                 App.Current.MainPage = new AutenticacaoPage();
             });
+            GravarURLCommand = new Command(() => Settings.BaseWebApi = CaminhoBase);
                                                                    
         }
 
 
+        private bool _ConfigurarURL = false;
         private bool loadFinished = false;
+        public string CaminhoBase { get; set; }
         public ICommand TapCommand { get; set; }
         public ICommand PageAppearingCommand { get; set; }
         public ICommand EntrarCommand { get; set; }
+
+        public ICommand GravarURLCommand { get; set; }
+
         public bool LoadFinished
         {
             get
@@ -57,9 +66,22 @@ namespace CV.Mobile.ViewModels
             }
         }
 
-        private async Task AbrirConfiguracaoURL()
+        public bool ConfigurarURL
         {
-            await Task.Delay(1);
+            get
+            {
+                return _ConfigurarURL;
+            }
+
+            set
+            {
+                SetProperty(ref _ConfigurarURL, value);
+            }
+        }
+
+        private void AbrirConfiguracaoURL()
+        {
+            ConfigurarURL = true;
         }
 
         private async Task<UsuarioLogado> ConectarAutenticacao()
@@ -91,6 +113,7 @@ namespace CV.Mobile.ViewModels
                 }
 
             }
+            IsBusy = false;
             LoadFinished = true;
             return itemUsuario;
         }

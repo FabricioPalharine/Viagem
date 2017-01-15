@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using CV.Mobile.Helpers;
+using Plugin.Connectivity;
 
 namespace CV.Mobile.Services
 {
@@ -255,12 +256,16 @@ namespace CV.Mobile.Services
 
         public async Task<Boolean> VerificarOnLine()
         {
-            
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Acesso/VerificaOnline"));
+
+            // bool valido = await CrossConnectivity.Current.IsReachable(string.Concat("http://", uri.Host));
+
+            // return valido;
             bool retorno = false;
             try
             {
                 HttpResponseMessage response = null;
+                client.Timeout = TimeSpan.FromSeconds(4);
                 response = await client.GetAsync(uri);
                 var resultado = await response.Content.ReadAsStringAsync();
 
@@ -2151,7 +2156,7 @@ namespace CV.Mobile.Services
 
         public async Task<ClasseSincronizacao> RetornarAtualizacoes(CriterioBusca criterioBusca)
         {
-            ClasseSincronizacao itemRetorno = null;
+            ClasseSincronizacao itemRetorno = new ClasseSincronizacao();
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Sincronizacao/RetornarAtualizacoes?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
             {
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc

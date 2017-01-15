@@ -68,6 +68,7 @@ namespace CV.Mobile.ViewModels
                         {
                             base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "CP", Resultado.IdentificadorRegistro.GetValueOrDefault(), true);
                             ItemAgenda.Identificador = Resultado.IdentificadorRegistro;
+                            itemAgenda.itemCalendario.DataProximoAviso = itemAgenda.itemCalendario.DataInicio.GetValueOrDefault(new DateTime(1900, 01, 01));
 
                             await DatabaseService.Database.SalvarCalendarioPrevisto(ItemAgenda);
                             var itemSugestao = await DatabaseService.Database.RetornarSugestao(ItemSugestao.Identificador);
@@ -78,6 +79,7 @@ namespace CV.Mobile.ViewModels
                             ItemSugestao.Status = 2;
                             ItemSugestao.AtualizadoBanco = true;
                             ItemSugestao.DataAtualizacao = DateTime.Now.ToUniversalTime();
+
                             await DatabaseService.Database.SalvarSugestao(ItemSugestao);
                           
                         }

@@ -318,7 +318,7 @@ namespace CV.Mobile.ViewModels
                     else
                     {
                         await DatabaseService.ExcluirLoja(ItemLoja.Identificador, false);
-                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Refeição Excluída com Sucesso " } };
+                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Loja Excluída com Sucesso " } };
 
                     }
 

@@ -47,5 +47,7 @@ namespace CV.Mobile.Models
         public const string ManutencaoCalendarioPrevisto = "ManutencaoCalendarioPrevisto";
 
         public const string AtualizarConsulta = "AtualizarConsulta";
+
+        public const string VerificarCalendario = "VerificarCalendario";
     }
 }

@@ -14,7 +14,6 @@ namespace CV.Mobile.Controls
     public class CalendarioControl : ContentView
     {
 
-
         public static readonly BindableProperty AgendaSelectedCommandProperty =
            BindableProperty.Create(nameof(AgendaSelectedCommand), typeof(Command<int?>), typeof(CalendarioControl), null);
 
@@ -99,6 +98,7 @@ namespace CV.Mobile.Controls
         private List<GestureInterest> Interests = new List<GestureInterest>();
         public CalendarioControl()
         {
+
             GestureInterest gi = new GestureInterest();
             gi.GestureType = GestureType.Swipe;
             gi.Direction = Directionality.Left;
@@ -135,6 +135,7 @@ namespace CV.Mobile.Controls
                 Agendamentos.CollectionChanged += Lista_CollectionChanged;
             }
             this.Content = _grid;
+            _grid.RowSpacing = 0;
             RenderizarComponente();
         }
 

@@ -365,7 +365,7 @@ namespace CV.Mobile.ViewModels
                         else
                             await DatabaseService.Database.ExcluirListaCompra(itemListaCompra);
 
-                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Lista Compra Salva com Sucesso" } };
+                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Lista Compra excluída com Sucesso" } };
                     }
                     MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
                     {

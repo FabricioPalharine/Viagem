@@ -14,6 +14,7 @@ using CV.Mobile.Interfaces;
 using Plugin.SecureStorage;
 using Plugin.Permissions;
 using Acr.UserDialogs;
+using System.Reflection;
 
 namespace CV.Mobile.Droid
 {
@@ -33,6 +34,8 @@ namespace CV.Mobile.Droid
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
             Xamarin.FormsMaps.Init(this, bundle);
+            var cv = typeof(Xamarin.Forms.CarouselView);
+            var assembly = Assembly.Load(cv.FullName);
             UserDialogs.Init(this);
             LoadApplication(new App());
         }

@@ -66,6 +66,16 @@ namespace CV.Mobile.Services
             await Database.IncluirListaAmigo(Amigos);
         }
 
+        internal static async Task<bool> ExisteEnvioPendente()
+        {
+            var item = await CarregarDadosEnvioSincronizar();
+            return item.AportesDinheiro.Any() || item.Atracoes.Any() || item.CalendariosPrevistos.Any() || item.CarroDeslocamentos.Any()
+                || item.Carros.Any() || item.Comentarios.Any() || item.Compras.Any() || item.CotacoesMoeda.Any() || item.Deslocamentos.Any()
+                || item.EventosHotel.Any() || item.Gastos.Any() || item.GastosAtracao.Any() || item.GastosCarro.Any() || item.GastosDeslocamento.Any()
+                || item.GastosHotel.Any() || item.GastosRefeicao.Any() || item.Hoteis.Any() || item.ItensComprados.Any() || item.ListaCompra.Any()
+                || item.Lojas.Any() || item.Reabastecimento.Any() || item.Refeicoes.Any() || item.Sugestoes.Any();
+        }
+
         public static async void AjustarAmigo(ConsultaAmigo itemAmigo)
         {
             if (itemAmigo.Acao == 1)
@@ -94,7 +104,7 @@ namespace CV.Mobile.Services
                 itemAgenda.itemCalendario.Nome = itemAgenda.itemSugestao.Local;
                 itemAgenda.itemCalendario.Latitude = itemAgenda.itemSugestao.Latitude;
                 itemAgenda.itemCalendario.Longitude = itemAgenda.itemSugestao.Longitude;
-
+                itemAgenda.itemCalendario.DataProximoAviso = itemAgenda.itemCalendario.DataInicio.GetValueOrDefault(new DateTime(1900, 01, 01));
                 await Database.SalvarCalendarioPrevisto(itemAgenda.itemCalendario);
                 await Database.SalvarSugestao(itemAgenda.itemSugestao);
 
@@ -120,6 +130,8 @@ namespace CV.Mobile.Services
             {
                 itemCalendarioPrevisto.AtualizadoBanco = false;
                 itemCalendarioPrevisto.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                itemCalendarioPrevisto.DataProximoAviso = itemCalendarioPrevisto.DataInicio.GetValueOrDefault(new DateTime(1900, 01, 01));
+
                 await Database.SalvarCalendarioPrevisto(itemCalendarioPrevisto);
                 itemResultado.IdentificadorRegistro = itemCalendarioPrevisto.Identificador;
                 Erros.Add(new MensagemErro() { Mensagem = "Agendamento salvo com sucesso" });
@@ -486,6 +498,8 @@ namespace CV.Mobile.Services
                 await VerificarAtualizacaoAporteDinheiro(identificador, itemUsuario.Codigo);
             else if (tipo == "CM")
                 await VerificarAtualizacaoCotacaoMoeda(identificador);
+            else if (tipo == "CP")
+                await VerificarAtualizacaoCalendarioPrevisto(identificador);
             else if (tipo == "S")
                 await VerificarAtualizacaoSugestao(identificador);
             else if (tipo == "HE")
@@ -506,6 +520,8 @@ namespace CV.Mobile.Services
                 await VerificarAtualizacaoGastoCompra(identificador);
             else if (tipo == "CD")
                 await VerificarAtualizacaoCarroDeslocamento(identificador);
+            else if (tipo == "CR")
+                await VerificarAtualizacaoReabastecimento(identificador);
             else if (tipo == "G")
                 await VerificarAtualizacaoGasto(identificador);
             else if (tipo == "A")
@@ -518,6 +534,13 @@ namespace CV.Mobile.Services
                 await VerificarAtualizacaoCarro(identificador);
             else if (tipo == "R")
                 await VerificarAtualizacaoRefeicao(identificador);
+
+            //var itemControle = await DatabaseService.Database.GetControleSincronizacaoAsync();
+            //if (itemControle.SincronizadoEnvio)
+            //{
+            //    itemControle.UltimaDataRecepcao = DateTime.Now.ToUniversalTime();
+            //    await DatabaseService.Database.SalvarControleSincronizacao(itemControle);
+            //}
         }
 
         private static async Task VerificarAtualizacaoRefeicao(int identificador)
@@ -533,7 +556,7 @@ namespace CV.Mobile.Services
                 {
                     var itemBanco = await Database.RetornarRefeicao(identificador);
                     if (itemBanco == null || itemBanco.DataAtualizacao < itemLista.DataAtualizacao)
-                        await SalvarRefeicao(itemLista);
+                        await SalvarRefeicaoReplicada(itemLista);
                 }
             }
         }
@@ -551,7 +574,7 @@ namespace CV.Mobile.Services
                 {
                     var itemBanco = await Database.RetornarCarro(identificador);
                     if (itemBanco == null || itemBanco.DataAtualizacao < itemLista.DataAtualizacao)
-                        await SalvarCarro(itemLista);
+                        await SalvarCarroReplicada(itemLista);
                 }
             }
         }
@@ -569,7 +592,7 @@ namespace CV.Mobile.Services
                 {
                     var itemBanco = await Database.RetornarViagemAerea(identificador);
                     if (itemBanco == null || itemBanco.DataAtualizacao < itemLista.DataAtualizacao)
-                        await SalvarViagemAerea(itemLista);
+                        await SalvarViagemAereaReplicada(itemLista);
                 }
             }
         }
@@ -587,7 +610,7 @@ namespace CV.Mobile.Services
                 {
                     var itemBanco = await Database.RetornarHotel(identificador);
                     if (itemBanco == null || itemBanco.DataAtualizacao < itemLista.DataAtualizacao)
-                        await SalvarHotel(itemLista);
+                        await SalvarHotelReplicada(itemLista);
                 }
             }
         }
@@ -605,7 +628,7 @@ namespace CV.Mobile.Services
                 {
                     var itemBanco = await Database.RetornarAtracao(identificador);
                     if (itemBanco == null || itemBanco.DataAtualizacao < itemLista.DataAtualizacao)
-                        await SalvarAtracao(itemLista);
+                        await SalvarAtracaoReplicada(itemLista);
                 }
             }
         }
@@ -623,7 +646,7 @@ namespace CV.Mobile.Services
                 {
                     var itemBanco = await Database.RetornarGasto(identificador);
                     if (itemBanco == null || itemBanco.DataAtualizacao < itemLista.DataAtualizacao)
-                        await SalvarGasto(itemLista);
+                         SalvarGastoSincronizado(itemLista);
                 }
             }
         }
@@ -642,6 +665,23 @@ namespace CV.Mobile.Services
                     var itemBanco = await Database.RetornarCarroDeslocamento(identificador);
                     if (itemBanco == null   || itemBanco.DataAtualizacao < itemLista.DataAtualizacao)                        
                         await SalvarCarroDeslocamentoReplicada(itemLista);
+                }
+            }
+        }
+        private static async Task VerificarAtualizacaoReabastecimento(int identificador)
+        {
+            using (ApiService srv = new ApiService())
+            {
+                var itemLista = await srv.CarregarReabastecimento(identificador);
+                if (itemLista.DataExclusao.HasValue)
+                {
+                    await ExcluirReabastecimento(identificador, true);
+                }
+                else
+                {
+                    var itemBanco = await Database.RetornarCarroDeslocamento(identificador);
+                    if (itemBanco == null || itemBanco.DataAtualizacao < itemLista.DataAtualizacao)
+                        await SalvarReabastecimentoReplicada(itemLista);
                 }
             }
         }
@@ -866,6 +906,35 @@ namespace CV.Mobile.Services
             }
         }
 
+        private static async Task VerificarAtualizacaoCalendarioPrevisto(int identificador)
+        {
+            using (ApiService srv = new ApiService())
+            {
+                var itemLista = await srv.CarregarCalendarioPrevisto(identificador);
+                var itemBanco = await Database.CarregarCalendarioPrevisto(identificador);
+                if (itemLista.DataExclusao.HasValue)
+                {
+                    if (itemBanco != null)
+                        await Database.ExcluirCalendarioPrevisto(itemBanco);
+                }
+                else
+                { 
+                    itemLista.DataProximoAviso = itemLista.DataInicio.GetValueOrDefault(new DateTime(1900, 01, 01));
+                    if (itemBanco != null)
+                    {
+                        if (itemBanco.DataAtualizacao > itemLista.DataAtualizacao)
+                            return;
+                        else
+                        {
+                            itemLista.Id = itemBanco.Id;
+                        itemLista.DataProximoAviso = itemBanco.DataProximoAviso;
+                        }
+                    }
+                    await Database.SalvarCalendarioPrevisto(itemLista);
+                }
+            }
+        }
+
         private static async Task VerificarAtualizacaoCotacaoMoeda(int identificador)
         {
             using (ApiService srv = new ApiService())
@@ -1083,6 +1152,8 @@ namespace CV.Mobile.Services
             await AjustarDadosListaCompra(itemEnvio.ListaCompra, resultadoSincronizacao);
             await AjustarDadosLoja(itemEnvio.Lojas, resultadoSincronizacao);
             await AjustarDadosSugestao(itemEnvio.Sugestoes, resultadoSincronizacao);
+            foreach (var item in itemEnvio.Posicoes)
+                await Database.ExcluirPosicao(item);
         }
 
         private static async Task AjustarDadosSugestao(List<Sugestao> sugestoes, List<DeParaIdentificador> resultadoSincronizacao)
@@ -1693,8 +1764,6 @@ namespace CV.Mobile.Services
                         DeParaIdentificador itemDeParaAvaliacao = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == itemAvaliacao.Identificador && d.TipoObjeto == "AVA").FirstOrDefault();
                         if (itemDeParaAvaliacao != null)
                             itemAvaliacao.Identificador = itemDeParaAvaliacao.IdentificadorDetino;
-
-                        itemAvaliacao.Identificador = itemDeParaAvaliacao.IdentificadorDetino;
                         await Database.SalvarAvaliacaoAerea(itemAvaliacao);
                     }
                 }
@@ -1811,7 +1880,7 @@ namespace CV.Mobile.Services
                 }
                 else
                 {
-                    DeParaIdentificador itemDePara = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.Identificador && d.TipoObjeto == "R").FirstOrDefault();
+                    DeParaIdentificador itemDePara = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.Identificador && d.TipoObjeto == "CR").FirstOrDefault();
                     if (itemDePara != null)
                     {
                         item.Identificador = itemDePara.IdentificadorDetino;
@@ -2010,16 +2079,17 @@ namespace CV.Mobile.Services
                             item.NomeCidade = itemGravado.NomeCidade;
                             item.IdentificadorCidade = itemGravado.IdentificadorCidade;
                         }
-                    }
-                    if (itemDePara.IdentificadorOrigem != itemDePara.IdentificadorDetino)
-                    {
-                        var UploadsArquivo = await Database.ListarUploadFoto_IdentificadorAtracao(itemDePara.IdentificadorOrigem);
-                        foreach (var itemVideo in UploadsArquivo)
+                        if (itemDePara.IdentificadorOrigem != itemDePara.IdentificadorDetino)
                         {
-                            itemVideo.IdentificadorRefeicao = itemDePara.IdentificadorDetino;
-                            await Database.SalvarUploadFoto(itemVideo);
+                            var UploadsArquivo = await Database.ListarUploadFoto_IdentificadorAtracao(itemDePara.IdentificadorOrigem);
+                            foreach (var itemVideo in UploadsArquivo)
+                            {
+                                itemVideo.IdentificadorRefeicao = itemDePara.IdentificadorDetino;
+                                await Database.SalvarUploadFoto(itemVideo);
+                            }
                         }
                     }
+                   
                     await Database.SalvarAtracao(item);
                     foreach (var itemAvaliacao in item.Avaliacoes)
                     {
@@ -2080,7 +2150,7 @@ namespace CV.Mobile.Services
             dadosSincronizar.ItemViagem.Edicao = ItemViagemLocal.Edicao;
             dadosSincronizar.ItemViagem.VejoGastos = ItemViagemLocal.VejoGastos;
             await Database.SalvarViagemAsync(dadosSincronizar.ItemViagem);
-            IncluirCidades(dadosSincronizar).Start();
+            await IncluirCidades(dadosSincronizar);
             SincronizarCotacoes(dadosSincronizar);
             SincronizarComentarios(dadosSincronizar.Comentarios);
             SincronizarCalendariosPrevistos(dadosSincronizar.CalendariosPrevistos);
@@ -2123,13 +2193,13 @@ namespace CV.Mobile.Services
                     {
                         if (itemBanco != null)
                             itemGasto.Id = itemBanco.Id;
-                        Database.SalvarAluguelGasto(itemGasto).Start();
+                        await Database.SalvarAluguelGasto(itemGasto);
                     }
                 }
                 else if (itemBanco != null)
                 {
 
-                    Database.ExcluirAluguelGasto(itemBanco).Start();
+                    await Database.ExcluirAluguelGasto(itemBanco);
                 }
             }
         }
@@ -2147,13 +2217,13 @@ namespace CV.Mobile.Services
                     {
                         if (itemBanco != null)
                             itemGasto.Id = itemBanco.Id;
-                        Database.SalvarGastoViagemAerea(itemGasto).Start();
+                        await Database.SalvarGastoViagemAerea(itemGasto);
                     }
                 }
                 else if (itemBanco != null)
                 {
 
-                    Database.ExcluirGastoViagemAerea(itemBanco).Start();
+                    await Database.ExcluirGastoViagemAerea(itemBanco);
                 }
             }
         }
@@ -2171,13 +2241,13 @@ namespace CV.Mobile.Services
                     {
                         if (itemBanco != null)
                             itemGasto.Id = itemBanco.Id;
-                        Database.SalvarGastoHotel(itemGasto).Start();
+                        await Database.SalvarGastoHotel(itemGasto);
                     }
                 }
                 else if (itemBanco != null)
                 {
 
-                    Database.ExcluirGastoHotel(itemBanco).Start();
+                    await Database.ExcluirGastoHotel(itemBanco);
                 }
             }
         }
@@ -2195,13 +2265,13 @@ namespace CV.Mobile.Services
                     {
                         if (itemBanco != null)
                             itemGasto.Id = itemBanco.Id;
-                        Database.SalvarGastoRefeicao(itemGasto).Start();
+                        await Database.SalvarGastoRefeicao(itemGasto);
                     }
                 }
                 else if (itemBanco != null)
                 {
 
-                    Database.ExcluirGastoRefeicao(itemBanco).Start();
+                    await Database.ExcluirGastoRefeicao(itemBanco);
                 }
             }
         }
@@ -2219,13 +2289,13 @@ namespace CV.Mobile.Services
                     {
                         if (itemBanco != null)
                             itemGasto.Id = itemBanco.Id;
-                        Database.SalvarGastoAtracao(itemGasto).Start();
+                        await Database.SalvarGastoAtracao(itemGasto);
                     }
                 }
                 else if (itemBanco != null)
                 {
 
-                    Database.ExcluirGastoAtracao(itemBanco).Start();
+                    await Database.ExcluirGastoAtracao(itemBanco);
                 }
             }
         }
@@ -2243,13 +2313,13 @@ namespace CV.Mobile.Services
                     {
                         if (itemBanco != null)
                             itemComprado.Id = itemBanco.Id;
-                        Database.SalvarItemCompra(itemComprado).Start();
+                        await Database.SalvarItemCompra(itemComprado);
                     }
                 }
                 else if (itemBanco != null)
                 {
 
-                    Database.ExcluirItemCompra(itemBanco).Start();
+                    await Database.ExcluirItemCompra(itemBanco);
                 }
             }
         }
@@ -2273,7 +2343,7 @@ namespace CV.Mobile.Services
                         await Database.SalvarGasto(itemCompra.ItemGasto);
                         if (itemBanco != null)
                             itemCompra.Id = itemBanco.Id;
-                        Database.SalvarGastoCompra(itemCompra).Start();
+                        await Database.SalvarGastoCompra(itemCompra);
                     }
                 }
                 else if (itemBanco != null)
@@ -2283,7 +2353,7 @@ namespace CV.Mobile.Services
                     var itemGasto = await Database.RetornarGasto(itemCompra.IdentificadorGasto);
                     if (itemGasto != null)
                         await Database.ExcluirGasto(itemGasto);
-                    Database.ExcluirGastoCompra(itemBanco).Start();
+                    await Database.ExcluirGastoCompra(itemBanco);
                 }
             }
         }
@@ -2319,7 +2389,7 @@ namespace CV.Mobile.Services
 
 
                         }
-                        Database.SalvarReabastecimento(itemReabastecimento).Start();
+                        await Database.SalvarReabastecimento(itemReabastecimento);
 
                     }
                 }
@@ -2333,7 +2403,7 @@ namespace CV.Mobile.Services
                         await Database.ExcluirReabastecimentoGasto(itemGastoReabastecimento);
                     }
 
-                    Database.ExcluirReabastecimento(itemBanco).Start();
+                    await Database.ExcluirReabastecimento(itemBanco);
                 }
             }
         }
@@ -2363,7 +2433,7 @@ namespace CV.Mobile.Services
                             await Database.SalvarCarroEvento(itemCarro.ItemCarroEventoChegada);
                         if (itemCarro.ItemCarroEventoPartida != null)
                             await Database.SalvarCarroEvento(itemCarro.ItemCarroEventoPartida);
-                        Database.SalvarCarroDeslocamento(itemCarro).Start();
+                        await Database.SalvarCarroDeslocamento(itemCarro);
                         await Database.IncluirCarroDeslocamentoUsuario(itemCarro.Usuarios.ToList());
                     }
                 }
@@ -2376,7 +2446,7 @@ namespace CV.Mobile.Services
                     if (itemBanco.IdentificadorCarroEventoPartida.HasValue)
                         await Database.ExcluirCarroEvento(await Database.RetornarCarroEvento(itemBanco.IdentificadorCarroEventoPartida));
 
-                    Database.ExcluirCarroDeslocamento(itemBanco).Start();
+                    await Database.ExcluirCarroDeslocamento(itemBanco);
                 }
             }
         }
@@ -2394,13 +2464,13 @@ namespace CV.Mobile.Services
                     {
                         if (itemBanco != null)
                             itemHotel.Id = itemBanco.Id;
-                        Database.SalvarHotelEvento(itemHotel).Start();
+                        await Database.SalvarHotelEvento(itemHotel);
                     }
                 }
                 else if (itemBanco != null)
                 {
 
-                    Database.ExcluirHotelEvento(itemBanco).Start();
+                    await Database.ExcluirHotelEvento(itemBanco);
                 }
             }
         }
@@ -2542,7 +2612,7 @@ namespace CV.Mobile.Services
                             await Database.SalvarCarroEvento(itemCarro.ItemCarroEventoDevolucao);
                         if (itemCarro.ItemCarroEventoRetirada != null)
                             await Database.SalvarCarroEvento(itemCarro.ItemCarroEventoRetirada);
-                        Database.SalvarCarro(itemCarro).Start();
+                        await Database.SalvarCarro(itemCarro);
                         await Database.IncluirAvaliacaoAluguel(itemCarro.Avaliacoes.ToList());
                     }
                 }
@@ -2555,7 +2625,7 @@ namespace CV.Mobile.Services
                     if (itemBanco.IdentificadorCarroEventoDevolucao.HasValue)
                         await Database.ExcluirCarroEvento(await Database.RetornarCarroEvento(itemBanco.IdentificadorCarroEventoDevolucao));
 
-                    Database.ExcluirCarro(itemBanco).Start();
+                    await Database.ExcluirCarro(itemBanco);
                 }
             }
         }
@@ -2574,7 +2644,7 @@ namespace CV.Mobile.Services
 
                         if (itemBanco != null)
                             itemViagemAerea.Id = itemBanco.Id;
-                        Database.SalvarViagemAerea(itemViagemAerea).Start();
+                        await Database.SalvarViagemAerea(itemViagemAerea);
                         await Database.IncluirAvaliacaoAerea(itemViagemAerea.Avaliacoes.ToList());
                         await Database.IncluirViagemAereaAeroporto(itemViagemAerea.Aeroportos.ToList());
                     }
@@ -2584,7 +2654,7 @@ namespace CV.Mobile.Services
                     await Database.ExcluirAvaliacaoAerea_IdentificadorViagemAerea(itemViagemAerea.Identificador);
                     await Database.ExcluirViagemAereaAeroporto_IdentificadorViagemAerea(itemViagemAerea.Identificador);
 
-                    Database.ExcluirViagemAerea(itemBanco).Start();
+                    await Database.ExcluirViagemAerea(itemBanco);
                 }
             }
         }
@@ -2604,7 +2674,7 @@ namespace CV.Mobile.Services
                     {
                         if (itemBanco != null)
                             itemLoja.Id = itemBanco.Id;
-                        Database.SalvarLoja(itemLoja).Start();
+                        await Database.SalvarLoja(itemLoja);
                         await Database.IncluirAvaliacaoLoja(itemLoja.Avaliacoes.ToList());
                     }
                 }
@@ -2612,7 +2682,7 @@ namespace CV.Mobile.Services
                 {
                     await Database.ExcluirAvaliacaoLoja_IdentificadorLoja(itemLoja.Identificador);
 
-                    Database.ExcluirLoja(itemBanco).Start();
+                    await Database.ExcluirLoja(itemBanco);
                 }
             }
         }
@@ -2632,7 +2702,7 @@ namespace CV.Mobile.Services
                     {
                         if (itemBanco != null)
                             itemHotel.Id = itemBanco.Id;
-                        Database.SalvarHotel(itemHotel).Start();
+                        await Database.SalvarHotel(itemHotel);
                         await Database.IncluirHotelAvaliacao(itemHotel.Avaliacoes.ToList());
                     }
                 }
@@ -2640,7 +2710,7 @@ namespace CV.Mobile.Services
                 {
                     await Database.ExcluirHotelAvaliacao_IdentificadorHotel(itemHotel.Identificador);
 
-                    Database.ExcluirHotel(itemBanco).Start();
+                    await Database.ExcluirHotel(itemBanco);
                 }
             }
         }
@@ -2661,7 +2731,7 @@ namespace CV.Mobile.Services
                     {
                         if (itemBanco != null)
                             itemRefeicao.Id = itemBanco.Id;
-                        Database.SalvarRefeicao(itemRefeicao).Start();
+                        await Database.SalvarRefeicao(itemRefeicao);
                         await Database.IncluirRefeicaoPedido(itemRefeicao.Pedidos.ToList());
                     }
                 }
@@ -2669,7 +2739,7 @@ namespace CV.Mobile.Services
                 {
                     await Database.ExcluirRefeicaoPedido_IdentificadorRefeicao(itemRefeicao.Identificador);
 
-                    Database.ExcluirRefeicao(itemBanco).Start();
+                    await Database.ExcluirRefeicao(itemBanco);
                 }
             }
         }
@@ -2689,8 +2759,8 @@ namespace CV.Mobile.Services
                         await Database.ExcluirAvaliacaoAtracao_IdentificadorAtracao(itemAtracao.Identificador);
 
                         if (itemBanco != null)
-                            itemAtracao.Id = itemBanco.Id;                       
-                        Database.SalvarAtracao(itemAtracao).Start();
+                            itemAtracao.Id = itemBanco.Id;
+                        await Database.SalvarAtracao(itemAtracao);
                         await Database.IncluirAvaliacaoAtracao(itemAtracao.Avaliacoes.ToList());
                     }
                 }
@@ -2698,7 +2768,7 @@ namespace CV.Mobile.Services
                 {
                     await Database.ExcluirAvaliacaoAtracao_IdentificadorAtracao(itemAtracao.Identificador);
 
-                    Database.ExcluirAtracao(itemBanco).Start();
+                    await Database.ExcluirAtracao(itemBanco);
                 }
             }
         }
@@ -2712,16 +2782,19 @@ namespace CV.Mobile.Services
                 {
                     if (itemBanco == null || itemBanco.DataAtualizacao < itemAporte.DataAtualizacao)
                     {
-                        if (itemBanco != null)
-                            itemAporte.Id = itemBanco.Id;
                         Gasto itemGasto = null;
-                        if (itemBanco.IdentificadorGasto.HasValue)
-                            itemGasto = await Database.RetornarGasto(itemBanco.IdentificadorGasto);
+                        if (itemBanco != null)
+                        {
+                            itemAporte.Id = itemBanco.Id;
+
+                            if (itemBanco.IdentificadorGasto.HasValue)
+                                itemGasto = await Database.RetornarGasto(itemBanco.IdentificadorGasto);
+                        }
                         if (itemAporte.IdentificadorGasto.HasValue && !itemAporte.ItemGasto.DataExclusao.HasValue)
                         {
                             if (itemGasto != null)
                                 itemAporte.ItemGasto.Id = itemGasto.Id;
-                            await Database.SalvarGasto(itemGasto);
+                            await Database.SalvarGasto(itemAporte.ItemGasto);
                         }
                         else
                         {
@@ -2729,14 +2802,14 @@ namespace CV.Mobile.Services
                             if (itemGasto != null)
                                 await Database.ExcluirGasto(itemGasto);
                         }
-                        Database.SalvarAporteDinheiro(itemAporte).Start();
+                        await Database.SalvarAporteDinheiro(itemAporte);
                     }
                 }
                 else if (itemBanco != null)
                 {
                     if (itemBanco.IdentificadorGasto.HasValue)
-                        Database.ExcluirGasto(await Database.RetornarGasto(itemBanco.IdentificadorGasto)).Start();
-                    Database.ExcluirAporteDinheiro(itemBanco).Start();
+                        await Database.ExcluirGasto(await Database.RetornarGasto(itemBanco.IdentificadorGasto));
+                    await Database.ExcluirAporteDinheiro(itemBanco);
                 }
             }
         }
@@ -2752,11 +2825,11 @@ namespace CV.Mobile.Services
                     {
                         if (itemBanco != null)
                             itemListaCompra.Id = itemBanco.Id;
-                        Database.SalvarListaCompra(itemListaCompra).Start();
+                        await Database.SalvarListaCompra(itemListaCompra);
                     }
                 }
                 else if (itemBanco != null)
-                    Database.ExcluirListaCompra(itemBanco).Start();
+                    await Database.ExcluirListaCompra(itemBanco);
             }
         }
 
@@ -2771,11 +2844,11 @@ namespace CV.Mobile.Services
                     {
                         if (itemBanco != null)
                             itemSugestao.Id = itemBanco.Id;
-                        Database.SalvarSugestao(itemSugestao).Start();
+                        await Database.SalvarSugestao(itemSugestao);
                     }
                 }
                 else if (itemBanco != null)
-                    Database.ExcluirSugestao(itemBanco).Start();
+                    await Database.ExcluirSugestao(itemBanco);
             }
         }
 
@@ -2789,12 +2862,19 @@ namespace CV.Mobile.Services
                     if (itemBanco == null || itemBanco.DataAtualizacao < itemCalendario.DataAtualizacao)
                     {
                         if (itemBanco != null)
+                        {
                             itemCalendario.Id = itemBanco.Id;
-                        Database.SalvarCalendarioPrevisto(itemCalendario).Start();
+                            itemCalendario.DataProximoAviso = itemBanco.DataProximoAviso;
+                        }
+                        else
+                        {
+                            itemCalendario.DataProximoAviso = itemCalendario.DataInicio.GetValueOrDefault(new DateTime(1900, 01, 01));
+                        }
+                        await Database.SalvarCalendarioPrevisto(itemCalendario);
                     }
                 }
                 else if (itemBanco != null)
-                    Database.ExcluirCalendarioPrevisto(itemBanco).Start();
+                    await Database.ExcluirCalendarioPrevisto(itemBanco);
             }
         }
 
@@ -2809,11 +2889,11 @@ namespace CV.Mobile.Services
                     {
                         if (itemBanco != null)
                             itemComentario.Id = itemBanco.Id;
-                        Database.SalvarComentario(itemComentario).Start();
+                        await Database.SalvarComentario(itemComentario);
                     }
                 }
                 else if (itemBanco != null)
-                    Database.ExcluirComentario(itemBanco).Start();
+                    await Database.ExcluirComentario(itemBanco);
             }
         }
 
@@ -2828,11 +2908,11 @@ namespace CV.Mobile.Services
                     {
                         if (itemBanco != null)
                             itemCotacao.Id = itemBanco.Id;
-                        Database.SalvarCotacaoMoeda(itemCotacao).Start();
+                        await Database.SalvarCotacaoMoeda(itemCotacao);
                     }
                 }
                 else if (itemBanco != null)
-                    Database.ExcluirCotacaoMoeda(itemBanco).Start();
+                    await  Database.ExcluirCotacaoMoeda(itemBanco);
             }
         }
 
@@ -2928,14 +3008,15 @@ namespace CV.Mobile.Services
                             await Database.ExcluirGastoAtracao(itemGasto);
                     }
                 }
-            }
-            else
-            {
-                foreach (var itemAvaliacao in itemBanco.Avaliacoes)
-                    await Database.ExcluirAvaliacaoAtracao(itemAvaliacao);
-                foreach (var itemGasto in itemBanco.Gastos)
-                    await Database.ExcluirGastoAtracao(itemGasto);
-                await Database.ExcluirAtracao(itemBanco);
+
+                else
+                {
+                    foreach (var itemAvaliacao in itemBanco.Avaliacoes)
+                        await Database.ExcluirAvaliacaoAtracao(itemAvaliacao);
+                    foreach (var itemGasto in itemBanco.Gastos)
+                        await Database.ExcluirGastoAtracao(itemGasto);
+                    await Database.ExcluirAtracao(itemBanco);
+                }
             }
         }
 
@@ -3041,15 +3122,16 @@ namespace CV.Mobile.Services
                         else
                             await Database.ExcluirGastoRefeicao(itemGasto);
                     }
+
                 }
-            }
-            else
-            {
-                foreach (var itemAvaliacao in itemBanco.Pedidos)
-                    await Database.ExcluirRefeicaoPedido(itemAvaliacao);
-                foreach (var itemGasto in itemBanco.Gastos)
-                    await Database.ExcluirGastoRefeicao(itemGasto);
-                await Database.ExcluirRefeicao(itemBanco);
+                else
+                {
+                    foreach (var itemAvaliacao in itemBanco.Pedidos)
+                        await Database.ExcluirRefeicaoPedido(itemAvaliacao);
+                    foreach (var itemGasto in itemBanco.Gastos)
+                        await Database.ExcluirGastoRefeicao(itemGasto);
+                    await Database.ExcluirRefeicao(itemBanco);
+                }
             }
         }
 
@@ -3111,14 +3193,17 @@ namespace CV.Mobile.Services
         internal static async Task<Hotel> CarregarHotel(int? Identificador)
         {
             Hotel item = await Database.RetornarHotel(Identificador);
-            item.Avaliacoes = new ObservableRangeCollection<HotelAvaliacao>(await Database.ListarHotelAvaliacao_IdentificadorHotel(Identificador));
-            item.Gastos = new ObservableRangeCollection<GastoHotel>(await Database.ListarGastoHotel_IdentificadorHotel(Identificador));
-            item.Eventos = new ObservableRangeCollection<HotelEvento>(await Database.ListarHotelEvento_IdentificadorHotel(Identificador));
-            foreach (var itemGastoHotel in item.Gastos)
+            if (item != null)
             {
-                itemGastoHotel.ItemGasto = await Database.RetornarGasto(itemGastoHotel.IdentificadorGasto);
-                itemGastoHotel.ItemGasto.Usuarios = new ObservableRangeCollection<GastoDividido>(await Database.ListarGastoDividido_IdentificadorGasto(itemGastoHotel.IdentificadorGasto));
+                item.Avaliacoes = new ObservableRangeCollection<HotelAvaliacao>(await Database.ListarHotelAvaliacao_IdentificadorHotel(Identificador));
+                item.Gastos = new ObservableRangeCollection<GastoHotel>(await Database.ListarGastoHotel_IdentificadorHotel(Identificador));
+                item.Eventos = new ObservableRangeCollection<HotelEvento>(await Database.ListarHotelEvento_IdentificadorHotel(Identificador));
+                foreach (var itemGastoHotel in item.Gastos)
+                {
+                    itemGastoHotel.ItemGasto = await Database.RetornarGasto(itemGastoHotel.IdentificadorGasto);
+                    itemGastoHotel.ItemGasto.Usuarios = new ObservableRangeCollection<GastoDividido>(await Database.ListarGastoDividido_IdentificadorGasto(itemGastoHotel.IdentificadorGasto));
 
+                }
             }
             return item;
         }
@@ -3168,16 +3253,18 @@ namespace CV.Mobile.Services
                             await Database.ExcluirGastoHotel(itemGasto);
                     }
                 }
-            }
-            else
-            {
-                foreach (var itemAvaliacao in itemBanco.Avaliacoes)
-                    await Database.ExcluirHotelAvaliacao(itemAvaliacao);
-                foreach (var itemGasto in itemBanco.Gastos)
-                    await Database.ExcluirGastoHotel(itemGasto);
-                foreach (var itemGasto in itemBanco.Eventos)
-                    await Database.ExcluirHotelEvento(itemGasto);
-                await Database.ExcluirHotel(itemBanco);
+
+                else
+                {
+                    foreach (var itemAvaliacao in itemBanco.Avaliacoes)
+                        await Database.ExcluirHotelAvaliacao(itemAvaliacao);
+                    foreach (var itemGasto in itemBanco.Gastos)
+                        await Database.ExcluirGastoHotel(itemGasto);
+                    foreach (var itemGasto in itemBanco.Eventos)
+                        await Database.ExcluirHotelEvento(itemGasto);
+                    await Database.ExcluirHotel(itemBanco);
+                }
+
             }
         }
 
@@ -3314,19 +3401,20 @@ namespace CV.Mobile.Services
                             await Database.ExcluirGastoCompra(itemGasto);
                         }
                     }
+
                 }
-            }
-            else
-            {
-                foreach (var itemAvaliacao in itemBanco.Avaliacoes)
-                    await Database.ExcluirAvaliacaoLoja(itemAvaliacao);
-                foreach (var itemGasto in itemBanco.Compras)
+                else
                 {
-                    await Database.ExcluirItemCompra_IdentificadorGastoCompra(itemGasto.Identificador);
-                    await Database.ExcluirGasto(itemGasto.ItemGasto);
-                    await Database.ExcluirGastoCompra(itemGasto);
+                    foreach (var itemAvaliacao in itemBanco.Avaliacoes)
+                        await Database.ExcluirAvaliacaoLoja(itemAvaliacao);
+                    foreach (var itemGasto in itemBanco.Compras)
+                    {
+                        await Database.ExcluirItemCompra_IdentificadorGastoCompra(itemGasto.Identificador);
+                        await Database.ExcluirGasto(itemGasto.ItemGasto);
+                        await Database.ExcluirGastoCompra(itemGasto);
+                    }
+                    await Database.ExcluirLoja(itemBanco);
                 }
-                await Database.ExcluirLoja(itemBanco);
             }
         }
 
@@ -3586,30 +3674,31 @@ namespace CV.Mobile.Services
                     }
 
                 }
-            }
-            else
-            {
-                foreach (var itemAvaliacao in itemBanco.Avaliacoes)
-                    await Database.ExcluirAvaliacaoAluguel(itemAvaliacao);
-                foreach (var itemGasto in itemBanco.Gastos)
-                    await Database.ExcluirAluguelGasto(itemGasto);
-                foreach (var itemDeslocamento in itemBanco.Deslocamentos)
+
+                else
                 {
-                    foreach (var itemUsuario in itemDeslocamento.Usuarios)
-                        await Database.ExcluirCarroDeslocamentoUsuario(itemUsuario);
-                    await Database.ExcluirCarroDeslocamento(itemDeslocamento);
-                }
-                foreach (var itemReabastecimento in itemBanco.Reabastecimentos)
-                {
-                    foreach (var itemGasto in itemReabastecimento.Gastos)
+                    foreach (var itemAvaliacao in itemBanco.Avaliacoes)
+                        await Database.ExcluirAvaliacaoAluguel(itemAvaliacao);
+                    foreach (var itemGasto in itemBanco.Gastos)
+                        await Database.ExcluirAluguelGasto(itemGasto);
+                    foreach (var itemDeslocamento in itemBanco.Deslocamentos)
                     {
-                        await Database.ExcluirGastoDividido_IdentificadorGasto(itemGasto.IdentificadorGasto.GetValueOrDefault());
-                        await Database.ExcluirGasto(itemGasto.ItemGasto);
-                        await Database.ExcluirReabastecimentoGasto(itemGasto);
+                        foreach (var itemUsuario in itemDeslocamento.Usuarios)
+                            await Database.ExcluirCarroDeslocamentoUsuario(itemUsuario);
+                        await Database.ExcluirCarroDeslocamento(itemDeslocamento);
                     }
-                    await Database.ExcluirReabastecimento(itemReabastecimento);
+                    foreach (var itemReabastecimento in itemBanco.Reabastecimentos)
+                    {
+                        foreach (var itemGasto in itemReabastecimento.Gastos)
+                        {
+                            await Database.ExcluirGastoDividido_IdentificadorGasto(itemGasto.IdentificadorGasto.GetValueOrDefault());
+                            await Database.ExcluirGasto(itemGasto.ItemGasto);
+                            await Database.ExcluirReabastecimentoGasto(itemGasto);
+                        }
+                        await Database.ExcluirReabastecimento(itemReabastecimento);
+                    }
+                    await Database.ExcluirCarro(itemBanco);
                 }
-                await Database.ExcluirCarro(itemBanco);
             }
         }
 
@@ -3625,7 +3714,7 @@ namespace CV.Mobile.Services
             {
                 Erros.Add(new MensagemErro() { Mensagem = "O campo Descrição é obrigatório" });
             }
-            if (itemCarro.Alugado && !string.IsNullOrEmpty(itemCarro.Locadora))
+            if (itemCarro.Alugado && string.IsNullOrEmpty(itemCarro.Locadora))
             {
                 Erros.Add(new MensagemErro() { Mensagem = "O campo Locadora é obrigatório" });
             }
@@ -4013,17 +4102,18 @@ namespace CV.Mobile.Services
                         else
                             await Database.ExcluirViagemAereaAeroporto(itemAeroporto);
                     }
+
                 }
-            }
-            else
-            {
-                foreach (var itemAvaliacao in itemBanco.Avaliacoes)
-                    await Database.ExcluirAvaliacaoAerea(itemAvaliacao);
-                foreach (var itemGasto in itemBanco.Gastos)
-                    await Database.ExcluirGastoViagemAerea(itemGasto);
-                foreach (var itemAeroporto in itemBanco.Aeroportos)
-                    await Database.ExcluirViagemAereaAeroporto(itemAeroporto);
-                await Database.ExcluirViagemAerea(itemBanco);
+                else
+                {
+                    foreach (var itemAvaliacao in itemBanco.Avaliacoes)
+                        await Database.ExcluirAvaliacaoAerea(itemAvaliacao);
+                    foreach (var itemGasto in itemBanco.Gastos)
+                        await Database.ExcluirGastoViagemAerea(itemGasto);
+                    foreach (var itemAeroporto in itemBanco.Aeroportos)
+                        await Database.ExcluirViagemAereaAeroporto(itemAeroporto);
+                    await Database.ExcluirViagemAerea(itemBanco);
+                }
             }
         }
 
@@ -4201,7 +4291,7 @@ namespace CV.Mobile.Services
             itemControle.Refeicoes = await Database.ListarRefeicao_Pendente();
             foreach (var itemRefeicao in itemControle.Refeicoes)
                 itemRefeicao.Pedidos = new ObservableRangeCollection<RefeicaoPedido>(await Database.ListarRefeicaoPedido_IdentificadorRefeicao(itemRefeicao.Identificador));
-
+            itemControle.Posicoes = await Database.ListarPosicao_Pendente();
             itemControle.Sugestoes = await Database.ListarSugestao_Pendente();
             return itemControle;
         }

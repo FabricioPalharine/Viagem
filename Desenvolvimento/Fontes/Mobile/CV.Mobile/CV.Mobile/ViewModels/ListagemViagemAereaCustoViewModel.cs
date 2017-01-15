@@ -90,6 +90,8 @@ namespace CV.Mobile.ViewModels
                 {
                     if (!(await DatabaseService.Database.ListarGastoViagemAerea_IdentificadorGasto(item.Identificador)).Where(d => !d.DataExclusao.HasValue).Any())
                     {
+                        itemGravar.ItemGasto = item;
+
                         itemGravar.AtualizadoBanco = false;
                         await DatabaseService.Database.SalvarGastoViagemAerea(itemGravar);
                         MessagingService.Current.SendMessage<GastoViagemAerea>(MessageKeys.ManutencaoGastoViagemAerea, itemGravar);

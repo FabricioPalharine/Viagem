@@ -2,10 +2,11 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CV.Mobile.Views.ListagemCalendarioPrevistoPage"
-             Title="Agenda"   
+             Title="Agenda"
               xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
               xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
               xmlns:controles="clr-namespace:CV.Mobile.Controls;assembly=CV.Mobile"
+             xmlns:cv="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.CarouselView"
               x:Name="paginaSelecao">
   <ContentPage.Resources>
     <ResourceDictionary>
@@ -21,11 +22,11 @@
     </behaviors:EventHandlerBehavior>
   </ContentPage.Behaviors>
 
- <ContentPage.ToolbarItems>
-   <ToolbarItem  Icon="{Binding ModoPesquisa, Converter={StaticResource boolImage}}"  Command="{Binding PesquisarCommand}"    />
-   <ToolbarItem x:Name="AdicionarToolbarItem" Icon="add24.png"  Command="{Binding AdicionarCommand}" />
+  <ContentPage.ToolbarItems>
+    <ToolbarItem  Icon="{Binding ModoPesquisa, Converter={StaticResource boolImage}}"  Command="{Binding PesquisarCommand}"    />
+    <ToolbarItem x:Name="AdicionarToolbarItem" Icon="add24.png"  Command="{Binding AdicionarCommand}" />
 
- </ContentPage.ToolbarItems>
+  </ContentPage.ToolbarItems>
 
   <ContentPage.Content>
     <StackLayout Spacing="0">
@@ -35,8 +36,8 @@
             <behaviors:InvokeCommandAction Command="{Binding ItemTappedCommand}"   />
           </behaviors:EventHandlerBehavior>
         </ListView.Behaviors>
-        
-   
+
+
         <ListView.ItemTemplate>
           <DataTemplate>
             <ViewCell >
@@ -45,7 +46,7 @@
                   <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                 
+
                   <ColumnDefinition Width="100*" />
                   <ColumnDefinition Width="50*" />
                   <ColumnDefinition Width="50*" />
@@ -61,17 +62,35 @@
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>
-      <StackLayout  IsVisible="{Binding ModoPesquisa}">
-        <DatePicker Date="{Binding DataCalendario}" VerticalOptions="Start">
+      <StackLayout  IsVisible="{Binding ModoPesquisa}" VerticalOptions="FillAndExpand">
+        <DatePicker Date="{Binding Data}" VerticalOptions="Start">
           <DatePicker.Format>dd/MM/yyyy</DatePicker.Format>
         </DatePicker>
-        <ScrollView>
-        <controles:CalendarioControl VerticalOptions="FillAndExpand" DataCalendario="{Binding DataCalendario}" Agendamentos="{Binding ListaDados}" AgendaSelectedCommand="{Binding AbrirAgendaCommand}">
-          
-        </controles:CalendarioControl>
-        </ScrollView>
+
+        <AbsoluteLayout VerticalOptions="FillAndExpand">
+
+          <cv:CarouselView ItemsSource="{Binding DatasCalendario}" HorizontalOptions="FillAndExpand" Position="{Binding Posicao}" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1.0, 1.0">
+            <cv:CarouselView.Behaviors>
+              <behaviors:EventHandlerBehavior EventName="PositionSelected">
+                <behaviors:InvokeCommandAction Command="{Binding TrocarPosicaoCommand}"   />
+              </behaviors:EventHandlerBehavior>
+            </cv:CarouselView.Behaviors>
+            <cv:CarouselView.ItemTemplate>
+              <DataTemplate>
+                <StackLayout >
+                  <ScrollView>
+                    <controles:CalendarioControl VerticalOptions="FillAndExpand" DataCalendario="{Binding Data, Mode=OneWay}" Agendamentos="{Binding Source={x:Reference paginaSelecao}, Path=BindingContext.ListaDados}" AgendaSelectedCommand="{Binding Source={x:Reference paginaSelecao}, Path=BindingContext.AbrirAgendaCommand}">
+
+                    </controles:CalendarioControl>
+                  </ScrollView>
+                </StackLayout>
+              </DataTemplate>
+            </cv:CarouselView.ItemTemplate>
+          </cv:CarouselView>
+        </AbsoluteLayout>
+
       </StackLayout>
     </StackLayout>
   </ContentPage.Content>
-  
+
 </ContentPage>

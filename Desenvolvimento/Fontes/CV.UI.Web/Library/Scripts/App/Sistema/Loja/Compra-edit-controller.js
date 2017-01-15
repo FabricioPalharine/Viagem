@@ -22,12 +22,12 @@
             vm.messages = [];
             vm.loading = true;
             vm.CamposInvalidos = {};            
-            vm.SalvarCusto();                        
+            vm.itemCompra.ItemGasto = vm.SalvarCusto();
             Loja.saveCompra(vm.itemCompra, function (data) {
                 vm.loading = false;
                 if (data.Sucesso) {
                     
-                    SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'GL', data.ItemRegistro, vm.itemCompra.Identificador==null);
+                    SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'GL', data.IdentificadorRegistro, vm.itemCompra.Identificador == null);
                     vm.itemCompra = data.ItemRegistro;
                     vm.EscopoAtualizacao.AtualizarCompra(vm.itemOriginal, vm.itemCompra);
                 } else {

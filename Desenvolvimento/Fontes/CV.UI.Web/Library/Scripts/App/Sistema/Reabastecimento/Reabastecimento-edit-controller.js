@@ -23,7 +23,7 @@
             vm.messages = [];
             vm.loading = true;
             vm.CamposInvalidos = {};            
-            vm.SalvarCusto();            
+            vm.itemCusto = vm.SalvarCusto();
             vm.itemReabastecimento.Data = vm.itemCusto.Data;
             vm.itemCusto.Latitude = vm.itemReabastecimento.Latitude;
             vm.itemCusto.Longitude = vm.itemReabastecimento.Longitude;
@@ -32,7 +32,7 @@
             Reabastecimento.save(vm.itemReabastecimento, function (data) {
                 vm.loading = false;
                 if (data.Sucesso) {
-                    SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'R', data.IdentificadorRegistro, vm.itemReabastecimento.Identificador == null);
+                    SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'CR', data.IdentificadorRegistro, vm.itemReabastecimento.Identificador == null);
                     vm.itemReabastecimento.Identificador = data.IdentificadorRegistro;
                     vm.EscopoAtualizacao.AtualizarReabastecimento(vm.itemReabastecimento);
                     vm.close();

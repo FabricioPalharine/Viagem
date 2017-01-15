@@ -137,9 +137,7 @@
             </div><!-- /.box-body -->
             <div class="box-footer">
 
-                <button type="file" class="btn btn-primary" multiple ngf-select="itemFoto.CarregarArquivos($files)">
-                    <span class="fa fa-upload" aria-hidden="true"></span>
-                </button>
+               
                 <button class="btn btn-primary  pull-right" ng-click="itemFoto.filtraDado()">
                     <span class="fa fa-search" aria-hidden="true"></span> @TextosPaginas.Pesquisar
                 </button>
@@ -155,6 +153,10 @@
                 <div class="box-tools pull-right">
                     <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-plus"></i></button>
                 </div>
+
+                <button type="file" class="btn btn-primary" multiple ngf-select="itemFoto.CarregarArquivos($files)">
+                    <span class="fa fa-upload" aria-hidden="true"></span>
+                </button>
             </div>
             <div class="box-body">
                 <table class="table-condensed table-striped">

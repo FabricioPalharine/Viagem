@@ -241,7 +241,7 @@ namespace CV.Mobile.ViewModels
                         if (Resultado.Sucesso)
                         {
 
-                            AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "R", Resultado.IdentificadorRegistro.GetValueOrDefault(), !ItemReabastecimento.Identificador.HasValue);
+                            AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "CR", Resultado.IdentificadorRegistro.GetValueOrDefault(), !ItemReabastecimento.Identificador.HasValue);
                             ItemReabastecimento = await srv.CarregarReabastecimento(Resultado.IdentificadorRegistro);
 
                             await DatabaseService.SalvarReabastecimentoReplicada(ItemReabastecimento);

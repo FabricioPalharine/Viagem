@@ -3,6 +3,7 @@ using CV.Mobile.Services;
 using CV.Mobile.ViewModels;
 using CV.Mobile.Views;
 using FormsToolkit;
+using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,11 @@ namespace CV.Mobile
             SubscribeToDisplayAlertMessages();
             GmsPlace.Init(Constants.ClientAPI);
             GmsDirection.Init(Constants.ClientAPI);
-
+            Device.StartTimer(TimeSpan.FromMinutes(2), () =>
+            {
+                MessagingService.Current.SendMessage(MessageKeys.VerificarCalendario);
+                return true;
+            });
             LoadingViewModel vm = new LoadingViewModel();
             MainPage = new LoadingPage() { BindingContext = vm };
         }
@@ -58,7 +63,7 @@ namespace CV.Mobile
             {
                 using (ApiService srv = new ApiService())
                 {
-                    if (await srv.VerificarOnLine())
+                    if (CrossConnectivity.Current.IsConnected && await srv.VerificarOnLine())
                     {
                         var itemUsuario = await srv.CarregarUsuario(Codigo);
 
@@ -69,33 +74,12 @@ namespace CV.Mobile
             }
         }
 
-        public async void RedirectToMenu(UsuarioLogado itemUsuario)
+        public  void RedirectToMenu(UsuarioLogado itemUsuario)
         {
             ItemUsuario = itemUsuario;
-
-
-            MasterDetailViewModel vm = new MasterDetailViewModel(itemUsuario);
-            Viagem itemViagem = await DatabaseService.Database.GetViagemAtualAsync();
-            var Pagina = new Views.MasterDetailPage(vm);
-
-            MainPage = Pagina;
-            await vm.VerificarConexaoSignalR(itemViagem);
-            if (itemViagem != null)
-            {
-                vm.ItemViagem = itemViagem;
-                vm.PreencherPaginasViagem(itemViagem);
-                using (ApiService srv = new ApiService())
-                {
-                    if (await srv.VerificarOnLine())
-                    {
-                        await srv.SelecionarViagem(itemViagem.Identificador);
-                    }
-                }
-                vm.VerificarEnvioFotos();
-                vm.VerificarEnvioVideos();
-                vm.VerificarSincronizacaoDados();
-               
-            }
+            AguardeProcessandoPage pagina = new AguardeProcessandoPage() { BindingContext = new AguardeProcessandoViewmModel(itemUsuario) };
+            MainPage = pagina;
+            
         }
 
         protected override void OnStart()

@@ -11,6 +11,7 @@ using CV.Mobile.iOS.Services;
 using CV.Mobile.Interfaces;
 using Xamarin;
 using TK.CustomMap.iOSUnified;
+using System.Reflection;
 
 namespace CV.Mobile.iOS
 {
@@ -36,7 +37,8 @@ namespace CV.Mobile.iOS
             FormsMaps.Init();
             TKCustomMapRenderer.InitMapRenderer();
             NativePlacesApi.Init();
-
+            var cv = typeof(Xamarin.Forms.CarouselView);
+            var assembly = Assembly.Load(cv.FullName);
 
             LoadApplication(new App());
             RegisterDependencies();

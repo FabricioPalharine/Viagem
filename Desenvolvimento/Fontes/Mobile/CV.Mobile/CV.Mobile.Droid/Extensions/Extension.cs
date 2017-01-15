@@ -165,7 +165,7 @@ namespace CV.Mobile.Droid.Extensions
                         typeface = Typeface.CreateFromAsset(context.Assets, path);
 
                     }
-                    catch (Exception ex)
+                    catch (Exception )
                     {
 
                         try
@@ -175,7 +175,7 @@ namespace CV.Mobile.Droid.Extensions
 
 
                         }
-                        catch (Exception ex1)
+                        catch (Exception )
                         {
 
                         }

@@ -17,22 +17,31 @@
     </ResourceDictionary>
   </ContentPage.Resources>
   <ContentPage.Content>
+  
     <StackLayout>
+      <AbsoluteLayout >
+
+        <Image Source="splash" Aspect="AspectFill" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1.0, 1.0" />
+      </AbsoluteLayout>
+      
+      <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="Blue" />
+
       <StackLayout IsVisible ="{Binding LoadFinished}">
       <Label Text="Bem Vindo ao Curtindo uma Viagem"  Margin="20" >
         <Label.GestureRecognizers>
           <TapGestureRecognizer
                Command="{Binding TapCommand}"
-               NumberOfTapsRequired="1" 
+               NumberOfTapsRequired="3" 
             />
         </Label.GestureRecognizers>
       </Label>
-        <Button Command="{Binding EntrarCommand}" Text="Fazer Login via Google"  Margin="20"/>
-      </StackLayout>
-      <AbsoluteLayout IsVisible ="{Binding LoadFinished, Converter={StaticResource boolInvConverter}}">
+        <Button Command="{Binding EntrarCommand}" Text="Fazer Login via Google"  Margin="20" IsVisible="{Binding LoadFinished}"/>
 
-        <Image Source="splash" Aspect="AspectFill" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1.0, 1.0" />
-      </AbsoluteLayout>
+        <Label Text="Caminho URL" IsVisible="{Binding ConfigurarURL}"></Label>
+        <Entry Text="{Binding CaminhoBase}" IsVisible="{Binding ConfigurarURL}"/>
+        <Button Command="{Binding GravarURLCommand}"  IsVisible="{Binding ConfigurarURL}" Text="Salvar URL"/>
+      </StackLayout>
+   
     </StackLayout>
     
   </ContentPage.Content>

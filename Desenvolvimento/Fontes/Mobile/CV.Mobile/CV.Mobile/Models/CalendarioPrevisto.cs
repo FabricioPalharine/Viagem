@@ -37,7 +37,7 @@ namespace CV.Mobile.Models
 
          public DateTime? DataFim { get; set; }
 
-        public bool? AvisarHorario { get; set; }
+        public bool AvisarHorario { get; set; }
 
         public TimeSpan? HoraInicio { get; set; }
         public TimeSpan? HoraFim { get; set; }
@@ -56,6 +56,8 @@ namespace CV.Mobile.Models
                 _Atualizado = value;
             }
         }
+
+        public DateTime DataProximoAviso { get; set; }
 
         public CalendarioPrevisto Clone()
         {

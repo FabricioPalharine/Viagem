@@ -421,7 +421,11 @@
                                             </slick>
                                         </div>
                                     </div>
+                                   
                                 </div>
+                                <button type="file" class="btn btn-primary" multiple ngf-select="itemEdit.CarregarArquivos($files)">
+                                    <span class="fa fa-upload" aria-hidden="true"></span>
+                                </button>
                             </div>
                             <div id="evento{{item.Identificador}}" class="tab-pane fade in ">
                                 <div class="box" style="overflow-y:auto; height:140px">
@@ -443,7 +447,7 @@
                                                 </th>
                                             </tr>
                                         </thead>
-                                        <tr ng-repeat='itemCusto in itemEdit.itemHotel.Eventos' ng-if="!itemCusto.DataExclusao && itemCusto.IdentiticadorUsuario == itemEdit.loggedUser.Codigo">
+                                        <tr ng-repeat='itemCusto in itemEdit.itemHotel.Eventos' ng-if="!itemCusto.DataExclusao && itemCusto.IdentificadorUsuario == itemEdit.loggedUser.Codigo">
                                             <td>
                                                 <div class="dropdown" ng-if="itemCusto.Edicao">
                                                     <a class="dropdown-toggle" role="button" data-toggle="dropdown">

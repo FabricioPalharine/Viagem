@@ -40,6 +40,7 @@ namespace CV.Mobile.Models
         public List<GastoHotel> GastosHotel { get; set; }
         public List<GastoRefeicao> GastosRefeicao { get; set; }
         public List<GastoViagemAerea> GastosDeslocamento { get; set; }
+        public List<Posicao> Posicoes { get; set; }
 
         public List<Amigo> Amigos { get; set; }
 

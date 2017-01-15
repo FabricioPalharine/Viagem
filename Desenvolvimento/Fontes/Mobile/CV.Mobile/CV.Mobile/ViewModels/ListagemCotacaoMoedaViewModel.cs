@@ -151,7 +151,7 @@ namespace CV.Mobile.ViewModels
                             await DatabaseService.Database.ExcluirCotacaoMoeda(itemCotacao);
 
                         }
-                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Cotação de Moeda Gravada com Sucesso" } };
+                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Cotação de Moeda excluida com sucesso" } };
 
 
                     }

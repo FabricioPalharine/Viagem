@@ -174,7 +174,7 @@
 		    var Posicao = vm.ListaDados.indexOf(itemHotel);
 		    ItemRegistro.Avaliacoes = null;
 		    vm.ListaDados.splice(Posicao, 1, ItemRegistro);
-		    SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'A', ItemRegistro.Identificador, itemHotel.Identificador == null);
+		    SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'H', ItemRegistro.Identificador, itemHotel.Identificador == null);
 
 		    vm.ItemAtual++;
 		};

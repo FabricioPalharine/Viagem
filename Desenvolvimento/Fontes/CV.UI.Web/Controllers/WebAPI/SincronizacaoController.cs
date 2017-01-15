@@ -34,7 +34,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             itemSincronizar.CidadesRefeicao = biz.CarregarCidadeRefeicao(token.IdentificadorViagem);
             itemSincronizar.CidadesSugestao = biz.CarregarCidadeSugestao(token.IdentificadorViagem);
             itemSincronizar.CidadesViagemAerea = biz.CarregarCidadeViagemAerea(token.IdentificadorViagem);
-
+      
             itemSincronizar.CotacoesMoeda = biz.ListarCotacaoMoeda(d => d.IdentificadorViagem == token.IdentificadorViagem && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
             itemSincronizar.Comentarios = biz.ListarComentario(d => d.IdentificadorViagem == token.IdentificadorViagem && d.IdentificadorUsuario == token.IdentificadorUsuario && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
             itemSincronizar.AportesDinheiro = biz.ListarAporteDinheiro(d => d.IdentificadorUsuario == token.IdentificadorUsuario && d.IdentificadorViagem == token.IdentificadorViagem && d.IdentificadorUsuario == token.IdentificadorUsuario && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
@@ -42,6 +42,16 @@ namespace CV.UI.Web.Controllers.WebAPI
             itemSincronizar.CalendariosPrevistos = biz.ListarCalendarioPrevisto(d => d.IdentificadorViagem == token.IdentificadorViagem && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
             itemSincronizar.Sugestoes = biz.ListarSugestao(d => d.IdentificadorViagem == token.IdentificadorViagem && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
             itemSincronizar.ListaCompra = biz.ListarListaCompra(token.IdentificadorUsuario, d => d.IdentificadorViagem == token.IdentificadorViagem && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
+            foreach (var item in itemSincronizar.Gastos.SelectMany(d => d.Alugueis))
+                item.ItemGasto = null;
+            foreach (var item in itemSincronizar.Gastos.SelectMany(d => d.Atracoes))
+                item.ItemGasto = null;
+            foreach (var item in itemSincronizar.Gastos.SelectMany(d => d.Hoteis))
+                item.ItemGasto = null;
+            foreach (var item in itemSincronizar.Gastos.SelectMany(d => d.Refeicoes))
+                item.ItemGasto = null;
+            foreach (var item in itemSincronizar.Gastos.SelectMany(d => d.ViagenAereas))
+                item.ItemGasto = null;
 
             itemSincronizar.Atracoes = biz.ListarAtracao_Completo(d => d.IdentificadorViagem == token.IdentificadorViagem && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
             foreach (var item in itemSincronizar.Atracoes.SelectMany(d => d.Avaliacoes))
@@ -67,7 +77,9 @@ namespace CV.UI.Web.Controllers.WebAPI
             foreach (var item in itemSincronizar.Deslocamentos.SelectMany(d => d.Aeroportos))
                 item.ItemViagemAerea = null;
 
-            itemSincronizar.Compras = biz.ListarGastoCompra(token.IdentificadorViagem, d => d.ItemGasto.IdentificadorUsuario == token.IdentificadorUsuario && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
+            itemSincronizar.Compras = biz.ListarGastoCompra(token.IdentificadorViagem, token.IdentificadorUsuario, d => d.ItemGasto.IdentificadorUsuario == token.IdentificadorUsuario && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
+            foreach (var item in itemSincronizar.Compras.Select(d => d.ItemGasto))
+                item.Compras = null;
             itemSincronizar.Reabastecimento = biz.ListarReabastecimento(token.IdentificadorViagem, d => (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
             foreach (var item in itemSincronizar.Reabastecimento.SelectMany(d => d.Gastos))
             {

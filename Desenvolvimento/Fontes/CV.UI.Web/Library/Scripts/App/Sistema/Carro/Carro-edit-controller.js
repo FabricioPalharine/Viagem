@@ -241,7 +241,7 @@
 		    $scope.$parent.itemCarro.modalPopupTrigger(itemCusto, $translate.instant('MensagemExclusao'), $translate.instant('Sim'), $translate.instant('Nao'), function () {
 		        itemCusto.DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
 		        Reabastecimento.delete(itemCusto.Identificador);
-		        SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'R', itemCusto.Identificador, false);
+		        SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'CR', itemCusto.Identificador, false);
 
 		    });
 		};

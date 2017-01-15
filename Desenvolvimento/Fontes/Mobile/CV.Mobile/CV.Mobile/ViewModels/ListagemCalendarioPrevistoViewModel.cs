@@ -11,6 +11,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using MvvmHelpers;
+using System.ComponentModel;
+using System.Collections.Specialized;
 
 namespace CV.Mobile.ViewModels
 {
@@ -21,19 +23,27 @@ namespace CV.Mobile.ViewModels
 
         private bool _IsLoadingLista;
         private CalendarioPrevisto _ItemSelecionado;
-        private DateTime _DataCalendario;
-
+        private DateTime _Data;
+        private int _Posicao;
+        private bool _PrimeiroLoad = true;
+        public ObservableCollection<DataCalendario> DatasCalendario { get; set; }
         public ListagemCalendarioPrevistoViewModel(Viagem pitemViagem)
         {
-            DataCalendario = DateTime.Today;
+            _Posicao = 1;
+            _Data = DateTime.Today;
             ItemViagem = pitemViagem;
             ItemCriterioBusca = new CriterioBusca() { };
             PageAppearingCommand = new Command(
                                                                    async () =>
                                                                    {
+                                                                       await Task.Delay(200);
+                                                                       Posicao = 1;
+
+                                                                       await CarregarListaDados();
+
                                                                        await Task.Delay(100);
                                                                        OnPropertyChanged("ModoLista");
-                                                                       await CarregarListaDados();
+                                                                       
                                                                    },
                                                                    () => true);
             PesquisarCommand = new Command(
@@ -54,6 +64,8 @@ namespace CV.Mobile.ViewModels
             AbrirAgendaCommand = new Command<int?>(
                                                       async (obj) => await VerificarAcaoItem(obj));
 
+            DatasCalendario = new ObservableCollection<Models.DataCalendario>(new DataCalendario[] { new DataCalendario() { Data = DateTime.Today.AddDays(-1) }, new DataCalendario() { Data = DateTime.Today }, new DataCalendario() { Data = DateTime.Today.AddDays(1) } });
+
             MessagingService.Current.Unsubscribe<CalendarioPrevisto>(MessageKeys.ManutencaoCalendarioPrevisto);
             MessagingService.Current.Subscribe<CalendarioPrevisto>(MessageKeys.ManutencaoCalendarioPrevisto, (service, item) =>
             {
@@ -73,6 +85,8 @@ namespace CV.Mobile.ViewModels
             });
         }
 
+      
+
         public CriterioBusca ItemCriterioBusca
         {
             get
@@ -88,6 +102,33 @@ namespace CV.Mobile.ViewModels
 
         public Viagem ItemViagem { get; set; }
         public ObservableCollection<Cidade> ListaCidades { get; set; }
+        private bool AlterandoPosicao = false;
+        public Command<SelectedPositionChangedEventArgs> TrocarPosicaoCommand
+        {
+            get
+            {
+                return new Command<SelectedPositionChangedEventArgs>(async (obj) =>
+                {
+                    int _posicao = (int)obj.SelectedPosition;
+                    await AjustarPosicaoCalendario(_posicao);
+
+                });
+            }
+        }
+
+        private async Task AjustarPosicaoCalendario( int _posicao)
+        {
+            AlterandoPosicao = true;
+            var item = DatasCalendario[_posicao];
+            Data = item.Data;
+            await Task.Delay(200);
+            if (_posicao == 0)
+                DatasCalendario.Insert(0, new DataCalendario() { Data = Data.AddDays(-1) });
+            else if (_posicao == DatasCalendario.Count - 1)
+                DatasCalendario.Add(new DataCalendario() { Data = Data.AddDays(+1) });
+
+            AlterandoPosicao = false;
+        }
 
         public bool ModoPesquisa
         {
@@ -144,16 +185,42 @@ namespace CV.Mobile.ViewModels
             }
         }
 
-        public DateTime DataCalendario
+        public DateTime Data
         {
             get
             {
-                return _DataCalendario;
+                return _Data;
             }
 
             set
             {
-                SetProperty(ref _DataCalendario, value);
+                bool Prosseguir = (_Data != value) && !AlterandoPosicao;
+                
+                 SetProperty(ref _Data, value);
+                if (Prosseguir)
+                {
+                    DatasCalendario = new ObservableCollection<Models.DataCalendario>(new DataCalendario[] { new DataCalendario() { Data = _Data.AddDays(-1) }, new DataCalendario() { Data = _Data }, new DataCalendario() { Data = _Data.AddDays(1) } });
+                    OnPropertyChanged("DatasCalendario");
+                    Posicao = 1;
+                }
+            }
+        }
+
+        public int Posicao
+        {
+            get
+            {
+                return _Posicao;
+            }
+
+            set
+            {
+                SetProperty(ref _Posicao, value);
+                if (value == 0 && _PrimeiroLoad)
+                {
+                    AjustarPosicaoCalendario(value);
+                    _PrimeiroLoad = false;
+                }
             }
         }
 

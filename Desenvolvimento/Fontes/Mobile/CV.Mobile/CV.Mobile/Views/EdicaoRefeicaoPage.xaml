@@ -24,6 +24,7 @@
     <ToolbarItem  Icon="save.png"  Command="{Binding SalvarCommand}" />
     <controles:BindableToolbarItem  Icon="delete24.png" Parent="{x:Reference this}"  Command="{Binding ExcluirCommand}" IsVisible="{Binding PermiteExcluir}"   />
     <controles:BindableToolbarItem  Icon="dollar24.png" Parent="{x:Reference this}"  Command="{Binding AbrirCustosCommand}" IsVisible="{Binding PermiteExcluir}"   />
+    <controles:BindableToolbarItem  Icon="camera24.png" Parent="{x:Reference this}"  Command="{Binding OpcaoFotoCommand}" IsVisible="{Binding PermiteExcluir}"   />
 
   </ContentPage.ToolbarItems>
   <ContentPage.Content>

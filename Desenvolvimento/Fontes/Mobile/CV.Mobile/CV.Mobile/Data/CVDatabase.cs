@@ -243,6 +243,11 @@ namespace CV.Mobile.Data
             await database.DeleteAsync(itemAmigo);
         }
 
+        public async Task ExcluirPosicao(Posicao itemAmigo)
+        {
+            await database.DeleteAsync(itemAmigo);
+        }
+
         public async Task<Amigo> RetornarAmigoIdentificadorUsuario(int IdentificadorUsuario)
         {
             return await database.Table<Amigo>().Where(d => d.IdentificadorAmigo == IdentificadorUsuario).FirstOrDefaultAsync();
@@ -1416,12 +1421,12 @@ namespace CV.Mobile.Data
             if ((itemBusca.Situacao.HasValue && itemBusca.Situacao < 4) || itemBusca.IdentificadorCidade.HasValue || itemBusca.IdentificadorCidade2.HasValue)
             {
                 var ListaInteiro = ListaResultado.Select(d => d.Identificador).ToList();
-                var queryAeroportoOrigem = database.Table<ViagemAereaAeroporto>().Where(d => ListaInteiro.Contains(d.Identificador)).Where(d => d.TipoPonto == (int)enumTipoParada.Origem);
+                var queryAeroportoOrigem = database.Table<ViagemAereaAeroporto>().Where(d => ListaInteiro.Contains(d.IdentificadorViagemAerea)).Where(d => d.TipoPonto == (int)enumTipoParada.Origem);
                 if (itemBusca.IdentificadorCidade.HasValue)
                     queryAeroportoOrigem = queryAeroportoOrigem.Where(d => d.IdentificadorCidade == itemBusca.IdentificadorCidade);
                 var ListaAeroportoOrigem = await queryAeroportoOrigem.ToListAsync();
 
-                var queryAeroportoDestino = database.Table<ViagemAereaAeroporto>().Where(d => ListaInteiro.Contains(d.Identificador)).Where(d => d.TipoPonto == (int)enumTipoParada.Destino);
+                var queryAeroportoDestino = database.Table<ViagemAereaAeroporto>().Where(d => ListaInteiro.Contains(d.IdentificadorViagemAerea)).Where(d => d.TipoPonto == (int)enumTipoParada.Destino);
                 if (itemBusca.IdentificadorCidade2.HasValue)
                     queryAeroportoDestino = queryAeroportoDestino.Where(d => d.IdentificadorCidade == itemBusca.IdentificadorCidade2);
                 var ListaAeroportoDestino = await queryAeroportoDestino.ToListAsync();
@@ -1687,6 +1692,11 @@ namespace CV.Mobile.Data
             return await database.Table<Sugestao>().Where(d => !d.AtualizadoBanco).ToListAsync();
         }
 
+
+        public async Task<List<Posicao>> ListarPosicao_Pendente()
+        {
+            return await database.Table<Posicao>().ToListAsync();
+        }
         public async Task<List<ViagemAerea>> ListarViagemAerea_Pendente()
         {
             return await database.Table<ViagemAerea>().Where(d => !d.AtualizadoBanco).ToListAsync();
@@ -1710,6 +1720,13 @@ namespace CV.Mobile.Data
         public async Task<List<Refeicao>> ListarRefeicao_Pendente()
         {
             return await database.Table<Refeicao>().Where(d => !d.AtualizadoBanco).ToListAsync();
+        }
+
+        public async Task<CalendarioPrevisto> ConsultarCalendarioAlerta()
+        {
+            DateTime dataPesquisa = DateTime.Now.AddMinutes(5);
+            var query = await database.Table<CalendarioPrevisto>().Where(d => d.AvisarHorario).Where(d => d.DataProximoAviso > DateTime.Today).Where(d => d.DataProximoAviso < dataPesquisa).ToListAsync();
+            return query.Where(d => !d.DataExclusao.HasValue).OrderBy(d => d.DataInicio).FirstOrDefault();
         }
     }
 }

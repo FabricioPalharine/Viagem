@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Net.Http;
 using System.Web.Script.Serialization;
+using Newtonsoft.Json;
 
 namespace CV.UI.Web.Helper
 {
@@ -20,7 +21,7 @@ namespace CV.UI.Web.Helper
         {
             var json = actionContext.Request.RequestUri.ParseQueryString()[_queryStringKey];
             var serializer = new JavaScriptSerializer();
-            actionContext.ActionArguments[_queryStringKey] = serializer.Deserialize(json, _type);
+            actionContext.ActionArguments[_queryStringKey] = JsonConvert.DeserializeObject(json, _type);
         }
     }
 }

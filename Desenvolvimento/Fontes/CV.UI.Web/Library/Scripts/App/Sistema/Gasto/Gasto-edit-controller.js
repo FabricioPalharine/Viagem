@@ -19,7 +19,6 @@
 		vm.edicao = false;
 		vm.loggedUser = Auth.currentUser;
 		vm.CamposInvalidos = {};
-		vm.itemUsuario = null;
 		vm.ListaUsuario = [];
 		vm.ListaMoeda = [];
 		vm.itemMoeda = {};
@@ -28,13 +27,7 @@
 		vm.load = function () {
 			vm.loading = true;		
 			
-			Viagem.get({ id: Auth.currentUser.IdentificadorViagem }, function (data) {
-			    vm.itemMoeda.Codigo = data.Moeda;
-			});
-
-			Dominio.CarregaMoedas(function (data) {
-			    vm.ListaMoeda = data;
-			});
+		
 
 			if (vm.itemGasto.Identificador)
 			{
@@ -47,11 +40,7 @@
 			    vm.PreencherLoadItem();
 
 			EscopoAtualizacao.SalvarCusto = function () {
-			    if (vm.itemUsuario !== null && vm.itemUsuario.Identificador)
-			        vm.itemGasto.IdentificadorUsuario = vm.itemUsuario.Identificador;
-			    else
-			        vm.itemGasto.IdentificadorUsuario = null;
-
+			  
 			    if (vm.itemMoeda && vm.itemMoeda.Codigo)
 			        vm.itemGasto.Moeda = vm.itemMoeda.Codigo;
 			    else
@@ -63,6 +52,8 @@
 			        vm.itemGasto.Data += (vm.itemGasto.strHora) ? vm.itemGasto.strHora : "00:00:00";
 
 			    }
+
+			    return vm.itemGasto;
 			};
 			
 		};
@@ -71,14 +62,22 @@
 		    vm.itemGastoOriginal = item;
 		    vm.itemGasto = jQuery.extend({}, item);
 		    vm.EscopoAtualizacao = $scope.$parent.itemGasto;
+
+
+		    Viagem.get({ id: Auth.currentUser.IdentificadorViagem }, function (data) {
+		        vm.itemMoeda.Codigo = data.Moeda;
+		    });
+
+		    Dominio.CarregaMoedas(function (data) {
+		        vm.ListaMoeda = data;
+		    });
+
 		    if (item.ExibeHora)
 		        vm.ExibeHora = true;
 		};
 
 		vm.PreencherLoadItem = function()
 		{
-		    if (vm.itemGasto.IdentificadorUsuario)
-		        vm.itemUsuario = { Identificador: vm.itemGasto.IdentificadorUsuario };
 
 		    if (vm.itemGasto.Moeda)
 		        vm.itemMoeda = { Codigo: vm.itemGasto.Moeda };
@@ -127,10 +126,7 @@
 			vm.CamposInvalidos = {};
 			vm.loading = true;
 				
-				if(vm.itemUsuario!== null && vm.itemUsuario.Identificador)
-					vm.itemGasto.IdentificadorUsuario= vm.itemUsuario.Identificador;
-				else
-				    vm.itemGasto.IdentificadorUsuario = null;
+			
 
 				if (vm.itemMoeda && vm.itemMoeda.Codigo)
 				    vm.itemGasto.Moeda = vm.itemMoeda.Codigo;
@@ -184,7 +180,7 @@
 				Gasto.save(vm.itemGasto, function (data) {
 					vm.loading = false;
 					if (data.Sucesso) {
-					    SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'G', data.ItemRegistro, vm.itemGastoOriginal.Identificador==null);
+					    SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'G', data.IdentificadorRegistro, vm.itemGastoOriginal.Identificador==null);
 
 					    vm.EscopoAtualizacao.AtualizarGasto(data.ItemRegistro, vm.itemGastoOriginal);
 					    vm.close();

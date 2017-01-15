@@ -2,6 +2,7 @@
 using CV.Mobile.Services;
 using CV.Mobile.Views;
 using FormsToolkit;
+using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -402,7 +403,7 @@ namespace CV.Mobile.ViewModels
                 {
                     await TrocarControleGPS();
                 }
-                else if (_ItemMenuSelecionado.Codigo == 21)
+                else if (_ItemMenuSelecionado.Codigo == 22)
                 {
                     await SincronizarDados(true);
                 }
@@ -430,7 +431,7 @@ namespace CV.Mobile.ViewModels
 
         private async Task AbrirCotacaoMoeda()
         {
-            if (_ItemViagem != null && await VerificarOnline())
+            if (_ItemViagem != null)
             {
                 ListagemCotacaoMoedaPage pagina = new ListagemCotacaoMoedaPage() { BindingContext = new ListagemCotacaoMoedaViewModel(_ItemViagem) };
 
@@ -583,7 +584,7 @@ namespace CV.Mobile.ViewModels
 
         private async Task AbrirListaCompra()
         {
-            if (_ItemViagem != null && await VerificarOnline())
+            if (_ItemViagem != null )
             {
                 var pagina = new ListagemListaCompraPage() { BindingContext = new ListagemListaCompraViewModel(_ItemViagem) };
 
@@ -632,7 +633,7 @@ namespace CV.Mobile.ViewModels
             bool Online = false;
             using (ApiService srv = new ApiService())
             {
-                Online = await srv.VerificarOnLine();
+                Online  = CrossConnectivity.Current.IsConnected && await srv.VerificarOnLine();
             }
             if (!Online)
                 ExibirAlertaOffLine();
@@ -655,8 +656,7 @@ namespace CV.Mobile.ViewModels
                     await OnItemMenuSelecionado(new EditarViagemPage() { BindingContext = new EditarViagemViewModel(itemEditar), Title = "Editar" }, false);
                 }
             }
-            else
-                ExibirAlertaOffLine();
+            
         }
 
         private void ExibirAlertaOffLine()

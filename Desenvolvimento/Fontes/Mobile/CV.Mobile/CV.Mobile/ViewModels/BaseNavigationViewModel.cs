@@ -65,6 +65,9 @@ namespace CV.Mobile.ViewModels
                 await DatabaseService.Database.SalvarViagemAsync(itemViagem);
                 DatabaseService.SincronizarParticipanteViagem(itemViagem);
                 ConectarViagem(itemViagem.Identificador.GetValueOrDefault(), itemViagem.Edicao);
+                var DadosSincronizar = await srv.RetornarAtualizacoes(new CriterioBusca() { DataInicioDe = itemCS.UltimaDataRecepcao });
+
+                await DatabaseService.SincronizarDadosServidorLocal(itemCS, DadosSincronizar, ItemUsuarioLogado, itemCS.UltimaDataRecepcao.Value);
 
                 if (Application.Current?.MainPage is MasterDetailPage)
                 {
@@ -434,8 +437,8 @@ namespace CV.Mobile.ViewModels
                 if (VM.Confirmado)
                     itemUpload.Comentario = VM.Valor;
 
-                if (CrossConnectivity.Current.IsConnected && Settings.ModoImagem != "3" &&
-                     (Settings.ModoImagem == "1" || CrossConnectivity.Current.ConnectionTypes.Contains(Plugin.Connectivity.Abstractions.ConnectionType.Desktop) ||
+                if (CrossConnectivity.Current.IsConnected && Settings.ModoVideo != "3" &&
+                     (Settings.ModoVideo == "1" || CrossConnectivity.Current.ConnectionTypes.Contains(Plugin.Connectivity.Abstractions.ConnectionType.Desktop) ||
                    CrossConnectivity.Current.ConnectionTypes.Contains(Plugin.Connectivity.Abstractions.ConnectionType.Wimax) ||
                    CrossConnectivity.Current.ConnectionTypes.Contains(Plugin.Connectivity.Abstractions.ConnectionType.WiFi)))
                 {

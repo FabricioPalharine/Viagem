@@ -23,7 +23,7 @@
   </ContentPage.Behaviors>
   <ContentPage.ToolbarItems>
     <ToolbarItem  Icon="save.png"  Command="{Binding SalvarCommand}" />
-    <controles:BindableToolbarItem  Icon="delete24.png" Parent="{x:Reference this}"  Command="{Binding ExcluirCommand}" IsVisible="{Binding PermiteExcluir}"   />
+    <controles:BindableToolbarItem  Icon="delete24.png" Parent="{x:Reference this}"  Command="{Binding DeleteCommand}" IsVisible="{Binding PermiteExcluir}"   />
 
   </ContentPage.ToolbarItems>
   <ContentPage.Content>

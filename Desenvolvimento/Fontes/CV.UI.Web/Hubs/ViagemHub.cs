@@ -13,7 +13,7 @@ namespace CV.UI.Web.Hubs
 
     public class ViagemHub : Hub
     {
-        private List<UsuarioLogado> UsuariosConetados = new List<UsuarioLogado>();
+        private static List<UsuarioLogado> UsuariosConetados = new List<UsuarioLogado>();
 
         public void ConectarUsuario(int IdentificadorUsuario)
         {

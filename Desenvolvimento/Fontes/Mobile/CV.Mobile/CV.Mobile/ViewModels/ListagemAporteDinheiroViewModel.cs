@@ -212,7 +212,7 @@ namespace CV.Mobile.ViewModels
                     {
                        
                         await DatabaseService.ExcluirAporteDinheiro(item, false);
-                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Aporte Dinheiro Gravado com Sucesso " } };
+                        Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Compra de Moeda excluída com Sucesso " } };
                     }
                     MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
                     {

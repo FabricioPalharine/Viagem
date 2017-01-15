@@ -43,5 +43,7 @@ namespace CV.Model
 
         public List<Amigo> Amigos { get; set; }
 
+        public List<Posicao> Posicoes { get; set; }
+
     }
 }

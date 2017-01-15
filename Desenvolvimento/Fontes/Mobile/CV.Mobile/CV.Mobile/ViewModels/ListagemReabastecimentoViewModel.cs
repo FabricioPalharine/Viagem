@@ -85,7 +85,7 @@ namespace CV.Mobile.ViewModels
                         using (ApiService srv = new ApiService())
                         {
                             Resultado = await srv.ExcluirReabastecimento(obj.Identificador);
-                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "R", obj.Identificador.GetValueOrDefault(), false);
+                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "CR", obj.Identificador.GetValueOrDefault(), false);
 
                             await DatabaseService.ExcluirReabastecimento(obj.Identificador, true);
 

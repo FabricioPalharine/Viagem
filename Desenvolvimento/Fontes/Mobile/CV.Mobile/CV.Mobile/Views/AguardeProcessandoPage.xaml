@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.AguardeProcessandoPage"             
+             Title="Carregando"
+             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             xmlns:toolkit="clr-namespace:FormsToolkit;assembly=FormsToolKit">
+  <ContentPage.Behaviors>
+    <behaviors:EventHandlerBehavior EventName="Appearing">
+      <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
+    </behaviors:EventHandlerBehavior>
+
+  </ContentPage.Behaviors>
+  <ContentPage.Content>
+    <StackLayout VerticalOptions="FillAndExpand">
+      <AbsoluteLayout >
+
+        <Image Source="splash" Aspect="AspectFill" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1.0, 1.0" />
+      </AbsoluteLayout>
+
+      <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="Blue" />
+      <Label Text="Aguarde enquanto carregamos os dados"  Margin="20" />
+
+    </StackLayout>
+  </ContentPage.Content>
+</ContentPage>

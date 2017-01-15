@@ -790,7 +790,7 @@ namespace CV.Business
                 if (itemViagem != null)
                 {
                     itemResultado.IdentificadorViagem = IdentificadorViagem;
-
+                    itemResultado.Aberto = itemViagem.Aberto.GetValueOrDefault();
                     itemResultado.NomeViagem = itemViagem.Nome;
                     itemResultado.PermiteEdicao = itemViagem.IdentificadorUsuario == itemResultado.Codigo || ListarParticipanteViagem(d => d.IdentificadorUsuario == itemResultado.Codigo).Any();
                     itemResultado.VerCustos = itemResultado.PermiteEdicao || ListarUsuarioGasto(d => d.IdentificadorUsuario == itemResultado.Codigo).Any();
@@ -1567,11 +1567,11 @@ namespace CV.Business
             }
         }
 
-        public List<GastoCompra> ListarGastoCompra(int? IdentificadorViagem, Expression<Func<GastoCompra, bool>> predicate)
+        public List<GastoCompra> ListarGastoCompra(int? IdentificadorViagem, int? IdentificadorUsuario, Expression<Func<GastoCompra, bool>> predicate)
         {
             using (ViagemRepository repositorio = new ViagemRepository())
             {
-                return repositorio.ListarGastoCompra(IdentificadorViagem, predicate);
+                return repositorio.ListarGastoCompra(IdentificadorViagem,IdentificadorUsuario, predicate);
             }
         }
 
@@ -1863,10 +1863,663 @@ namespace CV.Business
             SincronizarHoteis(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
             SincronizarCarros(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
             SincronizarViagemAereas(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
-
+            SincronizarCarroDeslocamento(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
+            SincronizarReabastecimentos(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
+            SincronizarHotelEvento(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
+            SincronizarGastoCompra(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
+            SincronizarItemCompra(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
+            SincronizarGasto(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
+            SincronizarGastoAtracao(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
+            SincronizarGastoHotel(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
+            SincronizarGastoRefeicao(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
+            SincronizarGastoViagemAerea(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
+            SincronizarGastoCarro(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
+            SincronizarPosicoes(itemDados, identificadorUsuario, identificadorViagem);
             return listaResultado;
         }
 
+        private void SincronizarPosicoes(ClasseSincronizacao itemDados, int identificadorUsuario, int? identificadorViagem)
+        {
+            foreach (var item in itemDados.Posicoes)
+            {
+                item.IdentificadorUsuario = identificadorUsuario;
+                item.IdentificadorViagem = identificadorViagem;
+                item.Identificador = null;
+                SalvarPosicao(item);
+            }
+        }
+
+        private void SincronizarGastoCarro(ClasseSincronizacao itemDados, int identificadorUsuario, int? identificadorViagem, List<DeParaIdentificador> listaResultado)
+        {
+            foreach (var item in itemDados.GastosCarro)
+            {
+                var itemBase = SelecionarAluguelGasto(item.Identificador);
+                if (itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
+                    continue;
+                if (item.DataExclusao.HasValue)
+                {
+                    item.DataExclusao = DateTime.Now.ToUniversalTime();
+                }
+                if (item.IdentificadorGasto.HasValue && item.IdentificadorGasto < 0)
+                {
+                    var ItemNovoCodigo = listaResultado.Where(d => d.IdentificadorOrigem == item.IdentificadorGasto && d.TipoObjeto == "G").FirstOrDefault();
+                    if (ItemNovoCodigo != null)
+                        item.IdentificadorGasto = ItemNovoCodigo.IdentificadorDetino;
+
+                }
+                if (item.IdentificadorCarro.HasValue && item.IdentificadorCarro < 0)
+                {
+                    var ItemNovoCodigo = listaResultado.Where(d => d.IdentificadorOrigem == item.IdentificadorCarro && d.TipoObjeto == "C").FirstOrDefault();
+                    if (ItemNovoCodigo != null)
+                        item.IdentificadorCarro = ItemNovoCodigo.IdentificadorDetino;
+
+                }
+                item.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                item.ItemGasto.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                DeParaIdentificador itemDePara = new DeParaIdentificador();
+                itemDePara.IdentificadorOrigem = item.Identificador;
+                itemDePara.TipoObjeto = "GC";
+                if (item.Identificador < 0)
+                    item.Identificador = null;
+
+
+
+                SalvarAluguelGasto(item);
+
+                itemDePara.IdentificadorDetino = item.Identificador;
+                listaResultado.Add(itemDePara);
+
+            }
+
+        }
+
+
+        private void SincronizarGastoHotel(ClasseSincronizacao itemDados, int identificadorUsuario, int? identificadorViagem, List<DeParaIdentificador> listaResultado)
+        {
+            foreach (var item in itemDados.GastosHotel)
+            {
+                var itemBase = SelecionarGastoHotel(item.Identificador);
+                if (itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
+                    continue;
+                if (item.DataExclusao.HasValue)
+                {
+                    item.DataExclusao = DateTime.Now.ToUniversalTime();
+                }
+                if (item.IdentificadorGasto.HasValue && item.IdentificadorGasto < 0)
+                {
+                    var ItemNovoCodigo = listaResultado.Where(d => d.IdentificadorOrigem == item.IdentificadorGasto && d.TipoObjeto == "G").FirstOrDefault();
+                    if (ItemNovoCodigo != null)
+                        item.IdentificadorGasto = ItemNovoCodigo.IdentificadorDetino;
+
+                }
+                if (item.IdentificadorHotel.HasValue && item.IdentificadorHotel < 0)
+                {
+                    var ItemNovoCodigo = listaResultado.Where(d => d.IdentificadorOrigem == item.IdentificadorHotel && d.TipoObjeto == "H").FirstOrDefault();
+                    if (ItemNovoCodigo != null)
+                        item.IdentificadorHotel = ItemNovoCodigo.IdentificadorDetino;
+
+                }
+                item.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                item.ItemGasto.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                DeParaIdentificador itemDePara = new DeParaIdentificador();
+                itemDePara.IdentificadorOrigem = item.Identificador;
+                itemDePara.TipoObjeto = "GH";
+                if (item.Identificador < 0)
+                    item.Identificador = null;
+
+
+
+                SalvarGastoHotel(item);
+
+                itemDePara.IdentificadorDetino = item.Identificador;
+                listaResultado.Add(itemDePara);
+
+            }
+
+        }
+
+
+        private void SincronizarGastoViagemAerea(ClasseSincronizacao itemDados, int identificadorUsuario, int? identificadorViagem, List<DeParaIdentificador> listaResultado)
+        {
+            foreach (var item in itemDados.GastosDeslocamento)
+            {
+                var itemBase = SelecionarGastoViagemAerea(item.Identificador);
+                if (itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
+                    continue;
+                if (item.DataExclusao.HasValue)
+                {
+                    item.DataExclusao = DateTime.Now.ToUniversalTime();
+                }
+                if (item.IdentificadorGasto.HasValue && item.IdentificadorGasto < 0)
+                {
+                    var ItemNovoCodigo = listaResultado.Where(d => d.IdentificadorOrigem == item.IdentificadorGasto && d.TipoObjeto == "G").FirstOrDefault();
+                    if (ItemNovoCodigo != null)
+                        item.IdentificadorGasto = ItemNovoCodigo.IdentificadorDetino;
+
+                }
+                if (item.IdentificadorViagemAerea.HasValue && item.IdentificadorViagemAerea < 0)
+                {
+                    var ItemNovoCodigo = listaResultado.Where(d => d.IdentificadorOrigem == item.IdentificadorViagemAerea && d.TipoObjeto == "VA").FirstOrDefault();
+                    if (ItemNovoCodigo != null)
+                        item.IdentificadorViagemAerea = ItemNovoCodigo.IdentificadorDetino;
+
+                }
+                item.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                item.ItemGasto.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                DeParaIdentificador itemDePara = new DeParaIdentificador();
+                itemDePara.IdentificadorOrigem = item.Identificador;
+                itemDePara.TipoObjeto = "GV";
+                if (item.Identificador < 0)
+                    item.Identificador = null;
+
+
+
+                SalvarGastoViagemAerea(item);
+
+                itemDePara.IdentificadorDetino = item.Identificador;
+                listaResultado.Add(itemDePara);
+
+            }
+
+        }
+
+
+        private void SincronizarGastoRefeicao(ClasseSincronizacao itemDados, int identificadorUsuario, int? identificadorViagem, List<DeParaIdentificador> listaResultado)
+        {
+            foreach (var item in itemDados.GastosRefeicao)
+            {
+                var itemBase = SelecionarGastoRefeicao(item.Identificador);
+                if (itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
+                    continue;
+                if (item.DataExclusao.HasValue)
+                {
+                    item.DataExclusao = DateTime.Now.ToUniversalTime();
+                }
+                if (item.IdentificadorGasto.HasValue && item.IdentificadorGasto < 0)
+                {
+                    var ItemNovoCodigo = listaResultado.Where(d => d.IdentificadorOrigem == item.IdentificadorGasto && d.TipoObjeto == "G").FirstOrDefault();
+                    if (ItemNovoCodigo != null)
+                        item.IdentificadorGasto = ItemNovoCodigo.IdentificadorDetino;
+
+                }
+                if (item.IdentificadorRefeicao.HasValue && item.IdentificadorRefeicao < 0)
+                {
+                    var ItemNovoCodigo = listaResultado.Where(d => d.IdentificadorOrigem == item.IdentificadorRefeicao && d.TipoObjeto == "R").FirstOrDefault();
+                    if (ItemNovoCodigo != null)
+                        item.IdentificadorRefeicao = ItemNovoCodigo.IdentificadorDetino;
+
+                }
+                item.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                item.ItemGasto.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                DeParaIdentificador itemDePara = new DeParaIdentificador();
+                itemDePara.IdentificadorOrigem = item.Identificador;
+                itemDePara.TipoObjeto = "GR";
+                if (item.Identificador < 0)
+                    item.Identificador = null;
+
+
+
+                SalvarGastoRefeicao(item);
+
+                itemDePara.IdentificadorDetino = item.Identificador;
+                listaResultado.Add(itemDePara);
+
+            }
+
+        }
+
+
+        private void SincronizarGastoAtracao(ClasseSincronizacao itemDados, int identificadorUsuario, int? identificadorViagem, List<DeParaIdentificador> listaResultado)
+        {
+            foreach (var item in itemDados.GastosAtracao)
+            {
+                var itemBase = SelecionarGastoAtracao(item.Identificador);
+                if (itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
+                    continue;
+                if (item.DataExclusao.HasValue)
+                {
+                    item.DataExclusao = DateTime.Now.ToUniversalTime();
+                }
+                if (item.IdentificadorGasto.HasValue && item.IdentificadorGasto < 0)
+                {
+                    var ItemNovoCodigo = listaResultado.Where(d => d.IdentificadorOrigem == item.IdentificadorGasto && d.TipoObjeto == "G").FirstOrDefault();
+                    if (ItemNovoCodigo != null)
+                        item.IdentificadorGasto = ItemNovoCodigo.IdentificadorDetino;
+
+                }
+                if (item.IdentificadorAtracao.HasValue && item.IdentificadorAtracao < 0)
+                {
+                    var ItemNovoCodigo = listaResultado.Where(d => d.IdentificadorOrigem == item.IdentificadorAtracao && d.TipoObjeto == "A").FirstOrDefault();
+                    if (ItemNovoCodigo != null)
+                        item.IdentificadorAtracao = ItemNovoCodigo.IdentificadorDetino;
+
+                }
+                item.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                item.ItemGasto.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                DeParaIdentificador itemDePara = new DeParaIdentificador();
+                itemDePara.IdentificadorOrigem = item.Identificador;
+                itemDePara.TipoObjeto = "GA";
+                if (item.Identificador < 0)
+                    item.Identificador = null;
+    
+
+
+                SalvarGastoAtracao(item);
+
+                itemDePara.IdentificadorDetino = item.Identificador;
+                listaResultado.Add(itemDePara);
+
+            }
+
+        }
+
+        private void SincronizarGasto(ClasseSincronizacao itemDados, int identificadorUsuario, int? identificadorViagem, List<DeParaIdentificador> listaResultado)
+        {
+            foreach (var itemGasto in itemDados.Gastos)
+            {
+                var itemBase = SelecionarItemCompra(itemGasto.Identificador);
+                if (itemBase.DataAtualizacao > itemGasto.DataAtualizacao || itemGasto.DataExclusao.HasValue)
+                    continue;
+                itemGasto.Reabastecimentos = new List<ReabastecimentoGasto>();
+                itemGasto.Compras = new List<GastoCompra>();
+                if (itemGasto.DataExclusao.HasValue)
+                {
+                    itemGasto.DataExclusao = DateTime.Now.ToUniversalTime();
+                    foreach (var item in itemGasto.Alugueis.Where(d => !d.DataExclusao.HasValue))
+                        item.DataExclusao = DateTime.Now.ToUniversalTime();
+                    foreach (var item in itemGasto.Atracoes.Where(d => !d.DataExclusao.HasValue))
+                        item.DataExclusao = DateTime.Now.ToUniversalTime();
+                    foreach (var item in itemGasto.Hoteis.Where(d => !d.DataExclusao.HasValue))
+                        item.DataExclusao = DateTime.Now.ToUniversalTime();
+                    foreach (var item in itemGasto.Refeicoes.Where(d => !d.DataExclusao.HasValue))
+                        item.DataExclusao = DateTime.Now.ToUniversalTime();
+                    foreach (var item in itemGasto.ViagenAereas.Where(d => !d.DataExclusao.HasValue))
+                        item.DataExclusao = DateTime.Now.ToUniversalTime();
+                    itemGasto.Usuarios = new List<GastoDividido>();
+                }
+
+
+                foreach (var item in itemGasto.Alugueis.Where(d => !d.DataExclusao.HasValue))
+                {
+                    item.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                    if (item.IdentificadorCarro.HasValue && item.IdentificadorCarro < 0)
+                    {
+                        var ItemNovoCodigo = listaResultado.Where(d => d.IdentificadorOrigem == item.IdentificadorCarro && d.TipoObjeto == "C").FirstOrDefault();
+                        if (ItemNovoCodigo != null)
+                            item.IdentificadorCarro = ItemNovoCodigo.IdentificadorDetino;
+
+                    }
+                }
+                foreach (var item in itemGasto.Atracoes.Where(d => !d.DataExclusao.HasValue))
+                {
+                    item.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                    if (item.IdentificadorAtracao.HasValue && item.IdentificadorAtracao < 0)
+                    {
+                        var ItemNovoCodigo = listaResultado.Where(d => d.IdentificadorOrigem == item.IdentificadorAtracao && d.TipoObjeto == "A").FirstOrDefault();
+                        if (ItemNovoCodigo != null)
+                            item.IdentificadorAtracao = ItemNovoCodigo.IdentificadorDetino;
+
+                    }
+                }
+                foreach (var item in itemGasto.Hoteis.Where(d => !d.DataExclusao.HasValue))
+                {
+                    {
+                        item.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                        if (item.IdentificadorHotel.HasValue && item.IdentificadorHotel < 0)
+                        {
+                            var ItemNovoCodigo = listaResultado.Where(d => d.IdentificadorOrigem == item.IdentificadorHotel && d.TipoObjeto == "H").FirstOrDefault();
+                            if (ItemNovoCodigo != null)
+                                item.IdentificadorHotel = ItemNovoCodigo.IdentificadorDetino;
+
+                        }
+                    }
+                }
+                foreach (var item in itemGasto.Refeicoes.Where(d => !d.DataExclusao.HasValue))
+                {
+                    item.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                    if (item.IdentificadorRefeicao.HasValue && item.IdentificadorRefeicao < 0)
+                    {
+                        var ItemNovoCodigo = listaResultado.Where(d => d.IdentificadorOrigem == item.IdentificadorRefeicao && d.TipoObjeto == "R").FirstOrDefault();
+                        if (ItemNovoCodigo != null)
+                            item.IdentificadorRefeicao = ItemNovoCodigo.IdentificadorDetino;
+
+                    }
+                }
+                foreach (var item in itemGasto.ViagenAereas.Where(d => !d.DataExclusao.HasValue))
+                {
+                    item.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                    if (item.IdentificadorViagemAerea.HasValue && item.IdentificadorViagemAerea < 0)
+                    {
+                        var ItemNovoCodigo = listaResultado.Where(d => d.IdentificadorOrigem == item.IdentificadorViagemAerea && d.TipoObjeto == "VA").FirstOrDefault();
+                        if (ItemNovoCodigo != null)
+                            item.IdentificadorViagemAerea = ItemNovoCodigo.IdentificadorDetino;
+
+                    }
+                }
+
+                itemGasto.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                DeParaIdentificador itemDePara = new DeParaIdentificador();
+                itemDePara.IdentificadorOrigem = itemGasto.Identificador;
+                itemDePara.TipoObjeto = "G";
+                if (itemGasto.Identificador < 0)
+                    itemGasto.Identificador = null;
+
+
+                SalvarGasto_Completo(itemGasto);
+
+                itemDePara.IdentificadorDetino = itemGasto.Identificador;
+                listaResultado.Add(itemDePara);
+
+                var itemGastoBase = SelecionarGasto_Completo(itemGasto.Identificador);
+                foreach (var item in itemGastoBase.Alugueis.Where(d=>!d.DataExclusao.HasValue))
+                {
+                    var itemBaseTipo = itemGastoBase.Alugueis.Where(d => !d.DataExclusao.HasValue).Where(d => d.IdentificadorCarro == item.IdentificadorCarro).FirstOrDefault();
+                    if (itemBaseTipo != null)
+                        listaResultado.Add(new DeParaIdentificador() { IdentificadorDetino = itemBaseTipo.Identificador, IdentificadorOrigem = item.Identificador, TipoObjeto = "GC" });
+                }
+                foreach (var item in itemGastoBase.Atracoes.Where(d => !d.DataExclusao.HasValue))
+                {
+                    var itemBaseTipo = itemGastoBase.Atracoes.Where(d => !d.DataExclusao.HasValue).Where(d => d.IdentificadorAtracao == item.IdentificadorAtracao).FirstOrDefault();
+                    if (itemBaseTipo != null)
+                        listaResultado.Add(new DeParaIdentificador() { IdentificadorDetino = itemBaseTipo.Identificador, IdentificadorOrigem = item.Identificador, TipoObjeto = "GA" });
+                }
+                foreach (var item in itemGastoBase.Hoteis.Where(d => !d.DataExclusao.HasValue))
+                {
+                    var itemBaseTipo = itemGastoBase.Hoteis.Where(d => !d.DataExclusao.HasValue).Where(d => d.IdentificadorHotel == item.IdentificadorHotel).FirstOrDefault();
+                    if (itemBaseTipo != null)
+                        listaResultado.Add(new DeParaIdentificador() { IdentificadorDetino = itemBaseTipo.Identificador, IdentificadorOrigem = item.Identificador, TipoObjeto = "GH" });
+                }
+                foreach (var item in itemGastoBase.ViagenAereas.Where(d => !d.DataExclusao.HasValue))
+                {
+                    var itemBaseTipo = itemGastoBase.ViagenAereas.Where(d => !d.DataExclusao.HasValue).Where(d => d.IdentificadorViagemAerea == item.IdentificadorViagemAerea).FirstOrDefault();
+                    if (itemBaseTipo != null)
+                        listaResultado.Add(new DeParaIdentificador() { IdentificadorDetino = itemBaseTipo.Identificador, IdentificadorOrigem = item.Identificador, TipoObjeto = "GV" });
+                }
+
+                foreach (var item in itemGastoBase.Refeicoes.Where(d => !d.DataExclusao.HasValue))
+                {
+                    var itemBaseTipo = itemGastoBase.Refeicoes.Where(d => !d.DataExclusao.HasValue).Where(d => d.IdentificadorRefeicao == item.IdentificadorRefeicao).FirstOrDefault();
+                    if (itemBaseTipo != null)
+                        listaResultado.Add(new DeParaIdentificador() { IdentificadorDetino = itemBaseTipo.Identificador, IdentificadorOrigem = item.Identificador, TipoObjeto = "GR" });
+                }
+
+            }
+
+        }
+
+
+        private void SincronizarItemCompra(ClasseSincronizacao itemDados, int identificadorUsuario, int? identificadorViagem, List<DeParaIdentificador> listaResultado)
+        {
+            foreach (var item in itemDados.ItensComprados)
+            {
+                var itemBase = SelecionarItemCompra(item.Identificador);
+                if (itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
+                    continue;
+                if (item.DataExclusao.HasValue)
+                {
+                    item.DataExclusao = DateTime.Now.ToUniversalTime();
+                }
+
+                if (item.IdentificadorGastoCompra.HasValue && item.IdentificadorGastoCompra < 0)
+                {
+                    var ItemNovoCodigo = listaResultado.Where(d => d.IdentificadorOrigem == item.IdentificadorGastoCompra && d.TipoObjeto == "GL").FirstOrDefault();
+                    if (ItemNovoCodigo != null)
+                        item.IdentificadorGastoCompra = ItemNovoCodigo.IdentificadorDetino;
+
+                }
+
+                if (item.IdentificadorListaCompra.HasValue && item.IdentificadorListaCompra < 0)
+                {
+                    var ItemNovoCodigo = listaResultado.Where(d => d.IdentificadorOrigem == item.IdentificadorListaCompra && d.TipoObjeto == "LC").FirstOrDefault();
+                    if (ItemNovoCodigo != null)
+                        item.IdentificadorListaCompra = ItemNovoCodigo.IdentificadorDetino;
+                    else
+                        item.IdentificadorListaCompra = null;
+                }
+                item.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                DeParaIdentificador itemDePara = new DeParaIdentificador();
+                itemDePara.IdentificadorOrigem = item.Identificador;
+                itemDePara.TipoObjeto = "IC";
+                if (item.Identificador < 0)
+                    item.Identificador = null;              
+
+
+                SalvarItemCompra(item);
+
+                itemDePara.IdentificadorDetino = item.Identificador;
+                listaResultado.Add(itemDePara);
+
+             
+
+            }
+
+        }
+
+        private void SincronizarGastoCompra(ClasseSincronizacao itemDados, int identificadorUsuario, int? identificadorViagem, List<DeParaIdentificador> listaResultado)
+        {
+            foreach (var item in itemDados.Compras)
+            {
+                var itemBase = SelecionarGastoCompra(item.Identificador);
+                if (itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
+                    continue;
+                if (item.DataExclusao.HasValue)
+                {
+                    item.DataExclusao = DateTime.Now.ToUniversalTime();
+                    item.ItemGasto.DataExclusao = DateTime.Now.ToUniversalTime();
+                    item.ItemGasto.Usuarios = new List<GastoDividido>();
+                }
+
+                if (item.IdentificadorLoja.HasValue && item.IdentificadorLoja < 0)
+                {
+                    var ItemNovoCodigo = listaResultado.Where(d => d.IdentificadorOrigem == item.IdentificadorLoja && d.TipoObjeto == "L").FirstOrDefault();
+                    if (ItemNovoCodigo != null)
+                        item.IdentificadorLoja = ItemNovoCodigo.IdentificadorDetino;
+
+                }
+                item.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                item.ItemGasto.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                DeParaIdentificador itemDePara = new DeParaIdentificador();
+                itemDePara.IdentificadorOrigem = item.Identificador;
+                itemDePara.TipoObjeto = "GL";
+                if (item.Identificador < 0)
+                    item.Identificador = null;
+                DeParaIdentificador itemDeParaGasto = new DeParaIdentificador();
+                itemDeParaGasto.IdentificadorOrigem = item.Identificador;
+                itemDeParaGasto.TipoObjeto = "G";
+                if (item.ItemGasto.Identificador < 0)
+                    item.ItemGasto.Identificador = null;
+
+
+
+                SalvarGastoCompra_Completo(item);
+
+                itemDePara.IdentificadorDetino = item.Identificador;
+                listaResultado.Add(itemDePara);
+
+                GastoCompra itemAtualizado = SelecionarGastoCompra(item.Identificador);
+                itemDeParaGasto.IdentificadorDetino = itemAtualizado.IdentificadorGasto;
+                listaResultado.Add(itemDeParaGasto);
+
+            }
+
+        }
+
+        private void SincronizarHotelEvento(ClasseSincronizacao itemDados, int identificadorUsuario, int? identificadorViagem, List<DeParaIdentificador> listaResultado)
+        {
+            foreach (var item in itemDados.EventosHotel)
+            {
+                var itemBase = SelecionarCarro(item.Identificador);
+                if (itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
+                    continue;
+                if (item.DataExclusao.HasValue)
+                {
+                    item.DataExclusao = DateTime.Now.ToUniversalTime();
+                }
+
+                if (item.IdentificadorHotel.HasValue && item.IdentificadorHotel < 0)
+                {
+                    var ItemNovoCodigo = listaResultado.Where(d => d.IdentificadorOrigem == item.IdentificadorHotel && d.TipoObjeto == "H").FirstOrDefault();
+                    if (ItemNovoCodigo != null)
+                        item.IdentificadorHotel = ItemNovoCodigo.IdentificadorDetino;
+
+                }
+                item.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                DeParaIdentificador itemDePara = new DeParaIdentificador();
+                itemDePara.IdentificadorOrigem = item.Identificador;
+                itemDePara.TipoObjeto = "HE";
+                if (item.Identificador < 0)
+                    item.Identificador = null;
+
+               
+
+                SalvarHotelEvento(item);
+              
+                itemDePara.IdentificadorDetino = item.Identificador;
+                listaResultado.Add(itemDePara);
+
+            }
+
+        }
+
+        private void SincronizarReabastecimentos(ClasseSincronizacao itemDados, int identificadorUsuario, int? identificadorViagem, List<DeParaIdentificador> listaResultado)
+        {
+            foreach (var item in itemDados.Reabastecimento)
+            {
+                var itemBase = SelecionarReabastecimento(item.Identificador);
+                if (itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
+                    continue;
+                if (item.DataExclusao.HasValue)
+                {
+                    item.DataExclusao = DateTime.Now.ToUniversalTime();
+                    item.Gastos[0].ItemGasto.DataExclusao = DateTime.Now.ToUniversalTime();
+                    item.Gastos[0].DataExclusao = DateTime.Now.ToUniversalTime();
+                    item.Gastos[0].ItemGasto.Usuarios = new List<GastoDividido>();
+                }
+                item.IdentificadorCidade = RetornarCidadeGeocoding(item.Latitude, item.Longitude);
+
+                if (item.IdentificadorCarro.HasValue && item.IdentificadorCarro < 0)
+                {
+                    var ItemNovoCodigo = listaResultado.Where(d => d.IdentificadorOrigem == item.IdentificadorCarro && d.TipoObjeto == "C").FirstOrDefault();
+                    if (ItemNovoCodigo != null)
+                        item.IdentificadorCarro = ItemNovoCodigo.IdentificadorDetino;
+
+                }
+                item.Gastos[0].ItemGasto.IdentificadorCidade = item.IdentificadorCidade;
+                item.Gastos[0].ItemGasto.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                item.Gastos[0].ItemGasto.IdentificadorViagem = identificadorViagem;
+
+                item.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                DeParaIdentificador itemDePara = new DeParaIdentificador();
+                itemDePara.IdentificadorOrigem = item.Identificador;
+                itemDePara.TipoObjeto = "CR";
+                if (item.Identificador < 0)
+                    item.Identificador = null;
+
+                DeParaIdentificador itemDeParaGasto = new DeParaIdentificador();
+                itemDePara.IdentificadorOrigem = item.Gastos[0].IdentificadorGasto;
+                itemDePara.TipoObjeto = "G";
+
+                DeParaIdentificador itemDeParaGastoReabastecimento = new DeParaIdentificador();
+                itemDePara.IdentificadorOrigem = item.Gastos[0].IdentificadorGasto;
+                itemDePara.TipoObjeto = "GR";
+
+
+                SalvarReabastecimentoCompleto(item);
+                var itemReabastecimento = SelecionarReabastecimento(item.Identificador);
+               
+                foreach (var itemAvaliacao in item.Gastos[0].ItemGasto.Usuarios)
+                {
+                    var itemgravado = itemReabastecimento.Gastos[0].ItemGasto.Usuarios.Where(d => d.IdentificadorUsuario == itemAvaliacao.IdentificadorUsuario).FirstOrDefault();
+                    if (itemgravado != null)
+                    {
+                        DeParaIdentificador itemDP = new DeParaIdentificador() { IdentificadorOrigem = itemAvaliacao.Identificador, IdentificadorDetino = itemgravado.Identificador, TipoObjeto = "GD" };
+                        listaResultado.Add(itemDP);
+                    }
+                }
+                itemDeParaGasto.IdentificadorDetino = itemReabastecimento.Gastos[0].IdentificadorGasto;
+                itemDeParaGastoReabastecimento.IdentificadorDetino = itemReabastecimento.Gastos[0].Identificador;
+                itemDePara.IdentificadorDetino = item.Identificador;
+                listaResultado.Add(itemDePara);
+                listaResultado.Add(itemDeParaGasto);
+                listaResultado.Add(itemDeParaGastoReabastecimento);
+            }
+
+        }
+        private void SincronizarCarroDeslocamento(ClasseSincronizacao itemDados, int identificadorUsuario, int? identificadorViagem, List<DeParaIdentificador> listaResultado)
+        {
+            foreach (var item in itemDados.CarroDeslocamentos)
+            {
+                var itemBase = SelecionarCarroDeslocamento(item.Identificador);
+                if (itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
+                    continue;
+                foreach (var itemAvaliacao in item.Usuarios)
+                    itemAvaliacao.IdentificadorCarroDeslocamento = null;
+                if (item.DataExclusao.HasValue)
+                {
+                    item.DataExclusao = DateTime.Now.ToUniversalTime();
+                    item.Usuarios = new List<CarroDeslocamentoUsuario>();
+                }
+                if (item.IdentificadorCarro.HasValue && item.IdentificadorCarro < 0)
+                {
+                    var ItemNovoCodigo = listaResultado.Where(d => d.IdentificadorOrigem == item.IdentificadorCarro && d.TipoObjeto == "C").FirstOrDefault();
+                    if (ItemNovoCodigo != null)
+                        item.IdentificadorCarro = ItemNovoCodigo.IdentificadorDetino;
+                   
+                }
+                item.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                DeParaIdentificador itemDePara = new DeParaIdentificador();
+                itemDePara.IdentificadorOrigem = item.Identificador;
+                itemDePara.TipoObjeto = "CD";
+                if (item.Identificador < 0)
+                    item.Identificador = null;
+                DeParaIdentificador itemDeParaPartida = null;
+
+                if (item.ItemCarroEventoPartida != null)
+                {
+                    itemDeParaPartida = new DeParaIdentificador() { IdentificadorOrigem = item.IdentificadorCarroEventoPartida, TipoObjeto = "CE" };
+                    item.ItemCarroEventoPartida.IdentificadorCidade = RetornarCidadeGeocoding(item.ItemCarroEventoPartida.Latitude, item.ItemCarroEventoPartida.Longitude);
+                    item.ItemCarroEventoPartida.DataAtualizacao = DateTime.Now.ToUniversalTime();
+
+                }
+                item.IdentificadorCarroEventoPartida = null;
+                DeParaIdentificador itemDeParaChegada = null;
+
+                if (item.ItemCarroEventoChegada != null)
+                {
+                    itemDeParaChegada = new DeParaIdentificador() { IdentificadorOrigem = item.IdentificadorCarroEventoChegada, TipoObjeto = "CE" };
+
+                    item.ItemCarroEventoChegada.IdentificadorCidade = RetornarCidadeGeocoding(item.ItemCarroEventoChegada.Latitude, item.ItemCarroEventoChegada.Longitude);
+                    item.ItemCarroEventoChegada.DataAtualizacao = DateTime.Now.ToUniversalTime();
+
+                }
+                item.IdentificadorCarroEventoChegada = null;
+
+                SalvarCarroDeslocamento_Evento(item);
+                var itemCarroDeslocamneto = SelecionarCarroDeslocamento(item.Identificador);
+                if (itemDeParaPartida != null)
+                {
+                    itemDeParaPartida.IdentificadorDetino = itemCarroDeslocamneto.IdentificadorCarroEventoPartida;
+                    listaResultado.Add(itemDeParaPartida);
+                }
+                if (itemDeParaChegada != null)
+                {
+                    itemDeParaChegada.IdentificadorDetino = itemCarroDeslocamneto.IdentificadorCarroEventoChegada;
+                    listaResultado.Add(itemDeParaChegada);
+                }
+                foreach (var itemAvaliacao in item.Usuarios)
+                {
+                    var itemgravado = itemCarroDeslocamneto.Usuarios.Where(d => d.IdentificadorUsuario == itemAvaliacao.IdentificadorUsuario).FirstOrDefault();
+                    if (itemgravado != null)
+                    {
+                        DeParaIdentificador itemDP = new DeParaIdentificador() { IdentificadorOrigem = itemAvaliacao.Identificador, IdentificadorDetino = itemgravado.Identificador, TipoObjeto = "CDU" };
+                        listaResultado.Add(itemDP);
+                    }
+                }
+                itemDePara.IdentificadorDetino = item.Identificador;
+                listaResultado.Add(itemDePara);
+            }
+
+        }
         private void SincronizarViagemAereas(ClasseSincronizacao itemDados, int identificadorUsuario, int? identificadorViagem, List<DeParaIdentificador> listaResultado)
         {
             foreach (var item in itemDados.Deslocamentos)
@@ -1970,7 +2623,7 @@ namespace CV.Business
                 }
                 item.IdentificadorCarroEventoRetirada = null;
 
-                SalvarCarro(item);
+                SalvarCarro_Evento(item);
                 var itemCarroCompleta = SelecionarCarro_Completo(item.Identificador);
                 if (itemDeParaDevolucao != null )
                 {

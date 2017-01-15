@@ -170,7 +170,7 @@
                     itemNovo.ItemMoeda = { Codigo: itemNovo.Moeda };
                     var Posicao = vm.ListaDados.indexOf(itemCotacao);
                     vm.ListaDados.splice(Posicao, 1, itemNovo);
-                    SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'CM', data.ItemRegistro, itemCotacao.Identificador == null);
+                    SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'CM', data.ItemRegistro.Identificador, itemCotacao.Identificador == null);
 
 
 

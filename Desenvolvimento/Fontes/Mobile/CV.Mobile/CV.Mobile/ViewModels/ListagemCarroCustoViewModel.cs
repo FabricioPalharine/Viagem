@@ -92,6 +92,8 @@ namespace CV.Mobile.ViewModels
                 {
                     if (!(await DatabaseService.Database.ListarAluguelGasto_IdentificadorGasto(item.Identificador)).Where(d => !d.DataExclusao.HasValue).Any())
                     {
+                        itemGravar.ItemGasto = item;
+
                         itemGravar.AtualizadoBanco = false;
                         await DatabaseService.Database.SalvarAluguelGasto(itemGravar);
                         MessagingService.Current.SendMessage<AluguelGasto>(MessageKeys.ManutencaoAluguelGasto, itemGravar);

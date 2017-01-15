@@ -67,7 +67,7 @@
 	        ListaCompra.save(vm.itemListaCompra, function (data) {
 	            vm.loading = false;
 	            if (data.Sucesso) {
-	                SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'LC', data.ItemRegistro, vm.itemListaCompra.Identificado == null);
+	                SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'LC', data.IdentificadorRegistro, vm.itemListaCompra.Identificado == null);
 
 	                vm.itemListaCompra = data.ItemRegistro;
 

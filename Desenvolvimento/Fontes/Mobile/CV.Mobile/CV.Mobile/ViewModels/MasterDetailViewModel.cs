@@ -55,7 +55,7 @@ namespace CV.Mobile.ViewModels
             MessagingService.Current.Subscribe<Hotel>(MessageKeys.ManutencaoHotelSelecao, (service, item) =>
             {
                 var hotel = _hotelAtual ?? new Hotel();
-                if (item.Identificador == (int)hotel.Identificador)
+                if (item.Identificador == hotel.Identificador.GetValueOrDefault())
                 {
                     if (item.DataSaidia.HasValue || item.DataExclusao.HasValue)
                         _hotelAtual = null;
@@ -73,6 +73,57 @@ namespace CV.Mobile.ViewModels
                         _hotelAtual = item;
                         HotelDentro = _hotelAtual.Eventos.Where(d => d.IdentificadorUsuario == ItemUsuario.Codigo).Where(d => !d.DataSaida.HasValue).Any();
 
+                    }
+                }
+            });
+            MessagingService.Current.Unsubscribe(MessageKeys.VerificarCalendario);
+            MessagingService.Current.Subscribe(MessageKeys.VerificarCalendario, async (service) =>
+            {
+                if (ItemViagem != null)
+                {
+                    var Alerta = await DatabaseService.Database.ConsultarCalendarioAlerta();
+                    if (Alerta != null)
+                    {
+
+                        MessagingService.Current.SendMessage<MessagingServiceQuestion>(MessageKeys.DisplayQuestion, new MessagingServiceQuestion()
+                        {
+                            Title = "Informação",
+                            Question = String.Format("Você agendou a visita a {0} as {1}", Alerta.Nome, Alerta.DataInicio.GetValueOrDefault().ToString("dd/MM/yyyy HH:mm")),
+                            Positive = "Avisar Novamento",
+                            Negative = "Ignorar",
+                            OnCompleted = new Action<bool>(async result =>
+                            {
+                                if (result)
+                                {
+                                    Alerta.DataProximoAviso = Alerta.DataProximoAviso.AddMinutes(5);
+                                }
+                                else
+                                {
+                                    Alerta.AvisarHorario = false;
+                                    Alerta.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                                    if (ConectadoPrincipal)
+                                    {
+                                        using (ApiService srv = new ApiService())
+                                        {
+                                            var Resultado = await srv.SalvarCalendarioPrevisto(Alerta);
+                                            if (Resultado.Sucesso)
+                                            {
+                                                Alerta.Identificador = Resultado.IdentificadorRegistro;
+                                                await AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "CP", Alerta.Identificador.GetValueOrDefault(), false);
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Alerta.AtualizadoBanco = false;
+                                        
+                                    }
+
+                                }
+                                await DatabaseService.Database.SalvarCalendarioPrevisto(Alerta);
+
+                            })
+                        });
                     }
                 }
             });
@@ -131,14 +182,20 @@ namespace CV.Mobile.ViewModels
             _ConectadoPrincipal = Conectado;
             if (VerificarSincronizacao)
             {
-                VerificarEnvioFotos();
-                VerificarEnvioVideos();
-                if (!ConectadoAnterior)
-                    VerificarSincronizacaoDados();
+                IniciarProcessoSincronizacao(ConectadoAnterior);
             }
         }
 
-        public async void VerificarSincronizacaoDados()
+        private async void IniciarProcessoSincronizacao(bool ConectadoAnterior)
+        {
+            if (!ConectadoAnterior)
+                await VerificarSincronizacaoDados();
+            VerificarEnvioFotos();
+            VerificarEnvioVideos();
+         
+        }
+
+        public async Task VerificarSincronizacaoDados()
         {
             if (CrossConnectivity.Current.IsConnected && Settings.ModoSincronizacao != "3" &&
          (Settings.ModoSincronizacao == "1" || CrossConnectivity.Current.ConnectionTypes.Contains(Plugin.Connectivity.Abstractions.ConnectionType.Desktop) ||
@@ -380,6 +437,7 @@ namespace CV.Mobile.ViewModels
                 SetProperty(ref _ItemViagem, value);
                 CarregarHotelAtual();
                 (masterPage.BindingContext as MenuViewModel).ItemViagem = value;
+                (detailPage.BindingContext as MenuInicialViewModel).ItemViagem = value;
             }
         }
 
@@ -596,10 +654,12 @@ namespace CV.Mobile.ViewModels
                     var DadosSincronizar = await srv.RetornarAtualizacoes(new CriterioBusca() { DataInicioDe = itemCS.UltimaDataRecepcao });
                     
                     await DatabaseService.SincronizarDadosServidorLocal(itemCS, DadosSincronizar, ItemUsuario, DataSincronizacao);
-                    var itemEnvio = await DatabaseService.CarregarDadosEnvioSincronizar();
-                    var resultadoSincronizacao = await srv.SincronizarDados(itemEnvio);
-                    itemCS.UltimaDataEnvio = DateTime.Now.ToUniversalTime();
-                    await DatabaseService.AjustarDePara(itemEnvio, resultadoSincronizacao, itemCS);
+
+                    var item = await DatabaseService.CarregarDadosEnvioSincronizar();
+                     var resultadoSincronizacao = await srv.SincronizarDados(item);
+                        itemCS.UltimaDataEnvio = DateTime.Now.ToUniversalTime();
+                        await DatabaseService.AjustarDePara(item, resultadoSincronizacao, itemCS);
+                   
                     if (exibeAlerta)
                     {
                         MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()

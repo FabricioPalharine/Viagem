@@ -76,6 +76,8 @@ namespace CV.Mobile.ViewModels
                             var itemBase = await DatabaseService.Database.CarregarCalendarioPrevisto(Resultado.IdentificadorRegistro.GetValueOrDefault());
                             if (itemBase != null)
                                 itemRetorno.Id = itemBase.Id;
+                            itemRetorno.DataProximoAviso = itemRetorno.DataInicio.GetValueOrDefault(new DateTime(1900, 01, 01));
+
                             await DatabaseService.Database.SalvarCalendarioPrevisto(itemRetorno);
                             base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "CP", itemRetorno.Identificador.GetValueOrDefault(), !ItemCalendarioPrevisto.Identificador.HasValue);
                         }
@@ -83,6 +85,8 @@ namespace CV.Mobile.ViewModels
                 }
                 else
                 {
+                    ItemCalendarioPrevisto.DataProximoAviso = ItemCalendarioPrevisto.DataInicio.GetValueOrDefault(new DateTime(1900, 01, 01));
+
                     Resultado = await DatabaseService.SalvarCalendarioPrevisto(ItemCalendarioPrevisto);
                 }
                 if (Resultado.Sucesso)

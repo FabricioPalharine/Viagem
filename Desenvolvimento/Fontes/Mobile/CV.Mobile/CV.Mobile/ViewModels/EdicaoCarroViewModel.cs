@@ -460,7 +460,8 @@ namespace CV.Mobile.ViewModels
                 else
                 {
                     Resultado = await DatabaseService.SalvarCarro(ItemCarro);
-                    pItemCarro = await DatabaseService.CarregarCarro(ItemCarro.Identificador);
+                    if (Resultado.Sucesso)
+                        pItemCarro = await DatabaseService.CarregarCarro(ItemCarro.Identificador);
                 }
                 if (Resultado.Sucesso)
                 {

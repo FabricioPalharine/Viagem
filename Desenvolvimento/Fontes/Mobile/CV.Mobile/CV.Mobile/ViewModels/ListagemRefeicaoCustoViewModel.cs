@@ -91,6 +91,8 @@ namespace CV.Mobile.ViewModels
                     if (!(await DatabaseService.Database.ListarGastoRefeicao_IdentificadorGasto(item.Identificador)).Where(d => !d.DataExclusao.HasValue).Any())
                     {
                         itemGravar.AtualizadoBanco = false;
+                        itemGravar.ItemGasto = item;
+
                         await DatabaseService.Database.SalvarGastoRefeicao(itemGravar);
                         MessagingService.Current.SendMessage<GastoRefeicao>(MessageKeys.ManutencaoGastoRefeicao, itemGravar);
 
