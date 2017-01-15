@@ -44,5 +44,10 @@ namespace CV.Mobile.Droid.Services
         {
             return File.GetLastWriteTime(filename);
         }
+
+        public Stream CarregarStreamFile(string filename)
+        {
+            return new FileStream(filename, FileMode.Open, FileAccess.Read);
+        }
     }
 }

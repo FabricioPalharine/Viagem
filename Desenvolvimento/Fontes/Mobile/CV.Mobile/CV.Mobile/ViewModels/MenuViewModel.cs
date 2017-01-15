@@ -275,7 +275,7 @@ namespace CV.Mobile.ViewModels
                 Title = "Sugestão",
                 IconSource = "Dados.png",
                 Visible = false,
-                ApenasAmigo = false
+                ApenasAmigo = true
             });
             ItensMenuCompleto.Add(new ItemMenu
             {

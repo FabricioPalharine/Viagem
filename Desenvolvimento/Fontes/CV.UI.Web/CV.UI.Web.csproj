@@ -234,8 +234,10 @@
     <Content Include="Library\css\font-awesome.css" />
     <Content Include="Library\css\fullcalendar.css" />
     <Content Include="Library\css\fullcalendar.min.css" />
+    <Content Include="Library\css\icon.png" />
     <Content Include="Library\css\ivh-treeview-theme-basic.css" />
     <Content Include="Library\css\ivh-treeview.min.css" />
+    <Content Include="Library\css\Logo.png" />
     <Content Include="Library\css\Site.css" />
     <Content Include="Library\css\skins\skin-blue-light.css" />
     <Content Include="Library\css\slick-theme.css" />

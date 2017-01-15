@@ -43,5 +43,10 @@ namespace CV.Mobile.iOS.Services
 
             return Path.Combine(libFolder, filename);
         }
+
+        public Stream CarregarStreamFile(string filename)
+        {
+            return new FileStream(filename, FileMode.Open, FileAccess.Read);
+        }
     }
 }

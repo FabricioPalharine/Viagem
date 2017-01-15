@@ -56,6 +56,11 @@ namespace CV.UI.Web.Controllers.WebAPI
             itemSincronizar.Atracoes = biz.ListarAtracao_Completo(d => d.IdentificadorViagem == token.IdentificadorViagem && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
             foreach (var item in itemSincronizar.Atracoes.SelectMany(d => d.Avaliacoes))
                 item.ItemAtracao = null;
+            foreach (var item in itemSincronizar.Atracoes)
+            {
+                item.ItemAtracaoPai = null;
+                item.Atracoes = null;
+            }
             itemSincronizar.Hoteis = biz.ListarHotel_Completo(d => d.IdentificadorViagem == token.IdentificadorViagem && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
             foreach (var item in itemSincronizar.Hoteis.SelectMany(d => d.Avaliacoes))
                 item.ItemHotel = null;

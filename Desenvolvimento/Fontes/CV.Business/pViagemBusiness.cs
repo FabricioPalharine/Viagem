@@ -1575,6 +1575,23 @@ namespace CV.Business
             }
         }
 
+        public List<GastoCompra> ListarGastoCompra( Expression<Func<GastoCompra, bool>> predicate)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarGastoCompra( predicate);
+            }
+        }
+
+
+        public List<ReabastecimentoGasto> ListarReabastecimentoGastos(Expression<Func<ReabastecimentoGasto, bool>> predicate)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.ListarReabastecimentoGastos(predicate);
+            }
+        }
+
         public List<Reabastecimento> ListarReabastecimento(int? IdentificadorViagem, Expression<Func<Reabastecimento, bool>> predicate)
         {
             using (ViagemRepository repositorio = new ViagemRepository())
@@ -1894,7 +1911,7 @@ namespace CV.Business
             foreach (var item in itemDados.GastosCarro)
             {
                 var itemBase = SelecionarAluguelGasto(item.Identificador);
-                if (itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
+                if (itemBase != null &&  itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
                     continue;
                 if (item.DataExclusao.HasValue)
                 {
@@ -1915,7 +1932,6 @@ namespace CV.Business
 
                 }
                 item.DataAtualizacao = DateTime.Now.ToUniversalTime();
-                item.ItemGasto.DataAtualizacao = DateTime.Now.ToUniversalTime();
                 DeParaIdentificador itemDePara = new DeParaIdentificador();
                 itemDePara.IdentificadorOrigem = item.Identificador;
                 itemDePara.TipoObjeto = "GC";
@@ -1939,7 +1955,7 @@ namespace CV.Business
             foreach (var item in itemDados.GastosHotel)
             {
                 var itemBase = SelecionarGastoHotel(item.Identificador);
-                if (itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
+                if (itemBase != null &&  itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
                     continue;
                 if (item.DataExclusao.HasValue)
                 {
@@ -1960,7 +1976,6 @@ namespace CV.Business
 
                 }
                 item.DataAtualizacao = DateTime.Now.ToUniversalTime();
-                item.ItemGasto.DataAtualizacao = DateTime.Now.ToUniversalTime();
                 DeParaIdentificador itemDePara = new DeParaIdentificador();
                 itemDePara.IdentificadorOrigem = item.Identificador;
                 itemDePara.TipoObjeto = "GH";
@@ -1984,7 +1999,7 @@ namespace CV.Business
             foreach (var item in itemDados.GastosDeslocamento)
             {
                 var itemBase = SelecionarGastoViagemAerea(item.Identificador);
-                if (itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
+                if (itemBase != null &&  itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
                     continue;
                 if (item.DataExclusao.HasValue)
                 {
@@ -2005,7 +2020,6 @@ namespace CV.Business
 
                 }
                 item.DataAtualizacao = DateTime.Now.ToUniversalTime();
-                item.ItemGasto.DataAtualizacao = DateTime.Now.ToUniversalTime();
                 DeParaIdentificador itemDePara = new DeParaIdentificador();
                 itemDePara.IdentificadorOrigem = item.Identificador;
                 itemDePara.TipoObjeto = "GV";
@@ -2029,7 +2043,7 @@ namespace CV.Business
             foreach (var item in itemDados.GastosRefeicao)
             {
                 var itemBase = SelecionarGastoRefeicao(item.Identificador);
-                if (itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
+                if (itemBase != null &&  itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
                     continue;
                 if (item.DataExclusao.HasValue)
                 {
@@ -2050,7 +2064,6 @@ namespace CV.Business
 
                 }
                 item.DataAtualizacao = DateTime.Now.ToUniversalTime();
-                item.ItemGasto.DataAtualizacao = DateTime.Now.ToUniversalTime();
                 DeParaIdentificador itemDePara = new DeParaIdentificador();
                 itemDePara.IdentificadorOrigem = item.Identificador;
                 itemDePara.TipoObjeto = "GR";
@@ -2074,7 +2087,7 @@ namespace CV.Business
             foreach (var item in itemDados.GastosAtracao)
             {
                 var itemBase = SelecionarGastoAtracao(item.Identificador);
-                if (itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
+                if (itemBase != null &&  itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
                     continue;
                 if (item.DataExclusao.HasValue)
                 {
@@ -2095,7 +2108,6 @@ namespace CV.Business
 
                 }
                 item.DataAtualizacao = DateTime.Now.ToUniversalTime();
-                item.ItemGasto.DataAtualizacao = DateTime.Now.ToUniversalTime();
                 DeParaIdentificador itemDePara = new DeParaIdentificador();
                 itemDePara.IdentificadorOrigem = item.Identificador;
                 itemDePara.TipoObjeto = "GA";
@@ -2117,8 +2129,8 @@ namespace CV.Business
         {
             foreach (var itemGasto in itemDados.Gastos)
             {
-                var itemBase = SelecionarItemCompra(itemGasto.Identificador);
-                if (itemBase.DataAtualizacao > itemGasto.DataAtualizacao || itemGasto.DataExclusao.HasValue)
+                var itemBase = SelecionarGasto(itemGasto.Identificador);
+                if (itemBase != null && itemBase.DataAtualizacao > itemGasto.DataAtualizacao || itemGasto.DataExclusao.HasValue)
                     continue;
                 itemGasto.Reabastecimentos = new List<ReabastecimentoGasto>();
                 itemGasto.Compras = new List<GastoCompra>();
@@ -2139,8 +2151,20 @@ namespace CV.Business
                 }
 
 
+               
+                itemGasto.Compras = ListarGastoCompra(d => d.IdentificadorGasto == itemGasto.Identificador);
+                itemGasto.Reabastecimentos = ListarReabastecimentoGastos(d => d.IdentificadorGasto == itemGasto.Identificador);
+
+                itemGasto.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                DeParaIdentificador itemDePara = new DeParaIdentificador();
+                itemDePara.IdentificadorOrigem = itemGasto.Identificador;
+                itemDePara.TipoObjeto = "G";
+                if (itemGasto.Identificador < 0)
+                    itemGasto.Identificador = null;
+
                 foreach (var item in itemGasto.Alugueis.Where(d => !d.DataExclusao.HasValue))
                 {
+                    item.IdentificadorGasto = itemGasto.Identificador;
                     item.DataAtualizacao = DateTime.Now.ToUniversalTime();
                     if (item.IdentificadorCarro.HasValue && item.IdentificadorCarro < 0)
                     {
@@ -2152,6 +2176,8 @@ namespace CV.Business
                 }
                 foreach (var item in itemGasto.Atracoes.Where(d => !d.DataExclusao.HasValue))
                 {
+                    item.IdentificadorGasto = itemGasto.Identificador;
+
                     item.DataAtualizacao = DateTime.Now.ToUniversalTime();
                     if (item.IdentificadorAtracao.HasValue && item.IdentificadorAtracao < 0)
                     {
@@ -2164,6 +2190,8 @@ namespace CV.Business
                 foreach (var item in itemGasto.Hoteis.Where(d => !d.DataExclusao.HasValue))
                 {
                     {
+                        item.IdentificadorGasto = itemGasto.Identificador;
+
                         item.DataAtualizacao = DateTime.Now.ToUniversalTime();
                         if (item.IdentificadorHotel.HasValue && item.IdentificadorHotel < 0)
                         {
@@ -2177,6 +2205,8 @@ namespace CV.Business
                 foreach (var item in itemGasto.Refeicoes.Where(d => !d.DataExclusao.HasValue))
                 {
                     item.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                    item.IdentificadorGasto = itemGasto.Identificador;
+
                     if (item.IdentificadorRefeicao.HasValue && item.IdentificadorRefeicao < 0)
                     {
                         var ItemNovoCodigo = listaResultado.Where(d => d.IdentificadorOrigem == item.IdentificadorRefeicao && d.TipoObjeto == "R").FirstOrDefault();
@@ -2187,6 +2217,8 @@ namespace CV.Business
                 }
                 foreach (var item in itemGasto.ViagenAereas.Where(d => !d.DataExclusao.HasValue))
                 {
+                    item.IdentificadorGasto = itemGasto.Identificador;
+
                     item.DataAtualizacao = DateTime.Now.ToUniversalTime();
                     if (item.IdentificadorViagemAerea.HasValue && item.IdentificadorViagemAerea < 0)
                     {
@@ -2196,15 +2228,10 @@ namespace CV.Business
 
                     }
                 }
-
-                itemGasto.DataAtualizacao = DateTime.Now.ToUniversalTime();
-                DeParaIdentificador itemDePara = new DeParaIdentificador();
-                itemDePara.IdentificadorOrigem = itemGasto.Identificador;
-                itemDePara.TipoObjeto = "G";
-                if (itemGasto.Identificador < 0)
-                    itemGasto.Identificador = null;
-
-
+                foreach (var item in itemGasto.Usuarios)
+                    item.IdentificadorGasto = itemGasto.Identificador;
+                itemGasto.IdentificadorViagem = identificadorViagem;
+                itemGasto.IdentificadorCidade = RetornarCidadeGeocoding(itemGasto.Latitude, itemGasto.Longitude);
                 SalvarGasto_Completo(itemGasto);
 
                 itemDePara.IdentificadorDetino = itemGasto.Identificador;
@@ -2253,7 +2280,7 @@ namespace CV.Business
             foreach (var item in itemDados.ItensComprados)
             {
                 var itemBase = SelecionarItemCompra(item.Identificador);
-                if (itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
+                if (itemBase != null &&  itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
                     continue;
                 if (item.DataExclusao.HasValue)
                 {
@@ -2300,7 +2327,7 @@ namespace CV.Business
             foreach (var item in itemDados.Compras)
             {
                 var itemBase = SelecionarGastoCompra(item.Identificador);
-                if (itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
+                if (itemBase != null &&  itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
                     continue;
                 if (item.DataExclusao.HasValue)
                 {
@@ -2348,8 +2375,8 @@ namespace CV.Business
         {
             foreach (var item in itemDados.EventosHotel)
             {
-                var itemBase = SelecionarCarro(item.Identificador);
-                if (itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
+                var itemBase = SelecionarHotelEvento(item.Identificador);
+                if (itemBase != null &&  itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
                     continue;
                 if (item.DataExclusao.HasValue)
                 {
@@ -2386,7 +2413,7 @@ namespace CV.Business
             foreach (var item in itemDados.Reabastecimento)
             {
                 var itemBase = SelecionarReabastecimento(item.Identificador);
-                if (itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
+                if (itemBase != null && itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
                     continue;
                 if (item.DataExclusao.HasValue)
                 {
@@ -2414,7 +2441,7 @@ namespace CV.Business
                 itemDePara.TipoObjeto = "CR";
                 if (item.Identificador < 0)
                     item.Identificador = null;
-
+                item.Gastos[0].IdentificadorReabastecimento = item.Identificador;
                 DeParaIdentificador itemDeParaGasto = new DeParaIdentificador();
                 itemDePara.IdentificadorOrigem = item.Gastos[0].IdentificadorGasto;
                 itemDePara.TipoObjeto = "G";
@@ -2450,10 +2477,8 @@ namespace CV.Business
             foreach (var item in itemDados.CarroDeslocamentos)
             {
                 var itemBase = SelecionarCarroDeslocamento(item.Identificador);
-                if (itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
+                if (itemBase != null &&  itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
                     continue;
-                foreach (var itemAvaliacao in item.Usuarios)
-                    itemAvaliacao.IdentificadorCarroDeslocamento = null;
                 if (item.DataExclusao.HasValue)
                 {
                     item.DataExclusao = DateTime.Now.ToUniversalTime();
@@ -2472,6 +2497,10 @@ namespace CV.Business
                 itemDePara.TipoObjeto = "CD";
                 if (item.Identificador < 0)
                     item.Identificador = null;
+
+                foreach (var itemAvaliacao in item.Usuarios)
+                    itemAvaliacao.IdentificadorCarroDeslocamento = item.Identificador;
+
                 DeParaIdentificador itemDeParaPartida = null;
 
                 if (item.ItemCarroEventoPartida != null)
@@ -2487,7 +2516,8 @@ namespace CV.Business
                 if (item.ItemCarroEventoChegada != null)
                 {
                     itemDeParaChegada = new DeParaIdentificador() { IdentificadorOrigem = item.IdentificadorCarroEventoChegada, TipoObjeto = "CE" };
-
+                    if (item.ItemCarroEventoChegada.Data == new DateTime(1900, 01, 01))
+                        item.ItemCarroEventoChegada.Data = null;
                     item.ItemCarroEventoChegada.IdentificadorCidade = RetornarCidadeGeocoding(item.ItemCarroEventoChegada.Latitude, item.ItemCarroEventoChegada.Longitude);
                     item.ItemCarroEventoChegada.DataAtualizacao = DateTime.Now.ToUniversalTime();
 
@@ -2525,11 +2555,9 @@ namespace CV.Business
             foreach (var item in itemDados.Deslocamentos)
             {
                 var itemBase = SelecionarViagemAerea(item.Identificador);
-                if (itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
+                if (itemBase != null && itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
                     continue;
-                foreach (var itemAvaliacao in item.Avaliacoes)
-                    itemAvaliacao.IdentificadorViagemAerea = null;
-                if (item.DataExclusao.HasValue)
+                  if (item.DataExclusao.HasValue)
                 {
                     item.DataExclusao = DateTime.Now.ToUniversalTime();
                     item.Avaliacoes = new List<AvaliacaoAerea>();
@@ -2542,10 +2570,14 @@ namespace CV.Business
                 itemDePara.TipoObjeto = "VA";
                 if (item.Identificador < 0)
                     item.Identificador = null;
+
+                foreach (var itemAvaliacao in item.Avaliacoes)
+                    itemAvaliacao.IdentificadorViagemAerea = item.Identificador;
+
                 Dictionary<ViagemAereaAeroporto, DeParaIdentificador> ListaSincroniza = new Dictionary<ViagemAereaAeroporto, DeParaIdentificador>();
                 foreach (var itemAvaliacao in item.Aeroportos)
                 {
-                    itemAvaliacao.IdentificadorViagemAerea = null;
+                    itemAvaliacao.IdentificadorViagemAerea = item.Identificador;
                     itemAvaliacao.IdentificadorCidade = RetornarCidadeGeocoding(itemAvaliacao.Latitude, itemAvaliacao.Longitude);
                     DeParaIdentificador itemDP = new DeParaIdentificador() { IdentificadorOrigem = itemAvaliacao.Identificador, TipoObjeto = "VAA" };
                     listaResultado.Add(itemDP);
@@ -2585,10 +2617,9 @@ namespace CV.Business
             foreach (var item in itemDados.Carros)
             {
                 var itemBase = SelecionarCarro(item.Identificador);
-                if (itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
+                if (itemBase != null && itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
                     continue;
-                foreach (var itemAvaliacao in item.Avaliacoes)
-                    itemAvaliacao.IdentificadorCarro = null;
+             
                 if (item.DataExclusao.HasValue)
                 {
                     item.DataExclusao = DateTime.Now.ToUniversalTime();
@@ -2601,6 +2632,8 @@ namespace CV.Business
                 itemDePara.TipoObjeto = "C";
                 if (item.Identificador < 0)
                     item.Identificador = null;
+                foreach (var itemAvaliacao in item.Avaliacoes)
+                    itemAvaliacao.IdentificadorCarro = item.Identificador;
                 DeParaIdentificador itemDeParaDevolucao = null;
 
                 if (item.ItemCarroEventoDevolucao != null)
@@ -2655,10 +2688,8 @@ namespace CV.Business
             foreach (var item in itemDados.Hoteis)
             {
                 var itemBase = SelecionarHotel(item.Identificador);
-                if (itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
+                if (itemBase != null && itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
                     continue;
-                foreach (var itemAvaliacao in item.Avaliacoes)
-                    itemAvaliacao.IdentificadorHotel = null;
                 if (item.DataExclusao.HasValue)
                 {
                     item.DataExclusao = DateTime.Now.ToUniversalTime();
@@ -2666,13 +2697,16 @@ namespace CV.Business
                 }
                 item.IdentificadorViagem = identificadorViagem;
                 item.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                item.Eventos = ListarHotelEvento(d => d.IdentificadorHotel == item.Identificador);
                 DeParaIdentificador itemDePara = new DeParaIdentificador();
                 itemDePara.IdentificadorOrigem = item.Identificador;
                 itemDePara.TipoObjeto = "H";
                 if (item.Identificador < 0)
                     item.Identificador = null;
                 item.IdentificadorCidade = RetornarCidadeGeocoding(item.Latitude, item.Longitude);
-               
+
+                foreach (var itemAvaliacao in item.Avaliacoes)
+                    itemAvaliacao.IdentificadorHotel = item.Identificador;
 
                 SalvarHotel(item);
                 var itemHotelCompleta = SelecionarHotel_Completo(item.Identificador);
@@ -2697,10 +2731,9 @@ namespace CV.Business
             foreach (var item in itemDados.Lojas)
             {
                 var itemBase = SelecionarLoja(item.Identificador);
-                if (itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
+                if (itemBase != null &&  itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
                     continue;
-                foreach (var itemAvaliacao in item.Avaliacoes)
-                    itemAvaliacao.IdentificadorLoja = null;
+
                 if (item.DataExclusao.HasValue)
                 {
                     item.DataExclusao = DateTime.Now.ToUniversalTime();
@@ -2713,6 +2746,9 @@ namespace CV.Business
                 itemDePara.TipoObjeto = "L";
                 if (item.Identificador < 0)
                     item.Identificador = null;
+                foreach (var itemAvaliacao in item.Avaliacoes)
+                    itemAvaliacao.IdentificadorLoja = item.Identificador;
+
                 item.IdentificadorCidade = RetornarCidadeGeocoding(item.Latitude, item.Longitude);
                 if (item.IdentificadorAtracao.HasValue && item.IdentificadorAtracao < 0)
                 {
@@ -2748,10 +2784,9 @@ namespace CV.Business
             foreach (var item in itemDados.Refeicoes)
             {
                 var itemBase = SelecionarRefeicao(item.Identificador);
-                if (itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
+                if (itemBase != null &&  itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
                     continue;
-                foreach (var itemAvaliacao in item.Pedidos)
-                    itemAvaliacao.IdentificadorRefeicao = null;
+  
                 if (item.DataExclusao.HasValue)
                 {
                     item.DataExclusao = DateTime.Now.ToUniversalTime();
@@ -2764,6 +2799,11 @@ namespace CV.Business
                 itemDePara.TipoObjeto = "R";
                 if (item.Identificador < 0)
                     item.Identificador = null;
+
+                foreach (var itemAvaliacao in item.Pedidos)
+                    itemAvaliacao.IdentificadorRefeicao = item.Identificador;
+
+
                 item.IdentificadorCidade = RetornarCidadeGeocoding(item.Latitude, item.Longitude);
                 if (item.IdentificadorAtracao.HasValue && item.IdentificadorAtracao < 0)
                 {
@@ -2800,10 +2840,9 @@ namespace CV.Business
             foreach (var item in itemDados.Atracoes)
             {
                 var itemBase = SelecionarAtracao(item.Identificador);
-                if (itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
+                if (itemBase != null &&  itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
                     continue;
-                foreach (var itemAvaliacao in item.Avaliacoes)
-                    itemAvaliacao.IdentificadorAtracao = null;
+
                 if (item.DataExclusao.HasValue)
                 {
                     item.DataExclusao = DateTime.Now.ToUniversalTime();
@@ -2816,6 +2855,9 @@ namespace CV.Business
                 itemDePara.TipoObjeto = "A";
                 if (item.Identificador < 0)
                     item.Identificador = null;
+                foreach (var itemAvaliacao in item.Avaliacoes)
+                    itemAvaliacao.IdentificadorAtracao = item.Identificador;
+
                 item.IdentificadorCidade = RetornarCidadeGeocoding(item.Latitude, item.Longitude);
                 int? IdentificadorPaiAjustar = null;
                 if (item.IdentificadorAtracaoPai.HasValue && item.IdentificadorAtracaoPai < 0)
@@ -2865,7 +2907,7 @@ namespace CV.Business
             foreach (var itemAporteDinheiro in itemDados.AportesDinheiro)
             {
                 var itemAporteBase = SelecionarAporteDinheiro(itemAporteDinheiro.Identificador);
-                if (itemAporteBase.DataAtualizacao > itemAporteDinheiro.DataAtualizacao || itemAporteDinheiro.DataExclusao.HasValue)
+                if (itemAporteBase != null &&  itemAporteBase.DataAtualizacao > itemAporteDinheiro.DataAtualizacao || itemAporteDinheiro.DataExclusao.HasValue)
                     continue;
 
                 if (itemAporteDinheiro.DataExclusao.HasValue)
@@ -2915,7 +2957,7 @@ namespace CV.Business
             foreach (var itemCotacao in itemDados.CotacoesMoeda)
             {
                 var itemAporteBase = SelecionarCotacaoMoeda(itemCotacao.Identificador);
-                if (itemAporteBase.DataAtualizacao > itemCotacao.DataAtualizacao || itemCotacao.DataExclusao.HasValue)
+                if (itemAporteBase != null && itemAporteBase.DataAtualizacao > itemCotacao.DataAtualizacao || itemCotacao.DataExclusao.HasValue)
                     continue;
                 if (itemCotacao.DataExclusao.HasValue)
                     itemCotacao.DataExclusao = DateTime.Now.ToUniversalTime();
@@ -2937,7 +2979,7 @@ namespace CV.Business
             foreach (var itemLC in itemDados.ListaCompra)
             {
                 var itemAporteBase = SelecionarListaCompra(itemLC.Identificador);
-                if (itemAporteBase.DataAtualizacao > itemLC.DataAtualizacao || itemLC.DataExclusao.HasValue)
+                if (itemAporteBase != null && itemAporteBase.DataAtualizacao > itemLC.DataAtualizacao || itemLC.DataExclusao.HasValue)
                     continue;
                 if (itemLC.DataExclusao.HasValue)
                     itemLC.DataExclusao = DateTime.Now.ToUniversalTime();
@@ -2959,7 +3001,7 @@ namespace CV.Business
             foreach (var itemCP in itemDados.CalendariosPrevistos)
             {
                 var itemAporteBase = SelecionarCalendarioPrevisto(itemCP.Identificador);
-                if (itemAporteBase.DataAtualizacao > itemCP.DataAtualizacao || itemCP.DataExclusao.HasValue)
+                if (itemAporteBase != null &&  itemAporteBase.DataAtualizacao > itemCP.DataAtualizacao || itemCP.DataExclusao.HasValue)
                     continue;
                 if (itemCP.DataExclusao.HasValue)
                     itemCP.DataExclusao = DateTime.Now.ToUniversalTime();
@@ -2981,7 +3023,7 @@ namespace CV.Business
             foreach (var itemCP in itemDados.Comentarios)
             {
                 var itemAporteBase = SelecionarComentario( itemCP.Identificador);
-                if (itemAporteBase.DataAtualizacao > itemCP.DataAtualizacao || itemCP.DataExclusao.HasValue)
+                if (itemAporteBase != null && itemAporteBase.DataAtualizacao > itemCP.DataAtualizacao || itemCP.DataExclusao.HasValue)
                     continue;
                 if (itemCP.DataExclusao.HasValue)
                     itemCP.DataExclusao = DateTime.Now.ToUniversalTime();
@@ -3007,7 +3049,7 @@ namespace CV.Business
             foreach (var itemCP in itemDados.Sugestoes)
             {
                 var itemAporteBase = SelecionarSugestao(itemCP.Identificador);
-                if (itemAporteBase.DataAtualizacao > itemCP.DataAtualizacao || itemCP.DataExclusao.HasValue)
+                if (itemAporteBase != null &&  itemAporteBase.DataAtualizacao > itemCP.DataAtualizacao || itemCP.DataExclusao.HasValue)
                     continue;
                 if (itemCP.DataExclusao.HasValue)
                     itemCP.DataExclusao = DateTime.Now.ToUniversalTime();

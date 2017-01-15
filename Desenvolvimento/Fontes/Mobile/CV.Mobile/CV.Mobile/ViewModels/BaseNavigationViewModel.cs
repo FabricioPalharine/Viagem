@@ -140,6 +140,17 @@ namespace CV.Mobile.ViewModels
         public async Task SincronizarDados(bool exibeAlerta)
         {
             await (((MasterDetailPage)Application.Current?.MainPage).BindingContext as MasterDetailViewModel).SincronizarDados(exibeAlerta);
+            await (((MasterDetailPage)Application.Current?.MainPage).BindingContext as MasterDetailViewModel).EnviarVideos();
+            await (((MasterDetailPage)Application.Current?.MainPage).BindingContext as MasterDetailViewModel).EnviarFotos();
+            if (exibeAlerta)
+            {
+                MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                {
+                    Title = "Sincronização",
+                    Message = "Dados Sincronizados com o servidor",
+                    Cancel = "OK"
+                });
+            }
         }
 
         #region SignalR

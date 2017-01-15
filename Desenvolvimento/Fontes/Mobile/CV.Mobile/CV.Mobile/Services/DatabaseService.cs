@@ -1369,14 +1369,15 @@ namespace CV.Mobile.Services
                             item.NomeCidade = itemGravado.NomeCidade;
                             item.IdentificadorCidade = itemGravado.IdentificadorCidade;
                         }
-                    }
-                    if (itemDePara.IdentificadorOrigem != itemDePara.IdentificadorDetino)
-                    {
-                        var UploadsArquivo = await Database.ListarUploadFoto_IdentificadorHotel(itemDePara.IdentificadorOrigem);
-                        foreach (var itemVideo in UploadsArquivo)
+
+                        if (itemDePara.IdentificadorOrigem != itemDePara.IdentificadorDetino)
                         {
-                            itemVideo.IdentificadorRefeicao = itemDePara.IdentificadorDetino;
-                            await Database.SalvarUploadFoto(itemVideo);
+                            var UploadsArquivo = await Database.ListarUploadFoto_IdentificadorHotel(itemDePara.IdentificadorOrigem);
+                            foreach (var itemVideo in UploadsArquivo)
+                            {
+                                itemVideo.IdentificadorRefeicao = itemDePara.IdentificadorDetino;
+                                await Database.SalvarUploadFoto(itemVideo);
+                            }
                         }
                     }
                     await Database.SalvarHotel(item);
@@ -1410,12 +1411,8 @@ namespace CV.Mobile.Services
                     {
                         DeParaIdentificador itemCusto = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.IdentificadorGasto && d.TipoObjeto == "G").FirstOrDefault();
                         if (itemCusto != null && itemCusto.IdentificadorDetino != itemCusto.IdentificadorOrigem)
-                        {
-                            item.ItemGasto.AtualizadoBanco = true;
-                            item.ItemGasto.Identificador = itemCusto.IdentificadorDetino;
-                            await Database.SalvarGasto(item.ItemGasto);
-                        }
-                        item.IdentificadorGasto = item.ItemGasto.Identificador;
+                            item.IdentificadorGasto = itemCusto.IdentificadorDetino;
+
 
                     }
                     DeParaIdentificador deParaLoja = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.IdentificadorViagemAerea && d.TipoObjeto == "A").FirstOrDefault();
@@ -1450,12 +1447,8 @@ namespace CV.Mobile.Services
                     {
                         DeParaIdentificador itemCusto = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.IdentificadorGasto && d.TipoObjeto == "G").FirstOrDefault();
                         if (itemCusto != null && itemCusto.IdentificadorDetino != itemCusto.IdentificadorOrigem)
-                        {
-                            item.ItemGasto.AtualizadoBanco = true;
-                            item.ItemGasto.Identificador = itemCusto.IdentificadorDetino;
-                            await Database.SalvarGasto(item.ItemGasto);
-                        }
-                        item.IdentificadorGasto = item.ItemGasto.Identificador;
+                            item.IdentificadorGasto = itemCusto.IdentificadorDetino;
+
 
                     }
                     DeParaIdentificador deParaLoja = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.IdentificadorRefeicao && d.TipoObjeto == "A").FirstOrDefault();
@@ -1490,12 +1483,8 @@ namespace CV.Mobile.Services
                     {
                         DeParaIdentificador itemCusto = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.IdentificadorGasto && d.TipoObjeto == "G").FirstOrDefault();
                         if (itemCusto != null && itemCusto.IdentificadorDetino != itemCusto.IdentificadorOrigem)
-                        {
-                            item.ItemGasto.AtualizadoBanco = true;
-                            item.ItemGasto.Identificador = itemCusto.IdentificadorDetino;
-                            await Database.SalvarGasto(item.ItemGasto);
-                        }
-                        item.IdentificadorGasto = item.ItemGasto.Identificador;
+                            item.IdentificadorGasto = itemCusto.IdentificadorDetino;
+
 
                     }
                     DeParaIdentificador deParaLoja = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.IdentificadorHotel && d.TipoObjeto == "A").FirstOrDefault();
@@ -1531,11 +1520,9 @@ namespace CV.Mobile.Services
                         DeParaIdentificador itemCusto = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.IdentificadorGasto && d.TipoObjeto == "G").FirstOrDefault();
                         if (itemCusto != null && itemCusto.IdentificadorDetino != itemCusto.IdentificadorOrigem)
                         {
-                            item.ItemGasto.AtualizadoBanco = true;
-                            item.ItemGasto.Identificador = itemCusto.IdentificadorDetino;
-                            await Database.SalvarGasto(item.ItemGasto);
+                            item.IdentificadorGasto = itemCusto.IdentificadorDetino;
+
                         }
-                        item.IdentificadorGasto = item.ItemGasto.Identificador;
 
                     }
                     DeParaIdentificador deParaLoja = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.IdentificadorAtracao && d.TipoObjeto == "A").FirstOrDefault();
@@ -1569,12 +1556,8 @@ namespace CV.Mobile.Services
                     {
                         DeParaIdentificador itemCusto = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.IdentificadorGasto && d.TipoObjeto == "G").FirstOrDefault();
                         if (itemCusto != null && itemCusto.IdentificadorDetino != itemCusto.IdentificadorOrigem)
-                        {
-                            item.ItemGasto.AtualizadoBanco = true;
-                            item.ItemGasto.Identificador = itemCusto.IdentificadorDetino;
-                            await Database.SalvarGasto(item.ItemGasto);
-                        }
-                        item.IdentificadorGasto = item.ItemGasto.Identificador;
+                            item.IdentificadorGasto = itemCusto.IdentificadorDetino;
+
 
                     }
                     DeParaIdentificador deParaLoja = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.IdentificadorCarro && d.TipoObjeto == "C").FirstOrDefault();
@@ -1893,8 +1876,9 @@ namespace CV.Mobile.Services
                             itemGR.ItemGasto.AtualizadoBanco = true;
                             itemGR.ItemGasto.Identificador = itemCusto.IdentificadorDetino;
                             await Database.SalvarGasto(itemGR.ItemGasto);
+                            itemGR.IdentificadorGasto = itemCusto.IdentificadorDetino;
                         }
-                        itemGR.IdentificadorGasto = itemCusto.IdentificadorDetino;
+
                         itemGR.IdentificadorReabastecimento = item.Identificador;
                         itemGR.AtualizadoBanco = true;
                         await Database.SalvarReabastecimentoGasto(itemGR);
@@ -1922,7 +1906,7 @@ namespace CV.Mobile.Services
                 else
                 {
 
-                    DeParaIdentificador itemDePara = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.Identificador && d.TipoObjeto == "CD").FirstOrDefault();
+                    DeParaIdentificador itemDePara = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.Identificador && d.TipoObjeto == "C").FirstOrDefault();
                     if (itemDePara != null)
                     {
                         item.Identificador = itemDePara.IdentificadorDetino;
@@ -1987,6 +1971,11 @@ namespace CV.Mobile.Services
                     if (itemDePara != null)
                     {
                         item.Identificador = itemDePara.IdentificadorDetino;
+                    }
+                    itemDePara = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.IdentificadorCarro && d.TipoObjeto == "C").FirstOrDefault();
+                    if (itemDePara != null)
+                    {
+                        item.IdentificadorCarro = itemDePara.IdentificadorDetino;
                     }
                     if (item.IdentificadorCarroEventoChegada.HasValue)
                     {
@@ -2374,16 +2363,18 @@ namespace CV.Mobile.Services
                         var itemGastoReabastecimento = itemReabastecimento.Gastos.FirstOrDefault();
                         if (itemGastoReabastecimento != null)
                         {
-                            var ListaGastos = await Database.ListarReabastecimentoGasto_IdentificadorReabastecimento(itemBanco.Identificador);
-                            if (ListaGastos.Any())
+                            if (itemBanco != null)
                             {
-                                var itemGRBase = ListaGastos.FirstOrDefault();
-                                var itemGastoBase = await Database.RetornarGasto(itemGRBase.IdentificadorGasto);
-                                if (itemGastoBase != null)
-                                    itemGastoReabastecimento.ItemGasto.Id = itemGastoBase.Id;
-                                itemGastoReabastecimento.Id = itemGRBase.Id;
+                                var ListaGastos = await Database.ListarReabastecimentoGasto_IdentificadorReabastecimento(itemBanco.Identificador);
+                                if (ListaGastos.Any())
+                                {
+                                    var itemGRBase = ListaGastos.FirstOrDefault();
+                                    var itemGastoBase = await Database.RetornarGasto(itemGRBase.IdentificadorGasto);
+                                    if (itemGastoBase != null)
+                                        itemGastoReabastecimento.ItemGasto.Id = itemGastoBase.Id;
+                                    itemGastoReabastecimento.Id = itemGRBase.Id;
+                                }
                             }
-
                             await Database.SalvarGasto(itemGastoReabastecimento.ItemGasto);
                             await Database.SalvarReabastecimentoGasto(itemGastoReabastecimento);
 
@@ -3885,7 +3876,7 @@ namespace CV.Mobile.Services
                 await Database.ExcluirCarroDeslocamentoUsuario_IdentificadorCarroDeslocamento(itemCarro.Identificador.GetValueOrDefault());
                 foreach (var itemUsuario in itemCarro.Usuarios)
                 {
-                    itemUsuario.IdentificadorUsuario = itemCarro.Identificador;
+                    itemUsuario.IdentificadorCarroDeslocamento = itemCarro.Identificador;
                     itemUsuario.AtualizadoBanco = false;
                     await Database.SalvarCarroDeslocamentoUsuario(itemUsuario);
                 }

@@ -1619,7 +1619,14 @@ namespace CV.Mobile.Data
 
         public async Task<List<Gasto>> ListarGasto_Pendente(List<int?> ListaIdentificadoresIgnorar)
         {
-            return await database.Table<Gasto>().Where(d => !ListaIdentificadoresIgnorar.Contains(d.Identificador)).Where(d=>!d.ApenasBaixa).ToListAsync();
+            var Lista = await database.Table<Gasto>().Where(d => !ListaIdentificadoresIgnorar.Contains(d.Identificador)).Where(d=>!d.ApenasBaixa).Where(d => !d.AtualizadoBanco).ToListAsync();
+            List<int?> Identificadores = Lista.Select(d => d.Identificador).ToList();
+            var ListaCompras = await database.Table<GastoCompra>().Where(d => Identificadores.Contains(d.IdentificadorGasto)).ToListAsync();
+            var ListaReabastecimentos = await database.Table<ReabastecimentoGasto>().Where(d => Identificadores.Contains(d.IdentificadorGasto)).ToListAsync();
+            Lista = Lista.Where(d => !ListaCompras.Where(e => e.IdentificadorGasto == d.Identificador).Any()).ToList();
+            Lista = Lista.Where(d => !ListaReabastecimentos.Where(e => e.IdentificadorGasto == d.Identificador).Any()).ToList();
+
+            return Lista;
         }
 
         public async Task<List<CalendarioPrevisto>> ListarCalendarioPrevisto_Pendente()

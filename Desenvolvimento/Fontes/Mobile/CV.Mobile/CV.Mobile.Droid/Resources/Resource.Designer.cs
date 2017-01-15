@@ -66,6 +66,8 @@ namespace CV.Mobile.Droid
 			global::ModernHttpClient.Resource.String.library_name = global::CV.Mobile.Droid.Resource.String.library_name;
 			global::PCLCrypto.Resource.String.ApplicationName = global::CV.Mobile.Droid.Resource.String.ApplicationName;
 			global::PCLCrypto.Resource.String.Hello = global::CV.Mobile.Droid.Resource.String.Hello;
+			global::Plugin.Vibrate.Resource.String.ApplicationName = global::CV.Mobile.Droid.Resource.String.ApplicationName;
+			global::Plugin.Vibrate.Resource.String.Hello = global::CV.Mobile.Droid.Resource.String.Hello;
 			global::Splat.Resource.String.library_name = global::CV.Mobile.Droid.Resource.String.library_name;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::CV.Mobile.Droid.Resource.Attribute.actionBarSize;
 		}
@@ -2619,8 +2621,8 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0200d6
 			public const int mr_ic_play_light = 2130837718;
 			
-			// aapt resource value: 0x7f0200df
-			public const int notification_template_icon_bg = 2130837727;
+			// aapt resource value: 0x7f0200e0
+			public const int notification_template_icon_bg = 2130837728;
 			
 			// aapt resource value: 0x7f0200d7
 			public const int places_ic_clear = 2130837719;
@@ -2645,6 +2647,9 @@ namespace CV.Mobile.Droid
 			
 			// aapt resource value: 0x7f0200de
 			public const int search24 = 2130837726;
+			
+			// aapt resource value: 0x7f0200df
+			public const int splash = 2130837727;
 			
 			static Drawable()
 			{
@@ -4517,6 +4522,9 @@ namespace CV.Mobile.Droid
 			
 			// aapt resource value: 0x7f0c0003
 			public const int Theme_MediaRouter_LightControlPanel = 2131492867;
+			
+			// aapt resource value: 0x7f0c0176
+			public const int Theme_Splash = 2131493238;
 			
 			// aapt resource value: 0x7f0c010e
 			public const int ThemeOverlay_AppCompat = 2131493134;

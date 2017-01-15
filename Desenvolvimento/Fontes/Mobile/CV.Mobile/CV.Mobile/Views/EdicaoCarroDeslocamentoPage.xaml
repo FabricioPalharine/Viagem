@@ -63,7 +63,7 @@
         <controles:FormattedNumberEntry  Keyboard="Numeric" DecimalPlaces="0" Value="{Binding ItemCarroDeslocamento.ItemCarroEventoChegada.Odometro, Converter={StaticResource intDecimalConverter}}" IsVisible="{Binding VisitaConcluida}"/>
 
         <Label Text="Observações"  />
-        <Editor Text="{Binding ItemCarroDeslocamento}"  HeightRequest="100" />
+        <Editor Text="{Binding ItemCarroDeslocamento.Observacao}"  HeightRequest="100" />
 
 
     <Label Text="Ocupantes"   />

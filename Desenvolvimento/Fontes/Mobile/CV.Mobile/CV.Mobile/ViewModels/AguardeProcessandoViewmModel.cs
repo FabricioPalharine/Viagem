@@ -56,6 +56,7 @@ namespace CV.Mobile.ViewModels
                         await srv.SelecionarViagem(itemViagem.Identificador);
                     }
                 }
+                await vm.IniciarControlePosicao();
                 await vm.VerificarSincronizacaoDados();
                 vm.VerificarEnvioFotos();
                 vm.VerificarEnvioVideos();

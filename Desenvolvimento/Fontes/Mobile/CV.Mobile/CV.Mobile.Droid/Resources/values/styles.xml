@@ -34,4 +34,9 @@
     <item name="android:colorBackground">#3c8dbc</item>
     <item name="android:textColor">#FFFFFF</item>
   </style>
+
+  <style name="Theme.Splash" parent="android:Theme">
+    <item name="android:windowBackground">@drawable/splash</item>
+    <item name="android:windowNoTitle">true</item>
+  </style>
 </resources>

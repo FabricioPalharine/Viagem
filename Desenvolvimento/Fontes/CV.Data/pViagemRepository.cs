@@ -861,6 +861,20 @@ namespace CV.Data
                 .Where(predicate).ToList();
         }
 
+
+        public List<GastoCompra> ListarGastoCompra( Expression<Func<GastoCompra, bool>> predicate)
+        {
+            return Context.GastoCompras
+
+                .Where(predicate).ToList();
+        }
+
+        public List<ReabastecimentoGasto> ListarReabastecimentoGastos(Expression<Func<ReabastecimentoGasto, bool>> predicate)
+        {
+            return Context.ReabastecimentoGastos
+
+                .Where(predicate).ToList();
+        }
         public List<Reabastecimento> ListarReabastecimento(int? IdentificadorViagem, Expression<Func<Reabastecimento, bool>> predicate)
         {
             return Context.Reabastecimentos.Include("Gastos").Include("Gastos.ItemGasto").Include("Gastos.ItemGasto.Usuarios")

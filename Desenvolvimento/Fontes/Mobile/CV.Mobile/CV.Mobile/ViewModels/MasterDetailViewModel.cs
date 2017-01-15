@@ -11,6 +11,7 @@ using Newtonsoft.Json.Linq;
 using Plugin.Connectivity;
 using Plugin.Geolocator;
 using Plugin.Geolocator.Abstractions;
+using Plugin.Vibrate;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -84,7 +85,7 @@ namespace CV.Mobile.ViewModels
                     var Alerta = await DatabaseService.Database.ConsultarCalendarioAlerta();
                     if (Alerta != null)
                     {
-
+                        CrossVibrate.Current.Vibration(1000);
                         MessagingService.Current.SendMessage<MessagingServiceQuestion>(MessageKeys.DisplayQuestion, new MessagingServiceQuestion()
                         {
                             Title = "Informação",
@@ -208,20 +209,22 @@ namespace CV.Mobile.ViewModels
 
         public async void VerificarEnvioVideos()
         {
-            await EnviarVideos();
+            if (CrossConnectivity.Current.IsConnected && Settings.ModoVideo != "3" &&
+          (Settings.ModoVideo == "1" || CrossConnectivity.Current.ConnectionTypes.Contains(Plugin.Connectivity.Abstractions.ConnectionType.Desktop) ||
+                  CrossConnectivity.Current.ConnectionTypes.Contains(Plugin.Connectivity.Abstractions.ConnectionType.Wimax) ||
+                  CrossConnectivity.Current.ConnectionTypes.Contains(Plugin.Connectivity.Abstractions.ConnectionType.WiFi)))
+            {
+                await EnviarVideos();
+            }
         }
 
         public async Task EnviarVideos()
         {
-            if (CrossConnectivity.Current.IsConnected && Settings.ModoVideo != "3" &&
-           (Settings.ModoVideo == "1" || CrossConnectivity.Current.ConnectionTypes.Contains(Plugin.Connectivity.Abstractions.ConnectionType.Desktop) ||
-                   CrossConnectivity.Current.ConnectionTypes.Contains(Plugin.Connectivity.Abstractions.ConnectionType.Wimax) ||
-                   CrossConnectivity.Current.ConnectionTypes.Contains(Plugin.Connectivity.Abstractions.ConnectionType.WiFi)))
-            {
+           
                 var ListaFotos = await DatabaseService.Database.ListarUploadFoto_Video(true);
                 foreach (var itemFoto in ListaFotos.Where(d=>d.IdentificadorAtracao.GetValueOrDefault(0) >= 0 && d.IdentificadorHotel.GetValueOrDefault(0) >= 0 && d.IdentificadorRefeicao.GetValueOrDefault(0) >= 0))
                 {
-                    byte[] DadosFoto = ServiceLocator.Current.GetInstance<IFileHelper>().CarregarDadosFile(itemFoto.CaminhoLocal);
+                    var DadosFoto = ServiceLocator.Current.GetInstance<IFileHelper>().CarregarStreamFile(itemFoto.CaminhoLocal);
                     using (ApiService srv = new ApiService())
                     {
 
@@ -233,15 +236,14 @@ namespace CV.Mobile.ViewModels
                                 await srvAccount.AtualizarTokenUsuario(ItemUsuario);
                             }
                         }
-                        using (MemoryStream ms = new MemoryStream(DadosFoto))
-                        {
-                            BaseNavigationViewModel.GravarVideoYouTube(itemFoto, ms, ItemUsuario);
-                        }
+                       
+                            BaseNavigationViewModel.GravarVideoYouTube(itemFoto, DadosFoto, ItemUsuario);
+                        
 
                     }
                     await DatabaseService.Database.ExcluirUploadFoto(itemFoto);
                 }
-            }
+            
         }
 
         public async void VerificarEnvioFotos()
@@ -660,15 +662,7 @@ namespace CV.Mobile.ViewModels
                         itemCS.UltimaDataEnvio = DateTime.Now.ToUniversalTime();
                         await DatabaseService.AjustarDePara(item, resultadoSincronizacao, itemCS);
                    
-                    if (exibeAlerta)
-                    {
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
-                        {
-                            Title = "Sincronização",
-                            Message = "Dados Sincronizados com o servidor",
-                            Cancel = "OK"
-                        });
-                    }
+                   
                 }
                 else
                 {

@@ -276,6 +276,7 @@ namespace CV.Mobile.Services
             }
             catch
             { }
+            client.Timeout = TimeSpan.FromMinutes(1);
 
             return retorno;
         }

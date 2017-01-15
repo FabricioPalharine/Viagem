@@ -87,6 +87,7 @@ namespace CV.Mobile.ViewModels
                 ItemCarroDeslocamento.ItemCarroEventoChegada.Data = _dataMinima;
                 ItemCarroDeslocamento.ItemCarroEventoChegada.Hora = new TimeSpan();
             }
+            
         }
 
         public async Task CarregarPosicao()
@@ -249,7 +250,7 @@ namespace CV.Mobile.ViewModels
                 {
                     using (ApiService srv = new ApiService())
                     {
-                        Resultado = await srv.SalvarCarroDeslocamento(ItemCarroDeslocamento);
+                        Resultado = await srv.SalvarCarroDeslocamento(ItemSalvar);
                         if (Resultado.Sucesso)
                         {
 
@@ -262,8 +263,9 @@ namespace CV.Mobile.ViewModels
                 }
                 else
                 {
-                    Resultado = await DatabaseService.SalvarCarroDeslocamento(ItemCarroDeslocamento);
-                    pItemCarroDeslocamento = await DatabaseService.CarregarCarroDeslocamento(ItemCarroDeslocamento.Identificador);
+                    Resultado = await DatabaseService.SalvarCarroDeslocamento(ItemSalvar);
+                    if (Resultado.Sucesso)
+                     pItemCarroDeslocamento = await DatabaseService.CarregarCarroDeslocamento(ItemSalvar.Identificador);
                 }
 
 
