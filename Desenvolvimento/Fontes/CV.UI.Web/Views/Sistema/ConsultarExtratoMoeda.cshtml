@@ -1,0 +1,102 @@
+﻿<section class="content-header">
+    <h1>
+        @TextosPaginas.Home_ExtratoMoeda
+
+    </h1>
+    <ol class="breadcrumb">
+
+        <li>@TextosPaginas.Home_Menu</li>
+        <li>@TextosPaginas.Home_Consultas</li>
+        <li class="active">@TextosPaginas.Home_ExtratoMoeda</li>
+    </ol>
+
+</section>
+<!-- Main content -->
+<section class="content" ng-init="itemExtratoMoeda.load()">
+    <!-- Default box -->
+    <!-- general form elements -->
+    <div class="box box-primary">
+        <div class="overlay" ng-show="itemExtratoMoeda.loading">
+            <i class="fa fa-refresh fa-spin text-gray"></i>
+        </div>
+
+        <form role="form" ng-submit="itemExtratoMoeda.filtraDado()">
+            <div class="box-body">
+                <div class="row">
+                    <div class="form-group col-md-6" ng-class="{ 'has-error':itemExtratoMoeda.CamposInvalidos.Moeda}">
+                        <label>@TextosPaginas.Gasto_Moeda</label>
+                        <select ng-model="itemExtratoMoeda.itemMoeda" class="form-control" ng-options="obj.Descricao for obj in itemExtratoMoeda.ListaMoeda track by obj.Codigo">
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>@TextosPaginas.ExtratoMoeda_DataInicio</label>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+                                <div class="input-group">
+                                    <input date-input ng-model="itemExtratoMoeda.filtro.DataInicioDe" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                           datapattern="dd/MM/yyyy">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker data-ng-model="itemExtratoMoeda.filtro.DataInicioDe"
+                                                data-datetimepicker-config="{  minView:'day' , langCode:itemExtratoMoeda.Idioma()  }" />
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div><!-- /.box-body -->
+            <div class="box-footer">
+
+                <button type="submit" class="btn btn-primary  pull-right">
+                    <span class="fa fa-search" aria-hidden="true"></span> @TextosPaginas.Pesquisar
+                </button>
+
+            </div>
+        </form>
+    </div><!-- /.box -->
+
+
+
+    <div class="box">
+        <div class="overlay" ng-show="itemExtratoMoeda.loading">
+            <i class="fa fa-refresh fa-spin text-gray"></i>
+        </div>
+        <div class="box-body table-responsive">
+            <table class="table-condensed " style="width:100%; ">
+               <tr ng-repeat='itemExtrato in itemExtratoMoeda.ListaDados'>
+
+                    <td class="col-xs-2">
+                       
+                        <div ng-if="itemExtrato.TipoLinha == 'S'"><b> {{itemExtrato.Data | date:'dd/MM/yyyy'}}</b></div>
+
+                        <div ng-if="itemExtrato.TipoLinha == 'V'">{{itemExtrato.Data | date:'dd/MM/yyyy HH:mm'}}</div>
+                    </td>
+
+                   <td class="col-xs-6">
+                       <div ng-if="itemExtrato.TipoLinha == 'S'"><b> {{itemExtrato.Descricao}}</b></div>
+
+                       <div ng-if="itemExtrato.TipoLinha == 'V'">{{itemExtrato.Descricao}}</div>
+                   </td>
+
+                   <td class="col-xs-4">
+                       <div ng-if="itemExtrato.TipoLinha == 'S'"><b> {{itemExtrato.Valor | number:'2'}}</b></div>
+
+                       <div ng-if="itemExtrato.TipoLinha == 'V'">{{itemExtrato.Valor | number:'2'}}</div>
+                   </td>
+                    
+                </tr>
+            </table>
+
+        </div>
+    </div>
+
+
+   
+
+</section><!-- /.content -->

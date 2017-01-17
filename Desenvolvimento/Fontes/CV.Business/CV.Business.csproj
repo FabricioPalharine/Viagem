@@ -72,6 +72,7 @@
     <Reference Include="System.DirectoryServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="pConsultaBusiness.cs" />
     <Compile Include="Library\BusinessBase.cs" />
     <Compile Include="Library\pBusinessBase.cs" />
     <Compile Include="MensagemBusiness.cs" />

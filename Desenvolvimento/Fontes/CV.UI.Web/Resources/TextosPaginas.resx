@@ -1479,4 +1479,13 @@
   <data name="Home_Requisicoes" xml:space="preserve">
     <value>Requisições</value>
   </data>
+  <data name="ExtratoMoeda_DataInicio" xml:space="preserve">
+    <value>Data Inicial</value>
+  </data>
+  <data name="Home_Consultas" xml:space="preserve">
+    <value>Consultas</value>
+  </data>
+  <data name="Home_ExtratoMoeda" xml:space="preserve">
+    <value>Extrato Dinheiro</value>
+  </data>
 </root>

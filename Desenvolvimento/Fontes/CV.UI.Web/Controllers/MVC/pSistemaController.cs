@@ -47,5 +47,10 @@ namespace CV.UI.Web.Controllers.MVC
         {
             return PartialView();
         }
+
+        public ActionResult ConsultarExtratoMoeda()
+        {
+            return PartialView();
+        }
     }
 }

@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="pConsultaRepository.cs" />
     <Compile Include="RepositoryBase.cs" />
     <Compile Include="pRepositoryBase.cs" />
     <Compile Include="EntityContext.cs" />
