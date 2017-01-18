@@ -414,6 +414,11 @@ namespace CV.Data
 
         #endregion
 
+        public void SalvarPosicaoLista(List<Posicao> Lista)
+        {
+            this.Context.Posicoes.AddRange(Lista);
+            this.Context.SaveChanges();
+        }
 
         public void SalvarAtracaoSimples(Atracao itemGravar)
         {

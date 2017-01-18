@@ -49,6 +49,8 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             ViagemBusiness biz = new ViagemBusiness();
             itemViagem.DataAlteracao = DateTime.Now.ToUniversalTime();
+            if (!itemViagem.IdentificadorUsuario.HasValue)
+                itemViagem.IdentificadorUsuario = token.IdentificadorUsuario;
             biz.SalvarViagem_Completa_Album(itemViagem);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();

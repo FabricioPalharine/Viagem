@@ -2182,7 +2182,7 @@ namespace CV.Mobile.Services
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc
             });
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-
+            client.Timeout = TimeSpan.FromMinutes(5);
             HttpResponseMessage response = null;
             response = await client.PostAsync(uri, content);
             var resultado = await response.Content.ReadAsStringAsync();

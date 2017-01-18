@@ -1132,6 +1132,7 @@ namespace CV.Mobile.Services
             await Database.SalvarControleSincronizacao(itemCS);
             await AjustarDadosAporte(itemEnvio, resultadoSincronizacao);
             await AjustarDadosAtracao(itemEnvio.Atracoes, resultadoSincronizacao);
+            await AjustarDadosRefeicao(itemEnvio.Refeicoes, resultadoSincronizacao);
             await AjustarDadosCalendarioPrevisto(itemEnvio.CalendariosPrevistos, resultadoSincronizacao);
             await AjustarDadosCarroDeslocamento(itemEnvio.CarroDeslocamentos, resultadoSincronizacao);
             await AjustarDadosCarro(itemEnvio.Carros, resultadoSincronizacao);

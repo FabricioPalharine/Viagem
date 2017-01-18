@@ -328,10 +328,11 @@ namespace CV.Mobile.ViewModels
             }
             if (_hotelAtual != null && _hotelAtual.Raio > 0 && _hotelAtual.Latitude.HasValue && _hotelAtual.Longitude.HasValue)
             {
-                var DistanciaAtual = GetDistanceTo(new Position() { Longitude = _hotelAtual.Longitude.Value, Latitude = _hotelAtual.Longitude.Value }, e.Position);
+                var DistanciaAtual = GetDistanceTo(new Position() { Longitude = _hotelAtual.Longitude.Value, Latitude = _hotelAtual.Latitude.Value }, e.Position);
                 bool estaDentro = DistanciaAtual.Meters <= _hotelAtual.Raio;
                 if (estaDentro != HotelDentro)
                 {
+                    HotelDentro = estaDentro;
                     HotelEvento itemEvento = new HotelEvento() { DataEntrada = DateTime.Now, IdentificadorHotel = _hotelAtual.Identificador, IdentificadorUsuario = ItemUsuario.Codigo, DataAtualizacao=DateTime.Now.ToUniversalTime() };
                     if (!estaDentro)
                         itemEvento.DataSaida = DateTime.Now;
@@ -484,15 +485,30 @@ namespace CV.Mobile.ViewModels
 
         public Xamarin.Forms.Maps.Distance GetDistanceTo(Position posicao, Position other)
         {
-            var d1 = posicao.Latitude * (Math.PI / 180.0);
-            var num1 = posicao.Longitude * (Math.PI / 180.0);
-            var d2 = other.Latitude * (Math.PI / 180.0);
-            var num2 = other.Longitude * (Math.PI / 180.0) - num1;
-            var d3 = Math.Pow(Math.Sin((d2 - d1) / 2.0), 2.0) +
-                     Math.Cos(d1) * Math.Cos(d2) * Math.Pow(Math.Sin(num2 / 2.0), 2.0);
 
-            var meters = 6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(d3), Math.Sqrt(1.0 - d3)));
-            return Xamarin.Forms.Maps.Distance.FromMeters(meters);
+            double pk = (double)(180d / Math.PI);
+
+            double a1 = posicao.Latitude / pk;
+            double a2 = posicao.Longitude / pk;
+            double b1 = other.Latitude / pk;
+            double b2 = other.Longitude / pk;
+
+            double t1 = Math.Cos(a1) * Math.Cos(a2) * Math.Cos(b1) * Math.Cos(b2);
+            double t2 = Math.Cos(a1) * Math.Sin(a2) * Math.Cos(b1) * Math.Sin(b2);
+            double t3 = Math.Sin(a1) * Math.Sin(b1);
+            double tt = Math.Acos(t1 + t2 + t3);
+
+            return Xamarin.Forms.Maps.Distance.FromMeters(6366000 * tt);
+
+            //var d1 = posicao.Latitude * (Math.PI / 180.0);
+            //var num1 = posicao.Longitude * (Math.PI / 180.0);
+            //var d2 = other.Latitude * (Math.PI / 180.0);
+            //var num2 = other.Longitude * (Math.PI / 180.0) - num1;
+            //var d3 = Math.Pow(Math.Sin((d2 - d1) / 2.0), 2.0) +
+            //         Math.Cos(d1) * Math.Cos(d2) * Math.Pow(Math.Sin(num2 / 2.0), 2.0);
+
+            //var meters = 6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(d3), Math.Sqrt(1.0 - d3)));
+            //return Xamarin.Forms.Maps.Distance.FromMeters(meters);
         }
 
         public async Task IniciarControlePosicao()
@@ -502,7 +518,7 @@ namespace CV.Mobile.ViewModels
                 if (_ItemViagem != null && _ItemViagem.Edicao && _ItemViagem.Aberto && _ItemViagem.DataInicio < DateTime.Now && _ItemViagem.ControlaPosicaoGPS)
                 {
                     if (!locator.IsListening)
-                        await locator.StartListeningAsync(15, 1, true);
+                        await locator.StartListeningAsync(60, 5, true);
                 }
                 else
                 {

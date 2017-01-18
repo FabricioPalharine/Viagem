@@ -641,7 +641,7 @@ namespace CV.Business
 
         public void AtualizarTokenUsuario(Usuario ItemUsuario)
         {
-            if (ItemUsuario.DataToken.GetValueOrDefault().AddSeconds(ItemUsuario.Lifetime.GetValueOrDefault(0) - 60) < DateTime.Now.ToUniversalTime())
+            if (!ItemUsuario.DataToken.HasValue || ItemUsuario.DataToken.GetValueOrDefault().AddSeconds(ItemUsuario.Lifetime.GetValueOrDefault(0) - 60) < DateTime.Now.ToUniversalTime())
             {
                 WebClient client = new WebClient();
                 // creates the post data for the POST request
@@ -1894,7 +1894,14 @@ namespace CV.Business
             SincronizarPosicoes(itemDados, identificadorUsuario, identificadorViagem);
             return listaResultado;
         }
-
+        public void SalvarPosicaoLista(List<Posicao> Lista)
+        {
+            using (ViagemRepository data = new ViagemRepository())
+            {
+                data.SalvarPosicaoLista(Lista);
+            }
+        }
+            
         private void SincronizarPosicoes(ClasseSincronizacao itemDados, int identificadorUsuario, int? identificadorViagem)
         {
             foreach (var item in itemDados.Posicoes)
@@ -1902,8 +1909,8 @@ namespace CV.Business
                 item.IdentificadorUsuario = identificadorUsuario;
                 item.IdentificadorViagem = identificadorViagem;
                 item.Identificador = null;
-                SalvarPosicao(item);
             }
+            SalvarPosicaoLista(itemDados.Posicoes);
         }
 
         private void SincronizarGastoCarro(ClasseSincronizacao itemDados, int identificadorUsuario, int? identificadorViagem, List<DeParaIdentificador> listaResultado)

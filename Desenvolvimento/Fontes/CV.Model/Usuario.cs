@@ -63,7 +63,7 @@ private void ValidarToken(Microsoft.Practices.EnterpriseLibrary.Validation.Valid
             new Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult(Resource.MensagemModelo.Usuario_Token, this, "Token", null, null);
       results.AddResult(result);
   }
-  else if (Token.Length > 100)
+  else if (Token.Length > 200)
   {
       Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult result =
             new Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult(Resource.MensagemModelo.Usuario_Token_Tamanho, this, "Token", null, null);
@@ -81,7 +81,7 @@ private void ValidarRefreshToken(Microsoft.Practices.EnterpriseLibrary.Validatio
             new Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult(Resource.MensagemModelo.Usuario_RefreshToken, this, "RefreshToken", null, null);
       results.AddResult(result);
   }
-  else if (RefreshToken.Length > 100)
+  else if (RefreshToken.Length > 200)
   {
       Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult result =
             new Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult(Resource.MensagemModelo.Usuario_RefreshToken_Tamanho, this, "RefreshToken", null, null);
