@@ -117,7 +117,7 @@ namespace CV.Mobile.ViewModels
                                     else
                                     {
                                         Alerta.AtualizadoBanco = false;
-                                        
+
                                     }
 
                                 }
@@ -193,7 +193,7 @@ namespace CV.Mobile.ViewModels
                 await VerificarSincronizacaoDados();
             VerificarEnvioFotos();
             VerificarEnvioVideos();
-         
+
         }
 
         public async Task VerificarSincronizacaoDados()
@@ -220,30 +220,30 @@ namespace CV.Mobile.ViewModels
 
         public async Task EnviarVideos()
         {
-           
-                var ListaFotos = await DatabaseService.Database.ListarUploadFoto_Video(true);
-                foreach (var itemFoto in ListaFotos.Where(d=>d.IdentificadorAtracao.GetValueOrDefault(0) >= 0 && d.IdentificadorHotel.GetValueOrDefault(0) >= 0 && d.IdentificadorRefeicao.GetValueOrDefault(0) >= 0))
+
+            var ListaFotos = await DatabaseService.Database.ListarUploadFoto_Video(true);
+            foreach (var itemFoto in ListaFotos.Where(d => d.IdentificadorAtracao.GetValueOrDefault(0) >= 0 && d.IdentificadorHotel.GetValueOrDefault(0) >= 0 && d.IdentificadorRefeicao.GetValueOrDefault(0) >= 0))
+            {
+                var DadosFoto = ServiceLocator.Current.GetInstance<IFileHelper>().CarregarStreamFile(itemFoto.CaminhoLocal);
+                using (ApiService srv = new ApiService())
                 {
-                    var DadosFoto = ServiceLocator.Current.GetInstance<IFileHelper>().CarregarStreamFile(itemFoto.CaminhoLocal);
-                    using (ApiService srv = new ApiService())
+
+                    var ItemUsuario = await srv.CarregarUsuario(_ItemUsuario.Codigo);
+                    if (ItemUsuario.DataToken.GetValueOrDefault().AddSeconds(ItemUsuario.Lifetime.GetValueOrDefault(0) - 60) < DateTime.Now.ToUniversalTime())
                     {
-
-                        var ItemUsuario = await srv.CarregarUsuario(_ItemUsuario.Codigo);
-                        if (ItemUsuario.DataToken.GetValueOrDefault().AddSeconds(ItemUsuario.Lifetime.GetValueOrDefault(0) - 60) < DateTime.Now.ToUniversalTime())
+                        using (AccountsService srvAccount = new AccountsService())
                         {
-                            using (AccountsService srvAccount = new AccountsService())
-                            {
-                                await srvAccount.AtualizarTokenUsuario(ItemUsuario);
-                            }
+                            await srvAccount.AtualizarTokenUsuario(ItemUsuario);
                         }
-                       
-                            BaseNavigationViewModel.GravarVideoYouTube(itemFoto, DadosFoto, ItemUsuario);
-                        
-
                     }
-                    await DatabaseService.Database.ExcluirUploadFoto(itemFoto);
+
+                    new ConfiguracaoViewModel().GravarVideoYouTube(itemFoto, DadosFoto, ItemUsuario, false);
+
+
                 }
-            
+                await DatabaseService.Database.ExcluirUploadFoto(itemFoto);
+            }
+
         }
 
         public async void VerificarEnvioFotos()
@@ -279,7 +279,7 @@ namespace CV.Mobile.ViewModels
                         await srvFoto.SubirFoto(_ItemViagem.CodigoAlbum, DadosFoto, itemFoto);
                     }
                     var resultadoAPI = await srv.SubirImagem(itemFoto);
-
+                    await AtualizarViagem(_ItemViagem.Identificador.GetValueOrDefault(), "F", resultadoAPI.IdentificadorRegistro.GetValueOrDefault(), true);
                 }
                 await DatabaseService.Database.ExcluirUploadFoto(itemFoto);
             }
@@ -287,9 +287,9 @@ namespace CV.Mobile.ViewModels
 
         private async Task ConectatSignalR(Viagem itemViagem)
         {
-            
+
             await IniciarHubSignalR();
-           
+
             if (itemViagem != null)
                 await ConectarViagem(itemViagem.Identificador.GetValueOrDefault(), itemViagem.Edicao);
         }
@@ -313,7 +313,7 @@ namespace CV.Mobile.ViewModels
                     Latitude = e.Position.Latitude,
                     Longitude = e.Position.Longitude,
                     Velocidade = e.Position.Speed
-                    
+
                 };
                 ultimaPosicao = e.Position;
                 if (ConectadoPrincipal)
@@ -333,7 +333,7 @@ namespace CV.Mobile.ViewModels
                 if (estaDentro != HotelDentro)
                 {
                     HotelDentro = estaDentro;
-                    HotelEvento itemEvento = new HotelEvento() { DataEntrada = DateTime.Now, IdentificadorHotel = _hotelAtual.Identificador, IdentificadorUsuario = ItemUsuario.Codigo, DataAtualizacao=DateTime.Now.ToUniversalTime() };
+                    HotelEvento itemEvento = new HotelEvento() { DataEntrada = DateTime.Now, IdentificadorHotel = _hotelAtual.Identificador, IdentificadorUsuario = ItemUsuario.Codigo, DataAtualizacao = DateTime.Now.ToUniversalTime() };
                     if (!estaDentro)
                         itemEvento.DataSaida = DateTime.Now;
                     if (ConectadoPrincipal)
@@ -349,7 +349,7 @@ namespace CV.Mobile.ViewModels
                                 if (itemBanco != null)
                                     pItemEvento.Id = itemBanco.Id;
                                 await DatabaseService.Database.SalvarHotelEvento(pItemEvento);
-                               await AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "HE", pItemEvento.Identificador.GetValueOrDefault(), false);
+                                await AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "HE", pItemEvento.Identificador.GetValueOrDefault(), false);
 
                             }
                         }
@@ -584,10 +584,10 @@ namespace CV.Mobile.ViewModels
             if (cvHubConnection.State != ConnectionState.Connected)
             {
                 cvHubProxy = cvHubConnection.CreateHubProxy("Viagem");
-                cvHubProxy.On<string, int, bool>("avisarAlertaAtualizacao",  (Tipo, Identificador, Inclusao) =>
-                {
-                     VerificarAcaoAlteracao(Tipo, Identificador);
-                });
+                cvHubProxy.On<string, int, bool>("avisarAlertaAtualizacao", (Tipo, Identificador, Inclusao) =>
+               {
+                   VerificarAcaoAlteracao(Tipo, Identificador);
+               });
 
                 cvHubProxy.On<AlertaUsuario>("enviarAlertaRequisicao", (itemAlerta) =>
                 {
@@ -608,7 +608,7 @@ namespace CV.Mobile.ViewModels
 
         public async Task ConectarUsuario(int IdentificadorUsuario)
         {
-            if ( cvHubConnection.State == ConnectionState.Connected )
+            if (cvHubConnection.State == ConnectionState.Connected)
                 await cvHubProxy.Invoke("conectarUsuario", IdentificadorUsuario);
         }
         public async Task DesconectarUsuario(int IdentificadorUsuario)
@@ -651,7 +651,7 @@ namespace CV.Mobile.ViewModels
                 await cvHubProxy.Invoke("viagemAtualizada", IdentificadorViagem, TipoAtualizacao, Identificador, Inclusao);
             }
         }
-  
+
 
         public void PararHubSignalR()
         {
@@ -668,17 +668,17 @@ namespace CV.Mobile.ViewModels
                 {
 
                     var itemCS = await DatabaseService.Database.GetControleSincronizacaoAsync();
-                    var DataSincronizacao =DateTime.Now.ToUniversalTime();
+                    var DataSincronizacao = DateTime.Now.ToUniversalTime();
                     var DadosSincronizar = await srv.RetornarAtualizacoes(new CriterioBusca() { DataInicioDe = itemCS.UltimaDataRecepcao });
-                    
+
                     await DatabaseService.SincronizarDadosServidorLocal(itemCS, DadosSincronizar, ItemUsuario, DataSincronizacao);
 
                     var item = await DatabaseService.CarregarDadosEnvioSincronizar();
-                     var resultadoSincronizacao = await srv.SincronizarDados(item);
-                        itemCS.UltimaDataEnvio = DateTime.Now.ToUniversalTime();
-                        await DatabaseService.AjustarDePara(item, resultadoSincronizacao, itemCS);
-                   
-                   
+                    var resultadoSincronizacao = await srv.SincronizarDados(item);
+                    itemCS.UltimaDataEnvio = DateTime.Now.ToUniversalTime();
+                    await DatabaseService.AjustarDePara(item, resultadoSincronizacao, itemCS,this);
+
+
                 }
                 else
                 {

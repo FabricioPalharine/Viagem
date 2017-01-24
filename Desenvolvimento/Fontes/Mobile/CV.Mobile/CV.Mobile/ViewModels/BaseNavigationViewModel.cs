@@ -400,6 +400,8 @@ namespace CV.Mobile.ViewModels
                             await srvFoto.SubirFoto(ItemViagemSelecionada.CodigoAlbum, DadosFoto, itemUpload);
                         }
                         var resultadoAPI = await srv.SubirImagem(itemUpload);
+                        AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "F", resultadoAPI.IdentificadorRegistro.GetValueOrDefault(), true);
+
                         MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
                         {
                             Title = "Sucesso",
@@ -463,7 +465,7 @@ namespace CV.Mobile.ViewModels
                                 await srvAccount.AtualizarTokenUsuario(ItemUsuario);
                             }
                         }
-                        GravarVideoYouTube(itemUpload, Source, ItemUsuario);
+                        GravarVideoYouTube(itemUpload, Source, ItemUsuario, true);
 
 
                     }
@@ -475,7 +477,7 @@ namespace CV.Mobile.ViewModels
         }
 
 
-        public static async void GravarVideoYouTube(UploadFoto itemUpload, Stream baseStream, Usuario itemUsuario)
+        public async void GravarVideoYouTube(UploadFoto itemUpload, Stream baseStream, Usuario itemUsuario, bool ExibirAlerta)
         {
             TokenResponse tr = new TokenResponse() { AccessToken = itemUsuario.Token, ExpiresInSeconds = itemUsuario.Lifetime, Issued = DateTime.Now, RefreshToken = itemUsuario.RefreshToken };
 
@@ -522,14 +524,18 @@ namespace CV.Mobile.ViewModels
                     using (ApiService srv = new ApiService())
                     {
                         var resultadoAPI = await srv.SubirVideo(itemUpload);
-                    }
+                     AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "F", resultadoAPI.IdentificadorRegistro.GetValueOrDefault(), true);
+
+                }
+                if (ExibirAlerta)
+                {
                     MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
                     {
                         Title = "Sucesso",
                         Message = "Vídeo Gravado com Sucesso",
                         Cancel = "OK"
                     });
-                
+                }
             }
 
         }

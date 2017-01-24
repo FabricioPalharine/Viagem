@@ -11,6 +11,7 @@ using CV.Mobile.Models;
 using MvvmHelpers;
 using CV.Mobile.Helpers;
 using Newtonsoft.Json.Linq;
+using CV.Mobile.ViewModels;
 
 namespace CV.Mobile.Services
 {
@@ -1127,42 +1128,52 @@ namespace CV.Mobile.Services
 
         }
 
-        internal async static Task AjustarDePara(ClasseSincronizacao itemEnvio, List<DeParaIdentificador> resultadoSincronizacao, ControleSincronizacao itemCS)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="itemEnvio"></param>
+        /// <param name="resultadoSincronizacao"></param>
+        /// <param name="itemCS"></param>
+        /// <param name="vm"></param>
+        /// <returns></returns>
+        internal async static Task AjustarDePara(ClasseSincronizacao itemEnvio, List<DeParaIdentificador> resultadoSincronizacao, ControleSincronizacao itemCS, MasterDetailViewModel vm)
         {
             await Database.SalvarControleSincronizacao(itemCS);
-            await AjustarDadosAporte(itemEnvio, resultadoSincronizacao);
-            await AjustarDadosAtracao(itemEnvio.Atracoes, resultadoSincronizacao);
-            await AjustarDadosRefeicao(itemEnvio.Refeicoes, resultadoSincronizacao);
-            await AjustarDadosCalendarioPrevisto(itemEnvio.CalendariosPrevistos, resultadoSincronizacao);
-            await AjustarDadosCarroDeslocamento(itemEnvio.CarroDeslocamentos, resultadoSincronizacao);
-            await AjustarDadosCarro(itemEnvio.Carros, resultadoSincronizacao);
-            await AjustarDadosReabastecimento(itemEnvio.Reabastecimento, resultadoSincronizacao);
-            await AjustarDadosComentario(itemEnvio.Comentarios, resultadoSincronizacao);
-            await AjustarDadosCotacaoMoeda(itemEnvio.CotacoesMoeda, resultadoSincronizacao);
-            await AjustarDadosCompra(itemEnvio.Compras, resultadoSincronizacao);
-            await AjustarDadosDeslocamentos(itemEnvio.Deslocamentos, resultadoSincronizacao);
-            await AjustarDadosEventosHotel(itemEnvio.EventosHotel, resultadoSincronizacao);
-            await AjustarDadosGastos(itemEnvio.Gastos, resultadoSincronizacao);
-            await AjustarDadosGastosCarro(itemEnvio.GastosCarro, resultadoSincronizacao);
-            await AjustarDadosGastosAtracao(itemEnvio.GastosAtracao, resultadoSincronizacao);
-            await AjustarDadosGastosHotel( itemEnvio.GastosHotel, resultadoSincronizacao);
-            await AjustarDadosGastosRefeicao(itemEnvio.GastosRefeicao, resultadoSincronizacao);
-            await AjustarDadosGastosViagemAerea(itemEnvio.GastosDeslocamento, resultadoSincronizacao);
-            await AjustarDadosHotel(itemEnvio.Hoteis, resultadoSincronizacao);
-            await AjustarDadosItensCompra(itemEnvio.ItensComprados, resultadoSincronizacao);
-            await AjustarDadosListaCompra(itemEnvio.ListaCompra, resultadoSincronizacao);
-            await AjustarDadosLoja(itemEnvio.Lojas, resultadoSincronizacao);
-            await AjustarDadosSugestao(itemEnvio.Sugestoes, resultadoSincronizacao);
-            foreach (var item in itemEnvio.Posicoes)
-                await Database.ExcluirPosicao(item);
+            await AjustarDadosAporte(itemEnvio, resultadoSincronizacao,vm);
+            await AjustarDadosAtracao(itemEnvio.Atracoes, resultadoSincronizacao,vm);
+            await AjustarDadosRefeicao(itemEnvio.Refeicoes, resultadoSincronizacao,vm);
+            await AjustarDadosCalendarioPrevisto(itemEnvio.CalendariosPrevistos, resultadoSincronizacao,vm);
+            await AjustarDadosCarroDeslocamento(itemEnvio.CarroDeslocamentos, resultadoSincronizacao,vm);
+            await AjustarDadosCarro(itemEnvio.Carros, resultadoSincronizacao, vm);
+            await AjustarDadosReabastecimento(itemEnvio.Reabastecimento, resultadoSincronizacao,vm);
+            await AjustarDadosComentario(itemEnvio.Comentarios, resultadoSincronizacao,vm);
+            await AjustarDadosCotacaoMoeda(itemEnvio.CotacoesMoeda, resultadoSincronizacao,vm);
+            await AjustarDadosCompra(itemEnvio.Compras, resultadoSincronizacao,vm);
+            await AjustarDadosDeslocamentos(itemEnvio.Deslocamentos, resultadoSincronizacao,vm);
+            await AjustarDadosEventosHotel(itemEnvio.EventosHotel, resultadoSincronizacao,vm);
+            await AjustarDadosGastos(itemEnvio.Gastos, resultadoSincronizacao,vm);
+            await AjustarDadosGastosCarro(itemEnvio.GastosCarro, resultadoSincronizacao,vm);
+            await AjustarDadosGastosAtracao(itemEnvio.GastosAtracao, resultadoSincronizacao,vm);
+            await AjustarDadosGastosHotel( itemEnvio.GastosHotel, resultadoSincronizacao,vm);
+            await AjustarDadosGastosRefeicao(itemEnvio.GastosRefeicao, resultadoSincronizacao,vm);
+            await AjustarDadosGastosViagemAerea(itemEnvio.GastosDeslocamento, resultadoSincronizacao,vm);
+            await AjustarDadosHotel(itemEnvio.Hoteis, resultadoSincronizacao,vm);
+            await AjustarDadosItensCompra(itemEnvio.ItensComprados, resultadoSincronizacao,vm);
+            await AjustarDadosListaCompra(itemEnvio.ListaCompra, resultadoSincronizacao,vm);
+            await AjustarDadosLoja(itemEnvio.Lojas, resultadoSincronizacao,vm);
+            await AjustarDadosSugestao(itemEnvio.Sugestoes, resultadoSincronizacao,vm);
+            if (itemEnvio.Posicoes.Any())
+                await Database.ExcluirPosicao(itemEnvio.Posicoes.Max(d=>d.Id).GetValueOrDefault(0));
         }
 
-        private static async Task AjustarDadosSugestao(List<Sugestao> sugestoes, List<DeParaIdentificador> resultadoSincronizacao)
+        private static async Task AjustarDadosSugestao(List<Sugestao> sugestoes, List<DeParaIdentificador> resultadoSincronizacao, MasterDetailViewModel vm)
         {
             foreach (var item in sugestoes)
             {
                 if (item.DataExclusao.HasValue)
                 {
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "S", item.Identificador.GetValueOrDefault(), false);
+
                     await Database.ExcluirSugestao(item);
                 }
                 else
@@ -1171,6 +1182,7 @@ namespace CV.Mobile.Services
                     DeParaIdentificador itemDePara = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.Identificador && d.TipoObjeto == "S").FirstOrDefault();
                     if (itemDePara != null)
                     {
+                        bool Inclusao = item.Identificador < 0;
                         item.Identificador = itemDePara.IdentificadorDetino;
                         if (itemDePara.ItemRetorno != null)
                         {
@@ -1179,6 +1191,7 @@ namespace CV.Mobile.Services
                             item.NomeCidade = itemGravado.NomeCidade;
                             item.IdentificadorCidade = itemGravado.IdentificadorCidade;
                         }
+                        await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "S", item.Identificador.GetValueOrDefault(), Inclusao);
                     }
                     item.AtualizadoBanco = true;
                     await Database.SalvarSugestao(item);
@@ -1188,7 +1201,7 @@ namespace CV.Mobile.Services
 
 
 
-        private async static Task AjustarDadosRefeicao(List<Refeicao> refeicoes, List<DeParaIdentificador> resultadoSincronizacao)
+        private async static Task AjustarDadosRefeicao(List<Refeicao> refeicoes, List<DeParaIdentificador> resultadoSincronizacao, MasterDetailViewModel vm)
         {
             foreach (var item in refeicoes)
             {
@@ -1196,9 +1209,12 @@ namespace CV.Mobile.Services
                 {
                     await Database.ExcluirRefeicaoPedido_IdentificadorRefeicao(item.Identificador);
                     await Database.ExcluirRefeicao(item);
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "R", item.Identificador.GetValueOrDefault(), false);
+
                 }
                 else
                 {
+                    bool Inclusao = item.Identificador < 0;
                     if (item.IdentificadorAtracao.HasValue)
                     {
                         DeParaIdentificador itemPai = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.IdentificadorAtracao && d.TipoObjeto == "A").FirstOrDefault();
@@ -1227,6 +1243,8 @@ namespace CV.Mobile.Services
                             await Database.SalvarUploadFoto(itemVideo);
                         }
                     }
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "R", item.Identificador.GetValueOrDefault(), Inclusao);
+
                     await Database.SalvarRefeicao(item);
                     foreach (var itemAvaliacao in item.Pedidos)
                     {
@@ -1243,7 +1261,7 @@ namespace CV.Mobile.Services
         }
 
 
-        private async static Task AjustarDadosLoja(List<Loja> atracoes, List<DeParaIdentificador> resultadoSincronizacao)
+        private async static Task AjustarDadosLoja(List<Loja> atracoes, List<DeParaIdentificador> resultadoSincronizacao, MasterDetailViewModel vm)
         {
             foreach (var item in atracoes)
             {
@@ -1251,9 +1269,12 @@ namespace CV.Mobile.Services
                 {
                     await Database.ExcluirAvaliacaoLoja_IdentificadorLoja(item.Identificador);
                     await Database.ExcluirLoja(item);
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "L", item.Identificador.GetValueOrDefault(), false);
+
                 }
                 else
                 {
+                    bool Inclusao = item.Identificador < 0;
                     if (item.IdentificadorAtracao.HasValue)
                     {
                         DeParaIdentificador itemPai = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.IdentificadorAtracao && d.TipoObjeto == "A").FirstOrDefault();
@@ -1274,6 +1295,8 @@ namespace CV.Mobile.Services
                         }
                     }
                     await Database.SalvarLoja(item);
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "L", item.Identificador.GetValueOrDefault(), Inclusao);
+
                     foreach (var itemAvaliacao in item.Avaliacoes)
                     {
                         itemAvaliacao.AtualizadoBanco = true;
@@ -1289,36 +1312,41 @@ namespace CV.Mobile.Services
         }
 
 
-        private static async Task AjustarDadosListaCompra(List<ListaCompra> listaCompra, List<DeParaIdentificador> resultadoSincronizacao)
+        private static async Task AjustarDadosListaCompra(List<ListaCompra> listaCompra, List<DeParaIdentificador> resultadoSincronizacao, MasterDetailViewModel vm)
         {
             foreach (var item in listaCompra)
             {
                 if (item.DataExclusao.HasValue)
                 {
                     await Database.ExcluirListaCompra(item);
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "LC", item.Identificador.GetValueOrDefault(), false);
+
                 }
                 else
                 {
-
+                    bool Inclusao = item.Identificador < 0;
                     DeParaIdentificador itemDePara = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.Identificador && d.TipoObjeto == "LC").FirstOrDefault();
                     if (itemDePara != null)
                     {
                         item.Identificador = itemDePara.IdentificadorDetino;
                     }
                     item.AtualizadoBanco = true;
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "LC", item.Identificador.GetValueOrDefault(), Inclusao);
+
                     await Database.SalvarListaCompra(item);
                 }
             }
         }
 
 
-        private async static Task AjustarDadosItensCompra(List<ItemCompra> itensComprados, List<DeParaIdentificador> resultadoSincronizacao)
+        private async static Task AjustarDadosItensCompra(List<ItemCompra> itensComprados, List<DeParaIdentificador> resultadoSincronizacao, MasterDetailViewModel vm)
         {
             foreach (var item in itensComprados)
             {
                 if (item.DataExclusao.HasValue)
                 {
                     await Database.ExcluirItemCompra(item);
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "IC", item.Identificador.GetValueOrDefault(), false);
 
                 }
                 else
@@ -1332,6 +1360,7 @@ namespace CV.Mobile.Services
                         }
 
                     }
+                    bool Inclusao = item.Identificador < 0;
                     DeParaIdentificador deParaLoja = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.IdentificadorGastoCompra && d.TipoObjeto == "GC").FirstOrDefault();
                     if (deParaLoja != null && deParaLoja.IdentificadorDetino != deParaLoja.IdentificadorOrigem)
                         item.IdentificadorGastoCompra = deParaLoja.IdentificadorDetino;
@@ -1340,13 +1369,15 @@ namespace CV.Mobile.Services
                     {
                         item.Identificador = itemDePara.IdentificadorDetino;
                     }
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "IC", item.Identificador.GetValueOrDefault(), Inclusao);
+
                     item.AtualizadoBanco = true;
                     await Database.SalvarItemCompra(item);
                 }
             }
         }
 
-        private async static Task AjustarDadosHotel(List<Hotel> hoteis, List<DeParaIdentificador> resultadoSincronizacao)
+        private async static Task AjustarDadosHotel(List<Hotel> hoteis, List<DeParaIdentificador> resultadoSincronizacao, MasterDetailViewModel vm)
         {
             foreach (var item in hoteis)
             {
@@ -1354,10 +1385,12 @@ namespace CV.Mobile.Services
                 {
                     await Database.ExcluirHotelAvaliacao_IdentificadorHotel(item.Identificador);
                     await Database.ExcluirHotel(item);
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "H", item.Identificador.GetValueOrDefault(), false);
+
                 }
                 else
                 {
-                   
+                    bool Inclusao = item.Identificador < 0;
                     item.AtualizadoBanco = true;
                     DeParaIdentificador itemDePara = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.Identificador && d.TipoObjeto == "H").FirstOrDefault();
                     if (itemDePara != null)
@@ -1381,6 +1414,8 @@ namespace CV.Mobile.Services
                             }
                         }
                     }
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "H", item.Identificador.GetValueOrDefault(), Inclusao);
+
                     await Database.SalvarHotel(item);
                     foreach (var itemAvaliacao in item.Avaliacoes)
                     {
@@ -1395,19 +1430,19 @@ namespace CV.Mobile.Services
 
             }
         }
-        private async static Task AjustarDadosGastosViagemAerea(List<GastoViagemAerea> gastos, List<DeParaIdentificador> resultadoSincronizacao)
+        private async static Task AjustarDadosGastosViagemAerea(List<GastoViagemAerea> gastos, List<DeParaIdentificador> resultadoSincronizacao, MasterDetailViewModel vm)
         {
             foreach (var item in gastos)
             {
                 if (item.DataExclusao.HasValue)
                 {
-                    if (item.ItemGasto != null)
-                        await Database.ExcluirGasto(item.ItemGasto);
                     await Database.ExcluirGastoViagemAerea(item);
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "GVA", item.Identificador.GetValueOrDefault(), false);
 
                 }
                 else
                 {
+                    bool Inclusao = item.Identificador < 0;
                     if (item.IdentificadorGasto.HasValue)
                     {
                         DeParaIdentificador itemCusto = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.IdentificadorGasto && d.TipoObjeto == "G").FirstOrDefault();
@@ -1416,34 +1451,37 @@ namespace CV.Mobile.Services
 
 
                     }
-                    DeParaIdentificador deParaLoja = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.IdentificadorViagemAerea && d.TipoObjeto == "A").FirstOrDefault();
+                    DeParaIdentificador deParaLoja = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.IdentificadorViagemAerea && d.TipoObjeto == "VA").FirstOrDefault();
                     if (deParaLoja != null && deParaLoja.IdentificadorDetino != deParaLoja.IdentificadorOrigem)
                         item.IdentificadorViagemAerea = deParaLoja.IdentificadorDetino;
-                    DeParaIdentificador itemDePara = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.Identificador && d.TipoObjeto == "GA").FirstOrDefault();
+                    DeParaIdentificador itemDePara = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.Identificador && d.TipoObjeto == "GVA").FirstOrDefault();
                     if (itemDePara != null)
                     {
                         item.Identificador = itemDePara.IdentificadorDetino;
                     }
                     item.AtualizadoBanco = true;
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "GVA", item.Identificador.GetValueOrDefault(), Inclusao);
+
                     await Database.SalvarGastoViagemAerea(item);
                 }
             }
         }
 
 
-        private async static Task AjustarDadosGastosRefeicao(List<GastoRefeicao> gastos, List<DeParaIdentificador> resultadoSincronizacao)
+        private async static Task AjustarDadosGastosRefeicao(List<GastoRefeicao> gastos, List<DeParaIdentificador> resultadoSincronizacao, MasterDetailViewModel vm)
         {
             foreach (var item in gastos)
             {
                 if (item.DataExclusao.HasValue)
                 {
-                    if (item.ItemGasto != null)
-                        await Database.ExcluirGasto(item.ItemGasto);
+
                     await Database.ExcluirGastoRefeicao(item);
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "GR", item.Identificador.GetValueOrDefault(), false);
 
                 }
                 else
                 {
+                    bool Inclusao = item.Identificador < 0;
                     if (item.IdentificadorGasto.HasValue)
                     {
                         DeParaIdentificador itemCusto = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.IdentificadorGasto && d.TipoObjeto == "G").FirstOrDefault();
@@ -1452,34 +1490,37 @@ namespace CV.Mobile.Services
 
 
                     }
-                    DeParaIdentificador deParaLoja = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.IdentificadorRefeicao && d.TipoObjeto == "A").FirstOrDefault();
+                    DeParaIdentificador deParaLoja = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.IdentificadorRefeicao && d.TipoObjeto == "R").FirstOrDefault();
                     if (deParaLoja != null && deParaLoja.IdentificadorDetino != deParaLoja.IdentificadorOrigem)
                         item.IdentificadorRefeicao = deParaLoja.IdentificadorDetino;
-                    DeParaIdentificador itemDePara = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.Identificador && d.TipoObjeto == "GA").FirstOrDefault();
+                    DeParaIdentificador itemDePara = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.Identificador && d.TipoObjeto == "GR").FirstOrDefault();
                     if (itemDePara != null)
                     {
                         item.Identificador = itemDePara.IdentificadorDetino;
                     }
                     item.AtualizadoBanco = true;
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "GR", item.Identificador.GetValueOrDefault(), Inclusao);
+
                     await Database.SalvarGastoRefeicao(item);
                 }
             }
         }
 
 
-        private async static Task AjustarDadosGastosHotel(List<GastoHotel> gastos, List<DeParaIdentificador> resultadoSincronizacao)
+        private async static Task AjustarDadosGastosHotel(List<GastoHotel> gastos, List<DeParaIdentificador> resultadoSincronizacao, MasterDetailViewModel vm)
         {
             foreach (var item in gastos)
             {
                 if (item.DataExclusao.HasValue)
                 {
-                    if (item.ItemGasto != null)
-                        await Database.ExcluirGasto(item.ItemGasto);
+  
                     await Database.ExcluirGastoHotel(item);
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "GH", item.Identificador.GetValueOrDefault(), false);
 
                 }
                 else
                 {
+                    bool Inclusao = item.Identificador < 0;
                     if (item.IdentificadorGasto.HasValue)
                     {
                         DeParaIdentificador itemCusto = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.IdentificadorGasto && d.TipoObjeto == "G").FirstOrDefault();
@@ -1488,34 +1529,37 @@ namespace CV.Mobile.Services
 
 
                     }
-                    DeParaIdentificador deParaLoja = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.IdentificadorHotel && d.TipoObjeto == "A").FirstOrDefault();
+                    DeParaIdentificador deParaLoja = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.IdentificadorHotel && d.TipoObjeto == "H").FirstOrDefault();
                     if (deParaLoja != null && deParaLoja.IdentificadorDetino != deParaLoja.IdentificadorOrigem)
                         item.IdentificadorHotel = deParaLoja.IdentificadorDetino;
-                    DeParaIdentificador itemDePara = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.Identificador && d.TipoObjeto == "GA").FirstOrDefault();
+                    DeParaIdentificador itemDePara = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.Identificador && d.TipoObjeto == "GH").FirstOrDefault();
                     if (itemDePara != null)
                     {
                         item.Identificador = itemDePara.IdentificadorDetino;
                     }
                     item.AtualizadoBanco = true;
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "GH", item.Identificador.GetValueOrDefault(), Inclusao);
+
                     await Database.SalvarGastoHotel(item);
                 }
             }
         }
 
 
-        private async static Task AjustarDadosGastosAtracao(List<GastoAtracao> gastos, List<DeParaIdentificador> resultadoSincronizacao)
+        private async static Task AjustarDadosGastosAtracao(List<GastoAtracao> gastos, List<DeParaIdentificador> resultadoSincronizacao, MasterDetailViewModel vm)
         {
             foreach (var item in gastos)
             {
                 if (item.DataExclusao.HasValue)
                 {
-                    if (item.ItemGasto != null)
-                        await Database.ExcluirGasto(item.ItemGasto);
+
                     await Database.ExcluirGastoAtracao(item);
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "GA", item.Identificador.GetValueOrDefault(), false);
 
                 }
                 else
                 {
+                    bool Inclusao = item.Identificador < 0;
                     if (item.IdentificadorGasto.HasValue)
                     {
                         DeParaIdentificador itemCusto = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.IdentificadorGasto && d.TipoObjeto == "G").FirstOrDefault();
@@ -1535,24 +1579,28 @@ namespace CV.Mobile.Services
                         item.Identificador = itemDePara.IdentificadorDetino;
                     }
                     item.AtualizadoBanco = true;
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "GA", item.Identificador.GetValueOrDefault(), Inclusao);
+
                     await Database.SalvarGastoAtracao(item);
                 }
             }
         }
 
-        private async static Task AjustarDadosGastosCarro(List<AluguelGasto> gastos, List<DeParaIdentificador> resultadoSincronizacao)
+        private async static Task AjustarDadosGastosCarro(List<AluguelGasto> gastos, List<DeParaIdentificador> resultadoSincronizacao, MasterDetailViewModel vm)
         {
             foreach (var item in gastos)
             {
                 if (item.DataExclusao.HasValue)
                 {
-                    if (item.ItemGasto != null)
-                        await Database.ExcluirGasto(item.ItemGasto);
+
                     await Database.ExcluirAluguelGasto(item);
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "GC", item.Identificador.GetValueOrDefault(), false);
+
 
                 }
                 else
                 {
+                    bool Inclusao = item.Identificador < 0;
                     if (item.IdentificadorGasto.HasValue)
                     {
                         DeParaIdentificador itemCusto = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.IdentificadorGasto && d.TipoObjeto == "G").FirstOrDefault();
@@ -1569,23 +1617,27 @@ namespace CV.Mobile.Services
                     {
                         item.Identificador = itemDePara.IdentificadorDetino;
                     }
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "GC", item.Identificador.GetValueOrDefault(), Inclusao);
+
                     item.AtualizadoBanco = true;
                     await Database.SalvarAluguelGasto(item);
                 }
             }
         }
 
-        private static async Task AjustarDadosGastos(List<Gasto> gastos, List<DeParaIdentificador> resultadoSincronizacao)
+        private static async Task AjustarDadosGastos(List<Gasto> gastos, List<DeParaIdentificador> resultadoSincronizacao, MasterDetailViewModel vm)
         {
             foreach (var item in gastos)
             {
                 if (item.DataExclusao.HasValue)
                 {
                     await Database.Excluir_Gasto_Filhos(item.Identificador.GetValueOrDefault());
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "G", item.Identificador.GetValueOrDefault(), false);
+
                 }
                 else
                 {
-
+                    bool Inclusao = item.Identificador < 0;
                     DeParaIdentificador itemDePara = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.Identificador && d.TipoObjeto == "G").FirstOrDefault();
                     if (itemDePara != null)
                     {
@@ -1593,6 +1645,8 @@ namespace CV.Mobile.Services
                     }
                     item.AtualizadoBanco = true;
                     await Database.SalvarGasto(item);
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "G", item.Identificador.GetValueOrDefault(), Inclusao);
+
                     foreach (var itemUsuario in item.Usuarios)
                     {
                         itemUsuario.IdentificadorGasto = item.Identificador;
@@ -1677,29 +1731,33 @@ namespace CV.Mobile.Services
             }
         }
 
-        private static async Task AjustarDadosEventosHotel(List<HotelEvento> eventosHotel, List<DeParaIdentificador> resultadoSincronizacao)
+        private static async Task AjustarDadosEventosHotel(List<HotelEvento> eventosHotel, List<DeParaIdentificador> resultadoSincronizacao, MasterDetailViewModel vm)
         {
             foreach (var item in eventosHotel)
             {
                 if (item.DataExclusao.HasValue)
                 {
                     await Database.ExcluirHotelEvento(item);
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "HE", item.Identificador.GetValueOrDefault(), false);
+
                 }
                 else
                 {
-
+                    bool Inclusao = item.Identificador < 0;
                     DeParaIdentificador itemDePara = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.Identificador && d.TipoObjeto == "HE").FirstOrDefault();
                     if (itemDePara != null)
                     {
                         item.Identificador = itemDePara.IdentificadorDetino;
                     }
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "HE", item.Identificador.GetValueOrDefault(), Inclusao);
+
                     item.AtualizadoBanco = true;
                     await Database.SalvarHotelEvento(item);
                 }
             }
         }
 
-        private static async Task AjustarDadosDeslocamentos(List<ViagemAerea> deslocamentos, List<DeParaIdentificador> resultadoSincronizacao)
+        private static async Task AjustarDadosDeslocamentos(List<ViagemAerea> deslocamentos, List<DeParaIdentificador> resultadoSincronizacao, MasterDetailViewModel vm)
         {
 
             foreach (var item in deslocamentos)
@@ -1709,10 +1767,12 @@ namespace CV.Mobile.Services
                     await Database.ExcluirAvaliacaoAerea_IdentificadorViagemAerea(item.Identificador);
                     await Database.ExcluirViagemAereaAeroporto_IdentificadorViagemAerea(item.Identificador);
                     await Database.ExcluirViagemAerea(item);
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "VA", item.Identificador.GetValueOrDefault(), false);
+
                 }
                 else
                 {
-
+                    bool Inclusao = item.Identificador < 0;
                     item.AtualizadoBanco = true;
                     DeParaIdentificador itemDePara = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.Identificador && d.TipoObjeto == "VA").FirstOrDefault();
                     if (itemDePara != null)
@@ -1720,6 +1780,8 @@ namespace CV.Mobile.Services
                         item.Identificador = itemDePara.IdentificadorDetino;
 
                     }
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "VA", item.Identificador.GetValueOrDefault(), Inclusao);
+
                     await Database.SalvarViagemAerea(item);
                     foreach (var itemAvaliacao in item.Aeroportos)
                     {
@@ -1756,7 +1818,7 @@ namespace CV.Mobile.Services
             }
         }
 
-        private static async Task AjustarDadosCompra(List<GastoCompra> compras, List<DeParaIdentificador> resultadoSincronizacao)
+        private static async Task AjustarDadosCompra(List<GastoCompra> compras, List<DeParaIdentificador> resultadoSincronizacao, MasterDetailViewModel vm)
         {
             foreach (var item in compras)
             {
@@ -1765,10 +1827,12 @@ namespace CV.Mobile.Services
                     if (item.ItemGasto != null)
                         await Database.ExcluirGasto(item.ItemGasto);
                     await Database.ExcluirGastoCompra(item);
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "GL", item.Identificador.GetValueOrDefault(), false);
 
                 }
                 else
                 {
+                    bool Inclusao = item.Identificador < 0;
                     if (item.IdentificadorGasto.HasValue)
                     {
                         DeParaIdentificador itemCusto = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.IdentificadorGasto && d.TipoObjeto == "G").FirstOrDefault();
@@ -1790,44 +1854,52 @@ namespace CV.Mobile.Services
                         item.Identificador = itemDePara.IdentificadorDetino;
                     }
                     item.AtualizadoBanco = true;
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "GL", item.Identificador.GetValueOrDefault(), Inclusao);
+
                     await Database.SalvarGastoCompra(item);
                 }
             }
         }
 
-        private static async Task AjustarDadosCotacaoMoeda(List<CotacaoMoeda> CotacaoMoedas, List<DeParaIdentificador> resultadoSincronizacao)
+        private static async Task AjustarDadosCotacaoMoeda(List<CotacaoMoeda> CotacaoMoedas, List<DeParaIdentificador> resultadoSincronizacao, MasterDetailViewModel vm)
         {
             foreach (var item in CotacaoMoedas)
             {
                 if (item.DataExclusao.HasValue)
                 {
                     await Database.ExcluirCotacaoMoeda(item);
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "CM", item.Identificador.GetValueOrDefault(), false);
+
                 }
                 else
                 {
-
+                    bool Inclusao = item.Identificador < 0;
                     DeParaIdentificador itemDePara = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.Identificador && d.TipoObjeto == "CM").FirstOrDefault();
                     if (itemDePara != null)
                     {
                         item.Identificador = itemDePara.IdentificadorDetino;
                     }
                     item.AtualizadoBanco = true;
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "CM", item.Identificador.GetValueOrDefault(), Inclusao);
+
                     await Database.SalvarCotacaoMoeda(item);
                 }
             }
         }
 
-        private static async Task AjustarDadosComentario(List<Comentario> comentarios, List<DeParaIdentificador> resultadoSincronizacao)
+        private static async Task AjustarDadosComentario(List<Comentario> comentarios, List<DeParaIdentificador> resultadoSincronizacao, MasterDetailViewModel vm)
         {
             foreach (var item in comentarios)
             {
                 if (item.DataExclusao.HasValue)
                 {
                     await Database.ExcluirComentario(item);
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "T", item.Identificador.GetValueOrDefault(), false);
+
                 }
                 else
                 {
-
+                    bool Inclusao = item.Identificador < 0;
                     DeParaIdentificador itemDePara = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.Identificador && d.TipoObjeto == "T").FirstOrDefault();
                     if (itemDePara != null)
                     {
@@ -1841,13 +1913,15 @@ namespace CV.Mobile.Services
                         }
                     }
                     item.AtualizadoBanco = true;
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "T", item.Identificador.GetValueOrDefault(), Inclusao);
+
                     await Database.SalvarComentario(item);
                 }
             }
         }
 
 
-        private async static Task AjustarDadosReabastecimento(List<Reabastecimento> reabastecimento, List<DeParaIdentificador> resultadoSincronizacao)
+        private async static Task AjustarDadosReabastecimento(List<Reabastecimento> reabastecimento, List<DeParaIdentificador> resultadoSincronizacao, MasterDetailViewModel vm)
         {
             foreach (var item in reabastecimento)
             {
@@ -1859,15 +1933,23 @@ namespace CV.Mobile.Services
                             await Database.ExcluirGasto(itemGR.ItemGasto);
                         await Database.ExcluirReabastecimentoGasto(itemGR);
                     }
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "CR", item.Identificador.GetValueOrDefault(), false);
+
                     await Database.ExcluirReabastecimento(item);
 
                 }
                 else
                 {
+                    bool Inclusao = item.Identificador < 0;
                     DeParaIdentificador itemDePara = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.Identificador && d.TipoObjeto == "CR").FirstOrDefault();
                     if (itemDePara != null)
                     {
                         item.Identificador = itemDePara.IdentificadorDetino;
+                    }
+                    itemDePara = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.IdentificadorCarro && d.TipoObjeto == "C").FirstOrDefault();
+                    if (itemDePara != null)
+                    {
+                        item.IdentificadorCarro = itemDePara.IdentificadorDetino;
                     }
                     foreach (var itemGR in item.Gastos)
                     {
@@ -1884,14 +1966,15 @@ namespace CV.Mobile.Services
                         itemGR.AtualizadoBanco = true;
                         await Database.SalvarReabastecimentoGasto(itemGR);
                     }
-                 
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "CR", item.Identificador.GetValueOrDefault(), Inclusao);
+
                     item.AtualizadoBanco = true;
                     await Database.SalvarReabastecimento(item);
                 }
             }
         }
 
-        private static async Task AjustarDadosCarro(List<Carro> carros, List<DeParaIdentificador> resultadoSincronizacao)
+        private static async Task AjustarDadosCarro(List<Carro> carros, List<DeParaIdentificador> resultadoSincronizacao, MasterDetailViewModel vm)
         {
             foreach (var item in carros)
             {
@@ -1903,10 +1986,12 @@ namespace CV.Mobile.Services
                         await Database.ExcluirCarroEvento(item.ItemCarroEventoRetirada);
                     await Database.ExcluirCarroDeslocamentoUsuario_IdentificadorCarroDeslocamento(item.Identificador);
                     await Database.ExcluirCarro(item);
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "C", item.Identificador.GetValueOrDefault(), false);
+
                 }
                 else
                 {
-
+                    bool Inclusao = item.Identificador < 0;
                     DeParaIdentificador itemDePara = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.Identificador && d.TipoObjeto == "C").FirstOrDefault();
                     if (itemDePara != null)
                     {
@@ -1945,6 +2030,7 @@ namespace CV.Mobile.Services
                         await Database.SalvarAvaliacaoAluguel(itemAvaliacao);
 
                     }
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "C", item.Identificador.GetValueOrDefault(), Inclusao);
 
                     item.AtualizadoBanco = true;
                     await Database.SalvarCarro(item);
@@ -1952,7 +2038,7 @@ namespace CV.Mobile.Services
             }
         }
 
-        private static async Task AjustarDadosCarroDeslocamento(List<CarroDeslocamento> carroDeslocamentos, List<DeParaIdentificador> resultadoSincronizacao)
+        private static async Task AjustarDadosCarroDeslocamento(List<CarroDeslocamento> carroDeslocamentos, List<DeParaIdentificador> resultadoSincronizacao, MasterDetailViewModel vm)
         {
             foreach (var item in carroDeslocamentos)
             {
@@ -1964,10 +2050,12 @@ namespace CV.Mobile.Services
                         await Database.ExcluirCarroEvento(item.ItemCarroEventoPartida);
                     await Database.ExcluirCarroDeslocamentoUsuario_IdentificadorCarroDeslocamento(item.Identificador);
                     await Database.ExcluirCarroDeslocamento(item);
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "CD", item.Identificador.GetValueOrDefault(), false);
+
                 }
                 else
                 {
-
+                    bool Inclusao = item.Identificador < 0;
                     DeParaIdentificador itemDePara = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.Identificador && d.TipoObjeto == "CD").FirstOrDefault();
                     if (itemDePara != null)
                     {
@@ -2011,6 +2099,7 @@ namespace CV.Mobile.Services
                         await Database.SalvarCarroDeslocamentoUsuario(itemUsuario);
 
                     }
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "CD", item.Identificador.GetValueOrDefault(), Inclusao);
 
                     item.AtualizadoBanco = true;
                     await Database.SalvarCarroDeslocamento(item);
@@ -2018,29 +2107,33 @@ namespace CV.Mobile.Services
             }
         }
 
-        private static async Task AjustarDadosCalendarioPrevisto(List<CalendarioPrevisto> calendariosPrevistos, List<DeParaIdentificador> resultadoSincronizacao)
+        private static async Task AjustarDadosCalendarioPrevisto(List<CalendarioPrevisto> calendariosPrevistos, List<DeParaIdentificador> resultadoSincronizacao, MasterDetailViewModel vm)
         {
             foreach (var item in calendariosPrevistos)
             {
                 if (item.DataExclusao.HasValue)
                 {                    
                     await Database.ExcluirCalendarioPrevisto(item);
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "CP", item.Identificador.GetValueOrDefault(), false);
+
                 }
                 else
                 {
-                   
+                    bool Inclusao = item.Identificador < 0;
                     DeParaIdentificador itemDePara = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.Identificador && d.TipoObjeto == "CP").FirstOrDefault();
                     if (itemDePara != null)
                     {
                         item.Identificador = itemDePara.IdentificadorDetino;
                     }
                     item.AtualizadoBanco = true;
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "CP", item.Identificador.GetValueOrDefault(), Inclusao);
+
                     await Database.SalvarCalendarioPrevisto(item);
                 }
             }
         }
 
-        private async static Task AjustarDadosAtracao(List<Atracao> atracoes, List<DeParaIdentificador> resultadoSincronizacao)
+        private async static Task AjustarDadosAtracao(List<Atracao> atracoes, List<DeParaIdentificador> resultadoSincronizacao, MasterDetailViewModel vm)
         {
             foreach (var item in atracoes)
             {
@@ -2048,9 +2141,12 @@ namespace CV.Mobile.Services
                 {
                     await Database.ExcluirAvaliacaoAtracao_IdentificadorAtracao(item.Identificador);
                     await Database.ExcluirAtracao(item);
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "A", item.Identificador.GetValueOrDefault(), false);
+
                 }
                 else
                 {
+                    bool Inclusao = item.Identificador < 0;
                     if (item.IdentificadorAtracaoPai.HasValue)
                     {
                         DeParaIdentificador itemPai = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.IdentificadorAtracaoPai && d.TipoObjeto == "A").FirstOrDefault();
@@ -2079,7 +2175,8 @@ namespace CV.Mobile.Services
                             }
                         }
                     }
-                   
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "A", item.Identificador.GetValueOrDefault(), Inclusao);
+
                     await Database.SalvarAtracao(item);
                     foreach (var itemAvaliacao in item.Avaliacoes)
                     {
@@ -2095,7 +2192,7 @@ namespace CV.Mobile.Services
             }
         }
 
-        private static async Task AjustarDadosAporte(ClasseSincronizacao itemEnvio, List<DeParaIdentificador> resultadoSincronizacao)
+        private static async Task AjustarDadosAporte(ClasseSincronizacao itemEnvio, List<DeParaIdentificador> resultadoSincronizacao, MasterDetailViewModel vm)
         {
             foreach (var item in itemEnvio.AportesDinheiro)
             {
@@ -2104,10 +2201,12 @@ namespace CV.Mobile.Services
                     if (item.ItemGasto != null)
                         await Database.ExcluirGasto(item.ItemGasto);
                     await Database.ExcluirAporteDinheiro(item);
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "AD", item.Identificador.GetValueOrDefault(), false);
 
                 }
                 else
                 {
+                    bool Inclusao = item.Identificador < 0;
                     if (item.IdentificadorGasto.HasValue)
                     {
                         DeParaIdentificador itemCusto = resultadoSincronizacao.Where(d => d.IdentificadorOrigem == item.IdentificadorGasto && d.TipoObjeto == "G").FirstOrDefault();
@@ -2125,6 +2224,8 @@ namespace CV.Mobile.Services
                         item.Identificador = itemDePara.IdentificadorDetino;
                     }
                     item.AtualizadoBanco = true;
+                    await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "AD", item.Identificador.GetValueOrDefault(), Inclusao);
+
                     await Database.SalvarAporteDinheiro(item);
                 }
             }

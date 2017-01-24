@@ -248,6 +248,11 @@ namespace CV.Mobile.Data
             await database.DeleteAsync(itemAmigo);
         }
 
+        public async Task ExcluirPosicao(int UltimaPosicao)
+        {
+            await database.ExecuteAsync("Delete from Posicao where  Id <= ?", UltimaPosicao);
+        }
+
         public async Task<Amigo> RetornarAmigoIdentificadorUsuario(int IdentificadorUsuario)
         {
             return await database.Table<Amigo>().Where(d => d.IdentificadorAmigo == IdentificadorUsuario).FirstOrDefaultAsync();
