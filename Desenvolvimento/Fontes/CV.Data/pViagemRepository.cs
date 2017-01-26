@@ -959,7 +959,12 @@ namespace CV.Data
         {
             return this.Context.ParticipanteViagemes.Where(d => d.IdentificadorViagem == IdentificadorViagem).Select(e => e.ItemUsuario).ToList();
         }
-
+        public IList<Usuario> CarregarParticipantesViagem(int? IdentificadorViagem, int? IdentificadorAmigo)
+        {
+            return this.Context.ParticipanteViagemes.Where(d => d.IdentificadorViagem == IdentificadorViagem).Select(e => e.ItemUsuario)
+                .Where(d => this.Context.Amigos.Where(e => e.IdentificadorAmigo == IdentificadorAmigo && d.Identificador == e.IdentificadorUsuario).Any() || d.Identificador == IdentificadorAmigo)
+                .ToList();
+        }
 
         public List<Atracao> ListarAtracao(int IdentificadorViagem, DateTime? DataChegadaDe, DateTime? DataChegadaAte,
              DateTime? DataPartidaDe, DateTime? DataPartidaAte, string Nome, string Tipo, int Situacao, int? IdentificadorCidade, int? IdentificadorAtracao)

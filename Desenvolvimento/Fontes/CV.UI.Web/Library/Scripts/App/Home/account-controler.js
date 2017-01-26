@@ -85,6 +85,10 @@
             return Auth.currentUser.PermiteEdicao;
         };
 
+        vm.VerCustos = function () {
+            return Auth.currentUser.VerCustos;
+        };
+
         vm.Aberto = function () {
             return Auth.currentUser.Aberto;
         };

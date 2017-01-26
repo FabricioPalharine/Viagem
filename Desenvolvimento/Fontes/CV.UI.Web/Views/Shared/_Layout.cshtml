@@ -163,7 +163,7 @@
                         </ul>
                     </li>
                     <li class="treeview" ng-if="!account.PermiteEdicao()">
-                        <a href="javascript:void(0)"><i class="fa fa-commenting-o fa-fw"></i><span>@TextosPaginas.Home_Sugestao</span><i class="fa fa-angle-left pull-right"></i></a>
+                        <a href="javascript:void(0)"><i class="fa fa-comment-o fa-fw"></i><span>@TextosPaginas.Home_Sugestao</span><i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="nav nav-second-level treeview-menu">
                             <li><a ui-sref="PedidoCompra()"><span>@TextosPaginas.Home_PedidoCompra</span></a></li>
                             <li><a ui-sref="Sugestao()"><span>@TextosPaginas.Home_Sugestao</span></a></li>
@@ -173,6 +173,10 @@
                         <a href="javascript:void(0)"><i class="fa fa-bars fa-fw"></i><span>@TextosPaginas.Home_Consultas</span><i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="nav nav-second-level treeview-menu">
                             <li  ng-if="account.PermiteEdicao()"><a ui-sref="ConsultarExtratoMoeda()"><span>@TextosPaginas.Home_ExtratoMoeda</span></a></li>
+                            <li ng-if="account.PermiteEdicao()"><a ui-sref="ConsultarAcertoConta()"><span>@TextosPaginas.Home_AcertoConta</span></a></li>
+                            <li ng-if="account.VerCustos()"><a ui-sref="ConsultarRelatorioGasto()"><span>@TextosPaginas.Home_RelatorioGastos</span></a></li>
+                            <li ><a ui-sref="ConsultarTimeline()"><span>@TextosPaginas.Home_Timeline</span></a></li>
+
                         </ul>
                     </li>
                 </ul>
@@ -193,7 +197,6 @@
             <div class="pull-right hidden-xs">
                 <b>Version</b> 1.0
             </div>
-            <strong>Copyright &copy; 2015-2016 <a href="http://www.architettura.com.br">Architettura</a>.</strong>
         </footer-->
         <!--</div>-->
 

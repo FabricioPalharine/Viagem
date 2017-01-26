@@ -3,7 +3,7 @@
     [ID_VIAGEM]         INT             NOT NULL,
     [ID_USUARIO]        INT             NULL,
     [ID_CIDADE]         INT             NULL,
-    [DS_COMENTARIO]     TEXT            NULL,
+    [DS_COMENTARIO]     VARCHAR(MAX)            NULL,
     [NR_LATITUDE]       NUMERIC (12, 8) NULL,
     [NR_LONGITUDE]      NUMERIC (12, 8) NULL,
     [DT_FOTO]           DATETIME        NOT NULL,

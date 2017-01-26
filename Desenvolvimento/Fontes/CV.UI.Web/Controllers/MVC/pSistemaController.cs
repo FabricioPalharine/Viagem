@@ -52,5 +52,19 @@ namespace CV.UI.Web.Controllers.MVC
         {
             return PartialView();
         }
+        public ActionResult ConsultarAcertoConta()
+        {
+            return PartialView();
+        }
+
+        public ActionResult ConsultarRelatorioGastos()
+        {
+            return PartialView();
+        }
+
+        public ActionResult ConsultarTimeline()
+        {
+            return PartialView();
+        }
     }
 }

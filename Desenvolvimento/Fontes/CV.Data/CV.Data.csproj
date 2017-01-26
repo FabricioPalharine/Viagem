@@ -43,6 +43,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -53,6 +54,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MensagensData.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MensagensData.resx</DependentUpon>
+    </Compile>
     <Compile Include="pConsultaRepository.cs" />
     <Compile Include="RepositoryBase.cs" />
     <Compile Include="pRepositoryBase.cs" />
@@ -166,6 +172,12 @@
       <Project>{bb9c58e3-7915-430a-9669-64cae7881c6d}</Project>
       <Name>CV.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MensagensData.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MensagensData.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

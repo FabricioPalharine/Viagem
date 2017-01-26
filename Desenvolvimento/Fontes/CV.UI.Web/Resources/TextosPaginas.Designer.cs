@@ -61,6 +61,69 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Amigo.
+        /// </summary>
+        public static string AcertoConta_Amigo {
+            get {
+                return ResourceManager.GetString("AcertoConta_Amigo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data Até.
+        /// </summary>
+        public static string AcertoConta_DataAte {
+            get {
+                return ResourceManager.GetString("AcertoConta_DataAte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data De.
+        /// </summary>
+        public static string AcertoConta_DataDe {
+            get {
+                return ResourceManager.GetString("AcertoConta_DataDe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Diferença.
+        /// </summary>
+        public static string AcertoConta_Diferenca {
+            get {
+                return ResourceManager.GetString("AcertoConta_Diferenca", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Moeda.
+        /// </summary>
+        public static string AcertoConta_Moeda {
+            get {
+                return ResourceManager.GetString("AcertoConta_Moeda", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Valor Pago.
+        /// </summary>
+        public static string AcertoConta_ValorPago {
+            get {
+                return ResourceManager.GetString("AcertoConta_ValorPago", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Valor Recebido.
+        /// </summary>
+        public static string AcertoConta_ValorRecebido {
+            get {
+                return ResourceManager.GetString("AcertoConta_ValorRecebido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Adicionar Novo.
         /// </summary>
         public static string Adicionar {
@@ -1924,6 +1987,15 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Acerto Conta.
+        /// </summary>
+        public static string Home_AcertoConta {
+            get {
+                return ResourceManager.GetString("Home_AcertoConta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Alterar Senha.
         /// </summary>
         public static string Home_AlterarSenha {
@@ -2167,6 +2239,15 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Relatório de Gastos.
+        /// </summary>
+        public static string Home_RelatorioGastos {
+            get {
+                return ResourceManager.GetString("Home_RelatorioGastos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Requisição Amizade.
         /// </summary>
         public static string Home_RequisicaoAmizade {
@@ -2190,6 +2271,15 @@ namespace CV.UI.Web.Resources {
         public static string Home_Sugestao {
             get {
                 return ResourceManager.GetString("Home_Sugestao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Timeline.
+        /// </summary>
+        public static string Home_Timeline {
+            get {
+                return ResourceManager.GetString("Home_Timeline", resourceCulture);
             }
         }
         
@@ -3364,6 +3454,141 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Atração.
+        /// </summary>
+        public static string RelatorioGastos_Atracao {
+            get {
+                return ResourceManager.GetString("RelatorioGastos_Atracao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Carro.
+        /// </summary>
+        public static string RelatorioGastos_Carro {
+            get {
+                return ResourceManager.GetString("RelatorioGastos_Carro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compra.
+        /// </summary>
+        public static string RelatorioGastos_Compra {
+            get {
+                return ResourceManager.GetString("RelatorioGastos_Compra", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data.
+        /// </summary>
+        public static string RelatorioGastos_Data {
+            get {
+                return ResourceManager.GetString("RelatorioGastos_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Descrição.
+        /// </summary>
+        public static string RelatorioGastos_Descricao {
+            get {
+                return ResourceManager.GetString("RelatorioGastos_Descricao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deslocamento.
+        /// </summary>
+        public static string RelatorioGastos_Deslocamento {
+            get {
+                return ResourceManager.GetString("RelatorioGastos_Deslocamento", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hotel.
+        /// </summary>
+        public static string RelatorioGastos_Hotel {
+            get {
+                return ResourceManager.GetString("RelatorioGastos_Hotel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Moeda.
+        /// </summary>
+        public static string RelatorioGastos_Moeda {
+            get {
+                return ResourceManager.GetString("RelatorioGastos_Moeda", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reabastecimento.
+        /// </summary>
+        public static string RelatorioGastos_Reabastecimento {
+            get {
+                return ResourceManager.GetString("RelatorioGastos_Reabastecimento", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refeição.
+        /// </summary>
+        public static string RelatorioGastos_Refeicao {
+            get {
+                return ResourceManager.GetString("RelatorioGastos_Refeicao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tipo de Gasto.
+        /// </summary>
+        public static string RelatorioGastos_TipoGasto {
+            get {
+                return ResourceManager.GetString("RelatorioGastos_TipoGasto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total.
+        /// </summary>
+        public static string RelatorioGastos_Total {
+            get {
+                return ResourceManager.GetString("RelatorioGastos_Total", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Amigo.
+        /// </summary>
+        public static string RelatorioGastos_Usuario {
+            get {
+                return ResourceManager.GetString("RelatorioGastos_Usuario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Valor.
+        /// </summary>
+        public static string RelatorioGastos_Valor {
+            get {
+                return ResourceManager.GetString("RelatorioGastos_Valor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Valor R$.
+        /// </summary>
+        public static string RelatorioGastos_ValorReal {
+            get {
+                return ResourceManager.GetString("RelatorioGastos_ValorReal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to EMail.
         /// </summary>
         public static string RequisicaoAmizade_EMail {
@@ -3603,6 +3828,465 @@ namespace CV.UI.Web.Resources {
         public static string Sugestao_Tipo {
             get {
                 return ResourceManager.GetString("Sugestao_Tipo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Amigo.
+        /// </summary>
+        public static string Timeline_Amigo {
+            get {
+                return ResourceManager.GetString("Timeline_Amigo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  chegaram na atração .
+        /// </summary>
+        public static string Timeline_AtracaoChegaram {
+            get {
+                return ResourceManager.GetString("Timeline_AtracaoChegaram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  chegou na atração .
+        /// </summary>
+        public static string Timeline_AtracaoChegou {
+            get {
+                return ResourceManager.GetString("Timeline_AtracaoChegou", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  deixaram a atração .
+        /// </summary>
+        public static string Timeline_AtracaoDeixaram {
+            get {
+                return ResourceManager.GetString("Timeline_AtracaoDeixaram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  deixou a atração .
+        /// </summary>
+        public static string Timeline_AtracaoDeixou {
+            get {
+                return ResourceManager.GetString("Timeline_AtracaoDeixou", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  visitaram a atração .
+        /// </summary>
+        public static string Timeline_AtracaoVisitaram {
+            get {
+                return ResourceManager.GetString("Timeline_AtracaoVisitaram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  visitou a atração .
+        /// </summary>
+        public static string Timeline_AtracaoVisitou {
+            get {
+                return ResourceManager.GetString("Timeline_AtracaoVisitou", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  avaliou como .
+        /// </summary>
+        public static string Timeline_Avaliou {
+            get {
+                return ResourceManager.GetString("Timeline_Avaliou", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  com o carro .
+        /// </summary>
+        public static string Timeline_CarroDeslocamento {
+            get {
+                return ResourceManager.GetString("Timeline_CarroDeslocamento", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  iniciaram o deslocamento .
+        /// </summary>
+        public static string Timeline_CarroDeslocamentoIniciaram {
+            get {
+                return ResourceManager.GetString("Timeline_CarroDeslocamentoIniciaram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  iniciou o deslocamento .
+        /// </summary>
+        public static string Timeline_CarroDeslocamentoIniciou {
+            get {
+                return ResourceManager.GetString("Timeline_CarroDeslocamentoIniciou", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  terminaram o deslocamento .
+        /// </summary>
+        public static string Timeline_CarroDeslocamentoTerminaram {
+            get {
+                return ResourceManager.GetString("Timeline_CarroDeslocamentoTerminaram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  terminou o deslocamento .
+        /// </summary>
+        public static string Timeline_CarroDeslocamentoTerminou {
+            get {
+                return ResourceManager.GetString("Timeline_CarroDeslocamentoTerminou", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  da locadora .
+        /// </summary>
+        public static string Timeline_CarroLocadoraDa {
+            get {
+                return ResourceManager.GetString("Timeline_CarroLocadoraDa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  para locadora .
+        /// </summary>
+        public static string Timeline_CarroLocadoraPara {
+            get {
+                return ResourceManager.GetString("Timeline_CarroLocadoraPara", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  foi reabastecido.
+        /// </summary>
+        public static string Timeline_CarroReabastecido {
+            get {
+                return ResourceManager.GetString("Timeline_CarroReabastecido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  retiraram o carro .
+        /// </summary>
+        public static string Timeline_CarroRetiraram {
+            get {
+                return ResourceManager.GetString("Timeline_CarroRetiraram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  retirou o carro .
+        /// </summary>
+        public static string Timeline_CarroRetirou {
+            get {
+                return ResourceManager.GetString("Timeline_CarroRetirou", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  retornaram o carro .
+        /// </summary>
+        public static string Timeline_CarroRetornaram {
+            get {
+                return ResourceManager.GetString("Timeline_CarroRetornaram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  retornou o carro .
+        /// </summary>
+        public static string Timeline_CarroRetornou {
+            get {
+                return ResourceManager.GetString("Timeline_CarroRetornou", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  fez  check-in no hotel .
+        /// </summary>
+        public static string Timeline_CheckInFez {
+            get {
+                return ResourceManager.GetString("Timeline_CheckInFez", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  fizeram chek-in no hotel .
+        /// </summary>
+        public static string Timeline_CheckInFizeram {
+            get {
+                return ResourceManager.GetString("Timeline_CheckInFizeram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  fez  check-out do hotel .
+        /// </summary>
+        public static string Timeline_CheckoutFez {
+            get {
+                return ResourceManager.GetString("Timeline_CheckoutFez", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  fizeram chek-out do hotel .
+        /// </summary>
+        public static string Timeline_CheckOutFizeram {
+            get {
+                return ResourceManager.GetString("Timeline_CheckOutFizeram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  comentou .
+        /// </summary>
+        public static string Timeline_Comentario {
+            get {
+                return ResourceManager.GetString("Timeline_Comentario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  comeu .
+        /// </summary>
+        public static string Timeline_Comeu {
+            get {
+                return ResourceManager.GetString("Timeline_Comeu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data Raiz.
+        /// </summary>
+        public static string Timeline_DataRaiz {
+            get {
+                return ResourceManager.GetString("Timeline_DataRaiz", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  chegaram em .
+        /// </summary>
+        public static string Timeline_DeslocamentoChegaram {
+            get {
+                return ResourceManager.GetString("Timeline_DeslocamentoChegaram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  chegou em .
+        /// </summary>
+        public static string Timeline_DeslocamentoChegou {
+            get {
+                return ResourceManager.GetString("Timeline_DeslocamentoChegou", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  pela companhia .
+        /// </summary>
+        public static string Timeline_DeslocamentoCompanhia {
+            get {
+                return ResourceManager.GetString("Timeline_DeslocamentoCompanhia", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  terminaram a viagem .
+        /// </summary>
+        public static string Timeline_DeslocamentoConcluiramViagem {
+            get {
+                return ResourceManager.GetString("Timeline_DeslocamentoConcluiramViagem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  para terminar a viagem .
+        /// </summary>
+        public static string Timeline_DeslocamentoConcluirViagem {
+            get {
+                return ResourceManager.GetString("Timeline_DeslocamentoConcluirViagem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  terminou a viagem .
+        /// </summary>
+        public static string Timeline_DeslocamentoConcluiuViagem {
+            get {
+                return ResourceManager.GetString("Timeline_DeslocamentoConcluiuViagem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  deixaram .
+        /// </summary>
+        public static string Timeline_DeslocamentoDeixaram {
+            get {
+                return ResourceManager.GetString("Timeline_DeslocamentoDeixaram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  deixou .
+        /// </summary>
+        public static string Timeline_DeslocamentoDeixou {
+            get {
+                return ResourceManager.GetString("Timeline_DeslocamentoDeixou", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  para escala da viagem .
+        /// </summary>
+        public static string Timeline_DeslocamentoEscala {
+            get {
+                return ResourceManager.GetString("Timeline_DeslocamentoEscala", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  fez escala pela viagem .
+        /// </summary>
+        public static string Timeline_DeslocamentoFezEscala {
+            get {
+                return ResourceManager.GetString("Timeline_DeslocamentoFezEscala", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  fizeram escala pela viagem .
+        /// </summary>
+        public static string Timeline_DeslocamentoFizeramEscala {
+            get {
+                return ResourceManager.GetString("Timeline_DeslocamentoFizeramEscala", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  iniciaram a viagem.
+        /// </summary>
+        public static string Timeline_DeslocamentoInciaramViagem {
+            get {
+                return ResourceManager.GetString("Timeline_DeslocamentoInciaramViagem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  iniciou a viagem .
+        /// </summary>
+        public static string Timeline_DeslocamentoInciouViagem {
+            get {
+                return ResourceManager.GetString("Timeline_DeslocamentoInciouViagem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  para iniciar a viagem .
+        /// </summary>
+        public static string Timeline_DeslocamentoIniciarViagem {
+            get {
+                return ResourceManager.GetString("Timeline_DeslocamentoIniciarViagem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  em.
+        /// </summary>
+        public static string Timeline_Em {
+            get {
+                return ResourceManager.GetString("Timeline_Em", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  tirou a foto.
+        /// </summary>
+        public static string Timeline_Foto {
+            get {
+                return ResourceManager.GetString("Timeline_Foto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  chegaram no hotel .
+        /// </summary>
+        public static string Timeline_HotelChegaram {
+            get {
+                return ResourceManager.GetString("Timeline_HotelChegaram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  chegou no hotel .
+        /// </summary>
+        public static string Timeline_HotelChegou {
+            get {
+                return ResourceManager.GetString("Timeline_HotelChegou", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  deixaram o hotel .
+        /// </summary>
+        public static string Timeline_HotelDeixaram {
+            get {
+                return ResourceManager.GetString("Timeline_HotelDeixaram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  deixou o hotel .
+        /// </summary>
+        public static string Timeline_HotelDeixou {
+            get {
+                return ResourceManager.GetString("Timeline_HotelDeixou", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  fez compras na loja .
+        /// </summary>
+        public static string Timeline_LojaCompra {
+            get {
+                return ResourceManager.GetString("Timeline_LojaCompra", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  comeram no .
+        /// </summary>
+        public static string Timeline_RefeicaoComerarm {
+            get {
+                return ResourceManager.GetString("Timeline_RefeicaoComerarm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  comeu no .
+        /// </summary>
+        public static string Timeline_RefeicaoComeu {
+            get {
+                return ResourceManager.GetString("Timeline_RefeicaoComeu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  gravou o vídeo.
+        /// </summary>
+        public static string Timeline_Video {
+            get {
+                return ResourceManager.GetString("Timeline_Video", resourceCulture);
             }
         }
         

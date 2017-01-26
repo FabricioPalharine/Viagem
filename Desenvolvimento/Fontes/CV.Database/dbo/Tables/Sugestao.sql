@@ -6,7 +6,7 @@
     [NM_LOCAL]       VARCHAR (100)   NOT NULL,
     [NR_LATITUDE]    NUMERIC (12, 8) NOT NULL,
     [NR_LONGITUDE]   NUMERIC (12, 8) NOT NULL,
-    [DS_COMENTARIO]  TEXT            NULL,
+    [DS_COMENTARIO]  VARCHAR(MAX)            NULL,
 	CD_PLACE		 VARCHAR(50)	 NULL,
     [CD_STATUS]      INT             NOT NULL,
     [DS_TIPO]        VARCHAR (50)    NULL,

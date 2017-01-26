@@ -1488,4 +1488,232 @@
   <data name="Home_ExtratoMoeda" xml:space="preserve">
     <value>Extrato Dinheiro</value>
   </data>
+  <data name="Home_AcertoConta" xml:space="preserve">
+    <value>Acerto Conta</value>
+  </data>
+  <data name="AcertoConta_DataDe" xml:space="preserve">
+    <value>Data De</value>
+  </data>
+  <data name="AcertoConta_DataAte" xml:space="preserve">
+    <value>Data Até</value>
+  </data>
+  <data name="AcertoConta_Amigo" xml:space="preserve">
+    <value>Amigo</value>
+  </data>
+  <data name="AcertoConta_Moeda" xml:space="preserve">
+    <value>Moeda</value>
+  </data>
+  <data name="AcertoConta_ValorPago" xml:space="preserve">
+    <value>Valor Pago</value>
+  </data>
+  <data name="AcertoConta_ValorRecebido" xml:space="preserve">
+    <value>Valor Recebido</value>
+  </data>
+  <data name="AcertoConta_Diferenca" xml:space="preserve">
+    <value>Diferença</value>
+  </data>
+  <data name="Home_RelatorioGastos" xml:space="preserve">
+    <value>Relatório de Gastos</value>
+  </data>
+  <data name="RelatorioGastos_Usuario" xml:space="preserve">
+    <value>Amigo</value>
+  </data>
+  <data name="RelatorioGastos_Data" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="RelatorioGastos_Descricao" xml:space="preserve">
+    <value>Descrição</value>
+  </data>
+  <data name="RelatorioGastos_Moeda" xml:space="preserve">
+    <value>Moeda</value>
+  </data>
+  <data name="RelatorioGastos_Valor" xml:space="preserve">
+    <value>Valor</value>
+  </data>
+  <data name="RelatorioGastos_ValorReal" xml:space="preserve">
+    <value>Valor R$</value>
+  </data>
+  <data name="RelatorioGastos_Carro" xml:space="preserve">
+    <value>Carro</value>
+  </data>
+  <data name="RelatorioGastos_Atracao" xml:space="preserve">
+    <value>Atração</value>
+  </data>
+  <data name="RelatorioGastos_Hotel" xml:space="preserve">
+    <value>Hotel</value>
+  </data>
+  <data name="RelatorioGastos_Compra" xml:space="preserve">
+    <value>Compra</value>
+  </data>
+  <data name="RelatorioGastos_Refeicao" xml:space="preserve">
+    <value>Refeição</value>
+  </data>
+  <data name="RelatorioGastos_Reabastecimento" xml:space="preserve">
+    <value>Reabastecimento</value>
+  </data>
+  <data name="RelatorioGastos_Deslocamento" xml:space="preserve">
+    <value>Deslocamento</value>
+  </data>
+  <data name="RelatorioGastos_TipoGasto" xml:space="preserve">
+    <value>Tipo de Gasto</value>
+  </data>
+  <data name="RelatorioGastos_Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="Home_Timeline" xml:space="preserve">
+    <value>Timeline</value>
+  </data>
+  <data name="Timeline_Amigo" xml:space="preserve">
+    <value>Amigo</value>
+  </data>
+  <data name="Timeline_DataRaiz" xml:space="preserve">
+    <value>Data Raiz</value>
+  </data>
+  <data name="Timeline_AtracaoChegaram" xml:space="preserve">
+    <value> chegaram na atração </value>
+  </data>
+  <data name="Timeline_AtracaoChegou" xml:space="preserve">
+    <value> chegou na atração </value>
+  </data>
+  <data name="Timeline_AtracaoDeixaram" xml:space="preserve">
+    <value> deixaram a atração </value>
+  </data>
+  <data name="Timeline_AtracaoDeixou" xml:space="preserve">
+    <value> deixou a atração </value>
+  </data>
+  <data name="Timeline_AtracaoVisitaram" xml:space="preserve">
+    <value> visitaram a atração </value>
+  </data>
+  <data name="Timeline_AtracaoVisitou" xml:space="preserve">
+    <value> visitou a atração </value>
+  </data>
+  <data name="Timeline_Avaliou" xml:space="preserve">
+    <value> avaliou como </value>
+  </data>
+  <data name="Timeline_CarroDeslocamento" xml:space="preserve">
+    <value> com o carro </value>
+  </data>
+  <data name="Timeline_CarroDeslocamentoIniciaram" xml:space="preserve">
+    <value> iniciaram o deslocamento </value>
+  </data>
+  <data name="Timeline_CarroDeslocamentoIniciou" xml:space="preserve">
+    <value> iniciou o deslocamento </value>
+  </data>
+  <data name="Timeline_CarroDeslocamentoTerminaram" xml:space="preserve">
+    <value> terminaram o deslocamento </value>
+  </data>
+  <data name="Timeline_CarroDeslocamentoTerminou" xml:space="preserve">
+    <value> terminou o deslocamento </value>
+  </data>
+  <data name="Timeline_CarroLocadoraDa" xml:space="preserve">
+    <value> da locadora </value>
+  </data>
+  <data name="Timeline_CarroLocadoraPara" xml:space="preserve">
+    <value> para locadora </value>
+  </data>
+  <data name="Timeline_CarroReabastecido" xml:space="preserve">
+    <value> foi reabastecido</value>
+  </data>
+  <data name="Timeline_CarroRetiraram" xml:space="preserve">
+    <value> retiraram o carro </value>
+  </data>
+  <data name="Timeline_CarroRetirou" xml:space="preserve">
+    <value> retirou o carro </value>
+  </data>
+  <data name="Timeline_CarroRetornaram" xml:space="preserve">
+    <value> retornaram o carro </value>
+  </data>
+  <data name="Timeline_CarroRetornou" xml:space="preserve">
+    <value> retornou o carro </value>
+  </data>
+  <data name="Timeline_CheckInFez" xml:space="preserve">
+    <value> fez  check-in no hotel </value>
+  </data>
+  <data name="Timeline_CheckInFizeram" xml:space="preserve">
+    <value> fizeram chek-in no hotel </value>
+  </data>
+  <data name="Timeline_CheckoutFez" xml:space="preserve">
+    <value> fez  check-out do hotel </value>
+  </data>
+  <data name="Timeline_CheckOutFizeram" xml:space="preserve">
+    <value> fizeram chek-out do hotel </value>
+  </data>
+  <data name="Timeline_Comentario" xml:space="preserve">
+    <value> comentou </value>
+  </data>
+  <data name="Timeline_Comeu" xml:space="preserve">
+    <value> comeu </value>
+  </data>
+  <data name="Timeline_DeslocamentoChegaram" xml:space="preserve">
+    <value> chegaram em </value>
+  </data>
+  <data name="Timeline_DeslocamentoChegou" xml:space="preserve">
+    <value> chegou em </value>
+  </data>
+  <data name="Timeline_DeslocamentoCompanhia" xml:space="preserve">
+    <value> pela companhia </value>
+  </data>
+  <data name="Timeline_DeslocamentoConcluiramViagem" xml:space="preserve">
+    <value> terminaram a viagem </value>
+  </data>
+  <data name="Timeline_DeslocamentoConcluirViagem" xml:space="preserve">
+    <value> para terminar a viagem </value>
+  </data>
+  <data name="Timeline_DeslocamentoConcluiuViagem" xml:space="preserve">
+    <value> terminou a viagem </value>
+  </data>
+  <data name="Timeline_DeslocamentoDeixaram" xml:space="preserve">
+    <value> deixaram </value>
+  </data>
+  <data name="Timeline_DeslocamentoDeixou" xml:space="preserve">
+    <value> deixou </value>
+  </data>
+  <data name="Timeline_DeslocamentoEscala" xml:space="preserve">
+    <value> para escala da viagem </value>
+  </data>
+  <data name="Timeline_DeslocamentoFezEscala" xml:space="preserve">
+    <value> fez escala pela viagem </value>
+  </data>
+  <data name="Timeline_DeslocamentoFizeramEscala" xml:space="preserve">
+    <value> fizeram escala pela viagem </value>
+  </data>
+  <data name="Timeline_DeslocamentoInciaramViagem" xml:space="preserve">
+    <value> iniciaram a viagem</value>
+  </data>
+  <data name="Timeline_DeslocamentoInciouViagem" xml:space="preserve">
+    <value> iniciou a viagem </value>
+  </data>
+  <data name="Timeline_DeslocamentoIniciarViagem" xml:space="preserve">
+    <value> para iniciar a viagem </value>
+  </data>
+  <data name="Timeline_Em" xml:space="preserve">
+    <value> em</value>
+  </data>
+  <data name="Timeline_Foto" xml:space="preserve">
+    <value> tirou a foto</value>
+  </data>
+  <data name="Timeline_HotelChegaram" xml:space="preserve">
+    <value> chegaram no hotel </value>
+  </data>
+  <data name="Timeline_HotelChegou" xml:space="preserve">
+    <value> chegou no hotel </value>
+  </data>
+  <data name="Timeline_HotelDeixaram" xml:space="preserve">
+    <value> deixaram o hotel </value>
+  </data>
+  <data name="Timeline_HotelDeixou" xml:space="preserve">
+    <value> deixou o hotel </value>
+  </data>
+  <data name="Timeline_LojaCompra" xml:space="preserve">
+    <value> fez compras na loja </value>
+  </data>
+  <data name="Timeline_RefeicaoComerarm" xml:space="preserve">
+    <value> comeram no </value>
+  </data>
+  <data name="Timeline_RefeicaoComeu" xml:space="preserve">
+    <value> comeu no </value>
+  </data>
+  <data name="Timeline_Video" xml:space="preserve">
+    <value> gravou o vídeo</value>
+  </data>
 </root>

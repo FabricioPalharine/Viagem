@@ -319,6 +319,9 @@
     <Content Include="Library\Scripts\App\Home\alteraSenha-controller.js" />
     <Content Include="Library\Scripts\App\Home\SignalR-factory.js" />
     <Content Include="Library\Scripts\App\Sistema\CarroDeslocamento\CarroDeslocamento-edit-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Consulta\AcertoConta-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Consulta\Timeline-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Consulta\RelatorioGasto-controller.js" />
     <Content Include="Library\Scripts\App\Sistema\Consulta\ExtratoMoeda-controller.js" />
     <Content Include="Library\Scripts\App\Sistema\Consulta\Consulta-factory.js" />
     <Content Include="Library\Scripts\App\Sistema\PedidoCompra\PedidoCompra-controller.js" />
@@ -499,7 +502,10 @@
     <Content Include="Views\Sistema\PedidoCompraEdicao.cshtml" />
     <Content Include="Views\Sistema\VerificarSugestao.cshtml" />
     <Content Include="Views\Sistema\VerificarSugestaoEdicao.cshtml" />
+    <Content Include="Views\Sistema\ConsultarAcertoConta.cshtml" />
     <Content Include="Views\Sistema\ConsultarExtratoMoeda.cshtml" />
+    <Content Include="Views\Sistema\ConsultarRelatorioGastos.cshtml" />
+    <Content Include="Views\Sistema\ConsultarTimeline.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -537,6 +543,7 @@
     <EmbeddedResource Include="Resources\TextosPaginas.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>TextosPaginas.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

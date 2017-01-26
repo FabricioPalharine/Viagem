@@ -792,8 +792,8 @@ namespace CV.Business
                     itemResultado.IdentificadorViagem = IdentificadorViagem;
                     itemResultado.Aberto = itemViagem.Aberto.GetValueOrDefault();
                     itemResultado.NomeViagem = itemViagem.Nome;
-                    itemResultado.PermiteEdicao = itemViagem.IdentificadorUsuario == itemResultado.Codigo || ListarParticipanteViagem(d => d.IdentificadorUsuario == itemResultado.Codigo).Any();
-                    itemResultado.VerCustos = itemResultado.PermiteEdicao || ListarUsuarioGasto(d => d.IdentificadorUsuario == itemResultado.Codigo).Any();
+                    itemResultado.PermiteEdicao = itemViagem.IdentificadorUsuario == itemResultado.Codigo || ListarParticipanteViagem(d => d.IdentificadorViagem == IdentificadorViagem && d.IdentificadorUsuario == itemResultado.Codigo).Any();
+                    itemResultado.VerCustos = itemResultado.PermiteEdicao || ListarUsuarioGasto(d => d.IdentificadorUsuario == itemResultado.Codigo && d.IdentificadorUsuario == itemResultado.Codigo).Any();
                 }
             }
             itemResultado.Viagens = ListarViagem(itemResultado.Codigo, true);
@@ -1666,6 +1666,13 @@ namespace CV.Business
             using (ViagemRepository repositorio = new ViagemRepository())
             {
                 return repositorio.CarregarParticipantesViagem(IdentificadorViagem);
+            }
+        }
+        public IList<Usuario> CarregarParticipantesViagem(int? IdentificadorViagem, int? IdentificadorUsuario)
+        {
+            using (ViagemRepository repositorio = new ViagemRepository())
+            {
+                return repositorio.CarregarParticipantesViagem(IdentificadorViagem, IdentificadorUsuario);
             }
         }
 

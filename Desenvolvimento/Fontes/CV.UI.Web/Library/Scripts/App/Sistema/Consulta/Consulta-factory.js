@@ -30,6 +30,33 @@
               },
             //  transformResponse: parseArray,
               isArray: true
+          },
+          ListarGastosAcerto: {
+              method: 'GET',
+              params: {
+                  controller: 'ListarGastosAcerto',
+                  json: 'json'
+              },
+              //  transformResponse: parseArray,
+              isArray: true
+          },
+          ListarRelatorioGastos: {
+              method: 'GET',
+              params: {
+                  controller: 'ListarRelatorioGastos',
+                  json: 'json'
+              },
+              //  transformResponse: parseArray,
+              isArray: true
+          },
+          ListarTimeline: {
+              method: 'GET',
+              params: {
+                  controller: 'ConsultarTimeline',
+                  json: 'json'
+              },
+              //  transformResponse: parseArray,
+              isArray: true
           }
       });
 

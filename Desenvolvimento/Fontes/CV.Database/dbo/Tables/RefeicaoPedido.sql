@@ -4,7 +4,7 @@
     [ID_USUARIO]         INT           NOT NULL,
     [DS_PEDIDO]          VARCHAR (200) NULL,
     [NR_NOTA]            INT           NULL,
-    [DS_COMENTARIO]      TEXT          NULL,
+    [DS_COMENTARIO]      VARCHAR(MAX)          NULL,
     [DT_ATUALIZACAO]     DATETIME      NOT NULL,
     [DT_EXCLUSAO]        DATETIME      NULL,
     CONSTRAINT [PK48] PRIMARY KEY CLUSTERED ([ID_REFEICAO_PEDIDO] ASC),

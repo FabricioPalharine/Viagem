@@ -134,19 +134,25 @@ namespace CV.Mobile.ViewModels
                     else
                         PossoComentar = false;
                 }
-                else if (item.VisitaIniciada)
+                if (item.VisitaIniciada)
                 {
-                    if (_PosicaoAtual != null)
+                    if (!item.Latitude.HasValue || !item.Longitude.HasValue)
                     {
-                        item.Latitude = _PosicaoAtual.Latitude;
-                        item.Longitude = _PosicaoAtual.Longitude;
+                        if (_PosicaoAtual != null)
+                        {
+                            item.Latitude = _PosicaoAtual.Latitude;
+                            item.Longitude = _PosicaoAtual.Longitude;
+                        }
+                        else
+                        {
+                            var posicao = await RetornarPosicao();
+                            if (posicao == null)
+                                posicao = new Plugin.Geolocator.Abstractions.Position() { Latitude = -23.6040963, Longitude = -46.6178018 };
+                            _PosicaoAtual = posicao;
+                            item.Latitude = _PosicaoAtual.Latitude;
+                            item.Longitude = _PosicaoAtual.Longitude;
+                        }
                     }
-                    var posicao = await RetornarPosicao();
-                    if (posicao == null)
-                        posicao = new Plugin.Geolocator.Abstractions.Position() { Latitude = -23.6040963, Longitude = -46.6178018 };
-                    _PosicaoAtual = posicao;
-                    item.Latitude = _PosicaoAtual.Latitude;
-                    item.Longitude = _PosicaoAtual.Longitude;
                 }
             }
         }

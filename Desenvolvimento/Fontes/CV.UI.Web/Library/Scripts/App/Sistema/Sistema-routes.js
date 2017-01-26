@@ -1313,6 +1313,113 @@
                     }]
                 }
             })
+           .state('ConsultarAcertoConta', {
+               url: '/ConsultarAcertoConta',
+               templateUrl: 'Sistema/ConsultarAcertoConta',
+               controller: 'AcertoContaCtrl',
+               controllerAs: 'itemExtratoMoeda',
+               authenticate: true,
+               params: {
+                   filtro: null
+               },
+               resolve: {
+                   deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                       return $ocLazyLoad.load([
+                            {
+                                name: 'ViagemFactory',
+                                files: [
+                                    'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
+                                ]
+                            },
+                           {
+                               name: 'ConsultarAcertoContaController',
+                               files: [
+                                   'library/scripts/app/Sistema/Consulta/AcertoConta-controller.js'
+                               ]
+                           }, {
+                               name: 'ConsultaFactory',
+                               files: [
+                                   'library/scripts/app/Sistema/Consulta/Consulta-factory.js'
+                               ]
+                           }
+
+                       ]);
+
+                   }]
+               }
+           })
+        .state('ConsultarRelatorioGasto', {
+            url: '/ConsultarRelatorioGasto',
+            templateUrl: 'Sistema/ConsultarRelatorioGastos',
+            controller: 'RelatorioGastoCtrl',
+            controllerAs: 'itemExtratoMoeda',
+            authenticate: true,
+            params: {
+                filtro: null
+            },
+            resolve: {
+                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    return $ocLazyLoad.load([
+                         {
+                             name: 'ViagemFactory',
+                             files: [
+                                 'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
+                             ]
+                         },
+                        {
+                            name: 'RelatorioGastoController',
+                            files: [
+                                'library/scripts/app/Sistema/Consulta/RelatorioGasto-controller.js'
+                            ]
+                        }, {
+                            name: 'ConsultaFactory',
+                            files: [
+                                'library/scripts/app/Sistema/Consulta/Consulta-factory.js'
+                            ]
+                        }
+
+                    ]);
+
+                }]
+            }
+        })
+
+        .state('ConsultarTimeline', {
+            url: '/ConsultarTimeline',
+            templateUrl: 'Sistema/ConsultarTimeline',
+            controller: 'TimelineCtrl',
+            controllerAs: 'itemExtratoMoeda',
+            authenticate: true,
+            params: {
+                filtro: null
+            },
+            resolve: {
+                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    return $ocLazyLoad.load([
+                         {
+                             name: 'ViagemFactory',
+                             files: [
+                                 'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
+                             ]
+                         },
+                        {
+                            name: 'TimelineController',
+                            files: [
+                                'library/scripts/app/Sistema/Consulta/Timeline-controller.js'
+                            ]
+                        }, {
+                            name: 'ConsultaFactory',
+                            files: [
+                                'library/scripts/app/Sistema/Consulta/Consulta-factory.js'
+                            ]
+                        }
+
+                    ]);
+
+                }]
+            }
+        })
+
         ;
     }
 }());

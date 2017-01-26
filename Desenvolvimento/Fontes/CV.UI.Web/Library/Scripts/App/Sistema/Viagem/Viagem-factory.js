@@ -45,7 +45,14 @@
               isArray: true
           },
          
-
+          CarregarParticipantesAmigo: {
+              method: 'GET',
+              params: {
+                  controller: 'CarregarParticipantesAmigo',
+              },
+              //  transformResponse: parseArray,
+              isArray: true
+          },
       });
     return UserBase;
   }

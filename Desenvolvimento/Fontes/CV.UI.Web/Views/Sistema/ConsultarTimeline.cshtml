@@ -1,0 +1,179 @@
+﻿<section class="content-header">
+    <h1>
+        @TextosPaginas.Home_Timeline
+
+    </h1>
+    <ol class="breadcrumb">
+
+        <li>@TextosPaginas.Home_Menu</li>
+        <li>@TextosPaginas.Home_Consultas</li>
+        <li class="active">@TextosPaginas.Home_Timeline</li>
+    </ol>
+
+</section>
+<!-- Main content -->
+<section class="content" ng-init="itemExtratoMoeda.load()">
+    <!-- Default box -->
+    <!-- general form elements -->
+    <div class="box box-primary">
+        <div class="overlay" ng-show="itemExtratoMoeda.loading">
+            <i class="fa fa-refresh fa-spin text-gray"></i>
+        </div>
+
+        <form role="form" ng-submit="itemExtratoMoeda.filtraDado()">
+            <div class="box-body">
+                <div class="row">
+
+                    <div class="form-group col-md-6">
+                        <label>@TextosPaginas.Timeline_DataRaiz</label>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+                                <div class="input-group">
+                                    <input date-input ng-model="itemExtratoMoeda.filtro.DataInicioDe" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                           datapattern="dd/MM/yyyy">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker data-ng-model="itemExtratoMoeda.filtro.DataInicioDe"
+                                                data-datetimepicker-config="{  minView:'day' , langCode:itemExtratoMoeda.Idioma()  }" />
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label>@TextosPaginas.Timeline_Amigo</label>
+                        <select ng-model="itemExtratoMoeda.itemUsuario" class="form-control" ng-options="obj.Nome for obj in itemExtratoMoeda.ListaUsuarios track by obj.Identificador">
+                            <option value="">@TextosPaginas.Selecione</option>
+                        </select>
+                    </div>
+
+                </div>
+            </div><!-- /.box-body -->
+            <div class="box-footer">
+
+                <button type="submit" class="btn btn-primary  pull-right">
+                    <span class="fa fa-search" aria-hidden="true"></span> @TextosPaginas.Pesquisar
+                </button>
+
+            </div>
+        </form>
+
+
+    </div><!-- /.box -->
+
+
+
+    <div class="box">
+        <div class="overlay" ng-show="itemExtratoMoeda.loading">
+            <i class="fa fa-refresh fa-spin text-gray"></i>
+        </div>
+        <div class="box-body">
+            <div class="panel panel-info" ng-repeat='item in itemExtratoMoeda.ListaDados'>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <h4>
+                                <span class="label label-primary">{{item.Data | date:'dd/MM/yyyy HH:mm'}}</span>
+                            </h4>
+                        </div>
+                        <div class="form-group col-md-9">
+                            <span ng-if="item.Tipo != 'Reabastecimento'"> {{itemExtratoMoeda.RetornarUsuarios(item.Usuarios)}}</span>
+                            <span ng-if="item.Tipo == 'AtracaoChegada' && item.Usuarios.length== 1">@TextosPaginas.Timeline_AtracaoChegou {{item.Texto}}</span>
+                            <span ng-if="item.Tipo == 'AtracaoChegada' && item.Usuarios.length > 1">@TextosPaginas.Timeline_AtracaoChegaram {{item.Texto}}</span>
+                            <span ng-if="item.Tipo == 'AtracaoPartida' && item.Usuarios.length== 1">@TextosPaginas.Timeline_AtracaoDeixou {{item.Texto}}</span>
+                            <span ng-if="item.Tipo == 'AtracaoPartida' && item.Usuarios.length> 1">@TextosPaginas.Timeline_AtracaoDeixaram {{item.Texto}}</span>
+                            <span ng-if="item.Tipo == 'AtracaoVisita' && item.Usuarios.length== 1">@TextosPaginas.Timeline_AtracaoVisitou {{item.Texto}}</span>
+                            <span ng-if="item.Tipo == 'AtracaoVisita' && item.Usuarios.length> 1">@TextosPaginas.Timeline_AtracaoVisitaram {{item.Texto}}</span>
+                            <span ng-if="item.Tipo == 'AtracaoVisita' && item.Usuarios.length> 1">@TextosPaginas.Timeline_AtracaoVisitaram {{item.Texto}}</span>
+                            <span ng-if="item.Tipo == 'AtracaoVisita' && item.Usuarios.length> 1">@TextosPaginas.Timeline_AtracaoVisitaram {{item.Texto}}</span>
+                            <span ng-if="item.Tipo == 'Refeicao' && item.Usuarios.length== 1">@TextosPaginas.Timeline_RefeicaoComeu {{item.Texto}}</span>
+                            <span ng-if="item.Tipo == 'Refeicao' && item.Usuarios.length> 1">@TextosPaginas.Timeline_RefeicaoComerarm {{item.Texto}}</span>
+                            <span ng-if="item.Tipo == 'HotelCheckIn' && item.Usuarios.length== 1">@TextosPaginas.Timeline_CheckInFez {{item.Texto}}</span>
+                            <span ng-if="item.Tipo == 'HotelCheckIn' && item.Usuarios.length > 1">@TextosPaginas.Timeline_CheckInFizeram {{item.Texto}}</span>
+                            <span ng-if="item.Tipo == 'HotelCheckOut' && item.Usuarios.length== 1">@TextosPaginas.Timeline_CheckoutFez {{item.Texto}}</span>
+                            <span ng-if="item.Tipo == 'HotelCheckOut' && item.Usuarios.length> 1">@TextosPaginas.Timeline_CheckOutFizeram {{item.Texto}}</span>
+                            <span ng-if="item.Tipo == 'HotelEntrada' && item.Usuarios.length== 1">@TextosPaginas.Timeline_HotelChegou {{item.Texto}}</span>
+                            <span ng-if="item.Tipo == 'HotelEntrada' && item.Usuarios.length > 1">@TextosPaginas.Timeline_HotelChegaram {{item.Texto}}</span>
+                            <span ng-if="item.Tipo == 'HotelSaida' && item.Usuarios.length== 1">@TextosPaginas.Timeline_HotelDeixou {{item.Texto}}</span>
+                            <span ng-if="item.Tipo == 'HotelSaida' && item.Usuarios.length> 1">@TextosPaginas.Timeline_HotelDeixaram {{item.Texto}}</span>
+                            <span ng-if="item.Tipo == 'CarroRetirada' && item.Usuarios.length== 1">@TextosPaginas.Timeline_CarroRetirou {{item.Texto}} @TextosPaginas.Timeline_CarroLocadoraDa {{item.Comentario}}</span>
+                            <span ng-if="item.Tipo == 'CarroRetirada' && item.Usuarios.length > 1">@TextosPaginas.Timeline_CarroRetiraram {{item.Texto}} @TextosPaginas.Timeline_CarroLocadoraDa {{item.Comentario}}</span>
+                            <span ng-if="item.Tipo == 'CarroDevolucao' && item.Usuarios.length== 1">@TextosPaginas.Timeline_CarroRetornou {{item.Texto}} @TextosPaginas.Timeline_CarroLocadoraPara {{item.Comentario}}</span>
+                            <span ng-if="item.Tipo == 'CarroDevolucao' && item.Usuarios.length> 1">@TextosPaginas.Timeline_CarroRetornaram {{item.Texto}}  @TextosPaginas.Timeline_CarroLocadoraPara {{item.Comentario}}</span>
+                            <span ng-if="item.Tipo == 'CarroPartida' && item.Usuarios.length== 1">@TextosPaginas.Timeline_CarroDeslocamentoIniciou {{item.Comentario}} @TextosPaginas.Timeline_CarroDeslocamento {{item.Texto}}</span>
+                            <span ng-if="item.Tipo == 'CarroPartida' && item.Usuarios.length > 1">@TextosPaginas.Timeline_CarroDeslocamentoIniciaram {{item.Comentario}} @TextosPaginas.Timeline_CarroDeslocamento {{item.Texto}}</span>
+                            <span ng-if="item.Tipo == 'CarroChegada' && item.Usuarios.length== 1">@TextosPaginas.Timeline_CarroDeslocamentoTerminou {{item.Comentario}} @TextosPaginas.Timeline_CarroDeslocamento {{item.Texto}}</span>
+                            <span ng-if="item.Tipo == 'CarroChegada' && item.Usuarios.length> 1">@TextosPaginas.Timeline_CarroDeslocamentoTerminaram {{item.Comentario}}  @TextosPaginas.Timeline_CarroDeslocamento {{item.Texto}}</span>
+                            <span ng-if="item.Tipo == 'Reabastecimento'">{{item.Texto}}  @TextosPaginas.Timeline_CarroReabastecido </span>
+                            <span ng-if="item.Tipo == 'Compra'">@TextosPaginas.Timeline_LojaCompra {{item.Texto}}</span>
+                            <span ng-if="item.Tipo == 'Comentario'">@TextosPaginas.Timeline_Comentario</span>
+                            <span ng-if="item.Tipo == 'Foto'">@TextosPaginas.Timeline_Foto</span>
+                            <span ng-if="item.Tipo == 'Video'">@TextosPaginas.Timeline_Video</span>
+                            <span ng-if="item.Tipo == 'DeslocamentoChegadaOrigem' && item.Usuarios.length== 1">@TextosPaginas.Timeline_DeslocamentoChegou {{item.Comentario}} @TextosPaginas.Timeline_DeslocamentoIniciarViagem {{item.Texto}} @TextosPaginas.Timeline_DeslocamentoCompanhia {{item.Url}}</span>
+                            <span ng-if="item.Tipo == 'DeslocamentoChegadaOrigem' && item.Usuarios.length > 1">@TextosPaginas.Timeline_DeslocamentoChegaram {{item.Comentario}} @TextosPaginas.Timeline_DeslocamentoIniciarViagem {{item.Texto}} @TextosPaginas.Timeline_DeslocamentoCompanhia {{item.Url}}</span>
+                            <span ng-if="item.Tipo == 'DeslocamentoPartidaOrigem' && item.Usuarios.length== 1">@TextosPaginas.Timeline_DeslocamentoDeixou {{item.Comentario}} @TextosPaginas.Timeline_DeslocamentoIniciarViagem {{item.Texto}} @TextosPaginas.Timeline_DeslocamentoCompanhia {{item.Url}}</span>
+                            <span ng-if="item.Tipo == 'DeslocamentoPartidaOrigem' && item.Usuarios.length > 1">@TextosPaginas.Timeline_DeslocamentoDeixaram {{item.Comentario}} @TextosPaginas.Timeline_DeslocamentoIniciarViagem {{item.Texto}} @TextosPaginas.Timeline_DeslocamentoCompanhia {{item.Url}}</span>
+                            <span ng-if="item.Tipo == 'DeslocamentoOrigem' && item.Usuarios.length== 1">@TextosPaginas.Timeline_DeslocamentoInciouViagem {{item.Texto}} @TextosPaginas.Timeline_Em {{item.Comentario}} @TextosPaginas.Timeline_DeslocamentoCompanhia {{item.Url}}</span>
+                            <span ng-if="item.Tipo == 'DeslocamentoOrigem' && item.Usuarios.length > 1">@TextosPaginas.Timeline_DeslocamentoIniciarViagem {{item.Texto}} @TextosPaginas.Timeline_Em {{item.Comentario}} @TextosPaginas.Timeline_DeslocamentoCompanhia {{item.Url}}</span>
+                            <span ng-if="item.Tipo == 'DeslocamentoChegadaDestino' && item.Usuarios.length== 1">@TextosPaginas.Timeline_DeslocamentoChegou {{item.Comentario}} @TextosPaginas.Timeline_DeslocamentoConcluirViagem {{item.Texto}} @TextosPaginas.Timeline_DeslocamentoCompanhia {{item.Url}}</span>
+                            <span ng-if="item.Tipo == 'DeslocamentoChegadaDestino' && item.Usuarios.length > 1">@TextosPaginas.Timeline_DeslocamentoChegaram {{item.Comentario}} @TextosPaginas.Timeline_DeslocamentoConcluirViagem {{item.Texto}} @TextosPaginas.Timeline_DeslocamentoCompanhia {{item.Url}}</span>
+                            <span ng-if="item.Tipo == 'DeslocamentoPartidaDestino' && item.Usuarios.length== 1">@TextosPaginas.Timeline_DeslocamentoDeixou {{item.Comentario}} @TextosPaginas.Timeline_DeslocamentoConcluirViagem {{item.Texto}} @TextosPaginas.Timeline_DeslocamentoCompanhia {{item.Url}}</span>
+                            <span ng-if="item.Tipo == 'DeslocamentoPartidaDestino' && item.Usuarios.length > 1">@TextosPaginas.Timeline_DeslocamentoDeixaram {{item.Comentario}} @TextosPaginas.Timeline_DeslocamentoConcluirViagem {{item.Texto}} @TextosPaginas.Timeline_DeslocamentoCompanhia {{item.Url}}</span>
+                            <span ng-if="item.Tipo == 'DeslocamentoDestino' && item.Usuarios.length== 1">@TextosPaginas.Timeline_DeslocamentoConcluiuViagem {{item.Texto}} @TextosPaginas.Timeline_Em {{item.Comentario}} @TextosPaginas.Timeline_DeslocamentoCompanhia {{item.Url}}</span>
+                            <span ng-if="item.Tipo == 'DeslocamentoDestino' && item.Usuarios.length > 1">@TextosPaginas.Timeline_DeslocamentoConcluiramViagem {{item.Texto}} @TextosPaginas.Timeline_Em {{item.Comentario}} @TextosPaginas.Timeline_DeslocamentoCompanhia {{item.Url}}</span>
+                            <span ng-if="item.Tipo == 'DeslocamentoChegadaEscala' && item.Usuarios.length== 1">@TextosPaginas.Timeline_DeslocamentoChegou {{item.Comentario}} @TextosPaginas.Timeline_DeslocamentoEscala {{item.Texto}} @TextosPaginas.Timeline_DeslocamentoCompanhia {{item.Url}}</span>
+                            <span ng-if="item.Tipo == 'DeslocamentoChegadaEscala' && item.Usuarios.length > 1">@TextosPaginas.Timeline_DeslocamentoChegaram {{item.Comentario}} @TextosPaginas.Timeline_DeslocamentoEscala {{item.Texto}} @TextosPaginas.Timeline_DeslocamentoCompanhia {{item.Url}}</span>
+                            <span ng-if="item.Tipo == 'DeslocamentoPartidaEscala' && item.Usuarios.length== 1">@TextosPaginas.Timeline_DeslocamentoDeixou {{item.Comentario}} @TextosPaginas.Timeline_DeslocamentoEscala {{item.Texto}} @TextosPaginas.Timeline_DeslocamentoCompanhia {{item.Url}}</span>
+                            <span ng-if="item.Tipo == 'DeslocamentoPartidaEscala' && item.Usuarios.length > 1">@TextosPaginas.Timeline_DeslocamentoDeixaram {{item.Comentario}} @TextosPaginas.Timeline_DeslocamentoEscala {{item.Texto}} @TextosPaginas.Timeline_DeslocamentoCompanhia {{item.Url}}</span>
+                            <span ng-if="item.Tipo == 'DeslocamentoEscala' && item.Usuarios.length== 1">@TextosPaginas.Timeline_DeslocamentoFezEscala {{item.Texto}} @TextosPaginas.Timeline_Em {{item.Comentario}} @TextosPaginas.Timeline_DeslocamentoCompanhia {{item.Url}}</span>
+                            <span ng-if="item.Tipo == 'DeslocamentoEscala' && item.Usuarios.length > 1">@TextosPaginas.Timeline_DeslocamentoFizeramEscala {{item.Texto}} @TextosPaginas.Timeline_Em {{item.Comentario}} @TextosPaginas.Timeline_DeslocamentoCompanhia {{item.Url}}</span>
+
+                        </div>
+                    </div>
+                    <div class="col-md12" ng-if="item.Tipo == 'Refeicao'" ng-repeat="itemPedido in itemExtratoMoeda.RetornarPedidos(item.Usuarios) track by $index">
+                        <span>{{itemPedido.Nome}} @TextosPaginas.Timeline_Comeu {{itemPedido.Pedido}}</span>
+                    </div>
+                    <div class="form-group col-md-12" ng-if="item.Tipo == 'Foto'">
+                        <img  ng-src="{{item.Url }}" class="img-responsive"/>
+                    </div>
+                    <div class="form-group col-md-12" ng-if="item.Tipo == 'Video'">
+                        <div >
+                            <iframe src="{{item.Url | trustAsResourceUrl}}" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12" ng-if="(item.Tipo == 'Comentario' || item.Tipo == 'Foto' || item.Tipo == 'Video') &&  item.Comentario">
+                       <span ng-bind-html='item.Comentario | newlines | sanitize'/>
+                    </div>
+                    
+                    <div class="col-md12" ng-repeat="itemPedido in itemExtratoMoeda.RetornarNotas(item.Usuarios) track by $index">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <span>{{itemPedido.Nome}} @TextosPaginas.Timeline_Avaliou </span>
+                            </div>
+                            <div class="col-md-4" star-rating ng-model="itemPedido.Nota" max="5" readonly="true"></div>
+                        </div>
+                        <div ng-if="itemPedido.Comentario" ng-bind-html='itemPedido.Comentario | newlines | sanitize' />
+                        
+                    </div>
+                    <div class="col-md12" ng-if="item.Latitude && item.Longitude && item.Tipo != 'DeslocamentoPartidaOrigem' && item.Tipo != 'DeslocamentoPartidaDestino' && item.Tipo != 'DeslocamentoPartidaEscala' && item.Tipo != 'HotelEntrada' && item.Tipo != 'HotelSaida' && item.Tipo != 'HotelChekckOut' && item.Tipo != 'AtracaoPartida'">
+                        <img ng-src="{{itemExtratoMoeda.RetornarURLMap(item) }}" class="img-responsive" />
+                    </div>
+                </div>
+            </div>
+            <div on-view-point on-visible="itemExtratoMoeda.ProximaPagina()" enabled="itemExtratoMoeda.enableScroll" end-of-page="itemExtratoMoeda.FimPagina" id="fimPagina">
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+</section><!-- /.content -->

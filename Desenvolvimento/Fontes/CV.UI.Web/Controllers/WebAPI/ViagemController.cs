@@ -83,6 +83,17 @@ namespace CV.UI.Web.Controllers.WebAPI
             return lista.ToList();
         }
 
+
+        [Authorize]
+        [ActionName("CarregarParticipantesAmigo")]
+        [HttpGet]
+        public List<Usuario> CarregarParticipantesAmigo()
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            var lista = biz.CarregarParticipantesViagem(token.IdentificadorViagem, token.IdentificadorUsuario);
+            return lista.ToList();
+        }
+        
         [Authorize]
         [ActionName("TrocarSituacaoViagem")]
         [HttpGet]
