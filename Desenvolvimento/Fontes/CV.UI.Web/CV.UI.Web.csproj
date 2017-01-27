@@ -320,6 +320,11 @@
     <Content Include="Library\Scripts\App\Home\SignalR-factory.js" />
     <Content Include="Library\Scripts\App\Sistema\CarroDeslocamento\CarroDeslocamento-edit-controller.js" />
     <Content Include="Library\Scripts\App\Sistema\Consulta\AcertoConta-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Consulta\LocaisLoja-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Consulta\LocaisRestaurante-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Consulta\LocaisHotel-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Consulta\LocaisAtracao-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Consulta\LocaisVisitados-controller.js" />
     <Content Include="Library\Scripts\App\Sistema\Consulta\Timeline-controller.js" />
     <Content Include="Library\Scripts\App\Sistema\Consulta\RelatorioGasto-controller.js" />
     <Content Include="Library\Scripts\App\Sistema\Consulta\ExtratoMoeda-controller.js" />
@@ -506,6 +511,11 @@
     <Content Include="Views\Sistema\ConsultarExtratoMoeda.cshtml" />
     <Content Include="Views\Sistema\ConsultarRelatorioGastos.cshtml" />
     <Content Include="Views\Sistema\ConsultarTimeline.cshtml" />
+    <Content Include="Views\Sistema\ConsultarLocaisVisitados.cshtml" />
+    <Content Include="Views\Sistema\ConsultarLocaisAtracao.cshtml" />
+    <Content Include="Views\Sistema\ConsultarLocaisRestaurante.cshtml" />
+    <Content Include="Views\Sistema\ConsultarLocaisHotel.cshtml" />
+    <Content Include="Views\Sistema\ConsultarLocaisLoja.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

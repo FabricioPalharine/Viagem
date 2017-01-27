@@ -66,5 +66,33 @@ namespace CV.UI.Web.Controllers.MVC
         {
             return PartialView();
         }
+
+        public ActionResult ConsultarLocaisVisitados()
+        {
+            return PartialView();
+        }
+
+        public ActionResult ConsultarLocaisAtracao()
+        {
+            return PartialView();
+        }
+
+
+        public ActionResult ConsultarLocaisHotel()
+        {
+            return PartialView();
+        }
+
+
+        public ActionResult ConsultarLocaisRestaurante()
+        {
+            return PartialView();
+        }
+
+
+        public ActionResult ConsultarLocaisLoja()
+        {
+            return PartialView();
+        }
     }
 }

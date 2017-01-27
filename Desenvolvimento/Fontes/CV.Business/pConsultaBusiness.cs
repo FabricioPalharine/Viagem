@@ -43,5 +43,60 @@ namespace CV.Business
                 return data.CarregarTimeline(IdentificadorViagem, IdentificadorUsuarioConsulta, IdentificadorUsuarioEvento, DataMaxima, DataMinima, NumeroRegistros);
             }
         }
+
+        public List<LocaisVisitados> CarregarLocaisVisitados(int? IdentificadorViagem, DateTime? DataDe, DateTime? DataAte)
+        {
+            using (ConsultaRepository data = new ConsultaRepository())
+            {
+                return data.CarregarLocaisVisitados(IdentificadorViagem, DataDe, DataAte, null, null);
+            }
+        }
+
+        public LocaisVisitados CarregarDetalhesAtracao(int? IdentificadorViagem, DateTime? DataDe, DateTime? DataAte, string Nome, string CodigoGoogle )
+        {
+            LocaisVisitados itemRetorno = new LocaisVisitados();
+            using (ConsultaRepository data = new ConsultaRepository())
+            {
+                itemRetorno.LocaisFilho = data.CarregarLocaisVisitados(IdentificadorViagem, DataDe, DataAte, Nome, CodigoGoogle);
+                itemRetorno.Detalhes = data.CarregarDetalhesAtracaoVisitada(IdentificadorViagem, DataDe, DataAte, Nome, CodigoGoogle);
+                itemRetorno.Gastos = data.ConsultarGastosAtracao(IdentificadorViagem, DataDe, DataAte, Nome, CodigoGoogle);
+                itemRetorno.Fotos = data.ConsultarFotosAtracao(IdentificadorViagem, DataDe, DataAte, Nome, CodigoGoogle);
+            }
+            return itemRetorno;
+        }
+
+        public LocaisVisitados CarregarDetalhesHotel(int? IdentificadorViagem, DateTime? DataDe, DateTime? DataAte, string Nome, string CodigoGoogle)
+        {
+            LocaisVisitados itemRetorno = new LocaisVisitados();
+            using (ConsultaRepository data = new ConsultaRepository())
+            {
+                itemRetorno.Detalhes = data.CarregarDetalhesHotelHospedado(IdentificadorViagem, DataDe, DataAte, Nome, CodigoGoogle);
+                itemRetorno.Gastos = data.ConsultarGastosHotel(IdentificadorViagem, DataDe, DataAte, Nome, CodigoGoogle);
+                itemRetorno.Fotos = data.ConsultarFotosHotel(IdentificadorViagem, DataDe, DataAte, Nome, CodigoGoogle);
+            }
+            return itemRetorno;
+        }
+
+        public LocaisVisitados CarregarDetalhesRefeicao(int? IdentificadorViagem, DateTime? DataDe, DateTime? DataAte, string Nome, string CodigoGoogle)
+        {
+            LocaisVisitados itemRetorno = new LocaisVisitados();
+            using (ConsultaRepository data = new ConsultaRepository())
+            {
+                itemRetorno.Detalhes = data.CarregarDetalhesRestaurante(IdentificadorViagem, DataDe, DataAte, Nome, CodigoGoogle);
+                itemRetorno.Gastos = data.ConsultarGastosRefeicao(IdentificadorViagem, DataDe, DataAte, Nome, CodigoGoogle);
+                itemRetorno.Fotos = data.ConsultarFotosRefeicao(IdentificadorViagem, DataDe, DataAte, Nome, CodigoGoogle);
+            }
+            return itemRetorno;
+        }
+
+        public LocaisVisitados CarregarDetalhesLoja(int? IdentificadorViagem, DateTime? DataDe, DateTime? DataAte, string Nome, string CodigoGoogle)
+        {
+            LocaisVisitados itemRetorno = new LocaisVisitados();
+            using (ConsultaRepository data = new ConsultaRepository())
+            {
+                itemRetorno.Gastos = data.ConsultarComprasLoja(IdentificadorViagem, DataDe, DataAte, Nome, CodigoGoogle);
+            }
+            return itemRetorno;
+        }
     }
 }

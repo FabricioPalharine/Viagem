@@ -58,5 +58,71 @@ namespace CV.UI.Web.Controllers.WebAPI
             ConsultaBusiness biz = new ConsultaBusiness();
             return biz.CarregarTimeline(token.IdentificadorViagem, token.IdentificadorUsuario, json.IdentificadorParticipante, json.DataInicioDe,json.DataInicioAte, json.Count.GetValueOrDefault(20));
         }
+
+        [Authorize]
+        [BindJson(typeof(CriterioBusca), "json")]
+        [ActionName("ListarLocaisVisitados")]
+        [HttpGet]
+        public List<LocaisVisitados> ListarLocaisVisitados(CriterioBusca json)
+        {
+            DateTime? DataFim = json.DataInicioAte;
+            if (DataFim.HasValue)
+                DataFim = DataFim.Value.AddDays(1);
+            ConsultaBusiness biz = new ConsultaBusiness();
+            return biz.CarregarLocaisVisitados(token.IdentificadorViagem, json.DataInicioDe, DataFim);
+        }
+
+
+        [Authorize]
+        [BindJson(typeof(CriterioBusca), "json")]
+        [ActionName("ConsultarDetalheAtracao")]
+        [HttpGet]
+        public LocaisVisitados ConsultarDetalheAtracao(CriterioBusca json)
+        {
+            DateTime? DataFim = json.DataInicioAte;
+            if (DataFim.HasValue)
+                DataFim = DataFim.Value.AddDays(1);
+            ConsultaBusiness biz = new ConsultaBusiness();
+            return biz.CarregarDetalhesAtracao(token.IdentificadorViagem, json.DataInicioDe, DataFim, json.Nome, json.Comentario);
+        }
+
+        [Authorize]
+        [BindJson(typeof(CriterioBusca), "json")]
+        [ActionName("ConsultarDetalheHotel")]
+        [HttpGet]
+        public LocaisVisitados ConsultarDetalheHotel(CriterioBusca json)
+        {
+            DateTime? DataFim = json.DataInicioAte;
+            if (DataFim.HasValue)
+                DataFim = DataFim.Value.AddDays(1);
+            ConsultaBusiness biz = new ConsultaBusiness();
+            return biz.CarregarDetalhesHotel(token.IdentificadorViagem, json.DataInicioDe, DataFim, json.Nome, json.Comentario);
+        }
+
+        [Authorize]
+        [BindJson(typeof(CriterioBusca), "json")]
+        [ActionName("ConsultarDetalheRestaurante")]
+        [HttpGet]
+        public LocaisVisitados ConsultarDetalheRestaurante(CriterioBusca json)
+        {
+            DateTime? DataFim = json.DataInicioAte;
+            if (DataFim.HasValue)
+                DataFim = DataFim.Value.AddDays(1);
+            ConsultaBusiness biz = new ConsultaBusiness();
+            return biz.CarregarDetalhesRefeicao(token.IdentificadorViagem, json.DataInicioDe, DataFim, json.Nome, json.Comentario);
+        }
+
+        [Authorize]
+        [BindJson(typeof(CriterioBusca), "json")]
+        [ActionName("ConsultarDetalheLoja")]
+        [HttpGet]
+        public LocaisVisitados ConsultarDetalheLoja(CriterioBusca json)
+        {
+            DateTime? DataFim = json.DataInicioAte;
+            if (DataFim.HasValue)
+                DataFim = DataFim.Value.AddDays(1);
+            ConsultaBusiness biz = new ConsultaBusiness();
+            return biz.CarregarDetalhesLoja(token.IdentificadorViagem, json.DataInicioDe, DataFim, json.Nome, json.Comentario);
+        }
     }
 }

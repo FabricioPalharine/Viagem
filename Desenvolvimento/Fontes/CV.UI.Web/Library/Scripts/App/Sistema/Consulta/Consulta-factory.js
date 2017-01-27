@@ -57,7 +57,53 @@
               },
               //  transformResponse: parseArray,
               isArray: true
+          },
+          ListarLocaisVisitados: {
+              method: 'GET',
+              params: {
+                  controller: 'ListarLocaisVisitados',
+                  json: 'json'
+              },
+              //  transformResponse: parseArray,
+              isArray: true
+          },
+          CarregarDetalhesAtracao: {
+              method: 'GET',
+              params: {
+                  controller: 'ConsultarDetalheAtracao',
+                  json: 'json'
+              },
+              //  transformResponse: parseArray,
+              isArray: false
+          },
+          CarregarDetalhesHotel: {
+              method: 'GET',
+              params: {
+                  controller: 'ConsultarDetalheHotel',
+                  json: 'json'
+              },
+              //  transformResponse: parseArray,
+              isArray: false
+          },
+          CarregarDetalhesRestaurante: {
+              method: 'GET',
+              params: {
+                  controller: 'ConsultarDetalheRestaurante',
+                  json: 'json'
+              },
+              //  transformResponse: parseArray,
+              isArray: false
+          },
+          CarregarDetalhesLoja: {
+              method: 'GET',
+              params: {
+                  controller: 'ConsultarDetalheLoja',
+                  json: 'json'
+              },
+              //  transformResponse: parseArray,
+              isArray: false
           }
+
       });
 
 

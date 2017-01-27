@@ -161,7 +161,7 @@
                         <div ng-if="itemPedido.Comentario" ng-bind-html='itemPedido.Comentario | newlines | sanitize' />
                         
                     </div>
-                    <div class="col-md12" ng-if="item.Latitude && item.Longitude && item.Tipo != 'DeslocamentoPartidaOrigem' && item.Tipo != 'DeslocamentoPartidaDestino' && item.Tipo != 'DeslocamentoPartidaEscala' && item.Tipo != 'HotelEntrada' && item.Tipo != 'HotelSaida' && item.Tipo != 'HotelChekckOut' && item.Tipo != 'AtracaoPartida'">
+                    <div class="col-md12" ng-if="item.Latitude  && item.Longitude &&  (item.Latitude != 0|| item.Longitude != 0) && item.Tipo != 'DeslocamentoPartidaOrigem' && item.Tipo != 'DeslocamentoPartidaDestino' && item.Tipo != 'DeslocamentoPartidaEscala' && item.Tipo != 'HotelEntrada' && item.Tipo != 'HotelSaida' && item.Tipo != 'HotelChekckOut' && item.Tipo != 'AtracaoPartida'">
                         <img ng-src="{{itemExtratoMoeda.RetornarURLMap(item) }}" class="img-responsive" />
                     </div>
                 </div>

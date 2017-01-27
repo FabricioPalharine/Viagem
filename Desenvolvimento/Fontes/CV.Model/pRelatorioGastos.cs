@@ -26,5 +26,7 @@ namespace CV.Model
             }
         }
 
+        public IEnumerable<LojaItens> Itens { get; set; }
+
     }
 }

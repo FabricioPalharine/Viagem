@@ -2167,6 +2167,15 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Locais.
+        /// </summary>
+        public static string Home_LocaisVisitados {
+            get {
+                return ResourceManager.GetString("Home_LocaisVisitados", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loja.
         /// </summary>
         public static string Home_Loja {
@@ -2829,6 +2838,177 @@ namespace CV.UI.Web.Resources {
         public static string ListaCompra_ValorMaximo {
             get {
                 return ResourceManager.GetString("ListaCompra_ValorMaximo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Locais Filhos.
+        /// </summary>
+        public static string LocaisAtracao_LocaisFilhos {
+            get {
+                return ResourceManager.GetString("LocaisAtracao_LocaisFilhos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Avaliação Média .
+        /// </summary>
+        public static string LocaisAtracao_NotaMedia {
+            get {
+                return ResourceManager.GetString("LocaisAtracao_NotaMedia", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visitas.
+        /// </summary>
+        public static string LocaisAtracao_Visita {
+            get {
+                return ResourceManager.GetString("LocaisAtracao_Visita", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Estadias.
+        /// </summary>
+        public static string LocaisHotel_Estadias {
+            get {
+                return ResourceManager.GetString("LocaisHotel_Estadias", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refeições.
+        /// </summary>
+        public static string LocaisRefeicao_Refeicoes {
+            get {
+                return ResourceManager.GetString("LocaisRefeicao_Refeicoes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comentário.
+        /// </summary>
+        public static string LocaisVisitados_Comentario {
+            get {
+                return ResourceManager.GetString("LocaisVisitados_Comentario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compras.
+        /// </summary>
+        public static string LocaisVisitados_Compras {
+            get {
+                return ResourceManager.GetString("LocaisVisitados_Compras", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Custos.
+        /// </summary>
+        public static string LocaisVisitados_Custos {
+            get {
+                return ResourceManager.GetString("LocaisVisitados_Custos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data.
+        /// </summary>
+        public static string LocaisVisitados_Data {
+            get {
+                return ResourceManager.GetString("LocaisVisitados_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data Até.
+        /// </summary>
+        public static string LocaisVisitados_DataAte {
+            get {
+                return ResourceManager.GetString("LocaisVisitados_DataAte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data De.
+        /// </summary>
+        public static string LocaisVisitados_DataDe {
+            get {
+                return ResourceManager.GetString("LocaisVisitados_DataDe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Descrição.
+        /// </summary>
+        public static string LocaisVisitados_Descricao {
+            get {
+                return ResourceManager.GetString("LocaisVisitados_Descricao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Itens Comprados.
+        /// </summary>
+        public static string LocaisVisitados_Itens {
+            get {
+                return ResourceManager.GetString("LocaisVisitados_Itens", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Marca.
+        /// </summary>
+        public static string LocaisVisitados_Marca {
+            get {
+                return ResourceManager.GetString("LocaisVisitados_Marca", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nota.
+        /// </summary>
+        public static string LocaisVisitados_Nota {
+            get {
+                return ResourceManager.GetString("LocaisVisitados_Nota", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pedido.
+        /// </summary>
+        public static string LocaisVisitados_Pedido {
+            get {
+                return ResourceManager.GetString("LocaisVisitados_Pedido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Período.
+        /// </summary>
+        public static string LocaisVisitados_Periodo {
+            get {
+                return ResourceManager.GetString("LocaisVisitados_Periodo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pessoa.
+        /// </summary>
+        public static string LocaisVisitados_Usuario {
+            get {
+                return ResourceManager.GetString("LocaisVisitados_Usuario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Valor.
+        /// </summary>
+        public static string LocaisVisitados_Valor {
+            get {
+                return ResourceManager.GetString("LocaisVisitados_Valor", resourceCulture);
             }
         }
         

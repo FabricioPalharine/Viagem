@@ -1419,7 +1419,189 @@
                 }]
             }
         })
+        .state('ConsultarLocaisVisitados', {
+            url: '/ConsultarLocaisVisitados',
+            templateUrl: 'Sistema/ConsultarLocaisVisitados',
+            controller: 'LocaisVisitadosCtrl',
+            controllerAs: 'itemExtratoMoeda',
+            authenticate: true,
+            params: {
+                filtro: null
+            },
+            resolve: {
+                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    return $ocLazyLoad.load([
+                         {
+                             name: 'ViagemFactory',
+                             files: [
+                                 'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
+                             ]
+                         },
+                        {
+                            name: 'LocaisVisitadosController',
+                            files: [
+                                'library/scripts/app/Sistema/Consulta/LocaisVisitados-controller.js'
+                            ]
+                        }, {
+                            name: 'ConsultaFactory',
+                            files: [
+                                'library/scripts/app/Sistema/Consulta/Consulta-factory.js'
+                            ]
+                        }
 
+                    ]);
+
+                }]
+            }
+        })
+        .state('ConsultarLocaisAtracao', {
+            url: '/ConsultarLocaisAtracao',
+            templateUrl: 'Sistema/ConsultarLocaisAtracao',
+            controller: 'LocaisAtracaoCtrl',
+            controllerAs: 'itemExtratoMoeda',
+            authenticate: true,
+            params: {
+                filtro: null,
+                Item: null,
+                ItemPai: null
+            },
+            resolve: {
+                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    return $ocLazyLoad.load([
+                         {
+                             name: 'ViagemFactory',
+                             files: [
+                                 'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
+                             ]
+                         },
+                        {
+                            name: 'LocaisAtracaoController',
+                            files: [
+                                'library/scripts/app/Sistema/Consulta/LocaisAtracao-controller.js'
+                            ]
+                        }, {
+                            name: 'ConsultaFactory',
+                            files: [
+                                'library/scripts/app/Sistema/Consulta/Consulta-factory.js'
+                            ]
+                        }
+
+                    ]);
+
+                }]
+            }
+        })
+        .state('ConsultarLocaisHotel', {
+            url: '/ConsultarLocaisHotel',
+            templateUrl: 'Sistema/ConsultarLocaisHotel',
+            controller: 'LocaisHotelCtrl',
+            controllerAs: 'itemExtratoMoeda',
+            authenticate: true,
+            params: {
+                filtro: null,
+                Item: null,
+                ItemPai: null
+            },
+            resolve: {
+                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    return $ocLazyLoad.load([
+                         {
+                             name: 'ViagemFactory',
+                             files: [
+                                 'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
+                             ]
+                         },
+                        {
+                            name: 'LocaisHotelController',
+                            files: [
+                                'library/scripts/app/Sistema/Consulta/LocaisHotel-controller.js'
+                            ]
+                        }, {
+                            name: 'ConsultaFactory',
+                            files: [
+                                'library/scripts/app/Sistema/Consulta/Consulta-factory.js'
+                            ]
+                        }
+
+                    ]);
+
+                }]
+            }
+        })
+        .state('ConsultarLocaisRestaurante', {
+            url: '/ConsultarLocaisRestaurante',
+            templateUrl: 'Sistema/ConsultarLocaisRestaurante',
+            controller: 'LocaisRestauranteCtrl',
+            controllerAs: 'itemExtratoMoeda',
+            authenticate: true,
+            params: {
+                filtro: null,
+                Item: null,
+                ItemPai: null
+            },
+            resolve: {
+                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    return $ocLazyLoad.load([
+                         {
+                             name: 'ViagemFactory',
+                             files: [
+                                 'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
+                             ]
+                         },
+                        {
+                            name: 'LocaisRestauranteController',
+                            files: [
+                                'library/scripts/app/Sistema/Consulta/LocaisRestaurante-controller.js'
+                            ]
+                        }, {
+                            name: 'ConsultaFactory',
+                            files: [
+                                'library/scripts/app/Sistema/Consulta/Consulta-factory.js'
+                            ]
+                        }
+
+                    ]);
+
+                }]
+            }
+        })
+        .state('ConsultarLocaisLoja', {
+            url: '/ConsultarLocaisLoja',
+            templateUrl: 'Sistema/ConsultarLocaisLoja',
+            controller: 'LocaisLojaCtrl',
+            controllerAs: 'itemExtratoMoeda',
+            authenticate: true,
+            params: {
+                filtro: null,
+                Item: null,
+                ItemPai: null
+            },
+            resolve: {
+                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    return $ocLazyLoad.load([
+                         {
+                             name: 'ViagemFactory',
+                             files: [
+                                 'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
+                             ]
+                         },
+                        {
+                            name: 'LocaisLojaController',
+                            files: [
+                                'library/scripts/app/Sistema/Consulta/LocaisLoja-controller.js'
+                            ]
+                        }, {
+                            name: 'ConsultaFactory',
+                            files: [
+                                'library/scripts/app/Sistema/Consulta/Consulta-factory.js'
+                            ]
+                        }
+
+                    ]);
+
+                }]
+            }
+        })
         ;
     }
 }());

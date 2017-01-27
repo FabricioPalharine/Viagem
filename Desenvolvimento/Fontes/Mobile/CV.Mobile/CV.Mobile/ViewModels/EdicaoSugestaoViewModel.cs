@@ -82,7 +82,7 @@ namespace CV.Mobile.ViewModels
             {
                 var posicao = await RetornarPosicao();
                 if (posicao == null)
-                    posicao = new Plugin.Geolocator.Abstractions.Position() { Latitude = -23.6040963, Longitude = -46.6178018 };
+                    posicao = new Plugin.Geolocator.Abstractions.Position() { Latitude = 0, Longitude = 0 };
                 Bounds = MapSpan.FromCenterAndRadius(new Position(posicao.Latitude, posicao.Longitude), new Distance(5000));
             }
 

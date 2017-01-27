@@ -1041,4 +1041,16 @@
   <data name="Viagem_DataFim" xml:space="preserve">
     <value>O campo Fim é obrigatório</value>
   </data>
+  <data name="Atracao" xml:space="preserve">
+    <value>Atração</value>
+  </data>
+  <data name="Hotel" xml:space="preserve">
+    <value>Hotel</value>
+  </data>
+  <data name="Loja" xml:space="preserve">
+    <value>Loja</value>
+  </data>
+  <data name="Restaurante" xml:space="preserve">
+    <value>Restaurante</value>
+  </data>
 </root>

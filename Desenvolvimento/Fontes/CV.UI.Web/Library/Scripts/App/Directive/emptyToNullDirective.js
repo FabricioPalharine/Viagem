@@ -18,7 +18,10 @@
           };
       }).filter('newlines', function () {
           return function (text) {
-              return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
+              if (text)
+                  return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
+              else
+                  return null;
           }
       })
 .filter("sanitize", ['$sce', function ($sce) {

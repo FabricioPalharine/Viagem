@@ -1716,4 +1716,64 @@
   <data name="Timeline_Video" xml:space="preserve">
     <value> gravou o vídeo</value>
   </data>
+  <data name="Home_LocaisVisitados" xml:space="preserve">
+    <value>Locais</value>
+  </data>
+  <data name="LocaisVisitados_DataAte" xml:space="preserve">
+    <value>Data Até</value>
+  </data>
+  <data name="LocaisVisitados_DataDe" xml:space="preserve">
+    <value>Data De</value>
+  </data>
+  <data name="LocaisAtracao_LocaisFilhos" xml:space="preserve">
+    <value>Locais Filhos</value>
+  </data>
+  <data name="LocaisAtracao_NotaMedia" xml:space="preserve">
+    <value>Avaliação Média </value>
+  </data>
+  <data name="LocaisAtracao_Visita" xml:space="preserve">
+    <value>Visitas</value>
+  </data>
+  <data name="LocaisHotel_Estadias" xml:space="preserve">
+    <value>Estadias</value>
+  </data>
+  <data name="LocaisRefeicao_Refeicoes" xml:space="preserve">
+    <value>Refeições</value>
+  </data>
+  <data name="LocaisVisitados_Comentario" xml:space="preserve">
+    <value>Comentário</value>
+  </data>
+  <data name="LocaisVisitados_Compras" xml:space="preserve">
+    <value>Compras</value>
+  </data>
+  <data name="LocaisVisitados_Custos" xml:space="preserve">
+    <value>Custos</value>
+  </data>
+  <data name="LocaisVisitados_Data" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="LocaisVisitados_Descricao" xml:space="preserve">
+    <value>Descrição</value>
+  </data>
+  <data name="LocaisVisitados_Itens" xml:space="preserve">
+    <value>Itens Comprados</value>
+  </data>
+  <data name="LocaisVisitados_Marca" xml:space="preserve">
+    <value>Marca</value>
+  </data>
+  <data name="LocaisVisitados_Nota" xml:space="preserve">
+    <value>Nota</value>
+  </data>
+  <data name="LocaisVisitados_Pedido" xml:space="preserve">
+    <value>Pedido</value>
+  </data>
+  <data name="LocaisVisitados_Periodo" xml:space="preserve">
+    <value>Período</value>
+  </data>
+  <data name="LocaisVisitados_Usuario" xml:space="preserve">
+    <value>Pessoa</value>
+  </data>
+  <data name="LocaisVisitados_Valor" xml:space="preserve">
+    <value>Valor</value>
+  </data>
 </root>

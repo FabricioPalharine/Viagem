@@ -214,10 +214,6 @@
                     }
                 });
             }
-
-
-
-
         };
 
         vm.ListaAtracao = function () {
@@ -697,8 +693,8 @@
 
         vm.MapModalCtrl = function ($uibModalInstance, NgMap, $timeout, $scope, item) {
             var vmMapa = this;
-            vmMapa.lat = -23.6040963;
-            vmMapa.lng = -46.6178018;
+            vmMapa.lat = 0;
+            vmMapa.lng = 0;
             vmMapa.itemEndereco = "";
             vmMapa.itemFoto = item;
             vmMapa.itemMarcador = {};
