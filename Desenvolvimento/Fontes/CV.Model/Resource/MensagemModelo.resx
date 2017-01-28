@@ -1053,4 +1053,46 @@
   <data name="Restaurante" xml:space="preserve">
     <value>Restaurante</value>
   </data>
+  <data name="AtracaoVisita" xml:space="preserve">
+    <value>Visitando atração {0}</value>
+  </data>
+  <data name="CarroDeslocamento" xml:space="preserve">
+    <value>Movendo-se de carro {0}</value>
+  </data>
+  <data name="CarroDevolucao" xml:space="preserve">
+    <value>Devolução do carro {0} para locadora {1}</value>
+  </data>
+  <data name="CarroReabastecido" xml:space="preserve">
+    <value>Reabasteceu carro {0}</value>
+  </data>
+  <data name="CarroRetirada" xml:space="preserve">
+    <value>Retirada do carro {0} na locadora {1}</value>
+  </data>
+  <data name="HotelCheckIn" xml:space="preserve">
+    <value>Fez check in na hospedagem {0}</value>
+  </data>
+  <data name="HotelCheckOut" xml:space="preserve">
+    <value>Fez check out da hospedagem {0}</value>
+  </data>
+  <data name="HotelNoHotel" xml:space="preserve">
+    <value>Descansando na hospedagem {0}</value>
+  </data>
+  <data name="LojaCompra" xml:space="preserve">
+    <value>Fez compras na loja {0}</value>
+  </data>
+  <data name="RefeicaoFazendo" xml:space="preserve">
+    <value>Comendo {0} no restaurante {1}</value>
+  </data>
+  <data name="ViagemAereaDestino" xml:space="preserve">
+    <value>Concluindo deslocamento {0} em {1}</value>
+  </data>
+  <data name="ViagemAereaEscala" xml:space="preserve">
+    <value>Fazendo escala de {0} em {1}</value>
+  </data>
+  <data name="ViagemAereaOrigem" xml:space="preserve">
+    <value>Aguardando inicio do deslocamento {0} em {1}</value>
+  </data>
+  <data name="ViagemAereaViajando" xml:space="preserve">
+    <value>Viajando {0}</value>
+  </data>
 </root>

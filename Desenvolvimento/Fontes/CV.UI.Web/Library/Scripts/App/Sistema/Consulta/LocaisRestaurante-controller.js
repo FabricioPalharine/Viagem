@@ -86,7 +86,14 @@
                 vm.loading = false;
                 vm.ListaDetalhes = data.Detalhes;
                 vm.ListaGastos = data.Gastos;
-                vm.ListaFotos = data.Fotos;
+                vm.ListaFotos = data.Fotos.map(function (v) {
+                    return {
+                        title: moment(v.Data).format("DD/MM/YYYY HH:mm") + (v.Comentario ? " - " + v.Comentario : ""),
+                        thumbUrl: v.LinkThumbnail,
+                        url: v.LinkFoto,
+                        video: v.Video
+                    };
+                });
                 vm.Item.Media = data.Media;
                 if (!data.Sucesso) {
                     vm.messages = data.Mensagens;

@@ -60,6 +60,7 @@
     <Compile Include="Dominio\enumMoeda.cs" />
     <Compile Include="Dominio\enumStatusListaCompra.cs" />
     <Compile Include="Dominio\enumTipoTransporte.cs" />
+    <Compile Include="pCalendarioRealizado.cs" />
     <Compile Include="pLojaItens.cs" />
     <Compile Include="pAgendarSugestao.cs" />
     <Compile Include="pLocaisDetalhes.cs" />

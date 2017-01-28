@@ -1454,6 +1454,43 @@
                 }]
             }
         })
+              .state('ConsultarCalendarioRealizado', {
+                  url: '/ConsultarCalendarioRealizado',
+                  templateUrl: 'Sistema/ConsultarCalendarioRealizado',
+                  controller: 'CalendarioRealizadoCtrl',
+                  controllerAs: 'itemExtratoMoeda',
+                  authenticate: true,
+                  params: {
+                      filtro: null
+                  },
+                  resolve: {
+                      deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                          return $ocLazyLoad.load([
+                               {
+                                   name: 'ViagemFactory',
+                                   files: [
+                                       'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
+                                   ]
+                               },
+                              {
+                                  name: 'CalendarioRealizadoController',
+                                  files: [
+                                      'library/scripts/app/Sistema/Consulta/CalendarioRealizado-controller.js'
+                                  ]
+                              }, {
+                                  name: 'ConsultaFactory',
+                                  files: [
+                                      'library/scripts/app/Sistema/Consulta/Consulta-factory.js'
+                                  ]
+                              }
+
+                          ]);
+
+                      }]
+                  }
+              })
+
+        
         .state('ConsultarLocaisAtracao', {
             url: '/ConsultarLocaisAtracao',
             templateUrl: 'Sistema/ConsultarLocaisAtracao',
@@ -1602,6 +1639,61 @@
                 }]
             }
         })
+         .state('ConsultarFoto', {
+             url: '/ConsultarFoto',
+             templateUrl: 'Sistema/ConsultarFoto',
+             controller: 'ConsultaFotoCtrl',
+             controllerAs: 'itemFoto',
+             authenticate: true,
+             params: {
+                 filtro: null
+             },
+             resolve: {
+                 deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                     return $ocLazyLoad.load([
+                          {
+                              name: 'FotoFactory',
+                              files: [
+                                  'library/scripts/app/Sistema/Foto/Foto-factory.js'
+                              ]
+                          },
+                         {
+                             name: 'ConsultaFotoController',
+                             files: [
+                                 'library/scripts/app/Sistema/Consulta/Foto-controller.js'
+                             ]
+                         },
+                           {
+                               name: 'ViagemFactory',
+                               files: [
+                                   'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
+                               ]
+                           },
+                            
+                         {
+                             name: 'RefeicaoFactory',
+                             files: [
+                                 'library/scripts/app/Sistema/Refeicao/Refeicao-factory.js'
+                             ]
+                         },
+                           {
+                               name: 'HotelFactory',
+                               files: [
+                                   'library/scripts/app/Sistema/Hotel/Hotel-factory.js'
+                               ]
+                           },
+                           {
+                               name: 'AtracaoFactory',
+                               files: [
+                                   'library/scripts/app/Sistema/Atracao/Atracao-factory.js'
+                               ]
+                           },
+                           
+                     ]);
+
+                 }]
+             }
+         })
         ;
     }
 }());

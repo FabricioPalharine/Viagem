@@ -259,6 +259,15 @@ namespace CV.Model.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Visitando atração {0}.
+        /// </summary>
+        internal static string AtracaoVisita {
+            get {
+                return ResourceManager.GetString("AtracaoVisita", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O campo Identificador é obrigatório.
         /// </summary>
         internal static string AvaliacaoAerea_Identificador {
@@ -601,6 +610,15 @@ namespace CV.Model.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Movendo-se de carro {0}.
+        /// </summary>
+        internal static string CarroDeslocamento {
+            get {
+                return ResourceManager.GetString("CarroDeslocamento", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O campo Data Atualização é obrigatório.
         /// </summary>
         internal static string CarroDeslocamento_DataAtualizacao {
@@ -673,6 +691,15 @@ namespace CV.Model.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Devolução do carro {0} para locadora {1}.
+        /// </summary>
+        internal static string CarroDevolucao {
+            get {
+                return ResourceManager.GetString("CarroDevolucao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O campo Data é obrigatório.
         /// </summary>
         internal static string CarroEvento_Data {
@@ -741,6 +768,24 @@ namespace CV.Model.Resource {
         internal static string CarroEvento_Tipo {
             get {
                 return ResourceManager.GetString("CarroEvento_Tipo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reabasteceu carro {0}.
+        /// </summary>
+        internal static string CarroReabastecido {
+            get {
+                return ResourceManager.GetString("CarroReabastecido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retirada do carro {0} na locadora {1}.
+        /// </summary>
+        internal static string CarroRetirada {
+            get {
+                return ResourceManager.GetString("CarroRetirada", resourceCulture);
             }
         }
         
@@ -1582,6 +1627,24 @@ namespace CV.Model.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fez check in na hospedagem {0}.
+        /// </summary>
+        internal static string HotelCheckIn {
+            get {
+                return ResourceManager.GetString("HotelCheckIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fez check out da hospedagem {0}.
+        /// </summary>
+        internal static string HotelCheckOut {
+            get {
+                return ResourceManager.GetString("HotelCheckOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O campo Data Atualização é obrigatório.
         /// </summary>
         internal static string HotelEvento_DataAtualizacao {
@@ -1641,6 +1704,15 @@ namespace CV.Model.Resource {
         internal static string HotelEvento_Tipo {
             get {
                 return ResourceManager.GetString("HotelEvento_Tipo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Descansando na hospedagem {0}.
+        /// </summary>
+        internal static string HotelNoHotel {
+            get {
+                return ResourceManager.GetString("HotelNoHotel", resourceCulture);
             }
         }
         
@@ -1911,6 +1983,15 @@ namespace CV.Model.Resource {
         internal static string Loja_Nome_Tamanho {
             get {
                 return ResourceManager.GetString("Loja_Nome_Tamanho", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fez compras na loja {0}.
+        /// </summary>
+        internal static string LojaCompra {
+            get {
+                return ResourceManager.GetString("LojaCompra", resourceCulture);
             }
         }
         
@@ -2253,6 +2334,15 @@ namespace CV.Model.Resource {
         internal static string Refeicao_Tipo_Tamanho {
             get {
                 return ResourceManager.GetString("Refeicao_Tipo_Tamanho", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comendo {0} no restaurante {1}.
+        /// </summary>
+        internal static string RefeicaoFazendo {
+            get {
+                return ResourceManager.GetString("RefeicaoFazendo", resourceCulture);
             }
         }
         
@@ -2865,6 +2955,42 @@ namespace CV.Model.Resource {
         internal static string ViagemAereaAeroporto_TipoPonto {
             get {
                 return ResourceManager.GetString("ViagemAereaAeroporto_TipoPonto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Concluindo deslocamento {0} em {1}.
+        /// </summary>
+        internal static string ViagemAereaDestino {
+            get {
+                return ResourceManager.GetString("ViagemAereaDestino", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fazendo escala de {0} em {1}.
+        /// </summary>
+        internal static string ViagemAereaEscala {
+            get {
+                return ResourceManager.GetString("ViagemAereaEscala", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aguardando inicio do deslocamento {0} em {1}.
+        /// </summary>
+        internal static string ViagemAereaOrigem {
+            get {
+                return ResourceManager.GetString("ViagemAereaOrigem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Viajando {0}.
+        /// </summary>
+        internal static string ViagemAereaViajando {
+            get {
+                return ResourceManager.GetString("ViagemAereaViajando", resourceCulture);
             }
         }
     }

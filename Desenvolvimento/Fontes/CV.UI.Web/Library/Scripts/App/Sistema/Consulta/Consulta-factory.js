@@ -67,6 +67,15 @@
               //  transformResponse: parseArray,
               isArray: true
           },
+          ListarCalendarioRealizado: {
+              method: 'GET',
+              params: {
+                  controller: 'ConsultarCalendarioRealizado',
+                  json: 'json'
+              },
+              //  transformResponse: parseArray,
+              isArray: true
+          },
           CarregarDetalhesAtracao: {
               method: 'GET',
               params: {

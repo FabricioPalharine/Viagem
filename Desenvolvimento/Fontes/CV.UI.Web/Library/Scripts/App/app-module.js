@@ -6,6 +6,7 @@
         'ui.router',
         'ui.bootstrap',
         'ui.bootstrap.modal',
+        'ui.bootstrap.tooltip',
         'oc.lazyLoad',
         'ngCookies',
         'ngResource',
@@ -29,6 +30,7 @@
         'home',
         'multi-select-tree',
         'slickCarousel',
+        'thatisuday.ng-image-gallery',
         'Sistema']
         );
 }());

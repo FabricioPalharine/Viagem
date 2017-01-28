@@ -225,7 +225,6 @@ namespace CV.Data
 
             var queryConsulta = this.Context.Atracoes.Where(d => !d.DataExclusao.HasValue).Where(d => d.IdentificadorViagem == IdentificadorViagem).Where(d => d.Chegada.HasValue)
                 .Where(d => d.Avaliacoes.Where(e => listaInteiros.Contains(e.IdentificadorUsuario)).Any());
-            var teste = queryConsulta.ToList();
             var queryResultado = queryConsulta
                 .Where(d => !d.Partida.HasValue || d.Partida > DbFunctions.AddMinutes(d.Chegada, 2))
                 .SelectMany(d => d.Avaliacoes.Select(e => new { Data = d.Chegada, Tipo = "AtracaoChegada", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.Nome, Url = "", Comentario = "", IdentificadorUsuario = e.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" }));//, Usuarios = d.Avaliacoes.Where(e => listaInteiros.Contains(e.IdentificadorUsuario)).Select(e => new UsuarioConsulta() { Comentario = "", Nome = e.ItemUsuario.Nome, Identificador = e.IdentificadorUsuario, Nota = null, Pedido = null }) });
@@ -749,6 +748,187 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
              }).ToList();
         }
 
+        public List<CalendarioRealizado> CarregarCalendarioRealizado(int? IdentificadorViagem,  int? IdentificadorUsuario)
+        {
+
+
+            var queryConsulta = this.Context.AvaliacaoAtracoes.Where(d => d.IdentificadorUsuario == IdentificadorUsuario)
+                .Where(d => !d.DataExclusao.HasValue).Where(d => d.ItemAtracao.IdentificadorViagem == IdentificadorViagem).Where(d => d.ItemAtracao.Chegada.HasValue)
+                .Where(d => !d.ItemAtracao.DataExclusao.HasValue);
+
+            var queryResultado = queryConsulta.Select(d => new CalendarioRealizado()
+            {
+                Complemento = null,
+                DataFim = d.ItemAtracao.Partida ?? DateTime.Now,
+                DataInicio = d.ItemAtracao.Chegada.Value,
+                Id = d.IdentificadorAtracao.Value,
+                Nome = d.ItemAtracao.Nome,
+                Tipo = "A"
+            });
+
+            var queryRefeicao = this.Context.RefeicaoPedidos.Where(d => d.IdentificadorUsuario == IdentificadorUsuario)
+                .Where(d => !d.DataExclusao.HasValue).Where(d => d.ItemRefeicao.IdentificadorViagem == IdentificadorViagem)
+                .Where(d => !d.ItemRefeicao.DataExclusao.HasValue);
+
+            queryResultado = queryResultado.Union( queryRefeicao.Select(d => new CalendarioRealizado()
+            {
+                Complemento = d.Pedido,
+                DataFim = d.ItemRefeicao.Data.Value,
+                DataInicio = d.ItemRefeicao.Data.Value,
+                Id = d.IdentificadorRefeicao.Value,
+                Nome = d.ItemRefeicao.Nome,
+                Tipo = "R"
+            }));
+
+            var queryHotel = this.Context.HotelAvaliacoes.Where(d => d.IdentificadorUsuario == IdentificadorUsuario)
+              .Where(d => !d.DataExclusao.HasValue).Where(d => d.ItemHotel.IdentificadorViagem == IdentificadorViagem).Where(d => d.ItemHotel.DataEntrada.HasValue)
+              .Where(d => !d.ItemHotel.DataExclusao.HasValue);
+
+            queryResultado = queryResultado.Union(
+                queryHotel.Select(d => new CalendarioRealizado()
+                {
+                    Complemento = null,
+                    DataFim = d.ItemHotel.DataEntrada.Value,
+                    DataInicio = d.ItemHotel.DataEntrada.Value,
+                    Id = d.IdentificadorHotel.Value,
+                    Nome = d.ItemHotel.Nome,
+                    Tipo = "HCI"
+                }));
+
+            var queryHotel2 = this.Context.HotelAvaliacoes.Where(d => d.IdentificadorUsuario == IdentificadorUsuario)
+              .Where(d => !d.DataExclusao.HasValue).Where(d => d.ItemHotel.IdentificadorViagem == IdentificadorViagem).Where(d => d.ItemHotel.DataEntrada.HasValue).Where(d=>d.ItemHotel.DataSaidia.HasValue)
+              .Where(d => !d.ItemHotel.DataExclusao.HasValue);
+
+            queryResultado = queryResultado.Union(
+               queryHotel2.Select(d => new CalendarioRealizado()
+               {
+                   Complemento = null,
+                   DataFim = d.ItemHotel.DataSaidia.Value,
+                   DataInicio = d.ItemHotel.DataSaidia.Value,
+                   Id = d.IdentificadorHotel.Value,
+                   Nome = d.ItemHotel.Nome,
+                   Tipo = "HCO"
+               }));
+
+
+            var queryCarro = this.Context.AvaliacaoAlugueis.Where(d => d.IdentificadorUsuario == IdentificadorUsuario).Where(d=>d.ItemCarro.Alugado.Value)
+             .Where(d => !d.DataExclusao.HasValue).Where(d => d.ItemCarro.IdentificadorViagem == IdentificadorViagem).Where(d => d.ItemCarro.ItemCarroEventoRetirada.Data.HasValue)
+             .Where(d => !d.ItemCarro.DataExclusao.HasValue);
+
+            queryResultado = queryResultado.Union(
+                queryCarro.Select(d => new CalendarioRealizado()
+                {
+                    Complemento = d.ItemCarro.Locadora,
+                    DataFim = d.ItemCarro.ItemCarroEventoRetirada.Data.Value,
+                    DataInicio = d.ItemCarro.ItemCarroEventoRetirada.Data.Value,
+                    Id = d.IdentificadorCarro.Value,
+                    Nome = d.ItemCarro.Descricao,
+                    Tipo = "CR"
+                }));
+
+            var queryCarro2 = this.Context.AvaliacaoAlugueis.Where(d => d.IdentificadorUsuario == IdentificadorUsuario).Where(d => d.ItemCarro.Alugado.Value)
+              .Where(d => !d.DataExclusao.HasValue).Where(d => d.ItemCarro.IdentificadorViagem == IdentificadorViagem).Where(d => d.ItemCarro.ItemCarroEventoRetirada.Data.HasValue).Where(d => d.ItemCarro.ItemCarroEventoDevolucao.Data.HasValue)
+              .Where(d => !d.ItemCarro.DataExclusao.HasValue);
+
+            queryResultado = queryResultado.Union(
+               queryCarro2.Select(d => new CalendarioRealizado()
+               {
+                   Complemento = d.ItemCarro.Locadora,
+                   DataFim = d.ItemCarro.ItemCarroEventoDevolucao.Data.Value,
+                   DataInicio = d.ItemCarro.ItemCarroEventoDevolucao.Data.Value,
+                   Id = d.IdentificadorCarro.Value,
+                   Nome = d.ItemCarro.Descricao,
+                   Tipo = "CD"
+               }));
+
+
+
+            var queryCarroDeslocamento = this.Context.CarroDeslocamentoUsuarios.Where(d => d.IdentificadorUsuario == IdentificadorUsuario)
+ .Where(d => !d.ItemCarroDeslocamento.DataExclusao.HasValue).Where(d => d.ItemCarroDeslocamento.ItemCarro.IdentificadorViagem == IdentificadorViagem).Where(d => d.ItemCarroDeslocamento.ItemCarroEventoPartida.Data.HasValue)
+ .Where(d => !d.ItemCarroDeslocamento.ItemCarro.DataExclusao.HasValue);
+
+            queryResultado = queryResultado.Union(queryCarroDeslocamento.Select(d => new CalendarioRealizado()
+            {
+                Complemento = null,
+                DataFim = d.ItemCarroDeslocamento.ItemCarroEventoChegada.Data ?? DateTime.Now,
+                DataInicio = d.ItemCarroDeslocamento.ItemCarroEventoPartida.Data.Value,
+                Id = d.IdentificadorCarroDeslocamento.Value,
+                Nome = d.ItemCarroDeslocamento.Observacao,
+                Tipo = "DC"
+            }));
+
+            var queryCompra = this.Context.GastoCompras.Where(d => d.ItemGasto.IdentificadorUsuario == IdentificadorUsuario)
+  .Where(d => !d.DataExclusao.HasValue).Where(d => d.ItemLoja.IdentificadorViagem == IdentificadorViagem)
+  .Where(d => !d.ItemGasto.DataExclusao.HasValue);
+
+            queryResultado = queryResultado.Union(queryCompra.Select(d => new CalendarioRealizado()
+            {
+                Complemento = null,
+                DataFim = d.ItemGasto.Data.Value,
+                DataInicio = d.ItemGasto.Data.Value,
+                Id = d.Identificador.Value,
+                Nome = d.ItemLoja.Nome,
+                Tipo = "L"
+            }));
+
+            var queryCarroReabastecimento = this.Context.AvaliacaoAlugueis.Where(d => d.IdentificadorUsuario == IdentificadorUsuario)
+ .Where(d => !d.DataExclusao.HasValue).Where(d => d.ItemCarro.IdentificadorViagem == IdentificadorViagem)
+ .Where(d => !d.ItemCarro.DataExclusao.HasValue);
+
+
+            queryResultado = queryResultado.Union(
+              queryCarroReabastecimento.SelectMany(d => d.ItemCarro.Reabastecimentos.Where(e => !e.DataExclusao.HasValue).Select(e=> new CalendarioRealizado()
+              {
+                  Complemento = null,
+                  DataFim = e.Data.Value,
+                  DataInicio = e.Data.Value,
+                  Id = e.Identificador.Value,
+                  Nome = d.ItemCarro.Descricao,
+                  Tipo = "RC"
+              })));
+
+            var resultado = queryResultado.ToList();
+
+            var queryVA = this.Context.AvaliacaoAereas.Include("ItemViagemAerea").Include("ItemViagemAerea.Aeroportos").Where(d => d.IdentificadorUsuario == IdentificadorUsuario)
+   .Where(d => !d.DataExclusao.HasValue).Where(d => d.ItemViagemAerea.IdentificadorViagem == IdentificadorViagem)
+   .Where(d => !d.ItemViagemAerea.DataExclusao.HasValue);
+            
+            foreach (var itemViagemAerea in queryVA)
+            {
+                CalendarioRealizado itemViajandoAtual = null;
+                foreach (var itemAeroporto in itemViagemAerea.ItemViagemAerea.Aeroportos.Where(d=>d.DataChegada.HasValue).Where(d=>!d.DataExclusao.HasValue).OrderBy(d=>d.DataChegada))
+                {
+                    CalendarioRealizado itemCalendario = new CalendarioRealizado()
+                    {
+                        Complemento = itemAeroporto.Aeroporto,
+                        Nome = itemViagemAerea.ItemViagemAerea.Descricao,
+                        DataInicio = itemAeroporto.DataChegada.Value,
+                        DataFim = itemAeroporto.DataPartida ?? DateTime.Now,
+                        Id = itemAeroporto.Identificador.Value,
+                        Tipo = itemAeroporto.TipoPonto == (int)enumTipoParada.Origem ? "VO" : itemAeroporto.TipoPonto == (int)enumTipoParada.Destino ? "VD" : "VE"
+                    };
+                    resultado.Add(itemCalendario);
+                    if (itemViajandoAtual != null)
+                        itemViajandoAtual.DataFim = itemAeroporto.DataChegada.Value;
+                    if (itemAeroporto.DataPartida.HasValue && itemAeroporto.TipoPonto != (int) enumTipoParada.Destino)
+                    {
+                        itemViajandoAtual = new CalendarioRealizado()
+                        {
+                            Complemento = null,
+                            Nome = itemViagemAerea.ItemViagemAerea.Descricao,
+                            DataInicio = itemAeroporto.DataPartida.Value,
+                            DataFim =  DateTime.Now,
+                            Id = itemAeroporto.Identificador.Value,
+                            Tipo = "VV"
+                        };
+                        resultado.Add(itemViajandoAtual);
+                    }
+                }
+
+            }
+
+            return resultado;
+        }
 
     }
 }

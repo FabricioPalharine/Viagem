@@ -100,6 +100,23 @@
                 </div>
             </div>
 
+
+            <div class="box" ng-if="itemExtratoMoeda.ListaFotos.length > 0">
+
+                <div class="box-header">
+                    @TextosPaginas.LocaisVisitados_Fotos
+                </div>
+                <div class="box-body">
+                    <ng-image-gallery images="itemExtratoMoeda.ListaFotos"
+                                      thumbnails="true"
+                                      inline="false"
+                                      img-bubbles="true"
+                                      bg-close="true"
+                                      bubbles="true"
+                                      img-anim="fadeup"></ng-image-gallery>
+                </div>
+            </div>
+
             <div class="box" ng-if="account.VerCustos() && itemExtratoMoeda.ListaDados.length > 0">
                
                 <div class="box-header">

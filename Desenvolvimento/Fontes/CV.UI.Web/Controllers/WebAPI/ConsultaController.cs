@@ -124,5 +124,16 @@ namespace CV.UI.Web.Controllers.WebAPI
             ConsultaBusiness biz = new ConsultaBusiness();
             return biz.CarregarDetalhesLoja(token.IdentificadorViagem, json.DataInicioDe, DataFim, json.Nome, json.Comentario);
         }
+
+        [Authorize]
+        [BindJson(typeof(CriterioBusca), "json")]
+        [ActionName("ConsultarCalendarioRealizado")]
+        [HttpGet]
+        public List<CalendarioRealizado> ConsultarCalendarioRealizado(CriterioBusca json)
+        {
+
+            ConsultaBusiness biz = new ConsultaBusiness();
+            return biz.CarregarCalendarioRealizado(token.IdentificadorViagem, json.IdentificadorParticipante);
+        }
     }
 }

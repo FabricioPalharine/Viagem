@@ -26,6 +26,7 @@ namespace CV.UI.Web
                          "~/library/Scripts/Componentes/slick.js",
                          "~/library/Scripts/Componentes/csswatch.js",
                          "~/library/Scripts/Componentes/fullcalendar.js"
+
                         ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
@@ -44,8 +45,8 @@ namespace CV.UI.Web
                     "~/library/Scripts/app/Home/auth-factory.js",
                     "~/library/Scripts/app/Home/dominio-factory.js",
                     "~/library/Scripts/app/Home/account-controler.js",
-                    "~/library/Scripts/app/Home/login-controller.js",                    
-                    "~/library/Scripts/app/Home/alteraSenha-controller.js",     
+                    "~/library/Scripts/app/Home/login-controller.js",
+                    "~/library/Scripts/app/Home/alteraSenha-controller.js",
                     "~/library/Scripts/app/Sistema/Sistema-module.js",
                     "~/library/Scripts/app/Sistema/Sistema-routes.js",
                     "~/library/Scripts/app/Directive/error-manager-directive.js",
@@ -84,7 +85,8 @@ namespace CV.UI.Web
                     "~/library/Scripts/angular/angular-multi-select-tree-0.1.0.js",
                     "~/library/Scripts/angular/angular-multi-select-tree-0.1.0.tpl.js",
                     "~/library/Scripts/angular/ng-map.min.js",
-                    "~/library/Scripts/angular/angular-slick.js"
+                    "~/library/Scripts/angular/angular-slick.js",
+                    "~/library/Scripts/angular/ng-image-gallery.js"
                    )
                   );
 
@@ -105,10 +107,12 @@ namespace CV.UI.Web
                       "~/library/css/fullcalendar.min.css",
                       "~/library/css/angular-multi-select-tree-0.1.0.css",
                       "~/library/css/slick.css",
-                      "~/library/css/slick-theme.css"
+                      "~/library/css/slick-theme.css",
+                      "~/library/css/ng-image-gallery.css"
+
                       )
 
-                      );
+            );
 
         }
     }

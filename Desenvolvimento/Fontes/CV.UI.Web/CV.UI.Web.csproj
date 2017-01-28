@@ -239,6 +239,7 @@
     <Content Include="Library\css\ivh-treeview-theme-basic.css" />
     <Content Include="Library\css\ivh-treeview.min.css" />
     <Content Include="Library\css\Logo.png" />
+    <Content Include="Library\css\ng-image-gallery.css" />
     <Content Include="Library\css\Site.css" />
     <Content Include="Library\css\skins\skin-blue-light.css" />
     <Content Include="Library\css\slick-theme.css" />
@@ -247,6 +248,14 @@
     <Content Include="Library\fonts\fontawesome-webfont.svg" />
     <Content Include="Library\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Library\fonts\ui-grid.svg" />
+    <Content Include="Library\res\icons\close-inline.svg" />
+    <Content Include="Library\res\icons\close.svg" />
+    <Content Include="Library\res\icons\external-link-inline.svg" />
+    <Content Include="Library\res\icons\external-link.svg" />
+    <Content Include="Library\res\icons\next-inline.svg" />
+    <Content Include="Library\res\icons\next.svg" />
+    <Content Include="Library\res\icons\prev-inline.svg" />
+    <Content Include="Library\res\icons\prev.svg" />
     <Content Include="Library\Scripts\Angular\angular-animate.js" />
     <Content Include="Library\Scripts\Angular\angular-animate.min.js" />
     <Content Include="Library\Scripts\Angular\angular-aria.js" />
@@ -287,6 +296,7 @@
     <Content Include="Library\Scripts\Angular\moment-with-locales.min.js" />
     <Content Include="Library\Scripts\Angular\ng-file-upload-all.min.js" />
     <Content Include="Library\Scripts\Angular\ng-google-chart.js" />
+    <Content Include="Library\Scripts\Angular\ng-image-gallery.js" />
     <Content Include="Library\Scripts\Angular\ng-map.min.js" />
     <Content Include="Library\Scripts\Angular\ngContextMenu.js" />
     <Content Include="Library\Scripts\Angular\ngInfiniteScroll.js" />
@@ -320,11 +330,13 @@
     <Content Include="Library\Scripts\App\Home\SignalR-factory.js" />
     <Content Include="Library\Scripts\App\Sistema\CarroDeslocamento\CarroDeslocamento-edit-controller.js" />
     <Content Include="Library\Scripts\App\Sistema\Consulta\AcertoConta-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Consulta\Foto-controller.js" />
     <Content Include="Library\Scripts\App\Sistema\Consulta\LocaisLoja-controller.js" />
     <Content Include="Library\Scripts\App\Sistema\Consulta\LocaisRestaurante-controller.js" />
     <Content Include="Library\Scripts\App\Sistema\Consulta\LocaisHotel-controller.js" />
     <Content Include="Library\Scripts\App\Sistema\Consulta\LocaisAtracao-controller.js" />
     <Content Include="Library\Scripts\App\Sistema\Consulta\LocaisVisitados-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Consulta\CalendarioRealizado-controller.js" />
     <Content Include="Library\Scripts\App\Sistema\Consulta\Timeline-controller.js" />
     <Content Include="Library\Scripts\App\Sistema\Consulta\RelatorioGasto-controller.js" />
     <Content Include="Library\Scripts\App\Sistema\Consulta\ExtratoMoeda-controller.js" />
@@ -516,6 +528,8 @@
     <Content Include="Views\Sistema\ConsultarLocaisRestaurante.cshtml" />
     <Content Include="Views\Sistema\ConsultarLocaisHotel.cshtml" />
     <Content Include="Views\Sistema\ConsultarLocaisLoja.cshtml" />
+    <Content Include="Views\Sistema\ConsultarFoto.cshtml" />
+    <Content Include="Views\Sistema\ConsultarCalendarioRealizado.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

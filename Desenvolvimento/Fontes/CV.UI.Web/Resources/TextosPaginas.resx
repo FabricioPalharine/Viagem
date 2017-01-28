@@ -1776,4 +1776,10 @@
   <data name="LocaisVisitados_Valor" xml:space="preserve">
     <value>Valor</value>
   </data>
+  <data name="Home_CalendarioRealizado" xml:space="preserve">
+    <value>Calendário Realizado</value>
+  </data>
+  <data name="LocaisVisitados_Fotos" xml:space="preserve">
+    <value>Fotos</value>
+  </data>
 </root>

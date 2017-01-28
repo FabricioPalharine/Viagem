@@ -52,7 +52,7 @@ namespace CV.Business
             }
         }
 
-        public LocaisVisitados CarregarDetalhesAtracao(int? IdentificadorViagem, DateTime? DataDe, DateTime? DataAte, string Nome, string CodigoGoogle )
+        public LocaisVisitados CarregarDetalhesAtracao(int? IdentificadorViagem, DateTime? DataDe, DateTime? DataAte, string Nome, string CodigoGoogle)
         {
             LocaisVisitados itemRetorno = new LocaisVisitados();
             using (ConsultaRepository data = new ConsultaRepository())
@@ -97,6 +97,14 @@ namespace CV.Business
                 itemRetorno.Gastos = data.ConsultarComprasLoja(IdentificadorViagem, DataDe, DataAte, Nome, CodigoGoogle);
             }
             return itemRetorno;
+        }
+
+        public List<CalendarioRealizado> CarregarCalendarioRealizado(int? IdentificadorViagem, int? IdentificadorUsuario)
+        {
+            using (ConsultaRepository data = new ConsultaRepository())
+            {
+                return data.CarregarCalendarioRealizado(IdentificadorViagem, IdentificadorUsuario);
+            }
         }
     }
 }

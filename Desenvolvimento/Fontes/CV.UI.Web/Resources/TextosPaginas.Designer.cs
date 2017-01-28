@@ -2041,6 +2041,15 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Calendário Realizado.
+        /// </summary>
+        public static string Home_CalendarioRealizado {
+            get {
+                return ResourceManager.GetString("Home_CalendarioRealizado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Carro.
         /// </summary>
         public static string Home_Carro {
@@ -2946,6 +2955,15 @@ namespace CV.UI.Web.Resources {
         public static string LocaisVisitados_Descricao {
             get {
                 return ResourceManager.GetString("LocaisVisitados_Descricao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fotos.
+        /// </summary>
+        public static string LocaisVisitados_Fotos {
+            get {
+                return ResourceManager.GetString("LocaisVisitados_Fotos", resourceCulture);
             }
         }
         

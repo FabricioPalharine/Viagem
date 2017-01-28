@@ -94,5 +94,15 @@ namespace CV.UI.Web.Controllers.MVC
         {
             return PartialView();
         }
+
+        public ActionResult ConsultarFoto()
+        {
+            return PartialView();
+        }
+
+        public ActionResult ConsultarCalendarioRealizado()
+        {
+            return PartialView();
+        }
     }
 }
