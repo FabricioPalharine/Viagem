@@ -1694,6 +1694,42 @@
                  }]
              }
          })
+                     .state('ConsultarResumo', {
+                         url: '/ConsultarResumo',
+                         templateUrl: 'Sistema/ConsultarResumo',
+                         controller: 'ResumoCtrl',
+                         controllerAs: 'itemExtratoMoeda',
+                         authenticate: true,
+                         params: {
+                             filtro: null
+                         },
+                         resolve: {
+                             deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                                 return $ocLazyLoad.load([
+                                      {
+                                          name: 'ViagemFactory',
+                                          files: [
+                                              'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
+                                          ]
+                                      },
+                                     {
+                                         name: 'ResumoController',
+                                         files: [
+                                             'library/scripts/app/Sistema/Consulta/Resumo-controller.js'
+                                         ]
+                                     }, {
+                                         name: 'ConsultaFactory',
+                                         files: [
+                                             'library/scripts/app/Sistema/Consulta/Consulta-factory.js'
+                                         ]
+                                     }
+
+                                 ]);
+
+                             }]
+                         }
+                     })
+
         ;
     }
 }());

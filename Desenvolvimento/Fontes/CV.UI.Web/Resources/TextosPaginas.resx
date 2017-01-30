@@ -1782,4 +1782,121 @@
   <data name="LocaisVisitados_Fotos" xml:space="preserve">
     <value>Fotos</value>
   </data>
+  <data name="Home_Resumo" xml:space="preserve">
+    <value>Resumo</value>
+  </data>
+  <data name="Resumo_APe" xml:space="preserve">
+    <value>A pé</value>
+  </data>
+  <data name="Resumo_Atracao" xml:space="preserve">
+    <value>Dados de Atração</value>
+  </data>
+  <data name="Resumo_Carro" xml:space="preserve">
+    <value>Carros</value>
+  </data>
+  <data name="Resumo_CarroDistancia" xml:space="preserve">
+    <value>Carro</value>
+  </data>
+  <data name="Resumo_Cidade" xml:space="preserve">
+    <value>Cidades</value>
+  </data>
+  <data name="Resumo_Comentarios" xml:space="preserve">
+    <value>Comentários</value>
+  </data>
+  <data name="Resumo_Compras" xml:space="preserve">
+    <value>Compras</value>
+  </data>
+  <data name="Resumo_Deslocamento" xml:space="preserve">
+    <value>Deslocamentos</value>
+  </data>
+  <data name="Resumo_Diarias" xml:space="preserve">
+    <value>Diárias</value>
+  </data>
+  <data name="Resumo_Distancias" xml:space="preserve">
+    <value>Distâncias Percorridas</value>
+  </data>
+  <data name="Resumo_Diversos" xml:space="preserve">
+    <value>Diversos</value>
+  </data>
+  <data name="Resumo_Fotos" xml:space="preserve">
+    <value>Fotos</value>
+  </data>
+  <data name="Resumo_Gasto" xml:space="preserve">
+    <value>Total Gasto R$</value>
+  </data>
+  <data name="Resumo_GastoReabastecimento" xml:space="preserve">
+    <value>Gasto com Reabastecimentos R$</value>
+  </data>
+  <data name="Resumo_Hospedagem" xml:space="preserve">
+    <value>Hospedagem</value>
+  </data>
+  <data name="Resumo_ItensComprados" xml:space="preserve">
+    <value>Itens Comprados</value>
+  </data>
+  <data name="Resumo_KMLitro" xml:space="preserve">
+    <value>KM/Litro</value>
+  </data>
+  <data name="Resumo_Litros" xml:space="preserve">
+    <value>Litros</value>
+  </data>
+  <data name="Resumo_Locadoras" xml:space="preserve">
+    <value>Locadoras</value>
+  </data>
+  <data name="Resumo_LojasCompra" xml:space="preserve">
+    <value>Lojas</value>
+  </data>
+  <data name="Resumo_NotaMedia" xml:space="preserve">
+    <value>Média</value>
+  </data>
+  <data name="Resumo_Numero" xml:space="preserve">
+    <value>Quantidade</value>
+  </data>
+  <data name="Resumo_OutrosDeslocamentos" xml:space="preserve">
+    <value>Outros Deslocamentos</value>
+  </data>
+  <data name="Resumo_PrecoDiaria" xml:space="preserve">
+    <value>Preço por Dia</value>
+  </data>
+  <data name="Resumo_PrecoMedio" xml:space="preserve">
+    <value>Preço Médio</value>
+  </data>
+  <data name="Resumo_Reabastecimento" xml:space="preserve">
+    <value>Reabastecimentos</value>
+  </data>
+  <data name="Resumo_ReaisKM" xml:space="preserve">
+    <value>Reais/KM</value>
+  </data>
+  <data name="Resumo_Realizadas" xml:space="preserve">
+    <value>Realizadas</value>
+  </data>
+  <data name="Resumo_Refeicao" xml:space="preserve">
+    <value>Refeições</value>
+  </data>
+  <data name="Resumo_Tempo" xml:space="preserve">
+    <value>Tempo</value>
+  </data>
+  <data name="Resumo_TempoAguardando" xml:space="preserve">
+    <value>Tempo Aguardando</value>
+  </data>
+  <data name="Resumo_TempoDeslocamento" xml:space="preserve">
+    <value>Tempo em Deslocamento</value>
+  </data>
+  <data name="Resumo_TempoHotel" xml:space="preserve">
+    <value>Tempo no Hotel</value>
+  </data>
+  <data name="Resumo_TempoViajando" xml:space="preserve">
+    <value>Tempo Viajando</value>
+  </data>
+  <data name="Resumo_Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="Resumo_Utilizados" xml:space="preserve">
+    <value>Utilizados</value>
+  </data>
+  <data name="Resumo_Videos" xml:space="preserve">
+    <value>Vídeos</value>
+  </data>
+  <data name="Resumo_Visitadas" xml:space="preserve">
+    <value>Visitadas</value>
+  </data>
 </root>

@@ -2284,6 +2284,15 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Resumo.
+        /// </summary>
+        public static string Home_Resumo {
+            get {
+                return ResourceManager.GetString("Home_Resumo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sugestão.
         /// </summary>
         public static string Home_Sugestao {
@@ -3828,6 +3837,348 @@ namespace CV.UI.Web.Resources {
         public static string RequisicaoAmizade_Status {
             get {
                 return ResourceManager.GetString("RequisicaoAmizade_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A pé.
+        /// </summary>
+        public static string Resumo_APe {
+            get {
+                return ResourceManager.GetString("Resumo_APe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dados de Atração.
+        /// </summary>
+        public static string Resumo_Atracao {
+            get {
+                return ResourceManager.GetString("Resumo_Atracao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Carros.
+        /// </summary>
+        public static string Resumo_Carro {
+            get {
+                return ResourceManager.GetString("Resumo_Carro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Carro.
+        /// </summary>
+        public static string Resumo_CarroDistancia {
+            get {
+                return ResourceManager.GetString("Resumo_CarroDistancia", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cidades.
+        /// </summary>
+        public static string Resumo_Cidade {
+            get {
+                return ResourceManager.GetString("Resumo_Cidade", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comentários.
+        /// </summary>
+        public static string Resumo_Comentarios {
+            get {
+                return ResourceManager.GetString("Resumo_Comentarios", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compras.
+        /// </summary>
+        public static string Resumo_Compras {
+            get {
+                return ResourceManager.GetString("Resumo_Compras", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deslocamentos.
+        /// </summary>
+        public static string Resumo_Deslocamento {
+            get {
+                return ResourceManager.GetString("Resumo_Deslocamento", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Diárias.
+        /// </summary>
+        public static string Resumo_Diarias {
+            get {
+                return ResourceManager.GetString("Resumo_Diarias", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Distâncias Percorridas.
+        /// </summary>
+        public static string Resumo_Distancias {
+            get {
+                return ResourceManager.GetString("Resumo_Distancias", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Diversos.
+        /// </summary>
+        public static string Resumo_Diversos {
+            get {
+                return ResourceManager.GetString("Resumo_Diversos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fotos.
+        /// </summary>
+        public static string Resumo_Fotos {
+            get {
+                return ResourceManager.GetString("Resumo_Fotos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Gasto R$.
+        /// </summary>
+        public static string Resumo_Gasto {
+            get {
+                return ResourceManager.GetString("Resumo_Gasto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gasto com Reabastecimentos R$.
+        /// </summary>
+        public static string Resumo_GastoReabastecimento {
+            get {
+                return ResourceManager.GetString("Resumo_GastoReabastecimento", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hospedagem.
+        /// </summary>
+        public static string Resumo_Hospedagem {
+            get {
+                return ResourceManager.GetString("Resumo_Hospedagem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Itens Comprados.
+        /// </summary>
+        public static string Resumo_ItensComprados {
+            get {
+                return ResourceManager.GetString("Resumo_ItensComprados", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KM/Litro.
+        /// </summary>
+        public static string Resumo_KMLitro {
+            get {
+                return ResourceManager.GetString("Resumo_KMLitro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Litros.
+        /// </summary>
+        public static string Resumo_Litros {
+            get {
+                return ResourceManager.GetString("Resumo_Litros", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Locadoras.
+        /// </summary>
+        public static string Resumo_Locadoras {
+            get {
+                return ResourceManager.GetString("Resumo_Locadoras", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lojas.
+        /// </summary>
+        public static string Resumo_LojasCompra {
+            get {
+                return ResourceManager.GetString("Resumo_LojasCompra", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Média.
+        /// </summary>
+        public static string Resumo_NotaMedia {
+            get {
+                return ResourceManager.GetString("Resumo_NotaMedia", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantidade.
+        /// </summary>
+        public static string Resumo_Numero {
+            get {
+                return ResourceManager.GetString("Resumo_Numero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Outros Deslocamentos.
+        /// </summary>
+        public static string Resumo_OutrosDeslocamentos {
+            get {
+                return ResourceManager.GetString("Resumo_OutrosDeslocamentos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preço por Dia.
+        /// </summary>
+        public static string Resumo_PrecoDiaria {
+            get {
+                return ResourceManager.GetString("Resumo_PrecoDiaria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preço Médio.
+        /// </summary>
+        public static string Resumo_PrecoMedio {
+            get {
+                return ResourceManager.GetString("Resumo_PrecoMedio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reabastecimentos.
+        /// </summary>
+        public static string Resumo_Reabastecimento {
+            get {
+                return ResourceManager.GetString("Resumo_Reabastecimento", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reais/KM.
+        /// </summary>
+        public static string Resumo_ReaisKM {
+            get {
+                return ResourceManager.GetString("Resumo_ReaisKM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Realizadas.
+        /// </summary>
+        public static string Resumo_Realizadas {
+            get {
+                return ResourceManager.GetString("Resumo_Realizadas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refeições.
+        /// </summary>
+        public static string Resumo_Refeicao {
+            get {
+                return ResourceManager.GetString("Resumo_Refeicao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tempo.
+        /// </summary>
+        public static string Resumo_Tempo {
+            get {
+                return ResourceManager.GetString("Resumo_Tempo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tempo Aguardando.
+        /// </summary>
+        public static string Resumo_TempoAguardando {
+            get {
+                return ResourceManager.GetString("Resumo_TempoAguardando", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tempo em Deslocamento.
+        /// </summary>
+        public static string Resumo_TempoDeslocamento {
+            get {
+                return ResourceManager.GetString("Resumo_TempoDeslocamento", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tempo no Hotel.
+        /// </summary>
+        public static string Resumo_TempoHotel {
+            get {
+                return ResourceManager.GetString("Resumo_TempoHotel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tempo Viajando.
+        /// </summary>
+        public static string Resumo_TempoViajando {
+            get {
+                return ResourceManager.GetString("Resumo_TempoViajando", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total.
+        /// </summary>
+        public static string Resumo_Total {
+            get {
+                return ResourceManager.GetString("Resumo_Total", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Utilizados.
+        /// </summary>
+        public static string Resumo_Utilizados {
+            get {
+                return ResourceManager.GetString("Resumo_Utilizados", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vídeos.
+        /// </summary>
+        public static string Resumo_Videos {
+            get {
+                return ResourceManager.GetString("Resumo_Videos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visitadas.
+        /// </summary>
+        public static string Resumo_Visitadas {
+            get {
+                return ResourceManager.GetString("Resumo_Visitadas", resourceCulture);
             }
         }
         

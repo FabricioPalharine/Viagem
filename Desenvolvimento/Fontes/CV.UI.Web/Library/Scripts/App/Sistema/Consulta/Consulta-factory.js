@@ -111,7 +111,16 @@
               },
               //  transformResponse: parseArray,
               isArray: false
-          }
+          },
+          CarregarResumo: {
+              method: 'GET',
+              params: {
+                  controller: 'CarregarResumo',
+                  json: 'json'
+              },
+              //  transformResponse: parseArray,
+              isArray: false
+          },
 
       });
 

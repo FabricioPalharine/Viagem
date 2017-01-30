@@ -174,11 +174,14 @@
                         <ul class="nav nav-second-level treeview-menu">
                             <li  ng-if="account.PermiteEdicao()"><a ui-sref="ConsultarExtratoMoeda()"><span>@TextosPaginas.Home_ExtratoMoeda</span></a></li>
                             <li ng-if="account.PermiteEdicao()"><a ui-sref="ConsultarAcertoConta()"><span>@TextosPaginas.Home_AcertoConta</span></a></li>
+                            <li ng-if="!account.PermiteEdicao()"><a ui-sref="CalendarioPrevisto()"><span>@TextosPaginas.Home_CalendarioPrevisto</span></a></li>
+
                             <li ng-if="account.VerCustos()"><a ui-sref="ConsultarRelatorioGasto()"><span>@TextosPaginas.Home_RelatorioGastos</span></a></li>
                             <li ><a ui-sref="ConsultarTimeline()"><span>@TextosPaginas.Home_Timeline</span></a></li>
                             <li><a ui-sref="ConsultarLocaisVisitados()"><span>@TextosPaginas.Home_LocaisVisitados</span></a></li>
                             <li><a ui-sref="ConsultarFoto()"><span>@TextosPaginas.Home_Foto</span></a></li>
                             <li><a ui-sref="ConsultarCalendarioRealizado()"><span>@TextosPaginas.Home_CalendarioRealizado</span></a></li>
+                            <li><a ui-sref="ConsultarResumo()"><span>@TextosPaginas.Home_Resumo</span></a></li>
 
                         </ul>
                     </li>

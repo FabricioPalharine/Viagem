@@ -1,0 +1,349 @@
+﻿<section class="content-header">
+    <h1>
+        @TextosPaginas.Home_Resumo
+
+    </h1>
+    <ol class="breadcrumb">
+
+        <li>@TextosPaginas.Home_Menu</li>
+        <li>@TextosPaginas.Home_Consultas</li>
+        <li class="active">@TextosPaginas.Home_Resumo</li>
+    </ol>
+
+</section>
+<!-- Main content -->
+<section class="content" ng-init="itemExtratoMoeda.load()">
+    <!-- Default box -->
+    <!-- general form elements -->
+    <div class="box box-primary">
+        <div class="overlay" ng-show="itemExtratoMoeda.loading">
+            <i class="fa fa-refresh fa-spin text-gray"></i>
+        </div>
+
+        <form role="form" ng-submit="itemExtratoMoeda.filtraDado()">
+            <div class="box-body">
+                
+
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label  >@TextosPaginas.RelatorioGastos_Usuario</label>
+                    <select ng-model="itemExtratoMoeda.itemUsuario" class="form-control" ng-options="obj.Nome for obj in itemExtratoMoeda.ListaUsuarios track by obj.Identificador">
+                        <option value="">@TextosPaginas.Selecione</option>
+                    </select>
+                </div>
+              
+            </div>
+                <div class="row">
+
+                    <div class="form-group col-md-6">
+                        <label>@TextosPaginas.AcertoConta_DataDe</label>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+                                <div class="input-group">
+                                    <input date-input ng-model="itemExtratoMoeda.filtro.DataInicioDe" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                           datapattern="dd/MM/yyyy">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker data-ng-model="itemExtratoMoeda.filtro.DataInicioDe"
+                                                data-datetimepicker-config="{  minView:'day' , langCode:itemExtratoMoeda.Idioma()  }" />
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>@TextosPaginas.AcertoConta_DataAte</label>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+                                <div class="input-group">
+                                    <input date-input ng-model="itemExtratoMoeda.filtro.DataInicioAte" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                           datapattern="dd/MM/yyyy">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker data-ng-model="itemExtratoMoeda.filtro.DataInicioAte"
+                                                data-datetimepicker-config="{  minView:'day' , langCode:itemExtratoMoeda.Idioma()  }" />
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.box-body -->
+            <div class="box-footer">
+
+                <button type="submit" class="btn btn-primary  pull-right">
+                    <span class="fa fa-search" aria-hidden="true"></span> @TextosPaginas.Pesquisar
+                </button>
+
+            </div>
+        </form>
+
+
+    </div><!-- /.box -->
+
+
+
+    <div class="box">
+        <div class="overlay" ng-show="itemExtratoMoeda.loading">
+            <i class="fa fa-refresh fa-spin text-gray"></i>
+        </div>
+        <div class="box-body">
+            <div class="panel">
+                <div class="panel-header">
+                    @TextosPaginas.Resumo_Atracao
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <b>@TextosPaginas.Resumo_Visitadas</b><br />
+                            {{itemExtratoMoeda.ItemResumo.AtracoesVisitadas}}
+                        </div>
+                        <div class="col-md-3">
+                            <b>@TextosPaginas.Resumo_Tempo</b><br />
+                            {{itemExtratoMoeda.timeFunction( itemExtratoMoeda.ItemResumo.MinutosAtracao)}}
+                        </div>
+                        <div class="col-md-3">
+                            <b>@TextosPaginas.Resumo_NotaMedia</b><br />
+                            {{itemExtratoMoeda.ItemResumo.NotaMediaAtracao | number:1}}
+                        </div>
+                        <div class="col-md-3" ng-if="account.VerCustos()">
+                            <b>@TextosPaginas.Resumo_Gasto</b><br />
+                            {{itemExtratoMoeda.ItemResumo.TotalReaisAtracao | number:2}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="panel-header">
+                    @TextosPaginas.Resumo_Hospedagem
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <b>@TextosPaginas.Resumo_Numero</b><br />
+                            {{itemExtratoMoeda.ItemResumo.NumeroHotel}}
+                        </div>
+                        <div class="col-md-3">
+                            <b>@TextosPaginas.Resumo_Diarias</b><br />
+                            {{itemExtratoMoeda.ItemResumo.NoitesHotel}}
+                        </div>
+                        <div class="col-md-3">
+                            <b>@TextosPaginas.Resumo_TempoHotel</b><br />
+                            {{itemExtratoMoeda.timeFunction( itemExtratoMoeda.ItemResumo.TempoHotel)}}
+                        </div>
+                        <div class="col-md-3">
+                            <b>@TextosPaginas.Resumo_NotaMedia</b><br />
+                            {{itemExtratoMoeda.ItemResumo.NotaMediaHotel | number:1}}
+                        </div>
+                        <div class="col-md-3" ng-if="account.VerCustos()">
+                            <b>@TextosPaginas.Resumo_Gasto</b><br />
+                            {{itemExtratoMoeda.ItemResumo.TotalReaisHospedagem | number:2}}
+                        </div>
+                        <div class="col-md-3" ng-if="account.VerCustos()">
+                            <b>@TextosPaginas.Resumo_PrecoDiaria</b><br />
+                            {{itemExtratoMoeda.ItemResumo.PrecoMediaNoite | number:2}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="panel-header">
+                    @TextosPaginas.Resumo_Refeicao
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <b>@TextosPaginas.Resumo_Realizadas</b><br />
+                            {{itemExtratoMoeda.ItemResumo.RefeicoesRealizadas}}
+                        </div>
+                        
+                        <div class="col-md-3">
+                            <b>@TextosPaginas.Resumo_NotaMedia</b><br />
+                            {{itemExtratoMoeda.ItemResumo.NotaMediaRefeicao | number:1}}
+                        </div>
+                        <div class="col-md-3" ng-if="account.VerCustos()">
+                            <b>@TextosPaginas.Resumo_Gasto</b><br />
+                            {{itemExtratoMoeda.ItemResumo.TotalReaisRefeicao | number:2}}
+                        </div>
+                        <div class="col-md-3" ng-if="account.VerCustos()">
+                            <b>@TextosPaginas.Resumo_PrecoMedio</b><br />
+                            {{itemExtratoMoeda.ItemResumo.PrecoMediaRefeicao | number:2}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="panel-header">
+                    @TextosPaginas.Resumo_Compras
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <b>@TextosPaginas.Resumo_LojasCompra</b><br />
+                            {{itemExtratoMoeda.ItemResumo.LojasVisitadas}}
+                        </div>
+
+                        <div class="col-md-3">
+                            <b>@TextosPaginas.Resumo_NotaMedia</b><br />
+                            {{itemExtratoMoeda.ItemResumo.NotaMediaLoja | number:1}}
+                        </div>
+
+                        <div class="col-md-3">
+                            <b>@TextosPaginas.Resumo_Realizadas</b><br />
+                            {{itemExtratoMoeda.ItemResumo.ComprasRealizadas}}
+                        </div>
+                        <div class="col-md-3">
+                            <b>@TextosPaginas.Resumo_ItensComprados</b><br />
+                            {{itemExtratoMoeda.ItemResumo.ItensComprados}}
+                        </div>
+                        
+                        <div class="col-md-3" ng-if="account.VerCustos()">
+                            <b>@TextosPaginas.Resumo_Gasto</b><br />
+                            {{itemExtratoMoeda.ItemResumo.TotalReaisCompra | number:2}}
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="panel-header">
+                    @TextosPaginas.Resumo_Carro
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <b>@TextosPaginas.Resumo_Utilizados</b><br />
+                            {{itemExtratoMoeda.ItemResumo.CarrosUtilizados}}
+                        </div>
+                        <div class="col-md-3">
+                            <b>@TextosPaginas.Resumo_Locadoras</b><br />
+                            {{itemExtratoMoeda.ItemResumo.LocadorasUtilizadas}}
+                        </div>
+                        <div class="col-md-3">
+                            <b>@TextosPaginas.Resumo_NotaMedia</b><br />
+                            {{itemExtratoMoeda.ItemResumo.NotaMediaAluguel | number:1}}
+                        </div>
+                        <div class="col-md-3">
+                            <b>@TextosPaginas.Resumo_TempoDeslocamento</b><br />
+                            {{itemExtratoMoeda.timeFunction( itemExtratoMoeda.ItemResumo.MinutosDeslocamentoCarro)}}
+                        </div>                      
+                        <div class="col-md-3">
+                            <b>@TextosPaginas.Resumo_Reabastecimento</b><br />
+                            {{itemExtratoMoeda.ItemResumo.NumeroReabastecimentoLitrosReabastecidos }}
+                        </div>
+                        <div class="col-md-3">
+                            <b>@TextosPaginas.Resumo_Litros</b><br />
+                            {{itemExtratoMoeda.ItemResumo.LitrosReabastecidos| number:0}}
+                        </div>
+                        <div class="col-md-3" ng-if="account.VerCustos()">
+                            <b>@TextosPaginas.Resumo_Gasto</b><br />
+                            {{itemExtratoMoeda.ItemResumo.TotalReaisCarro | number:2}}
+                        </div>
+                        <div class="col-md-3" ng-if="account.VerCustos()">
+                            <b>@TextosPaginas.Resumo_GastoReabastecimento</b><br />
+                            {{itemExtratoMoeda.ItemResumo.TotalReaisReabastecimento | number:2}}
+                        </div>
+                        <div class="col-md-3" ng-if="account.VerCustos()">
+                            <b>@TextosPaginas.Resumo_ReaisKM</b><br />
+                            {{itemExtratoMoeda.ItemResumo.PrecoMedioKM | number:2}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="panel-header">
+                    @TextosPaginas.Resumo_Deslocamento
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <b>@TextosPaginas.Resumo_Numero</b><br />
+                            {{itemExtratoMoeda.ItemResumo.DeslcamentosRealizados}}
+                        </div>
+      
+                        <div class="col-md-3">
+                            <b>@TextosPaginas.Resumo_NotaMedia</b><br />
+                            {{itemExtratoMoeda.ItemResumo.NotaMediaDeslocamento | number:1}}
+                        </div>
+                        <div class="col-md-3">
+                            <b>@TextosPaginas.Resumo_TempoDeslocamento</b><br />
+                            {{itemExtratoMoeda.timeFunction( itemExtratoMoeda.ItemResumo.MinutosViajando)}}
+                        </div>
+                        <div class="col-md-3">
+                            <b>@TextosPaginas.Resumo_TempoAguardando</b><br />
+                            {{itemExtratoMoeda.timeFunction( itemExtratoMoeda.ItemResumo.MinutosAguardando)}}
+                        </div>
+                       
+                      
+                        <div class="col-md-3" ng-if="account.VerCustos()">
+                            <b>@TextosPaginas.Resumo_Gasto</b><br />
+                            {{itemExtratoMoeda.ItemResumo.TotalReaisDeslocamento | number:2}}
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="panel-header">
+                    @TextosPaginas.Resumo_Diversos
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <b>@TextosPaginas.Resumo_Comentarios</b><br />
+                            {{itemExtratoMoeda.ItemResumo.ComentariosFeitos}}
+                        </div>
+                        <div class="col-md-3">
+                            <b>@TextosPaginas.Resumo_Fotos</b><br />
+                            {{itemExtratoMoeda.ItemResumo.FotosTirada}}
+                        </div>
+                        <div class="col-md-3">
+                            <b>@TextosPaginas.Resumo_Videos</b><br />
+                            {{itemExtratoMoeda.ItemResumo.VideosGravados}}
+                        </div>
+                        <div class="col-md-3">
+                            <b>@TextosPaginas.Resumo_Cidade</b><br />
+                            {{itemExtratoMoeda.ItemResumo.CidadesRegistradas}}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">
+                    @TextosPaginas.Resumo_Distancias
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <b>@TextosPaginas.Resumo_Total</b><br />
+                            {{itemExtratoMoeda.ItemResumo.KmTotaisDeslocados}}
+                        </div>
+                        <div class="col-md-3">
+                            <b>@TextosPaginas.Resumo_APe</b><br />
+                            {{itemExtratoMoeda.ItemResumo.KmCaminhados}}
+                        </div>
+                        <div class="col-md-3">
+                            <b>@TextosPaginas.Resumo_CarroDistancia</b><br />
+                            {{itemExtratoMoeda.ItemResumo.KmDeslocamentoCarro}}
+                        </div>
+                        <div class="col-md-3">
+                            <b>@TextosPaginas.Resumo_OutrosDeslocamentos</b><br />
+                            {{itemExtratoMoeda.ItemResumo.KmDeslocamento}}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+   
+
+</section><!-- /.content -->

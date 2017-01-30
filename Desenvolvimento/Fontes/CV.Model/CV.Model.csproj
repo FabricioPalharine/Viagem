@@ -61,6 +61,7 @@
     <Compile Include="Dominio\enumStatusListaCompra.cs" />
     <Compile Include="Dominio\enumTipoTransporte.cs" />
     <Compile Include="pCalendarioRealizado.cs" />
+    <Compile Include="pIntervaloDeslocamento.cs" />
     <Compile Include="pLojaItens.cs" />
     <Compile Include="pAgendarSugestao.cs" />
     <Compile Include="pLocaisDetalhes.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="pDeParaIdentificador.cs" />
     <Compile Include="pExtratoMoeda.cs" />
     <Compile Include="pManutencaoCidadeGrupo.cs" />
+    <Compile Include="pResumoViagem.cs" />
     <Compile Include="pTimeline.cs" />
     <Compile Include="pUsuarioConsulta.cs" />
     <Compile Include="UploadFoto.cs" />
