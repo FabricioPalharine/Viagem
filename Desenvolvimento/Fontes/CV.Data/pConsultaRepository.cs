@@ -748,6 +748,139 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
              }).ToList();
         }
 
+        public List<PontoMapa> ListarPontosViagem(int? IdentificadorViagem, int? IdentificadorUsuario, DateTime? DataDe, DateTime? DataAte, string Tipo)
+        {
+            IQueryable<PontoMapa> queryFinal = this.Context.Viagemes.Where(d => d.Identificador == -1)
+                .Select(d => new PontoMapa( ) { DataFim = null, DataInicio = null, Latitude =0, Longitude = 0, Nome=null, Tipo="P", Url=null, UrlTumbnail=null });
+            if (string.IsNullOrEmpty(Tipo) || Tipo == "A")
+            {
+                var queryAtracao = this.Context.AvaliacaoAtracoes.Where(d => d.IdentificadorUsuario == IdentificadorUsuario)
+                .Where(d => !d.DataExclusao.HasValue).Where(d => d.ItemAtracao.IdentificadorViagem == IdentificadorViagem).Where(d => d.ItemAtracao.Chegada.HasValue)
+                .Where(d => !d.ItemAtracao.DataExclusao.HasValue).Where(d=>d.ItemAtracao.Latitude.HasValue && d.ItemAtracao.Longitude.HasValue && (d.ItemAtracao.Longitude != 0 || d.ItemAtracao.Latitude != 0));
+                if (DataDe.HasValue)
+                    queryAtracao = queryAtracao.Where(d => d.ItemAtracao.Chegada >= DataDe || (d.ItemAtracao.Partida.HasValue && d.ItemAtracao.Partida >= DataDe));
+                if (DataAte.HasValue)
+                    queryAtracao = queryAtracao.Where(d => d.ItemAtracao.Chegada < DataAte && (!d.ItemAtracao.Partida.HasValue || d.ItemAtracao.Partida < DataAte));
+                queryFinal = queryFinal.Union(queryAtracao.Select(d => new PontoMapa() { DataFim = d.ItemAtracao.Partida, DataInicio = d.ItemAtracao.Chegada, Latitude = d.ItemAtracao.Latitude, Longitude = d.ItemAtracao.Longitude, Nome = d.ItemAtracao.Nome, Tipo = "A", Url = null, UrlTumbnail = null }));
+            }
+            if (string.IsNullOrEmpty(Tipo) || Tipo == "H")
+            {
+                var queryHotel = this.Context.HotelAvaliacoes.Where(d => d.IdentificadorUsuario == IdentificadorUsuario)
+                .Where(d => !d.DataExclusao.HasValue).Where(d => d.ItemHotel.IdentificadorViagem == IdentificadorViagem).Where(d => d.ItemHotel.DataEntrada.HasValue)
+                .Where(d => !d.ItemHotel.DataExclusao.HasValue).Where(d => d.ItemHotel.Latitude.HasValue && d.ItemHotel.Longitude.HasValue && (d.ItemHotel.Longitude != 0 || d.ItemHotel.Latitude != 0));
+                if (DataDe.HasValue)
+                    queryHotel = queryHotel.Where(d => d.ItemHotel.DataEntrada >= DataDe || (d.ItemHotel.DataSaidia.HasValue && d.ItemHotel.DataSaidia >= DataDe));
+                if (DataAte.HasValue)
+                    queryHotel = queryHotel.Where(d => d.ItemHotel.DataEntrada < DataAte && (!d.ItemHotel.DataSaidia.HasValue || d.ItemHotel.DataSaidia < DataAte));
+                queryFinal = queryFinal.Union(queryHotel.Select(d => new PontoMapa() { DataFim = d.ItemHotel.DataSaidia, DataInicio = d.ItemHotel.DataEntrada, Latitude = d.ItemHotel.Latitude, Longitude = d.ItemHotel.Longitude, Nome = d.ItemHotel.Nome, Tipo = "H", Url = null, UrlTumbnail = null }));
+            }
+            if (string.IsNullOrEmpty(Tipo) || Tipo == "R")
+            {
+                var queryRefeicao = this.Context.RefeicaoPedidos.Where(d => d.IdentificadorUsuario == IdentificadorUsuario)
+                .Where(d => !d.DataExclusao.HasValue).Where(d => d.ItemRefeicao.IdentificadorViagem == IdentificadorViagem)
+                .Where(d => !d.ItemRefeicao.DataExclusao.HasValue).Where(d => d.ItemRefeicao.Latitude.HasValue && d.ItemRefeicao.Longitude.HasValue && (d.ItemRefeicao.Longitude != 0 || d.ItemRefeicao.Latitude != 0));
+                if (DataDe.HasValue)
+                    queryRefeicao = queryRefeicao.Where(d => d.ItemRefeicao.Data >= DataDe);
+                if (DataAte.HasValue)
+                    queryRefeicao = queryRefeicao.Where(d => d.ItemRefeicao.Data < DataAte);
+                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.ItemRefeicao.Data, Latitude = d.ItemRefeicao.Latitude, Longitude = d.ItemRefeicao.Longitude, Nome = d.ItemRefeicao.Nome, Tipo = "R", Url = null, UrlTumbnail = null }));
+            }
+            if (string.IsNullOrEmpty(Tipo) || Tipo == "L")
+            {
+                var queryRefeicao = this.Context.GastoCompras.Where(d => d.ItemGasto.IdentificadorUsuario == IdentificadorUsuario)
+                .Where(d => !d.DataExclusao.HasValue).Where(d => d.ItemGasto.IdentificadorViagem == IdentificadorViagem)
+                .Where(d => !d.ItemGasto.DataExclusao.HasValue).Where(d => d.ItemLoja.Latitude.HasValue && d.ItemLoja.Longitude.HasValue && (d.ItemLoja.Longitude != 0 || d.ItemLoja.Latitude != 0));
+                if (DataDe.HasValue)
+                    queryRefeicao = queryRefeicao.Where(d => d.ItemGasto.Data >= DataDe);
+                if (DataAte.HasValue)
+                    queryRefeicao = queryRefeicao.Where(d => d.ItemGasto.Data < DataAte);
+                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.ItemGasto.Data, Latitude = d.ItemLoja.Latitude, Longitude = d.ItemLoja.Longitude, Nome = d.ItemLoja.Nome, Tipo = "L", Url = null, UrlTumbnail = null }));
+            }
+            if (string.IsNullOrEmpty(Tipo) || Tipo == "CR")
+            {
+                var queryRefeicao = this.Context.AvaliacaoAlugueis.Where(d => d.IdentificadorUsuario == IdentificadorUsuario)
+                .Where(d => !d.DataExclusao.HasValue).Where(d => d.ItemCarro.IdentificadorViagem == IdentificadorViagem).Where(d=>d.ItemCarro.ItemCarroEventoRetirada.Data.HasValue)
+                .Where(d => !d.ItemCarro.DataExclusao.HasValue).Where(d => d.ItemCarro.ItemCarroEventoRetirada.Latitude.HasValue && d.ItemCarro.ItemCarroEventoRetirada.Longitude.HasValue && (d.ItemCarro.ItemCarroEventoRetirada.Longitude != 0 || d.ItemCarro.ItemCarroEventoRetirada.Latitude != 0));
+                if (DataDe.HasValue)
+                    queryRefeicao = queryRefeicao.Where(d => d.ItemCarro.ItemCarroEventoRetirada.Data >= DataDe);
+                if (DataAte.HasValue)
+                    queryRefeicao = queryRefeicao.Where(d => d.ItemCarro.ItemCarroEventoRetirada.Data < DataAte);
+                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.ItemCarro.ItemCarroEventoRetirada.Data, Latitude = d.ItemCarro.ItemCarroEventoRetirada.Latitude, Longitude = d.ItemCarro.ItemCarroEventoRetirada.Longitude, Nome = d.ItemCarro.Descricao, Tipo = "CR", Url = null, UrlTumbnail = null }));
+            }
+            if (string.IsNullOrEmpty(Tipo) || Tipo == "CD")
+            {
+                var queryRefeicao = this.Context.AvaliacaoAlugueis.Where(d => d.IdentificadorUsuario == IdentificadorUsuario)
+                .Where(d => !d.DataExclusao.HasValue).Where(d => d.ItemCarro.IdentificadorViagem == IdentificadorViagem).Where(d => d.ItemCarro.ItemCarroEventoDevolucao.Data.HasValue)
+                .Where(d => !d.ItemCarro.DataExclusao.HasValue).Where(d => d.ItemCarro.ItemCarroEventoDevolucao.Latitude.HasValue && d.ItemCarro.ItemCarroEventoDevolucao.Longitude.HasValue && (d.ItemCarro.ItemCarroEventoDevolucao.Longitude != 0 || d.ItemCarro.ItemCarroEventoDevolucao.Latitude != 0));
+                if (DataDe.HasValue)
+                    queryRefeicao = queryRefeicao.Where(d => d.ItemCarro.ItemCarroEventoDevolucao.Data >= DataDe);
+                if (DataAte.HasValue)
+                    queryRefeicao = queryRefeicao.Where(d => d.ItemCarro.ItemCarroEventoDevolucao.Data < DataAte);
+                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.ItemCarro.ItemCarroEventoDevolucao.Data, Latitude = d.ItemCarro.ItemCarroEventoDevolucao.Latitude, Longitude = d.ItemCarro.ItemCarroEventoDevolucao.Longitude, Nome = d.ItemCarro.Descricao, Tipo = "CD", Url = null, UrlTumbnail = null }));
+            }
+            if (string.IsNullOrEmpty(Tipo) || Tipo == "RC")
+            {
+                var queryRefeicao = this.Context.AvaliacaoAlugueis.Where(d => d.IdentificadorUsuario == IdentificadorUsuario)
+                .Where(d => !d.DataExclusao.HasValue).Where(d => d.ItemCarro.IdentificadorViagem == IdentificadorViagem).Where(d => !d.ItemCarro.DataExclusao.HasValue)
+                .SelectMany(d=>d.ItemCarro.Reabastecimentos).Where(d=>!d.DataExclusao.HasValue)
+                .Where(d => d.Latitude.HasValue && d.Longitude.HasValue && (d.Longitude != 0 || d.Latitude != 0));
+                if (DataDe.HasValue)
+                    queryRefeicao = queryRefeicao.Where(d => d.Data >= DataDe);
+                if (DataAte.HasValue)
+                    queryRefeicao = queryRefeicao.Where(d => d.Data < DataAte);
+                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.Data, Latitude = d.Latitude, Longitude = d.Longitude, Nome = d.ItemCarro.Descricao, Tipo = "RC", Url = null, UrlTumbnail = null }));
+            }
+            if (string.IsNullOrEmpty(Tipo) || Tipo == "P")
+            {
+                var queryRefeicao = this.Context.AvaliacaoAereas.Where(d => d.IdentificadorUsuario == IdentificadorUsuario)
+                .Where(d => !d.DataExclusao.HasValue).Where(d => d.ItemViagemAerea.IdentificadorViagem == IdentificadorViagem).Where(d => !d.ItemViagemAerea.DataExclusao.HasValue)
+                .SelectMany(d => d.ItemViagemAerea.Aeroportos).Where(d => !d.DataExclusao.HasValue)
+                .Where(d => d.Latitude.HasValue && d.Longitude.HasValue && (d.Longitude != 0 || d.Latitude != 0));
+                if (DataDe.HasValue)
+                    queryRefeicao = queryRefeicao.Where(d => d.DataChegada >= DataDe || (d.DataPartida.HasValue && d.DataPartida >= DataDe));
+                if (DataAte.HasValue)
+                    queryRefeicao = queryRefeicao.Where(d => d.DataChegada < DataAte && (!d.DataPartida.HasValue || d.DataPartida < DataAte));
+                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = d.DataPartida, DataInicio = d.DataChegada, Latitude = d.Latitude, Longitude = d.Longitude, Nome = d.Aeroporto, Tipo = "P", Url = null, UrlTumbnail = null }));
+            }
+            if (string.IsNullOrEmpty(Tipo) || Tipo == "G")
+            {
+                var queryRefeicao = this.Context.Gastos.Where(d => d.IdentificadorUsuario == IdentificadorUsuario)
+                .Where(d => !d.DataExclusao.HasValue)
+                .Where(d=> !d.Reabastecimentos.Any() && !d.ApenasBaixa.Value && !d.Compras.Any())
+                .Where(d => d.Latitude.HasValue && d.Longitude.HasValue && (d.Longitude != 0 || d.Latitude != 0));
+                if (DataDe.HasValue)
+                    queryRefeicao = queryRefeicao.Where(d => d.Data >= DataDe);
+                if (DataAte.HasValue)
+                    queryRefeicao = queryRefeicao.Where(d => d.Data < DataAte);
+                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.Data, Latitude = d.Latitude, Longitude = d.Longitude, Nome = d.Descricao, Tipo = "G", Url = null, UrlTumbnail = null }));
+            }
+            if (string.IsNullOrEmpty(Tipo) || Tipo == "T")
+            {
+                var queryRefeicao = this.Context.Comentarios.Where(d => d.IdentificadorUsuario == IdentificadorUsuario)
+                .Where(d => !d.DataExclusao.HasValue)
+                .Where(d => d.Latitude.HasValue && d.Longitude.HasValue && (d.Longitude != 0 || d.Latitude != 0));
+                if (DataDe.HasValue)
+                    queryRefeicao = queryRefeicao.Where(d => d.Data >= DataDe);
+                if (DataAte.HasValue)
+                    queryRefeicao = queryRefeicao.Where(d => d.Data < DataAte);
+                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.Data, Latitude = d.Latitude, Longitude = d.Longitude, Nome = d.Texto, Tipo = "T", Url = null, UrlTumbnail = null }));
+            }
+            if (string.IsNullOrEmpty(Tipo) || Tipo == "F" || Tipo == "V")
+            {
+                var queryRefeicao = this.Context.Fotos.Where(d => d.IdentificadorUsuario == IdentificadorUsuario)
+                .Where(d => !d.DataExclusao.HasValue)
+                .Where(d => d.Latitude.HasValue && d.Longitude.HasValue && (d.Longitude != 0 || d.Latitude != 0));
+                if (!string.IsNullOrEmpty(Tipo))
+                    queryRefeicao = queryRefeicao.Where(d => d.Video == (Tipo == "V"));
+                if (DataDe.HasValue)
+                    queryRefeicao = queryRefeicao.Where(d => d.Data >= DataDe);
+                if (DataAte.HasValue)
+                    queryRefeicao = queryRefeicao.Where(d => d.Data < DataAte);
+                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.Data, Latitude = d.Latitude, Longitude = d.Longitude, Nome = d.Comentario, Tipo = d.Video.Value?"V":"F", Url = d.LinkFoto, UrlTumbnail = d.LinkThumbnail }));
+            }
+            return queryFinal.ToList();
+        }
+
         public List<CalendarioRealizado> CarregarCalendarioRealizado(int? IdentificadorViagem,  int? IdentificadorUsuario)
         {
 

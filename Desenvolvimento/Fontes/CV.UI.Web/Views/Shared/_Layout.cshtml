@@ -159,7 +159,6 @@
                             <li><a ui-sref="ViagemAerea()"><span>@TextosPaginas.Home_ViagemAerea</span></a></li>
                             <li ng-if="account.Aberto()"><a href="javascript:void(0)" ng-click="account.TrocarSituacaoViagem()"><span>@TextosPaginas.Home_FecharViagem </span></a></li>
                             <li ng-if="!account.Aberto()"><a href="javascript:void(0)" ng-click="account.TrocarSituacaoViagem()"><span>@TextosPaginas.Home_AbrirViagem </span></a></li>
-
                         </ul>
                     </li>
                     <li class="treeview" ng-if="!account.PermiteEdicao()">
@@ -177,9 +176,9 @@
                             <li ng-if="account.VerCustos()"><a ui-sref="ConsultarRelatorioGasto()"><span>@TextosPaginas.Home_RelatorioGastos</span></a></li>
                             <li ><a ui-sref="ConsultarTimeline()"><span>@TextosPaginas.Home_Timeline</span></a></li>
                             <li><a ui-sref="ConsultarLocaisVisitados()"><span>@TextosPaginas.Home_LocaisVisitados</span></a></li>
+                            <li><a ui-sref="ConsultarPontosMapa()"><span>@TextosPaginas.Home_PontoMapa</span></a></li>
                             <li><a ui-sref="ConsultarFoto()"><span>@TextosPaginas.Home_Foto</span></a></li>
                             <li><a ui-sref="ConsultarCalendarioRealizado()"><span>@TextosPaginas.Home_CalendarioRealizado</span></a></li>
-
                         </ul>
                     </li>
                 </ul>

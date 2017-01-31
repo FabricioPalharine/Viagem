@@ -67,6 +67,15 @@
               //  transformResponse: parseArray,
               isArray: true
           },
+          ListarPontosViagem: {
+              method: 'GET',
+              params: {
+                  controller: 'ListarPontosViagem',
+                  json: 'json'
+              },
+              //  transformResponse: parseArray,
+              isArray: true
+          },
           ListarCalendarioRealizado: {
               method: 'GET',
               params: {

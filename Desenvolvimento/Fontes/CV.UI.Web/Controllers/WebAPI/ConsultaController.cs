@@ -127,6 +127,16 @@ namespace CV.UI.Web.Controllers.WebAPI
 
         [Authorize]
         [BindJson(typeof(CriterioBusca), "json")]
+        [ActionName("ListarPontosViagem")]
+        [HttpGet]
+        public List<PontoMapa> ListarPontosViagem(CriterioBusca json)
+        {
+            ConsultaBusiness biz = new ConsultaBusiness();
+            return biz.ListarPontosViagem(token.IdentificadorViagem, json.IdentificadorParticipante, json.DataInicioDe, json.DataInicioAte, json.Tipo);
+        }
+
+        [Authorize]
+        [BindJson(typeof(CriterioBusca), "json")]
         [ActionName("ConsultarCalendarioRealizado")]
         [HttpGet]
         public List<CalendarioRealizado> ConsultarCalendarioRealizado(CriterioBusca json)

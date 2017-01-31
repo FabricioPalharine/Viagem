@@ -100,6 +100,11 @@ namespace CV.UI.Web.Controllers.MVC
             return PartialView();
         }
 
+        public ActionResult ConsultarPontosMapa()
+        {
+            return PartialView();
+        }
+
         public ActionResult ConsultarCalendarioRealizado()
         {
             return PartialView();

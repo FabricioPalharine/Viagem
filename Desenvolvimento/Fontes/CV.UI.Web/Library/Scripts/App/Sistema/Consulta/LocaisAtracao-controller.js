@@ -116,5 +116,47 @@
             });
         };
         //
+
+        vm.abrirMapa = function (Item) {
+            $uibModal.open({
+                templateUrl: 'modalMapa.html',
+                controller: ['$uibModalInstance', 'NgMap', '$timeout', '$scope', 'item', vm.MapModalCtrl],
+                controllerAs: 'vmMapa',
+                resolve: {
+                    item: function () { return Item; },
+                }
+            });
+
+        };
+
+        vm.MapModalCtrl = function ($uibModalInstance, NgMap, $timeout, $scope, item) {
+            var vmMapa = this;
+            vmMapa.lat = 0;
+            vmMapa.lng = 0;
+            vmMapa.itemFoto = item;
+            vmMapa.itemMarcador = {};
+            vmMapa.map = null;
+
+
+            NgMap.getMap().then(function (evtMap) {
+                vmMapa.map = evtMap;
+                $timeout(function () {
+                    google.maps.event.trigger(vmMapa.map, "resize");
+
+                    if (vmMapa.itemFoto.Latitude && vmMapa.itemFoto.Longitude) {
+                        vmMapa.lat = vmMapa.itemFoto.Latitude;
+                        vmMapa.lng = vmMapa.itemFoto.Longitude;
+                        vmMapa.itemMarcador = { Latitude: vmMapa.itemFoto.Latitude, Longitude: vmMapa.itemFoto.Longitude };
+                    }
+                    $scope.$apply();
+                }, 500);
+            });
+
+            vmMapa.close = function () {
+                $uibModalInstance.close();
+            };
+
+
+        };
     }
 }());

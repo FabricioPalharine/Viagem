@@ -1782,4 +1782,34 @@
   <data name="LocaisVisitados_Fotos" xml:space="preserve">
     <value>Fotos</value>
   </data>
+  <data name="Fechar" xml:space="preserve">
+    <value>Fechar</value>
+  </data>
+  <data name="Home_PontoMapa" xml:space="preserve">
+    <value>Mapa</value>
+  </data>
+  <data name="PontoMapa_CarroDevolucao" xml:space="preserve">
+    <value>Devolução do Carro</value>
+  </data>
+  <data name="PontoMapa_CarroRetirada" xml:space="preserve">
+    <value>Retirada do Carro</value>
+  </data>
+  <data name="PontoMapa_Comentario" xml:space="preserve">
+    <value>Comentário</value>
+  </data>
+  <data name="PontoMapa_Foto" xml:space="preserve">
+    <value>Foto</value>
+  </data>
+  <data name="PontoMapa_Gasto" xml:space="preserve">
+    <value>Gasto</value>
+  </data>
+  <data name="PontoMapa_Loja" xml:space="preserve">
+    <value>Loja</value>
+  </data>
+  <data name="PontoMapa_Parada" xml:space="preserve">
+    <value>Parada</value>
+  </data>
+  <data name="PontoMapa_Video" xml:space="preserve">
+    <value>Vídeo</value>
+  </data>
 </root>

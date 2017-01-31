@@ -1490,7 +1490,41 @@
                   }
               })
 
-        
+         .state('ConsultarPontosMapa', {
+             url: '/ConsultarPontosMapa',
+             templateUrl: 'Sistema/ConsultarPontosMapa',
+             controller: 'PontosMapaCtrl',
+             controllerAs: 'itemExtratoMoeda',
+             authenticate: true,
+             params: {
+                 filtro: null
+             },
+             resolve: {
+                 deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                     return $ocLazyLoad.load([
+                          {
+                              name: 'ViagemFactory',
+                              files: [
+                                  'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
+                              ]
+                          },
+                         {
+                             name: 'PontosMapaController',
+                             files: [
+                                 'library/scripts/app/Sistema/Consulta/PontosMapa-controller.js'
+                             ]
+                         }, {
+                             name: 'ConsultaFactory',
+                             files: [
+                                 'library/scripts/app/Sistema/Consulta/Consulta-factory.js'
+                             ]
+                         }
+
+                     ]);
+
+                 }]
+             }
+         })
         .state('ConsultarLocaisAtracao', {
             url: '/ConsultarLocaisAtracao',
             templateUrl: 'Sistema/ConsultarLocaisAtracao',

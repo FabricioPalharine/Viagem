@@ -25,7 +25,8 @@ namespace CV.UI.Web
                         "~/library/Scripts/Componentes/jszip.js",
                          "~/library/Scripts/Componentes/slick.js",
                          "~/library/Scripts/Componentes/csswatch.js",
-                         "~/library/Scripts/Componentes/fullcalendar.js"
+                         "~/library/Scripts/Componentes/fullcalendar.js",
+                         "~/library/Scripts/Componentes/markerclusterer.js"
 
                         ));
 
