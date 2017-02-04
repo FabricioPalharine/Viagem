@@ -1,0 +1,122 @@
+﻿<section class="content-header">
+    <h1>
+        @TextosPaginas.Home_PontoMapa
+
+    </h1>
+    <ol class="breadcrumb">
+
+        <li>@TextosPaginas.Home_Menu</li>
+        <li>@TextosPaginas.Home_Consultas</li>
+        <li class="active">@TextosPaginas.Home_PontoMapa</li>
+    </ol>
+
+</section>
+<!-- Main content -->
+<section class="content" ng-init="itemExtratoMoeda.load()">
+    <!-- Default box -->
+    <!-- general form elements -->
+    <div class="box box-primary">
+        <div class="overlay" ng-show="itemExtratoMoeda.loading">
+            <i class="fa fa-refresh fa-spin text-gray"></i>
+        </div>
+
+        <form role="form" ng-submit="itemExtratoMoeda.filtraDado()">
+            <div class="box-body">
+                <div class="row">
+                    
+                    <div class="form-group col-md-6">
+                        <label>@TextosPaginas.AcertoConta_DataDe</label>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+                                <div class="input-group">
+                                    <input date-input ng-model="itemExtratoMoeda.filtro.DataInicioDe" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                           datapattern="dd/MM/yyyy">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker data-ng-model="itemExtratoMoeda.filtro.DataInicioDe"
+                                                data-datetimepicker-config="{  minView:'day' , langCode:itemExtratoMoeda.Idioma()  }" />
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>@TextosPaginas.AcertoConta_DataAte</label>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+                                <div class="input-group">
+                                    <input date-input ng-model="itemExtratoMoeda.filtro.DataInicioAte" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                           datapattern="dd/MM/yyyy">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker data-ng-model="itemExtratoMoeda.filtro.DataInicioAte"
+                                                data-datetimepicker-config="{  minView:'day' , langCode:itemExtratoMoeda.Idioma()  }" />
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label>@TextosPaginas.RelatorioGastos_Usuario</label>
+                    <select ng-model="itemExtratoMoeda.itemUsuario" class="form-control" ng-options="obj.Nome for obj in itemExtratoMoeda.ListaUsuarios track by obj.Identificador">
+                        <option value="">@TextosPaginas.Selecione</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>@TextosPaginas.RelatorioGastos_TipoGasto</label>
+                    <select ng-model="itemExtratoMoeda.filtro.Tipo" class="form-control" >
+                        <option value="">@TextosPaginas.Selecione</option>
+                        <option value="A">@TextosPaginas.RelatorioGastos_Atracao</option>
+                        <option value="CR">@TextosPaginas.PontoMapa_CarroRetirada</option>
+                        <option value="CD">@TextosPaginas.PontoMapa_CarroDevolucao</option>
+                        <option value="L">@TextosPaginas.PontoMapa_Loja</option>
+                        <option value="H">@TextosPaginas.RelatorioGastos_Hotel</option>
+                        <option value="RC">@TextosPaginas.RelatorioGastos_Reabastecimento</option>
+                        <option value="R">@TextosPaginas.RelatorioGastos_Refeicao</option>
+                        <option value="P">@TextosPaginas.PontoMapa_Parada</option>
+                        <option value="T">@TextosPaginas.PontoMapa_Comentario</option>
+                        <option value="G">@TextosPaginas.PontoMapa_Gasto</option>
+                        <option value="V">@TextosPaginas.PontoMapa_Video</option>
+                        <option value="F">@TextosPaginas.PontoMapa_Foto</option>
+
+                    </select>
+                </div>
+            </div>
+            </div><!-- /.box-body -->
+            <div class="box-footer">
+
+                <button type="submit" class="btn btn-primary  pull-right">
+                    <span class="fa fa-search" aria-hidden="true"></span> @TextosPaginas.Pesquisar
+                </button>
+
+            </div>
+        </form>
+
+
+    </div><!-- /.box -->
+
+
+
+    <div class="box">
+        <div class="overlay" ng-show="itemExtratoMoeda.loading">
+            <i class="fa fa-refresh fa-spin text-gray"></i>
+        </div>
+        <div class="box-body">
+            <ng-map zoom="14" center="0, 0]">
+                <marker ng-repeat="pos in itemExtratoMoeda.ListaDados" position="{{pos.Latitude}},{{pos.Longitude}}"></marker>
+            </ng-map>
+
+        </div>
+    </div>
+
+
+   
+
+</section><!-- /.content -->

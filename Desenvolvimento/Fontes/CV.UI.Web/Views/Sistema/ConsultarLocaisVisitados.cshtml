@@ -76,7 +76,7 @@
             <div class="panel-body">
                 <div class="row"  ng-click="itemExtratoMoeda.AbrirDetalhes(item)">
                     <div class="col-md-3">
-                        <img ng-src="{{itemExtratoMoeda.RetornarURLMap(item) }}" class="img-responsive" ng-if="item.Latitude && item.Longitude && (item.Latitude != 0|| item.Longitude != 0)" />
+                        <img ng-src="{{itemExtratoMoeda.RetornarURLMap(item) }}" class="img-responsive" ng-if="item.Latitude && item.Longitude && (item.Latitude != 0|| item.Longitude != 0)" ng-click="itemExtratoMoeda.abrirMapa(item)" />
 
                     </div>
                     <div class="col-md-9">
@@ -89,5 +89,23 @@
             </div>
         </div>
     </div>
+
+
+    <script type="text/ng-template" id="modalMapa.html">
+        <div class="modal-body">
+           
+            <ng-map zoom="13"
+                    center="[{{vmMapa.lat}}, {{vmMapa.lng}}]" >
+                <marker ng-if="vmMapa.itemMarcador.Latitude && vmMapa.itemMarcador.Longitude" position="{{vmMapa.itemMarcador.Latitude}}, {{vmMapa.itemMarcador.Longitude}}"></marker>
+            </ng-map>
+        </div>
+        <div class="modal-footer ">
+          
+            <button type="button" class="btn btn-primary" ng-click="vmMapa.close()">
+                <span class="fa fa-close" aria-hidden="true">@TextosPaginas.Fechar</span>
+            </button>
+        </div>
+    </script>
+
 
 </section><!-- /.content -->

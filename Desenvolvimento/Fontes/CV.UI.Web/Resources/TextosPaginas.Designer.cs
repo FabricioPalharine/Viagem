@@ -1510,6 +1510,15 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fechar.
+        /// </summary>
+        public static string Fechar {
+            get {
+                return ResourceManager.GetString("Fechar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Atrações.
         /// </summary>
         public static string Foto_Atracao {
@@ -2226,6 +2235,15 @@ namespace CV.UI.Web.Resources {
         public static string Home_PedidosCompra {
             get {
                 return ResourceManager.GetString("Home_PedidosCompra", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mapa.
+        /// </summary>
+        public static string Home_PontoMapa {
+            get {
+                return ResourceManager.GetString("Home_PontoMapa", resourceCulture);
             }
         }
         
@@ -3279,6 +3297,78 @@ namespace CV.UI.Web.Resources {
         public static string Pesquisar {
             get {
                 return ResourceManager.GetString("Pesquisar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Devolução do Carro.
+        /// </summary>
+        public static string PontoMapa_CarroDevolucao {
+            get {
+                return ResourceManager.GetString("PontoMapa_CarroDevolucao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retirada do Carro.
+        /// </summary>
+        public static string PontoMapa_CarroRetirada {
+            get {
+                return ResourceManager.GetString("PontoMapa_CarroRetirada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comentário.
+        /// </summary>
+        public static string PontoMapa_Comentario {
+            get {
+                return ResourceManager.GetString("PontoMapa_Comentario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Foto.
+        /// </summary>
+        public static string PontoMapa_Foto {
+            get {
+                return ResourceManager.GetString("PontoMapa_Foto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gasto.
+        /// </summary>
+        public static string PontoMapa_Gasto {
+            get {
+                return ResourceManager.GetString("PontoMapa_Gasto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loja.
+        /// </summary>
+        public static string PontoMapa_Loja {
+            get {
+                return ResourceManager.GetString("PontoMapa_Loja", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parada.
+        /// </summary>
+        public static string PontoMapa_Parada {
+            get {
+                return ResourceManager.GetString("PontoMapa_Parada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vídeo.
+        /// </summary>
+        public static string PontoMapa_Video {
+            get {
+                return ResourceManager.GetString("PontoMapa_Video", resourceCulture);
             }
         }
         

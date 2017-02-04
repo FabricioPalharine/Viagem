@@ -99,6 +99,14 @@ namespace CV.Business
             return itemRetorno;
         }
 
+        public List<PontoMapa> ListarPontosViagem(int? IdentificadorViagem, int? IdentificadorUsuario, DateTime? DataDe, DateTime? DataAte, string Tipo)
+        {
+            using (ConsultaRepository data = new ConsultaRepository())
+            {
+                return data.ListarPontosViagem(IdentificadorViagem, IdentificadorUsuario, DataDe, DataAte, Tipo);
+            }
+        }
+
         public List<CalendarioRealizado> CarregarCalendarioRealizado(int? IdentificadorViagem, int? IdentificadorUsuario)
         {
             using (ConsultaRepository data = new ConsultaRepository())

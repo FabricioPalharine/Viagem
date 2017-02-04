@@ -256,6 +256,21 @@
     <Content Include="Library\res\icons\next.svg" />
     <Content Include="Library\res\icons\prev-inline.svg" />
     <Content Include="Library\res\icons\prev.svg" />
+    <Content Include="Library\res\images\conv30.png" />
+    <Content Include="Library\res\images\conv40.png" />
+    <Content Include="Library\res\images\conv50.png" />
+    <Content Include="Library\res\images\heart30.png" />
+    <Content Include="Library\res\images\heart40.png" />
+    <Content Include="Library\res\images\heart50.png" />
+    <Content Include="Library\res\images\m1.png" />
+    <Content Include="Library\res\images\m2.png" />
+    <Content Include="Library\res\images\m3.png" />
+    <Content Include="Library\res\images\m4.png" />
+    <Content Include="Library\res\images\m5.png" />
+    <Content Include="Library\res\images\people35.png" />
+    <Content Include="Library\res\images\people45.png" />
+    <Content Include="Library\res\images\people55.png" />
+    <Content Include="Library\res\images\pin.png" />
     <Content Include="Library\Scripts\Angular\angular-animate.js" />
     <Content Include="Library\Scripts\Angular\angular-animate.min.js" />
     <Content Include="Library\Scripts\Angular\angular-aria.js" />
@@ -338,6 +353,7 @@
     <Content Include="Library\Scripts\App\Sistema\Consulta\LocaisAtracao-controller.js" />
     <Content Include="Library\Scripts\App\Sistema\Consulta\LocaisVisitados-controller.js" />
     <Content Include="Library\Scripts\App\Sistema\Consulta\CalendarioRealizado-controller.js" />
+    <Content Include="Library\Scripts\App\Sistema\Consulta\PontosMapa-controller.js" />
     <Content Include="Library\Scripts\App\Sistema\Consulta\Timeline-controller.js" />
     <Content Include="Library\Scripts\App\Sistema\Consulta\RelatorioGasto-controller.js" />
     <Content Include="Library\Scripts\App\Sistema\Consulta\ExtratoMoeda-controller.js" />
@@ -369,6 +385,7 @@
     <Content Include="Library\Scripts\Componentes\jquery.signalR-2.0.0.js" />
     <Content Include="Library\Scripts\Componentes\jszip.js" />
     <Content Include="Library\Scripts\Componentes\load-image.all.min.js" />
+    <Content Include="Library\Scripts\Componentes\markerclusterer.js" />
     <Content Include="Library\Scripts\Componentes\modernizr-2.6.2.js" />
     <Content Include="Library\Scripts\Componentes\moment.min.js" />
     <Content Include="Library\Scripts\Componentes\respond.js" />
@@ -531,6 +548,7 @@
     <Content Include="Views\Sistema\ConsultarLocaisLoja.cshtml" />
     <Content Include="Views\Sistema\ConsultarFoto.cshtml" />
     <Content Include="Views\Sistema\ConsultarCalendarioRealizado.cshtml" />
+    <Content Include="Views\Sistema\ConsultarPontosMapa.cshtml" />
     <Content Include="Views\Sistema\ConsultarResumo.cshtml" />
   </ItemGroup>
   <ItemGroup>
