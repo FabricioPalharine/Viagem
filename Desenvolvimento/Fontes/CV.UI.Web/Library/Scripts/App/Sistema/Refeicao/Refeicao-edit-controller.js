@@ -447,6 +447,9 @@
 	        });
 	    };
 
+	    vm.Cancelar = function () {
+	        $scope.$parent.itemRefeicao.Cancelar(vm.itemRefeicao);
+	    };
 	    vm.slickConfig = {
 	        infinite: true,
 	        speed: 0,

@@ -29,7 +29,7 @@
                         <div class="dropdown">
                             <a class="dropdown-toggle" role="button" data-toggle="dropdown">
                                 <div class="input-group">
-                                    <input date-input ng-model="itemExtratoMoeda.filtro.DataInicioDe" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                    <input date-input ng-model="itemExtratoMoeda.filtro.DataInicioAte" class="form-control" input-mask="{mask: 'd/m/y'}"
                                            datapattern="dd/MM/yyyy">
                                     <span class="input-group-addon">
                                         <i class="glyphicon glyphicon-calendar"></i>
@@ -37,7 +37,7 @@
                                 </div>
                             </a>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                <datetimepicker data-ng-model="itemExtratoMoeda.filtro.DataInicioDe"
+                                <datetimepicker data-ng-model="itemExtratoMoeda.filtro.DataInicioAte"
                                                 data-datetimepicker-config="{  minView:'day' , langCode:itemExtratoMoeda.Idioma()  }" />
                             </ul>
                         </div>

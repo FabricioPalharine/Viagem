@@ -144,6 +144,13 @@
 		    return modal.result;
 		};
 
+
+		vm.Cancelar = function (itemForDelete) {
+		    var posicao = vm.ListaDados.indexOf(itemForDelete);
+		    vm.ListaDados.splice(posicao, 1);
+		    vm.ItemAtual--;
+		};
+
 		vm.DeleteModalCtrl = function ($uibModalInstance, itemForDelete, MensagemConfirmacao, TextoBotaoOK, TextoBotaoCancel) {
 		    var vmDelete = this;
 		    vmDelete.MensagemConfirmacao = MensagemConfirmacao;

@@ -41,6 +41,12 @@
 			
 		};
 
+		vm.Cancelar = function (itemForDelete) {
+		    var posicao = vm.ListaDados.indexOf(itemForDelete);
+		    vm.ListaDados.splice(posicao, 1);
+		    vm.ItemAtual--;
+		};
+
 		vm.Excluir = function (itemForDelete) {
 			vm.loading = true;
 			Atracao.delete({ id: itemForDelete.Identificador }, function (data) {
@@ -169,7 +175,7 @@
             };
 
             vmDelete.confirmar = function () {
-                VerificarAtracaoAberto
+                
 
                 $uibModalInstance.close(vmDelete.itemForDelete);
             };

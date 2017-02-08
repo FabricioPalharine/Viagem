@@ -15,11 +15,17 @@
 <section class="content" ng-init="itemExtratoMoeda.load()">
     <!-- Default box -->
     <!-- general form elements -->
-    <div class="box box-primary">
+    <div class="box box-primary collapsed-box">
         <div class="overlay" ng-show="itemExtratoMoeda.loading">
             <i class="fa fa-refresh fa-spin text-gray"></i>
         </div>
+        <div class="box-header with-border">
+            <h3 class="box-title"><i class="fa fa-filter"></i>&nbsp;@TextosPaginas.Foto_Filtros</h3>
 
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-plus"></i></button>
+            </div>
+        </div>
         <form role="form" ng-submit="itemExtratoMoeda.filtraDado()">
             <div class="box-body">
                 <div class="row">
@@ -82,9 +88,9 @@
                         <option value="R">@TextosPaginas.RelatorioGastos_Refeicao</option>
                         <option value="P">@TextosPaginas.PontoMapa_Parada</option>
                         <option value="T">@TextosPaginas.PontoMapa_Comentario</option>
-                        <option value="G">@TextosPaginas.PontoMapa_Gasto</option>
                         <option value="V">@TextosPaginas.PontoMapa_Video</option>
                         <option value="F">@TextosPaginas.PontoMapa_Foto</option>
+                        <option value="D">@TextosPaginas.PontoMapa_Deslocamento</option>
 
                     </select>
                 </div>
@@ -108,9 +114,38 @@
         <div class="overlay" ng-show="itemExtratoMoeda.loading">
             <i class="fa fa-refresh fa-spin text-gray"></i>
         </div>
-        <div class="box-body">
-            <ng-map zoom="14" center="0, 0]">
-                <marker ng-repeat="pos in itemExtratoMoeda.ListaDados" position="{{pos.Latitude}},{{pos.Longitude}}"></marker>
+        <div class="box-body" style="min-height:450px">
+            <ng-map zoom="14" center="[0, 0]" default-style="false" style="height: 450px; display:block; ">
+                <marker ng-repeat="pos in itemExtratoMoeda.ListaDados" id="{{pos.$$hashKey}}" 
+                        position="{{pos.Latitude}},{{pos.Longitude}}" on-click="itemExtratoMoeda.AbrirInfo(pos)"
+                        icon='{{itemExtratoMoeda.RetornarIcone(pos)}}'></marker>
+
+                <shape name="polyline" ng-repeat="pos in itemExtratoMoeda.ListaLinhas"
+                       path="{{pos.Points}}"
+                       stroke-color="{{pos.Color}}"
+                       stroke-opacity="1.0"
+                       stroke-weight="3">
+                </shape>
+
+                <info-window id="dado-window">
+                    <div ng-non-bindable="">
+                        <div>
+                            <span ng-bind="itemExtratoMoeda.itemSelecionado.Nome" />
+                        </div>
+                        <div>
+                            <span ng-bind="itemExtratoMoeda.itemSelecionado.Periodo" />
+                        </div>
+                    </div>
+                </info-window>
+
+               
+                <info-window id="url-window">
+                    
+                    <div ng-non-bindable="">
+                        <img ng-src="{{itemExtratoMoeda.itemSelecionado.UrlTumbnail }}" class="img-responsive" ng-click="itemExtratoMoeda.AbrirImagem()" />
+
+                    </div>
+                </info-window>
             </ng-map>
 
         </div>

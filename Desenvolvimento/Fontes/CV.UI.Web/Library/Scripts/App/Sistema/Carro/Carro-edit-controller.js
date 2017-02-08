@@ -28,6 +28,7 @@
 		    }
 		};
 
+
 		vm.load = function (itemBase) {
 		    if (itemBase.Identificador && !vm.itemCarro.Avaliacoes && !vm.loading) {
 		        vm.loading = true;
@@ -237,6 +238,9 @@
 		    });
 		};
 
+		vm.Cancelar = function () {
+		    $scope.$parent.itemCarro.Cancelar(vm.itemOriginal);
+		};
 		vm.RemoverReabastecimento = function (itemCusto) {
 		    $scope.$parent.itemCarro.modalPopupTrigger(itemCusto, $translate.instant('MensagemExclusao'), $translate.instant('Sim'), $translate.instant('Nao'), function () {
 		        itemCusto.DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");

@@ -17,5 +17,16 @@ namespace CV.Model
 
         public string UrlTumbnail { get; set; }
         public string Url { get; set; }
+
+        public string Periodo
+        {
+            get
+            {
+                if (DataFim.HasValue)
+                    return String.Concat(DataInicio.GetValueOrDefault().ToString("dd/MM/yyyy"), " - ", DataFim.GetValueOrDefault().ToString("dd/MM/yyyy"));
+                else
+                    return DataInicio.GetValueOrDefault().ToString("dd/MM/yyyy");
+            }
+        }
     }
 }

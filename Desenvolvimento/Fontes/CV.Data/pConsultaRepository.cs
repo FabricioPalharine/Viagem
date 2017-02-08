@@ -218,7 +218,7 @@ namespace CV.Data
         /// <param name="DataMinima"></param>
         /// <param name="NumeroRegistros"></param>
         /// <returns></returns>
-        public List<Timeline> CarregarTimeline(int? IdentificadorViagem, int? IdentificadorUsuarioConsulta, int? IdentificadorUsuarioEvento, DateTime? DataMaxima, DateTime? DataMinima, int NumeroRegistros)
+        public List<Timeline> CarregarTimeline(int? IdentificadorViagem, int? IdentificadorUsuarioConsulta, int? IdentificadorUsuarioEvento, DateTime? DataMaxima, DateTime? DataMinima, int NumeroRegistros, string Tipo, int? Identificador)
         {
             var queryUsuarios = this.Context.ParticipanteViagemes.Where(d => d.IdentificadorUsuario == IdentificadorUsuarioConsulta || this.Context.Amigos.Where(e => e.IdentificadorAmigo == IdentificadorUsuarioConsulta && e.IdentificadorUsuario == d.IdentificadorUsuario).Any());
             if (IdentificadorUsuarioEvento.HasValue)
@@ -227,141 +227,185 @@ namespace CV.Data
 
             var queryConsulta = this.Context.Atracoes.Where(d => !d.DataExclusao.HasValue).Where(d => d.IdentificadorViagem == IdentificadorViagem).Where(d => d.Chegada.HasValue)
                 .Where(d => d.Avaliacoes.Where(e => listaInteiros.Contains(e.IdentificadorUsuario)).Any());
+            if (!string.IsNullOrEmpty(Tipo))
+                queryConsulta = queryConsulta.Where(d => Tipo == "A");
+            if (Identificador.HasValue)
+                queryConsulta = queryConsulta.Where(d => d.Identificador == Identificador);
             var queryResultado = queryConsulta
                 .Where(d => !d.Partida.HasValue || d.Partida > DbFunctions.AddMinutes(d.Chegada, 2))
-                .SelectMany(d => d.Avaliacoes.Select(e => new { Data = d.Chegada, Tipo = "AtracaoChegada", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.Nome, Url = "", Comentario = "", IdentificadorUsuario = e.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" }));//, Usuarios = d.Avaliacoes.Where(e => listaInteiros.Contains(e.IdentificadorUsuario)).Select(e => new UsuarioConsulta() { Comentario = "", Nome = e.ItemUsuario.Nome, Identificador = e.IdentificadorUsuario, Nota = null, Pedido = null }) });
+                .SelectMany(d => d.Avaliacoes.Select(e => new {Identificador = d.Identificador,  Data = d.Chegada, Tipo = "AtracaoChegada", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.Nome, Url = "", Comentario = "", IdentificadorUsuario = e.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" }));//, Usuarios = d.Avaliacoes.Where(e => listaInteiros.Contains(e.IdentificadorUsuario)).Select(e => new UsuarioConsulta() { Comentario = "", Nome = e.ItemUsuario.Nome, Identificador = e.IdentificadorUsuario, Nota = null, Pedido = null }) });
             queryResultado = queryResultado.Union(
                 queryConsulta.Where(d => d.Partida.HasValue)
-                .SelectMany(d => d.Avaliacoes.Select(e => new { Data = d.Partida, Tipo = d.Partida > DbFunctions.AddMinutes(d.Chegada, 2) ? "AtracaoPartida" : "AtracaoVisita", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.Nome, Url = "", Comentario = "", IdentificadorUsuario = e.IdentificadorUsuario, Nota = e.Nota, NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = e.Comentario, Pedido = "" })));
+                .SelectMany(d => d.Avaliacoes.Select(e => new { Identificador = d.Identificador, Data = d.Partida, Tipo = d.Partida > DbFunctions.AddMinutes(d.Chegada, 2) ? "AtracaoPartida" : "AtracaoVisita", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.Nome, Url = "", Comentario = "", IdentificadorUsuario = e.IdentificadorUsuario, Nota = e.Nota, NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = e.Comentario, Pedido = "" })));
+
+            if (String.IsNullOrEmpty(Tipo) || Tipo == "R")
+            {
+                var queryRefeicao = this.Context.Refeicoes.Where(d => !d.DataExclusao.HasValue).Where(d => d.IdentificadorViagem == IdentificadorViagem)
+                    .Where(d => d.Pedidos.Where(e => listaInteiros.Contains(e.IdentificadorUsuario)).Any());
+                if (Identificador.HasValue)
+                    queryRefeicao = queryRefeicao.Where(d => d.Identificador == Identificador);
+                queryResultado = queryResultado.Union(
+        queryRefeicao
+        .SelectMany(d => d.Pedidos.Select(e => new {Identificador = d.Identificador, Data = d.Data, Tipo = "Refeicao", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.Nome, Url = "", Comentario = "", IdentificadorUsuario = e.IdentificadorUsuario, Nota = e.Nota, NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = e.Comentario, Pedido = e.Pedido })));
+
+            }
 
 
-            var queryRefeicao = this.Context.Refeicoes.Where(d => !d.DataExclusao.HasValue).Where(d => d.IdentificadorViagem == IdentificadorViagem)
-                .Where(d => d.Pedidos.Where(e => listaInteiros.Contains(e.IdentificadorUsuario)).Any());
+            if (String.IsNullOrEmpty(Tipo) || Tipo == "H")
+            {
+                var queryHotel = this.Context.Hoteis.Where(d => !d.DataExclusao.HasValue).Where(d => d.IdentificadorViagem == IdentificadorViagem).Where(d => d.DataEntrada.HasValue)
+    .Where(d => d.Avaliacoes.Where(e => listaInteiros.Contains(e.IdentificadorUsuario)).Any());
+                if (Identificador.HasValue)
+                    queryHotel = queryHotel.Where(d => d.Identificador == Identificador);
 
-            queryResultado = queryResultado.Union(
-    queryRefeicao
-    .SelectMany(d => d.Pedidos.Select(e => new { Data = d.Data, Tipo = "Refeicao", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.Nome, Url = "", Comentario = "", IdentificadorUsuario = e.IdentificadorUsuario, Nota = e.Nota, NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = e.Comentario, Pedido = e.Pedido })));
+                queryResultado = queryResultado.Union(
+        queryHotel
+        .SelectMany(d => d.Avaliacoes.Select(e => new { Identificador = d.Identificador, Data = d.DataEntrada, Tipo = "HotelCheckIn", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.Nome, Url = "", Comentario = "", IdentificadorUsuario = e.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" })));
 
 
-            var queryHotel = this.Context.Hoteis.Where(d => !d.DataExclusao.HasValue).Where(d => d.IdentificadorViagem == IdentificadorViagem).Where(d => d.DataEntrada.HasValue)
+                queryResultado = queryResultado.Union(
+        queryHotel.Where(d => d.DataSaidia.HasValue)
+        .SelectMany(d => d.Avaliacoes.Select(e => new { Identificador = d.Identificador, Data = d.DataSaidia, Tipo = "HotelChekckOut", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.Nome, Url = "", Comentario = "", IdentificadorUsuario = e.IdentificadorUsuario, Nota = e.Nota, NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = e.Comentario, Pedido = "" })));
+            }
+            if (String.IsNullOrEmpty(Tipo) || Tipo == "HE")
+            {
+                var queryHotelEvento = this.Context.HotelEventos.Where(d => !d.DataExclusao.HasValue).Where(d => d.ItemHotel.IdentificadorViagem == IdentificadorViagem).Where(d => d.DataEntrada.HasValue).Where(d => listaInteiros.Contains(d.IdentificadorUsuario));
+                if (Identificador.HasValue)
+                    queryHotelEvento = queryHotelEvento.Where(d => d.Identificador == Identificador);
+
+                queryResultado = queryResultado.Union(
+    queryHotelEvento
+    .Select(d => new { Identificador = d.Identificador, Data = d.DataEntrada, Tipo = "HotelEntrada", Latitude = d.ItemHotel.Latitude, Longitude = d.ItemHotel.Longitude, Texto = d.ItemHotel.Nome, Url = "", Comentario = "", IdentificadorUsuario = d.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = d.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" }));
+                queryResultado = queryResultado.Union(
+    queryHotelEvento.Where(d => d.DataSaida.HasValue)
+    .Select(d => new { Identificador = d.Identificador, Data = d.DataSaida, Tipo = "HotelSaida", Latitude = d.ItemHotel.Latitude, Longitude = d.ItemHotel.Longitude, Texto = d.ItemHotel.Nome, Url = "", Comentario = "", IdentificadorUsuario = d.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = d.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" }));
+
+            }
+            if (String.IsNullOrEmpty(Tipo) || Tipo == "C")
+            {
+                var queryCarro = this.Context.Carros.Where(d => d.Alugado.Value).Where(d => !d.DataExclusao.HasValue).Where(d => d.IdentificadorViagem == IdentificadorViagem).Where(d => d.ItemCarroEventoRetirada.Data.HasValue)
     .Where(d => d.Avaliacoes.Where(e => listaInteiros.Contains(e.IdentificadorUsuario)).Any());
 
-            queryResultado = queryResultado.Union(
-    queryHotel
-    .SelectMany(d => d.Avaliacoes.Select(e => new { Data = d.DataEntrada, Tipo = "HotelCheckIn", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.Nome, Url = "", Comentario = "", IdentificadorUsuario = e.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" })));
+                if (Identificador.HasValue)
+                    queryCarro = queryCarro.Where(d => d.Identificador == Identificador);
+
+                queryResultado = queryResultado.Union(
+    queryCarro
+    .SelectMany(d => d.Avaliacoes.Select(e => new { Identificador = d.Identificador, Data = d.ItemCarroEventoRetirada.Data, Tipo = "CarroRetirada", Latitude = d.ItemCarroEventoRetirada.Latitude, Longitude = d.ItemCarroEventoRetirada.Longitude, Texto = d.Descricao, Url = "", Comentario = d.Locadora, IdentificadorUsuario = e.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" })));
 
 
-            queryResultado = queryResultado.Union(
-    queryHotel.Where(d => d.DataSaidia.HasValue)
-    .SelectMany(d => d.Avaliacoes.Select(e => new { Data = d.DataSaidia, Tipo = "HotelChekckOut", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.Nome, Url = "", Comentario = "", IdentificadorUsuario = e.IdentificadorUsuario, Nota = e.Nota, NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = e.Comentario, Pedido = "" })));
-
-            var queryHotelEvento = this.Context.HotelEventos.Where(d => !d.DataExclusao.HasValue).Where(d => d.ItemHotel.IdentificadorViagem == IdentificadorViagem).Where(d => d.DataEntrada.HasValue).Where(d => listaInteiros.Contains(d.IdentificadorUsuario));
-
-            queryResultado = queryResultado.Union(
-queryHotelEvento
-.Select(d => new { Data = d.DataEntrada, Tipo = "HotelEntrada", Latitude = d.ItemHotel.Latitude, Longitude = d.ItemHotel.Longitude, Texto = d.ItemHotel.Nome, Url = "", Comentario = "", IdentificadorUsuario = d.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = d.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" }));
-            queryResultado = queryResultado.Union(
-queryHotelEvento.Where(d => d.DataSaida.HasValue)
-.Select(d => new { Data = d.DataSaida, Tipo = "HotelSaida", Latitude = d.ItemHotel.Latitude, Longitude = d.ItemHotel.Longitude, Texto = d.ItemHotel.Nome, Url = "", Comentario = "", IdentificadorUsuario = d.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = d.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" }));
-
-
-            var queryCarro = this.Context.Carros.Where(d => d.Alugado.Value).Where(d => !d.DataExclusao.HasValue).Where(d => d.IdentificadorViagem == IdentificadorViagem).Where(d => d.ItemCarroEventoRetirada.Data.HasValue)
-    .Where(d => d.Avaliacoes.Where(e => listaInteiros.Contains(e.IdentificadorUsuario)).Any());
-
-
-            queryResultado = queryResultado.Union(
-queryCarro
-.SelectMany(d => d.Avaliacoes.Select(e => new { Data = d.ItemCarroEventoRetirada.Data, Tipo = "CarroRetirada", Latitude = d.ItemCarroEventoRetirada.Latitude, Longitude = d.ItemCarroEventoRetirada.Longitude, Texto = d.Descricao, Url = "", Comentario = d.Locadora, IdentificadorUsuario = e.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" })));
-
-
-            queryResultado = queryResultado.Union(
-    queryCarro.Where(d => d.ItemCarroEventoDevolucao.Data.HasValue)
-    .SelectMany(d => d.Avaliacoes.Select(e => new { Data = d.ItemCarroEventoDevolucao.Data, Tipo = "CarroDevolucao", Latitude = d.ItemCarroEventoDevolucao.Latitude, Longitude = d.ItemCarroEventoDevolucao.Longitude, Texto = d.Descricao, Url = "", Comentario = d.Locadora, IdentificadorUsuario = e.IdentificadorUsuario, Nota = e.Nota, NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = e.Comentario, Pedido = "" })));
-
-            var queryCarroDeslocamento = this.Context.CarroDeslocamentos.Where(d => !d.DataExclusao.HasValue).Where(d => d.ItemCarro.IdentificadorViagem == IdentificadorViagem).Where(d => d.ItemCarroEventoPartida.Data.HasValue)
+                queryResultado = queryResultado.Union(
+        queryCarro.Where(d => d.ItemCarroEventoDevolucao.Data.HasValue)
+        .SelectMany(d => d.Avaliacoes.Select(e => new { Identificador = d.Identificador, Data = d.ItemCarroEventoDevolucao.Data, Tipo = "CarroDevolucao", Latitude = d.ItemCarroEventoDevolucao.Latitude, Longitude = d.ItemCarroEventoDevolucao.Longitude, Texto = d.Descricao, Url = "", Comentario = d.Locadora, IdentificadorUsuario = e.IdentificadorUsuario, Nota = e.Nota, NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = e.Comentario, Pedido = "" })));
+            }
+            if (String.IsNullOrEmpty(Tipo) || Tipo == "CD")
+            {
+                var queryCarroDeslocamento = this.Context.CarroDeslocamentos.Where(d => !d.DataExclusao.HasValue).Where(d => d.ItemCarro.IdentificadorViagem == IdentificadorViagem).Where(d => d.ItemCarroEventoPartida.Data.HasValue)
     .Where(d => d.Usuarios.Where(e => listaInteiros.Contains(e.IdentificadorUsuario)).Any());
+                if (Identificador.HasValue)
+                    queryCarroDeslocamento = queryCarroDeslocamento.Where(d => d.Identificador == Identificador);
 
-            queryResultado = queryResultado.Union(
-         queryCarroDeslocamento
-         .SelectMany(d => d.Usuarios.Select(e => new { Data = d.ItemCarroEventoPartida.Data, Tipo = "CarroPartida", Latitude = d.ItemCarroEventoPartida.Latitude, Longitude = d.ItemCarroEventoPartida.Longitude, Texto = d.ItemCarro.Descricao, Url = "", Comentario = d.Observacao, IdentificadorUsuario = e.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" })));
+                queryResultado = queryResultado.Union(
+             queryCarroDeslocamento
+             .SelectMany(d => d.Usuarios.Select(e => new { Identificador = d.Identificador, Data = d.ItemCarroEventoPartida.Data, Tipo = "CarroPartida", Latitude = d.ItemCarroEventoPartida.Latitude, Longitude = d.ItemCarroEventoPartida.Longitude, Texto = d.ItemCarro.Descricao, Url = "", Comentario = d.Observacao, IdentificadorUsuario = e.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" })));
 
-            queryResultado = queryResultado.Union(
-         queryCarroDeslocamento.Where(d => d.ItemCarroEventoChegada.Data.HasValue)
-         .SelectMany(d => d.Usuarios.Select(e => new { Data = d.ItemCarroEventoChegada.Data, Tipo = "CarroChegada", Latitude = d.ItemCarroEventoChegada.Latitude, Longitude = d.ItemCarroEventoChegada.Longitude, Texto = d.ItemCarro.Descricao, Url = "", Comentario = d.Observacao, IdentificadorUsuario = e.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" })));
+                queryResultado = queryResultado.Union(
+             queryCarroDeslocamento.Where(d => d.ItemCarroEventoChegada.Data.HasValue)
+             .SelectMany(d => d.Usuarios.Select(e => new { Identificador = d.Identificador, Data = d.ItemCarroEventoChegada.Data, Tipo = "CarroChegada", Latitude = d.ItemCarroEventoChegada.Latitude, Longitude = d.ItemCarroEventoChegada.Longitude, Texto = d.ItemCarro.Descricao, Url = "", Comentario = d.Observacao, IdentificadorUsuario = e.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" })));
+            }
 
-            var queryCarroReabastecimento = this.Context.Reabastecimentos.Where(d => !d.DataExclusao.HasValue).Where(d => d.ItemCarro.IdentificadorViagem == IdentificadorViagem).Where(d => d.Data.HasValue)
+            if (String.IsNullOrEmpty(Tipo) || Tipo == "CR")
+            {
+                var queryCarroReabastecimento = this.Context.Reabastecimentos.Where(d => !d.DataExclusao.HasValue).Where(d => d.ItemCarro.IdentificadorViagem == IdentificadorViagem).Where(d => d.Data.HasValue)
     .Where(d => d.ItemCarro.Avaliacoes.Where(e => listaInteiros.Contains(e.IdentificadorUsuario)).Any());
-            queryResultado = queryResultado.Union(
-                queryCarroReabastecimento
-                .Select(d => new { Data = d.Data, Tipo = "Reabastecimento", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.ItemCarro.Descricao, Url = "", Comentario = "", IdentificadorUsuario = d.ItemCarro.ItemViagem.ItemUsuario.Identificador, Nota = new Nullable<int>(), NomeUsuario = d.ItemCarro.ItemViagem.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" }));
+
+                if (Identificador.HasValue)
+                    queryCarroReabastecimento = queryCarroReabastecimento.Where(d => d.Identificador == Identificador);
+
+                queryResultado = queryResultado.Union(
+                    queryCarroReabastecimento
+                    .Select(d => new { Identificador = d.Identificador, Data = d.Data, Tipo = "Reabastecimento", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.ItemCarro.Descricao, Url = "", Comentario = "", IdentificadorUsuario = d.ItemCarro.ItemViagem.ItemUsuario.Identificador, Nota = new Nullable<int>(), NomeUsuario = d.ItemCarro.ItemViagem.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" }));
+            }
+            if (String.IsNullOrEmpty(Tipo) || Tipo == "T")
+            {
+                var queryComentario = this.Context.Comentarios.Where(d => !d.DataExclusao.HasValue).Where(d => d.IdentificadorViagem == IdentificadorViagem).Where(d => listaInteiros.Contains(d.IdentificadorUsuario));
+                if (Identificador.HasValue)
+                    queryComentario = queryComentario.Where(d => d.Identificador == Identificador);
+                queryResultado = queryResultado.Union(
+    queryComentario
+    .Select(d => new { Identificador = d.Identificador, Data = d.Data, Tipo = "Comentario", Latitude = d.Latitude, Longitude = d.Longitude, Texto = "", Url = "", Comentario = d.Texto, IdentificadorUsuario = d.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = d.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" }));
+            }
+            if (String.IsNullOrEmpty(Tipo) || Tipo == "GL")
+            {
+                var queryCompra = this.Context.GastoCompras.Where(d => !d.DataExclusao.HasValue).Where(d => d.ItemGasto.IdentificadorViagem == IdentificadorViagem).Where(d => listaInteiros.Contains(d.ItemGasto.IdentificadorUsuario));
+                if (Identificador.HasValue)
+                    queryCompra = queryCompra.Where(d => d.Identificador == Identificador);
+                queryResultado = queryResultado.Union(
+    queryCompra
+    .Select(d => new { Identificador = d.Identificador, Data = d.ItemGasto.Data, Tipo = "Compra", Latitude = d.ItemLoja.Latitude, Longitude = d.ItemLoja.Longitude, Texto = d.ItemLoja.Nome, Url = "", Comentario = d.ItemGasto.Descricao, IdentificadorUsuario = d.ItemGasto.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = d.ItemGasto.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" }));
+
+            }
+            if (String.IsNullOrEmpty(Tipo) || Tipo == "F")
+            {
+                var queryFoto = this.Context.Fotos.Where(d => !d.DataExclusao.HasValue).Where(d => d.IdentificadorViagem == IdentificadorViagem).Where(d => listaInteiros.Contains(d.IdentificadorUsuario));
+                if (Identificador.HasValue)
+                    queryFoto = queryFoto.Where(d => d.Identificador == Identificador);
+                queryResultado = queryResultado.Union(
+    queryFoto
+    .Select(d => new { Identificador = d.Identificador, Data = d.Data, Tipo = d.Video.Value ? "Video" : "Foto", Latitude = d.Latitude, Longitude = d.Longitude, Texto = "", Url = d.LinkFoto, Comentario = d.Comentario, IdentificadorUsuario = d.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = d.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" }));
 
 
-            var queryComentario = this.Context.Comentarios.Where(d => !d.DataExclusao.HasValue).Where(d => d.IdentificadorViagem == IdentificadorViagem).Where(d => listaInteiros.Contains(d.IdentificadorUsuario));
-
-            queryResultado = queryResultado.Union(
-queryComentario
-.Select(d => new { Data = d.Data, Tipo = "Comentario", Latitude = d.Latitude, Longitude = d.Longitude, Texto = "", Url = "", Comentario = d.Texto, IdentificadorUsuario = d.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = d.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" }));
-
-
-            var queryCompra = this.Context.GastoCompras.Where(d => !d.DataExclusao.HasValue).Where(d => d.ItemGasto.IdentificadorViagem == IdentificadorViagem).Where(d => listaInteiros.Contains(d.ItemGasto.IdentificadorUsuario));
-
-            queryResultado = queryResultado.Union(
-queryCompra
-.Select(d => new { Data = d.ItemGasto.Data, Tipo = "Compra", Latitude = d.ItemLoja.Latitude, Longitude = d.ItemLoja.Longitude, Texto = d.ItemLoja.Nome, Url = "", Comentario = d.ItemGasto.Descricao, IdentificadorUsuario = d.ItemGasto.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = d.ItemGasto.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" }));
-
-            var queryFoto = this.Context.Fotos.Where(d => !d.DataExclusao.HasValue).Where(d => d.IdentificadorViagem == IdentificadorViagem).Where(d => listaInteiros.Contains(d.IdentificadorUsuario));
-
-            queryResultado = queryResultado.Union(
-queryFoto
-.Select(d => new { Data = d.Data, Tipo = d.Video.Value ? "Video" : "Foto", Latitude = d.Latitude, Longitude = d.Longitude, Texto = "", Url = d.LinkFoto, Comentario = d.Comentario, IdentificadorUsuario = d.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = d.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" }));
-
-
-
-            var queryAeroportos = this.Context.ViagemAereaAeroportos.Where(d => d.ItemViagemAerea.IdentificadorViagem == IdentificadorViagem).Where(d => !d.ItemViagemAerea.DataExclusao.HasValue).Where(d => d.DataChegada.HasValue)
+            }
+            if (String.IsNullOrEmpty(Tipo) || Tipo == "VA")
+            {
+                var queryAeroportos = this.Context.ViagemAereaAeroportos.Where(d => d.ItemViagemAerea.IdentificadorViagem == IdentificadorViagem).Where(d => !d.ItemViagemAerea.DataExclusao.HasValue).Where(d => d.DataChegada.HasValue)
               .Where(d => d.ItemViagemAerea.Avaliacoes.Where(e => listaInteiros.Contains(e.IdentificadorUsuario)).Any());
+                if (Identificador.HasValue)
+                    queryAeroportos = queryAeroportos.Where(d => d.IdentificadorViagemAerea == Identificador);
 
-
-            queryResultado = queryResultado.Union(
-queryAeroportos.Where(d => !d.DataPartida.HasValue || d.DataPartida > DbFunctions.AddMinutes(d.DataChegada, 2))
-.SelectMany(d => d.ItemViagemAerea.Avaliacoes.Select(e => new
-{
-    Data = d.DataChegada,
-    Tipo = d.TipoPonto == (int)enumTipoParada.Origem ? "DeslocamentoChegadaOrigem" : d.TipoPonto == (int)enumTipoParada.Destino ? "DeslocamentoChegadaDestino" : "DeslocamentoChegadaEscala",
-    Latitude = d.Latitude,
-    Longitude = d.Longitude,
-    Texto = d.ItemViagemAerea.Descricao,
-    Url = d.ItemViagemAerea.CompanhiaAerea,
-    Comentario = d.Aeroporto,
-    IdentificadorUsuario = e.IdentificadorUsuario,
-    Nota = new Nullable<int>(),
-    NomeUsuario = e.ItemUsuario.Nome,
-    ComentarioUsuario = "",
-    Pedido = ""
-})));
-
-
-            queryResultado = queryResultado.Union(
-    queryAeroportos.Where(d => d.DataPartida.HasValue)
+                queryResultado = queryResultado.Union(
+    queryAeroportos.Where(d => !d.DataPartida.HasValue || d.DataPartida > DbFunctions.AddMinutes(d.DataChegada, 2))
     .SelectMany(d => d.ItemViagemAerea.Avaliacoes.Select(e => new
     {
-        Data = d.DataPartida,
-        Tipo = (d.DataPartida > DbFunctions.AddMinutes(d.DataChegada, 2)) ?
-            d.TipoPonto == (int)enumTipoParada.Origem ? "DeslocamentoPartidaOrigem" : d.TipoPonto == (int)enumTipoParada.Destino ? "DeslocamentoPartidaDestino" : "DeslocamentoPartidaEscala" :
-            d.TipoPonto == (int)enumTipoParada.Origem ? "DeslocamentoOrigem" : d.TipoPonto == (int)enumTipoParada.Destino ? "DeslocamentoDestino" : "DeslocamentoEscala",
+        Identificador = d.Identificador,
+        Data = d.DataChegada,
+        Tipo = d.TipoPonto == (int)enumTipoParada.Origem ? "DeslocamentoChegadaOrigem" : d.TipoPonto == (int)enumTipoParada.Destino ? "DeslocamentoChegadaDestino" : "DeslocamentoChegadaEscala",
         Latitude = d.Latitude,
         Longitude = d.Longitude,
         Texto = d.ItemViagemAerea.Descricao,
         Url = d.ItemViagemAerea.CompanhiaAerea,
         Comentario = d.Aeroporto,
         IdentificadorUsuario = e.IdentificadorUsuario,
-        Nota = d.TipoPonto == (int)enumTipoParada.Destino ? e.Nota : new Nullable<int>(),
+        Nota = new Nullable<int>(),
         NomeUsuario = e.ItemUsuario.Nome,
-        ComentarioUsuario = d.TipoPonto == (int)enumTipoParada.Destino ? e.Comentario : null,
+        ComentarioUsuario = "",
         Pedido = ""
     })));
 
 
+                queryResultado = queryResultado.Union(
+        queryAeroportos.Where(d => d.DataPartida.HasValue)
+        .SelectMany(d => d.ItemViagemAerea.Avaliacoes.Select(e => new
+        {
+            Identificador = d.Identificador,
+            Data = d.DataPartida,
+            Tipo = (d.DataPartida > DbFunctions.AddMinutes(d.DataChegada, 2)) ?
+                d.TipoPonto == (int)enumTipoParada.Origem ? "DeslocamentoPartidaOrigem" : d.TipoPonto == (int)enumTipoParada.Destino ? "DeslocamentoPartidaDestino" : "DeslocamentoPartidaEscala" :
+                d.TipoPonto == (int)enumTipoParada.Origem ? "DeslocamentoOrigem" : d.TipoPonto == (int)enumTipoParada.Destino ? "DeslocamentoDestino" : "DeslocamentoEscala",
+            Latitude = d.Latitude,
+            Longitude = d.Longitude,
+            Texto = d.ItemViagemAerea.Descricao,
+            Url = d.ItemViagemAerea.CompanhiaAerea,
+            Comentario = d.Aeroporto,
+            IdentificadorUsuario = e.IdentificadorUsuario,
+            Nota = d.TipoPonto == (int)enumTipoParada.Destino ? e.Nota : new Nullable<int>(),
+            NomeUsuario = e.ItemUsuario.Nome,
+            ComentarioUsuario = d.TipoPonto == (int)enumTipoParada.Destino ? e.Comentario : null,
+            Pedido = ""
+        })));
 
+
+            }
 
             if (DataMaxima.HasValue)
                 queryResultado = queryResultado.Where(d => d.Data < DataMaxima);
@@ -369,10 +413,11 @@ queryAeroportos.Where(d => !d.DataPartida.HasValue || d.DataPartida > DbFunction
                 queryResultado = queryResultado.Where(d => d.Data > DataMinima);
 
             var resultado = queryResultado.GroupBy(
-                d => new { d.Comentario, d.Data, d.Latitude, d.Longitude, d.Texto, d.Tipo, d.Url })
+                d => new { d.Comentario, d.Data, d.Latitude, d.Longitude, d.Texto, d.Tipo, d.Url,d.Identificador })
                 .Select(d => new Timeline()
 
                 {
+                    Identificador = d.Key.Identificador,
                     Comentario = d.Key.Comentario,
                     Data = d.Key.Data,
                     Latitude = d.Key.Latitude,
@@ -844,18 +889,18 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                     queryRefeicao = queryRefeicao.Where(d => d.DataChegada < DataAte && (!d.DataPartida.HasValue || d.DataPartida < DataAte));
                 queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = d.DataPartida, DataInicio = d.DataChegada, Latitude = d.Latitude, Longitude = d.Longitude, Nome = d.Aeroporto, Tipo = "P", Url = null, UrlTumbnail = null }));
             }
-            if (string.IsNullOrEmpty(Tipo) || Tipo == "G")
-            {
-                var queryRefeicao = this.Context.Gastos.Where(d => d.IdentificadorUsuario == IdentificadorUsuario)
-                .Where(d => !d.DataExclusao.HasValue)
-                .Where(d=> !d.Reabastecimentos.Any() && !d.ApenasBaixa.Value && !d.Compras.Any())
-                .Where(d => d.Latitude.HasValue && d.Longitude.HasValue && (d.Longitude != 0 || d.Latitude != 0));
-                if (DataDe.HasValue)
-                    queryRefeicao = queryRefeicao.Where(d => d.Data >= DataDe);
-                if (DataAte.HasValue)
-                    queryRefeicao = queryRefeicao.Where(d => d.Data < DataAte);
-                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.Data, Latitude = d.Latitude, Longitude = d.Longitude, Nome = d.Descricao, Tipo = "G", Url = null, UrlTumbnail = null }));
-            }
+            //if (string.IsNullOrEmpty(Tipo) || Tipo == "G")
+            //{
+            //    var queryRefeicao = this.Context.Gastos.Where(d => d.IdentificadorUsuario == IdentificadorUsuario)
+            //    .Where(d => !d.DataExclusao.HasValue)
+            //    .Where(d=> !d.Reabastecimentos.Any() && !d.ApenasBaixa.Value && !d.Compras.Any() && !d.Refeicoes.Any() && !d.Alugueis.Any() && !d.Hoteis.Any() && !d.ViagenAereas.Any() && !d.Atracoes.Any())
+            //    .Where(d => d.Latitude.HasValue && d.Longitude.HasValue && (d.Longitude != 0 || d.Latitude != 0));
+            //    if (DataDe.HasValue)
+            //        queryRefeicao = queryRefeicao.Where(d => d.Data >= DataDe);
+            //    if (DataAte.HasValue)
+            //        queryRefeicao = queryRefeicao.Where(d => d.Data < DataAte);
+            //    queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.Data, Latitude = d.Latitude, Longitude = d.Longitude, Nome = d.Descricao, Tipo = "G", Url = null, UrlTumbnail = null }));
+            //}
             if (string.IsNullOrEmpty(Tipo) || Tipo == "T")
             {
                 var queryRefeicao = this.Context.Comentarios.Where(d => d.IdentificadorUsuario == IdentificadorUsuario)
@@ -1608,6 +1653,387 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
             return query.OrderBy(d => d.DataLocal).AsNoTracking().ToList();
         }
         
+        public List<ConsultaRankings> ListarRankings (int? IdentificadorViagem,int? IdentificadorUsuario, bool ApenasAmigos, int? IdentificadorAmigo, string Tipo, int? NumeroRegistros, string CodigoGoogle, string Nome)
+        {
+            List<ConsultaRankings> lista = new List<ConsultaRankings>();
+            var queryUsuarios = this.Context.ParticipanteViagemes.Where(d => d.IdentificadorUsuario == IdentificadorUsuario || this.Context.Amigos.Where(e => e.IdentificadorAmigo == IdentificadorUsuario && e.IdentificadorUsuario == d.IdentificadorUsuario).Any());
+            if (IdentificadorAmigo.HasValue)
+                queryUsuarios = queryUsuarios.Where(d => d.IdentificadorUsuario == IdentificadorAmigo);
+            var listaInteiros = queryUsuarios.Select(d => d.IdentificadorUsuario);
+            bool Detalhe = !string.IsNullOrEmpty(CodigoGoogle) || !string.IsNullOrEmpty(Nome);
+            if (string.IsNullOrEmpty(Tipo) || Tipo == "A")
+            {
+                var queryAtracao = this.Context.AvaliacaoAtracoes.Where(d => !d.DataExclusao.HasValue).Where(d=>d.Nota.HasValue).Where(d=>!d.ItemAtracao.DataExclusao.HasValue);
+                if (ApenasAmigos || IdentificadorAmigo.HasValue)
+                    queryAtracao = queryAtracao.Where(d => listaInteiros.Contains(d.IdentificadorUsuario));
+                if (!string.IsNullOrWhiteSpace(CodigoGoogle))
+                {
+                    queryAtracao = queryAtracao.Where(e => e.ItemAtracao.CodigoPlace == CodigoGoogle);
+                }
+                else if (!string.IsNullOrEmpty(Nome))
+                {
+                    queryAtracao = queryAtracao.Where(e => e.ItemAtracao.CodigoPlace == null || e.ItemAtracao.CodigoPlace == string.Empty).Where(e => e.ItemAtracao.Nome == Nome);
+                }
+                if (IdentificadorViagem.HasValue)
+                    queryAtracao = queryAtracao.Where(e => e.ItemAtracao.IdentificadorViagem == IdentificadorViagem);
+
+                var listaSaida = queryAtracao.GroupBy(d => new { CodigoGoogle = (d.ItemAtracao.CodigoPlace == null) ? string.Empty : d.ItemAtracao.CodigoPlace, Nome = d.ItemAtracao.CodigoPlace != null && d.ItemAtracao.CodigoPlace != string.Empty ? string.Empty : d.ItemAtracao.Nome })
+                    .Select(d => new ConsultaRankings()
+                    {
+                        CodigoGoogle = d.Key.CodigoGoogle,
+                        Nome = d.Select(e => e.ItemAtracao.Nome).FirstOrDefault(),
+                        Tipo = "A",
+                        Media = d.Average(e => e.Nota),
+                        //Avaliacoes = Detalhe ? d.Select(e => new UsuarioConsulta() { Comentario = e.Comentario, Nome = e.ItemUsuario.Nome, DataAvaliacao = e.DataAtualizacao, Nota = e.Nota }) : null,
+                        NumeroAvaliacoes = d.Count()
+
+                    });
+                listaSaida = listaSaida.OrderByDescending(d => d.Media);
+                if (NumeroRegistros.HasValue)
+                    listaSaida = listaSaida.Take(NumeroRegistros.Value);
+                lista.AddRange(listaSaida.ToList());
+            }
+            if (string.IsNullOrEmpty(Tipo) || Tipo == "H")
+            {
+                var queryAtracao = this.Context.HotelAvaliacoes.Where(d => !d.DataExclusao.HasValue).Where(d => d.Nota.HasValue).Where(d => !d.ItemHotel.DataExclusao.HasValue);
+                if (ApenasAmigos || IdentificadorAmigo.HasValue)
+                    queryAtracao = queryAtracao.Where(d => listaInteiros.Contains(d.IdentificadorUsuario));
+                if (!string.IsNullOrWhiteSpace(CodigoGoogle))
+                {
+                    queryAtracao = queryAtracao.Where(e => e.ItemHotel.CodigoPlace == CodigoGoogle);
+                }
+                else if (!string.IsNullOrEmpty(Nome))
+                {
+                    queryAtracao = queryAtracao.Where(e => e.ItemHotel.CodigoPlace == null || e.ItemHotel.CodigoPlace == string.Empty).Where(e => e.ItemHotel.Nome == Nome);
+                }
+                if (IdentificadorViagem.HasValue)
+                    queryAtracao = queryAtracao.Where(e => e.ItemHotel.IdentificadorViagem == IdentificadorViagem);
+
+                var listaSaida = queryAtracao.GroupBy(d => new { CodigoGoogle = (d.ItemHotel.CodigoPlace == null) ? string.Empty : d.ItemHotel.CodigoPlace, Nome = d.ItemHotel.CodigoPlace != null && d.ItemHotel.CodigoPlace != string.Empty ? string.Empty : d.ItemHotel.Nome })
+                    .Select(d => new ConsultaRankings()
+                    {
+                        CodigoGoogle = d.Key.CodigoGoogle,
+                        Nome = d.Select(e => e.ItemHotel.Nome).FirstOrDefault(),
+                        Tipo = "H",
+                        Media = d.Average(e => e.Nota),
+                        //Avaliacoes = Detalhe ? d.Select(e => new UsuarioConsulta() { Comentario = e.Comentario, Nome = e.ItemUsuario.Nome, DataAvaliacao = e.DataAtualizacao, Nota = e.Nota }) : null,
+                        NumeroAvaliacoes = d.Count()
+
+                    });
+                listaSaida = listaSaida.OrderByDescending(d => d.Media);
+                if (NumeroRegistros.HasValue)
+                    listaSaida = listaSaida.Take(NumeroRegistros.Value);
+                lista.AddRange(listaSaida.ToList());
+            }
+            if (string.IsNullOrEmpty(Tipo) || Tipo == "L")
+            {
+                var queryAtracao = this.Context.AvaliacaoLojas.Where(d => !d.DataExclusao.HasValue).Where(d => d.Nota.HasValue).Where(d => !d.ItemLoja.DataExclusao.HasValue);
+                if (ApenasAmigos || IdentificadorAmigo.HasValue)
+                    queryAtracao = queryAtracao.Where(d => listaInteiros.Contains(d.IdentificadorUsuario));
+                if (!string.IsNullOrWhiteSpace(CodigoGoogle))
+                {
+                    queryAtracao = queryAtracao.Where(e => e.ItemLoja.CodigoPlace == CodigoGoogle);
+                }
+                else if (!string.IsNullOrEmpty(Nome))
+                {
+                    queryAtracao = queryAtracao.Where(e => e.ItemLoja.CodigoPlace == null || e.ItemLoja.CodigoPlace == string.Empty).Where(e => e.ItemLoja.Nome == Nome);
+                }
+                if (IdentificadorViagem.HasValue)
+                    queryAtracao = queryAtracao.Where(e => e.ItemLoja.IdentificadorViagem == IdentificadorViagem);
+
+                var listaSaida = queryAtracao.GroupBy(d => new { CodigoGoogle = (d.ItemLoja.CodigoPlace == null) ? string.Empty : d.ItemLoja.CodigoPlace, Nome = d.ItemLoja.CodigoPlace != null && d.ItemLoja.CodigoPlace != string.Empty ? string.Empty : d.ItemLoja.Nome })
+                    .Select(d => new ConsultaRankings()
+                    {
+                        CodigoGoogle = d.Key.CodigoGoogle,
+                        Nome = d.Select(e => e.ItemLoja.Nome).FirstOrDefault(),
+                        Tipo = "L",
+                        Media = d.Average(e => e.Nota),
+                        //Avaliacoes = Detalhe ? d.Select(e => new UsuarioConsulta() { Comentario = e.Comentario, Nome = e.ItemUsuario.Nome, DataAvaliacao = e.DataAtualizacao, Nota = e.Nota }) : null,
+                        NumeroAvaliacoes = d.Count()
+
+                    });
+                listaSaida = listaSaida.OrderByDescending(d => d.Media);
+                if (NumeroRegistros.HasValue)
+                    listaSaida = listaSaida.Take(NumeroRegistros.Value);
+                lista.AddRange(listaSaida.ToList());
+            }
+
+            if (string.IsNullOrEmpty(Tipo) || Tipo == "R")
+            {
+                var queryAtracao = this.Context.RefeicaoPedidos.Where(d => !d.DataExclusao.HasValue).Where(d => d.Nota.HasValue).Where(d => !d.ItemRefeicao.DataExclusao.HasValue);
+                if (ApenasAmigos || IdentificadorAmigo.HasValue)
+                    queryAtracao = queryAtracao.Where(d => listaInteiros.Contains(d.IdentificadorUsuario));
+                if (!string.IsNullOrWhiteSpace(CodigoGoogle))
+                {
+                    queryAtracao = queryAtracao.Where(e => e.ItemRefeicao.CodigoPlace == CodigoGoogle);
+                }
+                else if (!string.IsNullOrEmpty(Nome))
+                {
+                    queryAtracao = queryAtracao.Where(e => e.ItemRefeicao.CodigoPlace == null || e.ItemRefeicao.CodigoPlace == string.Empty).Where(e => e.ItemRefeicao.Nome == Nome);
+                }
+                if (IdentificadorViagem.HasValue)
+                    queryAtracao = queryAtracao.Where(e => e.ItemRefeicao.IdentificadorViagem == IdentificadorViagem);
+
+                var listaSaida = queryAtracao.GroupBy(d => new { CodigoGoogle = (d.ItemRefeicao.CodigoPlace == null) ? string.Empty : d.ItemRefeicao.CodigoPlace, Nome = d.ItemRefeicao.CodigoPlace != null && d.ItemRefeicao.CodigoPlace != string.Empty ? string.Empty : d.ItemRefeicao.Nome })
+                    .Select(d => new ConsultaRankings()
+                    {
+                        CodigoGoogle = d.Key.CodigoGoogle,
+                        Nome = d.Select(e => e.ItemRefeicao.Nome).FirstOrDefault(),
+                        Tipo = "R",
+                        Media = d.Average(e => e.Nota),
+                        //Avaliacoes = Detalhe ? d.Select(e => new UsuarioConsulta() { Comentario = e.Comentario, Nome = e.ItemUsuario.Nome, DataAvaliacao = e.DataAtualizacao, Nota = e.Nota }) : null,
+                        NumeroAvaliacoes = d.Count()
+
+                    });
+                listaSaida = listaSaida.OrderByDescending(d => d.Media);
+                if (NumeroRegistros.HasValue)
+                    listaSaida = listaSaida.Take(NumeroRegistros.Value);
+                lista.AddRange(listaSaida.ToList());
+            }
+
+            if (string.IsNullOrEmpty(Tipo) || Tipo == "C")
+            {
+                var queryAtracao = this.Context.AvaliacaoAlugueis.Where(d => !d.DataExclusao.HasValue).Where(d => d.Nota.HasValue).Where(d=>d.ItemCarro.Alugado.Value) .Where(d => !d.ItemCarro.DataExclusao.HasValue);
+                if (ApenasAmigos || IdentificadorAmigo.HasValue)
+                    queryAtracao = queryAtracao.Where(d => listaInteiros.Contains(d.IdentificadorUsuario));
+                if (!string.IsNullOrEmpty(Nome))
+                {
+                    queryAtracao = queryAtracao.Where(e => e.ItemCarro.Locadora == Nome);
+                }
+                if (IdentificadorViagem.HasValue)
+                    queryAtracao = queryAtracao.Where(e => e.ItemCarro.IdentificadorViagem == IdentificadorViagem);
+
+                var listaSaida = queryAtracao.GroupBy(d => new { CodigoGoogle =  string.Empty , Nome = d.ItemCarro.Locadora })
+                    .Select(d => new ConsultaRankings()
+                    {
+                        CodigoGoogle = d.Key.CodigoGoogle,
+                        Nome = d.Key.Nome,
+                        Tipo = "C",
+                        Media = d.Average(e => e.Nota),
+                        //Avaliacoes = Detalhe ? d.Select(e => new UsuarioConsulta() { Comentario = e.Comentario, Nome = e.ItemUsuario.Nome, DataAvaliacao = e.DataAtualizacao, Nota = e.Nota }) : null,
+                        NumeroAvaliacoes = d.Count()
+
+                    });
+                listaSaida = listaSaida.OrderByDescending(d => d.Media);
+                if (NumeroRegistros.HasValue)
+                    listaSaida = listaSaida.Take(NumeroRegistros.Value);
+                lista.AddRange(listaSaida.ToList());
+            }
+
+            if (string.IsNullOrEmpty(Tipo) || Tipo == "VA")
+            {
+                var queryAtracao = this.Context.AvaliacaoAereas.Where(d => !d.DataExclusao.HasValue).Where(d => d.Nota.HasValue).Where(d => !d.ItemViagemAerea.DataExclusao.HasValue);
+                if (ApenasAmigos || IdentificadorAmigo.HasValue)
+                    queryAtracao = queryAtracao.Where(d => listaInteiros.Contains(d.IdentificadorUsuario));
+                if (!string.IsNullOrEmpty(Nome))
+                {
+                    queryAtracao = queryAtracao.Where(e => e.ItemViagemAerea.CompanhiaAerea == Nome);
+                }
+                if (IdentificadorViagem.HasValue)
+                    queryAtracao = queryAtracao.Where(e => e.ItemViagemAerea.IdentificadorViagem == IdentificadorViagem);
+
+                var listaSaida = queryAtracao.GroupBy(d => new { CodigoGoogle = string.Empty, Nome = d.ItemViagemAerea.CompanhiaAerea })
+                    .Select(d => new ConsultaRankings()
+                    {
+                        CodigoGoogle = d.Key.CodigoGoogle,
+                        Nome = d.Key.Nome,
+                        Tipo = "VA",
+                        Media = d.Average(e => e.Nota),
+                        //Avaliacoes = Detalhe ? d.Select(e => new UsuarioConsulta() { Comentario = e.Comentario, Nome = e.ItemUsuario.Nome, DataAvaliacao = e.DataAtualizacao, Nota = e.Nota }) : null,
+                        NumeroAvaliacoes = d.Count()
+
+                    });
+                listaSaida = listaSaida.OrderByDescending(d => d.Media);
+                if (NumeroRegistros.HasValue)
+                    listaSaida = listaSaida.Take(NumeroRegistros.Value);
+                lista.AddRange(listaSaida.ToList());
+            }
+            lista = lista.OrderByDescending(d => d.Media).ToList();
+            if (NumeroRegistros.HasValue)
+                lista = lista.Take(NumeroRegistros.Value).ToList();
+            return lista;
+        }
+
+        public List<UsuarioConsulta> ListarAvaliacoesRankings(int? IdentificadorViagem, int? IdentificadorUsuario, bool ApenasAmigos, int? IdentificadorAmigo, string Tipo, string CodigoGoogle, string Nome)
+        {
+            List<UsuarioConsulta> lista = new List<UsuarioConsulta>();
+            var queryUsuarios = this.Context.ParticipanteViagemes.Where(d => d.IdentificadorUsuario == IdentificadorUsuario || this.Context.Amigos.Where(e => e.IdentificadorAmigo == IdentificadorUsuario && e.IdentificadorUsuario == d.IdentificadorUsuario).Any());
+            if (IdentificadorAmigo.HasValue)
+                queryUsuarios = queryUsuarios.Where(d => d.IdentificadorUsuario == IdentificadorAmigo);
+            var listaInteiros = queryUsuarios.Select(d => d.IdentificadorUsuario);
+            if (string.IsNullOrEmpty(Tipo) || Tipo == "A")
+            {
+                var queryAtracao = this.Context.AvaliacaoAtracoes.Where(d => !d.DataExclusao.HasValue).Where(d => d.Nota.HasValue).Where(d => !d.ItemAtracao.DataExclusao.HasValue);
+                if (ApenasAmigos || IdentificadorAmigo.HasValue)
+                    queryAtracao = queryAtracao.Where(d => listaInteiros.Contains(d.IdentificadorUsuario));
+                if (!string.IsNullOrWhiteSpace(CodigoGoogle))
+                {
+                    queryAtracao = queryAtracao.Where(e => e.ItemAtracao.CodigoPlace == CodigoGoogle);
+                }
+                else if (!string.IsNullOrEmpty(Nome))
+                {
+                    queryAtracao = queryAtracao.Where(e => e.ItemAtracao.CodigoPlace == null || e.ItemAtracao.CodigoPlace == string.Empty).Where(e => e.ItemAtracao.Nome == Nome);
+                }
+                if (IdentificadorViagem.HasValue)
+                    queryAtracao = queryAtracao.Where(e => e.ItemAtracao.IdentificadorViagem == IdentificadorViagem);
+
+                var listaSaida = queryAtracao.GroupBy(d => new { CodigoGoogle = (d.ItemAtracao.CodigoPlace == null) ? string.Empty : d.ItemAtracao.CodigoPlace, Nome = d.ItemAtracao.CodigoPlace != null && d.ItemAtracao.CodigoPlace != string.Empty ? string.Empty : d.ItemAtracao.Nome })
+                    .Select(d => new ConsultaRankings()
+                    {
+                        CodigoGoogle = d.Key.CodigoGoogle,
+                        Nome = d.Select(e => e.ItemAtracao.Nome).FirstOrDefault(),
+                        Tipo = "A",
+                        Media = d.Average(e => e.Nota),
+                        Avaliacoes = d.Select(e => new UsuarioConsulta() { Comentario = e.Comentario, Nome = e.ItemUsuario.Nome, DataAvaliacao = e.DataAtualizacao, Nota = e.Nota }),
+                        NumeroAvaliacoes = d.Count()
+
+                    }).SelectMany(d => d.Avaliacoes).OrderByDescending(d => d.DataAvaliacao);
+
+                lista.AddRange(listaSaida.ToList());
+            }
+            if (string.IsNullOrEmpty(Tipo) || Tipo == "H")
+            {
+                var queryAtracao = this.Context.HotelAvaliacoes.Where(d => !d.DataExclusao.HasValue).Where(d => d.Nota.HasValue).Where(d => !d.ItemHotel.DataExclusao.HasValue);
+                if (ApenasAmigos || IdentificadorAmigo.HasValue)
+                    queryAtracao = queryAtracao.Where(d => listaInteiros.Contains(d.IdentificadorUsuario));
+                if (!string.IsNullOrWhiteSpace(CodigoGoogle))
+                {
+                    queryAtracao = queryAtracao.Where(e => e.ItemHotel.CodigoPlace == CodigoGoogle);
+                }
+                else if (!string.IsNullOrEmpty(Nome))
+                {
+                    queryAtracao = queryAtracao.Where(e => e.ItemHotel.CodigoPlace == null || e.ItemHotel.CodigoPlace == string.Empty).Where(e => e.ItemHotel.Nome == Nome);
+                }
+                if (IdentificadorViagem.HasValue)
+                    queryAtracao = queryAtracao.Where(e => e.ItemHotel.IdentificadorViagem == IdentificadorViagem);
+
+                var listaSaida = queryAtracao.GroupBy(d => new { CodigoGoogle = (d.ItemHotel.CodigoPlace == null) ? string.Empty : d.ItemHotel.CodigoPlace, Nome = d.ItemHotel.CodigoPlace != null && d.ItemHotel.CodigoPlace != string.Empty ? string.Empty : d.ItemHotel.Nome })
+                    .Select(d => new ConsultaRankings()
+                    {
+                        CodigoGoogle = d.Key.CodigoGoogle,
+                        Nome = d.Select(e => e.ItemHotel.Nome).FirstOrDefault(),
+                        Tipo = "H",
+                        Media = d.Average(e => e.Nota),
+                        Avaliacoes = d.Select(e => new UsuarioConsulta() { Comentario = e.Comentario, Nome = e.ItemUsuario.Nome, DataAvaliacao = e.DataAtualizacao, Nota = e.Nota }) ,
+                        NumeroAvaliacoes = d.Count()
+
+                    }).SelectMany(d => d.Avaliacoes).OrderByDescending(d=>d.DataAvaliacao);
+                lista.AddRange(listaSaida.ToList());
+            }
+            if (string.IsNullOrEmpty(Tipo) || Tipo == "L")
+            {
+                var queryAtracao = this.Context.AvaliacaoLojas.Where(d => !d.DataExclusao.HasValue).Where(d => d.Nota.HasValue).Where(d => !d.ItemLoja.DataExclusao.HasValue);
+                if (ApenasAmigos || IdentificadorAmigo.HasValue)
+                    queryAtracao = queryAtracao.Where(d => listaInteiros.Contains(d.IdentificadorUsuario));
+                if (!string.IsNullOrWhiteSpace(CodigoGoogle))
+                {
+                    queryAtracao = queryAtracao.Where(e => e.ItemLoja.CodigoPlace == CodigoGoogle);
+                }
+                else if (!string.IsNullOrEmpty(Nome))
+                {
+                    queryAtracao = queryAtracao.Where(e => e.ItemLoja.CodigoPlace == null || e.ItemLoja.CodigoPlace == string.Empty).Where(e => e.ItemLoja.Nome == Nome);
+                }
+                if (IdentificadorViagem.HasValue)
+                    queryAtracao = queryAtracao.Where(e => e.ItemLoja.IdentificadorViagem == IdentificadorViagem);
+
+                var listaSaida = queryAtracao.GroupBy(d => new { CodigoGoogle = (d.ItemLoja.CodigoPlace == null) ? string.Empty : d.ItemLoja.CodigoPlace, Nome = d.ItemLoja.CodigoPlace != null && d.ItemLoja.CodigoPlace != string.Empty ? string.Empty : d.ItemLoja.Nome })
+                    .Select(d => new ConsultaRankings()
+                    {
+                        CodigoGoogle = d.Key.CodigoGoogle,
+                        Nome = d.Select(e => e.ItemLoja.Nome).FirstOrDefault(),
+                        Tipo = "L",
+                        Media = d.Average(e => e.Nota),
+                        Avaliacoes =  d.Select(e => new UsuarioConsulta() { Comentario = e.Comentario, Nome = e.ItemUsuario.Nome, DataAvaliacao = e.DataAtualizacao, Nota = e.Nota }) ,
+                        NumeroAvaliacoes = d.Count()
+
+                    }).SelectMany(d => d.Avaliacoes).OrderByDescending(d => d.DataAvaliacao);
+                lista.AddRange(listaSaida.ToList());
+            }
+
+            if (string.IsNullOrEmpty(Tipo) || Tipo == "R")
+            {
+                var queryAtracao = this.Context.RefeicaoPedidos.Where(d => !d.DataExclusao.HasValue).Where(d => d.Nota.HasValue).Where(d => !d.ItemRefeicao.DataExclusao.HasValue);
+                if (ApenasAmigos || IdentificadorAmigo.HasValue)
+                    queryAtracao = queryAtracao.Where(d => listaInteiros.Contains(d.IdentificadorUsuario));
+                if (!string.IsNullOrWhiteSpace(CodigoGoogle))
+                {
+                    queryAtracao = queryAtracao.Where(e => e.ItemRefeicao.CodigoPlace == CodigoGoogle);
+                }
+                else if (!string.IsNullOrEmpty(Nome))
+                {
+                    queryAtracao = queryAtracao.Where(e => e.ItemRefeicao.CodigoPlace == null || e.ItemRefeicao.CodigoPlace == string.Empty).Where(e => e.ItemRefeicao.Nome == Nome);
+                }
+                if (IdentificadorViagem.HasValue)
+                    queryAtracao = queryAtracao.Where(e => e.ItemRefeicao.IdentificadorViagem == IdentificadorViagem);
+
+                var listaSaida = queryAtracao.GroupBy(d => new { CodigoGoogle = (d.ItemRefeicao.CodigoPlace == null) ? string.Empty : d.ItemRefeicao.CodigoPlace, Nome = d.ItemRefeicao.CodigoPlace != null && d.ItemRefeicao.CodigoPlace != string.Empty ? string.Empty : d.ItemRefeicao.Nome })
+                    .Select(d => new ConsultaRankings()
+                    {
+                        CodigoGoogle = d.Key.CodigoGoogle,
+                        Nome = d.Select(e => e.ItemRefeicao.Nome).FirstOrDefault(),
+                        Tipo = "R",
+                        Media = d.Average(e => e.Nota),
+                        Avaliacoes = d.Select(e => new UsuarioConsulta() { Comentario = e.Comentario, Nome = e.ItemUsuario.Nome, DataAvaliacao = e.DataAtualizacao, Nota = e.Nota }) ,
+                        NumeroAvaliacoes = d.Count()
+
+                    }).SelectMany(d => d.Avaliacoes).OrderByDescending(d => d.DataAvaliacao);
+                lista.AddRange(listaSaida.ToList());
+            }
+
+            if (string.IsNullOrEmpty(Tipo) || Tipo == "C")
+            {
+                var queryAtracao = this.Context.AvaliacaoAlugueis.Where(d => !d.DataExclusao.HasValue).Where(d => d.Nota.HasValue).Where(d => d.ItemCarro.Alugado.Value).Where(d => !d.ItemCarro.DataExclusao.HasValue);
+                if (ApenasAmigos || IdentificadorAmigo.HasValue)
+                    queryAtracao = queryAtracao.Where(d => listaInteiros.Contains(d.IdentificadorUsuario));
+                if (!string.IsNullOrEmpty(Nome))
+                {
+                    queryAtracao = queryAtracao.Where(e => e.ItemCarro.Locadora == Nome);
+                }
+                if (IdentificadorViagem.HasValue)
+                    queryAtracao = queryAtracao.Where(e => e.ItemCarro.IdentificadorViagem == IdentificadorViagem);
+
+                var listaSaida = queryAtracao.GroupBy(d => new { CodigoGoogle = string.Empty, Nome = d.ItemCarro.Locadora })
+                    .Select(d => new ConsultaRankings()
+                    {
+                        CodigoGoogle = d.Key.CodigoGoogle,
+                        Nome = d.Key.Nome,
+                        Tipo = "C",
+                        Media = d.Average(e => e.Nota),
+                        Avaliacoes =  d.Select(e => new UsuarioConsulta() { Comentario = e.Comentario, Nome = e.ItemUsuario.Nome, DataAvaliacao = e.DataAtualizacao, Nota = e.Nota }) ,
+                        NumeroAvaliacoes = d.Count()
+
+                    }).SelectMany(d => d.Avaliacoes).OrderByDescending(d => d.DataAvaliacao);
+                lista.AddRange(listaSaida.ToList());
+            }
+
+            if (string.IsNullOrEmpty(Tipo) || Tipo == "VA")
+            {
+                var queryAtracao = this.Context.AvaliacaoAereas.Where(d => !d.DataExclusao.HasValue).Where(d => d.Nota.HasValue).Where(d => !d.ItemViagemAerea.DataExclusao.HasValue);
+                if (ApenasAmigos || IdentificadorAmigo.HasValue)
+                    queryAtracao = queryAtracao.Where(d => listaInteiros.Contains(d.IdentificadorUsuario));
+                if (!string.IsNullOrEmpty(Nome))
+                {
+                    queryAtracao = queryAtracao.Where(e => e.ItemViagemAerea.CompanhiaAerea == Nome);
+                }
+                if (IdentificadorViagem.HasValue)
+                    queryAtracao = queryAtracao.Where(e => e.ItemViagemAerea.IdentificadorViagem == IdentificadorViagem);
+
+                var listaSaida = queryAtracao.GroupBy(d => new { CodigoGoogle = string.Empty, Nome = d.ItemViagemAerea.CompanhiaAerea })
+                    .Select(d => new ConsultaRankings()
+                    {
+                        CodigoGoogle = d.Key.CodigoGoogle,
+                        Nome = d.Key.Nome,
+                        Tipo = "VA",
+                        Media = d.Average(e => e.Nota),
+                        Avaliacoes =  d.Select(e => new UsuarioConsulta() { Comentario = e.Comentario, Nome = e.ItemUsuario.Nome, DataAvaliacao = e.DataAtualizacao, Nota = e.Nota }) ,
+                        NumeroAvaliacoes = d.Count()
+
+                    }).SelectMany(d => d.Avaliacoes).OrderByDescending(d => d.DataAvaliacao);
+                lista.AddRange(listaSaida.ToList());
+            }
+           
+            return lista;
+        }
 
     }
 }

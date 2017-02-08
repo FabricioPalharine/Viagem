@@ -95,6 +95,10 @@ namespace CV.Mobile.Models
             }
         }
 
+        public bool VerCustos
+        {
+            get;set;
+        }
         public bool ViagemAberta
         {
             get

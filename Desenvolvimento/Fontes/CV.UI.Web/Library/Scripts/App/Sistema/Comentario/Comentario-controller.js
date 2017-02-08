@@ -29,6 +29,12 @@
 	       
 	    };
 
+	    vm.Cancelar = function (itemForDelete) {
+	        var posicao = vm.ListaDados.indexOf(itemForDelete);
+	        vm.ListaDados.splice(posicao, 1);
+	        vm.ItemAtual--;
+	    };
+
 	    vm.Excluir = function (itemForDelete) {
 	        vm.loading = true;
 	        Comentario.delete({ id: itemForDelete.Identificador }, function (data) {

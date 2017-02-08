@@ -1951,6 +1951,15 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancelar.
+        /// </summary>
+        public static string Geral_Cancelar {
+            get {
+                return ResourceManager.GetString("Geral_Cancelar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quilômetros.
         /// </summary>
         public static string Geral_KM {
@@ -3301,7 +3310,7 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Devolução do Carro.
+        ///   Looks up a localized string similar to Devolução de Carro.
         /// </summary>
         public static string PontoMapa_CarroDevolucao {
             get {
@@ -3310,7 +3319,7 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Retirada do Carro.
+        ///   Looks up a localized string similar to Retirada de Carro.
         /// </summary>
         public static string PontoMapa_CarroRetirada {
             get {
@@ -3324,6 +3333,15 @@ namespace CV.UI.Web.Resources {
         public static string PontoMapa_Comentario {
             get {
                 return ResourceManager.GetString("PontoMapa_Comentario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deslocamentos.
+        /// </summary>
+        public static string PontoMapa_Deslocamento {
+            get {
+                return ResourceManager.GetString("PontoMapa_Deslocamento", resourceCulture);
             }
         }
         
@@ -3355,7 +3373,16 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parada.
+        ///   Looks up a localized string similar to Nome.
+        /// </summary>
+        public static string PontoMapa_Nome {
+            get {
+                return ResourceManager.GetString("PontoMapa_Nome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aeroporto/Porto/Estação.
         /// </summary>
         public static string PontoMapa_Parada {
             get {
@@ -3459,6 +3486,105 @@ namespace CV.UI.Web.Resources {
         public static string Posicao_Velocidade {
             get {
                 return ResourceManager.GetString("Posicao_Velocidade", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Amigo.
+        /// </summary>
+        public static string Ranking_Amigo {
+            get {
+                return ResourceManager.GetString("Ranking_Amigo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Todos Amigos.
+        /// </summary>
+        public static string Ranking_Amigos {
+            get {
+                return ResourceManager.GetString("Ranking_Amigos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Avaliações.
+        /// </summary>
+        public static string Ranking_Avaliacoes {
+            get {
+                return ResourceManager.GetString("Ranking_Avaliacoes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Avaliações de.
+        /// </summary>
+        public static string Ranking_AvaliacoesDe {
+            get {
+                return ResourceManager.GetString("Ranking_AvaliacoesDe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Companhia de Transporte.
+        /// </summary>
+        public static string Ranking_CompanhiaTransporte {
+            get {
+                return ResourceManager.GetString("Ranking_CompanhiaTransporte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Locadora de Carro.
+        /// </summary>
+        public static string Ranking_Locadoras {
+            get {
+                return ResourceManager.GetString("Ranking_Locadoras", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Número de Registros.
+        /// </summary>
+        public static string Ranking_Melhores {
+            get {
+                return ResourceManager.GetString("Ranking_Melhores", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restaurante.
+        /// </summary>
+        public static string Ranking_Restaurante {
+            get {
+                return ResourceManager.GetString("Ranking_Restaurante", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tipo.
+        /// </summary>
+        public static string Ranking_Tipo {
+            get {
+                return ResourceManager.GetString("Ranking_Tipo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Todos Usuários.
+        /// </summary>
+        public static string Ranking_TodosUsuarios {
+            get {
+                return ResourceManager.GetString("Ranking_TodosUsuarios", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apenas Viagem Selecionada.
+        /// </summary>
+        public static string Ranking_ViagemSelecionada {
+            get {
+                return ResourceManager.GetString("Ranking_ViagemSelecionada", resourceCulture);
             }
         }
         
@@ -4111,7 +4237,7 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Média.
+        ///   Looks up a localized string similar to Nota Média.
         /// </summary>
         public static string Resumo_NotaMedia {
             get {

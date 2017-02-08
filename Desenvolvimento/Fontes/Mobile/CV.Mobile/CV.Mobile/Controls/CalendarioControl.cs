@@ -197,6 +197,7 @@ namespace CV.Mobile.Controls
                   
                 }
                 Label lbl = new Label() { VerticalOptions = LayoutOptions.CenterAndExpand};
+
                 lbl.Text = String.Concat(i.ToString("00"));
                 _grid.Children.Add(lbl, 0, i);
             }

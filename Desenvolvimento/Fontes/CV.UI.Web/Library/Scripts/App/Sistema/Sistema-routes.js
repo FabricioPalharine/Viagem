@@ -1489,7 +1489,47 @@
                       }]
                   }
               })
+              .state('Rankings', {
+                  url: '/Rankings',
+                  templateUrl: 'Sistema/ConsultarRankings',
+                  controller: 'RankingsCtrl',
+                  controllerAs: 'itemExtratoMoeda',
+                  authenticate: true,
+                  params: {
+                      filtro: null
+                  },
+                  resolve: {
+                      deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                          return $ocLazyLoad.load([
+                               {
+                                   name: 'ViagemFactory',
+                                   files: [
+                                       'library/scripts/app/Sistema/Viagem/Viagem-factory.js'
+                                   ]
+                               },
+                              {
+                                  name: 'RankingsController',
+                                  files: [
+                                      'library/scripts/app/Sistema/Consulta/Rankings-controller.js'
+                                  ]
+                              }, {
+                                  name: 'ConsultaFactory',
+                                  files: [
+                                      'library/scripts/app/Sistema/Consulta/Consulta-factory.js'
+                                  ]
+                              },
+                                {
+                                    name: 'UsuarioFactory',
+                                    files: [
+                                        'library/scripts/app/Sistema/Usuario/Usuario-factory.js'
+                                    ]
+                                },
 
+                          ]);
+
+                      }]
+                  }
+              })
          .state('ConsultarPontosMapa', {
              url: '/ConsultarPontosMapa',
              templateUrl: 'Sistema/ConsultarPontosMapa',

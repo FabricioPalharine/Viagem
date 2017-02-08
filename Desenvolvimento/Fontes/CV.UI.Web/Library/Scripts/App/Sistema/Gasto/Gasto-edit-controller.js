@@ -218,6 +218,11 @@
             });
         };
 
+        vm.Cancelar = function () {
+            vm.EscopoAtualizacao.Cancelar(vm.itemGastoOriginal);
+        };
+
+
         vm.close = function () {
             if ($uibModalInstance)
             $uibModalInstance.close();

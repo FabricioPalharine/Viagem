@@ -285,6 +285,9 @@
 		    });
 		};
 
+		vm.Cancelar = function () {
+		    $scope.$parent.itemLoja.Cancelar(vm.itemLoja);
+		};
 
 		vm.ChamarExclusao = function (item, callback1, callback2) {
 		    $scope.$parent.itemLoja.modalPopupTrigger(item, $translate.instant('MensagemExclusao'), $translate.instant('Sim'), $translate.instant('Nao'), callback1, callback2);

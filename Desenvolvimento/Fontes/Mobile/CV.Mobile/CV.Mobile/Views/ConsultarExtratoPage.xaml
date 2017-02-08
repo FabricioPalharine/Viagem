@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.ConsultarExtratoPage"
+             Title="Extrato"   
+              xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+              xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+              xmlns:controles="clr-namespace:CV.Mobile.Controls;assembly=CV.Mobile"
+              x:Name="paginaSelecao">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <local:InverseBooleanConverter x:Key="boolInverterConverter" />
+      <local:IntStringConverter x:Key="intStringConverter" />
+
+    </ResourceDictionary>
+  </ContentPage.Resources>
+
+
+ <ContentPage.ToolbarItems>
+    <ToolbarItem x:Name="PesquisarToolbarItem" Icon="search24.png"  Command="{Binding PesquisarCommand}" />
+
+  </ContentPage.ToolbarItems>
+
+  <ContentPage.Content>
+    <StackLayout Spacing="0">
+      <StackLayout >
+        
+
+          <Label Text="Data Início"  />
+          <controles:NullableDatePicker NullableDate="{Binding ItemCriterioBusca.DataInicioDe}">
+            <controles:NullableDatePicker.Format>dd/MM/yyyy</controles:NullableDatePicker.Format>
+          </controles:NullableDatePicker>
+        
+        <Label Text="Moeda"  />
+        <controles:ExtendedPicker
+                              DisplayProperty="Descricao"
+                              KeyMemberPath="Codigo"
+                              ItemsSource="{Binding ListaMoeda}"
+                              SelectedItem="{Binding ItemCriterioBusca.Moeda , Converter={StaticResource intStringConverter}}"
+                              HorizontalOptions="FillAndExpand"
+      
+                              />
+       
+      </StackLayout>
+
+    </StackLayout>
+  </ContentPage.Content>
+  
+</ContentPage>

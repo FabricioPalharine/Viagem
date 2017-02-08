@@ -56,7 +56,7 @@ namespace CV.UI.Web.Controllers.WebAPI
         public List<Timeline> ConsultarTimeline(CriterioBusca json)
         {
             ConsultaBusiness biz = new ConsultaBusiness();
-            return biz.CarregarTimeline(token.IdentificadorViagem, token.IdentificadorUsuario, json.IdentificadorParticipante, json.DataInicioDe,json.DataInicioAte, json.Count.GetValueOrDefault(20));
+            return biz.CarregarTimeline(token.IdentificadorViagem, token.IdentificadorUsuario, json.IdentificadorParticipante, json.DataInicioDe,json.DataInicioAte, json.Count.GetValueOrDefault(20),json.Tipo,json.Identificador);
         }
 
         [Authorize]
@@ -137,6 +137,16 @@ namespace CV.UI.Web.Controllers.WebAPI
 
         [Authorize]
         [BindJson(typeof(CriterioBusca), "json")]
+        [ActionName("ListarLinhasViagem")]
+        [HttpGet]
+        public List<LinhaMapa> ListarLinhasViagem(CriterioBusca json)
+        {
+            ConsultaBusiness biz = new ConsultaBusiness();
+            return biz.ListarLinhasViagem(token.IdentificadorViagem, json.IdentificadorParticipante, json.DataInicioDe, json.DataInicioAte, json.Tipo);
+        }
+
+        [Authorize]
+        [BindJson(typeof(CriterioBusca), "json")]
         [ActionName("ConsultarCalendarioRealizado")]
         [HttpGet]
         public List<CalendarioRealizado> ConsultarCalendarioRealizado(CriterioBusca json)
@@ -158,5 +168,30 @@ namespace CV.UI.Web.Controllers.WebAPI
             ConsultaBusiness biz = new ConsultaBusiness();
             return biz.CarregarResumoViagem(token.IdentificadorViagem, json.IdentificadorParticipante, json.DataInicioDe, DataFim);
         }
+
+        [Authorize]
+        [BindJson(typeof(CriterioBusca), "json")]
+        [ActionName("ListarRankings")]
+        [HttpGet]
+        public List<ConsultaRankings> ListarRankings(CriterioBusca json)
+        {
+            
+            ConsultaBusiness biz = new ConsultaBusiness();
+            return biz.ListarRankings(json.Aberto.GetValueOrDefault() ? token.IdentificadorViagem : new Nullable<int>(),
+                token.IdentificadorUsuario, json.TipoInteiro == 2, json.IdentificadorParticipante, json.Tipo, json.Count, json.Comentario, json.Nome);
+        }
+
+        [Authorize]
+        [BindJson(typeof(CriterioBusca), "json")]
+        [ActionName("ListarAvaliacoesRankings")]
+        [HttpGet]
+        public List<UsuarioConsulta> ListarAvaliacoesRankings(CriterioBusca json)
+        {
+
+            ConsultaBusiness biz = new ConsultaBusiness();
+            return biz.ListarAvaliacoesRankings(json.Aberto.GetValueOrDefault() ? token.IdentificadorViagem : new Nullable<int>(),
+                token.IdentificadorUsuario, json.TipoInteiro == 2, json.IdentificadorParticipante, json.Tipo,  json.Comentario, json.Nome);
+        }
+        
     }
 }

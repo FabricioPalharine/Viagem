@@ -58,6 +58,7 @@
     <Compile Include="Helpers\ImageResourceExtension.cs" />
     <Compile Include="Helpers\IntDecimalConverter.cs" />
     <Compile Include="Helpers\BooleanImageSourceConverter.cs" />
+    <Compile Include="Helpers\TipoFontAttributeConverter.cs" />
     <Compile Include="Helpers\IntStringConverter.cs" />
     <Compile Include="Helpers\InverseBooleanConverter.cs" />
     <Compile Include="Helpers\Settings.cs" />
@@ -67,6 +68,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\AgendarSugestao.cs" />
+    <Compile Include="Models\AjusteGastoDividido.cs" />
     <Compile Include="Models\AlertaUsuario.cs" />
     <Compile Include="Models\Amigo.cs" />
     <Compile Include="Models\AporteDinheiro.cs" />
@@ -82,6 +84,7 @@
     <Compile Include="Models\CotacaoMoeda.cs" />
     <Compile Include="Models\DataCalendario.cs" />
     <Compile Include="Models\DeParaIdentificador.cs" />
+    <Compile Include="Models\ExtratoMoeda.cs" />
     <Compile Include="Models\FotoRefeicao.cs" />
     <Compile Include="Models\FotoHotel.cs" />
     <Compile Include="Models\FotoAtracao.cs" />
@@ -151,6 +154,7 @@
     <Compile Include="ViewModels\AdicionarAmigoViewModel.cs" />
     <Compile Include="ViewModels\BaseNavigationViewModel.cs" />
     <Compile Include="ViewModels\ConfiguracaoViewModel.cs" />
+    <Compile Include="ViewModels\ConsultasViewModel.cs" />
     <Compile Include="ViewModels\EdicaoAporteDinheiroViewModel.cs" />
     <Compile Include="ViewModels\EdicaoAgendarSugestaoViewModel.cs" />
     <Compile Include="ViewModels\EdicaoCalendarioPrevistoViewModel.cs" />
@@ -175,7 +179,9 @@
     <Compile Include="ViewModels\EditarCotacaoViewModel.cs" />
     <Compile Include="ViewModels\ListagemAmigoViewModel.cs" />
     <Compile Include="ViewModels\ListagemAgrupamentoCidadeViewModel.cs" />
+    <Compile Include="ViewModels\ConsultarGastoDivididoViewModel.cs" />
     <Compile Include="ViewModels\ListagemCalendarioPrevistoViewModel.cs" />
+    <Compile Include="ViewModels\ConsultarExtratoViewModel.cs" />
     <Compile Include="ViewModels\ListagemViagemAereaCustoViewModel.cs" />
     <Compile Include="ViewModels\ListagemViagemAereaViewModel.cs" />
     <Compile Include="ViewModels\ListagemGastoViewModel.cs" />
@@ -227,8 +233,20 @@
     <Compile Include="Views\ConfiguracaoPage.xaml.cs">
       <DependentUpon>ConfiguracaoPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ConsultarExtratoPage.xaml.cs">
+      <DependentUpon>ConsultarExtratoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarGastoDivididoPage.xaml.cs">
+      <DependentUpon>ConsultarGastoDivididoPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ListagemCalendarioPrevistoPage.xaml.cs">
       <DependentUpon>ListagemCalendarioPrevistoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultasPage.xaml.cs">
+      <DependentUpon>ConsultasPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarExtratoListaPage.xaml.cs">
+      <DependentUpon>ConsultarExtratoListaPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TextoPopupPage.xaml.cs">
       <DependentUpon>TextoPopupPage.xaml</DependentUpon>
@@ -1008,6 +1026,30 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\AguardeProcessandoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultasPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarExtratoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarExtratoListaPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarGastoDivididoPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

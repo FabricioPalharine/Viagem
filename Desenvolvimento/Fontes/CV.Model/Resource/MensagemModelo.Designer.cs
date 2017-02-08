@@ -943,6 +943,15 @@ namespace CV.Model.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Companhia de Transporte.
+        /// </summary>
+        internal static string CompanhiaTransporte {
+            get {
+                return ResourceManager.GetString("CompanhiaTransporte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O campo Data Cotação é obrigatório.
         /// </summary>
         internal static string CotacaoMoeda_DataCotacao {
@@ -1902,6 +1911,15 @@ namespace CV.Model.Resource {
         internal static string ListaCompra_Status {
             get {
                 return ResourceManager.GetString("ListaCompra_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Locadora.
+        /// </summary>
+        internal static string Locadora {
+            get {
+                return ResourceManager.GetString("Locadora", resourceCulture);
             }
         }
         

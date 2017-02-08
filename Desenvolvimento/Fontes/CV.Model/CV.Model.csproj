@@ -61,6 +61,7 @@
     <Compile Include="Dominio\enumStatusListaCompra.cs" />
     <Compile Include="Dominio\enumTipoTransporte.cs" />
     <Compile Include="pCalendarioRealizado.cs" />
+    <Compile Include="pConsultaRankings.cs" />
     <Compile Include="pLinhaMapa.cs" />
     <Compile Include="pIntervaloDeslocamento.cs" />
     <Compile Include="pLojaItens.cs" />

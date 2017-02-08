@@ -347,7 +347,9 @@
 		        $scope.$parent.itemViagemAerea.Excluir(vm.itemOriginal)
 		    });
 		};
-
+		vm.Cancelar = function () {
+		    $scope.$parent.itemViagemAerea.Cancelar(vm.itemOriginal);
+		};
 		vm.SelecionarPosicao = function (itemAeroporto) {
 		    $uibModal.open({
 		        templateUrl: 'modalMapa.html',

@@ -78,7 +78,8 @@ namespace CV.UI.Web.Hubs
         {
             var UsuariosConectados = UsuariosConetados.Where(x => x.IdentificadorViagem == IdentificadorViagem && x.AuthenticationToken != Context.ConnectionId);
             foreach (var itemUsuario in UsuariosConectados)
-                Clients.Client(itemUsuario.AuthenticationToken).AvisarAlertaAtualizacao(TipoAtualizacao, Identificador, Inclusao);
+
+                Clients.Client(itemUsuario.AuthenticationToken).avisarAlertaAtualizacao(TipoAtualizacao, Identificador, Inclusao);
         }
 
         public override System.Threading.Tasks.Task OnDisconnected(bool stopCalled)

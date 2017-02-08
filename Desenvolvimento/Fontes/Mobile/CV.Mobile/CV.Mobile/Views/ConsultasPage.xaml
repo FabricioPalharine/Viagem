@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.ConsultasPage"
+               xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+              xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+              xmlns:controles="clr-namespace:CV.Mobile.Controls;assembly=CV.Mobile"
+             Title="Consultas">
+  <ContentPage.Content>
+    <StackLayout VerticalOptions="FillAndExpand">
+     
+      <ListView x:Name="listView" HasUnevenRows="True" VerticalOptions="FillAndExpand" SeparatorVisibility="None" ItemsSource="{Binding ItensMenu}"  SelectedItem="{Binding ItemSelecionado, Mode=TwoWay}"  >
+        <ListView.Behaviors>
+          <behaviors:EventHandlerBehavior EventName="ItemTapped">
+            <behaviors:InvokeCommandAction Command="{Binding ItemTappedCommand}"   />
+          </behaviors:EventHandlerBehavior>
+        </ListView.Behaviors>
+        <ListView.ItemTemplate >
+          <DataTemplate>
+            <ViewCell >
+
+              <StackLayout VerticalOptions="FillAndExpand" Orientation="Horizontal" Padding="10" IsVisible="{Binding Visible}" >
+                <Image Aspect="AspectFill" HeightRequest ="20" WidthRequest="20" Source="{Binding IconSource}"  />
+                <Label Text="{Binding Title}" YAlign="Start" Font="Medium"  />
+              </StackLayout>
+            </ViewCell>
+          </DataTemplate>
+
+        </ListView.ItemTemplate>
+      </ListView>
+    </StackLayout>
+  </ContentPage.Content>
+</ContentPage>

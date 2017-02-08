@@ -131,7 +131,9 @@
                     <a role="button" class="btn btn-primary pull-right" title="@TextosPaginas.Geral_Salvar" ng-click="itemGastoEdit.salvar()">
                         <span class="fa fa-save" aria-hidden="true"></span>
                     </a>
-
+                    <a role="button" class="btn btn-primary pull-right" title="@TextosPaginas.Geral_Cancelar" ng-click="itemEdit.Cancelar()" ng-if="!itemGastoEdit.itemGasto.Identificador">
+                        <span class="fa fa-close" aria-hidden="true"></span>
+                    </a>
                     <a role="button" class="btn btn-primary pull-right" title="@TextosPaginas.Excluir" ng-click="itemGastoEdit.VerificarExclusao()" ng-if="itemGastoEdit.itemGasto.Identificador">
                         <span class="fa fa-trash-o" aria-hidden="true"></span>
                     </a>

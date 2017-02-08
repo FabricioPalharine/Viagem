@@ -39,5 +39,7 @@ namespace CV.UI.Web.Models
         public int? IdentificadorCidade2 { get; set; }
 
         public int? Moeda { get; set; }
+
+
     }
 }

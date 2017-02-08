@@ -13,5 +13,7 @@ namespace CV.Model
         public int? Nota { get; set; }
         public string Comentario { get; set; }
         public string Pedido { get; set; }
+
+        public DateTime? DataAvaliacao { get; set; }
     }
 }

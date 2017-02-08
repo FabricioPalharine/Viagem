@@ -70,9 +70,16 @@
             AvisarAlertaAtualizacao: function (callback) {
                 $hub.client.avisarAlertaAtualizacao = callback;
             },
+
+            Callback: null
            
         };
 
+        signalR.AvisarAlertaAtualizacao(function (TipoAtualizacao, Identificador, Inclusao) {
+            if (signalR.Callback)
+                signalR.Callback(TipoAtualizacao, Identificador, Inclusao);
+                
+        });
         return signalR;
     }
 }());

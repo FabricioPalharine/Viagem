@@ -1095,4 +1095,10 @@
   <data name="ViagemAereaViajando" xml:space="preserve">
     <value>Viajando {0}</value>
   </data>
+  <data name="CompanhiaTransporte" xml:space="preserve">
+    <value>Companhia de Transporte</value>
+  </data>
+  <data name="Locadora" xml:space="preserve">
+    <value>Locadora</value>
+  </data>
 </root>

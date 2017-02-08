@@ -2,7 +2,7 @@
 	'use strict';
 	angular
 		.module('Sistema')
-		.controller('TimelineCtrl', ['$uibModal', 'Error', '$timeout', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', '$window', 'i18nService', 'Viagem', 'Consulta', 'Dominio', TimelineCtrl]);
+		.controller('TimelineCtrl', ['$uibModal', 'Error', '$timeout', '$state', '$translate', '$scope', 'Auth', '$rootScope', '$stateParams', '$window', 'i18nService', 'Viagem', 'Consulta', 'Dominio','SignalR', TimelineCtrl]);
 
 	function TimelineCtrl($uibModal, Error, $timeout, $state, $translate, $scope, Auth, $rootScope, $stateParams, $window, i18nService, Viagem, Consulta, Dominio, SignalR) {
 		var vm = this;
@@ -25,6 +25,27 @@
 		    });
 		    vm.CarregarDadosWebApi();
 		    
+		    SignalR.Callback = function (TipoAtualizacao, Identificador, Inclusao) {
+		        if (!vm.filtroAtualizacao.DataInicioAte && TipoAtualizacao != 'P')
+		        {
+		            var filtroLocal = jQuery.extend({}, vm.filtroAtualizacao);
+		            filtroLocal.DataInicioDe = null;
+		            filtroLocal.Count = 500;
+		            filtroLocal.Tipo = TipoAtualizacao;
+		            filtroLocal.Identificador = Identificador;
+
+		            Consulta.ListarTimeline({ json: JSON.stringify(filtroLocal) }, function (data) {
+		                angular.forEach(data, function (item) {
+		                    if (vm.ListaDados.filter(function (v) { return v.Identificador == item.Identificador && v.Tipo == item.Tipo; }).length == 0)
+		                    {
+		                        vm.ListaDados.unshift(item);
+		                    }
+		                });
+		            }, function (err) {
+		               
+		            });
+		        }
+		    };
 		};
 
 

@@ -2291,5 +2291,43 @@ namespace CV.Mobile.Services
 
             return itemRefeicao;
         }
+
+        public async Task<List<ExtratoMoeda>> ListarExtratoMoeda(CriterioBusca criterioBusca)
+        {
+            var Lista = new List<ExtratoMoeda>();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Consulta/ConsultarExtratoMoeda?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            })));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                Lista = JsonConvert.DeserializeObject<List<ExtratoMoeda>>(resultado);
+                
+            }
+
+            return Lista;
+        }
+
+        public async Task<List<AjusteGastoDividido>> ListarAjusteGastos(CriterioBusca criterioBusca)
+        {
+            var Lista = new List<AjusteGastoDividido>();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Consulta/ListarGastosAcerto?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            })));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                Lista = JsonConvert.DeserializeObject<List<AjusteGastoDividido>>(resultado);
+
+            }
+
+            return Lista;
+        }
     }
 }

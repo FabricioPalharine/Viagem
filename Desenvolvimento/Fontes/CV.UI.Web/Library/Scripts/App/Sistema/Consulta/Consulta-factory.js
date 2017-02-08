@@ -76,10 +76,37 @@
               //  transformResponse: parseArray,
               isArray: true
           },
+          ListarLinhasViagem: {
+              method: 'GET',
+              params: {
+                  controller: 'ListarLinhasViagem',
+                  json: 'json'
+              },
+              //  transformResponse: parseArray,
+              isArray: true
+          },
           ListarCalendarioRealizado: {
               method: 'GET',
               params: {
                   controller: 'ConsultarCalendarioRealizado',
+                  json: 'json'
+              },
+              //  transformResponse: parseArray,
+              isArray: true
+          },
+          ListarRankings: {
+              method: 'GET',
+              params: {
+                  controller: 'ListarRankings',
+                  json: 'json'
+              },
+              //  transformResponse: parseArray,
+              isArray: true
+          },
+          ListarAvaliacoesRankings: {
+              method: 'GET',
+              params: {
+                  controller: 'ListarAvaliacoesRankings',
                   json: 'json'
               },
               //  transformResponse: parseArray,

@@ -482,6 +482,10 @@
             });
         };
 
+        vm.Cancelar = function () {
+            $scope.$parent.itemAtracao.Cancelar(vm.itemAtracao);
+        };
+
         vm.slickConfig = {
             infinite: true,
             speed: 0,

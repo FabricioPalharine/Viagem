@@ -54,8 +54,11 @@
         };
         
         vm.timeFunction = function (timeObj) {
-            if (timeObj)
-                return moment.duration(timeObj).format("HH:mm:ss");
+
+            if (timeObj) {
+                var obj = moment.duration(timeObj);
+                return Math.floor(obj.asHours()) + moment.utc(obj.asMilliseconds()).format(":mm")
+            }
             else
                 return null;
 

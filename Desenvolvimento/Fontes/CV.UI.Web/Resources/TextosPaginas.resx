@@ -1846,7 +1846,7 @@
     <value>Lojas</value>
   </data>
   <data name="Resumo_NotaMedia" xml:space="preserve">
-    <value>Média</value>
+    <value>Nota Média</value>
   </data>
   <data name="Resumo_Numero" xml:space="preserve">
     <value>Quantidade</value>
@@ -1898,5 +1898,77 @@
   </data>
   <data name="Resumo_Visitadas" xml:space="preserve">
     <value>Visitadas</value>
+  </data>
+  <data name="Home_PontoMapa" xml:space="preserve">
+    <value>Mapa</value>
+  </data>
+  <data name="PontoMapa_CarroDevolucao" xml:space="preserve">
+    <value>Devolução de Carro</value>
+  </data>
+  <data name="PontoMapa_CarroRetirada" xml:space="preserve">
+    <value>Retirada de Carro</value>
+  </data>
+  <data name="PontoMapa_Comentario" xml:space="preserve">
+    <value>Comentário</value>
+  </data>
+  <data name="PontoMapa_Deslocamento" xml:space="preserve">
+    <value>Deslocamentos</value>
+  </data>
+  <data name="PontoMapa_Foto" xml:space="preserve">
+    <value>Foto</value>
+  </data>
+  <data name="PontoMapa_Gasto" xml:space="preserve">
+    <value>Gasto</value>
+  </data>
+  <data name="PontoMapa_Loja" xml:space="preserve">
+    <value>Loja</value>
+  </data>
+  <data name="PontoMapa_Nome" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="PontoMapa_Parada" xml:space="preserve">
+    <value>Aeroporto/Porto/Estação</value>
+  </data>
+  <data name="PontoMapa_Video" xml:space="preserve">
+    <value>Vídeo</value>
+  </data>
+  <data name="Fechar" xml:space="preserve">
+    <value>Fechar</value>
+  </data>
+  <data name="Geral_Cancelar" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="Ranking_Amigo" xml:space="preserve">
+    <value>Amigo</value>
+  </data>
+  <data name="Ranking_Amigos" xml:space="preserve">
+    <value>Todos Amigos</value>
+  </data>
+  <data name="Ranking_Avaliacoes" xml:space="preserve">
+    <value>Avaliações</value>
+  </data>
+  <data name="Ranking_AvaliacoesDe" xml:space="preserve">
+    <value>Avaliações de</value>
+  </data>
+  <data name="Ranking_CompanhiaTransporte" xml:space="preserve">
+    <value>Companhia de Transporte</value>
+  </data>
+  <data name="Ranking_Locadoras" xml:space="preserve">
+    <value>Locadora de Carro</value>
+  </data>
+  <data name="Ranking_Melhores" xml:space="preserve">
+    <value>Número de Registros</value>
+  </data>
+  <data name="Ranking_Restaurante" xml:space="preserve">
+    <value>Restaurante</value>
+  </data>
+  <data name="Ranking_Tipo" xml:space="preserve">
+    <value>Tipo</value>
+  </data>
+  <data name="Ranking_TodosUsuarios" xml:space="preserve">
+    <value>Todos Usuários</value>
+  </data>
+  <data name="Ranking_ViagemSelecionada" xml:space="preserve">
+    <value>Apenas Viagem Selecionada</value>
   </data>
 </root>

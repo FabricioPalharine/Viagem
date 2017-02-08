@@ -80,7 +80,9 @@
 		        $scope.$parent.itemComentario.Excluir(vm.itemComentario)
 		    });
 		};
-
+		vm.Cancelar = function () {
+		    $scope.$parent.itemComentario.Cancelar(vm.itemComentario);
+		};
 
 
 

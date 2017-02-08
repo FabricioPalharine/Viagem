@@ -311,7 +311,14 @@ namespace CV.Mobile.ViewModels
                 ApenasParticipante = true,
                 ViagemAberta = true
             });
-
+            ItensMenuCompleto.Add(new ItemMenu
+            {
+                Codigo = 23,
+                Title = "Consultas",
+                IconSource = "Dados.png",
+                Visible = false,
+                ApenasParticipante = false
+            });
         }
 
         public async Task ExecutarAcao()
@@ -407,6 +414,10 @@ namespace CV.Mobile.ViewModels
                 {
                     await SincronizarDados(true);
                 }
+                else if (_ItemMenuSelecionado.Codigo == 23)
+                {
+                    await AbrirConsultas();
+                }
                 else
                 {
                     Page pagina = new Page();
@@ -445,6 +456,17 @@ namespace CV.Mobile.ViewModels
             if (_ItemViagem != null && await VerificarOnline())
             {
                 var pagina = new ListagemSugestaoPage() { BindingContext = new ListagemSugestaoViewModel(_ItemViagem) };
+
+                await OnItemMenuSelecionado(pagina, false);
+
+            }
+        }
+
+        private async Task AbrirConsultas()
+        {
+            if (_ItemViagem != null )
+            {
+                var pagina = new ConsultasPage() { BindingContext = new ConsultasViewModel() };
 
                 await OnItemMenuSelecionado(pagina, false);
 

@@ -528,6 +528,12 @@
 		    });
 		};
 
+		vm.Cancelar = function () {
+		    $scope.$parent.itemHotel.Cancelar(vm.itemOriginal);
+		};
+
+
+
 		vm.slickConfig = {
 		    infinite: true,
 		    speed: 0,

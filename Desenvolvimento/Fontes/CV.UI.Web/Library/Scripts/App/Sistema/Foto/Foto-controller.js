@@ -241,30 +241,7 @@
 
 			vm.CarregarDadosWebApi(vm.pageSize, vm.currentItem, vm.AjustarDadosPagina);
 
-			SignalR.AvisarAlertaAtualizacao = function (TipoAtualizacao, Identificador, Inclusao) {
-			    if (TipoAtualizacao == "F")
-			    {
-			        var itemPesquisa = { Index: 0, Count: 1, Identificador: Identificador };
-
-			        var itens = $.grep(vm.ListaDados, function (e) { return e.Identificador == Identificador; });
-			        if (itens.length == 0 && Inclusao && !vm.continuaPesquisando) {
-			            Foto.list({ json: JSON.stringify(itemPesquisa) }, function (data) {
-			                vm.ListaDados.push(data.Lista[0]);
-			            }, function (err) {
-			                Error.showError('error', 'Ops!', $translate.instant('ErroRequisicao'), true);
-			            });
-			        }
-			        else if (itens.length  > 0)
-			        {
-			            var Posicao = vm.ListaDados.indexOf(itens[0]);
-			            Foto.list({ json: JSON.stringify(itemPesquisa) }, function (data) {
-			                vm.ListaDados.splice(Posicao,1, data.Lista[0]);
-			            }, function (err) {
-			                Error.showError('error', 'Ops!', $translate.instant('ErroRequisicao'), true);
-			            });
-			        }
-			    }
-			};
+			
 		};
 
 
