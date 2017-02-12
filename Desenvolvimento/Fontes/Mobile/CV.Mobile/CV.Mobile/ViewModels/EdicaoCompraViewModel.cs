@@ -236,7 +236,7 @@ namespace CV.Mobile.ViewModels
                     ItemGasto.Usuarios.Clear();
 
 
-                ItemGasto.Data = ItemGasto.Data.GetValueOrDefault().Date.Add(ItemGasto.Hora.GetValueOrDefault());
+                ItemGasto.Data = DateTime.SpecifyKind(ItemGasto.Data.GetValueOrDefault().Date.Add(ItemGasto.Hora.GetValueOrDefault()), DateTimeKind.Unspecified);
 
                 ResultadoOperacao Resultado = new ResultadoOperacao();
                 GastoCompra pItemGasto = null;
@@ -250,7 +250,6 @@ namespace CV.Mobile.ViewModels
                             var Jresultado = (JObject)Resultado.ItemRegistro;
                             pItemGasto = Jresultado.ToObject<GastoCompra>();
                             AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "GL", Resultado.IdentificadorRegistro.GetValueOrDefault(), !ItemCompra.Identificador.HasValue);
-
                             await DatabaseService.SalvarGastoCompra(pItemGasto);
 
                         }
@@ -275,6 +274,7 @@ namespace CV.Mobile.ViewModels
 
                     ItemGasto.Identificador = pItemGasto.ItemGasto.Identificador; ;
                     ItemCompra.Identificador = pItemGasto.Identificador;
+                    ItemCompra.IdentificadorGasto = pItemGasto.IdentificadorGasto;
                     if (ItemCompra.ItensComprados == null)
                         ItemCompra.ItensComprados = new MvvmHelpers.ObservableRangeCollection<Models.ItemCompra>();
                     if (!ListaPaginas.Any())

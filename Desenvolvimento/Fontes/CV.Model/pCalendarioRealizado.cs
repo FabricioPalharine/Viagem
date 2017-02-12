@@ -33,7 +33,7 @@ namespace CV.Model
                 if (Tipo == "CR")
                     Texto = String.Format(MensagemModelo.CarroRetirada, Nome, Complemento ?? string.Empty);
                 if (Tipo == "CD")
-                    Texto = String.Format(MensagemModelo.CarroRetirada, Nome, Complemento ?? string.Empty);
+                    Texto = String.Format(MensagemModelo.CarroDevolucao, Nome, Complemento ?? string.Empty);
                 if (Tipo == "DC")
                     Texto = String.Format(MensagemModelo.CarroDeslocamento, Nome);
                 if (Tipo == "RC")

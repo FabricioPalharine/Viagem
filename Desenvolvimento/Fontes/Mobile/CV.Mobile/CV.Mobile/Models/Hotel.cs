@@ -50,6 +50,8 @@ namespace CV.Mobile.Models
         [Ignore]
 
 
+        public bool Selecionado { get; set; }
+        [Ignore]
         public ObservableRangeCollection<HotelEvento> Eventos { get; set; }
 
         public int? Raio { get; set; }

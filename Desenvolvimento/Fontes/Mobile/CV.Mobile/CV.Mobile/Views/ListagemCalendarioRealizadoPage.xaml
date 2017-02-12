@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.ListagemCalendarioRealizadoPage"
+             Title="Calendário"
+              xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+              xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+              xmlns:controles="clr-namespace:CV.Mobile.Controls;assembly=CV.Mobile"
+             xmlns:cv="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.CarouselView"
+              x:Name="paginaSelecao">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <local:InverseBooleanConverter x:Key="boolInverterConverter" />
+      <local:IntStringConverter x:Key="intStringConverter" />
+      <local:BooleanFileImageSourceConverter x:Key="boolImage" />
+
+    </ResourceDictionary>
+  </ContentPage.Resources>
+
+
+  <ContentPage.ToolbarItems>
+    <ToolbarItem  Icon="{Binding ModoPesquisa, Converter={StaticResource boolImage}}"  Command="{Binding TrocarExibicaoCommand}"    />
+
+  </ContentPage.ToolbarItems>
+
+  <ContentPage.Content>
+    <StackLayout Spacing="0">
+      <ListView VerticalOptions="FillAndExpand" SeparatorVisibility="None" ItemsSource="{Binding ListaDados}" SelectedItem="{Binding ItemSelecionado, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="True"  IsPullToRefreshEnabled="true"  IsRefreshing="{Binding IsLoadingLista, Mode=TwoWay}" RefreshCommand="{Binding RecarregarListaCommand}"  IsVisible="{Binding ModoPesquisa, Converter={StaticResource boolInverterConverter}}" >
+       
+
+
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ViewCell >
+              <Grid>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+
+                  <ColumnDefinition Width="100*" />
+                  <ColumnDefinition Width="50*" />
+                  <ColumnDefinition Width="50*" />
+
+                </Grid.ColumnDefinitions>
+                <Label Text="{Binding Nome}" HorizontalTextAlignment="Center" Grid.Column="0"></Label>
+                <Label Text="{Binding DataInicio, StringFormat='{0:dd/MM/yyyy HH:mm}'}" HorizontalTextAlignment="Center" Grid.Column="1"></Label>
+                <Label Text="{Binding DataFim, StringFormat='{0:dd/MM/yyyy HH:mm}'}" HorizontalTextAlignment="Center" Grid.Column="2"></Label>
+
+              </Grid>
+            </ViewCell>
+
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+      <StackLayout  IsVisible="{Binding ModoPesquisa}" VerticalOptions="FillAndExpand">
+        <DatePicker Date="{Binding Data}" VerticalOptions="Start">
+          <DatePicker.Format>dd/MM/yyyy</DatePicker.Format>
+        </DatePicker>
+
+        <AbsoluteLayout VerticalOptions="FillAndExpand">
+
+          <cv:CarouselView ItemsSource="{Binding DatasCalendario}" HorizontalOptions="FillAndExpand" Position="{Binding Posicao}" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1.0, 1.0">
+            <cv:CarouselView.Behaviors>
+              <behaviors:EventHandlerBehavior EventName="PositionSelected">
+                <behaviors:InvokeCommandAction Command="{Binding TrocarPosicaoCommand}"   />
+              </behaviors:EventHandlerBehavior>
+            </cv:CarouselView.Behaviors>
+            <cv:CarouselView.ItemTemplate>
+              <DataTemplate>
+                <StackLayout >
+                  <ScrollView>
+                    <controles:CalendarioControl VerticalOptions="FillAndExpand" DataCalendario="{Binding Data, Mode=OneWay}" Agendamentos="{Binding Source={x:Reference paginaSelecao}, Path=BindingContext.ListaDados}" AgendaSelectedCommand="{Binding Source={x:Reference paginaSelecao}, Path=BindingContext.AbrirAgendaCommand}">
+
+                    </controles:CalendarioControl>
+                  </ScrollView>
+                </StackLayout>
+              </DataTemplate>
+            </cv:CarouselView.ItemTemplate>
+          </cv:CarouselView>
+        </AbsoluteLayout>
+
+      </StackLayout>
+    </StackLayout>
+  </ContentPage.Content>
+
+</ContentPage>

@@ -1,0 +1,241 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.ConsultarResumoDadosPage"
+             Title="Resumo"
+              xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+              xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+              xmlns:controles="clr-namespace:CV.Mobile.Controls;assembly=CV.Mobile"
+              x:Name="paginaSelecao">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <local:InverseBooleanConverter x:Key="boolInverterConverter" />
+      <local:IntStringConverter x:Key="intStringConverter" />
+
+    </ResourceDictionary>
+  </ContentPage.Resources>
+
+
+  <ContentPage.ToolbarItems>
+    <ToolbarItem x:Name="PesquisarToolbarItem" Icon="search24.png"  Command="{Binding PesquisarCommand}" />
+
+  </ContentPage.ToolbarItems>
+
+  <ContentPage.Content>
+    <ScrollView>
+      <StackLayout Spacing="0">
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Atrações Visitadas:" >
+          </Label>
+          <Label Text="{Binding ItemResumo.AtracoesVisitadas}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Tempo em Atração:" >
+          </Label>
+          <Label Text="{Binding ItemResumo.MinutosAtracao, StringFormat='{0:h\\:mm}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Nota Média Atração:" >
+          </Label>
+          <Label Text="{Binding ItemResumo.NotaMediaAtracao, StringFormat='{0:N1}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal" IsVisible="{Binding VerGastos}">
+          <Label Text="Gasto com Atração:" >
+          </Label>
+          <Label Text="{Binding ItemResumo.TotalReaisAtracao, StringFormat='{0:N1}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Hospedagem Utilizadas:" >
+          </Label>
+          <Label Text="{Binding ItemResumo.NumeroHotel}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Noites Hospedadas:" >
+          </Label>
+          <Label Text="{Binding ItemResumo.NoitesHotel}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Tempo nas Hospedagens:" >
+          </Label>
+          <Label Text="{Binding ItemResumo.TempoHotel, StringFormat='{0:h\\:mm}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Nota Média Hospedagem:" >
+          </Label>
+          <Label Text="{Binding ItemResumo.NotaMediaHotel, StringFormat='{0:N1}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal" IsVisible="{Binding VerGastos}">
+          <Label Text="Gasto com Hospedagem:" >
+          </Label>
+          <Label Text="{Binding ItemResumo.TotalReaisHospedagem, StringFormat='{0:N2}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal" IsVisible="{Binding VerGastos}">
+          <Label Text="Preço Média Diária:" >
+          </Label>
+          <Label Text="{Binding ItemResumo.PrecoMediaNoite, StringFormat='{0:N2}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Refeições Realizadas:" >
+          </Label>
+          <Label Text="{Binding ItemResumo.RefeicoesRealizadas}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Nota Média Refeições:" >
+          </Label>
+          <Label Text="{Binding ItemResumo.NotaMediaRefeicao, StringFormat='{0:N1}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal" IsVisible="{Binding VerGastos}">
+          <Label Text="Gasto com Refeição:" >
+          </Label>
+          <Label Text="{Binding ItemResumo.TotalReaisRefeicao, StringFormat='{0:N2}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal" IsVisible="{Binding VerGastos}">
+          <Label Text="Preço Médio por Refeição:" >
+          </Label>
+          <Label Text="{Binding ItemResumo.PrecoMediaRefeicao, StringFormat='{0:N2}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Lojas Visitadas" >
+          </Label>
+          <Label Text="{Binding ItemResumo.LojasVisitadas}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Nota Média Lojas:" >
+          </Label>
+          <Label Text="{Binding ItemResumo.NotaMediaLoja, StringFormat='{0:N1}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Compras Realizadas" >
+          </Label>
+          <Label Text="{Binding ItemResumo.ComprasRealizadas}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Itesn Comprados" >
+          </Label>
+          <Label Text="{Binding ItemResumo.ItensComprados}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal" IsVisible="{Binding VerGastos}">
+          <Label Text="Gasto em Compra:" >
+          </Label>
+          <Label Text="{Binding ItemResumo.TotalReaisCompra, StringFormat='{0:N2}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Carros Utilizados" >
+          </Label>
+          <Label Text="{Binding ItemResumo.CarrosUtilizados}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Locadoras Utilizadas" >
+          </Label>
+          <Label Text="{Binding ItemResumo.LocadorasUtilizadas}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Nota Média Locações de Carro:" >
+          </Label>
+          <Label Text="{Binding ItemResumo.NotaMediaAluguel, StringFormat='{0:N1}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Tempo em Carro:" >
+          </Label>
+          <Label Text="{Binding ItemResumo.MinutosDeslocamentoCarro, StringFormat='{0:h\\:mm}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Reabastecimentos Realizados" >
+          </Label>
+          <Label Text="{Binding ItemResumo.NumeroReabastecimento}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Litros Gastos:" >
+          </Label>
+          <Label Text="{Binding ItemResumo.LitrosReabastecidos, StringFormat='{0:N1}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal" IsVisible="{Binding VerGastos}">
+          <Label Text="Gasto com Carro:" >
+          </Label>
+          <Label Text="{Binding ItemResumo.TotalReaisCarro, StringFormat='{0:N2}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal" IsVisible="{Binding VerGastos}">
+          <Label Text="Gasto em Reabastecimento:" >
+          </Label>
+          <Label Text="{Binding ItemResumo.TotalReaisReabastecimento, StringFormat='{0:N2}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal" IsVisible="{Binding VerGastos}">
+          <Label Text="Reais por KM:" >
+          </Label>
+          <Label Text="{Binding ItemResumo.PrecoMedioKM, StringFormat='{0:N2}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+         <StackLayout Orientation="Horizontal">
+          <Label Text="Transportes Utilizados" >
+          </Label>
+          <Label Text="{Binding ItemResumo.DeslcamentosRealizados}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Nota Média Transporte:" >
+          </Label>
+          <Label Text="{Binding ItemResumo.NotaMediaDeslocamento, StringFormat='{0:N1}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Tempo em Transporte:" >
+          </Label>
+          <Label Text="{Binding ItemResumo.MinutosViajando, StringFormat='{0:h\\:mm}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Tempo Aguardando Viagem:" >
+          </Label>
+          <Label Text="{Binding ItemResumo.MinutosAguardando, StringFormat='{0:h\\:mm}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal" IsVisible="{Binding VerGastos}">
+          <Label Text="Gasto com Transporte:" >
+          </Label>
+          <Label Text="{Binding ItemResumo.TotalReaisDeslocamento, StringFormat='{0:N2}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Comentários Feitos" >
+          </Label>
+          <Label Text="{Binding ItemResumo.ComentariosFeitos}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Fotos Tiradas" >
+          </Label>
+          <Label Text="{Binding ItemResumo.FotosTirada}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Vídeos Gravados" >
+          </Label>
+          <Label Text="{Binding ItemResumo.VideosGravados}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Cidades Visitadas" >
+          </Label>
+          <Label Text="{Binding ItemResumo.CidadesRegistradas}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Km Totais" >
+          </Label>
+          <Label Text="{Binding ItemResumo.KmTotaisDeslocados}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Km Caminhados" >
+          </Label>
+          <Label Text="{Binding ItemResumo.KmCaminhados}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Km no Carro" >
+          </Label>
+          <Label Text="{Binding ItemResumo.KmDeslocamentoCarro}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Km Transportes" >
+          </Label>
+          <Label Text="{Binding ItemResumo.KmDeslocamento}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+        </StackLayout>
+      </StackLayout>
+    </ScrollView>
+  </ContentPage.Content>
+
+</ContentPage>

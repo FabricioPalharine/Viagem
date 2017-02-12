@@ -15,6 +15,7 @@ using Plugin.SecureStorage;
 using Plugin.Permissions;
 using Acr.UserDialogs;
 using System.Reflection;
+using FFImageLoading.Forms.Droid;
 
 namespace CV.Mobile.Droid
 {
@@ -31,7 +32,7 @@ namespace CV.Mobile.Droid
             SecureStorageImplementation.StoragePassword = "mudar.123";
             base.OnCreate(bundle);
             AndroidEnvironment.UnhandledExceptionRaiser += AndroidEnvironment_UnhandledExceptionRaiser; ;
-
+            CachedImageRenderer.Init();
             global::Xamarin.Forms.Forms.Init(this, bundle);
             Xamarin.FormsMaps.Init(this, bundle);
             var cv = typeof(Xamarin.Forms.CarouselView);

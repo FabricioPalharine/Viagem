@@ -194,5 +194,7 @@ namespace CV.Mobile.Models
                 _Atualizado = value;
             }
         }
+        [Ignore]
+        public bool Selecionado { get; set; }
     }
 }

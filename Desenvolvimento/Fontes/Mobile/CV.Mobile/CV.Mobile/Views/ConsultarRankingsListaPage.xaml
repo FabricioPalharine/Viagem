@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.ConsultarRankingsListaPage"
+             Title="Rankings"   
+              xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+              xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+              xmlns:controles="clr-namespace:CV.Mobile.Controls;assembly=CV.Mobile"
+              x:Name="paginaSelecao">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <local:InverseBooleanConverter x:Key="boolInverterConverter" />
+      <local:IntStringConverter x:Key="intStringConverter" />
+      <local:TipoFontAttributeConverter x:Key="fontConverter" />
+
+    </ResourceDictionary>
+  </ContentPage.Resources>
+ 
+ <ContentPage.ToolbarItems>
+  
+  </ContentPage.ToolbarItems>
+
+  <ContentPage.Content>
+   
+      <ListView VerticalOptions="FillAndExpand" SeparatorVisibility="None" ItemsSource="{Binding ListaDados}" SelectedItem="{Binding ItemSelecionado, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="True"  IsPullToRefreshEnabled="true"  IsRefreshing="{Binding IsLoadingLista, Mode=TwoWay}" RefreshCommand="{Binding RecarregarListaCommand}"  >
+        <ListView.Behaviors>
+          <behaviors:EventHandlerBehavior EventName="ItemTapped">
+            <behaviors:InvokeCommandAction Command="{Binding ItemTappedCommand}"   />
+          </behaviors:EventHandlerBehavior>
+        </ListView.Behaviors>
+
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ViewCell >
+              <StackLayout>
+                <StackLayout Orientation="Horizontal">
+                  <Label Text="Tipo:" >
+                  </Label>
+                  <Label Text="{Binding TipoDescricao}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                  <Label Text="Nome:" >
+                  </Label>
+                  <Label Text="{Binding Nome}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+
+                </StackLayout>
+               
+                <StackLayout Orientation="Horizontal">
+                  <Label Text="Média:" >
+                  </Label>
+                  <Label Text="{Binding Media,StringFormat='{0:N2}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+
+                  <Label Text="Avaliações:" >
+                  </Label>
+                  <Label Text="{Binding NumeroAvaliacoes}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+
+                </StackLayout>
+              </StackLayout>
+              
+              
+            </ViewCell>
+
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+
+  </ContentPage.Content>
+  
+</ContentPage>

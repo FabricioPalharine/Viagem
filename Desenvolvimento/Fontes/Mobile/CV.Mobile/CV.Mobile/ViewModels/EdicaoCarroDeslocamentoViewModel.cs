@@ -225,10 +225,10 @@ namespace CV.Mobile.ViewModels
                         }
                     }
                 }
-                ItemSalvar.ItemCarroEventoPartida.Data = ItemSalvar.ItemCarroEventoPartida.Data.GetValueOrDefault().Date.Add(ItemSalvar.ItemCarroEventoPartida.Hora.GetValueOrDefault());
+                ItemSalvar.ItemCarroEventoPartida.Data = DateTime.SpecifyKind(ItemSalvar.ItemCarroEventoPartida.Data.GetValueOrDefault().Date.Add(ItemSalvar.ItemCarroEventoPartida.Hora.GetValueOrDefault()), DateTimeKind.Unspecified);
                 if (VisitaConcluida)
                 {
-                    ItemSalvar.ItemCarroEventoChegada.Data = ItemSalvar.ItemCarroEventoChegada.Data.GetValueOrDefault().Date.Add(ItemSalvar.ItemCarroEventoChegada.Hora.GetValueOrDefault());
+                    ItemSalvar.ItemCarroEventoChegada.Data = DateTime.SpecifyKind(ItemSalvar.ItemCarroEventoChegada.Data.GetValueOrDefault().Date.Add(ItemSalvar.ItemCarroEventoChegada.Hora.GetValueOrDefault()), DateTimeKind.Unspecified);
                     if (_PosicaoAtual != null)
                     {
                         ItemSalvar.ItemCarroEventoChegada.Longitude = _PosicaoAtual.Longitude;

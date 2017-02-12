@@ -157,5 +157,13 @@ namespace CV.Mobile.Models
                 SetProperty(ref _TipoArquivo, value);
             }
         }
+
+        public string LinkControle
+        {
+            get
+            {
+                return Video ? LinkThumbnail : LinkFoto;
+            }
+        }
     }
 }

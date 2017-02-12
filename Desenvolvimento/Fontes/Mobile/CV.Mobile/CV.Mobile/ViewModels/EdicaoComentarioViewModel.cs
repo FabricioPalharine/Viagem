@@ -127,7 +127,7 @@ namespace CV.Mobile.ViewModels
             try
             {
                 
-                ItemComentario.Data = ItemComentario.Data.GetValueOrDefault().Date.Add(ItemComentario.Hora.GetValueOrDefault());
+                ItemComentario.Data = DateTime.SpecifyKind(ItemComentario.Data.GetValueOrDefault().Date.Add(ItemComentario.Hora.GetValueOrDefault()), DateTimeKind.Unspecified);
                 ResultadoOperacao Resultado = new ResultadoOperacao();
                 if (Conectado)
                 {

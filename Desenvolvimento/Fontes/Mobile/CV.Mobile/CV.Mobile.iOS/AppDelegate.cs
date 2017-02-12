@@ -12,6 +12,7 @@ using CV.Mobile.Interfaces;
 using Xamarin;
 using TK.CustomMap.iOSUnified;
 using System.Reflection;
+using FFImageLoading.Forms.Touch;
 
 namespace CV.Mobile.iOS
 {
@@ -39,7 +40,7 @@ namespace CV.Mobile.iOS
             NativePlacesApi.Init();
             var cv = typeof(Xamarin.Forms.CarouselView);
             var assembly = Assembly.Load(cv.FullName);
-
+            CachedImageRenderer.Init();
             LoadApplication(new App());
             RegisterDependencies();
             return base.FinishedLaunching(app, options);

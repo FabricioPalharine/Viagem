@@ -55,8 +55,8 @@ namespace CV.Mobile.ViewModels
             {
                 AgendarSugestao itemAgenda = new AgendarSugestao();
                 itemAgenda.itemSugestao = ItemSugestao;
-                ItemAgenda.DataInicio = ItemAgenda.DataInicio.GetValueOrDefault().Date.Add(ItemAgenda.HoraInicio.Value);
-                ItemAgenda.DataFim = ItemAgenda.DataFim.GetValueOrDefault().Date.Add(ItemAgenda.HoraFim.Value);
+                ItemAgenda.DataInicio = DateTime.SpecifyKind(ItemAgenda.DataInicio.GetValueOrDefault().Date.Add(ItemAgenda.HoraInicio.Value), DateTimeKind.Unspecified);
+                ItemAgenda.DataFim = DateTime.SpecifyKind(ItemAgenda.DataFim.GetValueOrDefault().Date.Add(ItemAgenda.HoraFim.Value),DateTimeKind.Unspecified);
                 itemAgenda.itemCalendario = ItemAgenda;
                 ResultadoOperacao Resultado = new ResultadoOperacao();
                 if (Conectado)

@@ -406,6 +406,22 @@ namespace CV.Mobile.Services
             return ListaViagem;
         }
 
+        public async Task<List<Usuario>> CarregarParticipantesAmigo()
+        {
+            var ListaViagem = new List<Usuario>();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Viagem/CarregarParticipantesAmigo"));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                var itemResultado = JsonConvert.DeserializeObject<List<Usuario>>(resultado);
+                ListaViagem = itemResultado;
+            }
+
+            return ListaViagem;
+        }
+        
         public async Task<ResultadoOperacao> SalvarAmigo(ConsultaAmigo itemAmigo)
         {
             ResultadoOperacao itemResultado = new ResultadoOperacao();
@@ -2329,5 +2345,335 @@ namespace CV.Mobile.Services
 
             return Lista;
         }
+
+        public async Task<List<RelatorioGastos>> ListarRelatorioGastos(CriterioBusca criterioBusca)
+        {
+            var Lista = new List<RelatorioGastos>();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Consulta/ListarRelatorioGastos?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            })));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                Lista = JsonConvert.DeserializeObject<List<RelatorioGastos>>(resultado);
+
+            }
+
+            return Lista;
+        }
+        public async Task<List<CalendarioRealizado>> ConsultarCalendarioRealizado(CriterioBusca criterioBusca)
+        {
+            var Lista = new List<CalendarioRealizado>();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Consulta/ConsultarCalendarioRealizado?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            })));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                Lista = JsonConvert.DeserializeObject<List<CalendarioRealizado>>(resultado);
+
+            }
+
+            return Lista;
+        }
+
+        public async Task<ResumoViagem> CarregarResumo(CriterioBusca criterioBusca)
+        {
+            var item = new ResumoViagem();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Consulta/CarregarResumo?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            })));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                item = JsonConvert.DeserializeObject<ResumoViagem>(resultado);
+
+            }
+
+            return item;
+        }
+
+        public async Task<List<ConsultaRankings>> ListarRankings(CriterioBusca criterioBusca)
+        {
+            var Lista = new List<ConsultaRankings>();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Consulta/ListarRankings?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            })));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                Lista = JsonConvert.DeserializeObject<List<ConsultaRankings>>(resultado);
+
+            }
+
+            return Lista;
+        }
+        public async Task<List<UsuarioConsulta>> ListarAvaliacoesRankings(CriterioBusca criterioBusca)
+        {
+            var Lista = new List<UsuarioConsulta>();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Consulta/ListarAvaliacoesRankings?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            })));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                Lista = JsonConvert.DeserializeObject<List<UsuarioConsulta>>(resultado);
+
+            }
+
+            return Lista;
+        }
+
+        public async Task<List<LocaisVisitados>> ListarLocaisVisitados(CriterioBusca criterioBusca)
+        {
+            var Lista = new List<LocaisVisitados>();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Consulta/ListarLocaisVisitados?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            })));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                Lista = JsonConvert.DeserializeObject<List<LocaisVisitados>>(resultado);
+
+            }
+
+            return Lista;
+        }
+
+        public async Task<LocaisVisitados> ConsultarDetalheAtracao(CriterioBusca criterioBusca)
+        {
+            var item = new LocaisVisitados();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Consulta/ConsultarDetalheAtracao?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            })));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                item = JsonConvert.DeserializeObject<LocaisVisitados>(resultado);
+
+            }
+
+            return item;
+        }
+
+        public async Task<LocaisVisitados> ConsultarDetalheHotel(CriterioBusca criterioBusca)
+        {
+            var item = new LocaisVisitados();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Consulta/ConsultarDetalheHotel?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            })));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                item = JsonConvert.DeserializeObject<LocaisVisitados>(resultado);
+
+            }
+
+            return item;
+        }
+
+        public async Task<LocaisVisitados> ConsultarDetalheRestaurante(CriterioBusca criterioBusca)
+        {
+            var item = new LocaisVisitados();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Consulta/ConsultarDetalheRestaurante?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            })));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                item = JsonConvert.DeserializeObject<LocaisVisitados>(resultado);
+
+            }
+
+            return item;
+        }
+
+        public async Task<LocaisVisitados> ConsultarDetalheLoja(CriterioBusca criterioBusca)
+        {
+            var item = new LocaisVisitados();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Consulta/ConsultarDetalheLoja?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            })));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                item = JsonConvert.DeserializeObject<LocaisVisitados>(resultado);
+
+            }
+
+            return item;
+        }
+        public async Task<List<Foto>> ListarFoto(CriterioBusca criterioBusca)
+        {
+            var ListaFoto = new List<Foto>();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Foto/Get?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            })));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                var itemResultado = JsonConvert.DeserializeObject<ResultadoConsultaTipo<Foto>>(resultado);
+                ListaFoto = itemResultado.Lista;
+            }
+
+            return ListaFoto;
+        }
+
+        public async Task<List<Atracao>> CarregarFotoAtracao()
+        {
+            var ListaFoto = new List<Atracao>();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Foto/CarregarFoto"));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                ListaFoto = JsonConvert.DeserializeObject<List<Atracao>>(resultado);
+
+            }
+
+            return ListaFoto;
+        }
+
+        public async Task<List<Hotel>> CarregarFotoHotel()
+        {
+            var ListaFoto = new List<Hotel>();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Foto/CarregarFoto"));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                ListaFoto = JsonConvert.DeserializeObject<List<Hotel>>(resultado);
+
+            }
+
+            return ListaFoto;
+        }
+
+        public async Task<List<Refeicao>> CarregarFotoRefeicao()
+        {
+            var ListaFoto = new List<Refeicao>();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Foto/CarregarFoto"));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                ListaFoto = JsonConvert.DeserializeObject<List<Refeicao>>(resultado);
+
+            }
+
+            return ListaFoto;
+        }
+
+        public async Task<List<Timeline>> ConsultarTimeline(CriterioBusca criterioBusca)
+        {
+            var Lista = new List<Timeline>();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Consulta/ConsultarTimeline?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            })));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                Lista = JsonConvert.DeserializeObject<List<Timeline>>(resultado);
+
+            }
+
+            return Lista;
+        }
+
+        public async Task<Foto> CarregarFoto(int? Identificador)
+        {
+            Foto itemFoto = new Foto();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Foto/Get/", Identificador));
+
+            HttpResponseMessage response = null;
+            response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                itemFoto = JsonConvert.DeserializeObject<Foto>(resultado);
+            }
+
+
+            return itemFoto;
+        }
+
+        public async Task<List<PontoMapa>> ListarPontosViagem(CriterioBusca criterioBusca)
+        {
+            var Lista = new List<PontoMapa>();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Consulta/ListarPontosViagem?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            })));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                Lista = JsonConvert.DeserializeObject<List<PontoMapa>>(resultado);
+
+            }
+
+            return Lista;
+        }
+
+        public async Task<List<LinhaMapa>> ListarLinhasViagem(CriterioBusca criterioBusca)
+        {
+            var Lista = new List<LinhaMapa>();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Consulta/ListarLinhasViagem?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            })));
+            var response = await client.GetAsync(uri);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                Lista = JsonConvert.DeserializeObject<List<LinhaMapa>>(resultado);
+
+            }
+
+            return Lista;
+        }
+
     }
 }

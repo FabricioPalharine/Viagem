@@ -62,8 +62,8 @@ namespace CV.Mobile.ViewModels
             SalvarCommand.ChangeCanExecute();
             try
             {
-                ItemCalendarioPrevisto.DataInicio = ItemCalendarioPrevisto.DataInicio.GetValueOrDefault().Date.Add(ItemCalendarioPrevisto.HoraInicio.Value);
-                ItemCalendarioPrevisto.DataFim = ItemCalendarioPrevisto.DataFim.GetValueOrDefault().Date.Add(ItemCalendarioPrevisto.HoraFim.Value);
+                ItemCalendarioPrevisto.DataInicio = DateTime.SpecifyKind(ItemCalendarioPrevisto.DataInicio.GetValueOrDefault().Date.Add(ItemCalendarioPrevisto.HoraInicio.Value), DateTimeKind.Unspecified);
+                ItemCalendarioPrevisto.DataFim = DateTime.SpecifyKind(ItemCalendarioPrevisto.DataFim.GetValueOrDefault().Date.Add(ItemCalendarioPrevisto.HoraFim.Value), DateTimeKind.Unspecified);
                 ResultadoOperacao Resultado = new ResultadoOperacao();
                 if (Conectado)
                 {

@@ -503,12 +503,12 @@ namespace CV.Mobile.ViewModels
                 if (!VisitaIniciada)
                     ItemHotel.DataEntrada = null;
                 else
-                    ItemHotel.DataEntrada = ItemHotel.DataEntrada.GetValueOrDefault().Date.Add(ItemHotel.HoraEntrada.GetValueOrDefault());
+                    ItemHotel.DataEntrada = DateTime.SpecifyKind(ItemHotel.DataEntrada.GetValueOrDefault().Date.Add(ItemHotel.HoraEntrada.GetValueOrDefault()), DateTimeKind.Unspecified);
 
                 if (!VisitaConcluida)
                     ItemHotel.DataSaidia = null;
                 else
-                    ItemHotel.DataSaidia = ItemHotel.DataEntrada.GetValueOrDefault().Date.Add(ItemHotel.HoraSaida.GetValueOrDefault());
+                    ItemHotel.DataSaidia = DateTime.SpecifyKind(ItemHotel.DataEntrada.GetValueOrDefault().Date.Add(ItemHotel.HoraSaida.GetValueOrDefault()), DateTimeKind.Unspecified) ;
 
                 if (VisitaConcluida && !_ItemHotelOriginal.DataSaidia.HasValue && ItemHotel.Eventos != null)
                 {

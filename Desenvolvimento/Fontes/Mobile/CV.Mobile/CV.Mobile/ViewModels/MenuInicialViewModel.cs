@@ -104,9 +104,11 @@ namespace CV.Mobile.ViewModels
         private async Task AbrirRankings()
         {
 
-            var vm = new PosicaoMapaViewModel(new Xamarin.Forms.Maps.Position(26, 26));
-            var Pagina = new PosicaoMapaPage() { BindingContext = vm };
-            await PushAsync(Pagina);
+            if (await VerificarOnline())
+            {
+                var Pagina = new ConsultarRankingsPage() { BindingContext = new ConsultarRankingsViewModel() };
+                await PushAsync(Pagina);
+            }
 
         }
 

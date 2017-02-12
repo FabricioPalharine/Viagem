@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MvvmHelpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CV.Mobile.Models
 {
-    public class CriterioBusca
+    public class CriterioBusca: ObservableObject
     {
 
         public int? Index { get; set; }
@@ -17,7 +18,7 @@ namespace CV.Mobile.Models
 
         public string Nome { get; set; }
 
-        public int? IdentificadorParticipante { get; set; }
+        private int? _IdentificadorParticipante;
 
         public DateTime? DataInicioDe { get; set; }
 
@@ -36,9 +37,40 @@ namespace CV.Mobile.Models
         public string Tipo { get; set; }
         public int? Situacao { get; set; }
 
-        public int? TipoInteiro { get; set; }
+        private int? _TipoInteiro;
         public int? IdentificadorCidade2 { get; set; }
 
         public int? Moeda { get; set; }
+
+        public int? IdentificadorParticipante
+        {
+            get
+            {
+                return _IdentificadorParticipante;
+            }
+
+            set
+            {
+                SetProperty(ref _IdentificadorParticipante, value);
+            }
+        }
+
+        public int? TipoInteiro
+        {
+            get
+            {
+                return _TipoInteiro;
+            }
+
+            set
+            {
+                SetProperty(ref _TipoInteiro, value);
+            }
+        }
+
+        public CriterioBusca Clone()
+        {
+            return (CriterioBusca)this.MemberwiseClone();
+        }
     }
 }

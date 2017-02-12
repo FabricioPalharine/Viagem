@@ -335,7 +335,7 @@ namespace CV.Mobile.ViewModels
                 if (ItemRefeicao.IdentificadorAtracao == 0)
                     ItemRefeicao.IdentificadorAtracao = null;
 
-                ItemRefeicao.Data = ItemRefeicao.Data.GetValueOrDefault().Date.Add(ItemRefeicao.Hora.GetValueOrDefault());
+                ItemRefeicao.Data = DateTime.SpecifyKind(ItemRefeicao.Data.GetValueOrDefault().Date.Add(ItemRefeicao.Hora.GetValueOrDefault()), DateTimeKind.Unspecified) ;
 
                 ResultadoOperacao Resultado = new ResultadoOperacao();
                 Refeicao pItemRefeicao = null;

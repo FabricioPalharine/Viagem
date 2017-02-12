@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.ConsultarMapaExibicaoPage"
+             Title="Mapa"
+              xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+             xmlns:controles="clr-namespace: CV.Mobile.Controls;assembly=CV.Mobile"
+             xmlns:tkmap="clr-namespace:TK.CustomMap;assembly=TK.CustomMap"
+             >
+  <ContentPage.ToolbarItems>
+  </ContentPage.ToolbarItems>
+ 
+    <RelativeLayout  VerticalOptions="FillAndExpand" >
+    
+      <tkmap:TKCustomMap MapRegion="{Binding LimiteMapa, Mode=TwoWay}" CustomPins="{Binding Pins}"  MapCenter="{Binding MapCenter}" Polylines="{Binding Polylines}" 
+    
+                          RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent,
+            Property=Height,Factor=0,Constant=0}"
+                          RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width,Factor=1,Constant=0}"
+                        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1,Constant=0}"
+
+                         ></tkmap:TKCustomMap>
+      
+    </RelativeLayout>
+
+</ContentPage>

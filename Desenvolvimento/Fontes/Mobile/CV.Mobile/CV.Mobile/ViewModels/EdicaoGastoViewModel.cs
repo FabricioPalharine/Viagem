@@ -236,7 +236,7 @@ namespace CV.Mobile.ViewModels
                     ItemGasto.Usuarios.Clear();
                 if (ExibeHora)
                 {
-                    ItemGasto.Data = ItemGasto.Data.GetValueOrDefault().Date.Add(ItemGasto.Hora.GetValueOrDefault());
+                    ItemGasto.Data = DateTime.SpecifyKind(ItemGasto.Data.GetValueOrDefault().Date.Add(ItemGasto.Hora.GetValueOrDefault()), DateTimeKind.Unspecified);
                 }
                 ResultadoOperacao Resultado = null;
                 Gasto pItemGasto = null;

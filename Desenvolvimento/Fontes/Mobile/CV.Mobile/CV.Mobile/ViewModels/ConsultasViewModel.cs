@@ -95,13 +95,7 @@ namespace CV.Mobile.ViewModels
                 Visible = true,
                 ApenasParticipante = false
             });
-            ItensMenuCompleto.Add(new ItemMenu
-            {
-                Codigo = 9,
-                Title = "Calendário Previsto",
-                IconSource = "Dados.png",
-                Visible = false
-            });
+         
             ItensMenuCompleto.Add(new ItemMenu
             {
                 Codigo = 10,
@@ -158,7 +152,34 @@ namespace CV.Mobile.ViewModels
             {
                 await AbrirAjusteGasto();
             }
-
+            else if (itemMenu.Codigo == 3)
+            {
+                await AbrirRelatorioGasto();
+            }
+            else if (itemMenu.Codigo == 4)
+            {
+                await AbrirTimeline();
+            }
+            else if (itemMenu.Codigo == 5)
+            {
+                await AbrirLocaisVisitados();
+            }
+            else if (itemMenu.Codigo == 6)
+            {
+                await AbrirMapa();
+            }
+            else if (itemMenu.Codigo == 7)
+            {
+                await AbrirFotos();
+            }
+            else if (itemMenu.Codigo == 8)
+            {
+                await AbrirCalendarioPrevisto();
+            }
+            else if (itemMenu.Codigo == 10)
+            {
+                await AbrirResumo();
+            }
         }
 
         private async Task AbrirAjusteGasto()
@@ -171,7 +192,77 @@ namespace CV.Mobile.ViewModels
             }
 
         }
+        private async Task AbrirMapa()
+        {
+            if (await VerificarOnline())
+            {
+                var pagina = new ConsultarMapaPage() { BindingContext = new ConsultarPontosMapaViewModel() };
 
+                await PushAsync(pagina);
+            }
+
+        }
+        private async Task AbrirTimeline()
+        {
+            if (await VerificarOnline())
+            {
+                var pagina = new ConsultarTimelinePage() { BindingContext = new ConsultarTimelineViewModel() };
+
+                await PushAsync(pagina);
+            }
+
+        }
+        private async Task AbrirLocaisVisitados()
+        {
+            if (await VerificarOnline())
+            {
+                var pagina = new ConsultarLocaisVisitadoPage() { BindingContext = new ConsultarLocaisVisitadosViewModel() };
+
+                await PushAsync(pagina);
+            }
+
+        }
+        private async Task AbrirFotos()
+        {
+            if (await VerificarOnline())
+            {
+                var pagina = new ConsultarFotoPage() { BindingContext = new ConsultarFotosViewModel() };
+
+                await PushAsync(pagina);
+            }
+
+        }
+        private async Task AbrirResumo()
+        {
+            if (await VerificarOnline())
+            {
+                var pagina = new ConsultarResumoPage() { BindingContext = new ConsultarResumoViewModel() };
+
+                await PushAsync(pagina);
+            }
+
+        }
+
+        private async Task AbrirCalendarioPrevisto()
+        {
+            if (await VerificarOnline())
+            {
+                var pagina = new ConsultarCalendarioRealizadoPage() { BindingContext = new ListagemCalendarioRealizadoViewModel() };
+
+                await PushAsync(pagina);
+            }
+
+        }
+        private async Task AbrirRelatorioGasto()
+        {
+            if (await VerificarOnline())
+            {
+                var pagina = new ConsultarRelatorioGastoPage() { BindingContext = new ConsultarRelatorioGastosViewModel() };
+
+                await PushAsync(pagina);
+            }
+
+        }
         private async Task<bool> VerificarOnline()
         {
             bool Online = false;

@@ -403,7 +403,7 @@ namespace CV.Mobile.ViewModels
                     }
                     else
                     {
-                        ItemCarro.ItemCarroEventoRetirada.Data = ItemCarro.ItemCarroEventoRetirada.Data.GetValueOrDefault().Date.Add(ItemCarro.ItemCarroEventoRetirada.Hora.GetValueOrDefault());
+                        ItemCarro.ItemCarroEventoRetirada.Data = DateTime.SpecifyKind(ItemCarro.ItemCarroEventoRetirada.Data.GetValueOrDefault().Date.Add(ItemCarro.ItemCarroEventoRetirada.Hora.GetValueOrDefault()), DateTimeKind.Unspecified);
                         if (_UltimaPosicao != null)
                         {
                             ItemCarro.ItemCarroEventoRetirada.Latitude = _UltimaPosicao.Latitude;
@@ -419,7 +419,7 @@ namespace CV.Mobile.ViewModels
                     }
                     else
                     {
-                        ItemCarro.ItemCarroEventoDevolucao.Data = ItemCarro.ItemCarroEventoDevolucao.Data.GetValueOrDefault().Date.Add(ItemCarro.ItemCarroEventoDevolucao.Hora.GetValueOrDefault());
+                        ItemCarro.ItemCarroEventoDevolucao.Data = DateTime.SpecifyKind(ItemCarro.ItemCarroEventoDevolucao.Data.GetValueOrDefault().Date.Add(ItemCarro.ItemCarroEventoDevolucao.Hora.GetValueOrDefault()), DateTimeKind.Unspecified);
                         if (_UltimaPosicao != null)
                         {
                             ItemCarro.ItemCarroEventoDevolucao.Latitude = _UltimaPosicao.Latitude;

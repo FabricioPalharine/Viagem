@@ -69,6 +69,1982 @@ namespace CV.Mobile.Droid
 			global::Plugin.Vibrate.Resource.String.ApplicationName = global::CV.Mobile.Droid.Resource.String.ApplicationName;
 			global::Plugin.Vibrate.Resource.String.Hello = global::CV.Mobile.Droid.Resource.String.Hello;
 			global::Splat.Resource.String.library_name = global::CV.Mobile.Droid.Resource.String.library_name;
+			global::TK.CustomMap.Droid.Resource.Animation.abc_fade_in = global::CV.Mobile.Droid.Resource.Animation.abc_fade_in;
+			global::TK.CustomMap.Droid.Resource.Animation.abc_fade_out = global::CV.Mobile.Droid.Resource.Animation.abc_fade_out;
+			global::TK.CustomMap.Droid.Resource.Animation.abc_grow_fade_in_from_bottom = global::CV.Mobile.Droid.Resource.Animation.abc_grow_fade_in_from_bottom;
+			global::TK.CustomMap.Droid.Resource.Animation.abc_popup_enter = global::CV.Mobile.Droid.Resource.Animation.abc_popup_enter;
+			global::TK.CustomMap.Droid.Resource.Animation.abc_popup_exit = global::CV.Mobile.Droid.Resource.Animation.abc_popup_exit;
+			global::TK.CustomMap.Droid.Resource.Animation.abc_shrink_fade_out_from_bottom = global::CV.Mobile.Droid.Resource.Animation.abc_shrink_fade_out_from_bottom;
+			global::TK.CustomMap.Droid.Resource.Animation.abc_slide_in_bottom = global::CV.Mobile.Droid.Resource.Animation.abc_slide_in_bottom;
+			global::TK.CustomMap.Droid.Resource.Animation.abc_slide_in_top = global::CV.Mobile.Droid.Resource.Animation.abc_slide_in_top;
+			global::TK.CustomMap.Droid.Resource.Animation.abc_slide_out_bottom = global::CV.Mobile.Droid.Resource.Animation.abc_slide_out_bottom;
+			global::TK.CustomMap.Droid.Resource.Animation.abc_slide_out_top = global::CV.Mobile.Droid.Resource.Animation.abc_slide_out_top;
+			global::TK.CustomMap.Droid.Resource.Animation.design_bottom_sheet_slide_in = global::CV.Mobile.Droid.Resource.Animation.design_bottom_sheet_slide_in;
+			global::TK.CustomMap.Droid.Resource.Animation.design_bottom_sheet_slide_out = global::CV.Mobile.Droid.Resource.Animation.design_bottom_sheet_slide_out;
+			global::TK.CustomMap.Droid.Resource.Animation.design_fab_in = global::CV.Mobile.Droid.Resource.Animation.design_fab_in;
+			global::TK.CustomMap.Droid.Resource.Animation.design_fab_out = global::CV.Mobile.Droid.Resource.Animation.design_fab_out;
+			global::TK.CustomMap.Droid.Resource.Animation.design_snackbar_in = global::CV.Mobile.Droid.Resource.Animation.design_snackbar_in;
+			global::TK.CustomMap.Droid.Resource.Animation.design_snackbar_out = global::CV.Mobile.Droid.Resource.Animation.design_snackbar_out;
+			global::TK.CustomMap.Droid.Resource.Attribute.MediaRouteControllerWindowBackground = global::CV.Mobile.Droid.Resource.Attribute.MediaRouteControllerWindowBackground;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionBarDivider = global::CV.Mobile.Droid.Resource.Attribute.actionBarDivider;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionBarItemBackground = global::CV.Mobile.Droid.Resource.Attribute.actionBarItemBackground;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionBarPopupTheme = global::CV.Mobile.Droid.Resource.Attribute.actionBarPopupTheme;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionBarSize = global::CV.Mobile.Droid.Resource.Attribute.actionBarSize;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionBarSplitStyle = global::CV.Mobile.Droid.Resource.Attribute.actionBarSplitStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionBarStyle = global::CV.Mobile.Droid.Resource.Attribute.actionBarStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionBarTabBarStyle = global::CV.Mobile.Droid.Resource.Attribute.actionBarTabBarStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionBarTabStyle = global::CV.Mobile.Droid.Resource.Attribute.actionBarTabStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionBarTabTextStyle = global::CV.Mobile.Droid.Resource.Attribute.actionBarTabTextStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionBarTheme = global::CV.Mobile.Droid.Resource.Attribute.actionBarTheme;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionBarWidgetTheme = global::CV.Mobile.Droid.Resource.Attribute.actionBarWidgetTheme;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionButtonStyle = global::CV.Mobile.Droid.Resource.Attribute.actionButtonStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionDropDownStyle = global::CV.Mobile.Droid.Resource.Attribute.actionDropDownStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionLayout = global::CV.Mobile.Droid.Resource.Attribute.actionLayout;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionMenuTextAppearance = global::CV.Mobile.Droid.Resource.Attribute.actionMenuTextAppearance;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionMenuTextColor = global::CV.Mobile.Droid.Resource.Attribute.actionMenuTextColor;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionModeBackground = global::CV.Mobile.Droid.Resource.Attribute.actionModeBackground;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionModeCloseButtonStyle = global::CV.Mobile.Droid.Resource.Attribute.actionModeCloseButtonStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionModeCloseDrawable = global::CV.Mobile.Droid.Resource.Attribute.actionModeCloseDrawable;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionModeCopyDrawable = global::CV.Mobile.Droid.Resource.Attribute.actionModeCopyDrawable;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionModeCutDrawable = global::CV.Mobile.Droid.Resource.Attribute.actionModeCutDrawable;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionModeFindDrawable = global::CV.Mobile.Droid.Resource.Attribute.actionModeFindDrawable;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionModePasteDrawable = global::CV.Mobile.Droid.Resource.Attribute.actionModePasteDrawable;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionModePopupWindowStyle = global::CV.Mobile.Droid.Resource.Attribute.actionModePopupWindowStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionModeSelectAllDrawable = global::CV.Mobile.Droid.Resource.Attribute.actionModeSelectAllDrawable;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionModeShareDrawable = global::CV.Mobile.Droid.Resource.Attribute.actionModeShareDrawable;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionModeSplitBackground = global::CV.Mobile.Droid.Resource.Attribute.actionModeSplitBackground;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionModeStyle = global::CV.Mobile.Droid.Resource.Attribute.actionModeStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionModeWebSearchDrawable = global::CV.Mobile.Droid.Resource.Attribute.actionModeWebSearchDrawable;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionOverflowButtonStyle = global::CV.Mobile.Droid.Resource.Attribute.actionOverflowButtonStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionOverflowMenuStyle = global::CV.Mobile.Droid.Resource.Attribute.actionOverflowMenuStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionProviderClass = global::CV.Mobile.Droid.Resource.Attribute.actionProviderClass;
+			global::TK.CustomMap.Droid.Resource.Attribute.actionViewClass = global::CV.Mobile.Droid.Resource.Attribute.actionViewClass;
+			global::TK.CustomMap.Droid.Resource.Attribute.activityChooserViewStyle = global::CV.Mobile.Droid.Resource.Attribute.activityChooserViewStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.alertDialogButtonGroupStyle = global::CV.Mobile.Droid.Resource.Attribute.alertDialogButtonGroupStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.alertDialogCenterButtons = global::CV.Mobile.Droid.Resource.Attribute.alertDialogCenterButtons;
+			global::TK.CustomMap.Droid.Resource.Attribute.alertDialogStyle = global::CV.Mobile.Droid.Resource.Attribute.alertDialogStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.alertDialogTheme = global::CV.Mobile.Droid.Resource.Attribute.alertDialogTheme;
+			global::TK.CustomMap.Droid.Resource.Attribute.allowStacking = global::CV.Mobile.Droid.Resource.Attribute.allowStacking;
+			global::TK.CustomMap.Droid.Resource.Attribute.ambientEnabled = global::CV.Mobile.Droid.Resource.Attribute.ambientEnabled;
+			global::TK.CustomMap.Droid.Resource.Attribute.arrowHeadLength = global::CV.Mobile.Droid.Resource.Attribute.arrowHeadLength;
+			global::TK.CustomMap.Droid.Resource.Attribute.arrowShaftLength = global::CV.Mobile.Droid.Resource.Attribute.arrowShaftLength;
+			global::TK.CustomMap.Droid.Resource.Attribute.autoCompleteTextViewStyle = global::CV.Mobile.Droid.Resource.Attribute.autoCompleteTextViewStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.background = global::CV.Mobile.Droid.Resource.Attribute.background;
+			global::TK.CustomMap.Droid.Resource.Attribute.backgroundSplit = global::CV.Mobile.Droid.Resource.Attribute.backgroundSplit;
+			global::TK.CustomMap.Droid.Resource.Attribute.backgroundStacked = global::CV.Mobile.Droid.Resource.Attribute.backgroundStacked;
+			global::TK.CustomMap.Droid.Resource.Attribute.backgroundTint = global::CV.Mobile.Droid.Resource.Attribute.backgroundTint;
+			global::TK.CustomMap.Droid.Resource.Attribute.backgroundTintMode = global::CV.Mobile.Droid.Resource.Attribute.backgroundTintMode;
+			global::TK.CustomMap.Droid.Resource.Attribute.barLength = global::CV.Mobile.Droid.Resource.Attribute.barLength;
+			global::TK.CustomMap.Droid.Resource.Attribute.behavior_hideable = global::CV.Mobile.Droid.Resource.Attribute.behavior_hideable;
+			global::TK.CustomMap.Droid.Resource.Attribute.behavior_overlapTop = global::CV.Mobile.Droid.Resource.Attribute.behavior_overlapTop;
+			global::TK.CustomMap.Droid.Resource.Attribute.behavior_peekHeight = global::CV.Mobile.Droid.Resource.Attribute.behavior_peekHeight;
+			global::TK.CustomMap.Droid.Resource.Attribute.borderWidth = global::CV.Mobile.Droid.Resource.Attribute.borderWidth;
+			global::TK.CustomMap.Droid.Resource.Attribute.borderlessButtonStyle = global::CV.Mobile.Droid.Resource.Attribute.borderlessButtonStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.bottomSheetDialogTheme = global::CV.Mobile.Droid.Resource.Attribute.bottomSheetDialogTheme;
+			global::TK.CustomMap.Droid.Resource.Attribute.bottomSheetStyle = global::CV.Mobile.Droid.Resource.Attribute.bottomSheetStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.buttonBarButtonStyle = global::CV.Mobile.Droid.Resource.Attribute.buttonBarButtonStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.buttonBarNegativeButtonStyle = global::CV.Mobile.Droid.Resource.Attribute.buttonBarNegativeButtonStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.buttonBarNeutralButtonStyle = global::CV.Mobile.Droid.Resource.Attribute.buttonBarNeutralButtonStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.buttonBarPositiveButtonStyle = global::CV.Mobile.Droid.Resource.Attribute.buttonBarPositiveButtonStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.buttonBarStyle = global::CV.Mobile.Droid.Resource.Attribute.buttonBarStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.buttonPanelSideLayout = global::CV.Mobile.Droid.Resource.Attribute.buttonPanelSideLayout;
+			global::TK.CustomMap.Droid.Resource.Attribute.buttonSize = global::CV.Mobile.Droid.Resource.Attribute.buttonSize;
+			global::TK.CustomMap.Droid.Resource.Attribute.buttonStyle = global::CV.Mobile.Droid.Resource.Attribute.buttonStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.buttonStyleSmall = global::CV.Mobile.Droid.Resource.Attribute.buttonStyleSmall;
+			global::TK.CustomMap.Droid.Resource.Attribute.buttonTint = global::CV.Mobile.Droid.Resource.Attribute.buttonTint;
+			global::TK.CustomMap.Droid.Resource.Attribute.buttonTintMode = global::CV.Mobile.Droid.Resource.Attribute.buttonTintMode;
+			global::TK.CustomMap.Droid.Resource.Attribute.cameraBearing = global::CV.Mobile.Droid.Resource.Attribute.cameraBearing;
+			global::TK.CustomMap.Droid.Resource.Attribute.cameraTargetLat = global::CV.Mobile.Droid.Resource.Attribute.cameraTargetLat;
+			global::TK.CustomMap.Droid.Resource.Attribute.cameraTargetLng = global::CV.Mobile.Droid.Resource.Attribute.cameraTargetLng;
+			global::TK.CustomMap.Droid.Resource.Attribute.cameraTilt = global::CV.Mobile.Droid.Resource.Attribute.cameraTilt;
+			global::TK.CustomMap.Droid.Resource.Attribute.cameraZoom = global::CV.Mobile.Droid.Resource.Attribute.cameraZoom;
+			global::TK.CustomMap.Droid.Resource.Attribute.cardBackgroundColor = global::CV.Mobile.Droid.Resource.Attribute.cardBackgroundColor;
+			global::TK.CustomMap.Droid.Resource.Attribute.cardCornerRadius = global::CV.Mobile.Droid.Resource.Attribute.cardCornerRadius;
+			global::TK.CustomMap.Droid.Resource.Attribute.cardElevation = global::CV.Mobile.Droid.Resource.Attribute.cardElevation;
+			global::TK.CustomMap.Droid.Resource.Attribute.cardMaxElevation = global::CV.Mobile.Droid.Resource.Attribute.cardMaxElevation;
+			global::TK.CustomMap.Droid.Resource.Attribute.cardPreventCornerOverlap = global::CV.Mobile.Droid.Resource.Attribute.cardPreventCornerOverlap;
+			global::TK.CustomMap.Droid.Resource.Attribute.cardUseCompatPadding = global::CV.Mobile.Droid.Resource.Attribute.cardUseCompatPadding;
+			global::TK.CustomMap.Droid.Resource.Attribute.checkboxStyle = global::CV.Mobile.Droid.Resource.Attribute.checkboxStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.checkedTextViewStyle = global::CV.Mobile.Droid.Resource.Attribute.checkedTextViewStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.circleCrop = global::CV.Mobile.Droid.Resource.Attribute.circleCrop;
+			global::TK.CustomMap.Droid.Resource.Attribute.closeIcon = global::CV.Mobile.Droid.Resource.Attribute.closeIcon;
+			global::TK.CustomMap.Droid.Resource.Attribute.closeItemLayout = global::CV.Mobile.Droid.Resource.Attribute.closeItemLayout;
+			global::TK.CustomMap.Droid.Resource.Attribute.collapseContentDescription = global::CV.Mobile.Droid.Resource.Attribute.collapseContentDescription;
+			global::TK.CustomMap.Droid.Resource.Attribute.collapseIcon = global::CV.Mobile.Droid.Resource.Attribute.collapseIcon;
+			global::TK.CustomMap.Droid.Resource.Attribute.collapsedTitleGravity = global::CV.Mobile.Droid.Resource.Attribute.collapsedTitleGravity;
+			global::TK.CustomMap.Droid.Resource.Attribute.collapsedTitleTextAppearance = global::CV.Mobile.Droid.Resource.Attribute.collapsedTitleTextAppearance;
+			global::TK.CustomMap.Droid.Resource.Attribute.color = global::CV.Mobile.Droid.Resource.Attribute.color;
+			global::TK.CustomMap.Droid.Resource.Attribute.colorAccent = global::CV.Mobile.Droid.Resource.Attribute.colorAccent;
+			global::TK.CustomMap.Droid.Resource.Attribute.colorButtonNormal = global::CV.Mobile.Droid.Resource.Attribute.colorButtonNormal;
+			global::TK.CustomMap.Droid.Resource.Attribute.colorControlActivated = global::CV.Mobile.Droid.Resource.Attribute.colorControlActivated;
+			global::TK.CustomMap.Droid.Resource.Attribute.colorControlHighlight = global::CV.Mobile.Droid.Resource.Attribute.colorControlHighlight;
+			global::TK.CustomMap.Droid.Resource.Attribute.colorControlNormal = global::CV.Mobile.Droid.Resource.Attribute.colorControlNormal;
+			global::TK.CustomMap.Droid.Resource.Attribute.colorPrimary = global::CV.Mobile.Droid.Resource.Attribute.colorPrimary;
+			global::TK.CustomMap.Droid.Resource.Attribute.colorPrimaryDark = global::CV.Mobile.Droid.Resource.Attribute.colorPrimaryDark;
+			global::TK.CustomMap.Droid.Resource.Attribute.colorScheme = global::CV.Mobile.Droid.Resource.Attribute.colorScheme;
+			global::TK.CustomMap.Droid.Resource.Attribute.colorSwitchThumbNormal = global::CV.Mobile.Droid.Resource.Attribute.colorSwitchThumbNormal;
+			global::TK.CustomMap.Droid.Resource.Attribute.commitIcon = global::CV.Mobile.Droid.Resource.Attribute.commitIcon;
+			global::TK.CustomMap.Droid.Resource.Attribute.contentInsetEnd = global::CV.Mobile.Droid.Resource.Attribute.contentInsetEnd;
+			global::TK.CustomMap.Droid.Resource.Attribute.contentInsetLeft = global::CV.Mobile.Droid.Resource.Attribute.contentInsetLeft;
+			global::TK.CustomMap.Droid.Resource.Attribute.contentInsetRight = global::CV.Mobile.Droid.Resource.Attribute.contentInsetRight;
+			global::TK.CustomMap.Droid.Resource.Attribute.contentInsetStart = global::CV.Mobile.Droid.Resource.Attribute.contentInsetStart;
+			global::TK.CustomMap.Droid.Resource.Attribute.contentPadding = global::CV.Mobile.Droid.Resource.Attribute.contentPadding;
+			global::TK.CustomMap.Droid.Resource.Attribute.contentPaddingBottom = global::CV.Mobile.Droid.Resource.Attribute.contentPaddingBottom;
+			global::TK.CustomMap.Droid.Resource.Attribute.contentPaddingLeft = global::CV.Mobile.Droid.Resource.Attribute.contentPaddingLeft;
+			global::TK.CustomMap.Droid.Resource.Attribute.contentPaddingRight = global::CV.Mobile.Droid.Resource.Attribute.contentPaddingRight;
+			global::TK.CustomMap.Droid.Resource.Attribute.contentPaddingTop = global::CV.Mobile.Droid.Resource.Attribute.contentPaddingTop;
+			global::TK.CustomMap.Droid.Resource.Attribute.contentScrim = global::CV.Mobile.Droid.Resource.Attribute.contentScrim;
+			global::TK.CustomMap.Droid.Resource.Attribute.controlBackground = global::CV.Mobile.Droid.Resource.Attribute.controlBackground;
+			global::TK.CustomMap.Droid.Resource.Attribute.counterEnabled = global::CV.Mobile.Droid.Resource.Attribute.counterEnabled;
+			global::TK.CustomMap.Droid.Resource.Attribute.counterMaxLength = global::CV.Mobile.Droid.Resource.Attribute.counterMaxLength;
+			global::TK.CustomMap.Droid.Resource.Attribute.counterOverflowTextAppearance = global::CV.Mobile.Droid.Resource.Attribute.counterOverflowTextAppearance;
+			global::TK.CustomMap.Droid.Resource.Attribute.counterTextAppearance = global::CV.Mobile.Droid.Resource.Attribute.counterTextAppearance;
+			global::TK.CustomMap.Droid.Resource.Attribute.customNavigationLayout = global::CV.Mobile.Droid.Resource.Attribute.customNavigationLayout;
+			global::TK.CustomMap.Droid.Resource.Attribute.defaultQueryHint = global::CV.Mobile.Droid.Resource.Attribute.defaultQueryHint;
+			global::TK.CustomMap.Droid.Resource.Attribute.dialogPreferredPadding = global::CV.Mobile.Droid.Resource.Attribute.dialogPreferredPadding;
+			global::TK.CustomMap.Droid.Resource.Attribute.dialogTheme = global::CV.Mobile.Droid.Resource.Attribute.dialogTheme;
+			global::TK.CustomMap.Droid.Resource.Attribute.displayOptions = global::CV.Mobile.Droid.Resource.Attribute.displayOptions;
+			global::TK.CustomMap.Droid.Resource.Attribute.divider = global::CV.Mobile.Droid.Resource.Attribute.divider;
+			global::TK.CustomMap.Droid.Resource.Attribute.dividerHorizontal = global::CV.Mobile.Droid.Resource.Attribute.dividerHorizontal;
+			global::TK.CustomMap.Droid.Resource.Attribute.dividerPadding = global::CV.Mobile.Droid.Resource.Attribute.dividerPadding;
+			global::TK.CustomMap.Droid.Resource.Attribute.dividerVertical = global::CV.Mobile.Droid.Resource.Attribute.dividerVertical;
+			global::TK.CustomMap.Droid.Resource.Attribute.drawableSize = global::CV.Mobile.Droid.Resource.Attribute.drawableSize;
+			global::TK.CustomMap.Droid.Resource.Attribute.drawerArrowStyle = global::CV.Mobile.Droid.Resource.Attribute.drawerArrowStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.dropDownListViewStyle = global::CV.Mobile.Droid.Resource.Attribute.dropDownListViewStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.dropdownListPreferredItemHeight = global::CV.Mobile.Droid.Resource.Attribute.dropdownListPreferredItemHeight;
+			global::TK.CustomMap.Droid.Resource.Attribute.editTextBackground = global::CV.Mobile.Droid.Resource.Attribute.editTextBackground;
+			global::TK.CustomMap.Droid.Resource.Attribute.editTextColor = global::CV.Mobile.Droid.Resource.Attribute.editTextColor;
+			global::TK.CustomMap.Droid.Resource.Attribute.editTextStyle = global::CV.Mobile.Droid.Resource.Attribute.editTextStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.elevation = global::CV.Mobile.Droid.Resource.Attribute.elevation;
+			global::TK.CustomMap.Droid.Resource.Attribute.errorEnabled = global::CV.Mobile.Droid.Resource.Attribute.errorEnabled;
+			global::TK.CustomMap.Droid.Resource.Attribute.errorTextAppearance = global::CV.Mobile.Droid.Resource.Attribute.errorTextAppearance;
+			global::TK.CustomMap.Droid.Resource.Attribute.expandActivityOverflowButtonDrawable = global::CV.Mobile.Droid.Resource.Attribute.expandActivityOverflowButtonDrawable;
+			global::TK.CustomMap.Droid.Resource.Attribute.expanded = global::CV.Mobile.Droid.Resource.Attribute.expanded;
+			global::TK.CustomMap.Droid.Resource.Attribute.expandedTitleGravity = global::CV.Mobile.Droid.Resource.Attribute.expandedTitleGravity;
+			global::TK.CustomMap.Droid.Resource.Attribute.expandedTitleMargin = global::CV.Mobile.Droid.Resource.Attribute.expandedTitleMargin;
+			global::TK.CustomMap.Droid.Resource.Attribute.expandedTitleMarginBottom = global::CV.Mobile.Droid.Resource.Attribute.expandedTitleMarginBottom;
+			global::TK.CustomMap.Droid.Resource.Attribute.expandedTitleMarginEnd = global::CV.Mobile.Droid.Resource.Attribute.expandedTitleMarginEnd;
+			global::TK.CustomMap.Droid.Resource.Attribute.expandedTitleMarginStart = global::CV.Mobile.Droid.Resource.Attribute.expandedTitleMarginStart;
+			global::TK.CustomMap.Droid.Resource.Attribute.expandedTitleMarginTop = global::CV.Mobile.Droid.Resource.Attribute.expandedTitleMarginTop;
+			global::TK.CustomMap.Droid.Resource.Attribute.expandedTitleTextAppearance = global::CV.Mobile.Droid.Resource.Attribute.expandedTitleTextAppearance;
+			global::TK.CustomMap.Droid.Resource.Attribute.externalRouteEnabledDrawable = global::CV.Mobile.Droid.Resource.Attribute.externalRouteEnabledDrawable;
+			global::TK.CustomMap.Droid.Resource.Attribute.fabSize = global::CV.Mobile.Droid.Resource.Attribute.fabSize;
+			global::TK.CustomMap.Droid.Resource.Attribute.foregroundInsidePadding = global::CV.Mobile.Droid.Resource.Attribute.foregroundInsidePadding;
+			global::TK.CustomMap.Droid.Resource.Attribute.gapBetweenBars = global::CV.Mobile.Droid.Resource.Attribute.gapBetweenBars;
+			global::TK.CustomMap.Droid.Resource.Attribute.goIcon = global::CV.Mobile.Droid.Resource.Attribute.goIcon;
+			global::TK.CustomMap.Droid.Resource.Attribute.headerLayout = global::CV.Mobile.Droid.Resource.Attribute.headerLayout;
+			global::TK.CustomMap.Droid.Resource.Attribute.height = global::CV.Mobile.Droid.Resource.Attribute.height;
+			global::TK.CustomMap.Droid.Resource.Attribute.hideOnContentScroll = global::CV.Mobile.Droid.Resource.Attribute.hideOnContentScroll;
+			global::TK.CustomMap.Droid.Resource.Attribute.hintAnimationEnabled = global::CV.Mobile.Droid.Resource.Attribute.hintAnimationEnabled;
+			global::TK.CustomMap.Droid.Resource.Attribute.hintEnabled = global::CV.Mobile.Droid.Resource.Attribute.hintEnabled;
+			global::TK.CustomMap.Droid.Resource.Attribute.hintTextAppearance = global::CV.Mobile.Droid.Resource.Attribute.hintTextAppearance;
+			global::TK.CustomMap.Droid.Resource.Attribute.homeAsUpIndicator = global::CV.Mobile.Droid.Resource.Attribute.homeAsUpIndicator;
+			global::TK.CustomMap.Droid.Resource.Attribute.homeLayout = global::CV.Mobile.Droid.Resource.Attribute.homeLayout;
+			global::TK.CustomMap.Droid.Resource.Attribute.icon = global::CV.Mobile.Droid.Resource.Attribute.icon;
+			global::TK.CustomMap.Droid.Resource.Attribute.iconifiedByDefault = global::CV.Mobile.Droid.Resource.Attribute.iconifiedByDefault;
+			global::TK.CustomMap.Droid.Resource.Attribute.imageAspectRatio = global::CV.Mobile.Droid.Resource.Attribute.imageAspectRatio;
+			global::TK.CustomMap.Droid.Resource.Attribute.imageAspectRatioAdjust = global::CV.Mobile.Droid.Resource.Attribute.imageAspectRatioAdjust;
+			global::TK.CustomMap.Droid.Resource.Attribute.imageButtonStyle = global::CV.Mobile.Droid.Resource.Attribute.imageButtonStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.indeterminateProgressStyle = global::CV.Mobile.Droid.Resource.Attribute.indeterminateProgressStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.initialActivityCount = global::CV.Mobile.Droid.Resource.Attribute.initialActivityCount;
+			global::TK.CustomMap.Droid.Resource.Attribute.insetForeground = global::CV.Mobile.Droid.Resource.Attribute.insetForeground;
+			global::TK.CustomMap.Droid.Resource.Attribute.isLightTheme = global::CV.Mobile.Droid.Resource.Attribute.isLightTheme;
+			global::TK.CustomMap.Droid.Resource.Attribute.itemBackground = global::CV.Mobile.Droid.Resource.Attribute.itemBackground;
+			global::TK.CustomMap.Droid.Resource.Attribute.itemIconTint = global::CV.Mobile.Droid.Resource.Attribute.itemIconTint;
+			global::TK.CustomMap.Droid.Resource.Attribute.itemPadding = global::CV.Mobile.Droid.Resource.Attribute.itemPadding;
+			global::TK.CustomMap.Droid.Resource.Attribute.itemTextAppearance = global::CV.Mobile.Droid.Resource.Attribute.itemTextAppearance;
+			global::TK.CustomMap.Droid.Resource.Attribute.itemTextColor = global::CV.Mobile.Droid.Resource.Attribute.itemTextColor;
+			global::TK.CustomMap.Droid.Resource.Attribute.keylines = global::CV.Mobile.Droid.Resource.Attribute.keylines;
+			global::TK.CustomMap.Droid.Resource.Attribute.layout = global::CV.Mobile.Droid.Resource.Attribute.layout;
+			global::TK.CustomMap.Droid.Resource.Attribute.layoutManager = global::CV.Mobile.Droid.Resource.Attribute.layoutManager;
+			global::TK.CustomMap.Droid.Resource.Attribute.layout_anchor = global::CV.Mobile.Droid.Resource.Attribute.layout_anchor;
+			global::TK.CustomMap.Droid.Resource.Attribute.layout_anchorGravity = global::CV.Mobile.Droid.Resource.Attribute.layout_anchorGravity;
+			global::TK.CustomMap.Droid.Resource.Attribute.layout_behavior = global::CV.Mobile.Droid.Resource.Attribute.layout_behavior;
+			global::TK.CustomMap.Droid.Resource.Attribute.layout_collapseMode = global::CV.Mobile.Droid.Resource.Attribute.layout_collapseMode;
+			global::TK.CustomMap.Droid.Resource.Attribute.layout_collapseParallaxMultiplier = global::CV.Mobile.Droid.Resource.Attribute.layout_collapseParallaxMultiplier;
+			global::TK.CustomMap.Droid.Resource.Attribute.layout_keyline = global::CV.Mobile.Droid.Resource.Attribute.layout_keyline;
+			global::TK.CustomMap.Droid.Resource.Attribute.layout_scrollFlags = global::CV.Mobile.Droid.Resource.Attribute.layout_scrollFlags;
+			global::TK.CustomMap.Droid.Resource.Attribute.layout_scrollInterpolator = global::CV.Mobile.Droid.Resource.Attribute.layout_scrollInterpolator;
+			global::TK.CustomMap.Droid.Resource.Attribute.listChoiceBackgroundIndicator = global::CV.Mobile.Droid.Resource.Attribute.listChoiceBackgroundIndicator;
+			global::TK.CustomMap.Droid.Resource.Attribute.listDividerAlertDialog = global::CV.Mobile.Droid.Resource.Attribute.listDividerAlertDialog;
+			global::TK.CustomMap.Droid.Resource.Attribute.listItemLayout = global::CV.Mobile.Droid.Resource.Attribute.listItemLayout;
+			global::TK.CustomMap.Droid.Resource.Attribute.listLayout = global::CV.Mobile.Droid.Resource.Attribute.listLayout;
+			global::TK.CustomMap.Droid.Resource.Attribute.listPopupWindowStyle = global::CV.Mobile.Droid.Resource.Attribute.listPopupWindowStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.listPreferredItemHeight = global::CV.Mobile.Droid.Resource.Attribute.listPreferredItemHeight;
+			global::TK.CustomMap.Droid.Resource.Attribute.listPreferredItemHeightLarge = global::CV.Mobile.Droid.Resource.Attribute.listPreferredItemHeightLarge;
+			global::TK.CustomMap.Droid.Resource.Attribute.listPreferredItemHeightSmall = global::CV.Mobile.Droid.Resource.Attribute.listPreferredItemHeightSmall;
+			global::TK.CustomMap.Droid.Resource.Attribute.listPreferredItemPaddingLeft = global::CV.Mobile.Droid.Resource.Attribute.listPreferredItemPaddingLeft;
+			global::TK.CustomMap.Droid.Resource.Attribute.listPreferredItemPaddingRight = global::CV.Mobile.Droid.Resource.Attribute.listPreferredItemPaddingRight;
+			global::TK.CustomMap.Droid.Resource.Attribute.liteMode = global::CV.Mobile.Droid.Resource.Attribute.liteMode;
+			global::TK.CustomMap.Droid.Resource.Attribute.logo = global::CV.Mobile.Droid.Resource.Attribute.logo;
+			global::TK.CustomMap.Droid.Resource.Attribute.logoDescription = global::CV.Mobile.Droid.Resource.Attribute.logoDescription;
+			global::TK.CustomMap.Droid.Resource.Attribute.mapType = global::CV.Mobile.Droid.Resource.Attribute.mapType;
+			global::TK.CustomMap.Droid.Resource.Attribute.maxActionInlineWidth = global::CV.Mobile.Droid.Resource.Attribute.maxActionInlineWidth;
+			global::TK.CustomMap.Droid.Resource.Attribute.maxButtonHeight = global::CV.Mobile.Droid.Resource.Attribute.maxButtonHeight;
+			global::TK.CustomMap.Droid.Resource.Attribute.measureWithLargestChild = global::CV.Mobile.Droid.Resource.Attribute.measureWithLargestChild;
+			global::TK.CustomMap.Droid.Resource.Attribute.mediaRouteAudioTrackDrawable = global::CV.Mobile.Droid.Resource.Attribute.mediaRouteAudioTrackDrawable;
+			global::TK.CustomMap.Droid.Resource.Attribute.mediaRouteBluetoothIconDrawable = global::CV.Mobile.Droid.Resource.Attribute.mediaRouteBluetoothIconDrawable;
+			global::TK.CustomMap.Droid.Resource.Attribute.mediaRouteButtonStyle = global::CV.Mobile.Droid.Resource.Attribute.mediaRouteButtonStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.mediaRouteCastDrawable = global::CV.Mobile.Droid.Resource.Attribute.mediaRouteCastDrawable;
+			global::TK.CustomMap.Droid.Resource.Attribute.mediaRouteChooserPrimaryTextStyle = global::CV.Mobile.Droid.Resource.Attribute.mediaRouteChooserPrimaryTextStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.mediaRouteChooserSecondaryTextStyle = global::CV.Mobile.Droid.Resource.Attribute.mediaRouteChooserSecondaryTextStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.mediaRouteCloseDrawable = global::CV.Mobile.Droid.Resource.Attribute.mediaRouteCloseDrawable;
+			global::TK.CustomMap.Droid.Resource.Attribute.mediaRouteCollapseGroupDrawable = global::CV.Mobile.Droid.Resource.Attribute.mediaRouteCollapseGroupDrawable;
+			global::TK.CustomMap.Droid.Resource.Attribute.mediaRouteConnectingDrawable = global::CV.Mobile.Droid.Resource.Attribute.mediaRouteConnectingDrawable;
+			global::TK.CustomMap.Droid.Resource.Attribute.mediaRouteControllerPrimaryTextStyle = global::CV.Mobile.Droid.Resource.Attribute.mediaRouteControllerPrimaryTextStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.mediaRouteControllerSecondaryTextStyle = global::CV.Mobile.Droid.Resource.Attribute.mediaRouteControllerSecondaryTextStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.mediaRouteControllerTitleTextStyle = global::CV.Mobile.Droid.Resource.Attribute.mediaRouteControllerTitleTextStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.mediaRouteDefaultIconDrawable = global::CV.Mobile.Droid.Resource.Attribute.mediaRouteDefaultIconDrawable;
+			global::TK.CustomMap.Droid.Resource.Attribute.mediaRouteExpandGroupDrawable = global::CV.Mobile.Droid.Resource.Attribute.mediaRouteExpandGroupDrawable;
+			global::TK.CustomMap.Droid.Resource.Attribute.mediaRouteOffDrawable = global::CV.Mobile.Droid.Resource.Attribute.mediaRouteOffDrawable;
+			global::TK.CustomMap.Droid.Resource.Attribute.mediaRouteOnDrawable = global::CV.Mobile.Droid.Resource.Attribute.mediaRouteOnDrawable;
+			global::TK.CustomMap.Droid.Resource.Attribute.mediaRoutePauseDrawable = global::CV.Mobile.Droid.Resource.Attribute.mediaRoutePauseDrawable;
+			global::TK.CustomMap.Droid.Resource.Attribute.mediaRoutePlayDrawable = global::CV.Mobile.Droid.Resource.Attribute.mediaRoutePlayDrawable;
+			global::TK.CustomMap.Droid.Resource.Attribute.mediaRouteSpeakerGroupIconDrawable = global::CV.Mobile.Droid.Resource.Attribute.mediaRouteSpeakerGroupIconDrawable;
+			global::TK.CustomMap.Droid.Resource.Attribute.mediaRouteSpeakerIconDrawable = global::CV.Mobile.Droid.Resource.Attribute.mediaRouteSpeakerIconDrawable;
+			global::TK.CustomMap.Droid.Resource.Attribute.mediaRouteTvIconDrawable = global::CV.Mobile.Droid.Resource.Attribute.mediaRouteTvIconDrawable;
+			global::TK.CustomMap.Droid.Resource.Attribute.menu = global::CV.Mobile.Droid.Resource.Attribute.menu;
+			global::TK.CustomMap.Droid.Resource.Attribute.multiChoiceItemLayout = global::CV.Mobile.Droid.Resource.Attribute.multiChoiceItemLayout;
+			global::TK.CustomMap.Droid.Resource.Attribute.navigationContentDescription = global::CV.Mobile.Droid.Resource.Attribute.navigationContentDescription;
+			global::TK.CustomMap.Droid.Resource.Attribute.navigationIcon = global::CV.Mobile.Droid.Resource.Attribute.navigationIcon;
+			global::TK.CustomMap.Droid.Resource.Attribute.navigationMode = global::CV.Mobile.Droid.Resource.Attribute.navigationMode;
+			global::TK.CustomMap.Droid.Resource.Attribute.overlapAnchor = global::CV.Mobile.Droid.Resource.Attribute.overlapAnchor;
+			global::TK.CustomMap.Droid.Resource.Attribute.paddingEnd = global::CV.Mobile.Droid.Resource.Attribute.paddingEnd;
+			global::TK.CustomMap.Droid.Resource.Attribute.paddingStart = global::CV.Mobile.Droid.Resource.Attribute.paddingStart;
+			global::TK.CustomMap.Droid.Resource.Attribute.panelBackground = global::CV.Mobile.Droid.Resource.Attribute.panelBackground;
+			global::TK.CustomMap.Droid.Resource.Attribute.panelMenuListTheme = global::CV.Mobile.Droid.Resource.Attribute.panelMenuListTheme;
+			global::TK.CustomMap.Droid.Resource.Attribute.panelMenuListWidth = global::CV.Mobile.Droid.Resource.Attribute.panelMenuListWidth;
+			global::TK.CustomMap.Droid.Resource.Attribute.popupMenuStyle = global::CV.Mobile.Droid.Resource.Attribute.popupMenuStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.popupTheme = global::CV.Mobile.Droid.Resource.Attribute.popupTheme;
+			global::TK.CustomMap.Droid.Resource.Attribute.popupWindowStyle = global::CV.Mobile.Droid.Resource.Attribute.popupWindowStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.preserveIconSpacing = global::CV.Mobile.Droid.Resource.Attribute.preserveIconSpacing;
+			global::TK.CustomMap.Droid.Resource.Attribute.pressedTranslationZ = global::CV.Mobile.Droid.Resource.Attribute.pressedTranslationZ;
+			global::TK.CustomMap.Droid.Resource.Attribute.progressBarPadding = global::CV.Mobile.Droid.Resource.Attribute.progressBarPadding;
+			global::TK.CustomMap.Droid.Resource.Attribute.progressBarStyle = global::CV.Mobile.Droid.Resource.Attribute.progressBarStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.queryBackground = global::CV.Mobile.Droid.Resource.Attribute.queryBackground;
+			global::TK.CustomMap.Droid.Resource.Attribute.queryHint = global::CV.Mobile.Droid.Resource.Attribute.queryHint;
+			global::TK.CustomMap.Droid.Resource.Attribute.radioButtonStyle = global::CV.Mobile.Droid.Resource.Attribute.radioButtonStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.ratingBarStyle = global::CV.Mobile.Droid.Resource.Attribute.ratingBarStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.ratingBarStyleIndicator = global::CV.Mobile.Droid.Resource.Attribute.ratingBarStyleIndicator;
+			global::TK.CustomMap.Droid.Resource.Attribute.ratingBarStyleSmall = global::CV.Mobile.Droid.Resource.Attribute.ratingBarStyleSmall;
+			global::TK.CustomMap.Droid.Resource.Attribute.reverseLayout = global::CV.Mobile.Droid.Resource.Attribute.reverseLayout;
+			global::TK.CustomMap.Droid.Resource.Attribute.rippleColor = global::CV.Mobile.Droid.Resource.Attribute.rippleColor;
+			global::TK.CustomMap.Droid.Resource.Attribute.scopeUris = global::CV.Mobile.Droid.Resource.Attribute.scopeUris;
+			global::TK.CustomMap.Droid.Resource.Attribute.searchHintIcon = global::CV.Mobile.Droid.Resource.Attribute.searchHintIcon;
+			global::TK.CustomMap.Droid.Resource.Attribute.searchIcon = global::CV.Mobile.Droid.Resource.Attribute.searchIcon;
+			global::TK.CustomMap.Droid.Resource.Attribute.searchViewStyle = global::CV.Mobile.Droid.Resource.Attribute.searchViewStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.seekBarStyle = global::CV.Mobile.Droid.Resource.Attribute.seekBarStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.selectableItemBackground = global::CV.Mobile.Droid.Resource.Attribute.selectableItemBackground;
+			global::TK.CustomMap.Droid.Resource.Attribute.selectableItemBackgroundBorderless = global::CV.Mobile.Droid.Resource.Attribute.selectableItemBackgroundBorderless;
+			global::TK.CustomMap.Droid.Resource.Attribute.showAsAction = global::CV.Mobile.Droid.Resource.Attribute.showAsAction;
+			global::TK.CustomMap.Droid.Resource.Attribute.showDividers = global::CV.Mobile.Droid.Resource.Attribute.showDividers;
+			global::TK.CustomMap.Droid.Resource.Attribute.showText = global::CV.Mobile.Droid.Resource.Attribute.showText;
+			global::TK.CustomMap.Droid.Resource.Attribute.singleChoiceItemLayout = global::CV.Mobile.Droid.Resource.Attribute.singleChoiceItemLayout;
+			global::TK.CustomMap.Droid.Resource.Attribute.spanCount = global::CV.Mobile.Droid.Resource.Attribute.spanCount;
+			global::TK.CustomMap.Droid.Resource.Attribute.spinBars = global::CV.Mobile.Droid.Resource.Attribute.spinBars;
+			global::TK.CustomMap.Droid.Resource.Attribute.spinnerDropDownItemStyle = global::CV.Mobile.Droid.Resource.Attribute.spinnerDropDownItemStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.spinnerStyle = global::CV.Mobile.Droid.Resource.Attribute.spinnerStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.splitTrack = global::CV.Mobile.Droid.Resource.Attribute.splitTrack;
+			global::TK.CustomMap.Droid.Resource.Attribute.srcCompat = global::CV.Mobile.Droid.Resource.Attribute.srcCompat;
+			global::TK.CustomMap.Droid.Resource.Attribute.stackFromEnd = global::CV.Mobile.Droid.Resource.Attribute.stackFromEnd;
+			global::TK.CustomMap.Droid.Resource.Attribute.state_above_anchor = global::CV.Mobile.Droid.Resource.Attribute.state_above_anchor;
+			global::TK.CustomMap.Droid.Resource.Attribute.statusBarBackground = global::CV.Mobile.Droid.Resource.Attribute.statusBarBackground;
+			global::TK.CustomMap.Droid.Resource.Attribute.statusBarScrim = global::CV.Mobile.Droid.Resource.Attribute.statusBarScrim;
+			global::TK.CustomMap.Droid.Resource.Attribute.submitBackground = global::CV.Mobile.Droid.Resource.Attribute.submitBackground;
+			global::TK.CustomMap.Droid.Resource.Attribute.subtitle = global::CV.Mobile.Droid.Resource.Attribute.subtitle;
+			global::TK.CustomMap.Droid.Resource.Attribute.subtitleTextAppearance = global::CV.Mobile.Droid.Resource.Attribute.subtitleTextAppearance;
+			global::TK.CustomMap.Droid.Resource.Attribute.subtitleTextColor = global::CV.Mobile.Droid.Resource.Attribute.subtitleTextColor;
+			global::TK.CustomMap.Droid.Resource.Attribute.subtitleTextStyle = global::CV.Mobile.Droid.Resource.Attribute.subtitleTextStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.suggestionRowLayout = global::CV.Mobile.Droid.Resource.Attribute.suggestionRowLayout;
+			global::TK.CustomMap.Droid.Resource.Attribute.switchMinWidth = global::CV.Mobile.Droid.Resource.Attribute.switchMinWidth;
+			global::TK.CustomMap.Droid.Resource.Attribute.switchPadding = global::CV.Mobile.Droid.Resource.Attribute.switchPadding;
+			global::TK.CustomMap.Droid.Resource.Attribute.switchStyle = global::CV.Mobile.Droid.Resource.Attribute.switchStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.switchTextAppearance = global::CV.Mobile.Droid.Resource.Attribute.switchTextAppearance;
+			global::TK.CustomMap.Droid.Resource.Attribute.tabBackground = global::CV.Mobile.Droid.Resource.Attribute.tabBackground;
+			global::TK.CustomMap.Droid.Resource.Attribute.tabContentStart = global::CV.Mobile.Droid.Resource.Attribute.tabContentStart;
+			global::TK.CustomMap.Droid.Resource.Attribute.tabGravity = global::CV.Mobile.Droid.Resource.Attribute.tabGravity;
+			global::TK.CustomMap.Droid.Resource.Attribute.tabIndicatorColor = global::CV.Mobile.Droid.Resource.Attribute.tabIndicatorColor;
+			global::TK.CustomMap.Droid.Resource.Attribute.tabIndicatorHeight = global::CV.Mobile.Droid.Resource.Attribute.tabIndicatorHeight;
+			global::TK.CustomMap.Droid.Resource.Attribute.tabMaxWidth = global::CV.Mobile.Droid.Resource.Attribute.tabMaxWidth;
+			global::TK.CustomMap.Droid.Resource.Attribute.tabMinWidth = global::CV.Mobile.Droid.Resource.Attribute.tabMinWidth;
+			global::TK.CustomMap.Droid.Resource.Attribute.tabMode = global::CV.Mobile.Droid.Resource.Attribute.tabMode;
+			global::TK.CustomMap.Droid.Resource.Attribute.tabPadding = global::CV.Mobile.Droid.Resource.Attribute.tabPadding;
+			global::TK.CustomMap.Droid.Resource.Attribute.tabPaddingBottom = global::CV.Mobile.Droid.Resource.Attribute.tabPaddingBottom;
+			global::TK.CustomMap.Droid.Resource.Attribute.tabPaddingEnd = global::CV.Mobile.Droid.Resource.Attribute.tabPaddingEnd;
+			global::TK.CustomMap.Droid.Resource.Attribute.tabPaddingStart = global::CV.Mobile.Droid.Resource.Attribute.tabPaddingStart;
+			global::TK.CustomMap.Droid.Resource.Attribute.tabPaddingTop = global::CV.Mobile.Droid.Resource.Attribute.tabPaddingTop;
+			global::TK.CustomMap.Droid.Resource.Attribute.tabSelectedTextColor = global::CV.Mobile.Droid.Resource.Attribute.tabSelectedTextColor;
+			global::TK.CustomMap.Droid.Resource.Attribute.tabTextAppearance = global::CV.Mobile.Droid.Resource.Attribute.tabTextAppearance;
+			global::TK.CustomMap.Droid.Resource.Attribute.tabTextColor = global::CV.Mobile.Droid.Resource.Attribute.tabTextColor;
+			global::TK.CustomMap.Droid.Resource.Attribute.textAllCaps = global::CV.Mobile.Droid.Resource.Attribute.textAllCaps;
+			global::TK.CustomMap.Droid.Resource.Attribute.textAppearanceLargePopupMenu = global::CV.Mobile.Droid.Resource.Attribute.textAppearanceLargePopupMenu;
+			global::TK.CustomMap.Droid.Resource.Attribute.textAppearanceListItem = global::CV.Mobile.Droid.Resource.Attribute.textAppearanceListItem;
+			global::TK.CustomMap.Droid.Resource.Attribute.textAppearanceListItemSmall = global::CV.Mobile.Droid.Resource.Attribute.textAppearanceListItemSmall;
+			global::TK.CustomMap.Droid.Resource.Attribute.textAppearanceSearchResultSubtitle = global::CV.Mobile.Droid.Resource.Attribute.textAppearanceSearchResultSubtitle;
+			global::TK.CustomMap.Droid.Resource.Attribute.textAppearanceSearchResultTitle = global::CV.Mobile.Droid.Resource.Attribute.textAppearanceSearchResultTitle;
+			global::TK.CustomMap.Droid.Resource.Attribute.textAppearanceSmallPopupMenu = global::CV.Mobile.Droid.Resource.Attribute.textAppearanceSmallPopupMenu;
+			global::TK.CustomMap.Droid.Resource.Attribute.textColorAlertDialogListItem = global::CV.Mobile.Droid.Resource.Attribute.textColorAlertDialogListItem;
+			global::TK.CustomMap.Droid.Resource.Attribute.textColorError = global::CV.Mobile.Droid.Resource.Attribute.textColorError;
+			global::TK.CustomMap.Droid.Resource.Attribute.textColorSearchUrl = global::CV.Mobile.Droid.Resource.Attribute.textColorSearchUrl;
+			global::TK.CustomMap.Droid.Resource.Attribute.theme = global::CV.Mobile.Droid.Resource.Attribute.theme;
+			global::TK.CustomMap.Droid.Resource.Attribute.thickness = global::CV.Mobile.Droid.Resource.Attribute.thickness;
+			global::TK.CustomMap.Droid.Resource.Attribute.thumbTextPadding = global::CV.Mobile.Droid.Resource.Attribute.thumbTextPadding;
+			global::TK.CustomMap.Droid.Resource.Attribute.title = global::CV.Mobile.Droid.Resource.Attribute.title;
+			global::TK.CustomMap.Droid.Resource.Attribute.titleEnabled = global::CV.Mobile.Droid.Resource.Attribute.titleEnabled;
+			global::TK.CustomMap.Droid.Resource.Attribute.titleMarginBottom = global::CV.Mobile.Droid.Resource.Attribute.titleMarginBottom;
+			global::TK.CustomMap.Droid.Resource.Attribute.titleMarginEnd = global::CV.Mobile.Droid.Resource.Attribute.titleMarginEnd;
+			global::TK.CustomMap.Droid.Resource.Attribute.titleMarginStart = global::CV.Mobile.Droid.Resource.Attribute.titleMarginStart;
+			global::TK.CustomMap.Droid.Resource.Attribute.titleMarginTop = global::CV.Mobile.Droid.Resource.Attribute.titleMarginTop;
+			global::TK.CustomMap.Droid.Resource.Attribute.titleMargins = global::CV.Mobile.Droid.Resource.Attribute.titleMargins;
+			global::TK.CustomMap.Droid.Resource.Attribute.titleTextAppearance = global::CV.Mobile.Droid.Resource.Attribute.titleTextAppearance;
+			global::TK.CustomMap.Droid.Resource.Attribute.titleTextColor = global::CV.Mobile.Droid.Resource.Attribute.titleTextColor;
+			global::TK.CustomMap.Droid.Resource.Attribute.titleTextStyle = global::CV.Mobile.Droid.Resource.Attribute.titleTextStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.toolbarId = global::CV.Mobile.Droid.Resource.Attribute.toolbarId;
+			global::TK.CustomMap.Droid.Resource.Attribute.toolbarNavigationButtonStyle = global::CV.Mobile.Droid.Resource.Attribute.toolbarNavigationButtonStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.toolbarStyle = global::CV.Mobile.Droid.Resource.Attribute.toolbarStyle;
+			global::TK.CustomMap.Droid.Resource.Attribute.track = global::CV.Mobile.Droid.Resource.Attribute.track;
+			global::TK.CustomMap.Droid.Resource.Attribute.uiCompass = global::CV.Mobile.Droid.Resource.Attribute.uiCompass;
+			global::TK.CustomMap.Droid.Resource.Attribute.uiMapToolbar = global::CV.Mobile.Droid.Resource.Attribute.uiMapToolbar;
+			global::TK.CustomMap.Droid.Resource.Attribute.uiRotateGestures = global::CV.Mobile.Droid.Resource.Attribute.uiRotateGestures;
+			global::TK.CustomMap.Droid.Resource.Attribute.uiScrollGestures = global::CV.Mobile.Droid.Resource.Attribute.uiScrollGestures;
+			global::TK.CustomMap.Droid.Resource.Attribute.uiTiltGestures = global::CV.Mobile.Droid.Resource.Attribute.uiTiltGestures;
+			global::TK.CustomMap.Droid.Resource.Attribute.uiZoomControls = global::CV.Mobile.Droid.Resource.Attribute.uiZoomControls;
+			global::TK.CustomMap.Droid.Resource.Attribute.uiZoomGestures = global::CV.Mobile.Droid.Resource.Attribute.uiZoomGestures;
+			global::TK.CustomMap.Droid.Resource.Attribute.useCompatPadding = global::CV.Mobile.Droid.Resource.Attribute.useCompatPadding;
+			global::TK.CustomMap.Droid.Resource.Attribute.useViewLifecycle = global::CV.Mobile.Droid.Resource.Attribute.useViewLifecycle;
+			global::TK.CustomMap.Droid.Resource.Attribute.voiceIcon = global::CV.Mobile.Droid.Resource.Attribute.voiceIcon;
+			global::TK.CustomMap.Droid.Resource.Attribute.windowActionBar = global::CV.Mobile.Droid.Resource.Attribute.windowActionBar;
+			global::TK.CustomMap.Droid.Resource.Attribute.windowActionBarOverlay = global::CV.Mobile.Droid.Resource.Attribute.windowActionBarOverlay;
+			global::TK.CustomMap.Droid.Resource.Attribute.windowActionModeOverlay = global::CV.Mobile.Droid.Resource.Attribute.windowActionModeOverlay;
+			global::TK.CustomMap.Droid.Resource.Attribute.windowFixedHeightMajor = global::CV.Mobile.Droid.Resource.Attribute.windowFixedHeightMajor;
+			global::TK.CustomMap.Droid.Resource.Attribute.windowFixedHeightMinor = global::CV.Mobile.Droid.Resource.Attribute.windowFixedHeightMinor;
+			global::TK.CustomMap.Droid.Resource.Attribute.windowFixedWidthMajor = global::CV.Mobile.Droid.Resource.Attribute.windowFixedWidthMajor;
+			global::TK.CustomMap.Droid.Resource.Attribute.windowFixedWidthMinor = global::CV.Mobile.Droid.Resource.Attribute.windowFixedWidthMinor;
+			global::TK.CustomMap.Droid.Resource.Attribute.windowMinWidthMajor = global::CV.Mobile.Droid.Resource.Attribute.windowMinWidthMajor;
+			global::TK.CustomMap.Droid.Resource.Attribute.windowMinWidthMinor = global::CV.Mobile.Droid.Resource.Attribute.windowMinWidthMinor;
+			global::TK.CustomMap.Droid.Resource.Attribute.windowNoTitle = global::CV.Mobile.Droid.Resource.Attribute.windowNoTitle;
+			global::TK.CustomMap.Droid.Resource.Attribute.zOrderOnTop = global::CV.Mobile.Droid.Resource.Attribute.zOrderOnTop;
+			global::TK.CustomMap.Droid.Resource.Boolean.abc_action_bar_embed_tabs = global::CV.Mobile.Droid.Resource.Boolean.abc_action_bar_embed_tabs;
+			global::TK.CustomMap.Droid.Resource.Boolean.abc_action_bar_embed_tabs_pre_jb = global::CV.Mobile.Droid.Resource.Boolean.abc_action_bar_embed_tabs_pre_jb;
+			global::TK.CustomMap.Droid.Resource.Boolean.abc_action_bar_expanded_action_views_exclusive = global::CV.Mobile.Droid.Resource.Boolean.abc_action_bar_expanded_action_views_exclusive;
+			global::TK.CustomMap.Droid.Resource.Boolean.abc_allow_stacked_button_bar = global::CV.Mobile.Droid.Resource.Boolean.abc_allow_stacked_button_bar;
+			global::TK.CustomMap.Droid.Resource.Boolean.abc_config_actionMenuItemAllCaps = global::CV.Mobile.Droid.Resource.Boolean.abc_config_actionMenuItemAllCaps;
+			global::TK.CustomMap.Droid.Resource.Boolean.abc_config_allowActionMenuItemTextWithIcon = global::CV.Mobile.Droid.Resource.Boolean.abc_config_allowActionMenuItemTextWithIcon;
+			global::TK.CustomMap.Droid.Resource.Boolean.abc_config_closeDialogWhenTouchOutside = global::CV.Mobile.Droid.Resource.Boolean.abc_config_closeDialogWhenTouchOutside;
+			global::TK.CustomMap.Droid.Resource.Boolean.abc_config_showMenuShortcutsWhenKeyboardPresent = global::CV.Mobile.Droid.Resource.Boolean.abc_config_showMenuShortcutsWhenKeyboardPresent;
+			global::TK.CustomMap.Droid.Resource.Color.abc_background_cache_hint_selector_material_dark = global::CV.Mobile.Droid.Resource.Color.abc_background_cache_hint_selector_material_dark;
+			global::TK.CustomMap.Droid.Resource.Color.abc_background_cache_hint_selector_material_light = global::CV.Mobile.Droid.Resource.Color.abc_background_cache_hint_selector_material_light;
+			global::TK.CustomMap.Droid.Resource.Color.abc_color_highlight_material = global::CV.Mobile.Droid.Resource.Color.abc_color_highlight_material;
+			global::TK.CustomMap.Droid.Resource.Color.abc_input_method_navigation_guard = global::CV.Mobile.Droid.Resource.Color.abc_input_method_navigation_guard;
+			global::TK.CustomMap.Droid.Resource.Color.abc_primary_text_disable_only_material_dark = global::CV.Mobile.Droid.Resource.Color.abc_primary_text_disable_only_material_dark;
+			global::TK.CustomMap.Droid.Resource.Color.abc_primary_text_disable_only_material_light = global::CV.Mobile.Droid.Resource.Color.abc_primary_text_disable_only_material_light;
+			global::TK.CustomMap.Droid.Resource.Color.abc_primary_text_material_dark = global::CV.Mobile.Droid.Resource.Color.abc_primary_text_material_dark;
+			global::TK.CustomMap.Droid.Resource.Color.abc_primary_text_material_light = global::CV.Mobile.Droid.Resource.Color.abc_primary_text_material_light;
+			global::TK.CustomMap.Droid.Resource.Color.abc_search_url_text = global::CV.Mobile.Droid.Resource.Color.abc_search_url_text;
+			global::TK.CustomMap.Droid.Resource.Color.abc_search_url_text_normal = global::CV.Mobile.Droid.Resource.Color.abc_search_url_text_normal;
+			global::TK.CustomMap.Droid.Resource.Color.abc_search_url_text_pressed = global::CV.Mobile.Droid.Resource.Color.abc_search_url_text_pressed;
+			global::TK.CustomMap.Droid.Resource.Color.abc_search_url_text_selected = global::CV.Mobile.Droid.Resource.Color.abc_search_url_text_selected;
+			global::TK.CustomMap.Droid.Resource.Color.abc_secondary_text_material_dark = global::CV.Mobile.Droid.Resource.Color.abc_secondary_text_material_dark;
+			global::TK.CustomMap.Droid.Resource.Color.abc_secondary_text_material_light = global::CV.Mobile.Droid.Resource.Color.abc_secondary_text_material_light;
+			global::TK.CustomMap.Droid.Resource.Color.accent_material_dark = global::CV.Mobile.Droid.Resource.Color.accent_material_dark;
+			global::TK.CustomMap.Droid.Resource.Color.accent_material_light = global::CV.Mobile.Droid.Resource.Color.accent_material_light;
+			global::TK.CustomMap.Droid.Resource.Color.background_floating_material_dark = global::CV.Mobile.Droid.Resource.Color.background_floating_material_dark;
+			global::TK.CustomMap.Droid.Resource.Color.background_floating_material_light = global::CV.Mobile.Droid.Resource.Color.background_floating_material_light;
+			global::TK.CustomMap.Droid.Resource.Color.background_material_dark = global::CV.Mobile.Droid.Resource.Color.background_material_dark;
+			global::TK.CustomMap.Droid.Resource.Color.background_material_light = global::CV.Mobile.Droid.Resource.Color.background_material_light;
+			global::TK.CustomMap.Droid.Resource.Color.bright_foreground_disabled_material_dark = global::CV.Mobile.Droid.Resource.Color.bright_foreground_disabled_material_dark;
+			global::TK.CustomMap.Droid.Resource.Color.bright_foreground_disabled_material_light = global::CV.Mobile.Droid.Resource.Color.bright_foreground_disabled_material_light;
+			global::TK.CustomMap.Droid.Resource.Color.bright_foreground_inverse_material_dark = global::CV.Mobile.Droid.Resource.Color.bright_foreground_inverse_material_dark;
+			global::TK.CustomMap.Droid.Resource.Color.bright_foreground_inverse_material_light = global::CV.Mobile.Droid.Resource.Color.bright_foreground_inverse_material_light;
+			global::TK.CustomMap.Droid.Resource.Color.bright_foreground_material_dark = global::CV.Mobile.Droid.Resource.Color.bright_foreground_material_dark;
+			global::TK.CustomMap.Droid.Resource.Color.bright_foreground_material_light = global::CV.Mobile.Droid.Resource.Color.bright_foreground_material_light;
+			global::TK.CustomMap.Droid.Resource.Color.button_material_dark = global::CV.Mobile.Droid.Resource.Color.button_material_dark;
+			global::TK.CustomMap.Droid.Resource.Color.button_material_light = global::CV.Mobile.Droid.Resource.Color.button_material_light;
+			global::TK.CustomMap.Droid.Resource.Color.cardview_dark_background = global::CV.Mobile.Droid.Resource.Color.cardview_dark_background;
+			global::TK.CustomMap.Droid.Resource.Color.cardview_light_background = global::CV.Mobile.Droid.Resource.Color.cardview_light_background;
+			global::TK.CustomMap.Droid.Resource.Color.cardview_shadow_end_color = global::CV.Mobile.Droid.Resource.Color.cardview_shadow_end_color;
+			global::TK.CustomMap.Droid.Resource.Color.cardview_shadow_start_color = global::CV.Mobile.Droid.Resource.Color.cardview_shadow_start_color;
+			global::TK.CustomMap.Droid.Resource.Color.common_action_bar_splitter = global::CV.Mobile.Droid.Resource.Color.common_action_bar_splitter;
+			global::TK.CustomMap.Droid.Resource.Color.common_google_signin_btn_text_dark = global::CV.Mobile.Droid.Resource.Color.common_google_signin_btn_text_dark;
+			global::TK.CustomMap.Droid.Resource.Color.common_google_signin_btn_text_dark_default = global::CV.Mobile.Droid.Resource.Color.common_google_signin_btn_text_dark_default;
+			global::TK.CustomMap.Droid.Resource.Color.common_google_signin_btn_text_dark_disabled = global::CV.Mobile.Droid.Resource.Color.common_google_signin_btn_text_dark_disabled;
+			global::TK.CustomMap.Droid.Resource.Color.common_google_signin_btn_text_dark_focused = global::CV.Mobile.Droid.Resource.Color.common_google_signin_btn_text_dark_focused;
+			global::TK.CustomMap.Droid.Resource.Color.common_google_signin_btn_text_dark_pressed = global::CV.Mobile.Droid.Resource.Color.common_google_signin_btn_text_dark_pressed;
+			global::TK.CustomMap.Droid.Resource.Color.common_google_signin_btn_text_light = global::CV.Mobile.Droid.Resource.Color.common_google_signin_btn_text_light;
+			global::TK.CustomMap.Droid.Resource.Color.common_google_signin_btn_text_light_default = global::CV.Mobile.Droid.Resource.Color.common_google_signin_btn_text_light_default;
+			global::TK.CustomMap.Droid.Resource.Color.common_google_signin_btn_text_light_disabled = global::CV.Mobile.Droid.Resource.Color.common_google_signin_btn_text_light_disabled;
+			global::TK.CustomMap.Droid.Resource.Color.common_google_signin_btn_text_light_focused = global::CV.Mobile.Droid.Resource.Color.common_google_signin_btn_text_light_focused;
+			global::TK.CustomMap.Droid.Resource.Color.common_google_signin_btn_text_light_pressed = global::CV.Mobile.Droid.Resource.Color.common_google_signin_btn_text_light_pressed;
+			global::TK.CustomMap.Droid.Resource.Color.common_plus_signin_btn_text_dark = global::CV.Mobile.Droid.Resource.Color.common_plus_signin_btn_text_dark;
+			global::TK.CustomMap.Droid.Resource.Color.common_plus_signin_btn_text_dark_default = global::CV.Mobile.Droid.Resource.Color.common_plus_signin_btn_text_dark_default;
+			global::TK.CustomMap.Droid.Resource.Color.common_plus_signin_btn_text_dark_disabled = global::CV.Mobile.Droid.Resource.Color.common_plus_signin_btn_text_dark_disabled;
+			global::TK.CustomMap.Droid.Resource.Color.common_plus_signin_btn_text_dark_focused = global::CV.Mobile.Droid.Resource.Color.common_plus_signin_btn_text_dark_focused;
+			global::TK.CustomMap.Droid.Resource.Color.common_plus_signin_btn_text_dark_pressed = global::CV.Mobile.Droid.Resource.Color.common_plus_signin_btn_text_dark_pressed;
+			global::TK.CustomMap.Droid.Resource.Color.common_plus_signin_btn_text_light = global::CV.Mobile.Droid.Resource.Color.common_plus_signin_btn_text_light;
+			global::TK.CustomMap.Droid.Resource.Color.common_plus_signin_btn_text_light_default = global::CV.Mobile.Droid.Resource.Color.common_plus_signin_btn_text_light_default;
+			global::TK.CustomMap.Droid.Resource.Color.common_plus_signin_btn_text_light_disabled = global::CV.Mobile.Droid.Resource.Color.common_plus_signin_btn_text_light_disabled;
+			global::TK.CustomMap.Droid.Resource.Color.common_plus_signin_btn_text_light_focused = global::CV.Mobile.Droid.Resource.Color.common_plus_signin_btn_text_light_focused;
+			global::TK.CustomMap.Droid.Resource.Color.common_plus_signin_btn_text_light_pressed = global::CV.Mobile.Droid.Resource.Color.common_plus_signin_btn_text_light_pressed;
+			global::TK.CustomMap.Droid.Resource.Color.design_fab_shadow_end_color = global::CV.Mobile.Droid.Resource.Color.design_fab_shadow_end_color;
+			global::TK.CustomMap.Droid.Resource.Color.design_fab_shadow_mid_color = global::CV.Mobile.Droid.Resource.Color.design_fab_shadow_mid_color;
+			global::TK.CustomMap.Droid.Resource.Color.design_fab_shadow_start_color = global::CV.Mobile.Droid.Resource.Color.design_fab_shadow_start_color;
+			global::TK.CustomMap.Droid.Resource.Color.design_fab_stroke_end_inner_color = global::CV.Mobile.Droid.Resource.Color.design_fab_stroke_end_inner_color;
+			global::TK.CustomMap.Droid.Resource.Color.design_fab_stroke_end_outer_color = global::CV.Mobile.Droid.Resource.Color.design_fab_stroke_end_outer_color;
+			global::TK.CustomMap.Droid.Resource.Color.design_fab_stroke_top_inner_color = global::CV.Mobile.Droid.Resource.Color.design_fab_stroke_top_inner_color;
+			global::TK.CustomMap.Droid.Resource.Color.design_fab_stroke_top_outer_color = global::CV.Mobile.Droid.Resource.Color.design_fab_stroke_top_outer_color;
+			global::TK.CustomMap.Droid.Resource.Color.design_snackbar_background_color = global::CV.Mobile.Droid.Resource.Color.design_snackbar_background_color;
+			global::TK.CustomMap.Droid.Resource.Color.design_textinput_error_color_dark = global::CV.Mobile.Droid.Resource.Color.design_textinput_error_color_dark;
+			global::TK.CustomMap.Droid.Resource.Color.design_textinput_error_color_light = global::CV.Mobile.Droid.Resource.Color.design_textinput_error_color_light;
+			global::TK.CustomMap.Droid.Resource.Color.dim_foreground_disabled_material_dark = global::CV.Mobile.Droid.Resource.Color.dim_foreground_disabled_material_dark;
+			global::TK.CustomMap.Droid.Resource.Color.dim_foreground_disabled_material_light = global::CV.Mobile.Droid.Resource.Color.dim_foreground_disabled_material_light;
+			global::TK.CustomMap.Droid.Resource.Color.dim_foreground_material_dark = global::CV.Mobile.Droid.Resource.Color.dim_foreground_material_dark;
+			global::TK.CustomMap.Droid.Resource.Color.dim_foreground_material_light = global::CV.Mobile.Droid.Resource.Color.dim_foreground_material_light;
+			global::TK.CustomMap.Droid.Resource.Color.foreground_material_dark = global::CV.Mobile.Droid.Resource.Color.foreground_material_dark;
+			global::TK.CustomMap.Droid.Resource.Color.foreground_material_light = global::CV.Mobile.Droid.Resource.Color.foreground_material_light;
+			global::TK.CustomMap.Droid.Resource.Color.highlighted_text_material_dark = global::CV.Mobile.Droid.Resource.Color.highlighted_text_material_dark;
+			global::TK.CustomMap.Droid.Resource.Color.highlighted_text_material_light = global::CV.Mobile.Droid.Resource.Color.highlighted_text_material_light;
+			global::TK.CustomMap.Droid.Resource.Color.hint_foreground_material_dark = global::CV.Mobile.Droid.Resource.Color.hint_foreground_material_dark;
+			global::TK.CustomMap.Droid.Resource.Color.hint_foreground_material_light = global::CV.Mobile.Droid.Resource.Color.hint_foreground_material_light;
+			global::TK.CustomMap.Droid.Resource.Color.material_blue_grey_800 = global::CV.Mobile.Droid.Resource.Color.material_blue_grey_800;
+			global::TK.CustomMap.Droid.Resource.Color.material_blue_grey_900 = global::CV.Mobile.Droid.Resource.Color.material_blue_grey_900;
+			global::TK.CustomMap.Droid.Resource.Color.material_blue_grey_950 = global::CV.Mobile.Droid.Resource.Color.material_blue_grey_950;
+			global::TK.CustomMap.Droid.Resource.Color.material_deep_teal_200 = global::CV.Mobile.Droid.Resource.Color.material_deep_teal_200;
+			global::TK.CustomMap.Droid.Resource.Color.material_deep_teal_500 = global::CV.Mobile.Droid.Resource.Color.material_deep_teal_500;
+			global::TK.CustomMap.Droid.Resource.Color.material_grey_100 = global::CV.Mobile.Droid.Resource.Color.material_grey_100;
+			global::TK.CustomMap.Droid.Resource.Color.material_grey_300 = global::CV.Mobile.Droid.Resource.Color.material_grey_300;
+			global::TK.CustomMap.Droid.Resource.Color.material_grey_50 = global::CV.Mobile.Droid.Resource.Color.material_grey_50;
+			global::TK.CustomMap.Droid.Resource.Color.material_grey_600 = global::CV.Mobile.Droid.Resource.Color.material_grey_600;
+			global::TK.CustomMap.Droid.Resource.Color.material_grey_800 = global::CV.Mobile.Droid.Resource.Color.material_grey_800;
+			global::TK.CustomMap.Droid.Resource.Color.material_grey_850 = global::CV.Mobile.Droid.Resource.Color.material_grey_850;
+			global::TK.CustomMap.Droid.Resource.Color.material_grey_900 = global::CV.Mobile.Droid.Resource.Color.material_grey_900;
+			global::TK.CustomMap.Droid.Resource.Color.place_autocomplete_prediction_primary_text = global::CV.Mobile.Droid.Resource.Color.place_autocomplete_prediction_primary_text;
+			global::TK.CustomMap.Droid.Resource.Color.place_autocomplete_prediction_primary_text_highlight = global::CV.Mobile.Droid.Resource.Color.place_autocomplete_prediction_primary_text_highlight;
+			global::TK.CustomMap.Droid.Resource.Color.place_autocomplete_prediction_secondary_text = global::CV.Mobile.Droid.Resource.Color.place_autocomplete_prediction_secondary_text;
+			global::TK.CustomMap.Droid.Resource.Color.place_autocomplete_search_hint = global::CV.Mobile.Droid.Resource.Color.place_autocomplete_search_hint;
+			global::TK.CustomMap.Droid.Resource.Color.place_autocomplete_search_text = global::CV.Mobile.Droid.Resource.Color.place_autocomplete_search_text;
+			global::TK.CustomMap.Droid.Resource.Color.place_autocomplete_separator = global::CV.Mobile.Droid.Resource.Color.place_autocomplete_separator;
+			global::TK.CustomMap.Droid.Resource.Color.primary_dark_material_dark = global::CV.Mobile.Droid.Resource.Color.primary_dark_material_dark;
+			global::TK.CustomMap.Droid.Resource.Color.primary_dark_material_light = global::CV.Mobile.Droid.Resource.Color.primary_dark_material_light;
+			global::TK.CustomMap.Droid.Resource.Color.primary_material_dark = global::CV.Mobile.Droid.Resource.Color.primary_material_dark;
+			global::TK.CustomMap.Droid.Resource.Color.primary_material_light = global::CV.Mobile.Droid.Resource.Color.primary_material_light;
+			global::TK.CustomMap.Droid.Resource.Color.primary_text_default_material_dark = global::CV.Mobile.Droid.Resource.Color.primary_text_default_material_dark;
+			global::TK.CustomMap.Droid.Resource.Color.primary_text_default_material_light = global::CV.Mobile.Droid.Resource.Color.primary_text_default_material_light;
+			global::TK.CustomMap.Droid.Resource.Color.primary_text_disabled_material_dark = global::CV.Mobile.Droid.Resource.Color.primary_text_disabled_material_dark;
+			global::TK.CustomMap.Droid.Resource.Color.primary_text_disabled_material_light = global::CV.Mobile.Droid.Resource.Color.primary_text_disabled_material_light;
+			global::TK.CustomMap.Droid.Resource.Color.ripple_material_dark = global::CV.Mobile.Droid.Resource.Color.ripple_material_dark;
+			global::TK.CustomMap.Droid.Resource.Color.ripple_material_light = global::CV.Mobile.Droid.Resource.Color.ripple_material_light;
+			global::TK.CustomMap.Droid.Resource.Color.secondary_text_default_material_dark = global::CV.Mobile.Droid.Resource.Color.secondary_text_default_material_dark;
+			global::TK.CustomMap.Droid.Resource.Color.secondary_text_default_material_light = global::CV.Mobile.Droid.Resource.Color.secondary_text_default_material_light;
+			global::TK.CustomMap.Droid.Resource.Color.secondary_text_disabled_material_dark = global::CV.Mobile.Droid.Resource.Color.secondary_text_disabled_material_dark;
+			global::TK.CustomMap.Droid.Resource.Color.secondary_text_disabled_material_light = global::CV.Mobile.Droid.Resource.Color.secondary_text_disabled_material_light;
+			global::TK.CustomMap.Droid.Resource.Color.switch_thumb_disabled_material_dark = global::CV.Mobile.Droid.Resource.Color.switch_thumb_disabled_material_dark;
+			global::TK.CustomMap.Droid.Resource.Color.switch_thumb_disabled_material_light = global::CV.Mobile.Droid.Resource.Color.switch_thumb_disabled_material_light;
+			global::TK.CustomMap.Droid.Resource.Color.switch_thumb_material_dark = global::CV.Mobile.Droid.Resource.Color.switch_thumb_material_dark;
+			global::TK.CustomMap.Droid.Resource.Color.switch_thumb_material_light = global::CV.Mobile.Droid.Resource.Color.switch_thumb_material_light;
+			global::TK.CustomMap.Droid.Resource.Color.switch_thumb_normal_material_dark = global::CV.Mobile.Droid.Resource.Color.switch_thumb_normal_material_dark;
+			global::TK.CustomMap.Droid.Resource.Color.switch_thumb_normal_material_light = global::CV.Mobile.Droid.Resource.Color.switch_thumb_normal_material_light;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_action_bar_content_inset_material = global::CV.Mobile.Droid.Resource.Dimension.abc_action_bar_content_inset_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_action_bar_default_height_material = global::CV.Mobile.Droid.Resource.Dimension.abc_action_bar_default_height_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_action_bar_default_padding_end_material = global::CV.Mobile.Droid.Resource.Dimension.abc_action_bar_default_padding_end_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_action_bar_default_padding_start_material = global::CV.Mobile.Droid.Resource.Dimension.abc_action_bar_default_padding_start_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_action_bar_icon_vertical_padding_material = global::CV.Mobile.Droid.Resource.Dimension.abc_action_bar_icon_vertical_padding_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_action_bar_overflow_padding_end_material = global::CV.Mobile.Droid.Resource.Dimension.abc_action_bar_overflow_padding_end_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_action_bar_overflow_padding_start_material = global::CV.Mobile.Droid.Resource.Dimension.abc_action_bar_overflow_padding_start_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_action_bar_progress_bar_size = global::CV.Mobile.Droid.Resource.Dimension.abc_action_bar_progress_bar_size;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_action_bar_stacked_max_height = global::CV.Mobile.Droid.Resource.Dimension.abc_action_bar_stacked_max_height;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_action_bar_stacked_tab_max_width = global::CV.Mobile.Droid.Resource.Dimension.abc_action_bar_stacked_tab_max_width;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_action_bar_subtitle_bottom_margin_material = global::CV.Mobile.Droid.Resource.Dimension.abc_action_bar_subtitle_bottom_margin_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_action_bar_subtitle_top_margin_material = global::CV.Mobile.Droid.Resource.Dimension.abc_action_bar_subtitle_top_margin_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_action_button_min_height_material = global::CV.Mobile.Droid.Resource.Dimension.abc_action_button_min_height_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_action_button_min_width_material = global::CV.Mobile.Droid.Resource.Dimension.abc_action_button_min_width_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_action_button_min_width_overflow_material = global::CV.Mobile.Droid.Resource.Dimension.abc_action_button_min_width_overflow_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_alert_dialog_button_bar_height = global::CV.Mobile.Droid.Resource.Dimension.abc_alert_dialog_button_bar_height;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_button_inset_horizontal_material = global::CV.Mobile.Droid.Resource.Dimension.abc_button_inset_horizontal_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_button_inset_vertical_material = global::CV.Mobile.Droid.Resource.Dimension.abc_button_inset_vertical_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_button_padding_horizontal_material = global::CV.Mobile.Droid.Resource.Dimension.abc_button_padding_horizontal_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_button_padding_vertical_material = global::CV.Mobile.Droid.Resource.Dimension.abc_button_padding_vertical_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_config_prefDialogWidth = global::CV.Mobile.Droid.Resource.Dimension.abc_config_prefDialogWidth;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_control_corner_material = global::CV.Mobile.Droid.Resource.Dimension.abc_control_corner_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_control_inset_material = global::CV.Mobile.Droid.Resource.Dimension.abc_control_inset_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_control_padding_material = global::CV.Mobile.Droid.Resource.Dimension.abc_control_padding_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_dialog_fixed_height_major = global::CV.Mobile.Droid.Resource.Dimension.abc_dialog_fixed_height_major;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_dialog_fixed_height_minor = global::CV.Mobile.Droid.Resource.Dimension.abc_dialog_fixed_height_minor;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_dialog_fixed_width_major = global::CV.Mobile.Droid.Resource.Dimension.abc_dialog_fixed_width_major;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_dialog_fixed_width_minor = global::CV.Mobile.Droid.Resource.Dimension.abc_dialog_fixed_width_minor;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_dialog_list_padding_vertical_material = global::CV.Mobile.Droid.Resource.Dimension.abc_dialog_list_padding_vertical_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_dialog_min_width_major = global::CV.Mobile.Droid.Resource.Dimension.abc_dialog_min_width_major;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_dialog_min_width_minor = global::CV.Mobile.Droid.Resource.Dimension.abc_dialog_min_width_minor;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_dialog_padding_material = global::CV.Mobile.Droid.Resource.Dimension.abc_dialog_padding_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_dialog_padding_top_material = global::CV.Mobile.Droid.Resource.Dimension.abc_dialog_padding_top_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_disabled_alpha_material_dark = global::CV.Mobile.Droid.Resource.Dimension.abc_disabled_alpha_material_dark;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_disabled_alpha_material_light = global::CV.Mobile.Droid.Resource.Dimension.abc_disabled_alpha_material_light;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_dropdownitem_icon_width = global::CV.Mobile.Droid.Resource.Dimension.abc_dropdownitem_icon_width;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_dropdownitem_text_padding_left = global::CV.Mobile.Droid.Resource.Dimension.abc_dropdownitem_text_padding_left;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_dropdownitem_text_padding_right = global::CV.Mobile.Droid.Resource.Dimension.abc_dropdownitem_text_padding_right;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_edit_text_inset_bottom_material = global::CV.Mobile.Droid.Resource.Dimension.abc_edit_text_inset_bottom_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_edit_text_inset_horizontal_material = global::CV.Mobile.Droid.Resource.Dimension.abc_edit_text_inset_horizontal_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_edit_text_inset_top_material = global::CV.Mobile.Droid.Resource.Dimension.abc_edit_text_inset_top_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_floating_window_z = global::CV.Mobile.Droid.Resource.Dimension.abc_floating_window_z;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_list_item_padding_horizontal_material = global::CV.Mobile.Droid.Resource.Dimension.abc_list_item_padding_horizontal_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_panel_menu_list_width = global::CV.Mobile.Droid.Resource.Dimension.abc_panel_menu_list_width;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_search_view_preferred_width = global::CV.Mobile.Droid.Resource.Dimension.abc_search_view_preferred_width;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_search_view_text_min_width = global::CV.Mobile.Droid.Resource.Dimension.abc_search_view_text_min_width;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_seekbar_track_background_height_material = global::CV.Mobile.Droid.Resource.Dimension.abc_seekbar_track_background_height_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_seekbar_track_progress_height_material = global::CV.Mobile.Droid.Resource.Dimension.abc_seekbar_track_progress_height_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_select_dialog_padding_start_material = global::CV.Mobile.Droid.Resource.Dimension.abc_select_dialog_padding_start_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_switch_padding = global::CV.Mobile.Droid.Resource.Dimension.abc_switch_padding;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_text_size_body_1_material = global::CV.Mobile.Droid.Resource.Dimension.abc_text_size_body_1_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_text_size_body_2_material = global::CV.Mobile.Droid.Resource.Dimension.abc_text_size_body_2_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_text_size_button_material = global::CV.Mobile.Droid.Resource.Dimension.abc_text_size_button_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_text_size_caption_material = global::CV.Mobile.Droid.Resource.Dimension.abc_text_size_caption_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_text_size_display_1_material = global::CV.Mobile.Droid.Resource.Dimension.abc_text_size_display_1_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_text_size_display_2_material = global::CV.Mobile.Droid.Resource.Dimension.abc_text_size_display_2_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_text_size_display_3_material = global::CV.Mobile.Droid.Resource.Dimension.abc_text_size_display_3_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_text_size_display_4_material = global::CV.Mobile.Droid.Resource.Dimension.abc_text_size_display_4_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_text_size_headline_material = global::CV.Mobile.Droid.Resource.Dimension.abc_text_size_headline_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_text_size_large_material = global::CV.Mobile.Droid.Resource.Dimension.abc_text_size_large_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_text_size_medium_material = global::CV.Mobile.Droid.Resource.Dimension.abc_text_size_medium_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_text_size_menu_material = global::CV.Mobile.Droid.Resource.Dimension.abc_text_size_menu_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_text_size_small_material = global::CV.Mobile.Droid.Resource.Dimension.abc_text_size_small_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_text_size_subhead_material = global::CV.Mobile.Droid.Resource.Dimension.abc_text_size_subhead_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_text_size_subtitle_material_toolbar = global::CV.Mobile.Droid.Resource.Dimension.abc_text_size_subtitle_material_toolbar;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_text_size_title_material = global::CV.Mobile.Droid.Resource.Dimension.abc_text_size_title_material;
+			global::TK.CustomMap.Droid.Resource.Dimension.abc_text_size_title_material_toolbar = global::CV.Mobile.Droid.Resource.Dimension.abc_text_size_title_material_toolbar;
+			global::TK.CustomMap.Droid.Resource.Dimension.cardview_compat_inset_shadow = global::CV.Mobile.Droid.Resource.Dimension.cardview_compat_inset_shadow;
+			global::TK.CustomMap.Droid.Resource.Dimension.cardview_default_elevation = global::CV.Mobile.Droid.Resource.Dimension.cardview_default_elevation;
+			global::TK.CustomMap.Droid.Resource.Dimension.cardview_default_radius = global::CV.Mobile.Droid.Resource.Dimension.cardview_default_radius;
+			global::TK.CustomMap.Droid.Resource.Dimension.design_appbar_elevation = global::CV.Mobile.Droid.Resource.Dimension.design_appbar_elevation;
+			global::TK.CustomMap.Droid.Resource.Dimension.design_bottom_sheet_modal_elevation = global::CV.Mobile.Droid.Resource.Dimension.design_bottom_sheet_modal_elevation;
+			global::TK.CustomMap.Droid.Resource.Dimension.design_bottom_sheet_modal_peek_height = global::CV.Mobile.Droid.Resource.Dimension.design_bottom_sheet_modal_peek_height;
+			global::TK.CustomMap.Droid.Resource.Dimension.design_fab_border_width = global::CV.Mobile.Droid.Resource.Dimension.design_fab_border_width;
+			global::TK.CustomMap.Droid.Resource.Dimension.design_fab_elevation = global::CV.Mobile.Droid.Resource.Dimension.design_fab_elevation;
+			global::TK.CustomMap.Droid.Resource.Dimension.design_fab_image_size = global::CV.Mobile.Droid.Resource.Dimension.design_fab_image_size;
+			global::TK.CustomMap.Droid.Resource.Dimension.design_fab_size_mini = global::CV.Mobile.Droid.Resource.Dimension.design_fab_size_mini;
+			global::TK.CustomMap.Droid.Resource.Dimension.design_fab_size_normal = global::CV.Mobile.Droid.Resource.Dimension.design_fab_size_normal;
+			global::TK.CustomMap.Droid.Resource.Dimension.design_fab_translation_z_pressed = global::CV.Mobile.Droid.Resource.Dimension.design_fab_translation_z_pressed;
+			global::TK.CustomMap.Droid.Resource.Dimension.design_navigation_elevation = global::CV.Mobile.Droid.Resource.Dimension.design_navigation_elevation;
+			global::TK.CustomMap.Droid.Resource.Dimension.design_navigation_icon_padding = global::CV.Mobile.Droid.Resource.Dimension.design_navigation_icon_padding;
+			global::TK.CustomMap.Droid.Resource.Dimension.design_navigation_icon_size = global::CV.Mobile.Droid.Resource.Dimension.design_navigation_icon_size;
+			global::TK.CustomMap.Droid.Resource.Dimension.design_navigation_max_width = global::CV.Mobile.Droid.Resource.Dimension.design_navigation_max_width;
+			global::TK.CustomMap.Droid.Resource.Dimension.design_navigation_padding_bottom = global::CV.Mobile.Droid.Resource.Dimension.design_navigation_padding_bottom;
+			global::TK.CustomMap.Droid.Resource.Dimension.design_navigation_separator_vertical_padding = global::CV.Mobile.Droid.Resource.Dimension.design_navigation_separator_vertical_padding;
+			global::TK.CustomMap.Droid.Resource.Dimension.design_snackbar_action_inline_max_width = global::CV.Mobile.Droid.Resource.Dimension.design_snackbar_action_inline_max_width;
+			global::TK.CustomMap.Droid.Resource.Dimension.design_snackbar_background_corner_radius = global::CV.Mobile.Droid.Resource.Dimension.design_snackbar_background_corner_radius;
+			global::TK.CustomMap.Droid.Resource.Dimension.design_snackbar_elevation = global::CV.Mobile.Droid.Resource.Dimension.design_snackbar_elevation;
+			global::TK.CustomMap.Droid.Resource.Dimension.design_snackbar_extra_spacing_horizontal = global::CV.Mobile.Droid.Resource.Dimension.design_snackbar_extra_spacing_horizontal;
+			global::TK.CustomMap.Droid.Resource.Dimension.design_snackbar_max_width = global::CV.Mobile.Droid.Resource.Dimension.design_snackbar_max_width;
+			global::TK.CustomMap.Droid.Resource.Dimension.design_snackbar_min_width = global::CV.Mobile.Droid.Resource.Dimension.design_snackbar_min_width;
+			global::TK.CustomMap.Droid.Resource.Dimension.design_snackbar_padding_horizontal = global::CV.Mobile.Droid.Resource.Dimension.design_snackbar_padding_horizontal;
+			global::TK.CustomMap.Droid.Resource.Dimension.design_snackbar_padding_vertical = global::CV.Mobile.Droid.Resource.Dimension.design_snackbar_padding_vertical;
+			global::TK.CustomMap.Droid.Resource.Dimension.design_snackbar_padding_vertical_2lines = global::CV.Mobile.Droid.Resource.Dimension.design_snackbar_padding_vertical_2lines;
+			global::TK.CustomMap.Droid.Resource.Dimension.design_snackbar_text_size = global::CV.Mobile.Droid.Resource.Dimension.design_snackbar_text_size;
+			global::TK.CustomMap.Droid.Resource.Dimension.design_tab_max_width = global::CV.Mobile.Droid.Resource.Dimension.design_tab_max_width;
+			global::TK.CustomMap.Droid.Resource.Dimension.design_tab_scrollable_min_width = global::CV.Mobile.Droid.Resource.Dimension.design_tab_scrollable_min_width;
+			global::TK.CustomMap.Droid.Resource.Dimension.design_tab_text_size = global::CV.Mobile.Droid.Resource.Dimension.design_tab_text_size;
+			global::TK.CustomMap.Droid.Resource.Dimension.design_tab_text_size_2line = global::CV.Mobile.Droid.Resource.Dimension.design_tab_text_size_2line;
+			global::TK.CustomMap.Droid.Resource.Dimension.disabled_alpha_material_dark = global::CV.Mobile.Droid.Resource.Dimension.disabled_alpha_material_dark;
+			global::TK.CustomMap.Droid.Resource.Dimension.disabled_alpha_material_light = global::CV.Mobile.Droid.Resource.Dimension.disabled_alpha_material_light;
+			global::TK.CustomMap.Droid.Resource.Dimension.highlight_alpha_material_colored = global::CV.Mobile.Droid.Resource.Dimension.highlight_alpha_material_colored;
+			global::TK.CustomMap.Droid.Resource.Dimension.highlight_alpha_material_dark = global::CV.Mobile.Droid.Resource.Dimension.highlight_alpha_material_dark;
+			global::TK.CustomMap.Droid.Resource.Dimension.highlight_alpha_material_light = global::CV.Mobile.Droid.Resource.Dimension.highlight_alpha_material_light;
+			global::TK.CustomMap.Droid.Resource.Dimension.item_touch_helper_max_drag_scroll_per_frame = global::CV.Mobile.Droid.Resource.Dimension.item_touch_helper_max_drag_scroll_per_frame;
+			global::TK.CustomMap.Droid.Resource.Dimension.item_touch_helper_swipe_escape_max_velocity = global::CV.Mobile.Droid.Resource.Dimension.item_touch_helper_swipe_escape_max_velocity;
+			global::TK.CustomMap.Droid.Resource.Dimension.item_touch_helper_swipe_escape_velocity = global::CV.Mobile.Droid.Resource.Dimension.item_touch_helper_swipe_escape_velocity;
+			global::TK.CustomMap.Droid.Resource.Dimension.mr_controller_volume_group_list_item_height = global::CV.Mobile.Droid.Resource.Dimension.mr_controller_volume_group_list_item_height;
+			global::TK.CustomMap.Droid.Resource.Dimension.mr_controller_volume_group_list_item_icon_size = global::CV.Mobile.Droid.Resource.Dimension.mr_controller_volume_group_list_item_icon_size;
+			global::TK.CustomMap.Droid.Resource.Dimension.mr_controller_volume_group_list_max_height = global::CV.Mobile.Droid.Resource.Dimension.mr_controller_volume_group_list_max_height;
+			global::TK.CustomMap.Droid.Resource.Dimension.mr_controller_volume_group_list_padding_top = global::CV.Mobile.Droid.Resource.Dimension.mr_controller_volume_group_list_padding_top;
+			global::TK.CustomMap.Droid.Resource.Dimension.mr_dialog_fixed_width_major = global::CV.Mobile.Droid.Resource.Dimension.mr_dialog_fixed_width_major;
+			global::TK.CustomMap.Droid.Resource.Dimension.mr_dialog_fixed_width_minor = global::CV.Mobile.Droid.Resource.Dimension.mr_dialog_fixed_width_minor;
+			global::TK.CustomMap.Droid.Resource.Dimension.notification_large_icon_height = global::CV.Mobile.Droid.Resource.Dimension.notification_large_icon_height;
+			global::TK.CustomMap.Droid.Resource.Dimension.notification_large_icon_width = global::CV.Mobile.Droid.Resource.Dimension.notification_large_icon_width;
+			global::TK.CustomMap.Droid.Resource.Dimension.notification_subtext_size = global::CV.Mobile.Droid.Resource.Dimension.notification_subtext_size;
+			global::TK.CustomMap.Droid.Resource.Dimension.place_autocomplete_button_padding = global::CV.Mobile.Droid.Resource.Dimension.place_autocomplete_button_padding;
+			global::TK.CustomMap.Droid.Resource.Dimension.place_autocomplete_powered_by_google_height = global::CV.Mobile.Droid.Resource.Dimension.place_autocomplete_powered_by_google_height;
+			global::TK.CustomMap.Droid.Resource.Dimension.place_autocomplete_powered_by_google_start = global::CV.Mobile.Droid.Resource.Dimension.place_autocomplete_powered_by_google_start;
+			global::TK.CustomMap.Droid.Resource.Dimension.place_autocomplete_prediction_height = global::CV.Mobile.Droid.Resource.Dimension.place_autocomplete_prediction_height;
+			global::TK.CustomMap.Droid.Resource.Dimension.place_autocomplete_prediction_horizontal_margin = global::CV.Mobile.Droid.Resource.Dimension.place_autocomplete_prediction_horizontal_margin;
+			global::TK.CustomMap.Droid.Resource.Dimension.place_autocomplete_prediction_primary_text = global::CV.Mobile.Droid.Resource.Dimension.place_autocomplete_prediction_primary_text;
+			global::TK.CustomMap.Droid.Resource.Dimension.place_autocomplete_prediction_secondary_text = global::CV.Mobile.Droid.Resource.Dimension.place_autocomplete_prediction_secondary_text;
+			global::TK.CustomMap.Droid.Resource.Dimension.place_autocomplete_progress_horizontal_margin = global::CV.Mobile.Droid.Resource.Dimension.place_autocomplete_progress_horizontal_margin;
+			global::TK.CustomMap.Droid.Resource.Dimension.place_autocomplete_progress_size = global::CV.Mobile.Droid.Resource.Dimension.place_autocomplete_progress_size;
+			global::TK.CustomMap.Droid.Resource.Dimension.place_autocomplete_separator_start = global::CV.Mobile.Droid.Resource.Dimension.place_autocomplete_separator_start;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_ab_share_pack_mtrl_alpha = global::CV.Mobile.Droid.Resource.Drawable.abc_ab_share_pack_mtrl_alpha;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_action_bar_item_background_material = global::CV.Mobile.Droid.Resource.Drawable.abc_action_bar_item_background_material;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_btn_borderless_material = global::CV.Mobile.Droid.Resource.Drawable.abc_btn_borderless_material;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_btn_check_material = global::CV.Mobile.Droid.Resource.Drawable.abc_btn_check_material;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_btn_check_to_on_mtrl_000 = global::CV.Mobile.Droid.Resource.Drawable.abc_btn_check_to_on_mtrl_000;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_btn_check_to_on_mtrl_015 = global::CV.Mobile.Droid.Resource.Drawable.abc_btn_check_to_on_mtrl_015;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_btn_colored_material = global::CV.Mobile.Droid.Resource.Drawable.abc_btn_colored_material;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_btn_default_mtrl_shape = global::CV.Mobile.Droid.Resource.Drawable.abc_btn_default_mtrl_shape;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_btn_radio_material = global::CV.Mobile.Droid.Resource.Drawable.abc_btn_radio_material;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_btn_radio_to_on_mtrl_000 = global::CV.Mobile.Droid.Resource.Drawable.abc_btn_radio_to_on_mtrl_000;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_btn_radio_to_on_mtrl_015 = global::CV.Mobile.Droid.Resource.Drawable.abc_btn_radio_to_on_mtrl_015;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_btn_rating_star_off_mtrl_alpha = global::CV.Mobile.Droid.Resource.Drawable.abc_btn_rating_star_off_mtrl_alpha;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_btn_rating_star_on_mtrl_alpha = global::CV.Mobile.Droid.Resource.Drawable.abc_btn_rating_star_on_mtrl_alpha;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_btn_switch_to_on_mtrl_00001 = global::CV.Mobile.Droid.Resource.Drawable.abc_btn_switch_to_on_mtrl_00001;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_btn_switch_to_on_mtrl_00012 = global::CV.Mobile.Droid.Resource.Drawable.abc_btn_switch_to_on_mtrl_00012;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_cab_background_internal_bg = global::CV.Mobile.Droid.Resource.Drawable.abc_cab_background_internal_bg;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_cab_background_top_material = global::CV.Mobile.Droid.Resource.Drawable.abc_cab_background_top_material;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_cab_background_top_mtrl_alpha = global::CV.Mobile.Droid.Resource.Drawable.abc_cab_background_top_mtrl_alpha;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_control_background_material = global::CV.Mobile.Droid.Resource.Drawable.abc_control_background_material;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_dialog_material_background_dark = global::CV.Mobile.Droid.Resource.Drawable.abc_dialog_material_background_dark;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_dialog_material_background_light = global::CV.Mobile.Droid.Resource.Drawable.abc_dialog_material_background_light;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_edit_text_material = global::CV.Mobile.Droid.Resource.Drawable.abc_edit_text_material;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_ic_ab_back_mtrl_am_alpha = global::CV.Mobile.Droid.Resource.Drawable.abc_ic_ab_back_mtrl_am_alpha;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_ic_clear_mtrl_alpha = global::CV.Mobile.Droid.Resource.Drawable.abc_ic_clear_mtrl_alpha;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_ic_commit_search_api_mtrl_alpha = global::CV.Mobile.Droid.Resource.Drawable.abc_ic_commit_search_api_mtrl_alpha;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_ic_go_search_api_mtrl_alpha = global::CV.Mobile.Droid.Resource.Drawable.abc_ic_go_search_api_mtrl_alpha;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_ic_menu_copy_mtrl_am_alpha = global::CV.Mobile.Droid.Resource.Drawable.abc_ic_menu_copy_mtrl_am_alpha;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_ic_menu_cut_mtrl_alpha = global::CV.Mobile.Droid.Resource.Drawable.abc_ic_menu_cut_mtrl_alpha;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_ic_menu_moreoverflow_mtrl_alpha = global::CV.Mobile.Droid.Resource.Drawable.abc_ic_menu_moreoverflow_mtrl_alpha;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_ic_menu_paste_mtrl_am_alpha = global::CV.Mobile.Droid.Resource.Drawable.abc_ic_menu_paste_mtrl_am_alpha;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_ic_menu_selectall_mtrl_alpha = global::CV.Mobile.Droid.Resource.Drawable.abc_ic_menu_selectall_mtrl_alpha;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_ic_menu_share_mtrl_alpha = global::CV.Mobile.Droid.Resource.Drawable.abc_ic_menu_share_mtrl_alpha;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_ic_search_api_mtrl_alpha = global::CV.Mobile.Droid.Resource.Drawable.abc_ic_search_api_mtrl_alpha;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_ic_star_black_16dp = global::CV.Mobile.Droid.Resource.Drawable.abc_ic_star_black_16dp;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_ic_star_black_36dp = global::CV.Mobile.Droid.Resource.Drawable.abc_ic_star_black_36dp;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_ic_star_half_black_16dp = global::CV.Mobile.Droid.Resource.Drawable.abc_ic_star_half_black_16dp;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_ic_star_half_black_36dp = global::CV.Mobile.Droid.Resource.Drawable.abc_ic_star_half_black_36dp;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_ic_voice_search_api_mtrl_alpha = global::CV.Mobile.Droid.Resource.Drawable.abc_ic_voice_search_api_mtrl_alpha;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_item_background_holo_dark = global::CV.Mobile.Droid.Resource.Drawable.abc_item_background_holo_dark;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_item_background_holo_light = global::CV.Mobile.Droid.Resource.Drawable.abc_item_background_holo_light;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_list_divider_mtrl_alpha = global::CV.Mobile.Droid.Resource.Drawable.abc_list_divider_mtrl_alpha;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_list_focused_holo = global::CV.Mobile.Droid.Resource.Drawable.abc_list_focused_holo;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_list_longpressed_holo = global::CV.Mobile.Droid.Resource.Drawable.abc_list_longpressed_holo;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_list_pressed_holo_dark = global::CV.Mobile.Droid.Resource.Drawable.abc_list_pressed_holo_dark;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_list_pressed_holo_light = global::CV.Mobile.Droid.Resource.Drawable.abc_list_pressed_holo_light;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_list_selector_background_transition_holo_dark = global::CV.Mobile.Droid.Resource.Drawable.abc_list_selector_background_transition_holo_dark;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_list_selector_background_transition_holo_light = global::CV.Mobile.Droid.Resource.Drawable.abc_list_selector_background_transition_holo_light;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_list_selector_disabled_holo_dark = global::CV.Mobile.Droid.Resource.Drawable.abc_list_selector_disabled_holo_dark;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_list_selector_disabled_holo_light = global::CV.Mobile.Droid.Resource.Drawable.abc_list_selector_disabled_holo_light;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_list_selector_holo_dark = global::CV.Mobile.Droid.Resource.Drawable.abc_list_selector_holo_dark;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_list_selector_holo_light = global::CV.Mobile.Droid.Resource.Drawable.abc_list_selector_holo_light;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_menu_hardkey_panel_mtrl_mult = global::CV.Mobile.Droid.Resource.Drawable.abc_menu_hardkey_panel_mtrl_mult;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_popup_background_mtrl_mult = global::CV.Mobile.Droid.Resource.Drawable.abc_popup_background_mtrl_mult;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_ratingbar_full_material = global::CV.Mobile.Droid.Resource.Drawable.abc_ratingbar_full_material;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_ratingbar_indicator_material = global::CV.Mobile.Droid.Resource.Drawable.abc_ratingbar_indicator_material;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_ratingbar_small_material = global::CV.Mobile.Droid.Resource.Drawable.abc_ratingbar_small_material;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_scrubber_control_off_mtrl_alpha = global::CV.Mobile.Droid.Resource.Drawable.abc_scrubber_control_off_mtrl_alpha;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_scrubber_control_to_pressed_mtrl_000 = global::CV.Mobile.Droid.Resource.Drawable.abc_scrubber_control_to_pressed_mtrl_000;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_scrubber_control_to_pressed_mtrl_005 = global::CV.Mobile.Droid.Resource.Drawable.abc_scrubber_control_to_pressed_mtrl_005;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_scrubber_primary_mtrl_alpha = global::CV.Mobile.Droid.Resource.Drawable.abc_scrubber_primary_mtrl_alpha;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_scrubber_track_mtrl_alpha = global::CV.Mobile.Droid.Resource.Drawable.abc_scrubber_track_mtrl_alpha;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_seekbar_thumb_material = global::CV.Mobile.Droid.Resource.Drawable.abc_seekbar_thumb_material;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_seekbar_track_material = global::CV.Mobile.Droid.Resource.Drawable.abc_seekbar_track_material;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_spinner_mtrl_am_alpha = global::CV.Mobile.Droid.Resource.Drawable.abc_spinner_mtrl_am_alpha;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_spinner_textfield_background_material = global::CV.Mobile.Droid.Resource.Drawable.abc_spinner_textfield_background_material;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_switch_thumb_material = global::CV.Mobile.Droid.Resource.Drawable.abc_switch_thumb_material;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_switch_track_mtrl_alpha = global::CV.Mobile.Droid.Resource.Drawable.abc_switch_track_mtrl_alpha;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_tab_indicator_material = global::CV.Mobile.Droid.Resource.Drawable.abc_tab_indicator_material;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_tab_indicator_mtrl_alpha = global::CV.Mobile.Droid.Resource.Drawable.abc_tab_indicator_mtrl_alpha;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_text_cursor_material = global::CV.Mobile.Droid.Resource.Drawable.abc_text_cursor_material;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_textfield_activated_mtrl_alpha = global::CV.Mobile.Droid.Resource.Drawable.abc_textfield_activated_mtrl_alpha;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_textfield_default_mtrl_alpha = global::CV.Mobile.Droid.Resource.Drawable.abc_textfield_default_mtrl_alpha;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_textfield_search_activated_mtrl_alpha = global::CV.Mobile.Droid.Resource.Drawable.abc_textfield_search_activated_mtrl_alpha;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_textfield_search_default_mtrl_alpha = global::CV.Mobile.Droid.Resource.Drawable.abc_textfield_search_default_mtrl_alpha;
+			global::TK.CustomMap.Droid.Resource.Drawable.abc_textfield_search_material = global::CV.Mobile.Droid.Resource.Drawable.abc_textfield_search_material;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_full_open_on_phone = global::CV.Mobile.Droid.Resource.Drawable.common_full_open_on_phone;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_google_signin_btn_icon_dark = global::CV.Mobile.Droid.Resource.Drawable.common_google_signin_btn_icon_dark;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_google_signin_btn_icon_dark_disabled = global::CV.Mobile.Droid.Resource.Drawable.common_google_signin_btn_icon_dark_disabled;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_google_signin_btn_icon_dark_focused = global::CV.Mobile.Droid.Resource.Drawable.common_google_signin_btn_icon_dark_focused;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_google_signin_btn_icon_dark_normal = global::CV.Mobile.Droid.Resource.Drawable.common_google_signin_btn_icon_dark_normal;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_google_signin_btn_icon_dark_pressed = global::CV.Mobile.Droid.Resource.Drawable.common_google_signin_btn_icon_dark_pressed;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_google_signin_btn_icon_light = global::CV.Mobile.Droid.Resource.Drawable.common_google_signin_btn_icon_light;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_google_signin_btn_icon_light_disabled = global::CV.Mobile.Droid.Resource.Drawable.common_google_signin_btn_icon_light_disabled;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_google_signin_btn_icon_light_focused = global::CV.Mobile.Droid.Resource.Drawable.common_google_signin_btn_icon_light_focused;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_google_signin_btn_icon_light_normal = global::CV.Mobile.Droid.Resource.Drawable.common_google_signin_btn_icon_light_normal;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_google_signin_btn_icon_light_pressed = global::CV.Mobile.Droid.Resource.Drawable.common_google_signin_btn_icon_light_pressed;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_google_signin_btn_text_dark = global::CV.Mobile.Droid.Resource.Drawable.common_google_signin_btn_text_dark;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_google_signin_btn_text_dark_disabled = global::CV.Mobile.Droid.Resource.Drawable.common_google_signin_btn_text_dark_disabled;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_google_signin_btn_text_dark_focused = global::CV.Mobile.Droid.Resource.Drawable.common_google_signin_btn_text_dark_focused;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_google_signin_btn_text_dark_normal = global::CV.Mobile.Droid.Resource.Drawable.common_google_signin_btn_text_dark_normal;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_google_signin_btn_text_dark_pressed = global::CV.Mobile.Droid.Resource.Drawable.common_google_signin_btn_text_dark_pressed;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_google_signin_btn_text_light = global::CV.Mobile.Droid.Resource.Drawable.common_google_signin_btn_text_light;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_google_signin_btn_text_light_disabled = global::CV.Mobile.Droid.Resource.Drawable.common_google_signin_btn_text_light_disabled;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_google_signin_btn_text_light_focused = global::CV.Mobile.Droid.Resource.Drawable.common_google_signin_btn_text_light_focused;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_google_signin_btn_text_light_normal = global::CV.Mobile.Droid.Resource.Drawable.common_google_signin_btn_text_light_normal;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_google_signin_btn_text_light_pressed = global::CV.Mobile.Droid.Resource.Drawable.common_google_signin_btn_text_light_pressed;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_ic_googleplayservices = global::CV.Mobile.Droid.Resource.Drawable.common_ic_googleplayservices;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_plus_signin_btn_icon_dark = global::CV.Mobile.Droid.Resource.Drawable.common_plus_signin_btn_icon_dark;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_plus_signin_btn_icon_dark_disabled = global::CV.Mobile.Droid.Resource.Drawable.common_plus_signin_btn_icon_dark_disabled;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_plus_signin_btn_icon_dark_focused = global::CV.Mobile.Droid.Resource.Drawable.common_plus_signin_btn_icon_dark_focused;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_plus_signin_btn_icon_dark_normal = global::CV.Mobile.Droid.Resource.Drawable.common_plus_signin_btn_icon_dark_normal;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_plus_signin_btn_icon_dark_pressed = global::CV.Mobile.Droid.Resource.Drawable.common_plus_signin_btn_icon_dark_pressed;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_plus_signin_btn_icon_light = global::CV.Mobile.Droid.Resource.Drawable.common_plus_signin_btn_icon_light;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_plus_signin_btn_icon_light_disabled = global::CV.Mobile.Droid.Resource.Drawable.common_plus_signin_btn_icon_light_disabled;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_plus_signin_btn_icon_light_focused = global::CV.Mobile.Droid.Resource.Drawable.common_plus_signin_btn_icon_light_focused;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_plus_signin_btn_icon_light_normal = global::CV.Mobile.Droid.Resource.Drawable.common_plus_signin_btn_icon_light_normal;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_plus_signin_btn_icon_light_pressed = global::CV.Mobile.Droid.Resource.Drawable.common_plus_signin_btn_icon_light_pressed;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_plus_signin_btn_text_dark = global::CV.Mobile.Droid.Resource.Drawable.common_plus_signin_btn_text_dark;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_plus_signin_btn_text_dark_disabled = global::CV.Mobile.Droid.Resource.Drawable.common_plus_signin_btn_text_dark_disabled;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_plus_signin_btn_text_dark_focused = global::CV.Mobile.Droid.Resource.Drawable.common_plus_signin_btn_text_dark_focused;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_plus_signin_btn_text_dark_normal = global::CV.Mobile.Droid.Resource.Drawable.common_plus_signin_btn_text_dark_normal;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_plus_signin_btn_text_dark_pressed = global::CV.Mobile.Droid.Resource.Drawable.common_plus_signin_btn_text_dark_pressed;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_plus_signin_btn_text_light = global::CV.Mobile.Droid.Resource.Drawable.common_plus_signin_btn_text_light;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_plus_signin_btn_text_light_disabled = global::CV.Mobile.Droid.Resource.Drawable.common_plus_signin_btn_text_light_disabled;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_plus_signin_btn_text_light_focused = global::CV.Mobile.Droid.Resource.Drawable.common_plus_signin_btn_text_light_focused;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_plus_signin_btn_text_light_normal = global::CV.Mobile.Droid.Resource.Drawable.common_plus_signin_btn_text_light_normal;
+			global::TK.CustomMap.Droid.Resource.Drawable.common_plus_signin_btn_text_light_pressed = global::CV.Mobile.Droid.Resource.Drawable.common_plus_signin_btn_text_light_pressed;
+			global::TK.CustomMap.Droid.Resource.Drawable.design_fab_background = global::CV.Mobile.Droid.Resource.Drawable.design_fab_background;
+			global::TK.CustomMap.Droid.Resource.Drawable.design_snackbar_background = global::CV.Mobile.Droid.Resource.Drawable.design_snackbar_background;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_audiotrack = global::CV.Mobile.Droid.Resource.Drawable.ic_audiotrack;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_audiotrack_light = global::CV.Mobile.Droid.Resource.Drawable.ic_audiotrack_light;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_bluetooth_grey = global::CV.Mobile.Droid.Resource.Drawable.ic_bluetooth_grey;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_bluetooth_white = global::CV.Mobile.Droid.Resource.Drawable.ic_bluetooth_white;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_cast_dark = global::CV.Mobile.Droid.Resource.Drawable.ic_cast_dark;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_cast_disabled_light = global::CV.Mobile.Droid.Resource.Drawable.ic_cast_disabled_light;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_cast_grey = global::CV.Mobile.Droid.Resource.Drawable.ic_cast_grey;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_cast_light = global::CV.Mobile.Droid.Resource.Drawable.ic_cast_light;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_cast_off_light = global::CV.Mobile.Droid.Resource.Drawable.ic_cast_off_light;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_cast_on_0_light = global::CV.Mobile.Droid.Resource.Drawable.ic_cast_on_0_light;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_cast_on_1_light = global::CV.Mobile.Droid.Resource.Drawable.ic_cast_on_1_light;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_cast_on_2_light = global::CV.Mobile.Droid.Resource.Drawable.ic_cast_on_2_light;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_cast_on_light = global::CV.Mobile.Droid.Resource.Drawable.ic_cast_on_light;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_cast_white = global::CV.Mobile.Droid.Resource.Drawable.ic_cast_white;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_close_dark = global::CV.Mobile.Droid.Resource.Drawable.ic_close_dark;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_close_light = global::CV.Mobile.Droid.Resource.Drawable.ic_close_light;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_collapse = global::CV.Mobile.Droid.Resource.Drawable.ic_collapse;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_collapse_00000 = global::CV.Mobile.Droid.Resource.Drawable.ic_collapse_00000;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_collapse_00001 = global::CV.Mobile.Droid.Resource.Drawable.ic_collapse_00001;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_collapse_00002 = global::CV.Mobile.Droid.Resource.Drawable.ic_collapse_00002;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_collapse_00003 = global::CV.Mobile.Droid.Resource.Drawable.ic_collapse_00003;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_collapse_00004 = global::CV.Mobile.Droid.Resource.Drawable.ic_collapse_00004;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_collapse_00005 = global::CV.Mobile.Droid.Resource.Drawable.ic_collapse_00005;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_collapse_00006 = global::CV.Mobile.Droid.Resource.Drawable.ic_collapse_00006;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_collapse_00007 = global::CV.Mobile.Droid.Resource.Drawable.ic_collapse_00007;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_collapse_00008 = global::CV.Mobile.Droid.Resource.Drawable.ic_collapse_00008;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_collapse_00009 = global::CV.Mobile.Droid.Resource.Drawable.ic_collapse_00009;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_collapse_00010 = global::CV.Mobile.Droid.Resource.Drawable.ic_collapse_00010;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_collapse_00011 = global::CV.Mobile.Droid.Resource.Drawable.ic_collapse_00011;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_collapse_00012 = global::CV.Mobile.Droid.Resource.Drawable.ic_collapse_00012;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_collapse_00013 = global::CV.Mobile.Droid.Resource.Drawable.ic_collapse_00013;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_collapse_00014 = global::CV.Mobile.Droid.Resource.Drawable.ic_collapse_00014;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_collapse_00015 = global::CV.Mobile.Droid.Resource.Drawable.ic_collapse_00015;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_expand = global::CV.Mobile.Droid.Resource.Drawable.ic_expand;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_expand_00000 = global::CV.Mobile.Droid.Resource.Drawable.ic_expand_00000;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_expand_00001 = global::CV.Mobile.Droid.Resource.Drawable.ic_expand_00001;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_expand_00002 = global::CV.Mobile.Droid.Resource.Drawable.ic_expand_00002;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_expand_00003 = global::CV.Mobile.Droid.Resource.Drawable.ic_expand_00003;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_expand_00004 = global::CV.Mobile.Droid.Resource.Drawable.ic_expand_00004;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_expand_00005 = global::CV.Mobile.Droid.Resource.Drawable.ic_expand_00005;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_expand_00006 = global::CV.Mobile.Droid.Resource.Drawable.ic_expand_00006;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_expand_00007 = global::CV.Mobile.Droid.Resource.Drawable.ic_expand_00007;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_expand_00008 = global::CV.Mobile.Droid.Resource.Drawable.ic_expand_00008;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_expand_00009 = global::CV.Mobile.Droid.Resource.Drawable.ic_expand_00009;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_expand_00010 = global::CV.Mobile.Droid.Resource.Drawable.ic_expand_00010;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_expand_00011 = global::CV.Mobile.Droid.Resource.Drawable.ic_expand_00011;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_expand_00012 = global::CV.Mobile.Droid.Resource.Drawable.ic_expand_00012;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_expand_00013 = global::CV.Mobile.Droid.Resource.Drawable.ic_expand_00013;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_expand_00014 = global::CV.Mobile.Droid.Resource.Drawable.ic_expand_00014;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_expand_00015 = global::CV.Mobile.Droid.Resource.Drawable.ic_expand_00015;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_media_pause = global::CV.Mobile.Droid.Resource.Drawable.ic_media_pause;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_media_play = global::CV.Mobile.Droid.Resource.Drawable.ic_media_play;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_media_route_disabled_mono_dark = global::CV.Mobile.Droid.Resource.Drawable.ic_media_route_disabled_mono_dark;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_media_route_off_mono_dark = global::CV.Mobile.Droid.Resource.Drawable.ic_media_route_off_mono_dark;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_media_route_on_0_mono_dark = global::CV.Mobile.Droid.Resource.Drawable.ic_media_route_on_0_mono_dark;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_media_route_on_1_mono_dark = global::CV.Mobile.Droid.Resource.Drawable.ic_media_route_on_1_mono_dark;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_media_route_on_2_mono_dark = global::CV.Mobile.Droid.Resource.Drawable.ic_media_route_on_2_mono_dark;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_media_route_on_mono_dark = global::CV.Mobile.Droid.Resource.Drawable.ic_media_route_on_mono_dark;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_pause_dark = global::CV.Mobile.Droid.Resource.Drawable.ic_pause_dark;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_pause_light = global::CV.Mobile.Droid.Resource.Drawable.ic_pause_light;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_play_dark = global::CV.Mobile.Droid.Resource.Drawable.ic_play_dark;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_play_light = global::CV.Mobile.Droid.Resource.Drawable.ic_play_light;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_speaker_dark = global::CV.Mobile.Droid.Resource.Drawable.ic_speaker_dark;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_speaker_group_dark = global::CV.Mobile.Droid.Resource.Drawable.ic_speaker_group_dark;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_speaker_group_light = global::CV.Mobile.Droid.Resource.Drawable.ic_speaker_group_light;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_speaker_light = global::CV.Mobile.Droid.Resource.Drawable.ic_speaker_light;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_tv_dark = global::CV.Mobile.Droid.Resource.Drawable.ic_tv_dark;
+			global::TK.CustomMap.Droid.Resource.Drawable.ic_tv_light = global::CV.Mobile.Droid.Resource.Drawable.ic_tv_light;
+			global::TK.CustomMap.Droid.Resource.Drawable.mr_dialog_material_background_dark = global::CV.Mobile.Droid.Resource.Drawable.mr_dialog_material_background_dark;
+			global::TK.CustomMap.Droid.Resource.Drawable.mr_dialog_material_background_light = global::CV.Mobile.Droid.Resource.Drawable.mr_dialog_material_background_light;
+			global::TK.CustomMap.Droid.Resource.Drawable.mr_ic_audiotrack_light = global::CV.Mobile.Droid.Resource.Drawable.mr_ic_audiotrack_light;
+			global::TK.CustomMap.Droid.Resource.Drawable.mr_ic_cast_dark = global::CV.Mobile.Droid.Resource.Drawable.mr_ic_cast_dark;
+			global::TK.CustomMap.Droid.Resource.Drawable.mr_ic_cast_light = global::CV.Mobile.Droid.Resource.Drawable.mr_ic_cast_light;
+			global::TK.CustomMap.Droid.Resource.Drawable.mr_ic_close_dark = global::CV.Mobile.Droid.Resource.Drawable.mr_ic_close_dark;
+			global::TK.CustomMap.Droid.Resource.Drawable.mr_ic_close_light = global::CV.Mobile.Droid.Resource.Drawable.mr_ic_close_light;
+			global::TK.CustomMap.Droid.Resource.Drawable.mr_ic_media_route_connecting_mono_dark = global::CV.Mobile.Droid.Resource.Drawable.mr_ic_media_route_connecting_mono_dark;
+			global::TK.CustomMap.Droid.Resource.Drawable.mr_ic_media_route_connecting_mono_light = global::CV.Mobile.Droid.Resource.Drawable.mr_ic_media_route_connecting_mono_light;
+			global::TK.CustomMap.Droid.Resource.Drawable.mr_ic_media_route_mono_dark = global::CV.Mobile.Droid.Resource.Drawable.mr_ic_media_route_mono_dark;
+			global::TK.CustomMap.Droid.Resource.Drawable.mr_ic_media_route_mono_light = global::CV.Mobile.Droid.Resource.Drawable.mr_ic_media_route_mono_light;
+			global::TK.CustomMap.Droid.Resource.Drawable.mr_ic_pause_dark = global::CV.Mobile.Droid.Resource.Drawable.mr_ic_pause_dark;
+			global::TK.CustomMap.Droid.Resource.Drawable.mr_ic_pause_light = global::CV.Mobile.Droid.Resource.Drawable.mr_ic_pause_light;
+			global::TK.CustomMap.Droid.Resource.Drawable.mr_ic_play_dark = global::CV.Mobile.Droid.Resource.Drawable.mr_ic_play_dark;
+			global::TK.CustomMap.Droid.Resource.Drawable.mr_ic_play_light = global::CV.Mobile.Droid.Resource.Drawable.mr_ic_play_light;
+			global::TK.CustomMap.Droid.Resource.Drawable.notification_template_icon_bg = global::CV.Mobile.Droid.Resource.Drawable.notification_template_icon_bg;
+			global::TK.CustomMap.Droid.Resource.Drawable.places_ic_clear = global::CV.Mobile.Droid.Resource.Drawable.places_ic_clear;
+			global::TK.CustomMap.Droid.Resource.Drawable.places_ic_search = global::CV.Mobile.Droid.Resource.Drawable.places_ic_search;
+			global::TK.CustomMap.Droid.Resource.Drawable.powered_by_google_dark = global::CV.Mobile.Droid.Resource.Drawable.powered_by_google_dark;
+			global::TK.CustomMap.Droid.Resource.Drawable.powered_by_google_light = global::CV.Mobile.Droid.Resource.Drawable.powered_by_google_light;
+			global::TK.CustomMap.Droid.Resource.Id.InfoWindowSubtitle = global::CV.Mobile.Droid.Resource.Id.InfoWindowSubtitle;
+			global::TK.CustomMap.Droid.Resource.Id.action0 = global::CV.Mobile.Droid.Resource.Id.action0;
+			global::TK.CustomMap.Droid.Resource.Id.action_bar = global::CV.Mobile.Droid.Resource.Id.action_bar;
+			global::TK.CustomMap.Droid.Resource.Id.action_bar_activity_content = global::CV.Mobile.Droid.Resource.Id.action_bar_activity_content;
+			global::TK.CustomMap.Droid.Resource.Id.action_bar_container = global::CV.Mobile.Droid.Resource.Id.action_bar_container;
+			global::TK.CustomMap.Droid.Resource.Id.action_bar_root = global::CV.Mobile.Droid.Resource.Id.action_bar_root;
+			global::TK.CustomMap.Droid.Resource.Id.action_bar_spinner = global::CV.Mobile.Droid.Resource.Id.action_bar_spinner;
+			global::TK.CustomMap.Droid.Resource.Id.action_bar_subtitle = global::CV.Mobile.Droid.Resource.Id.action_bar_subtitle;
+			global::TK.CustomMap.Droid.Resource.Id.action_bar_title = global::CV.Mobile.Droid.Resource.Id.action_bar_title;
+			global::TK.CustomMap.Droid.Resource.Id.action_context_bar = global::CV.Mobile.Droid.Resource.Id.action_context_bar;
+			global::TK.CustomMap.Droid.Resource.Id.action_divider = global::CV.Mobile.Droid.Resource.Id.action_divider;
+			global::TK.CustomMap.Droid.Resource.Id.action_menu_divider = global::CV.Mobile.Droid.Resource.Id.action_menu_divider;
+			global::TK.CustomMap.Droid.Resource.Id.action_menu_presenter = global::CV.Mobile.Droid.Resource.Id.action_menu_presenter;
+			global::TK.CustomMap.Droid.Resource.Id.action_mode_bar = global::CV.Mobile.Droid.Resource.Id.action_mode_bar;
+			global::TK.CustomMap.Droid.Resource.Id.action_mode_bar_stub = global::CV.Mobile.Droid.Resource.Id.action_mode_bar_stub;
+			global::TK.CustomMap.Droid.Resource.Id.action_mode_close_button = global::CV.Mobile.Droid.Resource.Id.action_mode_close_button;
+			global::TK.CustomMap.Droid.Resource.Id.activity_chooser_view_content = global::CV.Mobile.Droid.Resource.Id.activity_chooser_view_content;
+			global::TK.CustomMap.Droid.Resource.Id.adjust_height = global::CV.Mobile.Droid.Resource.Id.adjust_height;
+			global::TK.CustomMap.Droid.Resource.Id.adjust_width = global::CV.Mobile.Droid.Resource.Id.adjust_width;
+			global::TK.CustomMap.Droid.Resource.Id.alertTitle = global::CV.Mobile.Droid.Resource.Id.alertTitle;
+			global::TK.CustomMap.Droid.Resource.Id.always = global::CV.Mobile.Droid.Resource.Id.always;
+			global::TK.CustomMap.Droid.Resource.Id.auto = global::CV.Mobile.Droid.Resource.Id.auto;
+			global::TK.CustomMap.Droid.Resource.Id.beginning = global::CV.Mobile.Droid.Resource.Id.beginning;
+			global::TK.CustomMap.Droid.Resource.Id.bottom = global::CV.Mobile.Droid.Resource.Id.bottom;
+			global::TK.CustomMap.Droid.Resource.Id.buttonPanel = global::CV.Mobile.Droid.Resource.Id.buttonPanel;
+			global::TK.CustomMap.Droid.Resource.Id.cancel_action = global::CV.Mobile.Droid.Resource.Id.cancel_action;
+			global::TK.CustomMap.Droid.Resource.Id.center = global::CV.Mobile.Droid.Resource.Id.center;
+			global::TK.CustomMap.Droid.Resource.Id.center_horizontal = global::CV.Mobile.Droid.Resource.Id.center_horizontal;
+			global::TK.CustomMap.Droid.Resource.Id.center_vertical = global::CV.Mobile.Droid.Resource.Id.center_vertical;
+			global::TK.CustomMap.Droid.Resource.Id.checkbox = global::CV.Mobile.Droid.Resource.Id.checkbox;
+			global::TK.CustomMap.Droid.Resource.Id.chronometer = global::CV.Mobile.Droid.Resource.Id.chronometer;
+			global::TK.CustomMap.Droid.Resource.Id.clip_horizontal = global::CV.Mobile.Droid.Resource.Id.clip_horizontal;
+			global::TK.CustomMap.Droid.Resource.Id.clip_vertical = global::CV.Mobile.Droid.Resource.Id.clip_vertical;
+			global::TK.CustomMap.Droid.Resource.Id.collapseActionView = global::CV.Mobile.Droid.Resource.Id.collapseActionView;
+			global::TK.CustomMap.Droid.Resource.Id.contentPanel = global::CV.Mobile.Droid.Resource.Id.contentPanel;
+			global::TK.CustomMap.Droid.Resource.Id.custom = global::CV.Mobile.Droid.Resource.Id.custom;
+			global::TK.CustomMap.Droid.Resource.Id.customPanel = global::CV.Mobile.Droid.Resource.Id.customPanel;
+			global::TK.CustomMap.Droid.Resource.Id.dark = global::CV.Mobile.Droid.Resource.Id.dark;
+			global::TK.CustomMap.Droid.Resource.Id.decor_content_parent = global::CV.Mobile.Droid.Resource.Id.decor_content_parent;
+			global::TK.CustomMap.Droid.Resource.Id.default_activity_button = global::CV.Mobile.Droid.Resource.Id.default_activity_button;
+			global::TK.CustomMap.Droid.Resource.Id.demoImageView = global::CV.Mobile.Droid.Resource.Id.demoImageView;
+			global::TK.CustomMap.Droid.Resource.Id.design_bottom_sheet = global::CV.Mobile.Droid.Resource.Id.design_bottom_sheet;
+			global::TK.CustomMap.Droid.Resource.Id.design_menu_item_action_area = global::CV.Mobile.Droid.Resource.Id.design_menu_item_action_area;
+			global::TK.CustomMap.Droid.Resource.Id.design_menu_item_action_area_stub = global::CV.Mobile.Droid.Resource.Id.design_menu_item_action_area_stub;
+			global::TK.CustomMap.Droid.Resource.Id.design_menu_item_text = global::CV.Mobile.Droid.Resource.Id.design_menu_item_text;
+			global::TK.CustomMap.Droid.Resource.Id.design_navigation_view = global::CV.Mobile.Droid.Resource.Id.design_navigation_view;
+			global::TK.CustomMap.Droid.Resource.Id.disableHome = global::CV.Mobile.Droid.Resource.Id.disableHome;
+			global::TK.CustomMap.Droid.Resource.Id.edit_query = global::CV.Mobile.Droid.Resource.Id.edit_query;
+			global::TK.CustomMap.Droid.Resource.Id.end = global::CV.Mobile.Droid.Resource.Id.end;
+			global::TK.CustomMap.Droid.Resource.Id.end_padder = global::CV.Mobile.Droid.Resource.Id.end_padder;
+			global::TK.CustomMap.Droid.Resource.Id.enterAlways = global::CV.Mobile.Droid.Resource.Id.enterAlways;
+			global::TK.CustomMap.Droid.Resource.Id.enterAlwaysCollapsed = global::CV.Mobile.Droid.Resource.Id.enterAlwaysCollapsed;
+			global::TK.CustomMap.Droid.Resource.Id.exitUntilCollapsed = global::CV.Mobile.Droid.Resource.Id.exitUntilCollapsed;
+			global::TK.CustomMap.Droid.Resource.Id.expand_activities_button = global::CV.Mobile.Droid.Resource.Id.expand_activities_button;
+			global::TK.CustomMap.Droid.Resource.Id.expanded_menu = global::CV.Mobile.Droid.Resource.Id.expanded_menu;
+			global::TK.CustomMap.Droid.Resource.Id.fill = global::CV.Mobile.Droid.Resource.Id.fill;
+			global::TK.CustomMap.Droid.Resource.Id.fill_horizontal = global::CV.Mobile.Droid.Resource.Id.fill_horizontal;
+			global::TK.CustomMap.Droid.Resource.Id.fill_vertical = global::CV.Mobile.Droid.Resource.Id.fill_vertical;
+			global::TK.CustomMap.Droid.Resource.Id.@fixed = global::CV.Mobile.Droid.Resource.Id.@fixed;
+			global::TK.CustomMap.Droid.Resource.Id.home = global::CV.Mobile.Droid.Resource.Id.home;
+			global::TK.CustomMap.Droid.Resource.Id.homeAsUp = global::CV.Mobile.Droid.Resource.Id.homeAsUp;
+			global::TK.CustomMap.Droid.Resource.Id.hybrid = global::CV.Mobile.Droid.Resource.Id.hybrid;
+			global::TK.CustomMap.Droid.Resource.Id.icon = global::CV.Mobile.Droid.Resource.Id.icon;
+			global::TK.CustomMap.Droid.Resource.Id.icon_only = global::CV.Mobile.Droid.Resource.Id.icon_only;
+			global::TK.CustomMap.Droid.Resource.Id.ifRoom = global::CV.Mobile.Droid.Resource.Id.ifRoom;
+			global::TK.CustomMap.Droid.Resource.Id.image = global::CV.Mobile.Droid.Resource.Id.image;
+			global::TK.CustomMap.Droid.Resource.Id.info = global::CV.Mobile.Droid.Resource.Id.info;
+			global::TK.CustomMap.Droid.Resource.Id.item_touch_helper_previous_elevation = global::CV.Mobile.Droid.Resource.Id.item_touch_helper_previous_elevation;
+			global::TK.CustomMap.Droid.Resource.Id.left = global::CV.Mobile.Droid.Resource.Id.left;
+			global::TK.CustomMap.Droid.Resource.Id.light = global::CV.Mobile.Droid.Resource.Id.light;
+			global::TK.CustomMap.Droid.Resource.Id.line1 = global::CV.Mobile.Droid.Resource.Id.line1;
+			global::TK.CustomMap.Droid.Resource.Id.line3 = global::CV.Mobile.Droid.Resource.Id.line3;
+			global::TK.CustomMap.Droid.Resource.Id.listMode = global::CV.Mobile.Droid.Resource.Id.listMode;
+			global::TK.CustomMap.Droid.Resource.Id.list_item = global::CV.Mobile.Droid.Resource.Id.list_item;
+			global::TK.CustomMap.Droid.Resource.Id.media_actions = global::CV.Mobile.Droid.Resource.Id.media_actions;
+			global::TK.CustomMap.Droid.Resource.Id.middle = global::CV.Mobile.Droid.Resource.Id.middle;
+			global::TK.CustomMap.Droid.Resource.Id.mini = global::CV.Mobile.Droid.Resource.Id.mini;
+			global::TK.CustomMap.Droid.Resource.Id.mr_art = global::CV.Mobile.Droid.Resource.Id.mr_art;
+			global::TK.CustomMap.Droid.Resource.Id.mr_chooser_list = global::CV.Mobile.Droid.Resource.Id.mr_chooser_list;
+			global::TK.CustomMap.Droid.Resource.Id.mr_chooser_route_desc = global::CV.Mobile.Droid.Resource.Id.mr_chooser_route_desc;
+			global::TK.CustomMap.Droid.Resource.Id.mr_chooser_route_icon = global::CV.Mobile.Droid.Resource.Id.mr_chooser_route_icon;
+			global::TK.CustomMap.Droid.Resource.Id.mr_chooser_route_name = global::CV.Mobile.Droid.Resource.Id.mr_chooser_route_name;
+			global::TK.CustomMap.Droid.Resource.Id.mr_close = global::CV.Mobile.Droid.Resource.Id.mr_close;
+			global::TK.CustomMap.Droid.Resource.Id.mr_control_divider = global::CV.Mobile.Droid.Resource.Id.mr_control_divider;
+			global::TK.CustomMap.Droid.Resource.Id.mr_control_play_pause = global::CV.Mobile.Droid.Resource.Id.mr_control_play_pause;
+			global::TK.CustomMap.Droid.Resource.Id.mr_control_subtitle = global::CV.Mobile.Droid.Resource.Id.mr_control_subtitle;
+			global::TK.CustomMap.Droid.Resource.Id.mr_control_title = global::CV.Mobile.Droid.Resource.Id.mr_control_title;
+			global::TK.CustomMap.Droid.Resource.Id.mr_control_title_container = global::CV.Mobile.Droid.Resource.Id.mr_control_title_container;
+			global::TK.CustomMap.Droid.Resource.Id.mr_custom_control = global::CV.Mobile.Droid.Resource.Id.mr_custom_control;
+			global::TK.CustomMap.Droid.Resource.Id.mr_default_control = global::CV.Mobile.Droid.Resource.Id.mr_default_control;
+			global::TK.CustomMap.Droid.Resource.Id.mr_dialog_area = global::CV.Mobile.Droid.Resource.Id.mr_dialog_area;
+			global::TK.CustomMap.Droid.Resource.Id.mr_expandable_area = global::CV.Mobile.Droid.Resource.Id.mr_expandable_area;
+			global::TK.CustomMap.Droid.Resource.Id.mr_group_expand_collapse = global::CV.Mobile.Droid.Resource.Id.mr_group_expand_collapse;
+			global::TK.CustomMap.Droid.Resource.Id.mr_media_main_control = global::CV.Mobile.Droid.Resource.Id.mr_media_main_control;
+			global::TK.CustomMap.Droid.Resource.Id.mr_name = global::CV.Mobile.Droid.Resource.Id.mr_name;
+			global::TK.CustomMap.Droid.Resource.Id.mr_playback_control = global::CV.Mobile.Droid.Resource.Id.mr_playback_control;
+			global::TK.CustomMap.Droid.Resource.Id.mr_title_bar = global::CV.Mobile.Droid.Resource.Id.mr_title_bar;
+			global::TK.CustomMap.Droid.Resource.Id.mr_volume_control = global::CV.Mobile.Droid.Resource.Id.mr_volume_control;
+			global::TK.CustomMap.Droid.Resource.Id.mr_volume_group_list = global::CV.Mobile.Droid.Resource.Id.mr_volume_group_list;
+			global::TK.CustomMap.Droid.Resource.Id.mr_volume_item_icon = global::CV.Mobile.Droid.Resource.Id.mr_volume_item_icon;
+			global::TK.CustomMap.Droid.Resource.Id.mr_volume_slider = global::CV.Mobile.Droid.Resource.Id.mr_volume_slider;
+			global::TK.CustomMap.Droid.Resource.Id.multiply = global::CV.Mobile.Droid.Resource.Id.multiply;
+			global::TK.CustomMap.Droid.Resource.Id.navigation_header_container = global::CV.Mobile.Droid.Resource.Id.navigation_header_container;
+			global::TK.CustomMap.Droid.Resource.Id.never = global::CV.Mobile.Droid.Resource.Id.never;
+			global::TK.CustomMap.Droid.Resource.Id.none = global::CV.Mobile.Droid.Resource.Id.none;
+			global::TK.CustomMap.Droid.Resource.Id.normal = global::CV.Mobile.Droid.Resource.Id.normal;
+			global::TK.CustomMap.Droid.Resource.Id.parallax = global::CV.Mobile.Droid.Resource.Id.parallax;
+			global::TK.CustomMap.Droid.Resource.Id.parentPanel = global::CV.Mobile.Droid.Resource.Id.parentPanel;
+			global::TK.CustomMap.Droid.Resource.Id.pin = global::CV.Mobile.Droid.Resource.Id.pin;
+			global::TK.CustomMap.Droid.Resource.Id.place_autocomplete_clear_button = global::CV.Mobile.Droid.Resource.Id.place_autocomplete_clear_button;
+			global::TK.CustomMap.Droid.Resource.Id.place_autocomplete_powered_by_google = global::CV.Mobile.Droid.Resource.Id.place_autocomplete_powered_by_google;
+			global::TK.CustomMap.Droid.Resource.Id.place_autocomplete_prediction_primary_text = global::CV.Mobile.Droid.Resource.Id.place_autocomplete_prediction_primary_text;
+			global::TK.CustomMap.Droid.Resource.Id.place_autocomplete_prediction_secondary_text = global::CV.Mobile.Droid.Resource.Id.place_autocomplete_prediction_secondary_text;
+			global::TK.CustomMap.Droid.Resource.Id.place_autocomplete_progress = global::CV.Mobile.Droid.Resource.Id.place_autocomplete_progress;
+			global::TK.CustomMap.Droid.Resource.Id.place_autocomplete_search_button = global::CV.Mobile.Droid.Resource.Id.place_autocomplete_search_button;
+			global::TK.CustomMap.Droid.Resource.Id.place_autocomplete_search_input = global::CV.Mobile.Droid.Resource.Id.place_autocomplete_search_input;
+			global::TK.CustomMap.Droid.Resource.Id.place_autocomplete_separator = global::CV.Mobile.Droid.Resource.Id.place_autocomplete_separator;
+			global::TK.CustomMap.Droid.Resource.Id.progress_circular = global::CV.Mobile.Droid.Resource.Id.progress_circular;
+			global::TK.CustomMap.Droid.Resource.Id.progress_horizontal = global::CV.Mobile.Droid.Resource.Id.progress_horizontal;
+			global::TK.CustomMap.Droid.Resource.Id.radio = global::CV.Mobile.Droid.Resource.Id.radio;
+			global::TK.CustomMap.Droid.Resource.Id.right = global::CV.Mobile.Droid.Resource.Id.right;
+			global::TK.CustomMap.Droid.Resource.Id.satellite = global::CV.Mobile.Droid.Resource.Id.satellite;
+			global::TK.CustomMap.Droid.Resource.Id.screen = global::CV.Mobile.Droid.Resource.Id.screen;
+			global::TK.CustomMap.Droid.Resource.Id.scroll = global::CV.Mobile.Droid.Resource.Id.scroll;
+			global::TK.CustomMap.Droid.Resource.Id.scrollIndicatorDown = global::CV.Mobile.Droid.Resource.Id.scrollIndicatorDown;
+			global::TK.CustomMap.Droid.Resource.Id.scrollIndicatorUp = global::CV.Mobile.Droid.Resource.Id.scrollIndicatorUp;
+			global::TK.CustomMap.Droid.Resource.Id.scrollView = global::CV.Mobile.Droid.Resource.Id.scrollView;
+			global::TK.CustomMap.Droid.Resource.Id.scrollable = global::CV.Mobile.Droid.Resource.Id.scrollable;
+			global::TK.CustomMap.Droid.Resource.Id.search_badge = global::CV.Mobile.Droid.Resource.Id.search_badge;
+			global::TK.CustomMap.Droid.Resource.Id.search_bar = global::CV.Mobile.Droid.Resource.Id.search_bar;
+			global::TK.CustomMap.Droid.Resource.Id.search_button = global::CV.Mobile.Droid.Resource.Id.search_button;
+			global::TK.CustomMap.Droid.Resource.Id.search_close_btn = global::CV.Mobile.Droid.Resource.Id.search_close_btn;
+			global::TK.CustomMap.Droid.Resource.Id.search_edit_frame = global::CV.Mobile.Droid.Resource.Id.search_edit_frame;
+			global::TK.CustomMap.Droid.Resource.Id.search_go_btn = global::CV.Mobile.Droid.Resource.Id.search_go_btn;
+			global::TK.CustomMap.Droid.Resource.Id.search_mag_icon = global::CV.Mobile.Droid.Resource.Id.search_mag_icon;
+			global::TK.CustomMap.Droid.Resource.Id.search_plate = global::CV.Mobile.Droid.Resource.Id.search_plate;
+			global::TK.CustomMap.Droid.Resource.Id.search_src_text = global::CV.Mobile.Droid.Resource.Id.search_src_text;
+			global::TK.CustomMap.Droid.Resource.Id.search_voice_btn = global::CV.Mobile.Droid.Resource.Id.search_voice_btn;
+			global::TK.CustomMap.Droid.Resource.Id.select_dialog_listview = global::CV.Mobile.Droid.Resource.Id.select_dialog_listview;
+			global::TK.CustomMap.Droid.Resource.Id.shortcut = global::CV.Mobile.Droid.Resource.Id.shortcut;
+			global::TK.CustomMap.Droid.Resource.Id.showCustom = global::CV.Mobile.Droid.Resource.Id.showCustom;
+			global::TK.CustomMap.Droid.Resource.Id.showHome = global::CV.Mobile.Droid.Resource.Id.showHome;
+			global::TK.CustomMap.Droid.Resource.Id.showTitle = global::CV.Mobile.Droid.Resource.Id.showTitle;
+			global::TK.CustomMap.Droid.Resource.Id.snackbar_action = global::CV.Mobile.Droid.Resource.Id.snackbar_action;
+			global::TK.CustomMap.Droid.Resource.Id.snackbar_text = global::CV.Mobile.Droid.Resource.Id.snackbar_text;
+			global::TK.CustomMap.Droid.Resource.Id.snap = global::CV.Mobile.Droid.Resource.Id.snap;
+			global::TK.CustomMap.Droid.Resource.Id.spacer = global::CV.Mobile.Droid.Resource.Id.spacer;
+			global::TK.CustomMap.Droid.Resource.Id.split_action_bar = global::CV.Mobile.Droid.Resource.Id.split_action_bar;
+			global::TK.CustomMap.Droid.Resource.Id.src_atop = global::CV.Mobile.Droid.Resource.Id.src_atop;
+			global::TK.CustomMap.Droid.Resource.Id.src_in = global::CV.Mobile.Droid.Resource.Id.src_in;
+			global::TK.CustomMap.Droid.Resource.Id.src_over = global::CV.Mobile.Droid.Resource.Id.src_over;
+			global::TK.CustomMap.Droid.Resource.Id.standard = global::CV.Mobile.Droid.Resource.Id.standard;
+			global::TK.CustomMap.Droid.Resource.Id.start = global::CV.Mobile.Droid.Resource.Id.start;
+			global::TK.CustomMap.Droid.Resource.Id.status_bar_latest_event_content = global::CV.Mobile.Droid.Resource.Id.status_bar_latest_event_content;
+			global::TK.CustomMap.Droid.Resource.Id.submit_area = global::CV.Mobile.Droid.Resource.Id.submit_area;
+			global::TK.CustomMap.Droid.Resource.Id.tabMode = global::CV.Mobile.Droid.Resource.Id.tabMode;
+			global::TK.CustomMap.Droid.Resource.Id.terrain = global::CV.Mobile.Droid.Resource.Id.terrain;
+			global::TK.CustomMap.Droid.Resource.Id.text = global::CV.Mobile.Droid.Resource.Id.text;
+			global::TK.CustomMap.Droid.Resource.Id.text2 = global::CV.Mobile.Droid.Resource.Id.text2;
+			global::TK.CustomMap.Droid.Resource.Id.textSpacerNoButtons = global::CV.Mobile.Droid.Resource.Id.textSpacerNoButtons;
+			global::TK.CustomMap.Droid.Resource.Id.time = global::CV.Mobile.Droid.Resource.Id.time;
+			global::TK.CustomMap.Droid.Resource.Id.title = global::CV.Mobile.Droid.Resource.Id.title;
+			global::TK.CustomMap.Droid.Resource.Id.title_template = global::CV.Mobile.Droid.Resource.Id.title_template;
+			global::TK.CustomMap.Droid.Resource.Id.top = global::CV.Mobile.Droid.Resource.Id.top;
+			global::TK.CustomMap.Droid.Resource.Id.topPanel = global::CV.Mobile.Droid.Resource.Id.topPanel;
+			global::TK.CustomMap.Droid.Resource.Id.touch_outside = global::CV.Mobile.Droid.Resource.Id.touch_outside;
+			global::TK.CustomMap.Droid.Resource.Id.up = global::CV.Mobile.Droid.Resource.Id.up;
+			global::TK.CustomMap.Droid.Resource.Id.useLogo = global::CV.Mobile.Droid.Resource.Id.useLogo;
+			global::TK.CustomMap.Droid.Resource.Id.view_offset_helper = global::CV.Mobile.Droid.Resource.Id.view_offset_helper;
+			global::TK.CustomMap.Droid.Resource.Id.volume_item_container = global::CV.Mobile.Droid.Resource.Id.volume_item_container;
+			global::TK.CustomMap.Droid.Resource.Id.wide = global::CV.Mobile.Droid.Resource.Id.wide;
+			global::TK.CustomMap.Droid.Resource.Id.withText = global::CV.Mobile.Droid.Resource.Id.withText;
+			global::TK.CustomMap.Droid.Resource.Id.wrap_content = global::CV.Mobile.Droid.Resource.Id.wrap_content;
+			global::TK.CustomMap.Droid.Resource.Integer.abc_config_activityDefaultDur = global::CV.Mobile.Droid.Resource.Integer.abc_config_activityDefaultDur;
+			global::TK.CustomMap.Droid.Resource.Integer.abc_config_activityShortDur = global::CV.Mobile.Droid.Resource.Integer.abc_config_activityShortDur;
+			global::TK.CustomMap.Droid.Resource.Integer.abc_max_action_buttons = global::CV.Mobile.Droid.Resource.Integer.abc_max_action_buttons;
+			global::TK.CustomMap.Droid.Resource.Integer.bottom_sheet_slide_duration = global::CV.Mobile.Droid.Resource.Integer.bottom_sheet_slide_duration;
+			global::TK.CustomMap.Droid.Resource.Integer.cancel_button_image_alpha = global::CV.Mobile.Droid.Resource.Integer.cancel_button_image_alpha;
+			global::TK.CustomMap.Droid.Resource.Integer.design_snackbar_text_max_lines = global::CV.Mobile.Droid.Resource.Integer.design_snackbar_text_max_lines;
+			global::TK.CustomMap.Droid.Resource.Integer.google_play_services_version = global::CV.Mobile.Droid.Resource.Integer.google_play_services_version;
+			global::TK.CustomMap.Droid.Resource.Integer.mr_controller_volume_group_list_animation_duration_ms = global::CV.Mobile.Droid.Resource.Integer.mr_controller_volume_group_list_animation_duration_ms;
+			global::TK.CustomMap.Droid.Resource.Integer.mr_controller_volume_group_list_fade_in_duration_ms = global::CV.Mobile.Droid.Resource.Integer.mr_controller_volume_group_list_fade_in_duration_ms;
+			global::TK.CustomMap.Droid.Resource.Integer.mr_controller_volume_group_list_fade_out_duration_ms = global::CV.Mobile.Droid.Resource.Integer.mr_controller_volume_group_list_fade_out_duration_ms;
+			global::TK.CustomMap.Droid.Resource.Integer.status_bar_notification_info_maxnum = global::CV.Mobile.Droid.Resource.Integer.status_bar_notification_info_maxnum;
+			global::TK.CustomMap.Droid.Resource.Interpolator.mr_fast_out_slow_in = global::CV.Mobile.Droid.Resource.Interpolator.mr_fast_out_slow_in;
+			global::TK.CustomMap.Droid.Resource.Interpolator.mr_linear_out_slow_in = global::CV.Mobile.Droid.Resource.Interpolator.mr_linear_out_slow_in;
+			global::TK.CustomMap.Droid.Resource.Layout.abc_action_bar_title_item = global::CV.Mobile.Droid.Resource.Layout.abc_action_bar_title_item;
+			global::TK.CustomMap.Droid.Resource.Layout.abc_action_bar_up_container = global::CV.Mobile.Droid.Resource.Layout.abc_action_bar_up_container;
+			global::TK.CustomMap.Droid.Resource.Layout.abc_action_bar_view_list_nav_layout = global::CV.Mobile.Droid.Resource.Layout.abc_action_bar_view_list_nav_layout;
+			global::TK.CustomMap.Droid.Resource.Layout.abc_action_menu_item_layout = global::CV.Mobile.Droid.Resource.Layout.abc_action_menu_item_layout;
+			global::TK.CustomMap.Droid.Resource.Layout.abc_action_menu_layout = global::CV.Mobile.Droid.Resource.Layout.abc_action_menu_layout;
+			global::TK.CustomMap.Droid.Resource.Layout.abc_action_mode_bar = global::CV.Mobile.Droid.Resource.Layout.abc_action_mode_bar;
+			global::TK.CustomMap.Droid.Resource.Layout.abc_action_mode_close_item_material = global::CV.Mobile.Droid.Resource.Layout.abc_action_mode_close_item_material;
+			global::TK.CustomMap.Droid.Resource.Layout.abc_activity_chooser_view = global::CV.Mobile.Droid.Resource.Layout.abc_activity_chooser_view;
+			global::TK.CustomMap.Droid.Resource.Layout.abc_activity_chooser_view_list_item = global::CV.Mobile.Droid.Resource.Layout.abc_activity_chooser_view_list_item;
+			global::TK.CustomMap.Droid.Resource.Layout.abc_alert_dialog_button_bar_material = global::CV.Mobile.Droid.Resource.Layout.abc_alert_dialog_button_bar_material;
+			global::TK.CustomMap.Droid.Resource.Layout.abc_alert_dialog_material = global::CV.Mobile.Droid.Resource.Layout.abc_alert_dialog_material;
+			global::TK.CustomMap.Droid.Resource.Layout.abc_dialog_title_material = global::CV.Mobile.Droid.Resource.Layout.abc_dialog_title_material;
+			global::TK.CustomMap.Droid.Resource.Layout.abc_expanded_menu_layout = global::CV.Mobile.Droid.Resource.Layout.abc_expanded_menu_layout;
+			global::TK.CustomMap.Droid.Resource.Layout.abc_list_menu_item_checkbox = global::CV.Mobile.Droid.Resource.Layout.abc_list_menu_item_checkbox;
+			global::TK.CustomMap.Droid.Resource.Layout.abc_list_menu_item_icon = global::CV.Mobile.Droid.Resource.Layout.abc_list_menu_item_icon;
+			global::TK.CustomMap.Droid.Resource.Layout.abc_list_menu_item_layout = global::CV.Mobile.Droid.Resource.Layout.abc_list_menu_item_layout;
+			global::TK.CustomMap.Droid.Resource.Layout.abc_list_menu_item_radio = global::CV.Mobile.Droid.Resource.Layout.abc_list_menu_item_radio;
+			global::TK.CustomMap.Droid.Resource.Layout.abc_popup_menu_item_layout = global::CV.Mobile.Droid.Resource.Layout.abc_popup_menu_item_layout;
+			global::TK.CustomMap.Droid.Resource.Layout.abc_screen_content_include = global::CV.Mobile.Droid.Resource.Layout.abc_screen_content_include;
+			global::TK.CustomMap.Droid.Resource.Layout.abc_screen_simple = global::CV.Mobile.Droid.Resource.Layout.abc_screen_simple;
+			global::TK.CustomMap.Droid.Resource.Layout.abc_screen_simple_overlay_action_mode = global::CV.Mobile.Droid.Resource.Layout.abc_screen_simple_overlay_action_mode;
+			global::TK.CustomMap.Droid.Resource.Layout.abc_screen_toolbar = global::CV.Mobile.Droid.Resource.Layout.abc_screen_toolbar;
+			global::TK.CustomMap.Droid.Resource.Layout.abc_search_dropdown_item_icons_2line = global::CV.Mobile.Droid.Resource.Layout.abc_search_dropdown_item_icons_2line;
+			global::TK.CustomMap.Droid.Resource.Layout.abc_search_view = global::CV.Mobile.Droid.Resource.Layout.abc_search_view;
+			global::TK.CustomMap.Droid.Resource.Layout.abc_select_dialog_material = global::CV.Mobile.Droid.Resource.Layout.abc_select_dialog_material;
+			global::TK.CustomMap.Droid.Resource.Layout.design_bottom_sheet_dialog = global::CV.Mobile.Droid.Resource.Layout.design_bottom_sheet_dialog;
+			global::TK.CustomMap.Droid.Resource.Layout.design_layout_snackbar = global::CV.Mobile.Droid.Resource.Layout.design_layout_snackbar;
+			global::TK.CustomMap.Droid.Resource.Layout.design_layout_snackbar_include = global::CV.Mobile.Droid.Resource.Layout.design_layout_snackbar_include;
+			global::TK.CustomMap.Droid.Resource.Layout.design_layout_tab_icon = global::CV.Mobile.Droid.Resource.Layout.design_layout_tab_icon;
+			global::TK.CustomMap.Droid.Resource.Layout.design_layout_tab_text = global::CV.Mobile.Droid.Resource.Layout.design_layout_tab_text;
+			global::TK.CustomMap.Droid.Resource.Layout.design_menu_item_action_area = global::CV.Mobile.Droid.Resource.Layout.design_menu_item_action_area;
+			global::TK.CustomMap.Droid.Resource.Layout.design_navigation_item = global::CV.Mobile.Droid.Resource.Layout.design_navigation_item;
+			global::TK.CustomMap.Droid.Resource.Layout.design_navigation_item_header = global::CV.Mobile.Droid.Resource.Layout.design_navigation_item_header;
+			global::TK.CustomMap.Droid.Resource.Layout.design_navigation_item_separator = global::CV.Mobile.Droid.Resource.Layout.design_navigation_item_separator;
+			global::TK.CustomMap.Droid.Resource.Layout.design_navigation_item_subheader = global::CV.Mobile.Droid.Resource.Layout.design_navigation_item_subheader;
+			global::TK.CustomMap.Droid.Resource.Layout.design_navigation_menu = global::CV.Mobile.Droid.Resource.Layout.design_navigation_menu;
+			global::TK.CustomMap.Droid.Resource.Layout.design_navigation_menu_item = global::CV.Mobile.Droid.Resource.Layout.design_navigation_menu_item;
+			global::TK.CustomMap.Droid.Resource.Layout.MapImage = global::CV.Mobile.Droid.Resource.Layout.MapImage;
+			global::TK.CustomMap.Droid.Resource.Layout.mr_chooser_dialog = global::CV.Mobile.Droid.Resource.Layout.mr_chooser_dialog;
+			global::TK.CustomMap.Droid.Resource.Layout.mr_chooser_list_item = global::CV.Mobile.Droid.Resource.Layout.mr_chooser_list_item;
+			global::TK.CustomMap.Droid.Resource.Layout.mr_controller_material_dialog_b = global::CV.Mobile.Droid.Resource.Layout.mr_controller_material_dialog_b;
+			global::TK.CustomMap.Droid.Resource.Layout.mr_controller_volume_item = global::CV.Mobile.Droid.Resource.Layout.mr_controller_volume_item;
+			global::TK.CustomMap.Droid.Resource.Layout.mr_playback_control = global::CV.Mobile.Droid.Resource.Layout.mr_playback_control;
+			global::TK.CustomMap.Droid.Resource.Layout.mr_volume_control = global::CV.Mobile.Droid.Resource.Layout.mr_volume_control;
+			global::TK.CustomMap.Droid.Resource.Layout.notification_media_action = global::CV.Mobile.Droid.Resource.Layout.notification_media_action;
+			global::TK.CustomMap.Droid.Resource.Layout.notification_media_cancel_action = global::CV.Mobile.Droid.Resource.Layout.notification_media_cancel_action;
+			global::TK.CustomMap.Droid.Resource.Layout.notification_template_big_media = global::CV.Mobile.Droid.Resource.Layout.notification_template_big_media;
+			global::TK.CustomMap.Droid.Resource.Layout.notification_template_big_media_narrow = global::CV.Mobile.Droid.Resource.Layout.notification_template_big_media_narrow;
+			global::TK.CustomMap.Droid.Resource.Layout.notification_template_lines = global::CV.Mobile.Droid.Resource.Layout.notification_template_lines;
+			global::TK.CustomMap.Droid.Resource.Layout.notification_template_media = global::CV.Mobile.Droid.Resource.Layout.notification_template_media;
+			global::TK.CustomMap.Droid.Resource.Layout.notification_template_part_chronometer = global::CV.Mobile.Droid.Resource.Layout.notification_template_part_chronometer;
+			global::TK.CustomMap.Droid.Resource.Layout.notification_template_part_time = global::CV.Mobile.Droid.Resource.Layout.notification_template_part_time;
+			global::TK.CustomMap.Droid.Resource.Layout.place_autocomplete_fragment = global::CV.Mobile.Droid.Resource.Layout.place_autocomplete_fragment;
+			global::TK.CustomMap.Droid.Resource.Layout.place_autocomplete_item_powered_by_google = global::CV.Mobile.Droid.Resource.Layout.place_autocomplete_item_powered_by_google;
+			global::TK.CustomMap.Droid.Resource.Layout.place_autocomplete_item_prediction = global::CV.Mobile.Droid.Resource.Layout.place_autocomplete_item_prediction;
+			global::TK.CustomMap.Droid.Resource.Layout.place_autocomplete_progress = global::CV.Mobile.Droid.Resource.Layout.place_autocomplete_progress;
+			global::TK.CustomMap.Droid.Resource.Layout.select_dialog_item_material = global::CV.Mobile.Droid.Resource.Layout.select_dialog_item_material;
+			global::TK.CustomMap.Droid.Resource.Layout.select_dialog_multichoice_material = global::CV.Mobile.Droid.Resource.Layout.select_dialog_multichoice_material;
+			global::TK.CustomMap.Droid.Resource.Layout.select_dialog_singlechoice_material = global::CV.Mobile.Droid.Resource.Layout.select_dialog_singlechoice_material;
+			global::TK.CustomMap.Droid.Resource.Layout.support_simple_spinner_dropdown_item = global::CV.Mobile.Droid.Resource.Layout.support_simple_spinner_dropdown_item;
+			global::TK.CustomMap.Droid.Resource.String.abc_action_bar_home_description = global::CV.Mobile.Droid.Resource.String.abc_action_bar_home_description;
+			global::TK.CustomMap.Droid.Resource.String.abc_action_bar_home_description_format = global::CV.Mobile.Droid.Resource.String.abc_action_bar_home_description_format;
+			global::TK.CustomMap.Droid.Resource.String.abc_action_bar_home_subtitle_description_format = global::CV.Mobile.Droid.Resource.String.abc_action_bar_home_subtitle_description_format;
+			global::TK.CustomMap.Droid.Resource.String.abc_action_bar_up_description = global::CV.Mobile.Droid.Resource.String.abc_action_bar_up_description;
+			global::TK.CustomMap.Droid.Resource.String.abc_action_menu_overflow_description = global::CV.Mobile.Droid.Resource.String.abc_action_menu_overflow_description;
+			global::TK.CustomMap.Droid.Resource.String.abc_action_mode_done = global::CV.Mobile.Droid.Resource.String.abc_action_mode_done;
+			global::TK.CustomMap.Droid.Resource.String.abc_activity_chooser_view_see_all = global::CV.Mobile.Droid.Resource.String.abc_activity_chooser_view_see_all;
+			global::TK.CustomMap.Droid.Resource.String.abc_activitychooserview_choose_application = global::CV.Mobile.Droid.Resource.String.abc_activitychooserview_choose_application;
+			global::TK.CustomMap.Droid.Resource.String.abc_capital_off = global::CV.Mobile.Droid.Resource.String.abc_capital_off;
+			global::TK.CustomMap.Droid.Resource.String.abc_capital_on = global::CV.Mobile.Droid.Resource.String.abc_capital_on;
+			global::TK.CustomMap.Droid.Resource.String.abc_search_hint = global::CV.Mobile.Droid.Resource.String.abc_search_hint;
+			global::TK.CustomMap.Droid.Resource.String.abc_searchview_description_clear = global::CV.Mobile.Droid.Resource.String.abc_searchview_description_clear;
+			global::TK.CustomMap.Droid.Resource.String.abc_searchview_description_query = global::CV.Mobile.Droid.Resource.String.abc_searchview_description_query;
+			global::TK.CustomMap.Droid.Resource.String.abc_searchview_description_search = global::CV.Mobile.Droid.Resource.String.abc_searchview_description_search;
+			global::TK.CustomMap.Droid.Resource.String.abc_searchview_description_submit = global::CV.Mobile.Droid.Resource.String.abc_searchview_description_submit;
+			global::TK.CustomMap.Droid.Resource.String.abc_searchview_description_voice = global::CV.Mobile.Droid.Resource.String.abc_searchview_description_voice;
+			global::TK.CustomMap.Droid.Resource.String.abc_shareactionprovider_share_with = global::CV.Mobile.Droid.Resource.String.abc_shareactionprovider_share_with;
+			global::TK.CustomMap.Droid.Resource.String.abc_shareactionprovider_share_with_application = global::CV.Mobile.Droid.Resource.String.abc_shareactionprovider_share_with_application;
+			global::TK.CustomMap.Droid.Resource.String.abc_toolbar_collapse_description = global::CV.Mobile.Droid.Resource.String.abc_toolbar_collapse_description;
+			global::TK.CustomMap.Droid.Resource.String.appbar_scrolling_view_behavior = global::CV.Mobile.Droid.Resource.String.appbar_scrolling_view_behavior;
+			global::TK.CustomMap.Droid.Resource.String.auth_google_play_services_client_facebook_display_name = global::CV.Mobile.Droid.Resource.String.auth_google_play_services_client_facebook_display_name;
+			global::TK.CustomMap.Droid.Resource.String.auth_google_play_services_client_google_display_name = global::CV.Mobile.Droid.Resource.String.auth_google_play_services_client_google_display_name;
+			global::TK.CustomMap.Droid.Resource.String.bottom_sheet_behavior = global::CV.Mobile.Droid.Resource.String.bottom_sheet_behavior;
+			global::TK.CustomMap.Droid.Resource.String.character_counter_pattern = global::CV.Mobile.Droid.Resource.String.character_counter_pattern;
+			global::TK.CustomMap.Droid.Resource.String.common_google_play_services_api_unavailable_text = global::CV.Mobile.Droid.Resource.String.common_google_play_services_api_unavailable_text;
+			global::TK.CustomMap.Droid.Resource.String.common_google_play_services_enable_button = global::CV.Mobile.Droid.Resource.String.common_google_play_services_enable_button;
+			global::TK.CustomMap.Droid.Resource.String.common_google_play_services_enable_text = global::CV.Mobile.Droid.Resource.String.common_google_play_services_enable_text;
+			global::TK.CustomMap.Droid.Resource.String.common_google_play_services_enable_title = global::CV.Mobile.Droid.Resource.String.common_google_play_services_enable_title;
+			global::TK.CustomMap.Droid.Resource.String.common_google_play_services_install_button = global::CV.Mobile.Droid.Resource.String.common_google_play_services_install_button;
+			global::TK.CustomMap.Droid.Resource.String.common_google_play_services_install_text_phone = global::CV.Mobile.Droid.Resource.String.common_google_play_services_install_text_phone;
+			global::TK.CustomMap.Droid.Resource.String.common_google_play_services_install_text_tablet = global::CV.Mobile.Droid.Resource.String.common_google_play_services_install_text_tablet;
+			global::TK.CustomMap.Droid.Resource.String.common_google_play_services_install_title = global::CV.Mobile.Droid.Resource.String.common_google_play_services_install_title;
+			global::TK.CustomMap.Droid.Resource.String.common_google_play_services_invalid_account_text = global::CV.Mobile.Droid.Resource.String.common_google_play_services_invalid_account_text;
+			global::TK.CustomMap.Droid.Resource.String.common_google_play_services_invalid_account_title = global::CV.Mobile.Droid.Resource.String.common_google_play_services_invalid_account_title;
+			global::TK.CustomMap.Droid.Resource.String.common_google_play_services_network_error_text = global::CV.Mobile.Droid.Resource.String.common_google_play_services_network_error_text;
+			global::TK.CustomMap.Droid.Resource.String.common_google_play_services_network_error_title = global::CV.Mobile.Droid.Resource.String.common_google_play_services_network_error_title;
+			global::TK.CustomMap.Droid.Resource.String.common_google_play_services_notification_ticker = global::CV.Mobile.Droid.Resource.String.common_google_play_services_notification_ticker;
+			global::TK.CustomMap.Droid.Resource.String.common_google_play_services_restricted_profile_text = global::CV.Mobile.Droid.Resource.String.common_google_play_services_restricted_profile_text;
+			global::TK.CustomMap.Droid.Resource.String.common_google_play_services_restricted_profile_title = global::CV.Mobile.Droid.Resource.String.common_google_play_services_restricted_profile_title;
+			global::TK.CustomMap.Droid.Resource.String.common_google_play_services_sign_in_failed_text = global::CV.Mobile.Droid.Resource.String.common_google_play_services_sign_in_failed_text;
+			global::TK.CustomMap.Droid.Resource.String.common_google_play_services_sign_in_failed_title = global::CV.Mobile.Droid.Resource.String.common_google_play_services_sign_in_failed_title;
+			global::TK.CustomMap.Droid.Resource.String.common_google_play_services_unknown_issue = global::CV.Mobile.Droid.Resource.String.common_google_play_services_unknown_issue;
+			global::TK.CustomMap.Droid.Resource.String.common_google_play_services_unsupported_text = global::CV.Mobile.Droid.Resource.String.common_google_play_services_unsupported_text;
+			global::TK.CustomMap.Droid.Resource.String.common_google_play_services_unsupported_title = global::CV.Mobile.Droid.Resource.String.common_google_play_services_unsupported_title;
+			global::TK.CustomMap.Droid.Resource.String.common_google_play_services_update_button = global::CV.Mobile.Droid.Resource.String.common_google_play_services_update_button;
+			global::TK.CustomMap.Droid.Resource.String.common_google_play_services_update_text = global::CV.Mobile.Droid.Resource.String.common_google_play_services_update_text;
+			global::TK.CustomMap.Droid.Resource.String.common_google_play_services_update_title = global::CV.Mobile.Droid.Resource.String.common_google_play_services_update_title;
+			global::TK.CustomMap.Droid.Resource.String.common_google_play_services_updating_text = global::CV.Mobile.Droid.Resource.String.common_google_play_services_updating_text;
+			global::TK.CustomMap.Droid.Resource.String.common_google_play_services_updating_title = global::CV.Mobile.Droid.Resource.String.common_google_play_services_updating_title;
+			global::TK.CustomMap.Droid.Resource.String.common_google_play_services_wear_update_text = global::CV.Mobile.Droid.Resource.String.common_google_play_services_wear_update_text;
+			global::TK.CustomMap.Droid.Resource.String.common_open_on_phone = global::CV.Mobile.Droid.Resource.String.common_open_on_phone;
+			global::TK.CustomMap.Droid.Resource.String.common_signin_button_text = global::CV.Mobile.Droid.Resource.String.common_signin_button_text;
+			global::TK.CustomMap.Droid.Resource.String.common_signin_button_text_long = global::CV.Mobile.Droid.Resource.String.common_signin_button_text_long;
+			global::TK.CustomMap.Droid.Resource.String.mr_button_content_description = global::CV.Mobile.Droid.Resource.String.mr_button_content_description;
+			global::TK.CustomMap.Droid.Resource.String.mr_chooser_searching = global::CV.Mobile.Droid.Resource.String.mr_chooser_searching;
+			global::TK.CustomMap.Droid.Resource.String.mr_chooser_title = global::CV.Mobile.Droid.Resource.String.mr_chooser_title;
+			global::TK.CustomMap.Droid.Resource.String.mr_controller_casting_screen = global::CV.Mobile.Droid.Resource.String.mr_controller_casting_screen;
+			global::TK.CustomMap.Droid.Resource.String.mr_controller_close_description = global::CV.Mobile.Droid.Resource.String.mr_controller_close_description;
+			global::TK.CustomMap.Droid.Resource.String.mr_controller_collapse_group = global::CV.Mobile.Droid.Resource.String.mr_controller_collapse_group;
+			global::TK.CustomMap.Droid.Resource.String.mr_controller_disconnect = global::CV.Mobile.Droid.Resource.String.mr_controller_disconnect;
+			global::TK.CustomMap.Droid.Resource.String.mr_controller_expand_group = global::CV.Mobile.Droid.Resource.String.mr_controller_expand_group;
+			global::TK.CustomMap.Droid.Resource.String.mr_controller_no_info_available = global::CV.Mobile.Droid.Resource.String.mr_controller_no_info_available;
+			global::TK.CustomMap.Droid.Resource.String.mr_controller_no_media_selected = global::CV.Mobile.Droid.Resource.String.mr_controller_no_media_selected;
+			global::TK.CustomMap.Droid.Resource.String.mr_controller_pause = global::CV.Mobile.Droid.Resource.String.mr_controller_pause;
+			global::TK.CustomMap.Droid.Resource.String.mr_controller_play = global::CV.Mobile.Droid.Resource.String.mr_controller_play;
+			global::TK.CustomMap.Droid.Resource.String.mr_controller_stop = global::CV.Mobile.Droid.Resource.String.mr_controller_stop;
+			global::TK.CustomMap.Droid.Resource.String.mr_system_route_name = global::CV.Mobile.Droid.Resource.String.mr_system_route_name;
+			global::TK.CustomMap.Droid.Resource.String.mr_user_route_category_name = global::CV.Mobile.Droid.Resource.String.mr_user_route_category_name;
+			global::TK.CustomMap.Droid.Resource.String.place_autocomplete_clear_button = global::CV.Mobile.Droid.Resource.String.place_autocomplete_clear_button;
+			global::TK.CustomMap.Droid.Resource.String.place_autocomplete_search_hint = global::CV.Mobile.Droid.Resource.String.place_autocomplete_search_hint;
+			global::TK.CustomMap.Droid.Resource.String.status_bar_notification_info_overflow = global::CV.Mobile.Droid.Resource.String.status_bar_notification_info_overflow;
+			global::TK.CustomMap.Droid.Resource.Style.AlertDialog_AppCompat = global::CV.Mobile.Droid.Resource.Style.AlertDialog_AppCompat;
+			global::TK.CustomMap.Droid.Resource.Style.AlertDialog_AppCompat_Light = global::CV.Mobile.Droid.Resource.Style.AlertDialog_AppCompat_Light;
+			global::TK.CustomMap.Droid.Resource.Style.Animation_AppCompat_Dialog = global::CV.Mobile.Droid.Resource.Style.Animation_AppCompat_Dialog;
+			global::TK.CustomMap.Droid.Resource.Style.Animation_AppCompat_DropDownUp = global::CV.Mobile.Droid.Resource.Style.Animation_AppCompat_DropDownUp;
+			global::TK.CustomMap.Droid.Resource.Style.Animation_Design_BottomSheetDialog = global::CV.Mobile.Droid.Resource.Style.Animation_Design_BottomSheetDialog;
+			global::TK.CustomMap.Droid.Resource.Style.Base_AlertDialog_AppCompat = global::CV.Mobile.Droid.Resource.Style.Base_AlertDialog_AppCompat;
+			global::TK.CustomMap.Droid.Resource.Style.Base_AlertDialog_AppCompat_Light = global::CV.Mobile.Droid.Resource.Style.Base_AlertDialog_AppCompat_Light;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Animation_AppCompat_Dialog = global::CV.Mobile.Droid.Resource.Style.Base_Animation_AppCompat_Dialog;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Animation_AppCompat_DropDownUp = global::CV.Mobile.Droid.Resource.Style.Base_Animation_AppCompat_DropDownUp;
+			global::TK.CustomMap.Droid.Resource.Style.Base_CardView = global::CV.Mobile.Droid.Resource.Style.Base_CardView;
+			global::TK.CustomMap.Droid.Resource.Style.Base_DialogWindowTitle_AppCompat = global::CV.Mobile.Droid.Resource.Style.Base_DialogWindowTitle_AppCompat;
+			global::TK.CustomMap.Droid.Resource.Style.Base_DialogWindowTitleBackground_AppCompat = global::CV.Mobile.Droid.Resource.Style.Base_DialogWindowTitleBackground_AppCompat;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Body1 = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Body1;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Body2 = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Body2;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Button = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Button;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Caption = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Caption;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Display1 = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Display1;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Display2 = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Display2;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Display3 = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Display3;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Display4 = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Display4;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Headline = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Headline;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Inverse = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Inverse;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Large = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Large;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Large_Inverse = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Large_Inverse;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Light_Widget_PopupMenu_Large = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Light_Widget_PopupMenu_Large;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Light_Widget_PopupMenu_Small = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Light_Widget_PopupMenu_Small;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Medium = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Medium;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Medium_Inverse = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Medium_Inverse;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Menu = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Menu;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_SearchResult = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_SearchResult;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_SearchResult_Subtitle = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_SearchResult_Subtitle;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_SearchResult_Title = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_SearchResult_Title;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Small = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Small;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Small_Inverse = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Small_Inverse;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Subhead = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Subhead;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Subhead_Inverse = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Subhead_Inverse;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Title = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Title;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Title_Inverse = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Title_Inverse;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Menu = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Menu;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Subtitle = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Subtitle;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Subtitle_Inverse = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Subtitle_Inverse;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Title = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Title;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Title_Inverse = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionBar_Title_Inverse;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionMode_Subtitle = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionMode_Subtitle;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionMode_Title = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_ActionMode_Title;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_Button = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_Button;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_Button_Inverse = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_Button_Inverse;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_DropDownItem = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_DropDownItem;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_PopupMenu_Large = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_PopupMenu_Large;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_PopupMenu_Small = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_PopupMenu_Small;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_Switch = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_Switch;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_TextView_SpinnerItem = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_AppCompat_Widget_TextView_SpinnerItem;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_Widget_AppCompat_ExpandedMenu_Item = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_Widget_AppCompat_ExpandedMenu_Item;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_Widget_AppCompat_Toolbar_Subtitle = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_Widget_AppCompat_Toolbar_Subtitle;
+			global::TK.CustomMap.Droid.Resource.Style.Base_TextAppearance_Widget_AppCompat_Toolbar_Title = global::CV.Mobile.Droid.Resource.Style.Base_TextAppearance_Widget_AppCompat_Toolbar_Title;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Theme_AppCompat = global::CV.Mobile.Droid.Resource.Style.Base_Theme_AppCompat;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Theme_AppCompat_CompactMenu = global::CV.Mobile.Droid.Resource.Style.Base_Theme_AppCompat_CompactMenu;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Theme_AppCompat_Dialog = global::CV.Mobile.Droid.Resource.Style.Base_Theme_AppCompat_Dialog;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Theme_AppCompat_Dialog_Alert = global::CV.Mobile.Droid.Resource.Style.Base_Theme_AppCompat_Dialog_Alert;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Theme_AppCompat_Dialog_FixedSize = global::CV.Mobile.Droid.Resource.Style.Base_Theme_AppCompat_Dialog_FixedSize;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Theme_AppCompat_Dialog_MinWidth = global::CV.Mobile.Droid.Resource.Style.Base_Theme_AppCompat_Dialog_MinWidth;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Theme_AppCompat_DialogWhenLarge = global::CV.Mobile.Droid.Resource.Style.Base_Theme_AppCompat_DialogWhenLarge;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Theme_AppCompat_Light = global::CV.Mobile.Droid.Resource.Style.Base_Theme_AppCompat_Light;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Theme_AppCompat_Light_DarkActionBar = global::CV.Mobile.Droid.Resource.Style.Base_Theme_AppCompat_Light_DarkActionBar;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Theme_AppCompat_Light_Dialog = global::CV.Mobile.Droid.Resource.Style.Base_Theme_AppCompat_Light_Dialog;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Theme_AppCompat_Light_Dialog_Alert = global::CV.Mobile.Droid.Resource.Style.Base_Theme_AppCompat_Light_Dialog_Alert;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Theme_AppCompat_Light_Dialog_FixedSize = global::CV.Mobile.Droid.Resource.Style.Base_Theme_AppCompat_Light_Dialog_FixedSize;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Theme_AppCompat_Light_Dialog_MinWidth = global::CV.Mobile.Droid.Resource.Style.Base_Theme_AppCompat_Light_Dialog_MinWidth;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Theme_AppCompat_Light_DialogWhenLarge = global::CV.Mobile.Droid.Resource.Style.Base_Theme_AppCompat_Light_DialogWhenLarge;
+			global::TK.CustomMap.Droid.Resource.Style.Base_ThemeOverlay_AppCompat = global::CV.Mobile.Droid.Resource.Style.Base_ThemeOverlay_AppCompat;
+			global::TK.CustomMap.Droid.Resource.Style.Base_ThemeOverlay_AppCompat_ActionBar = global::CV.Mobile.Droid.Resource.Style.Base_ThemeOverlay_AppCompat_ActionBar;
+			global::TK.CustomMap.Droid.Resource.Style.Base_ThemeOverlay_AppCompat_Dark = global::CV.Mobile.Droid.Resource.Style.Base_ThemeOverlay_AppCompat_Dark;
+			global::TK.CustomMap.Droid.Resource.Style.Base_ThemeOverlay_AppCompat_Dark_ActionBar = global::CV.Mobile.Droid.Resource.Style.Base_ThemeOverlay_AppCompat_Dark_ActionBar;
+			global::TK.CustomMap.Droid.Resource.Style.Base_ThemeOverlay_AppCompat_Light = global::CV.Mobile.Droid.Resource.Style.Base_ThemeOverlay_AppCompat_Light;
+			global::TK.CustomMap.Droid.Resource.Style.Base_V11_Theme_AppCompat_Dialog = global::CV.Mobile.Droid.Resource.Style.Base_V11_Theme_AppCompat_Dialog;
+			global::TK.CustomMap.Droid.Resource.Style.Base_V11_Theme_AppCompat_Light_Dialog = global::CV.Mobile.Droid.Resource.Style.Base_V11_Theme_AppCompat_Light_Dialog;
+			global::TK.CustomMap.Droid.Resource.Style.Base_V12_Widget_AppCompat_AutoCompleteTextView = global::CV.Mobile.Droid.Resource.Style.Base_V12_Widget_AppCompat_AutoCompleteTextView;
+			global::TK.CustomMap.Droid.Resource.Style.Base_V12_Widget_AppCompat_EditText = global::CV.Mobile.Droid.Resource.Style.Base_V12_Widget_AppCompat_EditText;
+			global::TK.CustomMap.Droid.Resource.Style.Base_V21_Theme_AppCompat = global::CV.Mobile.Droid.Resource.Style.Base_V21_Theme_AppCompat;
+			global::TK.CustomMap.Droid.Resource.Style.Base_V21_Theme_AppCompat_Dialog = global::CV.Mobile.Droid.Resource.Style.Base_V21_Theme_AppCompat_Dialog;
+			global::TK.CustomMap.Droid.Resource.Style.Base_V21_Theme_AppCompat_Light = global::CV.Mobile.Droid.Resource.Style.Base_V21_Theme_AppCompat_Light;
+			global::TK.CustomMap.Droid.Resource.Style.Base_V21_Theme_AppCompat_Light_Dialog = global::CV.Mobile.Droid.Resource.Style.Base_V21_Theme_AppCompat_Light_Dialog;
+			global::TK.CustomMap.Droid.Resource.Style.Base_V22_Theme_AppCompat = global::CV.Mobile.Droid.Resource.Style.Base_V22_Theme_AppCompat;
+			global::TK.CustomMap.Droid.Resource.Style.Base_V22_Theme_AppCompat_Light = global::CV.Mobile.Droid.Resource.Style.Base_V22_Theme_AppCompat_Light;
+			global::TK.CustomMap.Droid.Resource.Style.Base_V23_Theme_AppCompat = global::CV.Mobile.Droid.Resource.Style.Base_V23_Theme_AppCompat;
+			global::TK.CustomMap.Droid.Resource.Style.Base_V23_Theme_AppCompat_Light = global::CV.Mobile.Droid.Resource.Style.Base_V23_Theme_AppCompat_Light;
+			global::TK.CustomMap.Droid.Resource.Style.Base_V7_Theme_AppCompat = global::CV.Mobile.Droid.Resource.Style.Base_V7_Theme_AppCompat;
+			global::TK.CustomMap.Droid.Resource.Style.Base_V7_Theme_AppCompat_Dialog = global::CV.Mobile.Droid.Resource.Style.Base_V7_Theme_AppCompat_Dialog;
+			global::TK.CustomMap.Droid.Resource.Style.Base_V7_Theme_AppCompat_Light = global::CV.Mobile.Droid.Resource.Style.Base_V7_Theme_AppCompat_Light;
+			global::TK.CustomMap.Droid.Resource.Style.Base_V7_Theme_AppCompat_Light_Dialog = global::CV.Mobile.Droid.Resource.Style.Base_V7_Theme_AppCompat_Light_Dialog;
+			global::TK.CustomMap.Droid.Resource.Style.Base_V7_Widget_AppCompat_AutoCompleteTextView = global::CV.Mobile.Droid.Resource.Style.Base_V7_Widget_AppCompat_AutoCompleteTextView;
+			global::TK.CustomMap.Droid.Resource.Style.Base_V7_Widget_AppCompat_EditText = global::CV.Mobile.Droid.Resource.Style.Base_V7_Widget_AppCompat_EditText;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_ActionBar = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_ActionBar;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_ActionBar_Solid = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_ActionBar_Solid;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_ActionBar_TabBar = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_ActionBar_TabBar;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_ActionBar_TabText = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_ActionBar_TabText;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_ActionBar_TabView = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_ActionBar_TabView;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_ActionButton = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_ActionButton;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_ActionButton_CloseMode = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_ActionButton_CloseMode;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_ActionButton_Overflow = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_ActionButton_Overflow;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_ActionMode = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_ActionMode;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_ActivityChooserView = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_ActivityChooserView;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_AutoCompleteTextView = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_AutoCompleteTextView;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_Button = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_Button;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_Button_Borderless = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_Button_Borderless;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_Button_Borderless_Colored = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_Button_Borderless_Colored;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_Button_ButtonBar_AlertDialog = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_Button_ButtonBar_AlertDialog;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_Button_Colored = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_Button_Colored;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_Button_Small = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_Button_Small;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_ButtonBar = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_ButtonBar;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_ButtonBar_AlertDialog = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_ButtonBar_AlertDialog;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_CompoundButton_CheckBox = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_CompoundButton_CheckBox;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_CompoundButton_RadioButton = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_CompoundButton_RadioButton;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_CompoundButton_Switch = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_CompoundButton_Switch;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_DrawerArrowToggle = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_DrawerArrowToggle;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_DrawerArrowToggle_Common = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_DrawerArrowToggle_Common;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_DropDownItem_Spinner = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_DropDownItem_Spinner;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_EditText = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_EditText;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_ImageButton = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_ImageButton;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_Light_ActionBar = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_Light_ActionBar;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_Solid = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_Solid;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_TabBar = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_TabBar;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_TabText = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_TabText;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_TabText_Inverse = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_TabText_Inverse;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_TabView = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_Light_ActionBar_TabView;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_Light_PopupMenu = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_Light_PopupMenu;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_Light_PopupMenu_Overflow = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_Light_PopupMenu_Overflow;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_ListPopupWindow = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_ListPopupWindow;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_ListView = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_ListView;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_ListView_DropDown = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_ListView_DropDown;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_ListView_Menu = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_ListView_Menu;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_PopupMenu = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_PopupMenu;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_PopupMenu_Overflow = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_PopupMenu_Overflow;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_PopupWindow = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_PopupWindow;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_ProgressBar = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_ProgressBar;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_ProgressBar_Horizontal = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_ProgressBar_Horizontal;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_RatingBar = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_RatingBar;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_RatingBar_Indicator = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_RatingBar_Indicator;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_RatingBar_Small = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_RatingBar_Small;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_SearchView = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_SearchView;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_SearchView_ActionBar = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_SearchView_ActionBar;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_SeekBar = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_SeekBar;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_Spinner = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_Spinner;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_Spinner_Underlined = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_Spinner_Underlined;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_TextView_SpinnerItem = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_TextView_SpinnerItem;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_Toolbar = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_Toolbar;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_AppCompat_Toolbar_Button_Navigation = global::CV.Mobile.Droid.Resource.Style.Base_Widget_AppCompat_Toolbar_Button_Navigation;
+			global::TK.CustomMap.Droid.Resource.Style.Base_Widget_Design_TabLayout = global::CV.Mobile.Droid.Resource.Style.Base_Widget_Design_TabLayout;
+			global::TK.CustomMap.Droid.Resource.Style.CardView = global::CV.Mobile.Droid.Resource.Style.CardView;
+			global::TK.CustomMap.Droid.Resource.Style.CardView_Dark = global::CV.Mobile.Droid.Resource.Style.CardView_Dark;
+			global::TK.CustomMap.Droid.Resource.Style.CardView_Light = global::CV.Mobile.Droid.Resource.Style.CardView_Light;
+			global::TK.CustomMap.Droid.Resource.Style.Platform_AppCompat = global::CV.Mobile.Droid.Resource.Style.Platform_AppCompat;
+			global::TK.CustomMap.Droid.Resource.Style.Platform_AppCompat_Light = global::CV.Mobile.Droid.Resource.Style.Platform_AppCompat_Light;
+			global::TK.CustomMap.Droid.Resource.Style.Platform_ThemeOverlay_AppCompat = global::CV.Mobile.Droid.Resource.Style.Platform_ThemeOverlay_AppCompat;
+			global::TK.CustomMap.Droid.Resource.Style.Platform_ThemeOverlay_AppCompat_Dark = global::CV.Mobile.Droid.Resource.Style.Platform_ThemeOverlay_AppCompat_Dark;
+			global::TK.CustomMap.Droid.Resource.Style.Platform_ThemeOverlay_AppCompat_Light = global::CV.Mobile.Droid.Resource.Style.Platform_ThemeOverlay_AppCompat_Light;
+			global::TK.CustomMap.Droid.Resource.Style.Platform_V11_AppCompat = global::CV.Mobile.Droid.Resource.Style.Platform_V11_AppCompat;
+			global::TK.CustomMap.Droid.Resource.Style.Platform_V11_AppCompat_Light = global::CV.Mobile.Droid.Resource.Style.Platform_V11_AppCompat_Light;
+			global::TK.CustomMap.Droid.Resource.Style.Platform_V14_AppCompat = global::CV.Mobile.Droid.Resource.Style.Platform_V14_AppCompat;
+			global::TK.CustomMap.Droid.Resource.Style.Platform_V14_AppCompat_Light = global::CV.Mobile.Droid.Resource.Style.Platform_V14_AppCompat_Light;
+			global::TK.CustomMap.Droid.Resource.Style.Platform_Widget_AppCompat_Spinner = global::CV.Mobile.Droid.Resource.Style.Platform_Widget_AppCompat_Spinner;
+			global::TK.CustomMap.Droid.Resource.Style.RtlOverlay_DialogWindowTitle_AppCompat = global::CV.Mobile.Droid.Resource.Style.RtlOverlay_DialogWindowTitle_AppCompat;
+			global::TK.CustomMap.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_ActionBar_TitleItem = global::CV.Mobile.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_ActionBar_TitleItem;
+			global::TK.CustomMap.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_DialogTitle_Icon = global::CV.Mobile.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_DialogTitle_Icon;
+			global::TK.CustomMap.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_PopupMenuItem = global::CV.Mobile.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_PopupMenuItem;
+			global::TK.CustomMap.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_PopupMenuItem_InternalGroup = global::CV.Mobile.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_PopupMenuItem_InternalGroup;
+			global::TK.CustomMap.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_PopupMenuItem_Text = global::CV.Mobile.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_PopupMenuItem_Text;
+			global::TK.CustomMap.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown = global::CV.Mobile.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown;
+			global::TK.CustomMap.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Icon1 = global::CV.Mobile.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Icon1;
+			global::TK.CustomMap.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Icon2 = global::CV.Mobile.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Icon2;
+			global::TK.CustomMap.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Query = global::CV.Mobile.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Query;
+			global::TK.CustomMap.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Text = global::CV.Mobile.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_Search_DropDown_Text;
+			global::TK.CustomMap.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_SearchView_MagIcon = global::CV.Mobile.Droid.Resource.Style.RtlOverlay_Widget_AppCompat_SearchView_MagIcon;
+			global::TK.CustomMap.Droid.Resource.Style.RtlUnderlay_Widget_AppCompat_ActionButton = global::CV.Mobile.Droid.Resource.Style.RtlUnderlay_Widget_AppCompat_ActionButton;
+			global::TK.CustomMap.Droid.Resource.Style.RtlUnderlay_Widget_AppCompat_ActionButton_Overflow = global::CV.Mobile.Droid.Resource.Style.RtlUnderlay_Widget_AppCompat_ActionButton_Overflow;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Body1 = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Body1;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Body2 = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Body2;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Button = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Button;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Caption = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Caption;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Display1 = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Display1;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Display2 = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Display2;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Display3 = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Display3;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Display4 = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Display4;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Headline = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Headline;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Inverse = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Inverse;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Large = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Large;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Large_Inverse = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Large_Inverse;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Light_SearchResult_Subtitle = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Light_SearchResult_Subtitle;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Light_SearchResult_Title = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Light_SearchResult_Title;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Light_Widget_PopupMenu_Large = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Light_Widget_PopupMenu_Large;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Light_Widget_PopupMenu_Small = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Light_Widget_PopupMenu_Small;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Medium = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Medium;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Medium_Inverse = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Medium_Inverse;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Menu = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Menu;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_SearchResult_Subtitle = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_SearchResult_Subtitle;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_SearchResult_Title = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_SearchResult_Title;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Small = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Small;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Small_Inverse = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Small_Inverse;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Subhead = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Subhead;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Subhead_Inverse = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Subhead_Inverse;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Title = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Title;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Title_Inverse = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Title_Inverse;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Menu = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Menu;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Subtitle = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Subtitle;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Subtitle_Inverse = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Subtitle_Inverse;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Title = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Title;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Title_Inverse = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionBar_Title_Inverse;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionMode_Subtitle = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionMode_Subtitle;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionMode_Subtitle_Inverse = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionMode_Subtitle_Inverse;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionMode_Title = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionMode_Title;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionMode_Title_Inverse = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Widget_ActionMode_Title_Inverse;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Widget_Button = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Widget_Button;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Widget_Button_Inverse = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Widget_Button_Inverse;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Widget_DropDownItem = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Widget_DropDownItem;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Widget_PopupMenu_Large = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Widget_PopupMenu_Large;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Widget_PopupMenu_Small = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Widget_PopupMenu_Small;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Widget_Switch = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Widget_Switch;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_AppCompat_Widget_TextView_SpinnerItem = global::CV.Mobile.Droid.Resource.Style.TextAppearance_AppCompat_Widget_TextView_SpinnerItem;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_Design_CollapsingToolbar_Expanded = global::CV.Mobile.Droid.Resource.Style.TextAppearance_Design_CollapsingToolbar_Expanded;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_Design_Counter = global::CV.Mobile.Droid.Resource.Style.TextAppearance_Design_Counter;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_Design_Counter_Overflow = global::CV.Mobile.Droid.Resource.Style.TextAppearance_Design_Counter_Overflow;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_Design_Error = global::CV.Mobile.Droid.Resource.Style.TextAppearance_Design_Error;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_Design_Hint = global::CV.Mobile.Droid.Resource.Style.TextAppearance_Design_Hint;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_Design_Snackbar_Message = global::CV.Mobile.Droid.Resource.Style.TextAppearance_Design_Snackbar_Message;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_Design_Tab = global::CV.Mobile.Droid.Resource.Style.TextAppearance_Design_Tab;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_StatusBar_EventContent = global::CV.Mobile.Droid.Resource.Style.TextAppearance_StatusBar_EventContent;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_StatusBar_EventContent_Info = global::CV.Mobile.Droid.Resource.Style.TextAppearance_StatusBar_EventContent_Info;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_StatusBar_EventContent_Line2 = global::CV.Mobile.Droid.Resource.Style.TextAppearance_StatusBar_EventContent_Line2;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_StatusBar_EventContent_Time = global::CV.Mobile.Droid.Resource.Style.TextAppearance_StatusBar_EventContent_Time;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_StatusBar_EventContent_Title = global::CV.Mobile.Droid.Resource.Style.TextAppearance_StatusBar_EventContent_Title;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_Widget_AppCompat_ExpandedMenu_Item = global::CV.Mobile.Droid.Resource.Style.TextAppearance_Widget_AppCompat_ExpandedMenu_Item;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_Widget_AppCompat_Toolbar_Subtitle = global::CV.Mobile.Droid.Resource.Style.TextAppearance_Widget_AppCompat_Toolbar_Subtitle;
+			global::TK.CustomMap.Droid.Resource.Style.TextAppearance_Widget_AppCompat_Toolbar_Title = global::CV.Mobile.Droid.Resource.Style.TextAppearance_Widget_AppCompat_Toolbar_Title;
+			global::TK.CustomMap.Droid.Resource.Style.Theme_AppCompat = global::CV.Mobile.Droid.Resource.Style.Theme_AppCompat;
+			global::TK.CustomMap.Droid.Resource.Style.Theme_AppCompat_CompactMenu = global::CV.Mobile.Droid.Resource.Style.Theme_AppCompat_CompactMenu;
+			global::TK.CustomMap.Droid.Resource.Style.Theme_AppCompat_DayNight = global::CV.Mobile.Droid.Resource.Style.Theme_AppCompat_DayNight;
+			global::TK.CustomMap.Droid.Resource.Style.Theme_AppCompat_DayNight_DarkActionBar = global::CV.Mobile.Droid.Resource.Style.Theme_AppCompat_DayNight_DarkActionBar;
+			global::TK.CustomMap.Droid.Resource.Style.Theme_AppCompat_DayNight_Dialog = global::CV.Mobile.Droid.Resource.Style.Theme_AppCompat_DayNight_Dialog;
+			global::TK.CustomMap.Droid.Resource.Style.Theme_AppCompat_DayNight_Dialog_Alert = global::CV.Mobile.Droid.Resource.Style.Theme_AppCompat_DayNight_Dialog_Alert;
+			global::TK.CustomMap.Droid.Resource.Style.Theme_AppCompat_DayNight_Dialog_MinWidth = global::CV.Mobile.Droid.Resource.Style.Theme_AppCompat_DayNight_Dialog_MinWidth;
+			global::TK.CustomMap.Droid.Resource.Style.Theme_AppCompat_DayNight_DialogWhenLarge = global::CV.Mobile.Droid.Resource.Style.Theme_AppCompat_DayNight_DialogWhenLarge;
+			global::TK.CustomMap.Droid.Resource.Style.Theme_AppCompat_DayNight_NoActionBar = global::CV.Mobile.Droid.Resource.Style.Theme_AppCompat_DayNight_NoActionBar;
+			global::TK.CustomMap.Droid.Resource.Style.Theme_AppCompat_Dialog = global::CV.Mobile.Droid.Resource.Style.Theme_AppCompat_Dialog;
+			global::TK.CustomMap.Droid.Resource.Style.Theme_AppCompat_Dialog_Alert = global::CV.Mobile.Droid.Resource.Style.Theme_AppCompat_Dialog_Alert;
+			global::TK.CustomMap.Droid.Resource.Style.Theme_AppCompat_Dialog_MinWidth = global::CV.Mobile.Droid.Resource.Style.Theme_AppCompat_Dialog_MinWidth;
+			global::TK.CustomMap.Droid.Resource.Style.Theme_AppCompat_DialogWhenLarge = global::CV.Mobile.Droid.Resource.Style.Theme_AppCompat_DialogWhenLarge;
+			global::TK.CustomMap.Droid.Resource.Style.Theme_AppCompat_Light = global::CV.Mobile.Droid.Resource.Style.Theme_AppCompat_Light;
+			global::TK.CustomMap.Droid.Resource.Style.Theme_AppCompat_Light_DarkActionBar = global::CV.Mobile.Droid.Resource.Style.Theme_AppCompat_Light_DarkActionBar;
+			global::TK.CustomMap.Droid.Resource.Style.Theme_AppCompat_Light_Dialog = global::CV.Mobile.Droid.Resource.Style.Theme_AppCompat_Light_Dialog;
+			global::TK.CustomMap.Droid.Resource.Style.Theme_AppCompat_Light_Dialog_Alert = global::CV.Mobile.Droid.Resource.Style.Theme_AppCompat_Light_Dialog_Alert;
+			global::TK.CustomMap.Droid.Resource.Style.Theme_AppCompat_Light_Dialog_MinWidth = global::CV.Mobile.Droid.Resource.Style.Theme_AppCompat_Light_Dialog_MinWidth;
+			global::TK.CustomMap.Droid.Resource.Style.Theme_AppCompat_Light_DialogWhenLarge = global::CV.Mobile.Droid.Resource.Style.Theme_AppCompat_Light_DialogWhenLarge;
+			global::TK.CustomMap.Droid.Resource.Style.Theme_AppCompat_Light_NoActionBar = global::CV.Mobile.Droid.Resource.Style.Theme_AppCompat_Light_NoActionBar;
+			global::TK.CustomMap.Droid.Resource.Style.Theme_AppCompat_NoActionBar = global::CV.Mobile.Droid.Resource.Style.Theme_AppCompat_NoActionBar;
+			global::TK.CustomMap.Droid.Resource.Style.Theme_Design = global::CV.Mobile.Droid.Resource.Style.Theme_Design;
+			global::TK.CustomMap.Droid.Resource.Style.Theme_Design_BottomSheetDialog = global::CV.Mobile.Droid.Resource.Style.Theme_Design_BottomSheetDialog;
+			global::TK.CustomMap.Droid.Resource.Style.Theme_Design_Light = global::CV.Mobile.Droid.Resource.Style.Theme_Design_Light;
+			global::TK.CustomMap.Droid.Resource.Style.Theme_Design_Light_BottomSheetDialog = global::CV.Mobile.Droid.Resource.Style.Theme_Design_Light_BottomSheetDialog;
+			global::TK.CustomMap.Droid.Resource.Style.Theme_Design_Light_NoActionBar = global::CV.Mobile.Droid.Resource.Style.Theme_Design_Light_NoActionBar;
+			global::TK.CustomMap.Droid.Resource.Style.Theme_Design_NoActionBar = global::CV.Mobile.Droid.Resource.Style.Theme_Design_NoActionBar;
+			global::TK.CustomMap.Droid.Resource.Style.Theme_MediaRouter = global::CV.Mobile.Droid.Resource.Style.Theme_MediaRouter;
+			global::TK.CustomMap.Droid.Resource.Style.Theme_MediaRouter_Light = global::CV.Mobile.Droid.Resource.Style.Theme_MediaRouter_Light;
+			global::TK.CustomMap.Droid.Resource.Style.Theme_MediaRouter_Light_DarkControlPanel = global::CV.Mobile.Droid.Resource.Style.Theme_MediaRouter_Light_DarkControlPanel;
+			global::TK.CustomMap.Droid.Resource.Style.Theme_MediaRouter_LightControlPanel = global::CV.Mobile.Droid.Resource.Style.Theme_MediaRouter_LightControlPanel;
+			global::TK.CustomMap.Droid.Resource.Style.ThemeOverlay_AppCompat = global::CV.Mobile.Droid.Resource.Style.ThemeOverlay_AppCompat;
+			global::TK.CustomMap.Droid.Resource.Style.ThemeOverlay_AppCompat_ActionBar = global::CV.Mobile.Droid.Resource.Style.ThemeOverlay_AppCompat_ActionBar;
+			global::TK.CustomMap.Droid.Resource.Style.ThemeOverlay_AppCompat_Dark = global::CV.Mobile.Droid.Resource.Style.ThemeOverlay_AppCompat_Dark;
+			global::TK.CustomMap.Droid.Resource.Style.ThemeOverlay_AppCompat_Dark_ActionBar = global::CV.Mobile.Droid.Resource.Style.ThemeOverlay_AppCompat_Dark_ActionBar;
+			global::TK.CustomMap.Droid.Resource.Style.ThemeOverlay_AppCompat_Light = global::CV.Mobile.Droid.Resource.Style.ThemeOverlay_AppCompat_Light;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_ActionBar = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_ActionBar;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_ActionBar_Solid = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_ActionBar_Solid;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_ActionBar_TabBar = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_ActionBar_TabBar;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_ActionBar_TabText = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_ActionBar_TabText;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_ActionBar_TabView = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_ActionBar_TabView;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_ActionButton = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_ActionButton;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_ActionButton_CloseMode = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_ActionButton_CloseMode;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_ActionButton_Overflow = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_ActionButton_Overflow;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_ActionMode = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_ActionMode;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_ActivityChooserView = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_ActivityChooserView;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_AutoCompleteTextView = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_AutoCompleteTextView;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Button = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Button;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Button_Borderless = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Button_Borderless;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Button_Borderless_Colored = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Button_Borderless_Colored;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Button_ButtonBar_AlertDialog = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Button_ButtonBar_AlertDialog;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Button_Colored = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Button_Colored;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Button_Small = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Button_Small;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_ButtonBar = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_ButtonBar;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_ButtonBar_AlertDialog = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_ButtonBar_AlertDialog;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_CompoundButton_CheckBox = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_CompoundButton_CheckBox;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_CompoundButton_RadioButton = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_CompoundButton_RadioButton;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_CompoundButton_Switch = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_CompoundButton_Switch;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_DrawerArrowToggle = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_DrawerArrowToggle;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_DropDownItem_Spinner = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_DropDownItem_Spinner;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_EditText = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_EditText;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_ImageButton = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_ImageButton;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_Solid = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_Solid;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_Solid_Inverse = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_Solid_Inverse;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_TabBar = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_TabBar;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_TabBar_Inverse = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_TabBar_Inverse;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_TabText = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_TabText;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_TabText_Inverse = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_TabText_Inverse;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_TabView = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_TabView;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_TabView_Inverse = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Light_ActionBar_TabView_Inverse;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Light_ActionButton = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Light_ActionButton;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Light_ActionButton_CloseMode = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Light_ActionButton_CloseMode;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Light_ActionButton_Overflow = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Light_ActionButton_Overflow;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Light_ActionMode_Inverse = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Light_ActionMode_Inverse;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Light_ActivityChooserView = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Light_ActivityChooserView;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Light_AutoCompleteTextView = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Light_AutoCompleteTextView;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Light_DropDownItem_Spinner = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Light_DropDownItem_Spinner;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Light_ListPopupWindow = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Light_ListPopupWindow;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Light_ListView_DropDown = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Light_ListView_DropDown;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Light_PopupMenu = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Light_PopupMenu;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Light_PopupMenu_Overflow = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Light_PopupMenu_Overflow;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Light_SearchView = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Light_SearchView;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Light_Spinner_DropDown_ActionBar = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Light_Spinner_DropDown_ActionBar;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_ListPopupWindow = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_ListPopupWindow;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_ListView = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_ListView;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_ListView_DropDown = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_ListView_DropDown;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_ListView_Menu = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_ListView_Menu;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_PopupMenu = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_PopupMenu;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_PopupMenu_Overflow = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_PopupMenu_Overflow;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_PopupWindow = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_PopupWindow;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_ProgressBar = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_ProgressBar;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_ProgressBar_Horizontal = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_ProgressBar_Horizontal;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_RatingBar = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_RatingBar;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_RatingBar_Indicator = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_RatingBar_Indicator;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_RatingBar_Small = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_RatingBar_Small;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_SearchView = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_SearchView;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_SearchView_ActionBar = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_SearchView_ActionBar;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_SeekBar = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_SeekBar;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Spinner = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Spinner;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Spinner_DropDown = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Spinner_DropDown;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Spinner_DropDown_ActionBar = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Spinner_DropDown_ActionBar;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Spinner_Underlined = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Spinner_Underlined;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_TextView_SpinnerItem = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_TextView_SpinnerItem;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Toolbar = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Toolbar;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_AppCompat_Toolbar_Button_Navigation = global::CV.Mobile.Droid.Resource.Style.Widget_AppCompat_Toolbar_Button_Navigation;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_Design_AppBarLayout = global::CV.Mobile.Droid.Resource.Style.Widget_Design_AppBarLayout;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_Design_BottomSheet_Modal = global::CV.Mobile.Droid.Resource.Style.Widget_Design_BottomSheet_Modal;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_Design_CollapsingToolbar = global::CV.Mobile.Droid.Resource.Style.Widget_Design_CollapsingToolbar;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_Design_CoordinatorLayout = global::CV.Mobile.Droid.Resource.Style.Widget_Design_CoordinatorLayout;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_Design_FloatingActionButton = global::CV.Mobile.Droid.Resource.Style.Widget_Design_FloatingActionButton;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_Design_NavigationView = global::CV.Mobile.Droid.Resource.Style.Widget_Design_NavigationView;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_Design_ScrimInsetsFrameLayout = global::CV.Mobile.Droid.Resource.Style.Widget_Design_ScrimInsetsFrameLayout;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_Design_Snackbar = global::CV.Mobile.Droid.Resource.Style.Widget_Design_Snackbar;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_Design_TabLayout = global::CV.Mobile.Droid.Resource.Style.Widget_Design_TabLayout;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_Design_TextInputLayout = global::CV.Mobile.Droid.Resource.Style.Widget_Design_TextInputLayout;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_MediaRouter_ChooserText = global::CV.Mobile.Droid.Resource.Style.Widget_MediaRouter_ChooserText;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_MediaRouter_ChooserText_Primary = global::CV.Mobile.Droid.Resource.Style.Widget_MediaRouter_ChooserText_Primary;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_MediaRouter_ChooserText_Primary_Dark = global::CV.Mobile.Droid.Resource.Style.Widget_MediaRouter_ChooserText_Primary_Dark;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_MediaRouter_ChooserText_Primary_Light = global::CV.Mobile.Droid.Resource.Style.Widget_MediaRouter_ChooserText_Primary_Light;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_MediaRouter_ChooserText_Secondary = global::CV.Mobile.Droid.Resource.Style.Widget_MediaRouter_ChooserText_Secondary;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_MediaRouter_ChooserText_Secondary_Dark = global::CV.Mobile.Droid.Resource.Style.Widget_MediaRouter_ChooserText_Secondary_Dark;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_MediaRouter_ChooserText_Secondary_Light = global::CV.Mobile.Droid.Resource.Style.Widget_MediaRouter_ChooserText_Secondary_Light;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_MediaRouter_ControllerText = global::CV.Mobile.Droid.Resource.Style.Widget_MediaRouter_ControllerText;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_MediaRouter_ControllerText_Primary = global::CV.Mobile.Droid.Resource.Style.Widget_MediaRouter_ControllerText_Primary;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_MediaRouter_ControllerText_Primary_Dark = global::CV.Mobile.Droid.Resource.Style.Widget_MediaRouter_ControllerText_Primary_Dark;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_MediaRouter_ControllerText_Primary_Light = global::CV.Mobile.Droid.Resource.Style.Widget_MediaRouter_ControllerText_Primary_Light;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_MediaRouter_ControllerText_Secondary = global::CV.Mobile.Droid.Resource.Style.Widget_MediaRouter_ControllerText_Secondary;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_MediaRouter_ControllerText_Secondary_Dark = global::CV.Mobile.Droid.Resource.Style.Widget_MediaRouter_ControllerText_Secondary_Dark;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_MediaRouter_ControllerText_Secondary_Light = global::CV.Mobile.Droid.Resource.Style.Widget_MediaRouter_ControllerText_Secondary_Light;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_MediaRouter_ControllerText_Title = global::CV.Mobile.Droid.Resource.Style.Widget_MediaRouter_ControllerText_Title;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_MediaRouter_ControllerText_Title_Dark = global::CV.Mobile.Droid.Resource.Style.Widget_MediaRouter_ControllerText_Title_Dark;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_MediaRouter_ControllerText_Title_Light = global::CV.Mobile.Droid.Resource.Style.Widget_MediaRouter_ControllerText_Title_Light;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_MediaRouter_Light_MediaRouteButton = global::CV.Mobile.Droid.Resource.Style.Widget_MediaRouter_Light_MediaRouteButton;
+			global::TK.CustomMap.Droid.Resource.Style.Widget_MediaRouter_MediaRouteButton = global::CV.Mobile.Droid.Resource.Style.Widget_MediaRouter_MediaRouteButton;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionBar = global::CV.Mobile.Droid.Resource.Styleable.ActionBar;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionBar_background = global::CV.Mobile.Droid.Resource.Styleable.ActionBar_background;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionBar_backgroundSplit = global::CV.Mobile.Droid.Resource.Styleable.ActionBar_backgroundSplit;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionBar_backgroundStacked = global::CV.Mobile.Droid.Resource.Styleable.ActionBar_backgroundStacked;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionBar_contentInsetEnd = global::CV.Mobile.Droid.Resource.Styleable.ActionBar_contentInsetEnd;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionBar_contentInsetLeft = global::CV.Mobile.Droid.Resource.Styleable.ActionBar_contentInsetLeft;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionBar_contentInsetRight = global::CV.Mobile.Droid.Resource.Styleable.ActionBar_contentInsetRight;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionBar_contentInsetStart = global::CV.Mobile.Droid.Resource.Styleable.ActionBar_contentInsetStart;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionBar_customNavigationLayout = global::CV.Mobile.Droid.Resource.Styleable.ActionBar_customNavigationLayout;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionBar_displayOptions = global::CV.Mobile.Droid.Resource.Styleable.ActionBar_displayOptions;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionBar_divider = global::CV.Mobile.Droid.Resource.Styleable.ActionBar_divider;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionBar_elevation = global::CV.Mobile.Droid.Resource.Styleable.ActionBar_elevation;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionBar_height = global::CV.Mobile.Droid.Resource.Styleable.ActionBar_height;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionBar_hideOnContentScroll = global::CV.Mobile.Droid.Resource.Styleable.ActionBar_hideOnContentScroll;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionBar_homeAsUpIndicator = global::CV.Mobile.Droid.Resource.Styleable.ActionBar_homeAsUpIndicator;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionBar_homeLayout = global::CV.Mobile.Droid.Resource.Styleable.ActionBar_homeLayout;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionBar_icon = global::CV.Mobile.Droid.Resource.Styleable.ActionBar_icon;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionBar_indeterminateProgressStyle = global::CV.Mobile.Droid.Resource.Styleable.ActionBar_indeterminateProgressStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionBar_itemPadding = global::CV.Mobile.Droid.Resource.Styleable.ActionBar_itemPadding;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionBar_logo = global::CV.Mobile.Droid.Resource.Styleable.ActionBar_logo;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionBar_navigationMode = global::CV.Mobile.Droid.Resource.Styleable.ActionBar_navigationMode;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionBar_popupTheme = global::CV.Mobile.Droid.Resource.Styleable.ActionBar_popupTheme;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionBar_progressBarPadding = global::CV.Mobile.Droid.Resource.Styleable.ActionBar_progressBarPadding;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionBar_progressBarStyle = global::CV.Mobile.Droid.Resource.Styleable.ActionBar_progressBarStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionBar_subtitle = global::CV.Mobile.Droid.Resource.Styleable.ActionBar_subtitle;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionBar_subtitleTextStyle = global::CV.Mobile.Droid.Resource.Styleable.ActionBar_subtitleTextStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionBar_title = global::CV.Mobile.Droid.Resource.Styleable.ActionBar_title;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionBar_titleTextStyle = global::CV.Mobile.Droid.Resource.Styleable.ActionBar_titleTextStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionBarLayout = global::CV.Mobile.Droid.Resource.Styleable.ActionBarLayout;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionBarLayout_android_layout_gravity = global::CV.Mobile.Droid.Resource.Styleable.ActionBarLayout_android_layout_gravity;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionMenuItemView = global::CV.Mobile.Droid.Resource.Styleable.ActionMenuItemView;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionMenuItemView_android_minWidth = global::CV.Mobile.Droid.Resource.Styleable.ActionMenuItemView_android_minWidth;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionMenuView = global::CV.Mobile.Droid.Resource.Styleable.ActionMenuView;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionMode = global::CV.Mobile.Droid.Resource.Styleable.ActionMode;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionMode_background = global::CV.Mobile.Droid.Resource.Styleable.ActionMode_background;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionMode_backgroundSplit = global::CV.Mobile.Droid.Resource.Styleable.ActionMode_backgroundSplit;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionMode_closeItemLayout = global::CV.Mobile.Droid.Resource.Styleable.ActionMode_closeItemLayout;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionMode_height = global::CV.Mobile.Droid.Resource.Styleable.ActionMode_height;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionMode_subtitleTextStyle = global::CV.Mobile.Droid.Resource.Styleable.ActionMode_subtitleTextStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActionMode_titleTextStyle = global::CV.Mobile.Droid.Resource.Styleable.ActionMode_titleTextStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActivityChooserView = global::CV.Mobile.Droid.Resource.Styleable.ActivityChooserView;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActivityChooserView_expandActivityOverflowButtonDrawable = global::CV.Mobile.Droid.Resource.Styleable.ActivityChooserView_expandActivityOverflowButtonDrawable;
+			global::TK.CustomMap.Droid.Resource.Styleable.ActivityChooserView_initialActivityCount = global::CV.Mobile.Droid.Resource.Styleable.ActivityChooserView_initialActivityCount;
+			global::TK.CustomMap.Droid.Resource.Styleable.AlertDialog = global::CV.Mobile.Droid.Resource.Styleable.AlertDialog;
+			global::TK.CustomMap.Droid.Resource.Styleable.AlertDialog_android_layout = global::CV.Mobile.Droid.Resource.Styleable.AlertDialog_android_layout;
+			global::TK.CustomMap.Droid.Resource.Styleable.AlertDialog_buttonPanelSideLayout = global::CV.Mobile.Droid.Resource.Styleable.AlertDialog_buttonPanelSideLayout;
+			global::TK.CustomMap.Droid.Resource.Styleable.AlertDialog_listItemLayout = global::CV.Mobile.Droid.Resource.Styleable.AlertDialog_listItemLayout;
+			global::TK.CustomMap.Droid.Resource.Styleable.AlertDialog_listLayout = global::CV.Mobile.Droid.Resource.Styleable.AlertDialog_listLayout;
+			global::TK.CustomMap.Droid.Resource.Styleable.AlertDialog_multiChoiceItemLayout = global::CV.Mobile.Droid.Resource.Styleable.AlertDialog_multiChoiceItemLayout;
+			global::TK.CustomMap.Droid.Resource.Styleable.AlertDialog_singleChoiceItemLayout = global::CV.Mobile.Droid.Resource.Styleable.AlertDialog_singleChoiceItemLayout;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppBarLayout = global::CV.Mobile.Droid.Resource.Styleable.AppBarLayout;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppBarLayout_android_background = global::CV.Mobile.Droid.Resource.Styleable.AppBarLayout_android_background;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppBarLayout_elevation = global::CV.Mobile.Droid.Resource.Styleable.AppBarLayout_elevation;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppBarLayout_expanded = global::CV.Mobile.Droid.Resource.Styleable.AppBarLayout_expanded;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppBarLayout_LayoutParams = global::CV.Mobile.Droid.Resource.Styleable.AppBarLayout_LayoutParams;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppBarLayout_LayoutParams_layout_scrollFlags = global::CV.Mobile.Droid.Resource.Styleable.AppBarLayout_LayoutParams_layout_scrollFlags;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppBarLayout_LayoutParams_layout_scrollInterpolator = global::CV.Mobile.Droid.Resource.Styleable.AppBarLayout_LayoutParams_layout_scrollInterpolator;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatImageView = global::CV.Mobile.Droid.Resource.Styleable.AppCompatImageView;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatImageView_android_src = global::CV.Mobile.Droid.Resource.Styleable.AppCompatImageView_android_src;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatImageView_srcCompat = global::CV.Mobile.Droid.Resource.Styleable.AppCompatImageView_srcCompat;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTextView = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTextView;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTextView_android_textAppearance = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTextView_android_textAppearance;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTextView_textAllCaps = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTextView_textAllCaps;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_actionBarDivider = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_actionBarDivider;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_actionBarItemBackground = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_actionBarItemBackground;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_actionBarPopupTheme = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_actionBarPopupTheme;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_actionBarSize = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_actionBarSize;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_actionBarSplitStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_actionBarSplitStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_actionBarStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_actionBarStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_actionBarTabBarStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_actionBarTabBarStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_actionBarTabStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_actionBarTabStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_actionBarTabTextStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_actionBarTabTextStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_actionBarTheme = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_actionBarTheme;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_actionBarWidgetTheme = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_actionBarWidgetTheme;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_actionButtonStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_actionButtonStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_actionDropDownStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_actionDropDownStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_actionMenuTextAppearance = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_actionMenuTextAppearance;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_actionMenuTextColor = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_actionMenuTextColor;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_actionModeBackground = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_actionModeBackground;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_actionModeCloseButtonStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_actionModeCloseButtonStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_actionModeCloseDrawable = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_actionModeCloseDrawable;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_actionModeCopyDrawable = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_actionModeCopyDrawable;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_actionModeCutDrawable = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_actionModeCutDrawable;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_actionModeFindDrawable = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_actionModeFindDrawable;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_actionModePasteDrawable = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_actionModePasteDrawable;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_actionModePopupWindowStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_actionModePopupWindowStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_actionModeSelectAllDrawable = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_actionModeSelectAllDrawable;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_actionModeShareDrawable = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_actionModeShareDrawable;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_actionModeSplitBackground = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_actionModeSplitBackground;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_actionModeStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_actionModeStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_actionModeWebSearchDrawable = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_actionModeWebSearchDrawable;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_actionOverflowButtonStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_actionOverflowButtonStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_actionOverflowMenuStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_actionOverflowMenuStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_activityChooserViewStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_activityChooserViewStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_alertDialogButtonGroupStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_alertDialogButtonGroupStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_alertDialogCenterButtons = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_alertDialogCenterButtons;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_alertDialogStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_alertDialogStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_alertDialogTheme = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_alertDialogTheme;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_android_windowAnimationStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_android_windowAnimationStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_android_windowIsFloating = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_android_windowIsFloating;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_autoCompleteTextViewStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_autoCompleteTextViewStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_borderlessButtonStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_borderlessButtonStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_buttonBarButtonStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_buttonBarButtonStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_buttonBarNegativeButtonStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_buttonBarNegativeButtonStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_buttonBarNeutralButtonStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_buttonBarNeutralButtonStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_buttonBarPositiveButtonStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_buttonBarPositiveButtonStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_buttonBarStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_buttonBarStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_buttonStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_buttonStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_buttonStyleSmall = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_buttonStyleSmall;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_checkboxStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_checkboxStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_checkedTextViewStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_checkedTextViewStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_colorAccent = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_colorAccent;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_colorButtonNormal = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_colorButtonNormal;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_colorControlActivated = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_colorControlActivated;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_colorControlHighlight = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_colorControlHighlight;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_colorControlNormal = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_colorControlNormal;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_colorPrimary = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_colorPrimary;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_colorPrimaryDark = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_colorPrimaryDark;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_colorSwitchThumbNormal = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_colorSwitchThumbNormal;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_controlBackground = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_controlBackground;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_dialogPreferredPadding = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_dialogPreferredPadding;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_dialogTheme = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_dialogTheme;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_dividerHorizontal = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_dividerHorizontal;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_dividerVertical = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_dividerVertical;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_dropDownListViewStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_dropDownListViewStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_dropdownListPreferredItemHeight = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_dropdownListPreferredItemHeight;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_editTextBackground = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_editTextBackground;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_editTextColor = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_editTextColor;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_editTextStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_editTextStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_homeAsUpIndicator = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_homeAsUpIndicator;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_imageButtonStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_imageButtonStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_listChoiceBackgroundIndicator = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_listChoiceBackgroundIndicator;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_listDividerAlertDialog = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_listDividerAlertDialog;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_listPopupWindowStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_listPopupWindowStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemHeight = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemHeight;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemHeightLarge = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemHeightLarge;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemHeightSmall = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemHeightSmall;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingLeft = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingLeft;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingRight = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_listPreferredItemPaddingRight;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_panelBackground = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_panelBackground;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_panelMenuListTheme = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_panelMenuListTheme;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_panelMenuListWidth = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_panelMenuListWidth;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_popupMenuStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_popupMenuStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_popupWindowStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_popupWindowStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_radioButtonStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_radioButtonStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_ratingBarStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_ratingBarStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_ratingBarStyleIndicator = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_ratingBarStyleIndicator;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_ratingBarStyleSmall = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_ratingBarStyleSmall;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_searchViewStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_searchViewStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_seekBarStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_seekBarStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_selectableItemBackground = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_selectableItemBackground;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_selectableItemBackgroundBorderless = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_selectableItemBackgroundBorderless;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_spinnerDropDownItemStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_spinnerDropDownItemStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_spinnerStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_spinnerStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_switchStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_switchStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_textAppearanceLargePopupMenu = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_textAppearanceLargePopupMenu;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_textAppearanceListItem = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_textAppearanceListItem;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_textAppearanceListItemSmall = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_textAppearanceListItemSmall;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_textAppearanceSearchResultSubtitle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_textAppearanceSearchResultSubtitle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_textAppearanceSearchResultTitle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_textAppearanceSearchResultTitle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_textAppearanceSmallPopupMenu = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_textAppearanceSmallPopupMenu;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_textColorAlertDialogListItem = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_textColorAlertDialogListItem;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_textColorSearchUrl = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_textColorSearchUrl;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_toolbarNavigationButtonStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_toolbarNavigationButtonStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_toolbarStyle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_toolbarStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_windowActionBar = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_windowActionBar;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_windowActionBarOverlay = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_windowActionBarOverlay;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_windowActionModeOverlay = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_windowActionModeOverlay;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_windowFixedHeightMajor = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_windowFixedHeightMajor;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_windowFixedHeightMinor = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_windowFixedHeightMinor;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_windowFixedWidthMajor = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_windowFixedWidthMajor;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_windowFixedWidthMinor = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_windowFixedWidthMinor;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_windowMinWidthMajor = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_windowMinWidthMajor;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_windowMinWidthMinor = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_windowMinWidthMinor;
+			global::TK.CustomMap.Droid.Resource.Styleable.AppCompatTheme_windowNoTitle = global::CV.Mobile.Droid.Resource.Styleable.AppCompatTheme_windowNoTitle;
+			global::TK.CustomMap.Droid.Resource.Styleable.BottomSheetBehavior_Params = global::CV.Mobile.Droid.Resource.Styleable.BottomSheetBehavior_Params;
+			global::TK.CustomMap.Droid.Resource.Styleable.BottomSheetBehavior_Params_behavior_hideable = global::CV.Mobile.Droid.Resource.Styleable.BottomSheetBehavior_Params_behavior_hideable;
+			global::TK.CustomMap.Droid.Resource.Styleable.BottomSheetBehavior_Params_behavior_peekHeight = global::CV.Mobile.Droid.Resource.Styleable.BottomSheetBehavior_Params_behavior_peekHeight;
+			global::TK.CustomMap.Droid.Resource.Styleable.ButtonBarLayout = global::CV.Mobile.Droid.Resource.Styleable.ButtonBarLayout;
+			global::TK.CustomMap.Droid.Resource.Styleable.ButtonBarLayout_allowStacking = global::CV.Mobile.Droid.Resource.Styleable.ButtonBarLayout_allowStacking;
+			global::TK.CustomMap.Droid.Resource.Styleable.CardView = global::CV.Mobile.Droid.Resource.Styleable.CardView;
+			global::TK.CustomMap.Droid.Resource.Styleable.CardView_android_minHeight = global::CV.Mobile.Droid.Resource.Styleable.CardView_android_minHeight;
+			global::TK.CustomMap.Droid.Resource.Styleable.CardView_android_minWidth = global::CV.Mobile.Droid.Resource.Styleable.CardView_android_minWidth;
+			global::TK.CustomMap.Droid.Resource.Styleable.CardView_cardBackgroundColor = global::CV.Mobile.Droid.Resource.Styleable.CardView_cardBackgroundColor;
+			global::TK.CustomMap.Droid.Resource.Styleable.CardView_cardCornerRadius = global::CV.Mobile.Droid.Resource.Styleable.CardView_cardCornerRadius;
+			global::TK.CustomMap.Droid.Resource.Styleable.CardView_cardElevation = global::CV.Mobile.Droid.Resource.Styleable.CardView_cardElevation;
+			global::TK.CustomMap.Droid.Resource.Styleable.CardView_cardMaxElevation = global::CV.Mobile.Droid.Resource.Styleable.CardView_cardMaxElevation;
+			global::TK.CustomMap.Droid.Resource.Styleable.CardView_cardPreventCornerOverlap = global::CV.Mobile.Droid.Resource.Styleable.CardView_cardPreventCornerOverlap;
+			global::TK.CustomMap.Droid.Resource.Styleable.CardView_cardUseCompatPadding = global::CV.Mobile.Droid.Resource.Styleable.CardView_cardUseCompatPadding;
+			global::TK.CustomMap.Droid.Resource.Styleable.CardView_contentPadding = global::CV.Mobile.Droid.Resource.Styleable.CardView_contentPadding;
+			global::TK.CustomMap.Droid.Resource.Styleable.CardView_contentPaddingBottom = global::CV.Mobile.Droid.Resource.Styleable.CardView_contentPaddingBottom;
+			global::TK.CustomMap.Droid.Resource.Styleable.CardView_contentPaddingLeft = global::CV.Mobile.Droid.Resource.Styleable.CardView_contentPaddingLeft;
+			global::TK.CustomMap.Droid.Resource.Styleable.CardView_contentPaddingRight = global::CV.Mobile.Droid.Resource.Styleable.CardView_contentPaddingRight;
+			global::TK.CustomMap.Droid.Resource.Styleable.CardView_contentPaddingTop = global::CV.Mobile.Droid.Resource.Styleable.CardView_contentPaddingTop;
+			global::TK.CustomMap.Droid.Resource.Styleable.CollapsingAppBarLayout_LayoutParams = global::CV.Mobile.Droid.Resource.Styleable.CollapsingAppBarLayout_LayoutParams;
+			global::TK.CustomMap.Droid.Resource.Styleable.CollapsingAppBarLayout_LayoutParams_layout_collapseMode = global::CV.Mobile.Droid.Resource.Styleable.CollapsingAppBarLayout_LayoutParams_layout_collapseMode;
+			global::TK.CustomMap.Droid.Resource.Styleable.CollapsingAppBarLayout_LayoutParams_layout_collapseParallaxMultiplier = global::CV.Mobile.Droid.Resource.Styleable.CollapsingAppBarLayout_LayoutParams_layout_collapseParallaxMultiplier;
+			global::TK.CustomMap.Droid.Resource.Styleable.CollapsingToolbarLayout = global::CV.Mobile.Droid.Resource.Styleable.CollapsingToolbarLayout;
+			global::TK.CustomMap.Droid.Resource.Styleable.CollapsingToolbarLayout_collapsedTitleGravity = global::CV.Mobile.Droid.Resource.Styleable.CollapsingToolbarLayout_collapsedTitleGravity;
+			global::TK.CustomMap.Droid.Resource.Styleable.CollapsingToolbarLayout_collapsedTitleTextAppearance = global::CV.Mobile.Droid.Resource.Styleable.CollapsingToolbarLayout_collapsedTitleTextAppearance;
+			global::TK.CustomMap.Droid.Resource.Styleable.CollapsingToolbarLayout_contentScrim = global::CV.Mobile.Droid.Resource.Styleable.CollapsingToolbarLayout_contentScrim;
+			global::TK.CustomMap.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleGravity = global::CV.Mobile.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleGravity;
+			global::TK.CustomMap.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMargin = global::CV.Mobile.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMargin;
+			global::TK.CustomMap.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMarginBottom = global::CV.Mobile.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMarginBottom;
+			global::TK.CustomMap.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMarginEnd = global::CV.Mobile.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMarginEnd;
+			global::TK.CustomMap.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMarginStart = global::CV.Mobile.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMarginStart;
+			global::TK.CustomMap.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMarginTop = global::CV.Mobile.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleMarginTop;
+			global::TK.CustomMap.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleTextAppearance = global::CV.Mobile.Droid.Resource.Styleable.CollapsingToolbarLayout_expandedTitleTextAppearance;
+			global::TK.CustomMap.Droid.Resource.Styleable.CollapsingToolbarLayout_statusBarScrim = global::CV.Mobile.Droid.Resource.Styleable.CollapsingToolbarLayout_statusBarScrim;
+			global::TK.CustomMap.Droid.Resource.Styleable.CollapsingToolbarLayout_title = global::CV.Mobile.Droid.Resource.Styleable.CollapsingToolbarLayout_title;
+			global::TK.CustomMap.Droid.Resource.Styleable.CollapsingToolbarLayout_titleEnabled = global::CV.Mobile.Droid.Resource.Styleable.CollapsingToolbarLayout_titleEnabled;
+			global::TK.CustomMap.Droid.Resource.Styleable.CollapsingToolbarLayout_toolbarId = global::CV.Mobile.Droid.Resource.Styleable.CollapsingToolbarLayout_toolbarId;
+			global::TK.CustomMap.Droid.Resource.Styleable.CompoundButton = global::CV.Mobile.Droid.Resource.Styleable.CompoundButton;
+			global::TK.CustomMap.Droid.Resource.Styleable.CompoundButton_android_button = global::CV.Mobile.Droid.Resource.Styleable.CompoundButton_android_button;
+			global::TK.CustomMap.Droid.Resource.Styleable.CompoundButton_buttonTint = global::CV.Mobile.Droid.Resource.Styleable.CompoundButton_buttonTint;
+			global::TK.CustomMap.Droid.Resource.Styleable.CompoundButton_buttonTintMode = global::CV.Mobile.Droid.Resource.Styleable.CompoundButton_buttonTintMode;
+			global::TK.CustomMap.Droid.Resource.Styleable.CoordinatorLayout = global::CV.Mobile.Droid.Resource.Styleable.CoordinatorLayout;
+			global::TK.CustomMap.Droid.Resource.Styleable.CoordinatorLayout_keylines = global::CV.Mobile.Droid.Resource.Styleable.CoordinatorLayout_keylines;
+			global::TK.CustomMap.Droid.Resource.Styleable.CoordinatorLayout_statusBarBackground = global::CV.Mobile.Droid.Resource.Styleable.CoordinatorLayout_statusBarBackground;
+			global::TK.CustomMap.Droid.Resource.Styleable.CoordinatorLayout_LayoutParams = global::CV.Mobile.Droid.Resource.Styleable.CoordinatorLayout_LayoutParams;
+			global::TK.CustomMap.Droid.Resource.Styleable.CoordinatorLayout_LayoutParams_android_layout_gravity = global::CV.Mobile.Droid.Resource.Styleable.CoordinatorLayout_LayoutParams_android_layout_gravity;
+			global::TK.CustomMap.Droid.Resource.Styleable.CoordinatorLayout_LayoutParams_layout_anchor = global::CV.Mobile.Droid.Resource.Styleable.CoordinatorLayout_LayoutParams_layout_anchor;
+			global::TK.CustomMap.Droid.Resource.Styleable.CoordinatorLayout_LayoutParams_layout_anchorGravity = global::CV.Mobile.Droid.Resource.Styleable.CoordinatorLayout_LayoutParams_layout_anchorGravity;
+			global::TK.CustomMap.Droid.Resource.Styleable.CoordinatorLayout_LayoutParams_layout_behavior = global::CV.Mobile.Droid.Resource.Styleable.CoordinatorLayout_LayoutParams_layout_behavior;
+			global::TK.CustomMap.Droid.Resource.Styleable.CoordinatorLayout_LayoutParams_layout_keyline = global::CV.Mobile.Droid.Resource.Styleable.CoordinatorLayout_LayoutParams_layout_keyline;
+			global::TK.CustomMap.Droid.Resource.Styleable.DesignTheme = global::CV.Mobile.Droid.Resource.Styleable.DesignTheme;
+			global::TK.CustomMap.Droid.Resource.Styleable.DesignTheme_bottomSheetDialogTheme = global::CV.Mobile.Droid.Resource.Styleable.DesignTheme_bottomSheetDialogTheme;
+			global::TK.CustomMap.Droid.Resource.Styleable.DesignTheme_bottomSheetStyle = global::CV.Mobile.Droid.Resource.Styleable.DesignTheme_bottomSheetStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.DesignTheme_textColorError = global::CV.Mobile.Droid.Resource.Styleable.DesignTheme_textColorError;
+			global::TK.CustomMap.Droid.Resource.Styleable.DrawerArrowToggle = global::CV.Mobile.Droid.Resource.Styleable.DrawerArrowToggle;
+			global::TK.CustomMap.Droid.Resource.Styleable.DrawerArrowToggle_arrowHeadLength = global::CV.Mobile.Droid.Resource.Styleable.DrawerArrowToggle_arrowHeadLength;
+			global::TK.CustomMap.Droid.Resource.Styleable.DrawerArrowToggle_arrowShaftLength = global::CV.Mobile.Droid.Resource.Styleable.DrawerArrowToggle_arrowShaftLength;
+			global::TK.CustomMap.Droid.Resource.Styleable.DrawerArrowToggle_barLength = global::CV.Mobile.Droid.Resource.Styleable.DrawerArrowToggle_barLength;
+			global::TK.CustomMap.Droid.Resource.Styleable.DrawerArrowToggle_color = global::CV.Mobile.Droid.Resource.Styleable.DrawerArrowToggle_color;
+			global::TK.CustomMap.Droid.Resource.Styleable.DrawerArrowToggle_drawableSize = global::CV.Mobile.Droid.Resource.Styleable.DrawerArrowToggle_drawableSize;
+			global::TK.CustomMap.Droid.Resource.Styleable.DrawerArrowToggle_gapBetweenBars = global::CV.Mobile.Droid.Resource.Styleable.DrawerArrowToggle_gapBetweenBars;
+			global::TK.CustomMap.Droid.Resource.Styleable.DrawerArrowToggle_spinBars = global::CV.Mobile.Droid.Resource.Styleable.DrawerArrowToggle_spinBars;
+			global::TK.CustomMap.Droid.Resource.Styleable.DrawerArrowToggle_thickness = global::CV.Mobile.Droid.Resource.Styleable.DrawerArrowToggle_thickness;
+			global::TK.CustomMap.Droid.Resource.Styleable.FloatingActionButton = global::CV.Mobile.Droid.Resource.Styleable.FloatingActionButton;
+			global::TK.CustomMap.Droid.Resource.Styleable.FloatingActionButton_backgroundTint = global::CV.Mobile.Droid.Resource.Styleable.FloatingActionButton_backgroundTint;
+			global::TK.CustomMap.Droid.Resource.Styleable.FloatingActionButton_backgroundTintMode = global::CV.Mobile.Droid.Resource.Styleable.FloatingActionButton_backgroundTintMode;
+			global::TK.CustomMap.Droid.Resource.Styleable.FloatingActionButton_borderWidth = global::CV.Mobile.Droid.Resource.Styleable.FloatingActionButton_borderWidth;
+			global::TK.CustomMap.Droid.Resource.Styleable.FloatingActionButton_elevation = global::CV.Mobile.Droid.Resource.Styleable.FloatingActionButton_elevation;
+			global::TK.CustomMap.Droid.Resource.Styleable.FloatingActionButton_fabSize = global::CV.Mobile.Droid.Resource.Styleable.FloatingActionButton_fabSize;
+			global::TK.CustomMap.Droid.Resource.Styleable.FloatingActionButton_pressedTranslationZ = global::CV.Mobile.Droid.Resource.Styleable.FloatingActionButton_pressedTranslationZ;
+			global::TK.CustomMap.Droid.Resource.Styleable.FloatingActionButton_rippleColor = global::CV.Mobile.Droid.Resource.Styleable.FloatingActionButton_rippleColor;
+			global::TK.CustomMap.Droid.Resource.Styleable.FloatingActionButton_useCompatPadding = global::CV.Mobile.Droid.Resource.Styleable.FloatingActionButton_useCompatPadding;
+			global::TK.CustomMap.Droid.Resource.Styleable.ForegroundLinearLayout = global::CV.Mobile.Droid.Resource.Styleable.ForegroundLinearLayout;
+			global::TK.CustomMap.Droid.Resource.Styleable.ForegroundLinearLayout_android_foreground = global::CV.Mobile.Droid.Resource.Styleable.ForegroundLinearLayout_android_foreground;
+			global::TK.CustomMap.Droid.Resource.Styleable.ForegroundLinearLayout_android_foregroundGravity = global::CV.Mobile.Droid.Resource.Styleable.ForegroundLinearLayout_android_foregroundGravity;
+			global::TK.CustomMap.Droid.Resource.Styleable.ForegroundLinearLayout_foregroundInsidePadding = global::CV.Mobile.Droid.Resource.Styleable.ForegroundLinearLayout_foregroundInsidePadding;
+			global::TK.CustomMap.Droid.Resource.Styleable.LinearLayoutCompat = global::CV.Mobile.Droid.Resource.Styleable.LinearLayoutCompat;
+			global::TK.CustomMap.Droid.Resource.Styleable.LinearLayoutCompat_android_baselineAligned = global::CV.Mobile.Droid.Resource.Styleable.LinearLayoutCompat_android_baselineAligned;
+			global::TK.CustomMap.Droid.Resource.Styleable.LinearLayoutCompat_android_baselineAlignedChildIndex = global::CV.Mobile.Droid.Resource.Styleable.LinearLayoutCompat_android_baselineAlignedChildIndex;
+			global::TK.CustomMap.Droid.Resource.Styleable.LinearLayoutCompat_android_gravity = global::CV.Mobile.Droid.Resource.Styleable.LinearLayoutCompat_android_gravity;
+			global::TK.CustomMap.Droid.Resource.Styleable.LinearLayoutCompat_android_orientation = global::CV.Mobile.Droid.Resource.Styleable.LinearLayoutCompat_android_orientation;
+			global::TK.CustomMap.Droid.Resource.Styleable.LinearLayoutCompat_android_weightSum = global::CV.Mobile.Droid.Resource.Styleable.LinearLayoutCompat_android_weightSum;
+			global::TK.CustomMap.Droid.Resource.Styleable.LinearLayoutCompat_divider = global::CV.Mobile.Droid.Resource.Styleable.LinearLayoutCompat_divider;
+			global::TK.CustomMap.Droid.Resource.Styleable.LinearLayoutCompat_dividerPadding = global::CV.Mobile.Droid.Resource.Styleable.LinearLayoutCompat_dividerPadding;
+			global::TK.CustomMap.Droid.Resource.Styleable.LinearLayoutCompat_measureWithLargestChild = global::CV.Mobile.Droid.Resource.Styleable.LinearLayoutCompat_measureWithLargestChild;
+			global::TK.CustomMap.Droid.Resource.Styleable.LinearLayoutCompat_showDividers = global::CV.Mobile.Droid.Resource.Styleable.LinearLayoutCompat_showDividers;
+			global::TK.CustomMap.Droid.Resource.Styleable.LinearLayoutCompat_Layout = global::CV.Mobile.Droid.Resource.Styleable.LinearLayoutCompat_Layout;
+			global::TK.CustomMap.Droid.Resource.Styleable.LinearLayoutCompat_Layout_android_layout_gravity = global::CV.Mobile.Droid.Resource.Styleable.LinearLayoutCompat_Layout_android_layout_gravity;
+			global::TK.CustomMap.Droid.Resource.Styleable.LinearLayoutCompat_Layout_android_layout_height = global::CV.Mobile.Droid.Resource.Styleable.LinearLayoutCompat_Layout_android_layout_height;
+			global::TK.CustomMap.Droid.Resource.Styleable.LinearLayoutCompat_Layout_android_layout_weight = global::CV.Mobile.Droid.Resource.Styleable.LinearLayoutCompat_Layout_android_layout_weight;
+			global::TK.CustomMap.Droid.Resource.Styleable.LinearLayoutCompat_Layout_android_layout_width = global::CV.Mobile.Droid.Resource.Styleable.LinearLayoutCompat_Layout_android_layout_width;
+			global::TK.CustomMap.Droid.Resource.Styleable.ListPopupWindow = global::CV.Mobile.Droid.Resource.Styleable.ListPopupWindow;
+			global::TK.CustomMap.Droid.Resource.Styleable.ListPopupWindow_android_dropDownHorizontalOffset = global::CV.Mobile.Droid.Resource.Styleable.ListPopupWindow_android_dropDownHorizontalOffset;
+			global::TK.CustomMap.Droid.Resource.Styleable.ListPopupWindow_android_dropDownVerticalOffset = global::CV.Mobile.Droid.Resource.Styleable.ListPopupWindow_android_dropDownVerticalOffset;
+			global::TK.CustomMap.Droid.Resource.Styleable.LoadingImageView = global::CV.Mobile.Droid.Resource.Styleable.LoadingImageView;
+			global::TK.CustomMap.Droid.Resource.Styleable.LoadingImageView_circleCrop = global::CV.Mobile.Droid.Resource.Styleable.LoadingImageView_circleCrop;
+			global::TK.CustomMap.Droid.Resource.Styleable.LoadingImageView_imageAspectRatio = global::CV.Mobile.Droid.Resource.Styleable.LoadingImageView_imageAspectRatio;
+			global::TK.CustomMap.Droid.Resource.Styleable.LoadingImageView_imageAspectRatioAdjust = global::CV.Mobile.Droid.Resource.Styleable.LoadingImageView_imageAspectRatioAdjust;
+			global::TK.CustomMap.Droid.Resource.Styleable.MapAttrs = global::CV.Mobile.Droid.Resource.Styleable.MapAttrs;
+			global::TK.CustomMap.Droid.Resource.Styleable.MapAttrs_ambientEnabled = global::CV.Mobile.Droid.Resource.Styleable.MapAttrs_ambientEnabled;
+			global::TK.CustomMap.Droid.Resource.Styleable.MapAttrs_cameraBearing = global::CV.Mobile.Droid.Resource.Styleable.MapAttrs_cameraBearing;
+			global::TK.CustomMap.Droid.Resource.Styleable.MapAttrs_cameraTargetLat = global::CV.Mobile.Droid.Resource.Styleable.MapAttrs_cameraTargetLat;
+			global::TK.CustomMap.Droid.Resource.Styleable.MapAttrs_cameraTargetLng = global::CV.Mobile.Droid.Resource.Styleable.MapAttrs_cameraTargetLng;
+			global::TK.CustomMap.Droid.Resource.Styleable.MapAttrs_cameraTilt = global::CV.Mobile.Droid.Resource.Styleable.MapAttrs_cameraTilt;
+			global::TK.CustomMap.Droid.Resource.Styleable.MapAttrs_cameraZoom = global::CV.Mobile.Droid.Resource.Styleable.MapAttrs_cameraZoom;
+			global::TK.CustomMap.Droid.Resource.Styleable.MapAttrs_liteMode = global::CV.Mobile.Droid.Resource.Styleable.MapAttrs_liteMode;
+			global::TK.CustomMap.Droid.Resource.Styleable.MapAttrs_mapType = global::CV.Mobile.Droid.Resource.Styleable.MapAttrs_mapType;
+			global::TK.CustomMap.Droid.Resource.Styleable.MapAttrs_uiCompass = global::CV.Mobile.Droid.Resource.Styleable.MapAttrs_uiCompass;
+			global::TK.CustomMap.Droid.Resource.Styleable.MapAttrs_uiMapToolbar = global::CV.Mobile.Droid.Resource.Styleable.MapAttrs_uiMapToolbar;
+			global::TK.CustomMap.Droid.Resource.Styleable.MapAttrs_uiRotateGestures = global::CV.Mobile.Droid.Resource.Styleable.MapAttrs_uiRotateGestures;
+			global::TK.CustomMap.Droid.Resource.Styleable.MapAttrs_uiScrollGestures = global::CV.Mobile.Droid.Resource.Styleable.MapAttrs_uiScrollGestures;
+			global::TK.CustomMap.Droid.Resource.Styleable.MapAttrs_uiTiltGestures = global::CV.Mobile.Droid.Resource.Styleable.MapAttrs_uiTiltGestures;
+			global::TK.CustomMap.Droid.Resource.Styleable.MapAttrs_uiZoomControls = global::CV.Mobile.Droid.Resource.Styleable.MapAttrs_uiZoomControls;
+			global::TK.CustomMap.Droid.Resource.Styleable.MapAttrs_uiZoomGestures = global::CV.Mobile.Droid.Resource.Styleable.MapAttrs_uiZoomGestures;
+			global::TK.CustomMap.Droid.Resource.Styleable.MapAttrs_useViewLifecycle = global::CV.Mobile.Droid.Resource.Styleable.MapAttrs_useViewLifecycle;
+			global::TK.CustomMap.Droid.Resource.Styleable.MapAttrs_zOrderOnTop = global::CV.Mobile.Droid.Resource.Styleable.MapAttrs_zOrderOnTop;
+			global::TK.CustomMap.Droid.Resource.Styleable.MediaRouteButton = global::CV.Mobile.Droid.Resource.Styleable.MediaRouteButton;
+			global::TK.CustomMap.Droid.Resource.Styleable.MediaRouteButton_android_minHeight = global::CV.Mobile.Droid.Resource.Styleable.MediaRouteButton_android_minHeight;
+			global::TK.CustomMap.Droid.Resource.Styleable.MediaRouteButton_android_minWidth = global::CV.Mobile.Droid.Resource.Styleable.MediaRouteButton_android_minWidth;
+			global::TK.CustomMap.Droid.Resource.Styleable.MediaRouteButton_externalRouteEnabledDrawable = global::CV.Mobile.Droid.Resource.Styleable.MediaRouteButton_externalRouteEnabledDrawable;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuGroup = global::CV.Mobile.Droid.Resource.Styleable.MenuGroup;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuGroup_android_checkableBehavior = global::CV.Mobile.Droid.Resource.Styleable.MenuGroup_android_checkableBehavior;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuGroup_android_enabled = global::CV.Mobile.Droid.Resource.Styleable.MenuGroup_android_enabled;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuGroup_android_id = global::CV.Mobile.Droid.Resource.Styleable.MenuGroup_android_id;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuGroup_android_menuCategory = global::CV.Mobile.Droid.Resource.Styleable.MenuGroup_android_menuCategory;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuGroup_android_orderInCategory = global::CV.Mobile.Droid.Resource.Styleable.MenuGroup_android_orderInCategory;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuGroup_android_visible = global::CV.Mobile.Droid.Resource.Styleable.MenuGroup_android_visible;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuItem = global::CV.Mobile.Droid.Resource.Styleable.MenuItem;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuItem_actionLayout = global::CV.Mobile.Droid.Resource.Styleable.MenuItem_actionLayout;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuItem_actionProviderClass = global::CV.Mobile.Droid.Resource.Styleable.MenuItem_actionProviderClass;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuItem_actionViewClass = global::CV.Mobile.Droid.Resource.Styleable.MenuItem_actionViewClass;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuItem_android_alphabeticShortcut = global::CV.Mobile.Droid.Resource.Styleable.MenuItem_android_alphabeticShortcut;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuItem_android_checkable = global::CV.Mobile.Droid.Resource.Styleable.MenuItem_android_checkable;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuItem_android_checked = global::CV.Mobile.Droid.Resource.Styleable.MenuItem_android_checked;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuItem_android_enabled = global::CV.Mobile.Droid.Resource.Styleable.MenuItem_android_enabled;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuItem_android_icon = global::CV.Mobile.Droid.Resource.Styleable.MenuItem_android_icon;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuItem_android_id = global::CV.Mobile.Droid.Resource.Styleable.MenuItem_android_id;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuItem_android_menuCategory = global::CV.Mobile.Droid.Resource.Styleable.MenuItem_android_menuCategory;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuItem_android_numericShortcut = global::CV.Mobile.Droid.Resource.Styleable.MenuItem_android_numericShortcut;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuItem_android_onClick = global::CV.Mobile.Droid.Resource.Styleable.MenuItem_android_onClick;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuItem_android_orderInCategory = global::CV.Mobile.Droid.Resource.Styleable.MenuItem_android_orderInCategory;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuItem_android_title = global::CV.Mobile.Droid.Resource.Styleable.MenuItem_android_title;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuItem_android_titleCondensed = global::CV.Mobile.Droid.Resource.Styleable.MenuItem_android_titleCondensed;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuItem_android_visible = global::CV.Mobile.Droid.Resource.Styleable.MenuItem_android_visible;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuItem_showAsAction = global::CV.Mobile.Droid.Resource.Styleable.MenuItem_showAsAction;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuView = global::CV.Mobile.Droid.Resource.Styleable.MenuView;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuView_android_headerBackground = global::CV.Mobile.Droid.Resource.Styleable.MenuView_android_headerBackground;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuView_android_horizontalDivider = global::CV.Mobile.Droid.Resource.Styleable.MenuView_android_horizontalDivider;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuView_android_itemBackground = global::CV.Mobile.Droid.Resource.Styleable.MenuView_android_itemBackground;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuView_android_itemIconDisabledAlpha = global::CV.Mobile.Droid.Resource.Styleable.MenuView_android_itemIconDisabledAlpha;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuView_android_itemTextAppearance = global::CV.Mobile.Droid.Resource.Styleable.MenuView_android_itemTextAppearance;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuView_android_verticalDivider = global::CV.Mobile.Droid.Resource.Styleable.MenuView_android_verticalDivider;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuView_android_windowAnimationStyle = global::CV.Mobile.Droid.Resource.Styleable.MenuView_android_windowAnimationStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.MenuView_preserveIconSpacing = global::CV.Mobile.Droid.Resource.Styleable.MenuView_preserveIconSpacing;
+			global::TK.CustomMap.Droid.Resource.Styleable.NavigationView = global::CV.Mobile.Droid.Resource.Styleable.NavigationView;
+			global::TK.CustomMap.Droid.Resource.Styleable.NavigationView_android_background = global::CV.Mobile.Droid.Resource.Styleable.NavigationView_android_background;
+			global::TK.CustomMap.Droid.Resource.Styleable.NavigationView_android_fitsSystemWindows = global::CV.Mobile.Droid.Resource.Styleable.NavigationView_android_fitsSystemWindows;
+			global::TK.CustomMap.Droid.Resource.Styleable.NavigationView_android_maxWidth = global::CV.Mobile.Droid.Resource.Styleable.NavigationView_android_maxWidth;
+			global::TK.CustomMap.Droid.Resource.Styleable.NavigationView_elevation = global::CV.Mobile.Droid.Resource.Styleable.NavigationView_elevation;
+			global::TK.CustomMap.Droid.Resource.Styleable.NavigationView_headerLayout = global::CV.Mobile.Droid.Resource.Styleable.NavigationView_headerLayout;
+			global::TK.CustomMap.Droid.Resource.Styleable.NavigationView_itemBackground = global::CV.Mobile.Droid.Resource.Styleable.NavigationView_itemBackground;
+			global::TK.CustomMap.Droid.Resource.Styleable.NavigationView_itemIconTint = global::CV.Mobile.Droid.Resource.Styleable.NavigationView_itemIconTint;
+			global::TK.CustomMap.Droid.Resource.Styleable.NavigationView_itemTextAppearance = global::CV.Mobile.Droid.Resource.Styleable.NavigationView_itemTextAppearance;
+			global::TK.CustomMap.Droid.Resource.Styleable.NavigationView_itemTextColor = global::CV.Mobile.Droid.Resource.Styleable.NavigationView_itemTextColor;
+			global::TK.CustomMap.Droid.Resource.Styleable.NavigationView_menu = global::CV.Mobile.Droid.Resource.Styleable.NavigationView_menu;
+			global::TK.CustomMap.Droid.Resource.Styleable.PopupWindow = global::CV.Mobile.Droid.Resource.Styleable.PopupWindow;
+			global::TK.CustomMap.Droid.Resource.Styleable.PopupWindow_android_popupBackground = global::CV.Mobile.Droid.Resource.Styleable.PopupWindow_android_popupBackground;
+			global::TK.CustomMap.Droid.Resource.Styleable.PopupWindow_overlapAnchor = global::CV.Mobile.Droid.Resource.Styleable.PopupWindow_overlapAnchor;
+			global::TK.CustomMap.Droid.Resource.Styleable.PopupWindowBackgroundState = global::CV.Mobile.Droid.Resource.Styleable.PopupWindowBackgroundState;
+			global::TK.CustomMap.Droid.Resource.Styleable.PopupWindowBackgroundState_state_above_anchor = global::CV.Mobile.Droid.Resource.Styleable.PopupWindowBackgroundState_state_above_anchor;
+			global::TK.CustomMap.Droid.Resource.Styleable.RecyclerView = global::CV.Mobile.Droid.Resource.Styleable.RecyclerView;
+			global::TK.CustomMap.Droid.Resource.Styleable.RecyclerView_android_orientation = global::CV.Mobile.Droid.Resource.Styleable.RecyclerView_android_orientation;
+			global::TK.CustomMap.Droid.Resource.Styleable.RecyclerView_layoutManager = global::CV.Mobile.Droid.Resource.Styleable.RecyclerView_layoutManager;
+			global::TK.CustomMap.Droid.Resource.Styleable.RecyclerView_reverseLayout = global::CV.Mobile.Droid.Resource.Styleable.RecyclerView_reverseLayout;
+			global::TK.CustomMap.Droid.Resource.Styleable.RecyclerView_spanCount = global::CV.Mobile.Droid.Resource.Styleable.RecyclerView_spanCount;
+			global::TK.CustomMap.Droid.Resource.Styleable.RecyclerView_stackFromEnd = global::CV.Mobile.Droid.Resource.Styleable.RecyclerView_stackFromEnd;
+			global::TK.CustomMap.Droid.Resource.Styleable.ScrimInsetsFrameLayout = global::CV.Mobile.Droid.Resource.Styleable.ScrimInsetsFrameLayout;
+			global::TK.CustomMap.Droid.Resource.Styleable.ScrimInsetsFrameLayout_insetForeground = global::CV.Mobile.Droid.Resource.Styleable.ScrimInsetsFrameLayout_insetForeground;
+			global::TK.CustomMap.Droid.Resource.Styleable.ScrollingViewBehavior_Params = global::CV.Mobile.Droid.Resource.Styleable.ScrollingViewBehavior_Params;
+			global::TK.CustomMap.Droid.Resource.Styleable.ScrollingViewBehavior_Params_behavior_overlapTop = global::CV.Mobile.Droid.Resource.Styleable.ScrollingViewBehavior_Params_behavior_overlapTop;
+			global::TK.CustomMap.Droid.Resource.Styleable.SearchView = global::CV.Mobile.Droid.Resource.Styleable.SearchView;
+			global::TK.CustomMap.Droid.Resource.Styleable.SearchView_android_focusable = global::CV.Mobile.Droid.Resource.Styleable.SearchView_android_focusable;
+			global::TK.CustomMap.Droid.Resource.Styleable.SearchView_android_imeOptions = global::CV.Mobile.Droid.Resource.Styleable.SearchView_android_imeOptions;
+			global::TK.CustomMap.Droid.Resource.Styleable.SearchView_android_inputType = global::CV.Mobile.Droid.Resource.Styleable.SearchView_android_inputType;
+			global::TK.CustomMap.Droid.Resource.Styleable.SearchView_android_maxWidth = global::CV.Mobile.Droid.Resource.Styleable.SearchView_android_maxWidth;
+			global::TK.CustomMap.Droid.Resource.Styleable.SearchView_closeIcon = global::CV.Mobile.Droid.Resource.Styleable.SearchView_closeIcon;
+			global::TK.CustomMap.Droid.Resource.Styleable.SearchView_commitIcon = global::CV.Mobile.Droid.Resource.Styleable.SearchView_commitIcon;
+			global::TK.CustomMap.Droid.Resource.Styleable.SearchView_defaultQueryHint = global::CV.Mobile.Droid.Resource.Styleable.SearchView_defaultQueryHint;
+			global::TK.CustomMap.Droid.Resource.Styleable.SearchView_goIcon = global::CV.Mobile.Droid.Resource.Styleable.SearchView_goIcon;
+			global::TK.CustomMap.Droid.Resource.Styleable.SearchView_iconifiedByDefault = global::CV.Mobile.Droid.Resource.Styleable.SearchView_iconifiedByDefault;
+			global::TK.CustomMap.Droid.Resource.Styleable.SearchView_layout = global::CV.Mobile.Droid.Resource.Styleable.SearchView_layout;
+			global::TK.CustomMap.Droid.Resource.Styleable.SearchView_queryBackground = global::CV.Mobile.Droid.Resource.Styleable.SearchView_queryBackground;
+			global::TK.CustomMap.Droid.Resource.Styleable.SearchView_queryHint = global::CV.Mobile.Droid.Resource.Styleable.SearchView_queryHint;
+			global::TK.CustomMap.Droid.Resource.Styleable.SearchView_searchHintIcon = global::CV.Mobile.Droid.Resource.Styleable.SearchView_searchHintIcon;
+			global::TK.CustomMap.Droid.Resource.Styleable.SearchView_searchIcon = global::CV.Mobile.Droid.Resource.Styleable.SearchView_searchIcon;
+			global::TK.CustomMap.Droid.Resource.Styleable.SearchView_submitBackground = global::CV.Mobile.Droid.Resource.Styleable.SearchView_submitBackground;
+			global::TK.CustomMap.Droid.Resource.Styleable.SearchView_suggestionRowLayout = global::CV.Mobile.Droid.Resource.Styleable.SearchView_suggestionRowLayout;
+			global::TK.CustomMap.Droid.Resource.Styleable.SearchView_voiceIcon = global::CV.Mobile.Droid.Resource.Styleable.SearchView_voiceIcon;
+			global::TK.CustomMap.Droid.Resource.Styleable.SignInButton = global::CV.Mobile.Droid.Resource.Styleable.SignInButton;
+			global::TK.CustomMap.Droid.Resource.Styleable.SignInButton_buttonSize = global::CV.Mobile.Droid.Resource.Styleable.SignInButton_buttonSize;
+			global::TK.CustomMap.Droid.Resource.Styleable.SignInButton_colorScheme = global::CV.Mobile.Droid.Resource.Styleable.SignInButton_colorScheme;
+			global::TK.CustomMap.Droid.Resource.Styleable.SignInButton_scopeUris = global::CV.Mobile.Droid.Resource.Styleable.SignInButton_scopeUris;
+			global::TK.CustomMap.Droid.Resource.Styleable.SnackbarLayout = global::CV.Mobile.Droid.Resource.Styleable.SnackbarLayout;
+			global::TK.CustomMap.Droid.Resource.Styleable.SnackbarLayout_android_maxWidth = global::CV.Mobile.Droid.Resource.Styleable.SnackbarLayout_android_maxWidth;
+			global::TK.CustomMap.Droid.Resource.Styleable.SnackbarLayout_elevation = global::CV.Mobile.Droid.Resource.Styleable.SnackbarLayout_elevation;
+			global::TK.CustomMap.Droid.Resource.Styleable.SnackbarLayout_maxActionInlineWidth = global::CV.Mobile.Droid.Resource.Styleable.SnackbarLayout_maxActionInlineWidth;
+			global::TK.CustomMap.Droid.Resource.Styleable.Spinner = global::CV.Mobile.Droid.Resource.Styleable.Spinner;
+			global::TK.CustomMap.Droid.Resource.Styleable.Spinner_android_dropDownWidth = global::CV.Mobile.Droid.Resource.Styleable.Spinner_android_dropDownWidth;
+			global::TK.CustomMap.Droid.Resource.Styleable.Spinner_android_entries = global::CV.Mobile.Droid.Resource.Styleable.Spinner_android_entries;
+			global::TK.CustomMap.Droid.Resource.Styleable.Spinner_android_popupBackground = global::CV.Mobile.Droid.Resource.Styleable.Spinner_android_popupBackground;
+			global::TK.CustomMap.Droid.Resource.Styleable.Spinner_android_prompt = global::CV.Mobile.Droid.Resource.Styleable.Spinner_android_prompt;
+			global::TK.CustomMap.Droid.Resource.Styleable.Spinner_popupTheme = global::CV.Mobile.Droid.Resource.Styleable.Spinner_popupTheme;
+			global::TK.CustomMap.Droid.Resource.Styleable.SwitchCompat = global::CV.Mobile.Droid.Resource.Styleable.SwitchCompat;
+			global::TK.CustomMap.Droid.Resource.Styleable.SwitchCompat_android_textOff = global::CV.Mobile.Droid.Resource.Styleable.SwitchCompat_android_textOff;
+			global::TK.CustomMap.Droid.Resource.Styleable.SwitchCompat_android_textOn = global::CV.Mobile.Droid.Resource.Styleable.SwitchCompat_android_textOn;
+			global::TK.CustomMap.Droid.Resource.Styleable.SwitchCompat_android_thumb = global::CV.Mobile.Droid.Resource.Styleable.SwitchCompat_android_thumb;
+			global::TK.CustomMap.Droid.Resource.Styleable.SwitchCompat_showText = global::CV.Mobile.Droid.Resource.Styleable.SwitchCompat_showText;
+			global::TK.CustomMap.Droid.Resource.Styleable.SwitchCompat_splitTrack = global::CV.Mobile.Droid.Resource.Styleable.SwitchCompat_splitTrack;
+			global::TK.CustomMap.Droid.Resource.Styleable.SwitchCompat_switchMinWidth = global::CV.Mobile.Droid.Resource.Styleable.SwitchCompat_switchMinWidth;
+			global::TK.CustomMap.Droid.Resource.Styleable.SwitchCompat_switchPadding = global::CV.Mobile.Droid.Resource.Styleable.SwitchCompat_switchPadding;
+			global::TK.CustomMap.Droid.Resource.Styleable.SwitchCompat_switchTextAppearance = global::CV.Mobile.Droid.Resource.Styleable.SwitchCompat_switchTextAppearance;
+			global::TK.CustomMap.Droid.Resource.Styleable.SwitchCompat_thumbTextPadding = global::CV.Mobile.Droid.Resource.Styleable.SwitchCompat_thumbTextPadding;
+			global::TK.CustomMap.Droid.Resource.Styleable.SwitchCompat_track = global::CV.Mobile.Droid.Resource.Styleable.SwitchCompat_track;
+			global::TK.CustomMap.Droid.Resource.Styleable.TabItem = global::CV.Mobile.Droid.Resource.Styleable.TabItem;
+			global::TK.CustomMap.Droid.Resource.Styleable.TabItem_android_icon = global::CV.Mobile.Droid.Resource.Styleable.TabItem_android_icon;
+			global::TK.CustomMap.Droid.Resource.Styleable.TabItem_android_layout = global::CV.Mobile.Droid.Resource.Styleable.TabItem_android_layout;
+			global::TK.CustomMap.Droid.Resource.Styleable.TabItem_android_text = global::CV.Mobile.Droid.Resource.Styleable.TabItem_android_text;
+			global::TK.CustomMap.Droid.Resource.Styleable.TabLayout = global::CV.Mobile.Droid.Resource.Styleable.TabLayout;
+			global::TK.CustomMap.Droid.Resource.Styleable.TabLayout_tabBackground = global::CV.Mobile.Droid.Resource.Styleable.TabLayout_tabBackground;
+			global::TK.CustomMap.Droid.Resource.Styleable.TabLayout_tabContentStart = global::CV.Mobile.Droid.Resource.Styleable.TabLayout_tabContentStart;
+			global::TK.CustomMap.Droid.Resource.Styleable.TabLayout_tabGravity = global::CV.Mobile.Droid.Resource.Styleable.TabLayout_tabGravity;
+			global::TK.CustomMap.Droid.Resource.Styleable.TabLayout_tabIndicatorColor = global::CV.Mobile.Droid.Resource.Styleable.TabLayout_tabIndicatorColor;
+			global::TK.CustomMap.Droid.Resource.Styleable.TabLayout_tabIndicatorHeight = global::CV.Mobile.Droid.Resource.Styleable.TabLayout_tabIndicatorHeight;
+			global::TK.CustomMap.Droid.Resource.Styleable.TabLayout_tabMaxWidth = global::CV.Mobile.Droid.Resource.Styleable.TabLayout_tabMaxWidth;
+			global::TK.CustomMap.Droid.Resource.Styleable.TabLayout_tabMinWidth = global::CV.Mobile.Droid.Resource.Styleable.TabLayout_tabMinWidth;
+			global::TK.CustomMap.Droid.Resource.Styleable.TabLayout_tabMode = global::CV.Mobile.Droid.Resource.Styleable.TabLayout_tabMode;
+			global::TK.CustomMap.Droid.Resource.Styleable.TabLayout_tabPadding = global::CV.Mobile.Droid.Resource.Styleable.TabLayout_tabPadding;
+			global::TK.CustomMap.Droid.Resource.Styleable.TabLayout_tabPaddingBottom = global::CV.Mobile.Droid.Resource.Styleable.TabLayout_tabPaddingBottom;
+			global::TK.CustomMap.Droid.Resource.Styleable.TabLayout_tabPaddingEnd = global::CV.Mobile.Droid.Resource.Styleable.TabLayout_tabPaddingEnd;
+			global::TK.CustomMap.Droid.Resource.Styleable.TabLayout_tabPaddingStart = global::CV.Mobile.Droid.Resource.Styleable.TabLayout_tabPaddingStart;
+			global::TK.CustomMap.Droid.Resource.Styleable.TabLayout_tabPaddingTop = global::CV.Mobile.Droid.Resource.Styleable.TabLayout_tabPaddingTop;
+			global::TK.CustomMap.Droid.Resource.Styleable.TabLayout_tabSelectedTextColor = global::CV.Mobile.Droid.Resource.Styleable.TabLayout_tabSelectedTextColor;
+			global::TK.CustomMap.Droid.Resource.Styleable.TabLayout_tabTextAppearance = global::CV.Mobile.Droid.Resource.Styleable.TabLayout_tabTextAppearance;
+			global::TK.CustomMap.Droid.Resource.Styleable.TabLayout_tabTextColor = global::CV.Mobile.Droid.Resource.Styleable.TabLayout_tabTextColor;
+			global::TK.CustomMap.Droid.Resource.Styleable.TextAppearance = global::CV.Mobile.Droid.Resource.Styleable.TextAppearance;
+			global::TK.CustomMap.Droid.Resource.Styleable.TextAppearance_android_shadowColor = global::CV.Mobile.Droid.Resource.Styleable.TextAppearance_android_shadowColor;
+			global::TK.CustomMap.Droid.Resource.Styleable.TextAppearance_android_shadowDx = global::CV.Mobile.Droid.Resource.Styleable.TextAppearance_android_shadowDx;
+			global::TK.CustomMap.Droid.Resource.Styleable.TextAppearance_android_shadowDy = global::CV.Mobile.Droid.Resource.Styleable.TextAppearance_android_shadowDy;
+			global::TK.CustomMap.Droid.Resource.Styleable.TextAppearance_android_shadowRadius = global::CV.Mobile.Droid.Resource.Styleable.TextAppearance_android_shadowRadius;
+			global::TK.CustomMap.Droid.Resource.Styleable.TextAppearance_android_textColor = global::CV.Mobile.Droid.Resource.Styleable.TextAppearance_android_textColor;
+			global::TK.CustomMap.Droid.Resource.Styleable.TextAppearance_android_textSize = global::CV.Mobile.Droid.Resource.Styleable.TextAppearance_android_textSize;
+			global::TK.CustomMap.Droid.Resource.Styleable.TextAppearance_android_textStyle = global::CV.Mobile.Droid.Resource.Styleable.TextAppearance_android_textStyle;
+			global::TK.CustomMap.Droid.Resource.Styleable.TextAppearance_android_typeface = global::CV.Mobile.Droid.Resource.Styleable.TextAppearance_android_typeface;
+			global::TK.CustomMap.Droid.Resource.Styleable.TextAppearance_textAllCaps = global::CV.Mobile.Droid.Resource.Styleable.TextAppearance_textAllCaps;
+			global::TK.CustomMap.Droid.Resource.Styleable.TextInputLayout = global::CV.Mobile.Droid.Resource.Styleable.TextInputLayout;
+			global::TK.CustomMap.Droid.Resource.Styleable.TextInputLayout_android_hint = global::CV.Mobile.Droid.Resource.Styleable.TextInputLayout_android_hint;
+			global::TK.CustomMap.Droid.Resource.Styleable.TextInputLayout_android_textColorHint = global::CV.Mobile.Droid.Resource.Styleable.TextInputLayout_android_textColorHint;
+			global::TK.CustomMap.Droid.Resource.Styleable.TextInputLayout_counterEnabled = global::CV.Mobile.Droid.Resource.Styleable.TextInputLayout_counterEnabled;
+			global::TK.CustomMap.Droid.Resource.Styleable.TextInputLayout_counterMaxLength = global::CV.Mobile.Droid.Resource.Styleable.TextInputLayout_counterMaxLength;
+			global::TK.CustomMap.Droid.Resource.Styleable.TextInputLayout_counterOverflowTextAppearance = global::CV.Mobile.Droid.Resource.Styleable.TextInputLayout_counterOverflowTextAppearance;
+			global::TK.CustomMap.Droid.Resource.Styleable.TextInputLayout_counterTextAppearance = global::CV.Mobile.Droid.Resource.Styleable.TextInputLayout_counterTextAppearance;
+			global::TK.CustomMap.Droid.Resource.Styleable.TextInputLayout_errorEnabled = global::CV.Mobile.Droid.Resource.Styleable.TextInputLayout_errorEnabled;
+			global::TK.CustomMap.Droid.Resource.Styleable.TextInputLayout_errorTextAppearance = global::CV.Mobile.Droid.Resource.Styleable.TextInputLayout_errorTextAppearance;
+			global::TK.CustomMap.Droid.Resource.Styleable.TextInputLayout_hintAnimationEnabled = global::CV.Mobile.Droid.Resource.Styleable.TextInputLayout_hintAnimationEnabled;
+			global::TK.CustomMap.Droid.Resource.Styleable.TextInputLayout_hintEnabled = global::CV.Mobile.Droid.Resource.Styleable.TextInputLayout_hintEnabled;
+			global::TK.CustomMap.Droid.Resource.Styleable.TextInputLayout_hintTextAppearance = global::CV.Mobile.Droid.Resource.Styleable.TextInputLayout_hintTextAppearance;
+			global::TK.CustomMap.Droid.Resource.Styleable.Toolbar = global::CV.Mobile.Droid.Resource.Styleable.Toolbar;
+			global::TK.CustomMap.Droid.Resource.Styleable.Toolbar_android_gravity = global::CV.Mobile.Droid.Resource.Styleable.Toolbar_android_gravity;
+			global::TK.CustomMap.Droid.Resource.Styleable.Toolbar_android_minHeight = global::CV.Mobile.Droid.Resource.Styleable.Toolbar_android_minHeight;
+			global::TK.CustomMap.Droid.Resource.Styleable.Toolbar_collapseContentDescription = global::CV.Mobile.Droid.Resource.Styleable.Toolbar_collapseContentDescription;
+			global::TK.CustomMap.Droid.Resource.Styleable.Toolbar_collapseIcon = global::CV.Mobile.Droid.Resource.Styleable.Toolbar_collapseIcon;
+			global::TK.CustomMap.Droid.Resource.Styleable.Toolbar_contentInsetEnd = global::CV.Mobile.Droid.Resource.Styleable.Toolbar_contentInsetEnd;
+			global::TK.CustomMap.Droid.Resource.Styleable.Toolbar_contentInsetLeft = global::CV.Mobile.Droid.Resource.Styleable.Toolbar_contentInsetLeft;
+			global::TK.CustomMap.Droid.Resource.Styleable.Toolbar_contentInsetRight = global::CV.Mobile.Droid.Resource.Styleable.Toolbar_contentInsetRight;
+			global::TK.CustomMap.Droid.Resource.Styleable.Toolbar_contentInsetStart = global::CV.Mobile.Droid.Resource.Styleable.Toolbar_contentInsetStart;
+			global::TK.CustomMap.Droid.Resource.Styleable.Toolbar_logo = global::CV.Mobile.Droid.Resource.Styleable.Toolbar_logo;
+			global::TK.CustomMap.Droid.Resource.Styleable.Toolbar_logoDescription = global::CV.Mobile.Droid.Resource.Styleable.Toolbar_logoDescription;
+			global::TK.CustomMap.Droid.Resource.Styleable.Toolbar_maxButtonHeight = global::CV.Mobile.Droid.Resource.Styleable.Toolbar_maxButtonHeight;
+			global::TK.CustomMap.Droid.Resource.Styleable.Toolbar_navigationContentDescription = global::CV.Mobile.Droid.Resource.Styleable.Toolbar_navigationContentDescription;
+			global::TK.CustomMap.Droid.Resource.Styleable.Toolbar_navigationIcon = global::CV.Mobile.Droid.Resource.Styleable.Toolbar_navigationIcon;
+			global::TK.CustomMap.Droid.Resource.Styleable.Toolbar_popupTheme = global::CV.Mobile.Droid.Resource.Styleable.Toolbar_popupTheme;
+			global::TK.CustomMap.Droid.Resource.Styleable.Toolbar_subtitle = global::CV.Mobile.Droid.Resource.Styleable.Toolbar_subtitle;
+			global::TK.CustomMap.Droid.Resource.Styleable.Toolbar_subtitleTextAppearance = global::CV.Mobile.Droid.Resource.Styleable.Toolbar_subtitleTextAppearance;
+			global::TK.CustomMap.Droid.Resource.Styleable.Toolbar_subtitleTextColor = global::CV.Mobile.Droid.Resource.Styleable.Toolbar_subtitleTextColor;
+			global::TK.CustomMap.Droid.Resource.Styleable.Toolbar_title = global::CV.Mobile.Droid.Resource.Styleable.Toolbar_title;
+			global::TK.CustomMap.Droid.Resource.Styleable.Toolbar_titleMarginBottom = global::CV.Mobile.Droid.Resource.Styleable.Toolbar_titleMarginBottom;
+			global::TK.CustomMap.Droid.Resource.Styleable.Toolbar_titleMarginEnd = global::CV.Mobile.Droid.Resource.Styleable.Toolbar_titleMarginEnd;
+			global::TK.CustomMap.Droid.Resource.Styleable.Toolbar_titleMarginStart = global::CV.Mobile.Droid.Resource.Styleable.Toolbar_titleMarginStart;
+			global::TK.CustomMap.Droid.Resource.Styleable.Toolbar_titleMarginTop = global::CV.Mobile.Droid.Resource.Styleable.Toolbar_titleMarginTop;
+			global::TK.CustomMap.Droid.Resource.Styleable.Toolbar_titleMargins = global::CV.Mobile.Droid.Resource.Styleable.Toolbar_titleMargins;
+			global::TK.CustomMap.Droid.Resource.Styleable.Toolbar_titleTextAppearance = global::CV.Mobile.Droid.Resource.Styleable.Toolbar_titleTextAppearance;
+			global::TK.CustomMap.Droid.Resource.Styleable.Toolbar_titleTextColor = global::CV.Mobile.Droid.Resource.Styleable.Toolbar_titleTextColor;
+			global::TK.CustomMap.Droid.Resource.Styleable.View = global::CV.Mobile.Droid.Resource.Styleable.View;
+			global::TK.CustomMap.Droid.Resource.Styleable.View_android_focusable = global::CV.Mobile.Droid.Resource.Styleable.View_android_focusable;
+			global::TK.CustomMap.Droid.Resource.Styleable.View_android_theme = global::CV.Mobile.Droid.Resource.Styleable.View_android_theme;
+			global::TK.CustomMap.Droid.Resource.Styleable.View_paddingEnd = global::CV.Mobile.Droid.Resource.Styleable.View_paddingEnd;
+			global::TK.CustomMap.Droid.Resource.Styleable.View_paddingStart = global::CV.Mobile.Droid.Resource.Styleable.View_paddingStart;
+			global::TK.CustomMap.Droid.Resource.Styleable.View_theme = global::CV.Mobile.Droid.Resource.Styleable.View_theme;
+			global::TK.CustomMap.Droid.Resource.Styleable.ViewBackgroundHelper = global::CV.Mobile.Droid.Resource.Styleable.ViewBackgroundHelper;
+			global::TK.CustomMap.Droid.Resource.Styleable.ViewBackgroundHelper_android_background = global::CV.Mobile.Droid.Resource.Styleable.ViewBackgroundHelper_android_background;
+			global::TK.CustomMap.Droid.Resource.Styleable.ViewBackgroundHelper_backgroundTint = global::CV.Mobile.Droid.Resource.Styleable.ViewBackgroundHelper_backgroundTint;
+			global::TK.CustomMap.Droid.Resource.Styleable.ViewBackgroundHelper_backgroundTintMode = global::CV.Mobile.Droid.Resource.Styleable.ViewBackgroundHelper_backgroundTintMode;
+			global::TK.CustomMap.Droid.Resource.Styleable.ViewStubCompat = global::CV.Mobile.Droid.Resource.Styleable.ViewStubCompat;
+			global::TK.CustomMap.Droid.Resource.Styleable.ViewStubCompat_android_id = global::CV.Mobile.Droid.Resource.Styleable.ViewStubCompat_android_id;
+			global::TK.CustomMap.Droid.Resource.Styleable.ViewStubCompat_android_inflatedId = global::CV.Mobile.Droid.Resource.Styleable.ViewStubCompat_android_inflatedId;
+			global::TK.CustomMap.Droid.Resource.Styleable.ViewStubCompat_android_layout = global::CV.Mobile.Droid.Resource.Styleable.ViewStubCompat_android_layout;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::CV.Mobile.Droid.Resource.Attribute.actionBarSize;
 		}
 		
@@ -2205,451 +4181,481 @@ namespace CV.Mobile.Droid
 			public const int add24 = 2130837579;
 			
 			// aapt resource value: 0x7f02004c
-			public const int calendar24 = 2130837580;
+			public const int automotive = 2130837580;
 			
 			// aapt resource value: 0x7f02004d
-			public const int camera24 = 2130837581;
+			public const int calendar24 = 2130837581;
 			
 			// aapt resource value: 0x7f02004e
-			public const int cancel24 = 2130837582;
+			public const int camera24 = 2130837582;
 			
 			// aapt resource value: 0x7f02004f
-			public const int cart24 = 2130837583;
+			public const int cancel24 = 2130837583;
 			
 			// aapt resource value: 0x7f020050
-			public const int checkmark24 = 2130837584;
+			public const int cart24 = 2130837584;
 			
 			// aapt resource value: 0x7f020051
-			public const int common_full_open_on_phone = 2130837585;
+			public const int checkmark24 = 2130837585;
 			
 			// aapt resource value: 0x7f020052
-			public const int common_google_signin_btn_icon_dark = 2130837586;
+			public const int common_full_open_on_phone = 2130837586;
 			
 			// aapt resource value: 0x7f020053
-			public const int common_google_signin_btn_icon_dark_disabled = 2130837587;
+			public const int common_google_signin_btn_icon_dark = 2130837587;
 			
 			// aapt resource value: 0x7f020054
-			public const int common_google_signin_btn_icon_dark_focused = 2130837588;
+			public const int common_google_signin_btn_icon_dark_disabled = 2130837588;
 			
 			// aapt resource value: 0x7f020055
-			public const int common_google_signin_btn_icon_dark_normal = 2130837589;
+			public const int common_google_signin_btn_icon_dark_focused = 2130837589;
 			
 			// aapt resource value: 0x7f020056
-			public const int common_google_signin_btn_icon_dark_pressed = 2130837590;
+			public const int common_google_signin_btn_icon_dark_normal = 2130837590;
 			
 			// aapt resource value: 0x7f020057
-			public const int common_google_signin_btn_icon_light = 2130837591;
+			public const int common_google_signin_btn_icon_dark_pressed = 2130837591;
 			
 			// aapt resource value: 0x7f020058
-			public const int common_google_signin_btn_icon_light_disabled = 2130837592;
+			public const int common_google_signin_btn_icon_light = 2130837592;
 			
 			// aapt resource value: 0x7f020059
-			public const int common_google_signin_btn_icon_light_focused = 2130837593;
+			public const int common_google_signin_btn_icon_light_disabled = 2130837593;
 			
 			// aapt resource value: 0x7f02005a
-			public const int common_google_signin_btn_icon_light_normal = 2130837594;
+			public const int common_google_signin_btn_icon_light_focused = 2130837594;
 			
 			// aapt resource value: 0x7f02005b
-			public const int common_google_signin_btn_icon_light_pressed = 2130837595;
+			public const int common_google_signin_btn_icon_light_normal = 2130837595;
 			
 			// aapt resource value: 0x7f02005c
-			public const int common_google_signin_btn_text_dark = 2130837596;
+			public const int common_google_signin_btn_icon_light_pressed = 2130837596;
 			
 			// aapt resource value: 0x7f02005d
-			public const int common_google_signin_btn_text_dark_disabled = 2130837597;
+			public const int common_google_signin_btn_text_dark = 2130837597;
 			
 			// aapt resource value: 0x7f02005e
-			public const int common_google_signin_btn_text_dark_focused = 2130837598;
+			public const int common_google_signin_btn_text_dark_disabled = 2130837598;
 			
 			// aapt resource value: 0x7f02005f
-			public const int common_google_signin_btn_text_dark_normal = 2130837599;
+			public const int common_google_signin_btn_text_dark_focused = 2130837599;
 			
 			// aapt resource value: 0x7f020060
-			public const int common_google_signin_btn_text_dark_pressed = 2130837600;
+			public const int common_google_signin_btn_text_dark_normal = 2130837600;
 			
 			// aapt resource value: 0x7f020061
-			public const int common_google_signin_btn_text_light = 2130837601;
+			public const int common_google_signin_btn_text_dark_pressed = 2130837601;
 			
 			// aapt resource value: 0x7f020062
-			public const int common_google_signin_btn_text_light_disabled = 2130837602;
+			public const int common_google_signin_btn_text_light = 2130837602;
 			
 			// aapt resource value: 0x7f020063
-			public const int common_google_signin_btn_text_light_focused = 2130837603;
+			public const int common_google_signin_btn_text_light_disabled = 2130837603;
 			
 			// aapt resource value: 0x7f020064
-			public const int common_google_signin_btn_text_light_normal = 2130837604;
+			public const int common_google_signin_btn_text_light_focused = 2130837604;
 			
 			// aapt resource value: 0x7f020065
-			public const int common_google_signin_btn_text_light_pressed = 2130837605;
+			public const int common_google_signin_btn_text_light_normal = 2130837605;
 			
 			// aapt resource value: 0x7f020066
-			public const int common_ic_googleplayservices = 2130837606;
+			public const int common_google_signin_btn_text_light_pressed = 2130837606;
 			
 			// aapt resource value: 0x7f020067
-			public const int common_plus_signin_btn_icon_dark = 2130837607;
+			public const int common_ic_googleplayservices = 2130837607;
 			
 			// aapt resource value: 0x7f020068
-			public const int common_plus_signin_btn_icon_dark_disabled = 2130837608;
+			public const int common_plus_signin_btn_icon_dark = 2130837608;
 			
 			// aapt resource value: 0x7f020069
-			public const int common_plus_signin_btn_icon_dark_focused = 2130837609;
+			public const int common_plus_signin_btn_icon_dark_disabled = 2130837609;
 			
 			// aapt resource value: 0x7f02006a
-			public const int common_plus_signin_btn_icon_dark_normal = 2130837610;
+			public const int common_plus_signin_btn_icon_dark_focused = 2130837610;
 			
 			// aapt resource value: 0x7f02006b
-			public const int common_plus_signin_btn_icon_dark_pressed = 2130837611;
+			public const int common_plus_signin_btn_icon_dark_normal = 2130837611;
 			
 			// aapt resource value: 0x7f02006c
-			public const int common_plus_signin_btn_icon_light = 2130837612;
+			public const int common_plus_signin_btn_icon_dark_pressed = 2130837612;
 			
 			// aapt resource value: 0x7f02006d
-			public const int common_plus_signin_btn_icon_light_disabled = 2130837613;
+			public const int common_plus_signin_btn_icon_light = 2130837613;
 			
 			// aapt resource value: 0x7f02006e
-			public const int common_plus_signin_btn_icon_light_focused = 2130837614;
+			public const int common_plus_signin_btn_icon_light_disabled = 2130837614;
 			
 			// aapt resource value: 0x7f02006f
-			public const int common_plus_signin_btn_icon_light_normal = 2130837615;
+			public const int common_plus_signin_btn_icon_light_focused = 2130837615;
 			
 			// aapt resource value: 0x7f020070
-			public const int common_plus_signin_btn_icon_light_pressed = 2130837616;
+			public const int common_plus_signin_btn_icon_light_normal = 2130837616;
 			
 			// aapt resource value: 0x7f020071
-			public const int common_plus_signin_btn_text_dark = 2130837617;
+			public const int common_plus_signin_btn_icon_light_pressed = 2130837617;
 			
 			// aapt resource value: 0x7f020072
-			public const int common_plus_signin_btn_text_dark_disabled = 2130837618;
+			public const int common_plus_signin_btn_text_dark = 2130837618;
 			
 			// aapt resource value: 0x7f020073
-			public const int common_plus_signin_btn_text_dark_focused = 2130837619;
+			public const int common_plus_signin_btn_text_dark_disabled = 2130837619;
 			
 			// aapt resource value: 0x7f020074
-			public const int common_plus_signin_btn_text_dark_normal = 2130837620;
+			public const int common_plus_signin_btn_text_dark_focused = 2130837620;
 			
 			// aapt resource value: 0x7f020075
-			public const int common_plus_signin_btn_text_dark_pressed = 2130837621;
+			public const int common_plus_signin_btn_text_dark_normal = 2130837621;
 			
 			// aapt resource value: 0x7f020076
-			public const int common_plus_signin_btn_text_light = 2130837622;
+			public const int common_plus_signin_btn_text_dark_pressed = 2130837622;
 			
 			// aapt resource value: 0x7f020077
-			public const int common_plus_signin_btn_text_light_disabled = 2130837623;
+			public const int common_plus_signin_btn_text_light = 2130837623;
 			
 			// aapt resource value: 0x7f020078
-			public const int common_plus_signin_btn_text_light_focused = 2130837624;
+			public const int common_plus_signin_btn_text_light_disabled = 2130837624;
 			
 			// aapt resource value: 0x7f020079
-			public const int common_plus_signin_btn_text_light_normal = 2130837625;
+			public const int common_plus_signin_btn_text_light_focused = 2130837625;
 			
 			// aapt resource value: 0x7f02007a
-			public const int common_plus_signin_btn_text_light_pressed = 2130837626;
+			public const int common_plus_signin_btn_text_light_normal = 2130837626;
 			
 			// aapt resource value: 0x7f02007b
-			public const int delete24 = 2130837627;
+			public const int common_plus_signin_btn_text_light_pressed = 2130837627;
 			
 			// aapt resource value: 0x7f02007c
-			public const int design_fab_background = 2130837628;
+			public const int cookbooks = 2130837628;
 			
 			// aapt resource value: 0x7f02007d
-			public const int design_snackbar_background = 2130837629;
+			public const int delete24 = 2130837629;
 			
 			// aapt resource value: 0x7f02007e
-			public const int dollar24 = 2130837630;
+			public const int design_fab_background = 2130837630;
 			
 			// aapt resource value: 0x7f02007f
-			public const int ic_audiotrack = 2130837631;
+			public const int design_snackbar_background = 2130837631;
 			
 			// aapt resource value: 0x7f020080
-			public const int ic_audiotrack_light = 2130837632;
+			public const int dollar24 = 2130837632;
 			
 			// aapt resource value: 0x7f020081
-			public const int ic_bluetooth_grey = 2130837633;
+			public const int entertainment = 2130837633;
 			
 			// aapt resource value: 0x7f020082
-			public const int ic_bluetooth_white = 2130837634;
+			public const int hotels = 2130837634;
 			
 			// aapt resource value: 0x7f020083
-			public const int ic_cast_dark = 2130837635;
+			public const int ic_audiotrack = 2130837635;
 			
 			// aapt resource value: 0x7f020084
-			public const int ic_cast_disabled_light = 2130837636;
+			public const int ic_audiotrack_light = 2130837636;
 			
 			// aapt resource value: 0x7f020085
-			public const int ic_cast_grey = 2130837637;
+			public const int ic_bluetooth_grey = 2130837637;
 			
 			// aapt resource value: 0x7f020086
-			public const int ic_cast_light = 2130837638;
+			public const int ic_bluetooth_white = 2130837638;
 			
 			// aapt resource value: 0x7f020087
-			public const int ic_cast_off_light = 2130837639;
+			public const int ic_cast_dark = 2130837639;
 			
 			// aapt resource value: 0x7f020088
-			public const int ic_cast_on_0_light = 2130837640;
+			public const int ic_cast_disabled_light = 2130837640;
 			
 			// aapt resource value: 0x7f020089
-			public const int ic_cast_on_1_light = 2130837641;
+			public const int ic_cast_grey = 2130837641;
 			
 			// aapt resource value: 0x7f02008a
-			public const int ic_cast_on_2_light = 2130837642;
+			public const int ic_cast_light = 2130837642;
 			
 			// aapt resource value: 0x7f02008b
-			public const int ic_cast_on_light = 2130837643;
+			public const int ic_cast_off_light = 2130837643;
 			
 			// aapt resource value: 0x7f02008c
-			public const int ic_cast_white = 2130837644;
+			public const int ic_cast_on_0_light = 2130837644;
 			
 			// aapt resource value: 0x7f02008d
-			public const int ic_close_dark = 2130837645;
+			public const int ic_cast_on_1_light = 2130837645;
 			
 			// aapt resource value: 0x7f02008e
-			public const int ic_close_light = 2130837646;
+			public const int ic_cast_on_2_light = 2130837646;
 			
 			// aapt resource value: 0x7f02008f
-			public const int ic_collapse = 2130837647;
+			public const int ic_cast_on_light = 2130837647;
 			
 			// aapt resource value: 0x7f020090
-			public const int ic_collapse_00000 = 2130837648;
+			public const int ic_cast_white = 2130837648;
 			
 			// aapt resource value: 0x7f020091
-			public const int ic_collapse_00001 = 2130837649;
+			public const int ic_close_dark = 2130837649;
 			
 			// aapt resource value: 0x7f020092
-			public const int ic_collapse_00002 = 2130837650;
+			public const int ic_close_light = 2130837650;
 			
 			// aapt resource value: 0x7f020093
-			public const int ic_collapse_00003 = 2130837651;
+			public const int ic_collapse = 2130837651;
 			
 			// aapt resource value: 0x7f020094
-			public const int ic_collapse_00004 = 2130837652;
+			public const int ic_collapse_00000 = 2130837652;
 			
 			// aapt resource value: 0x7f020095
-			public const int ic_collapse_00005 = 2130837653;
+			public const int ic_collapse_00001 = 2130837653;
 			
 			// aapt resource value: 0x7f020096
-			public const int ic_collapse_00006 = 2130837654;
+			public const int ic_collapse_00002 = 2130837654;
 			
 			// aapt resource value: 0x7f020097
-			public const int ic_collapse_00007 = 2130837655;
+			public const int ic_collapse_00003 = 2130837655;
 			
 			// aapt resource value: 0x7f020098
-			public const int ic_collapse_00008 = 2130837656;
+			public const int ic_collapse_00004 = 2130837656;
 			
 			// aapt resource value: 0x7f020099
-			public const int ic_collapse_00009 = 2130837657;
+			public const int ic_collapse_00005 = 2130837657;
 			
 			// aapt resource value: 0x7f02009a
-			public const int ic_collapse_00010 = 2130837658;
+			public const int ic_collapse_00006 = 2130837658;
 			
 			// aapt resource value: 0x7f02009b
-			public const int ic_collapse_00011 = 2130837659;
+			public const int ic_collapse_00007 = 2130837659;
 			
 			// aapt resource value: 0x7f02009c
-			public const int ic_collapse_00012 = 2130837660;
+			public const int ic_collapse_00008 = 2130837660;
 			
 			// aapt resource value: 0x7f02009d
-			public const int ic_collapse_00013 = 2130837661;
+			public const int ic_collapse_00009 = 2130837661;
 			
 			// aapt resource value: 0x7f02009e
-			public const int ic_collapse_00014 = 2130837662;
+			public const int ic_collapse_00010 = 2130837662;
 			
 			// aapt resource value: 0x7f02009f
-			public const int ic_collapse_00015 = 2130837663;
+			public const int ic_collapse_00011 = 2130837663;
 			
 			// aapt resource value: 0x7f0200a0
-			public const int ic_errorstatus = 2130837664;
+			public const int ic_collapse_00012 = 2130837664;
 			
 			// aapt resource value: 0x7f0200a1
-			public const int ic_expand = 2130837665;
+			public const int ic_collapse_00013 = 2130837665;
 			
 			// aapt resource value: 0x7f0200a2
-			public const int ic_expand_00000 = 2130837666;
+			public const int ic_collapse_00014 = 2130837666;
 			
 			// aapt resource value: 0x7f0200a3
-			public const int ic_expand_00001 = 2130837667;
+			public const int ic_collapse_00015 = 2130837667;
 			
 			// aapt resource value: 0x7f0200a4
-			public const int ic_expand_00002 = 2130837668;
+			public const int ic_errorstatus = 2130837668;
 			
 			// aapt resource value: 0x7f0200a5
-			public const int ic_expand_00003 = 2130837669;
+			public const int ic_expand = 2130837669;
 			
 			// aapt resource value: 0x7f0200a6
-			public const int ic_expand_00004 = 2130837670;
+			public const int ic_expand_00000 = 2130837670;
 			
 			// aapt resource value: 0x7f0200a7
-			public const int ic_expand_00005 = 2130837671;
+			public const int ic_expand_00001 = 2130837671;
 			
 			// aapt resource value: 0x7f0200a8
-			public const int ic_expand_00006 = 2130837672;
+			public const int ic_expand_00002 = 2130837672;
 			
 			// aapt resource value: 0x7f0200a9
-			public const int ic_expand_00007 = 2130837673;
+			public const int ic_expand_00003 = 2130837673;
 			
 			// aapt resource value: 0x7f0200aa
-			public const int ic_expand_00008 = 2130837674;
+			public const int ic_expand_00004 = 2130837674;
 			
 			// aapt resource value: 0x7f0200ab
-			public const int ic_expand_00009 = 2130837675;
+			public const int ic_expand_00005 = 2130837675;
 			
 			// aapt resource value: 0x7f0200ac
-			public const int ic_expand_00010 = 2130837676;
+			public const int ic_expand_00006 = 2130837676;
 			
 			// aapt resource value: 0x7f0200ad
-			public const int ic_expand_00011 = 2130837677;
+			public const int ic_expand_00007 = 2130837677;
 			
 			// aapt resource value: 0x7f0200ae
-			public const int ic_expand_00012 = 2130837678;
+			public const int ic_expand_00008 = 2130837678;
 			
 			// aapt resource value: 0x7f0200af
-			public const int ic_expand_00013 = 2130837679;
+			public const int ic_expand_00009 = 2130837679;
 			
 			// aapt resource value: 0x7f0200b0
-			public const int ic_expand_00014 = 2130837680;
+			public const int ic_expand_00010 = 2130837680;
 			
 			// aapt resource value: 0x7f0200b1
-			public const int ic_expand_00015 = 2130837681;
+			public const int ic_expand_00011 = 2130837681;
 			
 			// aapt resource value: 0x7f0200b2
-			public const int ic_media_pause = 2130837682;
+			public const int ic_expand_00012 = 2130837682;
 			
 			// aapt resource value: 0x7f0200b3
-			public const int ic_media_play = 2130837683;
+			public const int ic_expand_00013 = 2130837683;
 			
 			// aapt resource value: 0x7f0200b4
-			public const int ic_media_route_disabled_mono_dark = 2130837684;
+			public const int ic_expand_00014 = 2130837684;
 			
 			// aapt resource value: 0x7f0200b5
-			public const int ic_media_route_off_mono_dark = 2130837685;
+			public const int ic_expand_00015 = 2130837685;
 			
 			// aapt resource value: 0x7f0200b6
-			public const int ic_media_route_on_0_mono_dark = 2130837686;
+			public const int ic_media_pause = 2130837686;
 			
 			// aapt resource value: 0x7f0200b7
-			public const int ic_media_route_on_1_mono_dark = 2130837687;
+			public const int ic_media_play = 2130837687;
 			
 			// aapt resource value: 0x7f0200b8
-			public const int ic_media_route_on_2_mono_dark = 2130837688;
+			public const int ic_media_route_disabled_mono_dark = 2130837688;
 			
 			// aapt resource value: 0x7f0200b9
-			public const int ic_media_route_on_mono_dark = 2130837689;
+			public const int ic_media_route_off_mono_dark = 2130837689;
 			
 			// aapt resource value: 0x7f0200ba
-			public const int ic_pause_dark = 2130837690;
+			public const int ic_media_route_on_0_mono_dark = 2130837690;
 			
 			// aapt resource value: 0x7f0200bb
-			public const int ic_pause_light = 2130837691;
+			public const int ic_media_route_on_1_mono_dark = 2130837691;
 			
 			// aapt resource value: 0x7f0200bc
-			public const int ic_play_dark = 2130837692;
+			public const int ic_media_route_on_2_mono_dark = 2130837692;
 			
 			// aapt resource value: 0x7f0200bd
-			public const int ic_play_light = 2130837693;
+			public const int ic_media_route_on_mono_dark = 2130837693;
 			
 			// aapt resource value: 0x7f0200be
-			public const int ic_speaker_dark = 2130837694;
+			public const int ic_pause_dark = 2130837694;
 			
 			// aapt resource value: 0x7f0200bf
-			public const int ic_speaker_group_dark = 2130837695;
+			public const int ic_pause_light = 2130837695;
 			
 			// aapt resource value: 0x7f0200c0
-			public const int ic_speaker_group_light = 2130837696;
+			public const int ic_play_dark = 2130837696;
 			
 			// aapt resource value: 0x7f0200c1
-			public const int ic_speaker_light = 2130837697;
+			public const int ic_play_light = 2130837697;
 			
 			// aapt resource value: 0x7f0200c2
-			public const int ic_successstatus = 2130837698;
+			public const int ic_speaker_dark = 2130837698;
 			
 			// aapt resource value: 0x7f0200c3
-			public const int ic_tv_dark = 2130837699;
+			public const int ic_speaker_group_dark = 2130837699;
 			
 			// aapt resource value: 0x7f0200c4
-			public const int ic_tv_light = 2130837700;
+			public const int ic_speaker_group_light = 2130837700;
 			
 			// aapt resource value: 0x7f0200c5
-			public const int icon = 2130837701;
+			public const int ic_speaker_light = 2130837701;
 			
 			// aapt resource value: 0x7f0200c6
-			public const int list24 = 2130837702;
+			public const int ic_successstatus = 2130837702;
 			
 			// aapt resource value: 0x7f0200c7
-			public const int mapMarker24 = 2130837703;
+			public const int ic_tv_dark = 2130837703;
 			
 			// aapt resource value: 0x7f0200c8
-			public const int mr_dialog_material_background_dark = 2130837704;
+			public const int ic_tv_light = 2130837704;
 			
 			// aapt resource value: 0x7f0200c9
-			public const int mr_dialog_material_background_light = 2130837705;
+			public const int icon = 2130837705;
 			
 			// aapt resource value: 0x7f0200ca
-			public const int mr_ic_audiotrack_light = 2130837706;
+			public const int list24 = 2130837706;
 			
 			// aapt resource value: 0x7f0200cb
-			public const int mr_ic_cast_dark = 2130837707;
+			public const int mapMarker24 = 2130837707;
 			
 			// aapt resource value: 0x7f0200cc
-			public const int mr_ic_cast_light = 2130837708;
+			public const int mr_dialog_material_background_dark = 2130837708;
 			
 			// aapt resource value: 0x7f0200cd
-			public const int mr_ic_close_dark = 2130837709;
+			public const int mr_dialog_material_background_light = 2130837709;
 			
 			// aapt resource value: 0x7f0200ce
-			public const int mr_ic_close_light = 2130837710;
+			public const int mr_ic_audiotrack_light = 2130837710;
 			
 			// aapt resource value: 0x7f0200cf
-			public const int mr_ic_media_route_connecting_mono_dark = 2130837711;
+			public const int mr_ic_cast_dark = 2130837711;
 			
 			// aapt resource value: 0x7f0200d0
-			public const int mr_ic_media_route_connecting_mono_light = 2130837712;
+			public const int mr_ic_cast_light = 2130837712;
 			
 			// aapt resource value: 0x7f0200d1
-			public const int mr_ic_media_route_mono_dark = 2130837713;
+			public const int mr_ic_close_dark = 2130837713;
 			
 			// aapt resource value: 0x7f0200d2
-			public const int mr_ic_media_route_mono_light = 2130837714;
+			public const int mr_ic_close_light = 2130837714;
 			
 			// aapt resource value: 0x7f0200d3
-			public const int mr_ic_pause_dark = 2130837715;
+			public const int mr_ic_media_route_connecting_mono_dark = 2130837715;
 			
 			// aapt resource value: 0x7f0200d4
-			public const int mr_ic_pause_light = 2130837716;
+			public const int mr_ic_media_route_connecting_mono_light = 2130837716;
 			
 			// aapt resource value: 0x7f0200d5
-			public const int mr_ic_play_dark = 2130837717;
+			public const int mr_ic_media_route_mono_dark = 2130837717;
 			
 			// aapt resource value: 0x7f0200d6
-			public const int mr_ic_play_light = 2130837718;
-			
-			// aapt resource value: 0x7f0200e0
-			public const int notification_template_icon_bg = 2130837728;
+			public const int mr_ic_media_route_mono_light = 2130837718;
 			
 			// aapt resource value: 0x7f0200d7
-			public const int places_ic_clear = 2130837719;
+			public const int mr_ic_pause_dark = 2130837719;
 			
 			// aapt resource value: 0x7f0200d8
-			public const int places_ic_search = 2130837720;
+			public const int mr_ic_pause_light = 2130837720;
 			
 			// aapt resource value: 0x7f0200d9
-			public const int powered_by_google_dark = 2130837721;
+			public const int mr_ic_play_dark = 2130837721;
 			
 			// aapt resource value: 0x7f0200da
-			public const int powered_by_google_light = 2130837722;
+			public const int mr_ic_play_light = 2130837722;
+			
+			// aapt resource value: 0x7f0200ea
+			public const int notification_template_icon_bg = 2130837738;
 			
 			// aapt resource value: 0x7f0200db
-			public const int roundedbg = 2130837723;
+			public const int photography = 2130837723;
 			
 			// aapt resource value: 0x7f0200dc
-			public const int roundedbgdark = 2130837724;
+			public const int pin = 2130837724;
 			
 			// aapt resource value: 0x7f0200dd
-			public const int save = 2130837725;
+			public const int places_ic_clear = 2130837725;
 			
 			// aapt resource value: 0x7f0200de
-			public const int search24 = 2130837726;
+			public const int places_ic_search = 2130837726;
 			
 			// aapt resource value: 0x7f0200df
-			public const int splash = 2130837727;
+			public const int powered_by_google_dark = 2130837727;
+			
+			// aapt resource value: 0x7f0200e0
+			public const int powered_by_google_light = 2130837728;
+			
+			// aapt resource value: 0x7f0200e1
+			public const int restaurants = 2130837729;
+			
+			// aapt resource value: 0x7f0200e2
+			public const int roundedbg = 2130837730;
+			
+			// aapt resource value: 0x7f0200e3
+			public const int roundedbgdark = 2130837731;
+			
+			// aapt resource value: 0x7f0200e4
+			public const int save = 2130837732;
+			
+			// aapt resource value: 0x7f0200e5
+			public const int search24 = 2130837733;
+			
+			// aapt resource value: 0x7f0200e6
+			public const int shopping = 2130837734;
+			
+			// aapt resource value: 0x7f0200e7
+			public const int splash = 2130837735;
+			
+			// aapt resource value: 0x7f0200e8
+			public const int tiresaccessories = 2130837736;
+			
+			// aapt resource value: 0x7f0200e9
+			public const int transport = 2130837737;
 			
 			static Drawable()
 			{
@@ -2664,8 +4670,11 @@ namespace CV.Mobile.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f0b009a
-			public const int action0 = 2131427482;
+			// aapt resource value: 0x7f0b0081
+			public const int InfoWindowSubtitle = 2131427457;
+			
+			// aapt resource value: 0x7f0b009c
+			public const int action0 = 2131427484;
 			
 			// aapt resource value: 0x7f0b0065
 			public const int action_bar = 2131427429;
@@ -2691,8 +4700,8 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0b0066
 			public const int action_context_bar = 2131427430;
 			
-			// aapt resource value: 0x7f0b009e
-			public const int action_divider = 2131427486;
+			// aapt resource value: 0x7f0b00a0
+			public const int action_divider = 2131427488;
 			
 			// aapt resource value: 0x7f0b0003
 			public const int action_menu_divider = 2131427331;
@@ -2736,8 +4745,8 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0b004f
 			public const int buttonPanel = 2131427407;
 			
-			// aapt resource value: 0x7f0b009b
-			public const int cancel_action = 2131427483;
+			// aapt resource value: 0x7f0b009d
+			public const int cancel_action = 2131427485;
 			
 			// aapt resource value: 0x7f0b0036
 			public const int center = 2131427382;
@@ -2751,8 +4760,8 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0b005d
 			public const int checkbox = 2131427421;
 			
-			// aapt resource value: 0x7f0b00a1
-			public const int chronometer = 2131427489;
+			// aapt resource value: 0x7f0b00a3
+			public const int chronometer = 2131427491;
 			
 			// aapt resource value: 0x7f0b003e
 			public const int clip_horizontal = 2131427390;
@@ -2781,6 +4790,9 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0b004b
 			public const int default_activity_button = 2131427403;
 			
+			// aapt resource value: 0x7f0b0082
+			public const int demoImageView = 2131427458;
+			
 			// aapt resource value: 0x7f0b0075
 			public const int design_bottom_sheet = 2131427445;
 			
@@ -2805,8 +4817,8 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0b0027
 			public const int end = 2131427367;
 			
-			// aapt resource value: 0x7f0b00a6
-			public const int end_padder = 2131427494;
+			// aapt resource value: 0x7f0b00a8
+			public const int end_padder = 2131427496;
 			
 			// aapt resource value: 0x7f0b002e
 			public const int enterAlways = 2131427374;
@@ -2856,8 +4868,8 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0b004a
 			public const int image = 2131427402;
 			
-			// aapt resource value: 0x7f0b00a5
-			public const int info = 2131427493;
+			// aapt resource value: 0x7f0b00a7
+			public const int info = 2131427495;
 			
 			// aapt resource value: 0x7f0b0000
 			public const int item_touch_helper_previous_elevation = 2131427328;
@@ -2868,11 +4880,11 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0b0017
 			public const int light = 2131427351;
 			
-			// aapt resource value: 0x7f0b009f
-			public const int line1 = 2131427487;
+			// aapt resource value: 0x7f0b00a1
+			public const int line1 = 2131427489;
 			
-			// aapt resource value: 0x7f0b00a3
-			public const int line3 = 2131427491;
+			// aapt resource value: 0x7f0b00a5
+			public const int line3 = 2131427493;
 			
 			// aapt resource value: 0x7f0b0018
 			public const int listMode = 2131427352;
@@ -2889,8 +4901,8 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0b0080
 			public const int loadingProgressWheel = 2131427456;
 			
-			// aapt resource value: 0x7f0b009d
-			public const int media_actions = 2131427485;
+			// aapt resource value: 0x7f0b009f
+			public const int media_actions = 2131427487;
 			
 			// aapt resource value: 0x7f0b0028
 			public const int middle = 2131427368;
@@ -2898,77 +4910,77 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0b0042
 			public const int mini = 2131427394;
 			
-			// aapt resource value: 0x7f0b008c
-			public const int mr_art = 2131427468;
-			
-			// aapt resource value: 0x7f0b0081
-			public const int mr_chooser_list = 2131427457;
-			
-			// aapt resource value: 0x7f0b0084
-			public const int mr_chooser_route_desc = 2131427460;
-			
-			// aapt resource value: 0x7f0b0082
-			public const int mr_chooser_route_icon = 2131427458;
+			// aapt resource value: 0x7f0b008e
+			public const int mr_art = 2131427470;
 			
 			// aapt resource value: 0x7f0b0083
-			public const int mr_chooser_route_name = 2131427459;
-			
-			// aapt resource value: 0x7f0b0089
-			public const int mr_close = 2131427465;
-			
-			// aapt resource value: 0x7f0b008f
-			public const int mr_control_divider = 2131427471;
-			
-			// aapt resource value: 0x7f0b0095
-			public const int mr_control_play_pause = 2131427477;
-			
-			// aapt resource value: 0x7f0b0098
-			public const int mr_control_subtitle = 2131427480;
-			
-			// aapt resource value: 0x7f0b0097
-			public const int mr_control_title = 2131427479;
-			
-			// aapt resource value: 0x7f0b0096
-			public const int mr_control_title_container = 2131427478;
-			
-			// aapt resource value: 0x7f0b008a
-			public const int mr_custom_control = 2131427466;
-			
-			// aapt resource value: 0x7f0b008b
-			public const int mr_default_control = 2131427467;
+			public const int mr_chooser_list = 2131427459;
 			
 			// aapt resource value: 0x7f0b0086
-			public const int mr_dialog_area = 2131427462;
+			public const int mr_chooser_route_desc = 2131427462;
+			
+			// aapt resource value: 0x7f0b0084
+			public const int mr_chooser_route_icon = 2131427460;
 			
 			// aapt resource value: 0x7f0b0085
-			public const int mr_expandable_area = 2131427461;
+			public const int mr_chooser_route_name = 2131427461;
 			
-			// aapt resource value: 0x7f0b0099
-			public const int mr_group_expand_collapse = 2131427481;
-			
-			// aapt resource value: 0x7f0b008d
-			public const int mr_media_main_control = 2131427469;
-			
-			// aapt resource value: 0x7f0b0088
-			public const int mr_name = 2131427464;
-			
-			// aapt resource value: 0x7f0b008e
-			public const int mr_playback_control = 2131427470;
-			
-			// aapt resource value: 0x7f0b0087
-			public const int mr_title_bar = 2131427463;
-			
-			// aapt resource value: 0x7f0b0090
-			public const int mr_volume_control = 2131427472;
+			// aapt resource value: 0x7f0b008b
+			public const int mr_close = 2131427467;
 			
 			// aapt resource value: 0x7f0b0091
-			public const int mr_volume_group_list = 2131427473;
+			public const int mr_control_divider = 2131427473;
+			
+			// aapt resource value: 0x7f0b0097
+			public const int mr_control_play_pause = 2131427479;
+			
+			// aapt resource value: 0x7f0b009a
+			public const int mr_control_subtitle = 2131427482;
+			
+			// aapt resource value: 0x7f0b0099
+			public const int mr_control_title = 2131427481;
+			
+			// aapt resource value: 0x7f0b0098
+			public const int mr_control_title_container = 2131427480;
+			
+			// aapt resource value: 0x7f0b008c
+			public const int mr_custom_control = 2131427468;
+			
+			// aapt resource value: 0x7f0b008d
+			public const int mr_default_control = 2131427469;
+			
+			// aapt resource value: 0x7f0b0088
+			public const int mr_dialog_area = 2131427464;
+			
+			// aapt resource value: 0x7f0b0087
+			public const int mr_expandable_area = 2131427463;
+			
+			// aapt resource value: 0x7f0b009b
+			public const int mr_group_expand_collapse = 2131427483;
+			
+			// aapt resource value: 0x7f0b008f
+			public const int mr_media_main_control = 2131427471;
+			
+			// aapt resource value: 0x7f0b008a
+			public const int mr_name = 2131427466;
+			
+			// aapt resource value: 0x7f0b0090
+			public const int mr_playback_control = 2131427472;
+			
+			// aapt resource value: 0x7f0b0089
+			public const int mr_title_bar = 2131427465;
+			
+			// aapt resource value: 0x7f0b0092
+			public const int mr_volume_control = 2131427474;
 			
 			// aapt resource value: 0x7f0b0093
-			public const int mr_volume_item_icon = 2131427475;
+			public const int mr_volume_group_list = 2131427475;
 			
-			// aapt resource value: 0x7f0b0094
-			public const int mr_volume_slider = 2131427476;
+			// aapt resource value: 0x7f0b0095
+			public const int mr_volume_item_icon = 2131427477;
+			
+			// aapt resource value: 0x7f0b0096
+			public const int mr_volume_slider = 2131427478;
 			
 			// aapt resource value: 0x7f0b0021
 			public const int multiply = 2131427361;
@@ -2994,29 +5006,29 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0b0034
 			public const int pin = 2131427380;
 			
-			// aapt resource value: 0x7f0b00a9
-			public const int place_autocomplete_clear_button = 2131427497;
-			
 			// aapt resource value: 0x7f0b00ab
-			public const int place_autocomplete_powered_by_google = 2131427499;
+			public const int place_autocomplete_clear_button = 2131427499;
 			
 			// aapt resource value: 0x7f0b00ad
-			public const int place_autocomplete_prediction_primary_text = 2131427501;
+			public const int place_autocomplete_powered_by_google = 2131427501;
+			
+			// aapt resource value: 0x7f0b00af
+			public const int place_autocomplete_prediction_primary_text = 2131427503;
+			
+			// aapt resource value: 0x7f0b00b0
+			public const int place_autocomplete_prediction_secondary_text = 2131427504;
 			
 			// aapt resource value: 0x7f0b00ae
-			public const int place_autocomplete_prediction_secondary_text = 2131427502;
+			public const int place_autocomplete_progress = 2131427502;
 			
-			// aapt resource value: 0x7f0b00ac
-			public const int place_autocomplete_progress = 2131427500;
-			
-			// aapt resource value: 0x7f0b00a7
-			public const int place_autocomplete_search_button = 2131427495;
-			
-			// aapt resource value: 0x7f0b00a8
-			public const int place_autocomplete_search_input = 2131427496;
+			// aapt resource value: 0x7f0b00a9
+			public const int place_autocomplete_search_button = 2131427497;
 			
 			// aapt resource value: 0x7f0b00aa
-			public const int place_autocomplete_separator = 2131427498;
+			public const int place_autocomplete_search_input = 2131427498;
+			
+			// aapt resource value: 0x7f0b00ac
+			public const int place_autocomplete_separator = 2131427500;
 			
 			// aapt resource value: 0x7f0b0006
 			public const int progress_circular = 2131427334;
@@ -3096,8 +5108,8 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0b001e
 			public const int showTitle = 2131427358;
 			
-			// aapt resource value: 0x7f0b00af
-			public const int sliding_tabs = 2131427503;
+			// aapt resource value: 0x7f0b00b1
+			public const int sliding_tabs = 2131427505;
 			
 			// aapt resource value: 0x7f0b0077
 			public const int snackbar_action = 2131427447;
@@ -3129,8 +5141,8 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0b003c
 			public const int start = 2131427388;
 			
-			// aapt resource value: 0x7f0b009c
-			public const int status_bar_latest_event_content = 2131427484;
+			// aapt resource value: 0x7f0b009e
+			public const int status_bar_latest_event_content = 2131427486;
 			
 			// aapt resource value: 0x7f0b0070
 			public const int submit_area = 2131427440;
@@ -3141,11 +5153,11 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0b000f
 			public const int terrain = 2131427343;
 			
-			// aapt resource value: 0x7f0b00a4
-			public const int text = 2131427492;
+			// aapt resource value: 0x7f0b00a6
+			public const int text = 2131427494;
 			
-			// aapt resource value: 0x7f0b00a2
-			public const int text2 = 2131427490;
+			// aapt resource value: 0x7f0b00a4
+			public const int text2 = 2131427492;
 			
 			// aapt resource value: 0x7f0b0058
 			public const int textSpacerNoButtons = 2131427416;
@@ -3153,8 +5165,8 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0b007e
 			public const int textViewStatus = 2131427454;
 			
-			// aapt resource value: 0x7f0b00a0
-			public const int time = 2131427488;
+			// aapt resource value: 0x7f0b00a2
+			public const int time = 2131427490;
 			
 			// aapt resource value: 0x7f0b004e
 			public const int title = 2131427406;
@@ -3162,8 +5174,8 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0b0053
 			public const int title_template = 2131427411;
 			
-			// aapt resource value: 0x7f0b00b0
-			public const int toolbar = 2131427504;
+			// aapt resource value: 0x7f0b00b2
+			public const int toolbar = 2131427506;
 			
 			// aapt resource value: 0x7f0b003d
 			public const int top = 2131427389;
@@ -3183,8 +5195,8 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0b000a
 			public const int view_offset_helper = 2131427338;
 			
-			// aapt resource value: 0x7f0b0092
-			public const int volume_item_container = 2131427474;
+			// aapt resource value: 0x7f0b0094
+			public const int volume_item_container = 2131427476;
 			
 			// aapt resource value: 0x7f0b0014
 			public const int wide = 2131427348;
@@ -3394,76 +5406,79 @@ namespace CV.Mobile.Droid
 			public const int loadingprogress = 2130903079;
 			
 			// aapt resource value: 0x7f030028
-			public const int mr_chooser_dialog = 2130903080;
+			public const int MapImage = 2130903080;
 			
 			// aapt resource value: 0x7f030029
-			public const int mr_chooser_list_item = 2130903081;
+			public const int mr_chooser_dialog = 2130903081;
 			
 			// aapt resource value: 0x7f03002a
-			public const int mr_controller_material_dialog_b = 2130903082;
+			public const int mr_chooser_list_item = 2130903082;
 			
 			// aapt resource value: 0x7f03002b
-			public const int mr_controller_volume_item = 2130903083;
+			public const int mr_controller_material_dialog_b = 2130903083;
 			
 			// aapt resource value: 0x7f03002c
-			public const int mr_playback_control = 2130903084;
+			public const int mr_controller_volume_item = 2130903084;
 			
 			// aapt resource value: 0x7f03002d
-			public const int mr_volume_control = 2130903085;
+			public const int mr_playback_control = 2130903085;
 			
 			// aapt resource value: 0x7f03002e
-			public const int notification_media_action = 2130903086;
+			public const int mr_volume_control = 2130903086;
 			
 			// aapt resource value: 0x7f03002f
-			public const int notification_media_cancel_action = 2130903087;
+			public const int notification_media_action = 2130903087;
 			
 			// aapt resource value: 0x7f030030
-			public const int notification_template_big_media = 2130903088;
+			public const int notification_media_cancel_action = 2130903088;
 			
 			// aapt resource value: 0x7f030031
-			public const int notification_template_big_media_narrow = 2130903089;
+			public const int notification_template_big_media = 2130903089;
 			
 			// aapt resource value: 0x7f030032
-			public const int notification_template_lines = 2130903090;
+			public const int notification_template_big_media_narrow = 2130903090;
 			
 			// aapt resource value: 0x7f030033
-			public const int notification_template_media = 2130903091;
+			public const int notification_template_lines = 2130903091;
 			
 			// aapt resource value: 0x7f030034
-			public const int notification_template_part_chronometer = 2130903092;
+			public const int notification_template_media = 2130903092;
 			
 			// aapt resource value: 0x7f030035
-			public const int notification_template_part_time = 2130903093;
+			public const int notification_template_part_chronometer = 2130903093;
 			
 			// aapt resource value: 0x7f030036
-			public const int place_autocomplete_fragment = 2130903094;
+			public const int notification_template_part_time = 2130903094;
 			
 			// aapt resource value: 0x7f030037
-			public const int place_autocomplete_item_powered_by_google = 2130903095;
+			public const int place_autocomplete_fragment = 2130903095;
 			
 			// aapt resource value: 0x7f030038
-			public const int place_autocomplete_item_prediction = 2130903096;
+			public const int place_autocomplete_item_powered_by_google = 2130903096;
 			
 			// aapt resource value: 0x7f030039
-			public const int place_autocomplete_progress = 2130903097;
+			public const int place_autocomplete_item_prediction = 2130903097;
 			
 			// aapt resource value: 0x7f03003a
-			public const int select_dialog_item_material = 2130903098;
+			public const int place_autocomplete_progress = 2130903098;
 			
 			// aapt resource value: 0x7f03003b
-			public const int select_dialog_multichoice_material = 2130903099;
+			public const int select_dialog_item_material = 2130903099;
 			
 			// aapt resource value: 0x7f03003c
-			public const int select_dialog_singlechoice_material = 2130903100;
+			public const int select_dialog_multichoice_material = 2130903100;
 			
 			// aapt resource value: 0x7f03003d
-			public const int support_simple_spinner_dropdown_item = 2130903101;
+			public const int select_dialog_singlechoice_material = 2130903101;
 			
 			// aapt resource value: 0x7f03003e
-			public const int Tabbar = 2130903102;
+			public const int support_simple_spinner_dropdown_item = 2130903102;
 			
 			// aapt resource value: 0x7f03003f
-			public const int Toolbar = 2130903103;
+			public const int Tabbar = 2130903103;
+			
+			// aapt resource value: 0x7f030040
+			public const int Toolbar = 2130903104;
 			
 			static Layout()
 			{

@@ -495,7 +495,7 @@ namespace CV.Mobile.ViewModels
                     itemGravar.HoraChegada = null;
                 }
                 else
-                    itemGravar.DataChegada = itemGravar.DataChegada.Value.Date.Add(itemGravar.HoraChegada.GetValueOrDefault());
+                    itemGravar.DataChegada = DateTime.SpecifyKind(itemGravar.DataChegada.Value.Date.Add(itemGravar.HoraChegada.GetValueOrDefault()), DateTimeKind.Unspecified);
 
                 if (itemGravar.DataPartida.GetValueOrDefault(_dataMinima) == _dataMinima)
                 {
@@ -503,7 +503,7 @@ namespace CV.Mobile.ViewModels
                     itemGravar.HoraPartida = null;
                 }
                 else
-                    itemGravar.DataPartida = itemGravar.DataPartida.Value.Date.Add(itemGravar.HoraPartida.GetValueOrDefault());
+                    itemGravar.DataPartida = DateTime.SpecifyKind(itemGravar.DataPartida.Value.Date.Add(itemGravar.HoraPartida.GetValueOrDefault()), DateTimeKind.Unspecified);
                 ListaAvaliacoesAlteradas.Add(itemGravar);
             }
         }

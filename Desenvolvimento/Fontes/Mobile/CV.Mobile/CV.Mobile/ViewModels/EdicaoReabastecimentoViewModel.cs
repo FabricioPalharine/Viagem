@@ -225,7 +225,7 @@ namespace CV.Mobile.ViewModels
                 }
                 else
                     ItemGasto.Usuarios.Clear();
-                ItemReabastecimento.Data = ItemGasto.Data = ItemGasto.Data.GetValueOrDefault().Date.Add(ItemGasto.Hora.GetValueOrDefault());
+                ItemReabastecimento.Data = ItemGasto.Data = DateTime.SpecifyKind(ItemGasto.Data.GetValueOrDefault().Date.Add(ItemGasto.Hora.GetValueOrDefault()), DateTimeKind.Unspecified) ;
                 ItemGasto.Latitude = ItemReabastecimento.Latitude;
                 ItemGasto.Longitude = ItemReabastecimento.Longitude;
                 if (ItemReabastecimento.Gastos.Any())

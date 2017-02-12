@@ -21,6 +21,9 @@ using Xamarin.Forms.Maps.Android;
 using Xamarin.Forms.Platform.Android;
 using Color = Xamarin.Forms.Color;
 using System.Collections;
+using Android.Views;
+using Android.Widget;
+using System.Net;
 
 [assembly: ExportRenderer(typeof(TKCustomMap), typeof(TKCustomMapRenderer))]
 namespace TK.CustomMap.Droid
@@ -28,7 +31,7 @@ namespace TK.CustomMap.Droid
       /// <summary>
       /// Android Renderer of <see cref="TK.CustomMap.TKCustomMap"/>
       /// </summary>
-    public class TKCustomMapRenderer : MapRenderer, IRendererFunctions, IOnMapReadyCallback, GoogleMap.ISnapshotReadyCallback
+    public class TKCustomMapRenderer : MapRenderer, IRendererFunctions, IOnMapReadyCallback, GoogleMap.ISnapshotReadyCallback,  GoogleMap.IInfoWindowAdapter
     {
         private bool _init = true;
 
@@ -166,7 +169,7 @@ namespace TK.CustomMap.Droid
             this._googleMap.MarkerDragStart += OnMarkerDragStart;
             this._googleMap.InfoWindowClick += OnInfoWindowClick;
             this._googleMap.MyLocationChange += OnUserLocationChange;
-            
+            this._googleMap.SetInfoWindowAdapter(this);
             this.UpdateTileOptions();
             this.MoveToCenter();
             this.UpdatePins();
@@ -452,7 +455,7 @@ namespace TK.CustomMap.Droid
                 this.RemovePin(i.Key, false);
             }
             this._markers.Clear();
-            if (this.FormsMap.CustomPins != null)
+            if (this.FormsMap != null && this.FormsMap.CustomPins != null)
             {
                 foreach (var pin in this.FormsMap.CustomPins)
                 {
@@ -492,8 +495,9 @@ namespace TK.CustomMap.Droid
             {
                 markerWithIcon.Anchor((float)pin.Anchor.X, (float)pin.Anchor.Y);
             }
-
-            this._markers.Add(pin, this._googleMap.AddMarker(markerWithIcon));
+            var marker = this._googleMap.AddMarker(markerWithIcon);
+            
+            this._markers.Add(pin, marker);
         }
         /// <summary>
         /// Remove a pin from the map and the internal dictionary
@@ -1266,6 +1270,67 @@ namespace TK.CustomMap.Droid
         protected TKCustomMapPin GetPinByMarker(Marker marker)
         {
             return this._markers.SingleOrDefault(i => i.Value.Id == marker.Id).Key;
+        }
+
+        public Android.Views.View GetInfoContents(Marker marker)
+        {
+            if (marker.Title.ToLower().StartsWith("https://"))
+            {
+                var inflater = Android.App.Application.Context.GetSystemService("layout_inflater") as Android.Views.LayoutInflater;
+                if (inflater != null)
+                {
+                    Android.Views.View view;
+
+                   
+                   
+                    view = inflater.Inflate(Resource.Layout.MapImage, null);
+
+                    var imagen = view.FindViewById<ImageView>(Resource.Id.demoImageView);
+
+              
+                    Android.Graphics.Bitmap  imageBitmap = GetImageBitmapFromUrl(marker.Title) as Android.Graphics.Bitmap;
+                    imagen.SetImageBitmap(imageBitmap);
+
+                    //var infoTitle = view.FindViewById<TextView>(Resource.Id.InfoWindowTitle);
+                    var infoSubtitle = view.FindViewById<TextView>(Resource.Id.InfoWindowSubtitle);
+
+                    //if (infoTitle != null)
+                    //{
+                    //    infoTitle.Text = marker.Title;
+                    //}
+                    if (infoSubtitle != null)
+                    {
+                        infoSubtitle.Text = marker.Snippet;
+                    }
+
+                    return view;
+                }
+                return null;
+            }
+            else
+                return null;
+        }
+
+        private Bitmap GetImageBitmapFromUrl(string url)
+        {
+            Bitmap imageBitmap = null;
+
+            using (var webClient = new WebClient())
+            {
+                var imageBytes = webClient.DownloadData(url);
+                if (imageBytes != null && imageBytes.Length > 0)
+                {
+                    imageBitmap = BitmapFactory.DecodeByteArray(imageBytes, 0, imageBytes.Length);
+                }
+            }
+
+            return imageBitmap;
+        }
+
+
+        public Android.Views.View GetInfoWindow(Marker marker)
+        {
+            return null;
         }
     }
 }

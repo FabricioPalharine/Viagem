@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.ConsultarRelatorioGastoListaPage"
+             Title="Gastos"   
+              xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+              xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+              xmlns:controles="clr-namespace:CV.Mobile.Controls;assembly=CV.Mobile"
+              x:Name="paginaSelecao">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <local:InverseBooleanConverter x:Key="boolInverterConverter" />
+      <local:IntStringConverter x:Key="intStringConverter" />
+      <local:TipoFontAttributeConverter x:Key="fontConverter" />
+
+    </ResourceDictionary>
+  </ContentPage.Resources>
+ 
+ <ContentPage.ToolbarItems>
+  
+  </ContentPage.ToolbarItems>
+
+  <ContentPage.Content>
+   
+      <ListView VerticalOptions="FillAndExpand" SeparatorVisibility="None" ItemsSource="{Binding ListaDados}" SelectedItem="{Binding ItemSelecionado, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="True"  IsPullToRefreshEnabled="true"  IsRefreshing="{Binding IsLoadingLista, Mode=TwoWay}" RefreshCommand="{Binding RecarregarListaCommand}"  >
+        
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ViewCell >
+              <StackLayout>
+                <StackLayout Orientation="Horizontal">
+                  <Label Text="Pessoa:" >
+                  </Label>
+                  <Label Text="{Binding NomeUsuario}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                  <Label Text="Data:" >
+                  </Label>
+                  <Label Text="{Binding Data, StringFormat='{0:dd/MM/yyyy}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+                  <Label Text="Descrição:" >
+                  </Label>
+                  <Label Text="{Binding Descricao}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                  <Label Text="{Binding MoedaSigla, StringFormat='Valor {0}:'}" HorizontalTextAlignment="Start"  ></Label>
+
+                  <Label Text="{Binding Valor, StringFormat='{0:N2}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+                  <Label Text="Valor Real:" >
+                  </Label>
+                  <Label Text="{Binding ValorReal, StringFormat='{0:N2}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+
+                </StackLayout>
+              </StackLayout>
+              
+              
+            </ViewCell>
+
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+
+  </ContentPage.Content>
+  
+</ContentPage>

@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.ConsultarFotoListaPage"
+             Title="Fotos"   
+              xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+              xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+              xmlns:controles="clr-namespace:CV.Mobile.Controls;assembly=CV.Mobile"
+              x:Name="paginaSelecao">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <local:InverseBooleanConverter x:Key="boolInverterConverter" />
+      <local:IntStringConverter x:Key="intStringConverter" />
+
+ 
+    </ResourceDictionary>
+  </ContentPage.Resources>
+
+
+ <ContentPage.ToolbarItems>
+    <ToolbarItem x:Name="PesquisarToolbarItem" Icon="search24.png"  Command="{Binding PesquisarCommand}" />
+
+  </ContentPage.ToolbarItems>
+
+  <ContentPage.Content>
+    <StackLayout Spacing="0">
+      <controles:ImageGalleryControl Fotos="{Binding ListaDados}"></controles:ImageGalleryControl>
+
+
+    </StackLayout>
+  </ContentPage.Content>
+  
+</ContentPage>

@@ -432,12 +432,13 @@ namespace CV.Mobile.ViewModels
                 if (!VisitaIniciada)
                     ItemAtracao.Chegada = null;
                 else
-                    ItemAtracao.Chegada = ItemAtracao.Chegada.GetValueOrDefault().Date.Add(ItemAtracao.HoraChegada.GetValueOrDefault());
+                    ItemAtracao.Chegada = DateTime.SpecifyKind(ItemAtracao.Chegada.GetValueOrDefault().Date.Add(ItemAtracao.HoraChegada.GetValueOrDefault()), DateTimeKind.Unspecified);
 
                 if (!VisitaConcluida)
                     ItemAtracao.Partida = null;
                 else
-                    ItemAtracao.Partida = ItemAtracao.Chegada.GetValueOrDefault().Date.Add(ItemAtracao.HoraPartida.GetValueOrDefault());
+                    ItemAtracao.Partida = DateTime.SpecifyKind(ItemAtracao.Partida.GetValueOrDefault().Date.Add(ItemAtracao.HoraPartida.GetValueOrDefault()),DateTimeKind.Unspecified);
+
                 ResultadoOperacao Resultado = new ResultadoOperacao();
                 Atracao pItemAtracao = null;
                 if (Conectado)

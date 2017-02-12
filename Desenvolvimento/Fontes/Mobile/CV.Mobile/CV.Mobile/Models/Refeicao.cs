@@ -144,6 +144,8 @@ namespace CV.Mobile.Models
         public ObservableRangeCollection<GastoRefeicao> Gastos { get; set; }
         [Ignore]
         public ObservableRangeCollection<FotoRefeicao> Fotos { get; set; }
+        [Ignore]
+        public bool Selecionado { get; set; }
 
         private bool _Atualizado = true;
 

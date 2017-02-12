@@ -316,7 +316,7 @@ namespace CV.Mobile.ViewModels
 
                 };
                 ultimaPosicao = e.Position;
-                if (ConectadoPrincipal)
+                if (ConectadoPrincipal && e.Position.Speed > 0)
                 {
                     using (ApiService srv = new ApiService())
                     {
@@ -326,7 +326,7 @@ namespace CV.Mobile.ViewModels
                 else
                     await DatabaseService.Database.SalvarPosicao(itemPosicao);
             }
-            if (_hotelAtual != null && _hotelAtual.Raio > 0 && _hotelAtual.Latitude.HasValue && _hotelAtual.Longitude.HasValue)
+            if (_hotelAtual != null && _hotelAtual.Raio > 0 && _hotelAtual.Latitude.HasValue && _hotelAtual.Longitude.HasValue && e.Position.Speed > 0)
             {
                 var DistanciaAtual = GetDistanceTo(new Position() { Longitude = _hotelAtual.Longitude.Value, Latitude = _hotelAtual.Latitude.Value }, e.Position);
                 bool estaDentro = DistanciaAtual.Meters <= _hotelAtual.Raio;

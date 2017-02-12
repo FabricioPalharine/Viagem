@@ -218,7 +218,7 @@ namespace CV.Mobile.ViewModels
                 SetProperty(ref _Posicao, value);
                 if (value == 0 && _PrimeiroLoad)
                 {
-                    AjustarPosicaoCalendario(value).RunSynchronously();
+                    AjustarPosicaoCalendario(value);
                     _PrimeiroLoad = false;
                 }
             }

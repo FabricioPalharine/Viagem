@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.ConsultarLocaisVisitadosListaPage"
+             Title="Locais Visitados"
+              xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+              xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+              xmlns:controles="clr-namespace:CV.Mobile.Controls;assembly=CV.Mobile"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+              x:Name="paginaSelecao">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <local:InverseBooleanConverter x:Key="boolInverterConverter" />
+      <local:IntStringConverter x:Key="intStringConverter" />
+      <local:TipoFontAttributeConverter x:Key="fontConverter" />
+
+    </ResourceDictionary>
+  </ContentPage.Resources>
+
+  <ContentPage.ToolbarItems>
+
+  </ContentPage.ToolbarItems>
+
+  <ContentPage.Content>
+
+    <ListView VerticalOptions="FillAndExpand" SeparatorVisibility="None" ItemsSource="{Binding ListaDados}" SelectedItem="{Binding ItemSelecionado, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="True"  IsPullToRefreshEnabled="true"  IsRefreshing="{Binding IsLoadingLista, Mode=TwoWay}" RefreshCommand="{Binding RecarregarListaCommand}"  >
+      <ListView.Behaviors>
+        <behaviors:EventHandlerBehavior EventName="ItemTapped">
+          <behaviors:InvokeCommandAction Command="{Binding ItemTappedCommand}"   />
+        </behaviors:EventHandlerBehavior>
+      </ListView.Behaviors>
+
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <ViewCell >
+            <StackLayout Orientation="Horizontal">
+              <ffimageloading:CachedImage HorizontalOptions="Center" VerticalOptions="Center"
+    WidthRequest="100" HeightRequest="100"
+    DownsampleToViewSize="true" IsVisible="{Binding TemPosicao}"
+    Source = "{Binding URLMapa}">
+
+              </ffimageloading:CachedImage>
+              <StackLayout>
+                <StackLayout Orientation="Horizontal">
+
+                  <Label Text="{Binding Nome}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+
+                  <Label Text="{Binding TipoDescricao}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+                  <Label Text="-" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+                  <Label Text="{Binding NomeCidade}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+
+                </StackLayout>
+
+              </StackLayout>
+            </StackLayout>
+
+          </ViewCell>
+
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+
+  </ContentPage.Content>
+
+</ContentPage>

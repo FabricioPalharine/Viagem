@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.ConsultarRankingsDetalhePage"
+             Title="Avaliações"
+              xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+              xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile"
+              xmlns:controles="clr-namespace:CV.Mobile.Controls;assembly=CV.Mobile"
+              x:Name="paginaSelecao">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <local:InverseBooleanConverter x:Key="boolInverterConverter" />
+      <local:IntStringConverter x:Key="intStringConverter" />
+      <local:TipoFontAttributeConverter x:Key="fontConverter" />
+
+    </ResourceDictionary>
+  </ContentPage.Resources>
+
+  <ContentPage.ToolbarItems>
+
+  </ContentPage.ToolbarItems>
+
+  <ContentPage.Content>
+
+    <ListView VerticalOptions="FillAndExpand" SeparatorVisibility="None" ItemsSource="{Binding ListaAvaliacoes}" SelectedItem="{Binding ItemSelecionado, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="True"  IsPullToRefreshEnabled="False"    >
+
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <ViewCell >
+            <StackLayout>
+              <StackLayout Orientation="Horizontal">
+                <Label Text="Pessoa:" >
+                </Label>
+                <Label Text="{Binding Nome}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+
+              </StackLayout>
+              <StackLayout Orientation="Horizontal">
+                <Label Text="DataAvaliacao:" >
+                </Label>
+                <Label Text="{Binding Data, StringFormat='{0:dd/MM/yyyy}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+
+              </StackLayout>
+
+              <StackLayout Orientation="Horizontal">
+                <Label Text="Nota:" >
+                </Label>
+                <Label Text="{Binding Nota}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+
+
+              </StackLayout>
+
+
+              <Label Text="{Binding Comentario}" HorizontalTextAlignment="Start"  ></Label>
+
+            </StackLayout>
+
+
+          </ViewCell>
+
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+
+  </ContentPage.Content>
+
+</ContentPage>

@@ -45,12 +45,15 @@
     <Compile Include="Controls\GesturesContentView.cs" />
     <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="Controls\ImageButtonSourceConverter.cs" />
+    <Compile Include="Controls\ImageGallery.cs" />
     <Compile Include="Controls\NullableDatePicker.cs" />
     <Compile Include="Controls\ExtendedPicker.cs" />
     <Compile Include="Controls\PlacesSearch.cs" />
     <Compile Include="Controls\StarControl.cs" />
     <Compile Include="Data\CVDatabase.cs" />
     <Compile Include="Helpers\BooleanFileImageSourceConverter.cs" />
+    <Compile Include="Helpers\ConsultaFotoTemplateSelector.cs" />
+    <Compile Include="Helpers\DetalheLocalTemplateSelector.cs" />
     <Compile Include="Helpers\IntegerImageSourceConverter.cs" />
     <Compile Include="Helpers\EnumHelperExtension.cs" />
     <Compile Include="Helpers\enumMoeda.cs" />
@@ -73,7 +76,9 @@
     <Compile Include="Models\Amigo.cs" />
     <Compile Include="Models\AporteDinheiro.cs" />
     <Compile Include="Models\AtualizacaoConsulta.cs" />
+    <Compile Include="Models\Cabecalho.cs" />
     <Compile Include="Models\CalendarioPrevisto.cs" />
+    <Compile Include="Models\CalendarioRealizado.cs" />
     <Compile Include="Models\Carro.cs" />
     <Compile Include="Models\CarroDeslocamento.cs" />
     <Compile Include="Models\CarroDeslocamentoUsuario.cs" />
@@ -81,6 +86,7 @@
     <Compile Include="Models\Cidade.cs" />
     <Compile Include="Models\ClasseSincronizacao.cs" />
     <Compile Include="Models\Comentario.cs" />
+    <Compile Include="Models\ConsultaRankings.cs" />
     <Compile Include="Models\CotacaoMoeda.cs" />
     <Compile Include="Models\DataCalendario.cs" />
     <Compile Include="Models\DeParaIdentificador.cs" />
@@ -98,7 +104,13 @@
     <Compile Include="Models\Hotel.cs" />
     <Compile Include="Models\HotelEvento.cs" />
     <Compile Include="Models\ItemCompra.cs" />
+    <Compile Include="Models\LinhaMapa.cs" />
+    <Compile Include="Models\LocaisDetalhes.cs" />
+    <Compile Include="Models\LocaisVisitados.cs" />
+    <Compile Include="Models\LocalSelecionado.cs" />
     <Compile Include="Models\Loja.cs" />
+    <Compile Include="Models\LojaItens.cs" />
+    <Compile Include="Models\PontoMapa.cs" />
     <Compile Include="Models\Reabastecimento.cs" />
     <Compile Include="Models\ReabastecimentoGasto.cs" />
     <Compile Include="Models\GastoCompra.cs" />
@@ -127,13 +139,17 @@
     <Compile Include="Models\ItemMenu.cs" />
     <Compile Include="Models\MessageKeys.cs" />
     <Compile Include="Models\ParticipanteViagem.cs" />
+    <Compile Include="Models\RelatorioGastos.cs" />
     <Compile Include="Models\RequisicaoAmizade.cs" />
     <Compile Include="Models\ResultadoConsultaTipo.cs" />
     <Compile Include="Models\ResultadoOperacao.cs" />
+    <Compile Include="Models\ResumoViagem.cs" />
     <Compile Include="Models\Sugestao.cs" />
+    <Compile Include="Models\Timeline.cs" />
     <Compile Include="Models\UploadFoto.cs" />
     <Compile Include="Models\Usuario.cs" />
     <Compile Include="Models\GastoDividido.cs" />
+    <Compile Include="Models\UsuarioConsulta.cs" />
     <Compile Include="Models\UsuarioGasto.cs" />
     <Compile Include="Models\UsuarioLogado.cs" />
     <Compile Include="Models\Viagem.cs" />
@@ -145,6 +161,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EnumDescription.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resource\MensagemModelo.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MensagemModelo.resx</DependentUpon>
+    </Compile>
     <Compile Include="Services\ApiService.cs" />
     <Compile Include="Services\AccountsService.cs" />
     <Compile Include="Services\DatabaseService.cs" />
@@ -154,6 +175,13 @@
     <Compile Include="ViewModels\AdicionarAmigoViewModel.cs" />
     <Compile Include="ViewModels\BaseNavigationViewModel.cs" />
     <Compile Include="ViewModels\ConfiguracaoViewModel.cs" />
+    <Compile Include="ViewModels\ConsultarLocaisVisitadosViewModel.cs" />
+    <Compile Include="ViewModels\ConsultarRankingsViewModel.cs" />
+    <Compile Include="ViewModels\ConsultarFotosViewModel.cs" />
+    <Compile Include="ViewModels\ConsultarPontosMapaViewModel.cs" />
+    <Compile Include="ViewModels\ConsultarTimelineViewModel.cs" />
+    <Compile Include="ViewModels\ConsultarResumoViewModel.cs" />
+    <Compile Include="ViewModels\ConsultarRelatorioGastosViewModel.cs" />
     <Compile Include="ViewModels\ConsultasViewModel.cs" />
     <Compile Include="ViewModels\EdicaoAporteDinheiroViewModel.cs" />
     <Compile Include="ViewModels\EdicaoAgendarSugestaoViewModel.cs" />
@@ -180,6 +208,7 @@
     <Compile Include="ViewModels\ListagemAmigoViewModel.cs" />
     <Compile Include="ViewModels\ListagemAgrupamentoCidadeViewModel.cs" />
     <Compile Include="ViewModels\ConsultarGastoDivididoViewModel.cs" />
+    <Compile Include="ViewModels\ListagemCalendarioRealizadoViewModel.cs" />
     <Compile Include="ViewModels\ListagemCalendarioPrevistoViewModel.cs" />
     <Compile Include="ViewModels\ConsultarExtratoViewModel.cs" />
     <Compile Include="ViewModels\ListagemViagemAereaCustoViewModel.cs" />
@@ -224,6 +253,51 @@
     <Compile Include="Views\AutenticacaoPage.xaml.cs">
       <DependentUpon>AutenticacaoPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ConsultarCalendarioRealizadoPage.xaml.cs">
+      <DependentUpon>ConsultarCalendarioRealizadoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarMapaPage.xaml.cs">
+      <DependentUpon>ConsultarMapaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarTimelinePage.xaml.cs">
+      <DependentUpon>ConsultarTimelinePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarFotoListaPage.xaml.cs">
+      <DependentUpon>ConsultarFotoListaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarLocalVisitadoDetalhePage.xaml.cs">
+      <DependentUpon>ConsultarLocalVisitadoDetalhePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarRankingsDetalhePage.xaml.cs">
+      <DependentUpon>ConsultarRankingsDetalhePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarLocaisVisitadosListaPage.xaml.cs">
+      <DependentUpon>ConsultarLocaisVisitadosListaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarRankingsPage.xaml.cs">
+      <DependentUpon>ConsultarRankingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarRankingsListaPage.xaml.cs">
+      <DependentUpon>ConsultarRankingsListaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarLocaisVisitadoPage.xaml.cs">
+      <DependentUpon>ConsultarLocaisVisitadoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarFotoPage.xaml.cs">
+      <DependentUpon>ConsultarFotoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarResumoDadosPage.xaml.cs">
+      <DependentUpon>ConsultarResumoDadosPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarResumoPage.xaml.cs">
+      <DependentUpon>ConsultarResumoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarRelatorioGastoPage.xaml.cs">
+      <DependentUpon>ConsultarRelatorioGastoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarRelatorioGastoListaPage.xaml.cs">
+      <DependentUpon>ConsultarRelatorioGastoListaPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EdicaoAgrupamentoCidadePage.xaml.cs">
       <DependentUpon>EdicaoAgrupamentoCidadePage.xaml</DependentUpon>
     </Compile>
@@ -239,6 +313,9 @@
     <Compile Include="Views\ConsultarGastoDivididoPage.xaml.cs">
       <DependentUpon>ConsultarGastoDivididoPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ListagemCalendarioRealizadoPage.xaml.cs">
+      <DependentUpon>ListagemCalendarioRealizadoPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ListagemCalendarioPrevistoPage.xaml.cs">
       <DependentUpon>ListagemCalendarioPrevistoPage.xaml</DependentUpon>
     </Compile>
@@ -247,6 +324,9 @@
     </Compile>
     <Compile Include="Views\ConsultarExtratoListaPage.xaml.cs">
       <DependentUpon>ConsultarExtratoListaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarMapaExibicaoPage.xaml.cs">
+      <DependentUpon>ConsultarMapaExibicaoPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TextoPopupPage.xaml.cs">
       <DependentUpon>TextoPopupPage.xaml</DependentUpon>
@@ -450,6 +530,15 @@
       <HintPath>..\..\packages\ExifLib.PCL.1.0.1\lib\portable-net45+sl50+win+WindowsPhoneApp81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10\ExifLib.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="FFImageLoading">
+      <HintPath>..\..\packages\Xamarin.FFImageLoading.2.2.8\lib\portable-net45+win8+wpa81+wp8\FFImageLoading.dll</HintPath>
+    </Reference>
+    <Reference Include="FFImageLoading.Forms">
+      <HintPath>..\..\packages\Xamarin.FFImageLoading.Forms.2.2.8\lib\portable-net45+win8+wpa81+wp8\FFImageLoading.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="FFImageLoading.Platform">
+      <HintPath>..\..\packages\Xamarin.FFImageLoading.2.2.8\lib\portable-net45+win8+wpa81+wp8\FFImageLoading.Platform.dll</HintPath>
+    </Reference>
     <Reference Include="FormsToolkit, Version=1.1.18.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\FormsToolkit.1.1.18\lib\portable-net45+wp8+win8+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10+UAP10\FormsToolkit.dll</HintPath>
       <Private>True</Private>
@@ -546,6 +635,14 @@
       <HintPath>..\..\packages\Xam.Plugins.Settings.2.5.1.0\lib\portable-net45+wp80+win8+wpa81\Plugin.Settings.Abstractions.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Plugin.Share, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Plugin.Share.5.0.0\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+UAP10\Plugin.Share.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Plugin.Share.Abstractions, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Plugin.Share.5.0.0\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+UAP10\Plugin.Share.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Plugin.Vibrate, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xam.Plugins.Vibrate.2.0.0\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+UAP10\Plugin.Vibrate.dll</HintPath>
       <Private>True</Private>
@@ -628,6 +725,10 @@
     <EmbeddedResource Include="Resource\EnumDescription.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>EnumDescription.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\MensagemModelo.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MensagemModelo.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\MenuInicialPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
@@ -1050,6 +1151,108 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\ConsultarGastoDivididoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarRelatorioGastoListaPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarRelatorioGastoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemCalendarioRealizadoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarCalendarioRealizadoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarResumoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarResumoDadosPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarRankingsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarRankingsListaPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarRankingsDetalhePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarLocaisVisitadoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarLocaisVisitadosListaPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarLocalVisitadoDetalhePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarFotoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarFotoListaPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarTimelinePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarMapaPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarMapaExibicaoPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

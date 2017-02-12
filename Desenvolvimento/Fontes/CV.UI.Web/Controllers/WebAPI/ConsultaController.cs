@@ -55,6 +55,7 @@ namespace CV.UI.Web.Controllers.WebAPI
         [HttpGet]
         public List<Timeline> ConsultarTimeline(CriterioBusca json)
         {
+            
             ConsultaBusiness biz = new ConsultaBusiness();
             return biz.CarregarTimeline(token.IdentificadorViagem, token.IdentificadorUsuario, json.IdentificadorParticipante, json.DataInicioDe,json.DataInicioAte, json.Count.GetValueOrDefault(20),json.Tipo,json.Identificador);
         }
