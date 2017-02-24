@@ -23,7 +23,7 @@ namespace CV.Mobile.ViewModels
     public class EdicaoCarroViewModel : BaseNavigationViewModel
     {
         private Carro _ItemCarro;
-
+        private double _TamanhoGrid=0;
         private bool _PermiteExcluir = true;
         private bool _PossoComentar = false;
         private bool _VisitaIniciada = false;
@@ -234,6 +234,7 @@ namespace CV.Mobile.ViewModels
                         itemUsuario.Selecionado = true;
                     Participantes.Add(itemUsuario);
                 }
+                TamanhoGrid = Participantes.Count() * 18;
 
             }
         }
@@ -358,7 +359,18 @@ namespace CV.Mobile.ViewModels
             }
         }
 
+        public double TamanhoGrid
+        {
+            get
+            {
+                return _TamanhoGrid;
+            }
 
+            set
+            {
+                SetProperty(ref _TamanhoGrid, value);
+            }
+        }
 
         private async Task Salvar()
         {

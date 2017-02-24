@@ -31,6 +31,7 @@ namespace CV.Mobile.ViewModels
         private AvaliacaoAtracao _ItemAvaliacao = new AvaliacaoAtracao();
         private Usuario _ParticipanteSelecionado;
         private readonly DateTime _dataMinima = new DateTime(1900, 01, 01);
+        private double _TamanhoGrid;
         public EdicaoAtracaoViewModel(Atracao pItemAtracao, Viagem pItemViagem)
         {
             if (pItemAtracao.IdentificadorAtracaoPai == null)
@@ -237,7 +238,9 @@ namespace CV.Mobile.ViewModels
                         itemUsuario.Selecionado = true;
                     Participantes.Add(itemUsuario);
                 }
-                
+                TamanhoGrid = Participantes.Count() * 18;
+
+
             }
         }
 
@@ -391,6 +394,19 @@ namespace CV.Mobile.ViewModels
             {
                 _ParticipanteSelecionado = null;
                 OnPropertyChanged();
+            }
+        }
+
+        public double TamanhoGrid
+        {
+            get
+            {
+                return _TamanhoGrid;
+            }
+
+            set
+            {
+                SetProperty(ref _TamanhoGrid, value);
             }
         }
 

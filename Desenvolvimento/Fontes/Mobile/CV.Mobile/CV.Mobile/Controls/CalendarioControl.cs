@@ -33,10 +33,20 @@ namespace CV.Mobile.Controls
 
             });
 
+        public static BindableProperty QuantidadeIntervaloProperty =
+         BindableProperty.Create(nameof(QuantidadeIntervalo), typeof(int), typeof(CalendarioControl), 1);
+
         public Command<int?> AgendaSelectedCommand
         {
             get { return (Command<int?>)this.GetValue(AgendaSelectedCommandProperty); }
             set { this.SetValue(AgendaSelectedCommandProperty, value); }
+        }
+
+
+        public int QuantidadeIntervalo
+        {
+            get { return (int)this.GetValue(QuantidadeIntervaloProperty); }
+            set { this.SetValue(QuantidadeIntervaloProperty, value); }
         }
 
         public Command<DateTime> TrocarDataCommand
@@ -145,7 +155,7 @@ namespace CV.Mobile.Controls
             _grid.ColumnDefinitions = new ColumnDefinitionCollection();
             _grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(80, GridUnitType.Absolute) });
             _grid.RowDefinitions = new RowDefinitionCollection();
-            for (int i = 0; i <= 23; i++)
+            for (int i = 0; i <= (24 * QuantidadeIntervalo - 1); i++)
                 _grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(60) });
             _grid.Children.Clear();
             List<GrupoHorario> Grupos = new List<GrupoHorario>();
@@ -155,8 +165,8 @@ namespace CV.Mobile.Controls
                 {
                     GrupoHorario itemGrupo = new GrupoHorario()
                     {
-                        LinhaInicial = itemAgendamento.DataInicio.GetValueOrDefault().Date < DataCalendario.Date ? 0 : itemAgendamento.DataInicio.GetValueOrDefault().Hour,
-                        LinhaFinal = itemAgendamento.DataFim.GetValueOrDefault().Date > DataCalendario.Date ? 23 : itemAgendamento.DataFim.GetValueOrDefault().Hour,
+                        LinhaInicial = itemAgendamento.DataInicio.GetValueOrDefault().Date < DataCalendario.Date ? 0 : ( itemAgendamento.DataInicio.GetValueOrDefault().Hour * QuantidadeIntervalo + (Convert.ToInt32( decimal.Truncate( itemAgendamento.DataInicio.GetValueOrDefault().Minute / Convert.ToInt32(decimal.Truncate(60m/Convert.ToDecimal(QuantidadeIntervalo))))) )),
+                        LinhaFinal = itemAgendamento.DataFim.GetValueOrDefault().Date > DataCalendario.Date ? (24 * QuantidadeIntervalo - 1) : (itemAgendamento.DataFim.GetValueOrDefault().Hour * QuantidadeIntervalo + (Convert.ToInt32(decimal.Truncate(itemAgendamento.DataInicio.GetValueOrDefault().Minute / Convert.ToInt32(decimal.Truncate(60m / Convert.ToDecimal(QuantidadeIntervalo)))))) ),
                         Identificador = itemAgendamento.Identificador.GetValueOrDefault(),
                         Nome = itemAgendamento.Nome,
                         Prioridade = itemAgendamento.Prioridade
@@ -186,7 +196,7 @@ namespace CV.Mobile.Controls
             for (int i=1;i<=TotalColunas;i++)
                 _grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
 
-            for (int i = 0;i<=23;i++)
+            for (int i = 0;i<=(24 * QuantidadeIntervalo)-1; i++)
             {
                 if (i%2 == 1)
                 {
@@ -197,8 +207,10 @@ namespace CV.Mobile.Controls
                   
                 }
                 Label lbl = new Label() { VerticalOptions = LayoutOptions.CenterAndExpand};
-
-                lbl.Text = String.Concat(i.ToString("00"));
+                int ParteInteira = Convert.ToInt32(decimal.Truncate(Convert.ToDecimal(i) / Convert.ToDecimal(QuantidadeIntervalo)));
+                int Resto = i % QuantidadeIntervalo;
+                int ParteMinutos = Convert.ToInt32(decimal.Truncate(60m / Convert.ToDecimal(QuantidadeIntervalo)));
+                lbl.Text = String.Concat(ParteInteira.ToString("00"),":", ParteMinutos.ToString("00"));
                 _grid.Children.Add(lbl, 0, i);
             }
             foreach (var itemGrupo in Grupos)

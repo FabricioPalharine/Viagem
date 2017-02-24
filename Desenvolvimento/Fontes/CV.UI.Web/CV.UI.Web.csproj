@@ -346,6 +346,8 @@
     <Content Include="Library\res\images\play-schools.png" />
     <Content Include="Library\res\images\playgrounds.png" />
     <Content Include="Library\res\images\pool-halls.png" />
+    <Content Include="Library\res\images\powered_by_google_on_non_white.png" />
+    <Content Include="Library\res\images\powered_by_google_on_white.png" />
     <Content Include="Library\res\images\printing-graphic-arts.png" />
     <Content Include="Library\res\images\professional.png" />
     <Content Include="Library\res\images\real-estate.png" />

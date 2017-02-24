@@ -13,7 +13,8 @@ namespace CV.UI.Web.Controllers.MVC
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
-
+            if (!Request.RawUrl.Contains("Index") && !Request.RawUrl.EndsWith("/"))
+                return RedirectToAction("Index", "Home");
             return View();
         }
 

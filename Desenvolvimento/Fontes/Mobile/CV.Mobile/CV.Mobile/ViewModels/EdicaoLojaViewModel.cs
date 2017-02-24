@@ -25,7 +25,7 @@ namespace CV.Mobile.ViewModels
         private MapSpan _Bounds;
         private bool _PermiteExcluir = true;
         private bool _PossoComentar = false;
-
+        
         private AvaliacaoLoja _ItemAvaliacao = new AvaliacaoLoja();
         private readonly DateTime _dataMinima = new DateTime(1900, 01, 01);
         public EdicaoLojaViewModel(Loja pItemLoja, Viagem pItemViagem)

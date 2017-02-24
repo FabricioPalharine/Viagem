@@ -26,6 +26,7 @@ namespace CV.Mobile.Controls
         private SearchBar _searchBar;
         private Entry _entry;
         private ListView _autoCompleteListView;
+        private StackLayout _stackLayout;
 
         private IEnumerable<GmsSearchResults> _predictions;
 
@@ -122,7 +123,11 @@ namespace CV.Mobile.Controls
             await System.Threading.Tasks.Task.Delay(500);
 
             OsmNominatim.Instance.CountryCodes.Add("br");
-
+            this._stackLayout = new StackLayout()
+            {
+                Spacing = 0,
+                IsVisible = false
+            };
 
             this._autoCompleteListView = new ListView
             {
@@ -138,6 +143,11 @@ namespace CV.Mobile.Controls
 
                 return cell;
             });
+
+            this._stackLayout.Children.Add(this._autoCompleteListView);
+            Image img = new Image();
+            img.Source = ImageSource.FromFile("powered_by_google_on_white.png");
+            this._stackLayout.Children.Add(img);
 
             View searchView;
             if (this._useSearchBar)
@@ -173,7 +183,7 @@ namespace CV.Mobile.Controls
                 widthConstraint: Constraint.RelativeToParent(l => l.Width));
 
             this.Children.Add(
-                this._autoCompleteListView,
+                this._stackLayout,
                 Constraint.Constant(0),
                 Constraint.RelativeToView(searchView, (r, v) => v.Y + v.Height));
 
@@ -187,6 +197,7 @@ namespace CV.Mobile.Controls
             await System.Threading.Tasks.Task.Delay(500);
             this._autoCompleteListView.HeightRequest = 0;
             this._autoCompleteListView.IsVisible = false;
+            this._stackLayout.IsVisible = false;
         }
 
         private void SearchButtonPressed(object sender, EventArgs e)
@@ -212,10 +223,11 @@ namespace CV.Mobile.Controls
         {
             try
             {
-                if (string.IsNullOrEmpty(this.SearchText))
+                if (string.IsNullOrEmpty(this.SearchText) || this.SearchText.Length < 3)
                 {
                     this._autoCompleteListView.ItemsSource = null;
                     this._autoCompleteListView.IsVisible = false;
+                    this._stackLayout.IsVisible = false;
                     this._autoCompleteListView.HeightRequest = 0;
                     return;
                 }
@@ -237,12 +249,16 @@ namespace CV.Mobile.Controls
 
                     this._autoCompleteListView.HeightRequest = result.Count() * 40;
                     this._autoCompleteListView.IsVisible = true;
+                    this._stackLayout.IsVisible = true;
+
                     this._autoCompleteListView.ItemsSource = this._predictions;
                 }
                 else
                 {
                     this._autoCompleteListView.HeightRequest = 0;
                     this._autoCompleteListView.IsVisible = false;
+                    this._stackLayout.IsVisible = true;
+
                 }
             }
             catch (Exception )
@@ -276,6 +292,8 @@ namespace CV.Mobile.Controls
         {
             this._autoCompleteListView.ItemsSource = null;
             this._autoCompleteListView.IsVisible = false;
+            this._stackLayout.IsVisible = true;
+
             this._autoCompleteListView.HeightRequest = 0;
 
             if (this._useSearchBar)

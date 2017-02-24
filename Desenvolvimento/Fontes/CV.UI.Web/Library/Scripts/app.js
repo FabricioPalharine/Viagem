@@ -236,13 +236,13 @@ function _init() {
         fix: function () {
             //Get window height and the wrapper height
             /*jshint camelcase: false */
-            var neg = $('.main-header').outerHeight() + $('.main-footer').outerHeight();
+            var neg = $('.main-header').outerHeight() + $('.main-footer').outerHeight() + 5;
             var window_height = $(window).height();
             var sidebar_height = $('.sidebar').height();
             //Set the min-height of the content and sidebar based on the
             //the height of the document.
             if ($('body').hasClass('fixed')) {
-                $('.content-wrapper, .right-side').css('min-height', window_height - $('.main-footer').outerHeight());
+                $('.content-wrapper, .right-side').css('min-height', window_height - $('.main-footer').outerHeight() - 5);
             } else {
                 var postSetWidth;
                 if (window_height >= sidebar_height) {

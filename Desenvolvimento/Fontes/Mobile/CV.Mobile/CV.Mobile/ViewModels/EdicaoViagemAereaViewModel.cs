@@ -27,6 +27,7 @@ namespace CV.Mobile.ViewModels
         private bool _PossoComentar = false;
         private AvaliacaoAerea _ItemAvaliacao = new AvaliacaoAerea();
         private Usuario _ParticipanteSelecionado;
+        private double _TamanhoGrid = 0;
         private ViagemAereaAeroporto _AeroportoSelecionado;
 
         private readonly DateTime _dataMinima = new DateTime(1900, 01, 01);
@@ -245,6 +246,7 @@ namespace CV.Mobile.ViewModels
                         itemUsuario.Selecionado = true;
                     Participantes.Add(itemUsuario);
                 }
+                TamanhoGrid = Participantes.Count() * 18;
 
             }
         }
@@ -368,6 +370,19 @@ namespace CV.Mobile.ViewModels
             {
                 SetProperty(ref _ItemDestino, value);
 
+            }
+        }
+
+        public double TamanhoGrid
+        {
+            get
+            {
+                return _TamanhoGrid;
+            }
+
+            set
+            {
+                SetProperty(ref _TamanhoGrid, value);
             }
         }
 

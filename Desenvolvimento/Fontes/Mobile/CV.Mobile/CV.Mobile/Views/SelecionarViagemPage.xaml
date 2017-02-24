@@ -24,7 +24,7 @@
     <ToolbarItem x:Name="PesquisarToolbarItem" Icon="search24.png"  Command="{Binding PesquisarCommand}" />
   </ContentPage.ToolbarItems>  
   <ContentPage.Content>
-    <StackLayout Spacing="0">
+    <StackLayout Spacing="0" VerticalOptions="FillAndExpand">
       <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="Blue" />
 
       <ListView x:Name="listView" VerticalOptions="FillAndExpand" SeparatorVisibility="None" ItemsSource="{Binding Viagens}" SelectedItem="{Binding ViagemSelecionada, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="false"  IsPullToRefreshEnabled="true"  IsRefreshing="{Binding IsBusy, Mode=OneWay}" RefreshCommand="{Binding AtualizarListaCommand}" IsVisible="{Binding ModoPesquisa, Converter={StaticResource boolInverterConverter}}" >

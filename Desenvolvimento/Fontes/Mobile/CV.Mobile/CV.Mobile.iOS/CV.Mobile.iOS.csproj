@@ -401,6 +401,9 @@
   <ItemGroup>
     <BundleResource Include="Resources\transport.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\powered_by_google_on_white.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

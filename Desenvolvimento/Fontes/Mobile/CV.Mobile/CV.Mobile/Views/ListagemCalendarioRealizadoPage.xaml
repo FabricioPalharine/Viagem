@@ -24,7 +24,7 @@
   </ContentPage.ToolbarItems>
 
   <ContentPage.Content>
-    <StackLayout Spacing="0">
+    <StackLayout Spacing="0" VerticalOptions="FillAndExpand">
       <ListView VerticalOptions="FillAndExpand" SeparatorVisibility="None" ItemsSource="{Binding ListaDados}" SelectedItem="{Binding ItemSelecionado, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="True"  IsPullToRefreshEnabled="true"  IsRefreshing="{Binding IsLoadingLista, Mode=TwoWay}" RefreshCommand="{Binding RecarregarListaCommand}"  IsVisible="{Binding ModoPesquisa, Converter={StaticResource boolInverterConverter}}" >
        
 
@@ -70,7 +70,7 @@
               <DataTemplate>
                 <StackLayout >
                   <ScrollView>
-                    <controles:CalendarioControl VerticalOptions="FillAndExpand" DataCalendario="{Binding Data, Mode=OneWay}" Agendamentos="{Binding Source={x:Reference paginaSelecao}, Path=BindingContext.ListaDados}" AgendaSelectedCommand="{Binding Source={x:Reference paginaSelecao}, Path=BindingContext.AbrirAgendaCommand}">
+                    <controles:CalendarioControl VerticalOptions="FillAndExpand" DataCalendario="{Binding Data, Mode=OneWay}" Agendamentos="{Binding Source={x:Reference paginaSelecao}, Path=BindingContext.ListaDados}" AgendaSelectedCommand="{Binding Source={x:Reference paginaSelecao}, Path=BindingContext.AbrirAgendaCommand}" QuantidadeIntervalo="4">
 
                     </controles:CalendarioControl>
                   </ScrollView>

@@ -26,8 +26,7 @@
   </ContentPage.ToolbarItems>
 
   <ContentPage.Content>
-    <StackLayout Spacing="0">
-      <ListView VerticalOptions="FillAndExpand" SeparatorVisibility="None" ItemsSource="{Binding ListaDados}" SelectedItem="{Binding ItemSelecionado, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="True"  IsPullToRefreshEnabled="False"   >
+    <ListView VerticalOptions="FillAndExpand" SeparatorVisibility="None" ItemsSource="{Binding ListaDados}" SelectedItem="{Binding ItemSelecionado, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="True"  IsPullToRefreshEnabled="False"   >
         <ListView.Behaviors>
           <behaviors:EventHandlerBehavior EventName="ItemTapped">
             <behaviors:InvokeCommandAction Command="{Binding ItemTappedCommand}"   />
@@ -81,7 +80,6 @@
         </ListView.ItemTemplate>
       </ListView>
  
-    </StackLayout>
   </ContentPage.Content>
   
 </ContentPage>

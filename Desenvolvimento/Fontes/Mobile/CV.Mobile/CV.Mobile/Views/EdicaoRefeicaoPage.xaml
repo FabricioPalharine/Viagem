@@ -64,7 +64,7 @@
 
     <Label Text="Comensais"  />
        
-        <ListView  SeparatorVisibility="None" ItemsSource="{Binding Participantes}" SelectedItem="{Binding ParticipanteSelecionado, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="True"  IsPullToRefreshEnabled="False" IsVisible="{Binding VisitaIniciada}"  >
+        <ListView  SeparatorVisibility="None" ItemsSource="{Binding Participantes}" SelectedItem="{Binding ParticipanteSelecionado, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="True"  IsPullToRefreshEnabled="False" IsVisible="{Binding VisitaIniciada}" HeightRequest="{Binding TamanhoGrid}"  >
           <ListView.ItemTemplate>
             <DataTemplate>
               <ViewCell >

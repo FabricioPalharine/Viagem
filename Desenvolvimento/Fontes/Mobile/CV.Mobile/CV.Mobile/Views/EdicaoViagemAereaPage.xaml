@@ -59,7 +59,7 @@
 
         <Label Text="Viajantes"   />
 
-        <ListView  SeparatorVisibility="None" ItemsSource="{Binding Participantes}" SelectedItem="{Binding ParticipanteSelecionado, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="True"  IsPullToRefreshEnabled="False" IsVisible="{Binding VisitaIniciada}" VerticalOptions="Fill"  >
+        <ListView  SeparatorVisibility="None" ItemsSource="{Binding Participantes}" SelectedItem="{Binding ParticipanteSelecionado, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="True"  IsPullToRefreshEnabled="False" IsVisible="{Binding VisitaIniciada}" VerticalOptions="Fill"  HeightRequest="{Binding TamanhoGrid}" >
           <ListView.ItemTemplate>
             <DataTemplate>
               <ViewCell >

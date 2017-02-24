@@ -70,7 +70,7 @@
 
     <Label Text="Amigos" IsVisible="{Binding ItemGasto.Dividido}"  />
        
-        <ListView  SeparatorVisibility="None" ItemsSource="{Binding Participantes}" SelectedItem="{Binding ParticipanteSelecionado, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="True"  IsPullToRefreshEnabled="False" IsVisible="{Binding ItemGasto.Dividido}"  >
+        <ListView  SeparatorVisibility="None" ItemsSource="{Binding Participantes}" SelectedItem="{Binding ParticipanteSelecionado, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="True"  IsPullToRefreshEnabled="False" IsVisible="{Binding ItemGasto.Dividido}" HeightRequest="{Binding TamanhoGrid}" >
           <ListView.ItemTemplate>
             <DataTemplate>
               <ViewCell >

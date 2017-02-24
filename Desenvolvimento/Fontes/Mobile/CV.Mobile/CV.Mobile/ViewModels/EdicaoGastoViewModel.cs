@@ -27,6 +27,7 @@ namespace CV.Mobile.ViewModels
         private bool _ExibeHora = false;
         private bool _VoltarPagina = false;
         private Usuario _ParticipanteSelecionado;
+        private double _TamanhoGrid = 0;
         public EdicaoGastoViewModel(Gasto pItemGasto)
         {
 
@@ -118,6 +119,7 @@ namespace CV.Mobile.ViewModels
                         itemUsuario.Selecionado = true;
                     Participantes.Add(itemUsuario);
                 }
+                TamanhoGrid = Participantes.Count() * 18;
 
             }
         }
@@ -202,6 +204,19 @@ namespace CV.Mobile.ViewModels
             set
             {
                 _VoltarPagina = value;
+            }
+        }
+
+        public double TamanhoGrid
+        {
+            get
+            {
+                return _TamanhoGrid;
+            }
+
+            set
+            {
+               SetProperty(ref _TamanhoGrid , value);
             }
         }
 

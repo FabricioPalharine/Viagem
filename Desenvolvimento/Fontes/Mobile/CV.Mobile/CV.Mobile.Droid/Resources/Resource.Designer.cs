@@ -4609,8 +4609,8 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0200da
 			public const int mr_ic_play_light = 2130837722;
 			
-			// aapt resource value: 0x7f0200ea
-			public const int notification_template_icon_bg = 2130837738;
+			// aapt resource value: 0x7f0200eb
+			public const int notification_template_icon_bg = 2130837739;
 			
 			// aapt resource value: 0x7f0200db
 			public const int photography = 2130837723;
@@ -4631,31 +4631,34 @@ namespace CV.Mobile.Droid
 			public const int powered_by_google_light = 2130837728;
 			
 			// aapt resource value: 0x7f0200e1
-			public const int restaurants = 2130837729;
+			public const int powered_by_google_on_white = 2130837729;
 			
 			// aapt resource value: 0x7f0200e2
-			public const int roundedbg = 2130837730;
+			public const int restaurants = 2130837730;
 			
 			// aapt resource value: 0x7f0200e3
-			public const int roundedbgdark = 2130837731;
+			public const int roundedbg = 2130837731;
 			
 			// aapt resource value: 0x7f0200e4
-			public const int save = 2130837732;
+			public const int roundedbgdark = 2130837732;
 			
 			// aapt resource value: 0x7f0200e5
-			public const int search24 = 2130837733;
+			public const int save = 2130837733;
 			
 			// aapt resource value: 0x7f0200e6
-			public const int shopping = 2130837734;
+			public const int search24 = 2130837734;
 			
 			// aapt resource value: 0x7f0200e7
-			public const int splash = 2130837735;
+			public const int shopping = 2130837735;
 			
 			// aapt resource value: 0x7f0200e8
-			public const int tiresaccessories = 2130837736;
+			public const int splash = 2130837736;
 			
 			// aapt resource value: 0x7f0200e9
-			public const int transport = 2130837737;
+			public const int tiresaccessories = 2130837737;
+			
+			// aapt resource value: 0x7f0200ea
+			public const int transport = 2130837738;
 			
 			static Drawable()
 			{

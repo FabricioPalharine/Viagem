@@ -25,7 +25,7 @@
   </ContentPage.ToolbarItems>
 
   <ContentPage.Content>
-    <StackLayout Spacing="0">
+    <StackLayout Spacing="0" VerticalOptions="FillAndExpand">
       <ListView VerticalOptions="FillAndExpand" SeparatorVisibility="None" ItemsSource="{Binding PedidosCompra}" SelectedItem="{Binding PedidoSelecionado, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="True"  IsPullToRefreshEnabled="true"  IsRefreshing="{Binding IsLoadingLista, Mode=TwoWay}" RefreshCommand="{Binding RecarregarListaCommand}"  IsVisible="{Binding ModoPesquisa, Converter={StaticResource boolInverterConverter}}"  >
 
         <ListView.Behaviors>
