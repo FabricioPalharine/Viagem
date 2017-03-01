@@ -44,22 +44,30 @@ namespace CV.Mobile.ViewModels
             await vm.VerificarConexaoSignalR(itemViagem);
             if (itemViagem != null)
             {
-                var itemCS = await DatabaseService.Database.GetControleSincronizacaoAsync();
-                itemCS.SincronizadoEnvio = false;
-                await DatabaseService.Database.SalvarControleSincronizacao(itemCS);
+                if (itemViagem.Edicao)
+                {
+                    var itemCS = await DatabaseService.Database.GetControleSincronizacaoAsync();
+                    itemCS.SincronizadoEnvio = false;
+                    await DatabaseService.Database.SalvarControleSincronizacao(itemCS);
+                }
                 vm.ItemViagem = itemViagem;
                 //vm.PreencherPaginasViagem(itemViagem);
                 using (ApiService srv = new ApiService())
                 {
-                    if (CrossConnectivity.Current.IsConnected && await srv.VerificarOnLine())
+                    bool Online = CrossConnectivity.Current.IsConnected &&  await srv.VerificarOnLine();
+                    if (Online)
                     {
                         await srv.SelecionarViagem(itemViagem.Identificador);
                     }
+
+                    await vm.IniciarControlePosicao();
+                    if (Online && itemViagem.Edicao)
+                    {
+                        await vm.VerificarSincronizacaoDados();
+                        vm.VerificarEnvioFotos();
+                        vm.VerificarEnvioVideos();
+                    }
                 }
-                await vm.IniciarControlePosicao();
-                await vm.VerificarSincronizacaoDados();
-                vm.VerificarEnvioFotos();
-                vm.VerificarEnvioVideos();
             }
             var Pagina = new Views.MasterDetailPage(vm);
 

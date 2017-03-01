@@ -23,7 +23,7 @@ namespace CV.Mobile.ViewModels
     {
         private CarroDeslocamento _ItemCarroDeslocamento;
         private bool _PermiteExcluir = true;
-        private double _TamanhoGrid = 0;
+        private double _TamanhoGrid ;
         private bool _VisitaConcluida = false;
         private Usuario _ParticipanteSelecionado;
         private readonly DateTime _dataMinima = new DateTime(1900, 01, 01);
@@ -134,7 +134,7 @@ namespace CV.Mobile.ViewModels
                         itemUsuario.Selecionado = true;
                     Participantes.Add(itemUsuario);
                 }
-                TamanhoGrid = Participantes.Count() * 18;
+                TamanhoGrid = Participantes.Count() * 24;
 
 
             }

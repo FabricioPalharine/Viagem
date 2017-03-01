@@ -26,7 +26,7 @@ namespace CV.Mobile.ViewModels
         private bool _PermiteExcluir = true;
         private bool _PagamentoMECartao = false;
         private Usuario _ParticipanteSelecionado;
-        private double _TamanhoGrid = 0;
+        private double _TamanhoGrid ;
 
         public EdicaoReabastecimentoViewModel(Reabastecimento pItemReabastecimento)
         {
@@ -121,7 +121,7 @@ namespace CV.Mobile.ViewModels
                     if (itemUsuario.Identificador != ItemUsuarioLogado.Codigo)
                         Participantes.Add(itemUsuario);
                 }
-                TamanhoGrid = Participantes.Count() * 18;
+                TamanhoGrid = Participantes.Count() * 24;
 
             }
         }

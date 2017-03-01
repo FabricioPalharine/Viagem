@@ -29,7 +29,7 @@ namespace CV.Mobile.ViewModels
         private RefeicaoPedido _ItemAvaliacao = new RefeicaoPedido();
         private Usuario _ParticipanteSelecionado;
         private readonly DateTime _dataMinima = new DateTime(1900, 01, 01);
-        private double _TamanhoGrid = 0;
+        private double _TamanhoGrid;
         public EdicaoRefeicaoViewModel(Refeicao pItemRefeicao, Viagem pItemViagem)
         {
             if (pItemRefeicao.IdentificadorAtracao == null)
@@ -91,7 +91,7 @@ namespace CV.Mobile.ViewModels
                         PossoComentar = false;
 
                 }
-                TamanhoGrid = Participantes.Where(d => d.Selecionado).Count() * 36 + Participantes.Where(d => !d.Selecionado).Count() * 18;
+                TamanhoGrid = Participantes.Where(d => d.Selecionado).Count() * 40 + Participantes.Where(d => !d.Selecionado).Count() * 24;
             }
         }
         public Command SalvarCommand { get; set; }
@@ -183,7 +183,7 @@ namespace CV.Mobile.ViewModels
                     }
                     Participantes.Add(itemUsuario);
                 }
-                TamanhoGrid = Participantes.Where(d => d.Selecionado).Count() * 36 + Participantes.Where(d => !d.Selecionado).Count() * 18;
+                TamanhoGrid = Participantes.Where(d => d.Selecionado).Count() * 40 + Participantes.Where(d => !d.Selecionado).Count() * 24;
             }
         }
 

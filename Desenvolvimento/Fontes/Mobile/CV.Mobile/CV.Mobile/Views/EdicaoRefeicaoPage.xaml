@@ -35,6 +35,7 @@
             Property=Height,Factor=0,Constant=60}"
                           RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width,Factor=1,Constant=0}"
                          >
+        
         <Label Text="Atração Pai"  />
         <controles:ExtendedPicker
                               DisplayProperty="Nome"
@@ -64,7 +65,7 @@
 
     <Label Text="Comensais"  />
        
-        <ListView  SeparatorVisibility="None" ItemsSource="{Binding Participantes}" SelectedItem="{Binding ParticipanteSelecionado, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="True"  IsPullToRefreshEnabled="False" IsVisible="{Binding VisitaIniciada}" HeightRequest="{Binding TamanhoGrid}"  >
+        <ListView  SeparatorVisibility="None" ItemsSource="{Binding Participantes}" SelectedItem="{Binding ParticipanteSelecionado, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="True"  IsPullToRefreshEnabled="False" IsVisible="{Binding VisitaIniciada}"   >
           <ListView.ItemTemplate>
             <DataTemplate>
               <ViewCell >

@@ -234,7 +234,7 @@ namespace CV.Mobile.ViewModels
                         itemUsuario.Selecionado = true;
                     Participantes.Add(itemUsuario);
                 }
-                TamanhoGrid = Participantes.Count() * 18;
+                TamanhoGrid = Participantes.Count() * 24;
 
             }
         }

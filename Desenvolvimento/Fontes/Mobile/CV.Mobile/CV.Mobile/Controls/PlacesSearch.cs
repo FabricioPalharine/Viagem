@@ -126,9 +126,14 @@ namespace CV.Mobile.Controls
             this._stackLayout = new StackLayout()
             {
                 Spacing = 0,
-                IsVisible = false
+                IsVisible = false,
+                BackgroundColor = Color.White
             };
 
+            Image img = new Image();
+            img.Source = ImageSource.FromFile("powered_by_google_on_white.png");
+            img.HeightRequest = 20;
+            this._stackLayout.Children.Add(img);
             this._autoCompleteListView = new ListView
             {
                 IsVisible = false,
@@ -143,11 +148,9 @@ namespace CV.Mobile.Controls
 
                 return cell;
             });
-
             this._stackLayout.Children.Add(this._autoCompleteListView);
-            Image img = new Image();
-            img.Source = ImageSource.FromFile("powered_by_google_on_white.png");
-            this._stackLayout.Children.Add(img);
+
+
 
             View searchView;
             if (this._useSearchBar)

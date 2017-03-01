@@ -166,14 +166,14 @@ namespace CV.Mobile.Controls
                     GrupoHorario itemGrupo = new GrupoHorario()
                     {
                         LinhaInicial = itemAgendamento.DataInicio.GetValueOrDefault().Date < DataCalendario.Date ? 0 : ( itemAgendamento.DataInicio.GetValueOrDefault().Hour * QuantidadeIntervalo + (Convert.ToInt32( decimal.Truncate( itemAgendamento.DataInicio.GetValueOrDefault().Minute / Convert.ToInt32(decimal.Truncate(60m/Convert.ToDecimal(QuantidadeIntervalo))))) )),
-                        LinhaFinal = itemAgendamento.DataFim.GetValueOrDefault().Date > DataCalendario.Date ? (24 * QuantidadeIntervalo - 1) : (itemAgendamento.DataFim.GetValueOrDefault().Hour * QuantidadeIntervalo + (Convert.ToInt32(decimal.Truncate(itemAgendamento.DataInicio.GetValueOrDefault().Minute / Convert.ToInt32(decimal.Truncate(60m / Convert.ToDecimal(QuantidadeIntervalo)))))) ),
+                        LinhaFinal = itemAgendamento.DataFim.GetValueOrDefault().Date > DataCalendario.Date ? (24 * QuantidadeIntervalo - 1) : (itemAgendamento.DataFim.GetValueOrDefault().Hour * QuantidadeIntervalo + (Convert.ToInt32(decimal.Truncate(itemAgendamento.DataFim.GetValueOrDefault().Minute / Convert.ToInt32(decimal.Truncate(60m / Convert.ToDecimal(QuantidadeIntervalo)))))) ),
                         Identificador = itemAgendamento.Identificador.GetValueOrDefault(),
                         Nome = itemAgendamento.Nome,
                         Prioridade = itemAgendamento.Prioridade
                     };
                     if (itemGrupo.LinhaFinal < itemGrupo.LinhaInicial)
                         itemGrupo.LinhaFinal = itemGrupo.LinhaInicial;
-                    var ItensHorario = Grupos.Where(d => ( d.LinhaFinal >= itemGrupo.LinhaInicial) ).OrderBy(d => d.Coluna);
+                    var ItensHorario = Grupos.Where(d => (d.LinhaFinal >= itemGrupo.LinhaInicial && d.LinhaInicial <= itemGrupo.LinhaFinal) ).OrderBy(d => d.Coluna);
                     if (ItensHorario.Any())
                     {
                         for (int i = 1; i <= ItensHorario.Max(d => d.Coluna) + 1; i++)
@@ -209,7 +209,7 @@ namespace CV.Mobile.Controls
                 Label lbl = new Label() { VerticalOptions = LayoutOptions.CenterAndExpand};
                 int ParteInteira = Convert.ToInt32(decimal.Truncate(Convert.ToDecimal(i) / Convert.ToDecimal(QuantidadeIntervalo)));
                 int Resto = i % QuantidadeIntervalo;
-                int ParteMinutos = Convert.ToInt32(decimal.Truncate(60m / Convert.ToDecimal(QuantidadeIntervalo)));
+                int ParteMinutos = Resto * Convert.ToInt32(decimal.Truncate(60m / Convert.ToDecimal(QuantidadeIntervalo )));
                 lbl.Text = String.Concat(ParteInteira.ToString("00"),":", ParteMinutos.ToString("00"));
                 _grid.Children.Add(lbl, 0, i);
             }

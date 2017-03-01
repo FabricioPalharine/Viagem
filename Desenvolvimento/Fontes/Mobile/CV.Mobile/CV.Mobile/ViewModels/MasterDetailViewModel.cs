@@ -189,11 +189,13 @@ namespace CV.Mobile.ViewModels
 
         private async void IniciarProcessoSincronizacao(bool ConectadoAnterior)
         {
-            if (!ConectadoAnterior)
-                await VerificarSincronizacaoDados();
-            VerificarEnvioFotos();
-            VerificarEnvioVideos();
-
+            if (ItemViagem.Edicao)
+            {
+                if (!ConectadoAnterior)
+                    await VerificarSincronizacaoDados();
+                VerificarEnvioFotos();
+                VerificarEnvioVideos();
+            }
         }
 
         public async Task VerificarSincronizacaoDados()

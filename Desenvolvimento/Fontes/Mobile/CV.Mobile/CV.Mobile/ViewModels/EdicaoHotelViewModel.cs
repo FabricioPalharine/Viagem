@@ -23,7 +23,7 @@ namespace CV.Mobile.ViewModels
     {
         private Hotel _ItemHotel;
         private Hotel _ItemHotelOriginal;
-        private double _TamanhoGrid = 0;
+        private double _TamanhoGrid ;
         private MapSpan _Bounds;
         private bool _PermiteExcluir = true;
         private bool _PossoComentar = false;
@@ -291,7 +291,7 @@ namespace CV.Mobile.ViewModels
                     Participantes.Add(itemUsuario);
                 }
 
-                TamanhoGrid = Participantes.Count() * 18;
+                TamanhoGrid = Participantes.Count() * 24;
 
 
             }
