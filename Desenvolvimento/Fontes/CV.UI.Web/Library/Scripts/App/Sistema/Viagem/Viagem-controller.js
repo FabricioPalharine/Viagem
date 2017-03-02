@@ -49,6 +49,7 @@
             else
                 vm.filtroAtualizacao.Aberto = vm.filtroAtualizacao.Situacao == "true"
 
+            vm.filtroAtualizacao.Situacao = null;
             if (vm.itemParticipante && vm.itemParticipante.Identificador)
                 vm.filtroAtualizacao.IdentificadorParticipante = vm.itemParticipante.Identificador;
             else

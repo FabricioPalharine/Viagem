@@ -1,18 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="Palharine.com.CV" android:installLocation="auto">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="Palharine.com.CV" android:installLocation="auto" android:versionCode="1" android:versionName="1.0">
 	<uses-sdk android:minSdkVersion="15" android:targetSdkVersion="24" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-	<application android:label="Curtindo Uma Viagem">
+	<application android:label="Curtindo Uma Viagem" android:icon="@drawable/icon">
 		<meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyAlUpOpwZWS_ZGlMAtB6lY76oy1QBWk97g" />
-    <provider android:name="android.support.v4.content.FileProvider"
-                android:authorities="Palharine.com.CV.fileprovider"
-                android:exported="false"
-                android:grantUriPermissions="true">
-      <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
-          android:resource="@xml/file_paths"></meta-data>
-    </provider>
-
-  </application>
+		<provider android:name="android.support.v4.content.FileProvider" android:authorities="Palharine.com.CV.fileprovider" android:exported="false" android:grantUriPermissions="true">
+			<meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths"></meta-data>
+		</provider>
+	</application>
 </manifest>

@@ -41,7 +41,7 @@ namespace CV.Mobile.Services
         public async Task SubirFoto(string AlbumId, byte[] Imagem, UploadFoto itemUpload)
         {
 
-            string Uri = String.Concat("user/default/albumid/", AlbumId, "?alt=json-in-script");
+            string Uri = String.Concat("user/default/albumid/default", "?alt=json-in-script");
             HttpResponseMessage response = null;
            
 

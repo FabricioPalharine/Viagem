@@ -1004,7 +1004,7 @@ namespace CV.Business
             {
 
                 wc.Headers[HttpRequestHeader.Authorization] = "Bearer " + itemUsuario.Token;
-                wc.Headers["GData-Version"] = "2";
+                wc.Headers["GData-Version"] = "3";
                 //var jsonData = wc.DownloadString("https://picasaweb.google.com/data/feed/api/user/default?alt=json");
                 //var albuminfo = JsonConvert.DeserializeObject<dynamic>(jsonData);
                 //var entries = ((Newtonsoft.Json.Linq.JArray)albuminfo.feed.entry);
@@ -1027,6 +1027,7 @@ namespace CV.Business
                 wc.Headers[HttpRequestHeader.ContentType] = "application/atom+xml";
 
 
+                
                 string URI = "https://picasaweb.google.com/data/feed/api/user/default?alt=json";
                 string HtmlResult = wc.UploadString(URI, "POST", XMLEntrada);
                 var newalbuminfo = JsonConvert.DeserializeObject<dynamic>(HtmlResult);
@@ -1045,7 +1046,7 @@ namespace CV.Business
                 if (string.IsNullOrEmpty(itemViagem.CodigoAlbum))
                 {
                     Usuario itemUsuario = SelecionarUsuario(itemViagem.IdentificadorUsuario);
-                    itemViagem.CodigoAlbum = CriarAlbum(itemUsuario, itemViagem.Nome);
+                    itemViagem.CodigoAlbum = string.Empty;// CriarAlbum(itemUsuario, itemViagem.Nome);
                 }
                 SalvarViagem_Completa(itemViagem);
             }
@@ -1080,7 +1081,7 @@ namespace CV.Business
                     Base64 = Base64.Substring(Posicao + 7);
             }
             byte[] Dados = Convert.FromBase64String(Base64);
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://picasaweb.google.com/data/feed/api/user/default/albumid/" + Album + "?alt=json-in-script");
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://picasaweb.google.com/data/feed/api/user/default/albumid/default?alt=json-in-script");
             request.Method = "POST";
             request.ContentType = itemFoto.ImageMime;
             request.ContentLength = Dados.Length;
