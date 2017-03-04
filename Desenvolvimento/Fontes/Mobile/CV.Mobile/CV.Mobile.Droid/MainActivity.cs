@@ -33,7 +33,12 @@ namespace CV.Mobile.Droid
             base.OnCreate(bundle);
             AndroidEnvironment.UnhandledExceptionRaiser += AndroidEnvironment_UnhandledExceptionRaiser; ;
             CachedImageRenderer.Init();
+            Behaviors.EventHandlerBehavior evt = new Behaviors.EventHandlerBehavior();
+            Behaviors.InvokeCommandAction cmd = new Behaviors.InvokeCommandAction();
+            FormsToolkit.Droid.Toolkit.Init();
             global::Xamarin.Forms.Forms.Init(this, bundle);
+            
+
             Xamarin.FormsMaps.Init(this, bundle);
             var cv = typeof(Xamarin.Forms.CarouselView);
             var assembly = Assembly.Load(cv.FullName);
@@ -43,7 +48,7 @@ namespace CV.Mobile.Droid
 
         private void AndroidEnvironment_UnhandledExceptionRaiser(object sender, RaiseThrowableEventArgs e)
         {
-            
+            Android.Util.Log.Error("CV", e.Exception.Message + ";" + e.Exception.StackTrace);
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)

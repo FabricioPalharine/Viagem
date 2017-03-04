@@ -61,6 +61,7 @@
     <Compile Include="Helpers\ImageResourceExtension.cs" />
     <Compile Include="Helpers\IntDecimalConverter.cs" />
     <Compile Include="Helpers\BooleanImageSourceConverter.cs" />
+    <Compile Include="Helpers\InvertedBooleanConverter.cs" />
     <Compile Include="Helpers\TipoFontAttributeConverter.cs" />
     <Compile Include="Helpers\IntStringConverter.cs" />
     <Compile Include="Helpers\InverseBooleanConverter.cs" />

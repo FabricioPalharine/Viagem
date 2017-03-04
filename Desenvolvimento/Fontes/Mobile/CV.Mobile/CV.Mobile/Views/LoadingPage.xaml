@@ -4,7 +4,7 @@
              x:Class="CV.Mobile.Views.LoadingPage"
              Title="Carregando"
              xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
-             xmlns:toolkit="clr-namespace:FormsToolkit;assembly=FormsToolKit">
+             xmlns:local="clr-namespace:CV.Mobile.Helpers;assembly=CV.Mobile">
   <ContentPage.Behaviors>
     <behaviors:EventHandlerBehavior EventName="Appearing">
       <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
@@ -13,7 +13,7 @@
   </ContentPage.Behaviors>
   <ContentPage.Resources>
     <ResourceDictionary>
-      <toolkit:InvertedBooleanConverter x:Key="boolInvConverter"/>
+      <local:InvertedBooleanConverter x:Key="boolInvConverter"/>
     </ResourceDictionary>
   </ContentPage.Resources>
   <ContentPage.Content>
