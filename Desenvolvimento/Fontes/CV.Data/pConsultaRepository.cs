@@ -925,6 +925,19 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                     queryRefeicao = queryRefeicao.Where(d => d.Data < DataAte);
                 queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.Data, Latitude = d.Latitude, Longitude = d.Longitude, Nome = d.Comentario, Tipo = d.Video.Value?"V":"F", Url = d.LinkFoto, UrlTumbnail = d.LinkThumbnail }));
             }
+            if (string.IsNullOrEmpty(Tipo) || Tipo == "U")
+            {
+                var queryUltimoPonto = this.Context.Posicoes.Where(d=>d.IdentificadorUsuario == IdentificadorUsuario)
+                                    .Where(d => d.Latitude.HasValue && d.Longitude.HasValue && (d.Longitude != 0 || d.Latitude != 0));
+                if (DataDe.HasValue)
+                    queryUltimoPonto = queryUltimoPonto.Where(d => d.DataLocal >= DataDe);
+                if (DataAte.HasValue)
+                    queryUltimoPonto = queryUltimoPonto.Where(d => d.DataLocal < DataAte);
+                queryUltimoPonto = queryUltimoPonto.OrderByDescending(d => d.DataLocal).Take(1);
+                queryFinal = queryFinal.Union(queryUltimoPonto.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.DataGMT, Latitude = d.Latitude, Longitude = d.Longitude, Nome = "Última Posição", Tipo = "U", Url = null, UrlTumbnail = null }));
+
+            }
+
             return queryFinal.ToList();
         }
 

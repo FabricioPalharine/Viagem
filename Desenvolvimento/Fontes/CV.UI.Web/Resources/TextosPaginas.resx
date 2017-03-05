@@ -1971,4 +1971,7 @@
   <data name="Ranking_ViagemSelecionada" xml:space="preserve">
     <value>Apenas Viagem Selecionada</value>
   </data>
+  <data name="PontoMapa_UltimaPosicao" xml:space="preserve">
+    <value>Última Posição</value>
+  </data>
 </root>

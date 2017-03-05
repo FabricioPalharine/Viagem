@@ -3391,6 +3391,15 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Última Posição.
+        /// </summary>
+        public static string PontoMapa_UltimaPosicao {
+            get {
+                return ResourceManager.GetString("PontoMapa_UltimaPosicao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vídeo.
         /// </summary>
         public static string PontoMapa_Video {

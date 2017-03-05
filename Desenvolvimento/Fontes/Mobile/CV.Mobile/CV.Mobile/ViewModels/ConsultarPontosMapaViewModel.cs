@@ -57,6 +57,7 @@ namespace CV.Mobile.ViewModels
             ListaTipo.Add(new ItemLista() { Codigo = "F", Descricao = "Foto" });
             ListaTipo.Add(new ItemLista() { Codigo = "R", Descricao = "Restaurante" });
             ListaTipo.Add(new ItemLista() { Codigo = "D", Descricao = "Trajetos" });
+            ListaTipo.Add(new ItemLista() { Codigo = "U", Descricao = "Última Posição" });
 
             Pins = new ObservableCollection<TKCustomMapPin>();
 
@@ -251,6 +252,8 @@ namespace CV.Mobile.ViewModels
                     itemPonto.Tipo == "R" ? "restaurants" :
                     itemPonto.Tipo == "P" ? "transport" :
                     itemPonto.Tipo == "T" ? "cookbooks" :
+                    itemPonto.Tipo == "U" ? "professional" :
+
                     itemPonto.Tipo == "V" || itemPonto.Tipo == "F" ? "photography" : "pin") + ".png");
                 itemPin.ShowCallout = true;
                 itemPin.Anchor = new Point(0.5, 1);

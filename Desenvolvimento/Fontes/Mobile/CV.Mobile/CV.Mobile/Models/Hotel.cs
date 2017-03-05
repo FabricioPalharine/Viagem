@@ -54,7 +54,7 @@ namespace CV.Mobile.Models
         [Ignore]
         public ObservableRangeCollection<HotelEvento> Eventos { get; set; }
 
-        public int? Raio { get; set; }
+        private int? _Raio=25;
 
         public DateTime? DataAtualizacao { get; set; }
 
@@ -129,6 +129,20 @@ namespace CV.Mobile.Models
                 _Atualizado = value;
             }
         }
+
+        public int? Raio
+        {
+            get
+            {
+                return _Raio;
+            }
+
+            set
+            {
+                SetProperty(ref _Raio, value);
+            }
+        }
+
         public Hotel Clone()
         {
             return (Hotel)this.MemberwiseClone();

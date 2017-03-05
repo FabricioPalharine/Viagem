@@ -84,6 +84,7 @@
                     item.Tipo == "R" ? "restaurants" :
                     item.Tipo == "P" ? "transport" :
                     item.Tipo == "T" ? "cookbooks" :
+                    item.Tipo == "U" ? "professional" :
                     item.Tipo == "V" || item.Tipo == "F" ? "photography" : "pin";
            });
            vm.dynMarkers = [];
