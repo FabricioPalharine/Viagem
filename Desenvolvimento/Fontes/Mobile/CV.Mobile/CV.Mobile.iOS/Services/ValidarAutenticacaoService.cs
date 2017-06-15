@@ -11,6 +11,11 @@ namespace CV.Mobile.iOS.Services
 {
     public class ValidarAutenticacaoService : IValidaAutenticacao
     {
+        public async Task Desconectar()
+        {
+            await Task.Delay(1);
+        }
+
         public async Task<Account> RetornarAutenticacaoAplicacao()
         {
             var accounts = await AccountStore.Create().FindAccountsForServiceAsync(Constants.AppName);

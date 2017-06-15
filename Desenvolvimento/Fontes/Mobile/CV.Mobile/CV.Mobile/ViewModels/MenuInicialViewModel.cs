@@ -43,6 +43,7 @@ namespace CV.Mobile.ViewModels
         {
             IValidaAutenticacao _validador = ServiceLocator.Current.GetInstance<IValidaAutenticacao>();
             var autenticacao = await _validador.RetornarAutenticacaoAplicacao();
+            await _validador.Desconectar();
             await AccountStore.Create().DeleteAsync(autenticacao, Constants.AppName);
             LoadingViewModel vm = new LoadingViewModel();
             App.Current.MainPage = new LoadingPage() { BindingContext = vm };

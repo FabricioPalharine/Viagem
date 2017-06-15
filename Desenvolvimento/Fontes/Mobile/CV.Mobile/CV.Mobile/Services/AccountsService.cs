@@ -20,17 +20,58 @@ namespace CV.Mobile.Services
         private readonly HttpClient _httpClient;
 
         private const string BaseUrl = "https://accounts.google.com/o/oauth2/";
+        private const string BaseUrlToken = "https://www.googleapis.com/oauth2/v4/";
+        public AccountsService(): this(false)
+        {
 
-        public AccountsService()
+     
+           
+
+        }
+
+        public AccountsService(bool AuthCode)
         {
 
             this._httpClient = new HttpClient(new NativeMessageHandler())
             {
-                BaseAddress = new Uri(BaseUrl)
+                BaseAddress = new Uri(AuthCode?BaseUrlToken: BaseUrl)
             };
 
-           
 
+
+        }
+
+        public async Task<DadosGoogleToken> RetornarTokenUsuario(string authCode)
+        {
+            HttpResponseMessage response = null;
+            DadosGoogleToken item = null;
+            string Uri = String.Concat("token");
+
+
+            var content = new FormUrlEncodedContent(new[]
+            {
+                new KeyValuePair<string, string>("client_id", Constants.ClientId),
+                new KeyValuePair<string, string>("client_secret", Constants.ClientSecret),
+                new KeyValuePair<string, string>("code", authCode),
+                new KeyValuePair<string, string>("grant_type", "authorization_code"),
+                new KeyValuePair<string, string>("redirect_uri", Constants.RedirectToURL),
+            });
+
+            response = await _httpClient.PostAsync(Uri, content);
+
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                var retornoCompleto = JsonConvert.DeserializeObject<dynamic>(resultado);
+                item = new DadosGoogleToken();
+                item.expires_in  = retornoCompleto.expires_in;
+                item.access_token = retornoCompleto.access_token;
+                item.refresh_token = retornoCompleto.refresh_token;
+               
+            }
+
+            return item;
         }
 
         public async Task AtualizarTokenUsuario(Usuario itemUsuario)

@@ -10,5 +10,6 @@ namespace CV.Mobile.Interfaces
     public interface IValidaAutenticacao
     {
         Task<Account> RetornarAutenticacaoAplicacao();
+        Task Desconectar();
     }
 }

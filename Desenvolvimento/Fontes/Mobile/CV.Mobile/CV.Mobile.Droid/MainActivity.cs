@@ -16,13 +16,27 @@ using Plugin.Permissions;
 using Acr.UserDialogs;
 using System.Reflection;
 using FFImageLoading.Forms.Droid;
+using Android.Content;
+using Android.Gms.Auth.Api.SignIn;
+using Android.Gms.Auth.Api;
 
 namespace CV.Mobile.Droid
 {
+    public class ActivityResultEventArgs : EventArgs
+    {
+        public int RequestCode { get; set; }
+        public Result ResultCode { get; set; }
+        public Intent Data { get; set; }
+
+        public ActivityResultEventArgs() : base()
+        { }
+    }
+
     [Activity(Label = "Curtindo uma Viagem", Icon = "@drawable/icon", Theme = "@style/MainTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         IContainer _IoCContainer;
+        public event EventHandler<ActivityResultEventArgs> ActivityResult = delegate { };
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -55,6 +69,31 @@ namespace CV.Mobile.Droid
         {
             PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
+        }
+
+        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        {
+            base.OnActivityResult(requestCode, resultCode, data);
+            ActivityResult(this, new ActivityResultEventArgs
+            {
+                RequestCode = requestCode,
+                ResultCode = resultCode,
+                Data = data
+            });
+            
+        
+            //Log.Debug(TAG, "onActivityResult:" + requestCode + ":" + resultCode + ":" + data);
+
+            //if (requestCode == RC_SIGN_IN)
+            //{
+            //    if (resultCode != Result.Ok)
+            //    {
+            //        mShouldResolve = false;
+            //    }
+
+            //    mIsResolving = false;
+            //    mGoogleApiClient.Connect();
+            //}
         }
 
         void RegisterDependencies()

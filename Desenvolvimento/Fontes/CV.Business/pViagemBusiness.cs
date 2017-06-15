@@ -776,7 +776,10 @@ namespace CV.Business
             }
             ItemUsuario.DataToken = DateTime.Now.ToUniversalTime();
             ItemUsuario.Token = access_token;
-            ItemUsuario.RefreshToken = refresh_token;
+            if (!string.IsNullOrEmpty(refresh_token))
+                ItemUsuario.RefreshToken = refresh_token;
+            else if (string.IsNullOrEmpty(ItemUsuario.RefreshToken))
+                ItemUsuario.RefreshToken = "";
             ItemUsuario.Lifetime = expires_in;
             biz.SalvarUsuario(ItemUsuario, participantes, requisicoesAjustadas, amigos);
             return ItemUsuario;
