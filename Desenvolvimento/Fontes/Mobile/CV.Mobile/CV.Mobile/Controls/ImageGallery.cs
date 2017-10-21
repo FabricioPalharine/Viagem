@@ -121,7 +121,7 @@ namespace CV.Mobile.Controls
             Foto itemFoto = Fotos.Where(d => d.Identificador == (int)tap.Parameter).FirstOrDefault();
             if (itemFoto != null && itemFoto.Video)
             {
-                CrossShare.Current.OpenBrowser( string.Concat("https://www.youtube.com/watch?v=", itemFoto.CodigoFoto));
+                Device.OpenUri(new Uri( string.Concat("https://www.youtube.com/watch?v=", itemFoto.CodigoFoto)));
             }
         }
 

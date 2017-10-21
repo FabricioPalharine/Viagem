@@ -151,7 +151,7 @@ namespace CV.Mobile.ViewModels
                   using (ApiService srv = new ApiService())
                   {
                       var itemFoto = await srv.CarregarFoto(item.Identificador);
-                      await CrossShare.Current.OpenBrowser(string.Concat("https://www.youtube.com/watch?v=", itemFoto.CodigoFoto));
+                      Device.OpenUri(new Uri(string.Concat("https://www.youtube.com/watch?v=", itemFoto.CodigoFoto)));
                   }
 
               });

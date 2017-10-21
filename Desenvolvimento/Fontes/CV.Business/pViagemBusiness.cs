@@ -651,9 +651,9 @@ namespace CV.Business
                 values.Add("refresh_token", ItemUsuario.RefreshToken);
                 values.Add("grant_type", "refresh_token");
 
-                //try
-                //{
-                byte[] response = client.UploadValues("https://accounts.google.com/o/oauth2/token", values);
+                try
+               {
+                byte[] response = client.UploadValues("https://www.googleapis.com/oauth2/v4/token", values);
 
                 string TokenInformation = System.Text.Encoding.UTF8.GetString(response);
 
@@ -663,6 +663,13 @@ namespace CV.Business
                 ItemUsuario.Lifetime = retornoCompleto.expires_in;
                 ItemUsuario.DataToken = DateTime.Now.ToUniversalTime();
                 SalvarUsuario(ItemUsuario);
+                }
+                catch (WebException ex)
+                {
+                    StreamReader sr = new StreamReader(ex.Response.GetResponseStream());
+                    string a = sr.ReadToEnd();
+                    throw ex;
+                }
             }
         }
 
@@ -712,24 +719,24 @@ namespace CV.Business
             values.Add("code", itemLogin.CodigoValidacao);
             values.Add("grant_type", "authorization_code");
 
-            //try
-            //{
-            byte[] response = client.UploadValues("https://accounts.google.com/o/oauth2/token", values);
+            try
+            {
+            byte[] response = client.UploadValues("https://www.googleapis.com/oauth2/v4/token", values);
 
             string TokenInformation = System.Text.Encoding.UTF8.GetString(response);
 
             var retornoCompleto = JsonConvert.DeserializeObject<dynamic>(TokenInformation);
             ItemUsuario = CadastrarUsuario(itemLogin, biz, ItemUsuario, Convert.ToString(retornoCompleto.access_token), Convert.ToString(retornoCompleto.refresh_token), Convert.ToInt32(retornoCompleto.expires_in));
 
-            //VerificarAlbum(ItemUsuario);
+                //VerificarAlbum(ItemUsuario);
 
-            //}
-            //catch (WebException ex)
-            //{
-            //    StreamReader sr = new StreamReader(ex.Response.GetResponseStream());
-            //    string a = sr.ReadToEnd();
-
-            //}
+            }
+            catch (WebException ex)
+            {
+                StreamReader sr = new StreamReader(ex.Response.GetResponseStream());
+                string a = sr.ReadToEnd();
+                throw ex;
+            }
 
             itemResultado.Nome = ItemUsuario.Nome;
             itemResultado.Sucesso = true;

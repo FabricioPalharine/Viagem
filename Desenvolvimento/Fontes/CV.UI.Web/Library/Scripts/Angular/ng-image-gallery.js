@@ -92,7 +92,7 @@
 										'<div class="galleria-images img-anim-{{imgAnim}} img-move-dir-{{imgMoveDirection}}">' +
                                             '<div ng-repeat="image in images track by $index" ng-if="activeImg == image">' +
 											    '<img class="galleria-image" ng-if="!image.video"  ng-src="{{image.url}}" ondragstart="return false;" oncontextmenu="return false;" ng-attr-title="{{image.title || undefined}}" ng-attr-alt="{{image.alt || undefined}}"/>' +
-                                                '<iframe class="galleria-image" ng-if="image.video" src="{{image.url | trustAsResourceUrl}}" ondragstart="return false;" oncontextmenu="return false;" ng-attr-title="{{image.title || undefined}}" ng-attr-alt="{{image.alt || undefined}}" allowfullscreen></iframe>' +
+                                                '<iframe style="z-index: 900;" class="galleria-image" ng-if="image.video" src="{{image.url | trustAsResourceUrl}}" ondragstart="return false;" oncontextmenu="return false;" ng-attr-title="{{image.title || undefined}}" ng-attr-alt="{{image.alt || undefined}}" allowfullscreen></iframe>' +
                                                 '<div class="galleria" ng-if="image.title"><h3><span class="text-primary">{{image.title}}</span></h3></div>' +
 
                                             '</div>' +

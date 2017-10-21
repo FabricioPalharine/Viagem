@@ -203,10 +203,10 @@
         };
 
         AuthBase.GetOfflineAcess = function (callback) {
-            AuthBase.auth2.grantOfflineAccess({ 'redirect_uri': 'postmessage', 'scope': AuthBase.scopes, 'approval_prompt': 'force' }).then(function (resp) {
+            AuthBase.auth2.grantOfflineAccess({ 'redirect_uri': 'postmessage', 'scope': AuthBase.scopes, 'prompt': 'consent' }).then(function (resp) {
                 var auth_code = resp.code;
                 AuthBase.auth2.signIn().then(function (resp2) {
-                   
+
                     var User = AuthBase.auth2.currentUser.get();
                     var DadosRetorno = User.getAuthResponse();
                     var Nome = User.getBasicProfile().getName();
@@ -260,7 +260,9 @@
                            }
                            callback(data);
                        });
+                }).catch(function (err) {
                 });
+                    ;
                 
             });
         }

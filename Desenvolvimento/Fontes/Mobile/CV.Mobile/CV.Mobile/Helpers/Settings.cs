@@ -22,8 +22,11 @@ namespace CV.Mobile.Helpers
         #region Setting Constants
 
         private const string CVBaseWebApiKey = "CVBaseWebApiKey";
+#if Release
         private static readonly string CVBaseWebApiDefault = "http://sites.architettura.com.br:5131/";
-
+#else
+        private static readonly string CVBaseWebApiDefault = "http://192.168.15.11/CV/";
+#endif
         private const string CVModoSincronizacaoKey = "CVModoSincronizacaoKey";
         private static readonly string CVModoSincronizacaoDefault = "1";
 
@@ -38,7 +41,7 @@ namespace CV.Mobile.Helpers
 
        
 
-        #endregion
+#endregion
 
 
         public static string BaseWebApi

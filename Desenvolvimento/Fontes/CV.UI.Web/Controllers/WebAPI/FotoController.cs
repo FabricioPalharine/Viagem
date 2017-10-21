@@ -119,6 +119,8 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
 
             ViagemBusiness biz = new ViagemBusiness();
+            if (string.IsNullOrEmpty(itemFoto.ImageMime))
+                itemFoto.ImageMime = "video";
             Usuario itemUsuario = biz.SelecionarUsuario(token.IdentificadorUsuario);
             return biz.CadastrarVideo(itemFoto, itemUsuario, token.IdentificadorViagem);
         }

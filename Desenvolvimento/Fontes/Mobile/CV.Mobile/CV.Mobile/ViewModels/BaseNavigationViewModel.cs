@@ -26,6 +26,8 @@ using System.Xml;
 using Microsoft.Practices.ServiceLocation;
 using CV.Mobile.Interfaces;
 using Plugin.Connectivity;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 
 namespace CV.Mobile.ViewModels
 {
@@ -278,6 +280,15 @@ namespace CV.Mobile.ViewModels
         protected async Task CarregarAcaoFoto(UploadFoto itemUpload)
         {
             await CrossMedia.Current.Initialize();
+            var cameraStatus = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Camera);
+            var storageStatus = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
+
+            if (cameraStatus != PermissionStatus.Granted || storageStatus != PermissionStatus.Granted)
+            {
+                var results = await CrossPermissions.Current.RequestPermissionsAsync(new[] { Permission.Camera, Permission.Storage });
+                cameraStatus = results[Permission.Camera];
+                storageStatus = results[Permission.Storage];
+            }
             List<string> Acoes = new List<string>(new string[]
             {
                         "Selecionar Foto",
@@ -304,7 +315,7 @@ namespace CV.Mobile.ViewModels
             }
             else if (action == "Tirar Foto")
             {
-                var retorno = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions() { CompressionQuality = 92, AllowCropping = true, DefaultCamera = Plugin.Media.Abstractions.CameraDevice.Rear, SaveToAlbum=true });
+                var retorno = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions() { CompressionQuality = 92, AllowCropping = true, DefaultCamera = Plugin.Media.Abstractions.CameraDevice.Rear, SaveToAlbum=true, Directory="Fotos", Name=ItemViagemSelecionada.Nome });
                 if (retorno != null)
                 {
                     await GravarFoto(itemUpload, retorno,true);
@@ -320,7 +331,7 @@ namespace CV.Mobile.ViewModels
             }
             else if (action == "Gravar Vídeo")
             {
-                var retorno = await CrossMedia.Current.TakeVideoAsync(new Plugin.Media.Abstractions.StoreVideoOptions() {  AllowCropping = true, DefaultCamera = Plugin.Media.Abstractions.CameraDevice.Rear, SaveToAlbum = true });
+                var retorno = await CrossMedia.Current.TakeVideoAsync(new Plugin.Media.Abstractions.StoreVideoOptions() {  AllowCropping = true, DefaultCamera = Plugin.Media.Abstractions.CameraDevice.Rear, SaveToAlbum = true, Directory ="Videos", Name = ItemViagemSelecionada.Nome });
                 if (retorno != null)
                 {
                     await GravarVideo(itemUpload, retorno,true);
