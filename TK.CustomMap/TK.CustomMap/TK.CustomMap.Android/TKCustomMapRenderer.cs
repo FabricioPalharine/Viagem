@@ -317,6 +317,7 @@ namespace TK.CustomMap.Droid
         /// <param name="e">Event Arguments</param>
         private void OnCustomPinsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
+            if (this.FormsMap == null ) return;
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
                 foreach (TKCustomMapPin pin in e.NewItems)
@@ -346,6 +347,7 @@ namespace TK.CustomMap.Droid
         /// <param name="e">Event Arguments</param>
         private async void OnPinPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+
             var pin = sender as TKCustomMapPin;
             if (pin == null) return;
 
@@ -449,7 +451,7 @@ namespace TK.CustomMap.Droid
         private void UpdatePins(bool firstUpdate = true)
         {
             if (this._googleMap == null) return;
-
+            if (this.FormsMap == null) return;
             foreach (var i in this._markers)
             {
                 this.RemovePin(i.Key, false);
@@ -505,10 +507,11 @@ namespace TK.CustomMap.Droid
         /// <param name="pin">The pin to remove</param>
         private void RemovePin(TKCustomMapPin pin, bool removeMarker = true)
         {
+            if (this.FormsMap == null) return;
             var item = this._markers[pin];
             if(item == null) return;
 
-            if (this._selectedMarker != null)
+            if (this._selectedMarker != null && this.FormsMap !=null)
             {
                 if (item.Id.Equals(this._selectedMarker.Id))
                 {
@@ -529,6 +532,7 @@ namespace TK.CustomMap.Droid
         /// </summary>
         private void SetSelectedItem()
         {
+            if (this.FormsMap == null) return;
             if (this._selectedMarker != null)
             {
                 this._selectedMarker.HideInfoWindow();
@@ -553,7 +557,7 @@ namespace TK.CustomMap.Droid
         private void MoveToCenter()
         {
             if (this._googleMap == null) return;
-
+            if (this.FormsMap == null) return;
             if (!this.FormsMap.MapCenter.Equals(this._googleMap.CameraPosition.Target.ToPosition()))
             {
                 var cameraUpdate = CameraUpdateFactory.NewLatLng(this.FormsMap.MapCenter.ToLatLng());
@@ -574,7 +578,7 @@ namespace TK.CustomMap.Droid
         private void UpdateLines(bool firstUpdate = true)
         {
             if (this._googleMap == null) return;
-
+            if (this.FormsMap == null) return;
             foreach (var i in this._polylines)
             {
                 i.Key.PropertyChanged -= OnLinePropertyChanged;
@@ -605,7 +609,7 @@ namespace TK.CustomMap.Droid
         private void UpdateCircles(bool firstUpdate = true)
         {
             if (this._googleMap == null) return;
-
+            if (this.FormsMap == null) return;
             foreach (var i in this._circles)
             {
                 i.Key.PropertyChanged -= CirclePropertyChanged;
@@ -635,7 +639,7 @@ namespace TK.CustomMap.Droid
         private void UpdatePolygons(bool firstUpdate = true)
         {
             if (this._googleMap == null) return;
-
+            if (this.FormsMap == null) return;
             foreach (var i in this._polygons)
             {
                 i.Key.PropertyChanged -= OnPolygonPropertyChanged;
@@ -665,7 +669,7 @@ namespace TK.CustomMap.Droid
         private void UpdateRoutes(bool firstUpdate = true)
         {
             this._tempRouteList.Clear();
-
+            if (this.FormsMap == null) return;
             if (this._googleMap == null) return;
 
             foreach (var i in this._routes)
@@ -767,6 +771,7 @@ namespace TK.CustomMap.Droid
             }
             else if (e.Action == NotifyCollectionChangedAction.Remove)
             {
+                if (this.FormsMap == null) return;
                 foreach (TKPolygon poly in e.OldItems)
                 {
                     if (!this.FormsMap.Polygons.Contains(poly))
@@ -849,6 +854,7 @@ namespace TK.CustomMap.Droid
             }
             else if (e.Action == NotifyCollectionChangedAction.Remove)
             {
+                if (this.FormsMap == null) return;
                 foreach (TKCircle circle in e.OldItems)
                 {
                     if (!this.FormsMap.Circles.Contains(circle))

@@ -213,7 +213,30 @@ namespace CV.Mobile.Services
 
 
             return itemResultado;
+
         }
+
+        public async Task<ResultadoOperacao> SalvarViagemSimples(Viagem itemViagem)
+        {
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Viagem/SalvarSimples"));
+            var json = JsonConvert.SerializeObject(itemViagem, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            });
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = null;
+            response = await client.PostAsync(uri, content);
+            var resultado = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
+            {
+                itemResultado = JsonConvert.DeserializeObject<ResultadoOperacao>(resultado);
+            }
+            return itemResultado;
+        }
+
         public async Task<ResultadoOperacao> SalvarUsuario(Usuario itemUsuario)
         {
             ResultadoOperacao itemResultado = new ResultadoOperacao();

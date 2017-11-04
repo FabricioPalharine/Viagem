@@ -203,9 +203,10 @@
         };
 
         AuthBase.GetOfflineAcess = function (callback) {
+            AuthBase.auth2.signIn({ 'scope': AuthBase.scopes, 'prompt': 'consent' }).then(function (resp2) {
             AuthBase.auth2.grantOfflineAccess({ 'redirect_uri': 'postmessage', 'scope': AuthBase.scopes, 'prompt': 'consent' }).then(function (resp) {
                 var auth_code = resp.code;
-                AuthBase.auth2.signIn().then(function (resp2) {
+                
 
                     var User = AuthBase.auth2.currentUser.get();
                     var DadosRetorno = User.getAuthResponse();
@@ -264,6 +265,7 @@
                 });
                     ;
                 
+            }).catch(function (err) {
             });
         }
 

@@ -61,6 +61,22 @@ namespace CV.UI.Web.Controllers.WebAPI
         }
 
         [Authorize]
+        [HttpPost]
+        [ActionName("SalvarSimples")]
+        public ResultadoOperacao SalvarSimples([FromBody] Viagem itemViagem)
+        {
+            ViagemBusiness biz = new ViagemBusiness();
+            itemViagem.DataAlteracao = DateTime.Now.ToUniversalTime();
+            biz.SalvarViagem(itemViagem);
+            ResultadoOperacao itemResultado = new ResultadoOperacao();
+            itemResultado.Sucesso = biz.IsValid();
+            itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
+            if (itemResultado.Sucesso)
+                itemResultado.IdentificadorRegistro = itemViagem.Identificador;
+            return itemResultado;
+        }
+
+        [Authorize]
         public ResultadoOperacao Delete(int id)
         {
             ViagemBusiness biz = new ViagemBusiness();

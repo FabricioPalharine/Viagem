@@ -291,7 +291,9 @@ namespace CV.Mobile.ViewModels
                 Title = "Fechar Viagem",
                 IconSource = "Dados.png",
                 Visible = false,
-                ApenasParticipante = true
+                ApenasParticipante = true,
+                ViagemAberta=false
+
             });
             ItensMenuCompleto.Add(new ItemMenu
             {
@@ -309,7 +311,8 @@ namespace CV.Mobile.ViewModels
                 IconSource = "Dados.png",
                 Visible = false,
                 ApenasParticipante = true,
-                ViagemAberta = true
+                ViagemAberta = true,
+
             });
             ItensMenuCompleto.Add(new ItemMenu
             {
@@ -317,7 +320,8 @@ namespace CV.Mobile.ViewModels
                 Title = "Consultas",
                 IconSource = "Dados.png",
                 Visible = false,
-                ApenasParticipante = false
+                ApenasParticipante = false,
+                ViagemAberta = false
             });
         }
 
@@ -628,7 +632,7 @@ namespace CV.Mobile.ViewModels
                     ItemViagem.Aberto = true;
                 using (ApiService srv = new ApiService())
                 {
-                    await srv.SalvarViagem(ItemViagem);
+                    await srv.SalvarViagemSimples(ItemViagem);
                 }
                 await DatabaseService.Database.SalvarViagemAsync(ItemViagem);
                 AjustarVisibilidadeItens();

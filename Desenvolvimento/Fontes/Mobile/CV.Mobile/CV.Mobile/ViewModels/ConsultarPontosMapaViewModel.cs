@@ -272,8 +272,23 @@ namespace CV.Mobile.ViewModels
                 {
                     Color = itemPonto.Tipo == "C" ? Color.Blue : itemPonto.Tipo == "D" ? Color.Green : Color.Red,
                     LineWidth = 10,
-                    LineCoordinates = itemPonto.Pontos.Select(d=>new Position(d.Latitude.GetValueOrDefault(), d.Longitude.GetValueOrDefault())).ToList(),
+                    LineCoordinates =  itemPonto.Pontos.Select(d => new Position(d.Latitude.GetValueOrDefault(), d.Longitude.GetValueOrDefault())).ToList(),
                 };
+                if (itemPonto.Pontos.Count > 500)
+                {
+                    polyline.LineCoordinates = new List<Position>();
+                    polyline.LineCoordinates.Add(new Position(itemPonto.Pontos.FirstOrDefault().Latitude.GetValueOrDefault(), itemPonto.Pontos.FirstOrDefault().Longitude.GetValueOrDefault()));
+                    for (decimal k =0;k<itemPonto.Pontos.Count;k+= itemPonto.Pontos.Count()/500m)
+                    {
+                        polyline.LineCoordinates.Add(new Position(itemPonto.Pontos.ElementAt(Convert.ToInt32(k)).Latitude.GetValueOrDefault(), itemPonto.Pontos.ElementAt(Convert.ToInt32(k)).Longitude.GetValueOrDefault()));
+                        if (itemPonto.Pontos.ElementAt(Convert.ToInt32(k)).Longitude < -46.64093234)
+                        {
+
+                        }
+                    }
+                    polyline.LineCoordinates.Add(new Position(itemPonto.Pontos.LastOrDefault().Latitude.GetValueOrDefault(), itemPonto.Pontos.LastOrDefault().Longitude.GetValueOrDefault()));
+
+                }
                 Polylines.Add(polyline);
             }
             await Task.Delay(2000);

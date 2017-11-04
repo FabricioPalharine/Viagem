@@ -174,7 +174,9 @@ namespace CV.Business
                             }
                         };
                         if (itemPosicao.Velocidade != 0)
+                        {
                             itemLinha.Pontos.Add(new PontoMapa() { Latitude = itemPosicao.Latitude, Longitude = itemPosicao.Longitude });
+                        }
                         itemPosicaoAnterior = itemPosicao;
 
                     }

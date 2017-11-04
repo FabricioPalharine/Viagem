@@ -304,76 +304,80 @@ namespace CV.Mobile.ViewModels
 
         private async void Locator_PositionChanged(object sender, PositionEventArgs e)
         {
-            if (_ItemViagem != null)
+            if (e.Position.Speed > 0)
             {
-                Posicao itemPosicao = new Posicao()
+                if (_ItemViagem != null)
                 {
-                    DataGMT = e.Position.Timestamp.DateTime,
-                    DataLocal = DateTime.Now,
-                    IdentificadorUsuario = _ItemUsuario.Codigo,
-                    IdentificadorViagem = _ItemViagem.Identificador,
-                    Latitude = e.Position.Latitude,
-                    Longitude = e.Position.Longitude,
-                    Velocidade = e.Position.Speed
-
-                };
-                ultimaPosicao = e.Position;
-                if (ConectadoPrincipal && e.Position.Speed > 0)
-                {
-                    using (ApiService srv = new ApiService())
+                    Posicao itemPosicao = new Posicao()
                     {
-                        await srv.SalvarPosicao(itemPosicao);
-                    }
-                }
-                else
-                    await DatabaseService.Database.SalvarPosicao(itemPosicao);
-            }
-            if (_hotelAtual != null && _hotelAtual.Raio > 0 && _hotelAtual.Latitude.HasValue && _hotelAtual.Longitude.HasValue && e.Position.Speed > 0)
-            {
-                var DistanciaAtual = GetDistanceTo(new Position() { Longitude = _hotelAtual.Longitude.Value, Latitude = _hotelAtual.Latitude.Value }, e.Position);
-                bool estaDentro = DistanciaAtual.Meters <= _hotelAtual.Raio;
-                if (estaDentro != HotelDentro)
-                {
-                    HotelDentro = estaDentro;
-                    HotelEvento itemEvento = new HotelEvento() { DataEntrada = DateTime.Now, IdentificadorHotel = _hotelAtual.Identificador, IdentificadorUsuario = ItemUsuario.Codigo, DataAtualizacao = DateTime.Now.ToUniversalTime() };
-                    if (!estaDentro)
-                        itemEvento.DataSaida = DateTime.Now;
+                        DataGMT = e.Position.Timestamp.DateTime,
+                        DataLocal = new DateTime(DateTime.Now.Ticks),
+                        IdentificadorUsuario = _ItemUsuario.Codigo,
+                        IdentificadorViagem = _ItemViagem.Identificador,
+                        Latitude = e.Position.Latitude,
+                        Longitude = e.Position.Longitude,
+                        Velocidade = e.Position.Speed
+
+                    };
+                    ultimaPosicao = e.Position;
+
                     if (ConectadoPrincipal)
                     {
                         using (ApiService srv = new ApiService())
                         {
-                            var Resultado = await srv.SalvarHotelEvento(itemEvento);
-                            if (Resultado.Sucesso)
-                            {
-                                var Jresultado = (JObject)Resultado.ItemRegistro;
-                                var pItemEvento = Jresultado.ToObject<HotelEvento>();
-                                var itemBanco = await DatabaseService.Database.RetornarHotelEvento(pItemEvento.Identificador);
-                                if (itemBanco != null)
-                                    pItemEvento.Id = itemBanco.Id;
-                                await DatabaseService.Database.SalvarHotelEvento(pItemEvento);
-                                await AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "HE", pItemEvento.Identificador.GetValueOrDefault(), false);
-
-                            }
+                            await srv.SalvarPosicao(itemPosicao);
                         }
                     }
                     else
+                        await DatabaseService.Database.SalvarPosicao(itemPosicao);
+                }
+                if (_hotelAtual != null && _hotelAtual.Raio > 0 && _hotelAtual.Latitude.HasValue && _hotelAtual.Longitude.HasValue && e.Position.Speed > 0)
+                {
+                    var DistanciaAtual = GetDistanceTo(new Position() { Longitude = _hotelAtual.Longitude.Value, Latitude = _hotelAtual.Latitude.Value }, e.Position);
+                    bool estaDentro = DistanciaAtual.Meters <= _hotelAtual.Raio;
+                    if (estaDentro != HotelDentro)
                     {
-                        var itemAtual = await DatabaseService.Database.RetornarUltimoHotelEvento_IdentificadorHotel_IdentificadorUsuario(_hotelAtual.Identificador, ItemUsuario.Codigo);
-                        if (itemAtual != null && !estaDentro)
+                        HotelDentro = estaDentro;
+                        HotelEvento itemEvento = new HotelEvento() { DataEntrada = DateTime.Now, IdentificadorHotel = _hotelAtual.Identificador, IdentificadorUsuario = ItemUsuario.Codigo, DataAtualizacao = DateTime.Now.ToUniversalTime() };
+                        if (!estaDentro)
+                            itemEvento.DataSaida = DateTime.Now;
+                        if (ConectadoPrincipal)
                         {
-                            itemAtual.DataAtualizacao = DateTime.Now.ToUniversalTime();
-                            itemAtual.AtualizadoBanco = false;
-                            itemAtual.DataSaida = DateTime.Now;
-                            await DatabaseService.Database.SalvarHotelEvento(itemAtual);
+                            using (ApiService srv = new ApiService())
+                            {
+                                var Resultado = await srv.SalvarHotelEvento(itemEvento);
+                                if (Resultado.Sucesso)
+                                {
+                                    var Jresultado = (JObject)Resultado.ItemRegistro;
+                                    var pItemEvento = Jresultado.ToObject<HotelEvento>();
+                                    var itemBanco = await DatabaseService.Database.RetornarHotelEvento(pItemEvento.Identificador);
+                                    if (itemBanco != null)
+                                        pItemEvento.Id = itemBanco.Id;
+                                    await DatabaseService.Database.SalvarHotelEvento(pItemEvento);
+                                    await AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "HE", pItemEvento.Identificador.GetValueOrDefault(), false);
+
+                                }
+                            }
                         }
-                        else if (itemAtual == null && estaDentro)
+                        else
                         {
-                            itemEvento.AtualizadoBanco = false;
-                            await DatabaseService.Database.SalvarHotelEvento(itemEvento);
+                            var itemAtual = await DatabaseService.Database.RetornarUltimoHotelEvento_IdentificadorHotel_IdentificadorUsuario(_hotelAtual.Identificador, ItemUsuario.Codigo);
+                            if (itemAtual != null && !estaDentro)
+                            {
+                                itemAtual.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                                itemAtual.AtualizadoBanco = false;
+                                itemAtual.DataSaida = DateTime.Now;
+                                await DatabaseService.Database.SalvarHotelEvento(itemAtual);
+                            }
+                            else if (itemAtual == null && estaDentro)
+                            {
+                                itemEvento.AtualizadoBanco = false;
+                                await DatabaseService.Database.SalvarHotelEvento(itemEvento);
+                            }
+
                         }
 
                     }
-
                 }
             }
         }
@@ -536,7 +540,7 @@ namespace CV.Mobile.ViewModels
             {
                 try
                 {
-                    var position = await locator.GetPositionAsync(timeoutMilliseconds: 10000);
+                    var position = await locator.GetPositionAsync(timeoutMilliseconds: 30000);
                     return position;
                 }
                 catch
