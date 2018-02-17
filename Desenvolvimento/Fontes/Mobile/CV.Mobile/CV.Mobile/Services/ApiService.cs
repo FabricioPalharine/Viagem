@@ -2215,20 +2215,30 @@ namespace CV.Mobile.Services
         public async Task<List<DeParaIdentificador>> SincronizarDados(ClasseSincronizacao itemSincronizar)
         {
             List<DeParaIdentificador> itemResultado = new List<DeParaIdentificador>();
-            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Sincronizacao/SincronizarDados"));
-            var json = JsonConvert.SerializeObject(itemSincronizar, new JsonSerializerSettings
+            try
             {
-                DateTimeZoneHandling = DateTimeZoneHandling.Utc
-            });
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            client.Timeout = TimeSpan.FromMinutes(5);
-            HttpResponseMessage response = null;
-            response = await client.PostAsync(uri, content);
-            var resultado = await response.Content.ReadAsStringAsync();
+                var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Sincronizacao/SincronizarDados"));
+                var json = JsonConvert.SerializeObject(itemSincronizar, new JsonSerializerSettings
+                {
+                    DateTimeZoneHandling = DateTimeZoneHandling.Utc
+                });
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                client.Timeout = TimeSpan.FromMinutes(5);
+                HttpResponseMessage response = null;
+                response = await client.PostAsync(uri, content);
+                var resultado = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
+                {
+                    itemResultado = JsonConvert.DeserializeObject<List<DeParaIdentificador>>(resultado);
+                }
+
+            }
+            catch (Exception ex)
             {
-                itemResultado = JsonConvert.DeserializeObject<List<DeParaIdentificador>>(resultado);
+                string Mensagem = ex.Message;
+                string Stack = ex.StackTrace;
+                throw;
             }
 
 

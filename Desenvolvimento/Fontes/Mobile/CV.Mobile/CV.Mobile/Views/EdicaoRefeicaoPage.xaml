@@ -30,7 +30,9 @@
   <ContentPage.Content>
     <ScrollView>
       <RelativeLayout  VerticalOptions="FillAndExpand" >
-      <StackLayout
+                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="Blue" />
+
+                <StackLayout
                                   RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent,
             Property=Height,Factor=0,Constant=60}"
                           RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width,Factor=1,Constant=0}"

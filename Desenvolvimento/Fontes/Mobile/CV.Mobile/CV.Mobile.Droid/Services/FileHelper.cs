@@ -49,5 +49,10 @@ namespace CV.Mobile.Droid.Services
         {
             return new FileStream(filename, FileMode.Open, FileAccess.Read);
         }
+
+        public System.Globalization.NumberFormatInfo GetLocale()
+        {
+            return System.Globalization.CultureInfo.CurrentCulture.NumberFormat;
+        }
     }
 }

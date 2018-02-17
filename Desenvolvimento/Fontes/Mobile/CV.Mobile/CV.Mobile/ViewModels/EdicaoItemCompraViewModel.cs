@@ -27,7 +27,7 @@ namespace CV.Mobile.ViewModels
             CadastradoComoAmigo = ItemItemCompra.IdentificadorUsuario.HasValue;
             SalvarCommand = new Command(
                                 async () => await Salvar(),
-                                () => true);
+                                () => !IsBusy);
             DeleteCommand = new Command(
                                () =>  VerificarExclusao(),
                               () => true);
@@ -293,8 +293,9 @@ namespace CV.Mobile.ViewModels
             }
             finally
             {
-                SalvarCommand.ChangeCanExecute();
                 IsBusy = false;
+
+                SalvarCommand.ChangeCanExecute();
             }
         }
 

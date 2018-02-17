@@ -1,13 +1,16 @@
-﻿using System;
+﻿using CV.Mobile.Interfaces;
+using Microsoft.Practices.ServiceLocation;
+using System;
 
 using Xamarin.Forms;
 
 namespace CV.Mobile.Controls
 {
+
     public class FormattedNumberEntry : Entry
     {
         public static readonly BindableProperty ValueProperty =
-            BindableProperty.Create(nameof(Value), typeof(decimal?), typeof(FormattedNumberEntry), 0m, BindingMode.TwoWay,null,  new BindableProperty.BindingPropertyChangedDelegate(OnValueChanged));
+            BindableProperty.Create(nameof(Value), typeof(decimal?), typeof(FormattedNumberEntry), 0m, BindingMode.TwoWay, null, new BindableProperty.BindingPropertyChangedDelegate(OnValueChanged));
 
         public static readonly BindableProperty DecimalPlacesProperty =
     BindableProperty.Create(nameof(DecimalPlaces), typeof(int), typeof(FormattedNumberEntry), 2);
@@ -15,7 +18,11 @@ namespace CV.Mobile.Controls
         public decimal? Value
         {
             get { return (decimal?)GetValue(ValueProperty); }
-            set { SetValue(ValueProperty, value); }
+            set
+            {
+                SetValue(ValueProperty, value);
+
+            }
         }
 
         public int DecimalPlaces
@@ -25,15 +32,17 @@ namespace CV.Mobile.Controls
         }
 
         public bool ShouldReactToTextChanges { get; set; }
-
+        public System.Globalization.NumberFormatInfo Idioma;
         public FormattedNumberEntry()
         {
             ShouldReactToTextChanges = true;
+            Idioma = ServiceLocator.Current.GetInstance<IFileHelper>().GetLocale();
         }
 
         public decimal? DumbParse(string input)
         {
-            if (string.IsNullOrEmpty( input)) return null;
+
+            if (string.IsNullOrEmpty(input)) return null;
             bool temDecimal = false;
             int posicao = 0;
             decimal number = 0;
@@ -49,7 +58,7 @@ namespace CV.Mobile.Controls
                     posicao++;
 
                 }
-                else if (input[i].ToString() == System.Globalization.CultureInfo.CurrentUICulture.NumberFormat.NumberDecimalSeparator)
+                else if (input[i].ToString() == Idioma.NumberDecimalSeparator)
                 {
                     if (DecimalPlaces > 0 && !temDecimal)
                     {
@@ -64,6 +73,8 @@ namespace CV.Mobile.Controls
             return number;
         }
 
+
+
         private int? _PosicaoVirgula = int.MinValue;
 
         private static void OnValueChanged(BindableObject bindable, object oldValue, object newValue)
@@ -71,7 +82,7 @@ namespace CV.Mobile.Controls
             FormattedNumberEntry element = (FormattedNumberEntry)bindable;
             if (element.Value.HasValue)
             {
-                var newText = element.Value.Value.ToString(!string.IsNullOrEmpty(element.Formato) && !element.ShouldReactToTextChanges ? element.Formato : String.Concat("N", element.DecimalPlaces));
+                var newText = element.Value.Value.ToString(!string.IsNullOrEmpty(element.Formato) && !element.ShouldReactToTextChanges ? element.Formato : String.Concat("N", element.DecimalPlaces), element.Idioma);
                 element.Text = newText;
             }
             else

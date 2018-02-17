@@ -28,9 +28,10 @@
   <ContentPage.Content>
 
     <StackLayout>
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="Blue" />
 
 
-      <Label Text="Comentário"  />
+            <Label Text="Comentário"  />
       <Editor Text="{Binding ItemComentario.Texto}" VerticalOptions="FillAndExpand"/>
 
       <Label Text="Data"   VerticalOptions="End"/>

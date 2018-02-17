@@ -23,8 +23,9 @@ namespace CV.UI.Web
                           PrincipalProvider = new ValidateTokenPrincipalProvider()
                       });
             GlobalConfiguration.Configuration.Services.Clear(typeof(System.Web.Http.Validation.IBodyModelValidator));
-
             GlobalConfiguration.Configure(WebApiConfig.Register);
+            GlobalConfiguration.Configuration.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
+
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);

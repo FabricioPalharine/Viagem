@@ -33,6 +33,7 @@
     <ContentPage.Content>
       <ScrollView>
         <StackLayout>
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="Blue" />
 
 
           <Label Text="Descrição"  />

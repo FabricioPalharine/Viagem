@@ -45,7 +45,7 @@ namespace CV.Mobile.ViewModels
 
             SalvarCommand = new Command(
                                 async () => await Salvar(),
-                                () => true);
+                                () => !IsBusy);
             PageAppearingCommand = new Command(
                                                                   async () =>
                                                                   {
@@ -411,8 +411,9 @@ namespace CV.Mobile.ViewModels
             }
             finally
             {
-                SalvarCommand.ChangeCanExecute();
                 IsBusy = false;
+
+                SalvarCommand.ChangeCanExecute();
             }
         }
 

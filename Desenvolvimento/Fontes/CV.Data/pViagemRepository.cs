@@ -291,9 +291,12 @@ namespace CV.Data
                 {
                     itemBaseCarroEventoDevolucao = Context.CarroEventos.Create();
                     Context.Entry<CarroEvento>(itemBaseCarroEventoDevolucao).State = System.Data.Entity.EntityState.Added;
-                }
+                }               
+
                 AtualizarPropriedades<CarroEvento>(itemBaseCarroEventoDevolucao, itemCarroEventoDevolucao);
                 itemBase.ItemCarroEventoDevolucao = itemBaseCarroEventoDevolucao;
+                if (itemBaseCarroEventoDevolucao.Identificador.HasValue)
+                    itemBase.IdentificadorCarroEventoDevolucao = itemBaseCarroEventoDevolucao.Identificador;
             }
             else if (itemBase.ItemCarroEventoDevolucao != null)
                 Context.CarroEventos.Remove(itemBase.ItemCarroEventoDevolucao);
@@ -310,6 +313,10 @@ namespace CV.Data
                 }
                 AtualizarPropriedades<CarroEvento>(itemBaseCarroEvento, itemCarroEvento);
                 itemBase.ItemCarroEventoRetirada = itemBaseCarroEvento;
+                if (itemBaseCarroEvento.Identificador.HasValue)
+
+                    itemBase.Identificador = itemBaseCarroEvento.Identificador;
+
             }
             else if (itemBase.ItemCarroEventoRetirada != null)
                 Context.CarroEventos.Remove(itemBase.ItemCarroEventoRetirada);
@@ -358,6 +365,8 @@ namespace CV.Data
                 }
                 AtualizarPropriedades<CarroEvento>(itemBaseCarroEventoChegada, itemCarroEventoChegada);
                 itemBase.ItemCarroEventoChegada = itemBaseCarroEventoChegada;
+                if (itemBaseCarroEventoChegada.Identificador.HasValue)
+                    itemBase.IdentificadorCarroEventoChegada = itemBaseCarroEventoChegada.Identificador;
             }
             CarroEvento itemCarroEvento = itemGravar.ItemCarroEventoPartida;
             CarroEvento itemBaseCarroEvento = null;
@@ -371,6 +380,9 @@ namespace CV.Data
                 }
                 AtualizarPropriedades<CarroEvento>(itemBaseCarroEvento, itemCarroEvento);
                 itemBase.ItemCarroEventoPartida = itemBaseCarroEvento;
+                if (itemBaseCarroEvento.Identificador.HasValue)
+
+                    itemBase.IdentificadorCarroEventoPartida = itemBaseCarroEvento.Identificador;
             }
             Context.SaveChanges();
             itemGravar.Identificador = itemBase.Identificador;
@@ -1038,6 +1050,7 @@ namespace CV.Data
             query = query.Where(d => !d.Compras.Any());
             query = query.Where(d => !d.Reabastecimentos.Any());
             query = query.Where(d => !d.ApenasBaixa.Value);
+            query = query.Where(d => !d.DataExclusao.HasValue);
             query = query.OrderByDescending(d => d.Data);
             return query.ToList();
         }

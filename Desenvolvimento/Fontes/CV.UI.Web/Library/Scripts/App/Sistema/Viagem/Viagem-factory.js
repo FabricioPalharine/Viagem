@@ -36,6 +36,12 @@
             //  transformResponse: parseArray,
               isArray: false
           },
+          save: {
+              method: 'POST',
+              params: {
+                  controller: 'Post'
+              }
+          },
           CarregarParticipantes: {
               method: 'GET',
               params: {

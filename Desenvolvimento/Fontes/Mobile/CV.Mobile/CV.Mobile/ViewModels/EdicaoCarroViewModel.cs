@@ -35,27 +35,29 @@ namespace CV.Mobile.ViewModels
 
         public EdicaoCarroViewModel(Carro pItemCarro, Viagem pItemViagem)
         {
-            if (pItemCarro.ItemCarroEventoRetirada.Hora == null)
+            if (pItemCarro.ItemCarroEventoRetirada != null && pItemCarro.ItemCarroEventoRetirada.Hora == null)
                 pItemCarro.ItemCarroEventoRetirada.Hora = new TimeSpan();
-            if (pItemCarro.ItemCarroEventoDevolucao.Hora == null)
+            if (pItemCarro.ItemCarroEventoDevolucao != null && pItemCarro.ItemCarroEventoDevolucao.Hora == null)
                 pItemCarro.ItemCarroEventoDevolucao.Hora = new TimeSpan();
-            if (!pItemCarro.ItemCarroEventoRetirada.Data.HasValue)
+            if (pItemCarro.ItemCarroEventoRetirada != null && !pItemCarro.ItemCarroEventoRetirada.Data.HasValue)
                 pItemCarro.ItemCarroEventoRetirada.Data = _dataMinima;
-            if (!pItemCarro.ItemCarroEventoDevolucao.Data.HasValue)
+            if (pItemCarro.ItemCarroEventoDevolucao != null && !pItemCarro.ItemCarroEventoDevolucao.Data.HasValue)
                 pItemCarro.ItemCarroEventoDevolucao.Data = _dataMinima;
             ItemCarro = pItemCarro;
 
             Participantes = new ObservableCollection<Usuario>();
             Participantes.CollectionChanged += Participantes_CollectionChanged;
-            VisitaConcluida = pItemCarro.ItemCarroEventoDevolucao.Data.GetValueOrDefault(_dataMinima) != _dataMinima && ItemCarro.Alugado;
-            VisitaIniciada = pItemCarro.ItemCarroEventoRetirada.Data.GetValueOrDefault(_dataMinima) != _dataMinima && ItemCarro.Alugado;
+            if (pItemCarro.ItemCarroEventoDevolucao != null)
+                VisitaConcluida = pItemCarro.ItemCarroEventoDevolucao.Data.GetValueOrDefault(_dataMinima) != _dataMinima && ItemCarro.Alugado;
+            if (pItemCarro.ItemCarroEventoRetirada != null)
+                VisitaIniciada = pItemCarro.ItemCarroEventoRetirada.Data.GetValueOrDefault(_dataMinima) != _dataMinima && ItemCarro.Alugado;
             PossoComentar = VisitaConcluida && pItemCarro.Avaliacoes.Where(d => d.IdentificadorUsuario == ItemUsuarioLogado.Codigo).Any() && ItemCarro.Alugado;
             ItemViagem = pItemViagem;
             ItemCarro.PropertyChanged += ItemCarro_PropertyChanged;
 
             SalvarCommand = new Command(
                                 async () => await Salvar(),
-                                () => true);
+                                () => !IsBusy);
             PageAppearingCommand = new Command(
                                                                   async () =>
                                                                   {
@@ -83,6 +85,10 @@ namespace CV.Mobile.ViewModels
                 if (ItemCarro.Alugado)
                 {
                     PossoComentar = Participantes.Where(d => d.Identificador == ItemUsuarioLogado.Codigo && d.Selecionado).Any() && VisitaConcluida;
+                    if (ItemCarro.ItemCarroEventoRetirada == null)
+                        ItemCarro.ItemCarroEventoRetirada = new CarroEvento() { Inicio = true };
+                    if (ItemCarro.ItemCarroEventoDevolucao == null)
+                        ItemCarro.ItemCarroEventoDevolucao = new CarroEvento() { Inicio = false };
                     ItemCarro.ItemCarroEventoRetirada.Hora = new TimeSpan();
                     ItemCarro.ItemCarroEventoDevolucao.Hora = new TimeSpan();
                     ItemCarro.ItemCarroEventoRetirada.Data = _dataMinima;
@@ -101,7 +107,8 @@ namespace CV.Mobile.ViewModels
 
         private void VerificarAcaoConcluidoItem(ToggledEventArgs obj)
         {
-
+            if (ItemCarro.ItemCarroEventoDevolucao == null)
+                ItemCarro.ItemCarroEventoDevolucao = new CarroEvento() { Inicio = false };
             if (obj.Value)
             {
                 if (ItemCarro.ItemCarroEventoDevolucao.Data.GetValueOrDefault(_dataMinima) == _dataMinima)
@@ -127,6 +134,9 @@ namespace CV.Mobile.ViewModels
 
         private void VerificarAcaoIniciadaItem(ToggledEventArgs obj)
         {
+            if (ItemCarro.ItemCarroEventoRetirada == null)
+                ItemCarro.ItemCarroEventoRetirada = new CarroEvento() { Inicio = true };
+
             if (obj.Value)
             {
 
@@ -442,6 +452,11 @@ namespace CV.Mobile.ViewModels
                 }
                 else
                 {
+                    if (ItemCarro.ItemCarroEventoRetirada == null)
+                        ItemCarro.ItemCarroEventoRetirada = new CarroEvento() { Inicio = true };
+                    if (ItemCarro.ItemCarroEventoDevolucao == null)
+                        ItemCarro.ItemCarroEventoDevolucao = new CarroEvento() { Inicio = false };
+
                     ItemCarro.ItemCarroEventoRetirada.Data = null;
                     ItemCarro.ItemCarroEventoRetirada.Latitude = ItemCarro.ItemCarroEventoDevolucao.Longitude = null;
                     ItemCarro.ItemCarroEventoRetirada.Odometro = null;
@@ -516,8 +531,9 @@ namespace CV.Mobile.ViewModels
             }
             finally
             {
-                SalvarCommand.ChangeCanExecute();
                 IsBusy = false;
+
+                SalvarCommand.ChangeCanExecute();
             }
         }
 

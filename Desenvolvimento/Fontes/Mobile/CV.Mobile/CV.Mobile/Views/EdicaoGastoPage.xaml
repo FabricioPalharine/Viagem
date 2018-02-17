@@ -28,9 +28,10 @@
   <ContentPage.Content>
     <ScrollView>
       <StackLayout>
-  
-        
-        <Label Text="Descrição"  />
+                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="Blue" />
+
+
+                <Label Text="Descrição"  />
         <Entry Text="{Binding ItemGasto.Descricao}"/>
         <Label Text="Data"   />
         <controles:NullableDatePicker NullableDate="{Binding ItemGasto.Data}">

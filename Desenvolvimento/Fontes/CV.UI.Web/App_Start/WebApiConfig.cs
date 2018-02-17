@@ -38,11 +38,16 @@ namespace CV.UI.Web
                     defaults: new { id = RouteParameter.Optional }
             );
 
-
-
             config.Routes.MapHttpRoute(
-                name: "DefaultApiEmpty",
-                routeTemplate: "api/{controller}/");
+        name: "DefaultActionApiEmpty",
+        routeTemplate: "api/{controller}/{action}"
+);
+            config.Routes.MapHttpRoute(
+     name: "DefaultEmpty",
+     routeTemplate: "api/{controller}"
+);
+
+
         }
     }
 }

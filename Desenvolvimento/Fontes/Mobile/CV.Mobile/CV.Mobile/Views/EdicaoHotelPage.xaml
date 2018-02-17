@@ -32,12 +32,15 @@
   <ContentPage.Content>
     <ScrollView>
       <RelativeLayout  VerticalOptions="FillAndExpand" >
-        <StackLayout
+                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="Blue" />
+
+                <StackLayout
                                   RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent,
             Property=Height,Factor=0,Constant=60}"
                           RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width,Factor=1,Constant=0}"
                          >
-          <Label Text="Raio"  />
+
+                    <Label Text="Raio"  />
           <controles:FormattedNumberEntry x:Name="FormattedEntry" Keyboard="Numeric" DecimalPlaces="0" Value="{Binding ItemHotel.Raio, Converter={StaticResource intDecimalConverter}}"  />
 
           <Label Text="Check In Previsto"  />

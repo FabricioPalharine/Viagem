@@ -19,7 +19,9 @@
   </ContentPage.ToolbarItems>
   <ContentPage.Content>
     <StackLayout>
-      <Label Text="Marca"  />
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="Blue" />
+
+            <Label Text="Marca"  />
       <Entry Text="{Binding ItemListaCompra.Marca}"/>
       <Label Text="Descrição"  />
       <Entry Text="{Binding ItemListaCompra.Descricao}"/>

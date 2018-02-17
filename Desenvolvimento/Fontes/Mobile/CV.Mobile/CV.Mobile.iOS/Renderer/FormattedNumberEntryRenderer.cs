@@ -26,6 +26,9 @@ namespace CV.Mobile.iOS.Renderer
             {
                 Control.EditingChanged += Control_EditingChanged;
             }
+            var element = ((FormattedNumberEntry)Element);
+            element.Formato = String.Concat("N", element.DecimalPlaces);
+
         }
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -33,11 +36,11 @@ namespace CV.Mobile.iOS.Renderer
             if (e.PropertyName.Equals(nameof(FormattedNumberEntry.Value)))
             {
                 var element = ((FormattedNumberEntry)Element);
-
+                // 5. Format number, and place the formatted text in newText
+                //var newText = element.Value.ToString(element.Formato??String.Concat( "N",element.DecimalPlaces));
                 if (element.Value.HasValue)
                 {
-                    // 5. Format number, and place the formatted text in newText
-                    var newText = element.Value.Value.ToString(!string.IsNullOrEmpty(element.Formato) && !element.ShouldReactToTextChanges ? element.Formato : String.Concat("N", element.DecimalPlaces));
+                    var newText = element.Value.Value.ToString(String.Concat("N", element.DecimalPlaces));
 
                     // 6. Set the Text property of our control to newText
                     Control.Text = newText;
@@ -53,6 +56,10 @@ namespace CV.Mobile.iOS.Renderer
 
         }
 
+
+       
+ 
+
         void Control_EditingChanged(object sender, EventArgs e)
         {
             var element = ((FormattedNumberEntry)Element);
@@ -62,30 +69,53 @@ namespace CV.Mobile.iOS.Renderer
             if (!element.ShouldReactToTextChanges) return;
             element.ShouldReactToTextChanges = false;
 
-            // 2. Get the current cursor position
             var selectedRange = Control.SelectedTextRange;
             var posicao = Control.GetOffsetFromPosition(Control.BeginningOfDocument, selectedRange.Start);
+            var ultimaposicao = posicao == Control.Text.Length;
+            var cursorPosition = Convert.ToInt32(posicao);
             // 3. Take the control’s text, lets name it oldText
             var oldText = Control.Text;
 
+            var TextoPuro = oldText.Replace(".", string.Empty).Replace(",", string.Empty);
+         
             // 4. Parse oldText into a number, lets name it number
-            var number = element.DumbParse(oldText);
+           decimal? number = null;
+            if (!string.IsNullOrEmpty(TextoPuro))
+                number = Convert.ToDecimal(TextoPuro) / Convert.ToDecimal(Math.Pow(10, element.DecimalPlaces));
             element.Value = number;
 
+         
+
             // 5. Format number, and place the formatted text in newText
-            var newText = number.HasValue? number.Value.ToString(element.Formato):string.Empty;
+            var newText = number.HasValue ? number.Value.ToString(element.Formato, element.Idioma) : string.Empty;
 
             // 6. Set the Text property of our control to newText
             Control.Text = newText;
 
             // 7. Calculate the new cursor position
-            var change = -1 * (oldText.Length - newText.Length);
-            if (element.PosicaoVirgula >= 0 && element.PosicaoVirgula < posicao)
+            var change = newText.Length - oldText.Length;
+            // 8. Set the new cursor position
+
+            //if (cursorPosition <= element.PosicaoVirgula || element.PosicaoVirgula < 0)
+            //{
+            //    if (cursorPosition - change <= newText.Length && cursorPosition - change > 0)
+            //        Control.SetSelection(cursorPosition - change);
+
+            //}
+
+            UIKit.UITextPosition newPosition = null;
+
+            if (change > 0)
+                cursorPosition += change;
+            if (cursorPosition < newText.Length && !ultimaposicao)
+                newPosition = Control.GetPosition(selectedRange.Start, (nint)change);
+            else
             {
-                change = 0;
+                change = newText.Length - Convert.ToInt32(posicao);
+                newPosition = Control.GetPosition(selectedRange.Start, (nint)change);
             }
 
-            var newPosition = Control.GetPosition(selectedRange.Start, (nint)change);
+          
 
             // 8. Set the new cursor position
             if (newPosition != null) // before we fail miserably

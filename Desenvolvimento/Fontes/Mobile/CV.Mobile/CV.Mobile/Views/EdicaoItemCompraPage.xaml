@@ -30,7 +30,9 @@
     <ScrollView>
    
       <StackLayout>
-        <StackLayout>
+                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="Blue" />
+
+                <StackLayout>
           <Label Text="Item da Lista de Compra"  />
           <controles:ExtendedPicker
                                DisplayProperty="DescricaoCombinada"

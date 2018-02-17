@@ -48,5 +48,14 @@ namespace CV.Mobile.iOS.Services
         {
             return new FileStream(filename, FileMode.Open, FileAccess.Read);
         }
+
+        public System.Globalization.NumberFormatInfo GetLocale()
+        {
+            System.Globalization.NumberFormatInfo info = new System.Globalization.NumberFormatInfo();
+            info.CurrencySymbol = NSLocale.CurrentLocale.CurrencySymbol;
+            info.NumberDecimalSeparator = NSLocale.CurrentLocale.DecimalSeparator;
+            info.NumberGroupSeparator = NSLocale.CurrentLocale.GroupingSeparator;
+            return info;
+        }
     }
 }

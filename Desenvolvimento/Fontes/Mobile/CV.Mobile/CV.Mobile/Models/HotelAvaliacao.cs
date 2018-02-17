@@ -12,7 +12,8 @@ namespace CV.Mobile.Models
     {
         private string _Comentario;
         private int? _Nota;
-        
+
+        [PrimaryKey, AutoIncrement]
 
         public int? Id { get; set; }
         public int? Identificador { get; set; }

@@ -191,10 +191,17 @@ namespace CV.Mobile.ViewModels
         {
             if (ItemViagem.Edicao)
             {
-                if (!ConectadoAnterior)
-                    await VerificarSincronizacaoDados();
-                VerificarEnvioFotos();
-                VerificarEnvioVideos();
+                try
+                {
+                    if (!ConectadoAnterior)
+                        await VerificarSincronizacaoDados();
+                    VerificarEnvioFotos();
+                    VerificarEnvioVideos();
+                }
+                catch
+                {
+
+                }
             }
         }
 
@@ -325,7 +332,14 @@ namespace CV.Mobile.ViewModels
                     {
                         using (ApiService srv = new ApiService())
                         {
-                            await srv.SalvarPosicao(itemPosicao);
+                            try
+                            {
+                                await srv.SalvarPosicao(itemPosicao);
+                            }
+                            catch
+                            {
+                                await DatabaseService.Database.SalvarPosicao(itemPosicao);
+                            }
                         }
                     }
                     else

@@ -1233,14 +1233,15 @@ namespace CV.Mobile.Services
                             item.NomeCidade = itemGravado.NomeCidade;
                             item.IdentificadorCidade = itemGravado.IdentificadorCidade;
                         }
-                    }
-                    if (itemDePara.IdentificadorOrigem != itemDePara.IdentificadorDetino)
-                    {
-                        var UploadsArquivo = await Database.ListarUploadFoto_IdentificadorRefeicao(itemDePara.IdentificadorOrigem);
-                        foreach (var itemVideo in UploadsArquivo)
+
+                        if (itemDePara.IdentificadorOrigem != itemDePara.IdentificadorDetino)
                         {
-                            itemVideo.IdentificadorRefeicao = itemDePara.IdentificadorDetino;
-                            await Database.SalvarUploadFoto(itemVideo);
+                            var UploadsArquivo = await Database.ListarUploadFoto_IdentificadorRefeicao(itemDePara.IdentificadorOrigem);
+                            foreach (var itemVideo in UploadsArquivo)
+                            {
+                                itemVideo.IdentificadorRefeicao = itemDePara.IdentificadorDetino;
+                                await Database.SalvarUploadFoto(itemVideo);
+                            }
                         }
                     }
                     await vm.AtualizarViagem(vm.ItemViagem.Identificador.GetValueOrDefault(), "R", item.Identificador.GetValueOrDefault(), Inclusao);

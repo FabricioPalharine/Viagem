@@ -905,6 +905,8 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
             {
                 var queryRefeicao = this.Context.Comentarios.Where(d => d.IdentificadorUsuario == IdentificadorUsuario)
                 .Where(d => !d.DataExclusao.HasValue)
+                 .Where(d => d.IdentificadorViagem == IdentificadorViagem)
+
                 .Where(d => d.Latitude.HasValue && d.Longitude.HasValue && (d.Longitude != 0 || d.Latitude != 0));
                 if (DataDe.HasValue)
                     queryRefeicao = queryRefeicao.Where(d => d.Data >= DataDe);
@@ -916,6 +918,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
             {
                 var queryRefeicao = this.Context.Fotos.Where(d => d.IdentificadorUsuario == IdentificadorUsuario)
                 .Where(d => !d.DataExclusao.HasValue)
+                .Where(d=>d.IdentificadorViagem == IdentificadorViagem)
                 .Where(d => d.Latitude.HasValue && d.Longitude.HasValue && (d.Longitude != 0 || d.Latitude != 0));
                 if (!string.IsNullOrEmpty(Tipo))
                     queryRefeicao = queryRefeicao.Where(d => d.Video == (Tipo == "V"));
@@ -928,6 +931,8 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
             if (string.IsNullOrEmpty(Tipo) || Tipo == "U")
             {
                 var queryUltimoPonto = this.Context.Posicoes.Where(d=>d.IdentificadorUsuario == IdentificadorUsuario)
+                                    .Where(d => d.IdentificadorViagem == IdentificadorViagem)
+
                                     .Where(d => d.Latitude.HasValue && d.Longitude.HasValue && (d.Longitude != 0 || d.Latitude != 0));
                 if (DataDe.HasValue)
                     queryUltimoPonto = queryUltimoPonto.Where(d => d.DataLocal >= DataDe);

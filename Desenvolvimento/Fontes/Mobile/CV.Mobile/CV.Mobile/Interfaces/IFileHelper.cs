@@ -14,6 +14,6 @@ namespace CV.Mobile.Interfaces
         DateTime RetornarDataArquivo(string filename);
 
         Stream CarregarStreamFile(string filename);
-
+        System.Globalization.NumberFormatInfo GetLocale();
     }
 }

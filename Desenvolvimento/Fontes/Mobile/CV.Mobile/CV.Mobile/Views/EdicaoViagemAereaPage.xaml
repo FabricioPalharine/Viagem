@@ -32,7 +32,9 @@
       <ContentPage.Content>
       <ScrollView>
         <StackLayout>
-          <Label Text="Descrição"  />
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="Blue" />
+
+                    <Label Text="Descrição"  />
           <Entry Text="{Binding ItemViagemAerea.Descricao}"/>
           <Label Text="Companhia"  />
           <Entry Text="{Binding ItemViagemAerea.CompanhiaAerea}"/>

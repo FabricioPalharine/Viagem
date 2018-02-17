@@ -7,6 +7,8 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Configuration;
 using System.Net.Mail;
+using System.Net;
+
 namespace CV.Business.Library
 {
     public partial class UtilitarioBusiness
@@ -58,4 +60,18 @@ public static string ToXML<T>(T objToSerialize)
             Byte[] cipherText = enc.Encrypt(plainText, key);
             return Convert.ToBase64String(cipherText);
         }          }
+
+    public class NoKeepAlivesWebClient : WebClient
+    {
+        protected override WebRequest GetWebRequest(Uri address)
+        {
+            var request = base.GetWebRequest(address);
+            if (request is HttpWebRequest)
+            {
+                ((HttpWebRequest)request).KeepAlive = false;
+            }
+
+            return request;
+        }
+    }
 }

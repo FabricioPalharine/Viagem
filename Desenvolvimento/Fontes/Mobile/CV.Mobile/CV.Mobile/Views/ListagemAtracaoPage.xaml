@@ -28,7 +28,8 @@
 
   <ContentPage.Content>
     <StackLayout Spacing="0" VerticalOptions="FillAndExpand">
-      <ListView VerticalOptions="FillAndExpand" SeparatorVisibility="None" ItemsSource="{Binding ListaDados}" SelectedItem="{Binding ItemSelecionado, Mode=TwoWay}" CachingStrategy="RecycleElement" HasUnevenRows="True"  IsPullToRefreshEnabled="true"  IsRefreshing="{Binding IsLoadingLista, Mode=TwoWay}" RefreshCommand="{Binding RecarregarListaCommand}"  IsVisible="{Binding ModoPesquisa, Converter={StaticResource boolInverterConverter}}" >
+      <ListView VerticalOptions="FillAndExpand" SeparatorVisibility="None" ItemsSource="{Binding ListaDados}" SelectedItem="{Binding ItemSelecionado, Mode=TwoWay}" 
+                CachingStrategy="RecycleElement" HasUnevenRows="True"  IsPullToRefreshEnabled="true"  IsRefreshing="{Binding IsLoadingLista, Mode=TwoWay}" RefreshCommand="{Binding RecarregarListaCommand}"  IsVisible="{Binding ModoPesquisa, Converter={StaticResource boolInverterConverter}}" >
         <ListView.Behaviors>
           <behaviors:EventHandlerBehavior EventName="ItemTapped">
             <behaviors:InvokeCommandAction Command="{Binding ItemTappedCommand}"   />

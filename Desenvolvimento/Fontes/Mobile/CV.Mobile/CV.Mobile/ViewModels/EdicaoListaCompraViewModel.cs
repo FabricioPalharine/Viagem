@@ -33,7 +33,7 @@ namespace CV.Mobile.ViewModels
             ListaMoeda = new ObservableCollection<ItemLista>(ListaMoeda.OrderBy(d => d.Descricao));
             SalvarCommand = new Command(
                                 async () => await Salvar(),
-                                () => true);
+                                () => !IsBusy);
         }
 
         public Command SalvarCommand { get; set; }
@@ -130,8 +130,9 @@ namespace CV.Mobile.ViewModels
             }
             finally
             {
-                SalvarCommand.ChangeCanExecute();
                 IsBusy = false;
+
+                SalvarCommand.ChangeCanExecute();
             }
         }
     }

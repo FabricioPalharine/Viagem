@@ -1288,58 +1288,68 @@ namespace CV.Business
 
         public int? RetornarCidadeGeocoding(decimal? latitude, decimal? longitude)
         {
-            WebClient client = new WebClient();
-
-            client.Encoding = System.Text.Encoding.UTF8;
-            string LocationInformation = client.DownloadString("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude.GetValueOrDefault(0).ToString("F6", System.Globalization.CultureInfo.GetCultureInfo("en-Us")) + "," + longitude.GetValueOrDefault(0).ToString("F6", System.Globalization.CultureInfo.GetCultureInfo("en-Us")) + "&key=AIzaSyAlUpOpwZWS_ZGlMAtB6lY76oy1QBWk97g");
-
-            var locationinfo = JsonConvert.DeserializeObject<dynamic>(LocationInformation);
             int? IdentificadorCidade = null;
-            if (locationinfo.status == "OK")
-            {
-                string Cidade = null;
-                string Estado = string.Empty;
-                string Pais = null;
-                string SiglaPais = null;
-                var entries = ((Newtonsoft.Json.Linq.JArray)locationinfo.results);
-                foreach (var itemResult in entries)
-                {
 
-                    if (itemResult["types"].ToString().IndexOf("administrative_area_level_2", StringComparison.InvariantCultureIgnoreCase) >= 0
-                        || itemResult["types"].ToString().IndexOf("locality", StringComparison.InvariantCultureIgnoreCase) >= 0)
+            if (latitude.GetValueOrDefault(0) != 0 && longitude.GetValueOrDefault(0) != 0)
+            {
+                try
+                {
+                    NoKeepAlivesWebClient client = new NoKeepAlivesWebClient();
+                    client.Encoding = System.Text.Encoding.UTF8;
+                    string LocationInformation = client.DownloadString("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude.GetValueOrDefault(0).ToString("F6", System.Globalization.CultureInfo.GetCultureInfo("en-Us")) + "," + longitude.GetValueOrDefault(0).ToString("F6", System.Globalization.CultureInfo.GetCultureInfo("en-Us")) + "&key=AIzaSyAlUpOpwZWS_ZGlMAtB6lY76oy1QBWk97g");
+
+                    var locationinfo = JsonConvert.DeserializeObject<dynamic>(LocationInformation);
+                    if (locationinfo.status == "OK")
                     {
-                        Cidade = itemResult["address_components"][0]["long_name"].ToString();
-                    }
-                    if (itemResult["types"].ToString().IndexOf("administrative_area_level_1", StringComparison.InvariantCultureIgnoreCase) >= 0)
-                    {
-                        Estado = itemResult["address_components"][0]["long_name"].ToString();
-                    }
-                    if (itemResult["types"].ToString().IndexOf("country", StringComparison.InvariantCultureIgnoreCase) >= 0)
-                    {
-                        Pais = itemResult["address_components"][0]["long_name"].ToString();
-                        SiglaPais = itemResult["address_components"][0]["short_name"].ToString();
+                        string Cidade = null;
+                        string Estado = string.Empty;
+                        string Pais = null;
+                        string SiglaPais = null;
+                        var entries = ((Newtonsoft.Json.Linq.JArray)locationinfo.results);
+                        foreach (var itemResult in entries)
+                        {
+
+                            if (itemResult["types"].ToString().IndexOf("administrative_area_level_2", StringComparison.InvariantCultureIgnoreCase) >= 0
+                                || itemResult["types"].ToString().IndexOf("locality", StringComparison.InvariantCultureIgnoreCase) >= 0)
+                            {
+                                Cidade = itemResult["address_components"][0]["long_name"].ToString();
+                            }
+                            if (itemResult["types"].ToString().IndexOf("administrative_area_level_1", StringComparison.InvariantCultureIgnoreCase) >= 0)
+                            {
+                                Estado = itemResult["address_components"][0]["long_name"].ToString();
+                            }
+                            if (itemResult["types"].ToString().IndexOf("country", StringComparison.InvariantCultureIgnoreCase) >= 0)
+                            {
+                                Pais = itemResult["address_components"][0]["long_name"].ToString();
+                                SiglaPais = itemResult["address_components"][0]["short_name"].ToString();
+                            }
+                        }
+                        if (!string.IsNullOrEmpty(Cidade) && !string.IsNullOrEmpty(Pais))
+                        {
+                            Pais itemPais = ListarPais(d => d.Nome == Pais).FirstOrDefault();
+                            if (itemPais == null)
+                            {
+                                itemPais = new Model.Pais();
+                                itemPais.Nome = Pais;
+                                itemPais.Sigla = SiglaPais;
+                                SalvarPais(itemPais);
+                            }
+                            Cidade itemCidade = ListarCidade(d => d.IdentificadorPais == itemPais.Identificador && d.Nome == Cidade && d.Estado == Estado).FirstOrDefault();
+                            if (itemCidade == null)
+                            {
+                                itemCidade = new Model.Cidade();
+                                itemCidade.IdentificadorPais = itemPais.Identificador;
+                                itemCidade.Nome = Cidade;
+                                itemCidade.Estado = Estado;
+                                SalvarCidade(itemCidade);
+                            }
+                            IdentificadorCidade = itemCidade.Identificador;
+
+                        }
                     }
                 }
-                if (!string.IsNullOrEmpty(Cidade) && !string.IsNullOrEmpty(Pais))
+                catch (Exception)
                 {
-                    Pais itemPais = ListarPais(d => d.Nome == Pais).FirstOrDefault();
-                    if (itemPais == null)
-                    {
-                        itemPais = new Model.Pais();
-                        itemPais.Nome = Pais;
-                        itemPais.Sigla = SiglaPais;
-                        SalvarPais(itemPais);
-                    }
-                    Cidade itemCidade = ListarCidade(d => d.IdentificadorPais == itemPais.Identificador && d.Nome == Cidade && d.Estado == Estado).FirstOrDefault();
-                    if (itemCidade == null)
-                    {
-                        itemCidade = new Model.Cidade();
-                        itemCidade.IdentificadorPais = itemPais.Identificador;
-                        itemCidade.Nome = Cidade;
-                        itemCidade.Estado = Estado;
-                        SalvarCidade(itemCidade);
-                    }
-                    IdentificadorCidade = itemCidade.Identificador;
 
                 }
             }
@@ -2209,7 +2219,8 @@ namespace CV.Business
                         var ItemNovoCodigo = listaResultado.Where(d => d.IdentificadorOrigem == item.IdentificadorAtracao && d.TipoObjeto == "A").FirstOrDefault();
                         if (ItemNovoCodigo != null)
                             item.IdentificadorAtracao = ItemNovoCodigo.IdentificadorDetino;
-
+                        else
+                            itemGasto.Atracoes.Remove(item);
                     }
                 }
                 foreach (var item in itemGasto.Hoteis.Where(d => !d.DataExclusao.HasValue))

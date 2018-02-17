@@ -56,7 +56,7 @@ namespace CV.Mobile.ViewModels
 
             SalvarCommand = new Command(
                                 async () => await Salvar(),
-                                () => true);
+                                () => !IsBusy);
             PageAppearingCommand = new Command(
                                                                   async () =>
                                                                   {
@@ -458,11 +458,13 @@ namespace CV.Mobile.ViewModels
         {
             IsBusy = true;
             SalvarCommand.ChangeCanExecute();
+
+
             try
             {
                 ItemAvaliacao.DataAtualizacao = DateTime.Now.ToUniversalTime();
                 Hotel pItemHotel = new Hotel();
-                if (ItemHotel.Identificador.HasValue)
+                if (Conectado && ItemHotel.Identificador.HasValue && ItemHotel.Identificador >0)
                 {
                     using (ApiService srv = new ApiService())
                     {
@@ -524,7 +526,7 @@ namespace CV.Mobile.ViewModels
                 if (!VisitaConcluida)
                     ItemHotel.DataSaidia = null;
                 else
-                    ItemHotel.DataSaidia = DateTime.SpecifyKind(ItemHotel.DataEntrada.GetValueOrDefault().Date.Add(ItemHotel.HoraSaida.GetValueOrDefault()), DateTimeKind.Unspecified) ;
+                    ItemHotel.DataSaidia = DateTime.SpecifyKind(ItemHotel.DataSaidia.GetValueOrDefault().Date.Add(ItemHotel.HoraSaida.GetValueOrDefault()), DateTimeKind.Unspecified) ;
 
                 if (VisitaConcluida && !_ItemHotelOriginal.DataSaidia.HasValue && ItemHotel.Eventos != null)
                 {
@@ -612,8 +614,9 @@ namespace CV.Mobile.ViewModels
             }
             finally
             {
-                SalvarCommand.ChangeCanExecute();
                 IsBusy = false;
+
+                SalvarCommand.ChangeCanExecute();
             }
         }
 

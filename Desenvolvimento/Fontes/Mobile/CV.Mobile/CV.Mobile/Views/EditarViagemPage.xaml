@@ -30,6 +30,8 @@
   <ContentPage Title="Dados">
     <ContentPage.Content>
       <StackLayout Spacing="0">
+        <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="Blue" />
+
         <Label Text="Nome"  />
         <Entry Text="{Binding ItemViagem.Nome}" />
         <Label Text="Data Início"  />
