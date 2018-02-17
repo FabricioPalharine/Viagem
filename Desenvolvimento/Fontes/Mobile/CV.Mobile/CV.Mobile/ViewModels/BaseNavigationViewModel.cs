@@ -354,6 +354,7 @@ namespace CV.Mobile.ViewModels
                 itemUpload.Latitude = (exif.DecimalLatitude());
                 itemUpload.Longitude = (exif.DecimalLongitude());
             }
+           
             else if (Novo)
             {
                 var posicao = await RetornarPosicao();

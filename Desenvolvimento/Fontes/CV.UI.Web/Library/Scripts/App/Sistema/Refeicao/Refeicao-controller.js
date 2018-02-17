@@ -46,7 +46,7 @@
 	        vm.loading = true;
 	        Refeicao.delete({ id: itemForDelete.Identificador }, function (data) {
 	            if (data.Sucesso) {
-	                var posicao = vm.ListaDados.indexOf(itemForDelete);
+	                var posicao = vm.ListaDados.indexOf(vm.ListaDados.find(f=>f.Identificador == itemForDelete.Identificador));
 	                vm.ListaDados.splice(posicao, 1);
 	                Error.showError('success', $translate.instant("Sucesso"), data.Mensagens[0].Mensagem, true);
 	                SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'R', itemForDelete.Identificador, false);

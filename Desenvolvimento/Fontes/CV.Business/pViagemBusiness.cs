@@ -1368,6 +1368,7 @@ namespace CV.Business
                     itemFoto.Hoteis.ToList().ForEach(d => { d.ItemFoto = null; d.ItemHotel.Fotos = null; });
                     itemFoto.ItensCompra.ToList().ForEach(d => { d.ItemFoto = null; d.ItemItemCompra.Fotos = null; });
                     itemFoto.Refeicoes.ToList().ForEach(d => { d.ItemFoto = null; d.ItemRefeicao.Fotos = null; });
+                    
 
                 }
                 return lista;

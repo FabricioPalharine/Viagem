@@ -78,9 +78,13 @@
 
 		vm.PreencherLoadItem = function()
 		{
+		    Dominio.CarregaMoedas(function (data) {
+		        vm.ListaMoeda = data;
+		        if (vm.itemGasto.Moeda)
+		            vm.itemMoeda = { Codigo: vm.itemGasto.Moeda };
+		    });
 
-		    if (vm.itemGasto.Moeda)
-		        vm.itemMoeda = { Codigo: vm.itemGasto.Moeda };
+		   
 
 		    Viagem.CarregarParticipantes(function (lista) {
 		        vm.ListaUsuario = lista;

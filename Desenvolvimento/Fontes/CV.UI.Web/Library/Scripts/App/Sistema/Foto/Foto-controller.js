@@ -148,7 +148,7 @@
 		        uploadVideo.ready(result[1], item.name, item, function(link, status)
 		        {
 		            var itemFoto = {
-		                ImageMime: item.type, DataArquivo: item.lastModifiedDate, CodigoGoogle: uploadVideo.videoId, Thumbnail: uploadVideo.thumbnail,
+		                ImageMime: item.type, DataArquivo: moment.utc(item.lastModifiedDate).local().format("YYYY-MM-DDTHH:mm:ss"), CodigoGoogle: uploadVideo.videoId, Thumbnail: uploadVideo.thumbnail,
 		                LinkGoogle: link
 		            };
 		            if (status == null) {
@@ -177,7 +177,7 @@
                 item,
                 function (img, dados) {
                     var imageURL = img.toDataURL();
-                    var itemFoto = { Base64: imageURL, ImageMime: item.type, DataArquivo: item.lastModifiedDate };
+                    var itemFoto = { Base64: imageURL, ImageMime: item.type, DataArquivo: moment.utc(item.lastModifiedDate).local().format("YYYY-MM-DDTHH:mm:ss") };
                     if (dados && dados.exif) {
                         var tags = dados.exif.getAll()
                         if (tags.GPSLatitude)
@@ -188,6 +188,10 @@
                         if (tags.GPSLongitude) {
                             var arrPosicao = tags.GPSLongitude.split(',');
                             itemFoto.Longitude = vm.ConverterDegressDecimal(arrPosicao[0], arrPosicao[1], arrPosicao[2] == "NaN" ? 0 : arrPosicao[2], tags.GPSLongitudeRef)
+                        }
+                        if (tags.DateTimeOriginal)
+                        {
+                            itemFoto.DataArquivo = moment(tags.DateTimeOriginal, "YYYY:MM:DD HH:mm:ss").local().format("YYYY-MM-DDTHH:mm:ss");
                         }
                     }
                     itemArquivo.Situacao = $translate.instant('Foto_Enviando');
@@ -524,7 +528,7 @@
                 {
                     //var posicao = vmEdit.itemFoto.Atracoes.indexOf(itens[0]);
                     //vmEdit.itemFoto.Atracoes.splice(posicao, 1);
-                    item.DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+                    itens[0].DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
                 }
             };
 
@@ -539,7 +543,7 @@
                 else if (!item.Selecionado && itens.length > 0) {
                     //var posicao = vmEdit.itemFoto.Hoteis.indexOf(itens[0]);
                     //vmEdit.itemFoto.Hoteis.splice(posicao, 1);
-                    item.DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+                    itens[0].DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
                 }
             };
 
@@ -554,7 +558,7 @@
                 else if (!item.Selecionado && itens.length > 0) {
                     //var posicao = vmEdit.itemFoto.Refeicoes.indexOf(itens[0]);
                     //vmEdit.itemFoto.Refeicoes.splice(posicao, 1);
-                    item.DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+                    itens[0].DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
                 }
             };
 
@@ -568,7 +572,7 @@
                     vmEdit.itemFoto.ItensCompra.push({ IdentificadorItemCompra: item.Identificador, ItemItemCompra: item, DataAtualizacao: moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss") });
                 }
                 else if (!item.Selecionado && itens.length > 0) {
-                    item.DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+                    itens[0].DataExclusao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
                     //var posicao = vmEdit.itemFoto.ItensCompra.indexOf(itens[0]);
                     //vmEdit.itemFoto.ItensCompra.splice(posicao, 1);
                 }

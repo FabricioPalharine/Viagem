@@ -625,7 +625,7 @@ namespace CV.Data
                 .Include("Hoteis").Include("Hoteis.ItemHotel")
                 .Include("ItensCompra").Include("ItensCompra.ItemItemCompra")
                 .Include("Refeicoes").Include("Refeicoes.ItemRefeicao");
-            query = query.Where(d => d.IdentificadorViagem == IdentificadorViagem);
+            query = query.Where(d => d.IdentificadorViagem == IdentificadorViagem).Where(d => !d.DataExclusao.HasValue);
             if (IdentificadorFoto.HasValue)
                 query = query.Where(d => d.Identificador == IdentificadorFoto);
             if (DataDe.HasValue)
