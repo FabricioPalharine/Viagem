@@ -123,12 +123,12 @@ namespace CV.Business
                     itemLinha.Tipo = "N";
                     itemLinha.Pontos = new List<PontoMapa>();
                     lista.Add(itemLinha);
-                    foreach (var itemPosicao in ListaPosicoes.OrderBy(d => d.DataLocal))
+                    foreach (var itemPosicao in ListaPosicoes.OrderBy(d => d.DataGMT))
                     {
                         if (itemPosicaoAnterior != null)
                         {
 
-                            if (itemLinha.Tipo != "D" && itemPosicao.DataLocal.GetValueOrDefault().Subtract(itemPosicaoAnterior.DataLocal.GetValueOrDefault()).TotalSeconds > 120)
+                            if (itemLinha.Tipo != "D" && itemPosicao.DataLocal.GetValueOrDefault().Subtract(itemPosicaoAnterior.DataLocal.GetValueOrDefault()).TotalMinutes > 90)
                             {
                                 var tipo = itemLinha.Tipo;
                                 itemLinha = new LinhaMapa();

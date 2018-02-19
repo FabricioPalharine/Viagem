@@ -209,6 +209,7 @@ namespace CV.Mobile.ViewModels
             {
                 using (ApiService srv = new ApiService())
                 {
+                    
                     ItemViagemAerea = await srv.CarregarViagemAerea(((ViagemAerea)itemSelecionado.Item).Identificador);
 
                 }

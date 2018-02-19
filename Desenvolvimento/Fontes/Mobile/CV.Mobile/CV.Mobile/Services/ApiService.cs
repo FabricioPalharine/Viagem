@@ -2055,15 +2055,21 @@ namespace CV.Mobile.Services
         public async Task<ViagemAerea> CarregarViagemAerea(int? Identificador)
         {
             var itemViagemAerea = new ViagemAerea();
-            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/ViagemAerea/get/", Identificador.GetValueOrDefault(0)));
-            var response = await client.GetAsync(uri);
-            var resultado = await response.Content.ReadAsStringAsync();
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                itemViagemAerea = JsonConvert.DeserializeObject<ViagemAerea>(resultado);
+                var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/ViagemAerea/get/", Identificador.GetValueOrDefault(0)));
+                var response = await client.GetAsync(uri);
+                var resultado = await response.Content.ReadAsStringAsync();
 
+                if (response.IsSuccessStatusCode)
+                {
+                    itemViagemAerea = JsonConvert.DeserializeObject<ViagemAerea>(resultado);
+
+                }
             }
+            catch
+            { 
+}
 
             return itemViagemAerea;
         }

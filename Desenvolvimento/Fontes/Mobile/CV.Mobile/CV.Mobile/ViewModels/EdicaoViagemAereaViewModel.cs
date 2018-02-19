@@ -440,7 +440,7 @@ namespace CV.Mobile.ViewModels
 
                             AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "VA", Resultado.IdentificadorRegistro.GetValueOrDefault(), !ItemViagemAerea.Identificador.HasValue);
                             pItemViagemAerea = await srv.CarregarViagemAerea(Resultado.IdentificadorRegistro);
-
+                            if (pItemViagemAerea.Identificador.HasValue)
                             await DatabaseService.SalvarViagemAereaReplicada(pItemViagemAerea);
                         }
 

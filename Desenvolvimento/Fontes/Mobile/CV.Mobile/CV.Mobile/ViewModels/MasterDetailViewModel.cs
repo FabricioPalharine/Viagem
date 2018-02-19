@@ -42,7 +42,7 @@ namespace CV.Mobile.ViewModels
             cvHubConnection = new HubConnection(String.Concat(Settings.BaseWebApi, "signalr/hubs"));
 
             locator = CrossGeolocator.Current;
-            locator.DesiredAccuracy = 50;
+            locator.DesiredAccuracy = 20;
             locator.AllowsBackgroundUpdates = true;
             locator.PositionChanged += Locator_PositionChanged;
             MenuViewModel vmMenu = new MenuViewModel(itemUsuario);
@@ -296,11 +296,17 @@ namespace CV.Mobile.ViewModels
 
         private async Task ConectatSignalR(Viagem itemViagem)
         {
+            try
+            {
+                await IniciarHubSignalR();
 
-            await IniciarHubSignalR();
+                if (itemViagem != null)
+                    await ConectarViagem(itemViagem.Identificador.GetValueOrDefault(), itemViagem.Edicao);
+            }
+            catch
+            {
 
-            if (itemViagem != null)
-                await ConectarViagem(itemViagem.Identificador.GetValueOrDefault(), itemViagem.Edicao);
+            }
         }
 
         private async void Current_ConnectivityChanged(object sender, Plugin.Connectivity.Abstractions.ConnectivityChangedEventArgs e)
@@ -311,7 +317,7 @@ namespace CV.Mobile.ViewModels
 
         private async void Locator_PositionChanged(object sender, PositionEventArgs e)
         {
-            if (e.Position.Speed > 0)
+            if (e.Position.Speed > 0.7)
             {
                 if (_ItemViagem != null)
                 {
@@ -359,16 +365,23 @@ namespace CV.Mobile.ViewModels
                         {
                             using (ApiService srv = new ApiService())
                             {
-                                var Resultado = await srv.SalvarHotelEvento(itemEvento);
-                                if (Resultado.Sucesso)
+                                try
                                 {
-                                    var Jresultado = (JObject)Resultado.ItemRegistro;
-                                    var pItemEvento = Jresultado.ToObject<HotelEvento>();
-                                    var itemBanco = await DatabaseService.Database.RetornarHotelEvento(pItemEvento.Identificador);
-                                    if (itemBanco != null)
-                                        pItemEvento.Id = itemBanco.Id;
-                                    await DatabaseService.Database.SalvarHotelEvento(pItemEvento);
-                                    await AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "HE", pItemEvento.Identificador.GetValueOrDefault(), false);
+                                    var Resultado = await srv.SalvarHotelEvento(itemEvento);
+                                    if (Resultado.Sucesso)
+                                    {
+                                        var Jresultado = (JObject)Resultado.ItemRegistro;
+                                        var pItemEvento = Jresultado.ToObject<HotelEvento>();
+                                        var itemBanco = await DatabaseService.Database.RetornarHotelEvento(pItemEvento.Identificador);
+                                        if (itemBanco != null)
+                                            pItemEvento.Id = itemBanco.Id;
+                                        await DatabaseService.Database.SalvarHotelEvento(pItemEvento);
+                                        await AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "HE", pItemEvento.Identificador.GetValueOrDefault(), false);
+
+                                    }
+                                }
+                                catch (Exception )
+                                {
 
                                 }
                             }
