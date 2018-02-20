@@ -141,8 +141,10 @@ namespace CV.Mobile.ViewModels
                             var itembase = await srv.CarregarComentario(ItemComentario.Identificador.GetValueOrDefault(Resultado.IdentificadorRegistro.GetValueOrDefault()));
                             var itemAjustar = await DatabaseService.Database.RetornarComentario(ItemComentario.Identificador);
                             if (itemAjustar != null)
+                            {
                                 itembase.Id = itemAjustar.Id;
-                            itemAjustar.DataAtualizacao = DateTime.Now.ToUniversalTime();                           
+                                itemAjustar.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                            }
                             await DatabaseService.Database.SalvarComentario(itembase);
 
                         }
