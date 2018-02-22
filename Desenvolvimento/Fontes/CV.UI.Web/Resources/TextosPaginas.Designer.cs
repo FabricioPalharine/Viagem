@@ -5065,6 +5065,15 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tipo Ponto.
+        /// </summary>
+        public static string Tipo_Ponto {
+            get {
+                return ResourceManager.GetString("Tipo_Ponto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CV.
         /// </summary>
         public static string TituloAplicacao {

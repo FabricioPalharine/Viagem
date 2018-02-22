@@ -1974,4 +1974,7 @@
   <data name="PontoMapa_UltimaPosicao" xml:space="preserve">
     <value>Última Posição</value>
   </data>
+  <data name="Tipo_Ponto" xml:space="preserve">
+    <value>Tipo Ponto</value>
+  </data>
 </root>
