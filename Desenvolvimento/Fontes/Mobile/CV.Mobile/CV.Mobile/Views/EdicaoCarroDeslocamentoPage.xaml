@@ -40,8 +40,12 @@
         
         <Label Text="Odômetro"  />
         <controles:FormattedNumberEntry  Keyboard="Numeric" DecimalPlaces="0" Value="{Binding ItemCarroDeslocamento.ItemCarroEventoPartida.Odometro, Converter={StaticResource intDecimalConverter}}" />
-        
 
+        <StackLayout Orientation="Horizontal" Spacing="10" >
+          <Label Text="Distância: "  />
+                    <Label Text="{Binding ItemCarroDeslocamento.Distancia, StringFormat='{0:N2}'}" />
+
+        </StackLayout>
          <StackLayout Orientation="Horizontal" Spacing="10">
           <Label Text="Destino Alcançado"  />
           <Switch IsToggled="{Binding VisitaConcluida}" >

@@ -37,6 +37,7 @@ namespace CV.Model
 
 			public string Observacao { get; set; }
 
+            public decimal? Distancia { get; set; }
 			public Carro ItemCarro { get; set; }
 		 public CarroDeslocamento Clone()
 		{

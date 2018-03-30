@@ -49,5 +49,10 @@ namespace CV.Mobile.Models
         public const string AtualizarConsulta = "AtualizarConsulta";
 
         public const string VerificarCalendario = "VerificarCalendario";
+
+        public const string AtualizarAtracaoDistancia = "AtualizarAtracaoDistancia";
+        public const string AtualizarCarroDeslocamentoDistancia = "AtualizarCarroDeslocamentoDistancia";
+        public const string AtualizarViagemAereaDistancia = "AtualizarViagemAereaDistancia";
+
     }
 }

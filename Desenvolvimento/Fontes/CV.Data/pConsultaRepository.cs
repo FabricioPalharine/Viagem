@@ -560,7 +560,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                 queryAtracao = queryAtracao.Where(d => d.Chegada >= DataDe || (d.Partida.HasValue && d.Partida >= DataDe));
             if (DataAte.HasValue)
                 queryAtracao = queryAtracao.Where(d => d.Chegada < DataAte && (!d.Partida.HasValue || d.Partida < DataAte));
-            return queryAtracao.SelectMany(d => d.Avaliacoes.Where(e => !e.DataExclusao.HasValue).Select(e => new LocaisDetalhes() { Comentario = e.Comentario, DataDe = d.Chegada, DataAte = d.Partida, Nota = e.Nota, NomeUsuario = e.ItemUsuario.Nome })).ToList();
+            return queryAtracao.SelectMany(d => d.Avaliacoes.Where(e => !e.DataExclusao.HasValue).Select(e => new LocaisDetalhes() { Comentario = e.Comentario, DataDe = d.Chegada, DataAte = d.Partida, Nota = e.Nota, NomeUsuario = e.ItemUsuario.Nome, Distancia = d.Distancia })).ToList();
         }
 
         public List<RelatorioGastos> ConsultarGastosAtracao(int? IdentificadorViagem, DateTime? DataDe, DateTime? DataAte, string Nome, string CodigoGoogle)

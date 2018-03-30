@@ -72,7 +72,18 @@ namespace CV.Mobile.ViewModels
 
             ExcluirCommand = new Command(() =>  Excluir());
             AbrirCustosCommand = new Command(async () => await AbrirJanelaCustos());
-           
+
+            MessagingService.Current.Unsubscribe<Atracao>(MessageKeys.AtualizarAtracaoDistancia);
+            MessagingService.Current.Subscribe<Atracao>(MessageKeys.AtualizarAtracaoDistancia, (service, item) =>
+            {
+                IsBusy = true;
+
+                if (ItemAtracao.Id.HasValue && item.Id.Value == ItemAtracao.Id.Value)
+                    ItemAtracao.Distancia = item.Distancia;
+
+                IsBusy = false;
+            });
+
         }
 
         private void VerificarAcaoConcluidoItem(ToggledEventArgs obj)

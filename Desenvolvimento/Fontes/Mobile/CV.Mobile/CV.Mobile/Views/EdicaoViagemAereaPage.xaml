@@ -51,8 +51,14 @@
           <controles:NullableDatePicker NullableDate="{Binding ItemViagemAerea.DataPrevista}" >
             <controles:NullableDatePicker.Format>dd/MM/yyyy</controles:NullableDatePicker.Format>
           </controles:NullableDatePicker>
-        
-         <Label Text="Nota" IsVisible="{Binding PossoComentar}" />
+
+                    <StackLayout Orientation="Horizontal" Spacing="10" IsVisible="{Binding ItemOrigem.VisitaConcluida}">
+                        <Label Text="Distância: "  />
+                        <Label Text="{Binding ItemViagemAerea.Distancia, StringFormat='{0:N2}'}" />
+
+                    </StackLayout>
+
+                    <Label Text="Nota" IsVisible="{Binding PossoComentar}" />
         <controles:StarControl Orientation="Horizontal" HeightRequest="70" IsVisible="{Binding PossoComentar}" Nota="{Binding ItemAvaliacao.Nota}">
         </controles:StarControl>
         <Label Text="Comentário" IsVisible="{Binding PossoComentar}" />

@@ -96,6 +96,7 @@ namespace CV.Mobile.ViewModels
 
         private async Task Selecionar(ItemTappedEventArgs Item)
         {
+            await PararGPS();
             await AtualizarViagem(((Viagem)Item.Item).Identificador.GetValueOrDefault());
             await PopAsync();
         }

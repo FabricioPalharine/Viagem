@@ -56,6 +56,18 @@ namespace CV.Mobile.ViewModels
             VisitaConcluidaToggledCommand = new Command<ToggledEventArgs>(
                                                         (obj) => VerificarAcaoConcluidoItem(obj));
 
+            MessagingService.Current.Unsubscribe<CarroDeslocamento>(MessageKeys.AtualizarCarroDeslocamentoDistancia);
+            MessagingService.Current.Subscribe<CarroDeslocamento>(MessageKeys.AtualizarCarroDeslocamentoDistancia, (service, item) =>
+            {
+                IsBusy = true;
+
+                if (ItemCarroDeslocamento.Id.HasValue && item.Id.Value == ItemCarroDeslocamento.Id.Value)
+                    ItemCarroDeslocamento.Distancia = item.Distancia;
+
+                IsBusy = false;
+            });
+
+
         }
 
 

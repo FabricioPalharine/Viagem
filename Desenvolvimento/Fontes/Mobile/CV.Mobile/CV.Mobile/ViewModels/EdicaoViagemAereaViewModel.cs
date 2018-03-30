@@ -79,6 +79,18 @@ namespace CV.Mobile.ViewModels
 
             AbrirCustosCommand = new Command(async () => await AbrirJanelaCustos());
 
+            MessagingService.Current.Unsubscribe<ViagemAerea>(MessageKeys.AtualizarViagemAereaDistancia);
+            MessagingService.Current.Subscribe<ViagemAerea>(MessageKeys.AtualizarViagemAereaDistancia, (service, item) =>
+            {
+                IsBusy = true;
+
+                if (ItemViagemAerea.Id.HasValue && item.Id.Value == ItemViagemAerea.Id.Value)
+                    ItemViagemAerea.Distancia = item.Distancia;
+
+                IsBusy = false;
+            });
+
+
         }
 
         private void ListaDados_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

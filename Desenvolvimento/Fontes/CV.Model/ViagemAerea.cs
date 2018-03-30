@@ -53,7 +53,10 @@ private void ValidarCompanhiaAerea(Microsoft.Practices.EnterpriseLibrary.Validat
 
 			public DateTime? DataExclusao { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="ViagemAerea_Tipo",MessageTemplateResourceType=typeof(MensagemModelo))]
+        public decimal? Distancia { get; set; }
+
+
+        [NotNullValidator(MessageTemplateResourceName="ViagemAerea_Tipo",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public int? Tipo { get; set; }
 
 			public string Descricao { get; set; }

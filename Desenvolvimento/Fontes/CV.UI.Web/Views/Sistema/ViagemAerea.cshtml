@@ -227,6 +227,14 @@
                             </div>
                         </div>
                     </div>
+                <div class="row" ng-if="itemEdit.itemPontoDestino.PartidaPonto">
+                    <div class="col-md-3">
+                        <label>Distância</label>
+                        <label>
+                            {{itemEdit.itemViagemAerea.Distancia | number:2}}
+                        </label>
+                    </div>
+                </div>
                     <div class="row">
                         <div class="col-md-12">
                             <h3>@TextosPaginas.ViagemAerea_Origem</h3>
@@ -326,7 +334,7 @@
                             <label>@TextosPaginas.ViagemAerea_Partida</label>
                             <input type="checkbox" ng-model="itemEdit.itemPontoDestino.PartidaPonto" ng-click="itemEdit.AjustarHoraPartida(itemEdit.itemPontoDestino);" class="checkbox">
                         </div>
-
+                       
                         <div class="col-md-3" ng-if="itemEdit.itemPontoDestino.ChegadaPonto">
                             <label>@TextosPaginas.ViagemAerea_DataChegada</label>
                             <div class="dropdown">

@@ -22,7 +22,8 @@ namespace CV.Data.Configuration
 			this.Property(i => i.IdentificadorCarro).HasColumnName("ID_CARRO");
 			this.Property(i => i.IdentificadorCarroEventoPartida).HasColumnName("ID_CARRO_EVENTO_PARTIDA");
 			this.Property(i => i.IdentificadorCarroEventoChegada).HasColumnName("ID_CARRO_EVENTO_CHEGADA");
-			this.HasOptional(i => i.ItemCarroEventoPartida).WithMany().HasForeignKey(d=>d.IdentificadorCarroEventoPartida);
+            this.Property(i => i.Distancia).HasColumnName("VL_DISTANCIA").HasPrecision(16, 4); ;
+            this.HasOptional(i => i.ItemCarroEventoPartida).WithMany().HasForeignKey(d=>d.IdentificadorCarroEventoPartida);
 			this.HasOptional(i => i.ItemCarroEventoChegada).WithMany().HasForeignKey(d=>d.IdentificadorCarroEventoChegada);
 			this.HasMany(i => i.Usuarios).WithRequired().HasForeignKey(d=>d.IdentificadorCarroDeslocamento);
 			this.Property(i => i.DataAtualizacao).HasColumnName("DT_ATUALIZACAO");

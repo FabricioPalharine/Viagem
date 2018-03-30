@@ -49,6 +49,12 @@
         
         <Label Text="Tipo"  />
         <Entry Text="{Binding ItemAtracao.Tipo}"/>
+                  <StackLayout Orientation="Horizontal" Spacing="10" IsVisible="{Binding VisitaIniciada}">
+                    <Label Text="Distância: "  />
+                        <Label Text="{Binding ItemAtracao.Distancia, StringFormat='{0:N2}'}" />
+
+                  </StackLayout>
+                    
         <StackLayout Orientation="Horizontal" Spacing="10">
           <Label Text="Visita Iniciada"  />
           <Switch IsToggled="{Binding VisitaIniciada}">
@@ -67,6 +73,8 @@
           <TimePicker.Format>HH:mm</TimePicker.Format>
         </TimePicker>
         <StackLayout Orientation="Horizontal" Spacing="10" IsVisible="{Binding VisitaIniciada}">
+
+          <Label Text="{Binding Valor, StringFormat='{0:N2}'}" />
           <Label Text="Visita Concluída"  />
           <Switch IsToggled="{Binding VisitaConcluida}" >
               <Switch.Behaviors>

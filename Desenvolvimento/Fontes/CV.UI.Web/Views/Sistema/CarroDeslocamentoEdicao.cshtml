@@ -2,152 +2,160 @@
     <span>@TextosPaginas.Carro_Deslocamentos</span>
 </div>
 <div class="modal-body" ng-init="itemCarroDeslocamentoEdit.load()">
-        <div class="box box-primary">
-            <div class="overlay" ng-show="itemCarroDeslocamentoEdit.loading">
-                <i class="fa fa-refresh fa-spin text-gray"></i>
+    <div class="box box-primary">
+        <div class="overlay" ng-show="itemCarroDeslocamentoEdit.loading">
+            <i class="fa fa-refresh fa-spin text-gray"></i>
+        </div>
+
+        <div class="box-body">
+
+            <div class="row" ng-show="itemCarroDeslocamentoEdit.messages.length > 0">
+                <div class="col-md-12">
+                    <div class="callout callout-danger">
+                        <h4>@TextosPaginas.Geral_ValidarErros</h4>
+                        <ul>
+                            <li ng-repeat="erro in itemCarroDeslocamentoEdit.messages">
+                                <span ng-bind="erro.Mensagem"></span>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+
             </div>
 
-            <div class="box-body">
 
-                <div class="row" ng-show="itemCarroDeslocamentoEdit.messages.length > 0">
-                    <div class="col-md-12">
-                        <div class="callout callout-danger">
-                            <h4>@TextosPaginas.Geral_ValidarErros</h4>
-                            <ul>
-                                <li ng-repeat="erro in itemCarroDeslocamentoEdit.messages">
-                                    <span ng-bind="erro.Mensagem"></span>
-                                </li>
-                            </ul>
 
-                        </div>
-                    </div>
+            <div class="row">
+                <div class="col-md-10">
+                    <h3>@TextosPaginas.Carro_Partida</h3>
+                </div>
+                <div class="col-md-2" ng-class="{ 'has-error':itemCarroDeslocamentoEdit.CamposInvalidos.ItemCarroEventoPartida_Posicao}">
+                    <label>&nbsp;</label><br />
+                    <a role="button" class="btn btn-primary " title="@TextosPaginas.Posicao" ng-click="itemCarroDeslocamentoEdit.SelecionarPosicao(itemCarroDeslocamentoEdit.itemCarroDeslocamento.ItemCarroEventoPartida)">
+                        <span class="fa fa-map-marker" aria-hidden="true"></span>
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <label>@TextosPaginas.Carro_Odometro</label>
+                    <input type="text" class="form-control" ng-model="itemCarroDeslocamentoEdit.itemCarroDeslocamento.ItemCarroEventoPartida.Odometro" maxlength="7" empty-to-null integer-input>
 
                 </div>
-              
-
-                
-                 <div class="row" >
-                    <div class="col-md-10">
-                        <h3>@TextosPaginas.Carro_Partida</h3>
-                    </div>
-                    <div class="col-md-2" ng-class="{ 'has-error':itemCarroDeslocamentoEdit.CamposInvalidos.ItemCarroEventoPartida_Posicao}">
-                        <label>&nbsp;</label><br />
-                        <a role="button" class="btn btn-primary " title="@TextosPaginas.Posicao" ng-click="itemCarroDeslocamentoEdit.SelecionarPosicao(itemCarroDeslocamentoEdit.itemCarroDeslocamento.ItemCarroEventoPartida)">
-                            <span class="fa fa-map-marker" aria-hidden="true"></span>
+            </div>
+            <div class="row" ng-if="itemCarroDeslocamentoEdit.itemCarroDeslocamento.ItemCarroEventoPartida.Data">
+                <div class="col-md-3">
+                    <label>Distância</label>
+                    <label>
+                        {{itemCarroDeslocamentoEdit.itemCarroDeslocamento.Distancia | number:2}}
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6" ng-class="{ 'has-error':itemCarroDeslocamentoEdit.CamposInvalidos.ItemCarroEventoPartida_Data}">
+                    <label>@TextosPaginas.Carro_Data</label>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+                            <div class="input-group">
+                                <input date-input ng-model="itemCarroDeslocamentoEdit.itemCarroDeslocamento.ItemCarroEventoPartida.Data" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                       datapattern="dd/MM/yyyy">
+                                <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </span>
+                            </div>
                         </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <datetimepicker data-ng-model="itemCarroDeslocamentoEdit.itemCarroDeslocamento.ItemCarroEventoPartida.Data"
+                                            data-datetimepicker-config="{  minView:'day' , langCode:itemCarroDeslocamentoEdit.Idioma()   }" />
+                        </ul>
                     </div>
-                     <div class="col-md-6">
-                         <label>@TextosPaginas.Carro_Odometro</label>
-                         <input type="text" class="form-control" ng-model="itemCarroDeslocamentoEdit.itemCarroDeslocamento.ItemCarroEventoPartida.Odometro" maxlength="7" empty-to-null integer-input>
-
-                     </div>
-                     </div>
-                <div class="row">
-                    <div class="col-md-6" ng-class="{ 'has-error':itemCarroDeslocamentoEdit.CamposInvalidos.ItemCarroEventoPartida_Data}">
-                        <label>@TextosPaginas.Carro_Data</label>
-                        <div class="dropdown">
-                            <a class="dropdown-toggle" role="button" data-toggle="dropdown">
-                                <div class="input-group">
-                                    <input date-input ng-model="itemCarroDeslocamentoEdit.itemCarroDeslocamento.ItemCarroEventoPartida.Data" class="form-control" input-mask="{mask: 'd/m/y'}"
-                                           datapattern="dd/MM/yyyy">
-                                    <span class="input-group-addon">
-                                        <i class="glyphicon glyphicon-calendar"></i>
-                                    </span>
-                                </div>
-                            </a>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                <datetimepicker data-ng-model="itemCarroDeslocamentoEdit.itemCarroDeslocamento.ItemCarroEventoPartida.Data"
-                                                data-datetimepicker-config="{  minView:'day' , langCode:itemCarroDeslocamentoEdit.Idioma()   }" />
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <label>&nbsp;</label>
-                        <input type="text" class="form-control" ng-model="itemCarroDeslocamentoEdit.itemCarroDeslocamento.ItemCarroEventoPartida.strHora" input-mask="{mask: 'h:s:s'}" empty-to-null>
-
-                    </div>
-
-
-
+                </div>
+                <div class="col-md-6">
+                    <label>&nbsp;</label>
+                    <input type="text" class="form-control" ng-model="itemCarroDeslocamentoEdit.itemCarroDeslocamento.ItemCarroEventoPartida.strHora" input-mask="{mask: 'h:s:s'}" empty-to-null>
 
                 </div>
 
-                <div class="row">
-                    <div class="col-md-10">
-                        <h3>@TextosPaginas.Carro_Chegada</h3>
-                    </div>
-                    <div class="col-md-2" ng-class="{ 'has-error':itemCarroDeslocamentoEdit.CamposInvalidos.ItemCarroEventoChegada_Posicao}">
-                        <label>&nbsp;</label><br />
-                        <a role="button" class="btn btn-primary " title="@TextosPaginas.Posicao" ng-click="itemCarroDeslocamentoEdit.SelecionarPosicao(itemCarroDeslocamentoEdit.itemCarroDeslocamento.ItemCarroEventoChegada)">
-                            <span class="fa fa-map-marker" aria-hidden="true"></span>
+
+
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-10">
+                    <h3>@TextosPaginas.Carro_Chegada</h3>
+                </div>
+                <div class="col-md-2" ng-class="{ 'has-error':itemCarroDeslocamentoEdit.CamposInvalidos.ItemCarroEventoChegada_Posicao}">
+                    <label>&nbsp;</label><br />
+                    <a role="button" class="btn btn-primary " title="@TextosPaginas.Posicao" ng-click="itemCarroDeslocamentoEdit.SelecionarPosicao(itemCarroDeslocamentoEdit.itemCarroDeslocamento.ItemCarroEventoChegada)">
+                        <span class="fa fa-map-marker" aria-hidden="true"></span>
+                    </a>
+                </div>
+
+                <div class="col-md-6">
+                    <label>@TextosPaginas.Carro_FimDeslocamento</label>
+                    <input type="checkbox" ng-model="itemCarroDeslocamentoEdit.FimDeslocamento" ng-click="itemCarroDeslocamentoEdit.AjustarHoraChegada();" class="checkbox">
+                </div>
+                <div class="col-md-6" ng-if="itemCarroDeslocamentoEdit.FimDeslocamento">
+                    <label>@TextosPaginas.Carro_Odometro</label>
+                    <input type="text" class="form-control" ng-model="itemCarroDeslocamentoEdit.itemCarroDeslocamento.ItemCarroEventoChegada.Odometro" maxlength="7" empty-to-null integer-input>
+
+                </div>
+                <div class="col-md-6" ng-class="{ 'has-error':itemCarroDeslocamentoEdit.itemCarroDescolamento.CamposInvalidos.ItemCarroEventoChegada_Data}" ng-if="itemCarroDeslocamentoEdit.FimDeslocamento">
+                    <label>@TextosPaginas.Carro_Data</label>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+                            <div class="input-group">
+                                <input date-input ng-model="itemCarroDeslocamentoEdit.itemCarroDeslocamento.ItemCarroEventoChegada.Data" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                       datapattern="dd/MM/yyyy">
+                                <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </span>
+                            </div>
                         </a>
-                    </div>
-
-                    <div class="col-md-6">
-                        <label>@TextosPaginas.Carro_FimDeslocamento</label>
-                        <input type="checkbox" ng-model="itemCarroDeslocamentoEdit.FimDeslocamento" ng-click="itemCarroDeslocamentoEdit.AjustarHoraChegada();" class="checkbox">
-                    </div>
-                    <div class="col-md-6" ng-if="itemCarroDeslocamentoEdit.FimDeslocamento">
-                        <label>@TextosPaginas.Carro_Odometro</label>
-                        <input type="text" class="form-control" ng-model="itemCarroDeslocamentoEdit.itemCarroDeslocamento.ItemCarroEventoChegada.Odometro" maxlength="7" empty-to-null integer-input>
-
-                    </div>
-                    <div class="col-md-6" ng-class="{ 'has-error':itemCarroDeslocamentoEdit.itemCarroDescolamento.CamposInvalidos.ItemCarroEventoChegada_Data}" ng-if="itemCarroDeslocamentoEdit.FimDeslocamento">
-                        <label>@TextosPaginas.Carro_Data</label>
-                        <div class="dropdown">
-                            <a class="dropdown-toggle" role="button" data-toggle="dropdown">
-                                <div class="input-group">
-                                    <input date-input ng-model="itemCarroDeslocamentoEdit.itemCarroDeslocamento.ItemCarroEventoChegada.Data" class="form-control" input-mask="{mask: 'd/m/y'}"
-                                           datapattern="dd/MM/yyyy">
-                                    <span class="input-group-addon">
-                                        <i class="glyphicon glyphicon-calendar"></i>
-                                    </span>
-                                </div>
-                            </a>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                <datetimepicker data-ng-model="itemCarroDeslocamentoEdit.itemCarroDeslocamento.ItemCarroEventoChegada.Data"
-                                                data-datetimepicker-config="{  minView:'day' , langCode:itemCarroDeslocamentoEdit.Idioma()   }" />
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-6" ng-if="itemCarroDeslocamentoEdit.FimDeslocamento">
-                        <label>&nbsp;</label>
-                        <input type="text" class="form-control" ng-model="itemCarroDeslocamentoEdit.itemCarroDeslocamento.ItemCarroEventoChegada.strHora" input-mask="{mask: 'h:s:s'}" empty-to-null>
-
-                    </div>
-                    
-                </div>
-                <div class="row">
-                    <div class="col-md-12" >
-                        <label>@TextosPaginas.Carro_Observacoes</label>
-                        <textarea class="form-control" rows="3" ng-model="itemCarroDeslocamentoEdit.itemCarroDeslocamento.Observacao"></textarea>
-
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <datetimepicker data-ng-model="itemCarroDeslocamentoEdit.itemCarroDeslocamento.ItemCarroEventoChegada.Data"
+                                            data-datetimepicker-config="{  minView:'day' , langCode:itemCarroDeslocamentoEdit.Idioma()   }" />
+                        </ul>
                     </div>
                 </div>
+                <div class="col-md-6" ng-if="itemCarroDeslocamentoEdit.FimDeslocamento">
+                    <label>&nbsp;</label>
+                    <input type="text" class="form-control" ng-model="itemCarroDeslocamentoEdit.itemCarroDeslocamento.ItemCarroEventoChegada.strHora" input-mask="{mask: 'h:s:s'}" empty-to-null>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <label>@TextosPaginas.Carro_Ocupantes</label>
-                    </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-inline">
-                            <label ng-repeat='itemParticipante in itemCarroDeslocamentoEdit.ListaParticipantes' class="radio">
-                                <input type="checkbox" ng-model="itemParticipante.Selecionado">
-                                <label style="padding-top:5px">
-                                    {{itemParticipante.Nome}}
-                                </label>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label>@TextosPaginas.Carro_Observacoes</label>
+                    <textarea class="form-control" rows="3" ng-model="itemCarroDeslocamentoEdit.itemCarroDeslocamento.Observacao"></textarea>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <label>@TextosPaginas.Carro_Ocupantes</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-inline">
+                        <label ng-repeat='itemParticipante in itemCarroDeslocamentoEdit.ListaParticipantes' class="radio">
+                            <input type="checkbox" ng-model="itemParticipante.Selecionado">
+                            <label style="padding-top:5px">
+                                {{itemParticipante.Nome}}
                             </label>
+                        </label>
 
-                        </div>
                     </div>
                 </div>
-           </div>
+            </div>
         </div>
+    </div>
 </div>
 <div class="modal-footer">
-   
+
     <button type="button" class="btn btn-primary" ng-click="itemCarroDeslocamentoEdit.close()">
         <span class="fa fa-close" aria-hidden="true">@TextosPaginas.Cancelar</span>
     </button>

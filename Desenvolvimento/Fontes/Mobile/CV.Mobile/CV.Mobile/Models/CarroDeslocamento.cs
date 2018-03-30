@@ -47,6 +47,21 @@ namespace CV.Mobile.Models
                 _Atualizado = value;
             }
         }
+
+        private decimal? _Distancia;
+        public decimal? Distancia
+        {
+            get
+            {
+                return _Distancia;
+            }
+
+            set
+            {
+                SetProperty(ref _Distancia, value);
+            }
+        }
+
         public CarroDeslocamento Clone()
         {
             return (CarroDeslocamento)this.MemberwiseClone();

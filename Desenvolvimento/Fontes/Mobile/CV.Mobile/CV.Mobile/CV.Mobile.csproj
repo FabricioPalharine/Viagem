@@ -112,6 +112,7 @@
     <Compile Include="Models\Loja.cs" />
     <Compile Include="Models\LojaItens.cs" />
     <Compile Include="Models\PontoMapa.cs" />
+    <Compile Include="Models\UlimaPosicao.cs" />
     <Compile Include="Models\Reabastecimento.cs" />
     <Compile Include="Models\ReabastecimentoGasto.cs" />
     <Compile Include="Models\GastoCompra.cs" />

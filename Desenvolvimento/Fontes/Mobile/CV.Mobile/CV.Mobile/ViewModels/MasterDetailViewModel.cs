@@ -24,6 +24,7 @@ namespace CV.Mobile.ViewModels
 {
     public class MasterDetailViewModel : BaseViewModel
     {
+        public UlimaPosicao ItemUltimaPosicao { get; set; }
 
         private HubConnection cvHubConnection;
         private IHubProxy cvHubProxy;
@@ -317,10 +318,12 @@ namespace CV.Mobile.ViewModels
 
         private async void Locator_PositionChanged(object sender, PositionEventArgs e)
         {
-            if (e.Position.Speed > 0.1)
+            if (e.Position.Speed > 0)
             {
                 if (_ItemViagem != null)
                 {
+                    AtualizarDistancias(e.Position);
+
                     Posicao itemPosicao = new Posicao()
                     {
                         DataGMT = e.Position.Timestamp.DateTime,
@@ -551,7 +554,7 @@ namespace CV.Mobile.ViewModels
                 if (_ItemViagem != null && _ItemViagem.Edicao && _ItemViagem.Aberto && _ItemViagem.DataInicio < DateTime.Now && _ItemViagem.ControlaPosicaoGPS)
                 {
                     if (!locator.IsListening)
-                        await locator.StartListeningAsync(15000, 7, true);
+                        await locator.StartListeningAsync(500, 5, true);
                 }
                 else
                 {
@@ -563,20 +566,149 @@ namespace CV.Mobile.ViewModels
 
         public async Task<Position> RetornarPosicaoGPS()
         {
-            if (ultimaPosicao == null)
+
+            try
             {
-                try
-                {
-                    var position = await locator.GetPositionAsync(timeoutMilliseconds: 30000);
-                    return position;
-                }
-                catch
+                var position = await locator.GetPositionAsync(timeoutMilliseconds: 30000);
+                AtualizarDistancias(position);
+                return position;
+            }
+            catch
+            {
+                if (ultimaPosicao == null)
                 {
                     return null;
                 }
+                else
+                    return ultimaPosicao;
             }
-            else
-                return ultimaPosicao;
+          
+               
+        }
+
+        private async void AtualizarDistancias(Position itemPosition)
+        {
+            if (_ItemViagem != null )
+            {
+                if (ItemUltimaPosicao != null)
+                {
+                    if (ItemUltimaPosicao.Latitude != itemPosition.Latitude || ItemUltimaPosicao.Longitude != itemPosition.Longitude)
+                    {
+                        var itemNovaPosicao = new UlimaPosicao() { DataUltimaPosicao = DateTime.Now, Latitude = itemPosition.Latitude, Longitude = itemPosition.Longitude };
+                        await DatabaseService.Database.GravarUltimaPosicao(itemNovaPosicao);
+                        var AtracoesAbertas = await DatabaseService.Database.ListarAtracaoAberta();
+                        var PosicaoAntiga = new Position() { Latitude = ItemUltimaPosicao.Latitude.GetValueOrDefault(), Longitude = ItemUltimaPosicao.Longitude.GetValueOrDefault() };
+                        var DistanciaPontos = Convert.ToDecimal(GetDistanceTo(PosicaoAntiga, itemPosition).Kilometers);
+                        await AjustarDistanciaAtracao(AtracoesAbertas, DistanciaPontos);
+                        await AjustarDistanciaCarroDeslocamento(DistanciaPontos);
+                        await AjustarDistanciaViagemAerea(DistanciaPontos);
+
+                        ItemUltimaPosicao = itemNovaPosicao;
+                    }
+                }
+                else
+                {
+                    var itemNovaPosicao = new UlimaPosicao() { DataUltimaPosicao = DateTime.Now, Latitude = itemPosition.Latitude, Longitude = itemPosition.Longitude };
+                    await DatabaseService.Database.GravarUltimaPosicao(itemNovaPosicao);
+                    ItemUltimaPosicao = itemNovaPosicao;
+
+                }
+            }
+        }
+
+        private async Task AjustarDistanciaViagemAerea(decimal distanciaPontos)
+        {
+            var DeslocamentosAbertos = await DatabaseService.Database.ListarViagemAereaAberto();
+            foreach (var itemViagemAerea in DeslocamentosAbertos)
+            {
+                var itemDeslocamentoCompleto = await DatabaseService.CarregarViagemAerea(itemViagemAerea.Identificador);
+                if (itemDeslocamentoCompleto.Aeroportos.Where(d=>d.DataPartida.HasValue).Max(d=>d.DataPartida) <= ItemUltimaPosicao.DataUltimaPosicao)
+                {
+                    itemDeslocamentoCompleto.Distancia = itemDeslocamentoCompleto.Distancia.GetValueOrDefault(0) + distanciaPontos;
+
+                    if (ConectadoPrincipal)
+                    {
+                        using (ApiService srv = new ApiService())
+                        {
+                            var Resultado = await srv.SalvarViagemAerea(itemDeslocamentoCompleto);
+                            if (Resultado.Sucesso)
+                            {
+                                itemDeslocamentoCompleto = await srv.CarregarViagemAerea(Resultado.IdentificadorRegistro);
+                                await DatabaseService.SalvarViagemAereaReplicada(itemDeslocamentoCompleto);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        await DatabaseService.SalvarViagemAerea(itemDeslocamentoCompleto);
+                    }
+
+                    MessagingService.Current.SendMessage<ViagemAerea>(MessageKeys.AtualizarViagemAereaDistancia, itemDeslocamentoCompleto);
+                }
+            }
+        }
+
+        private async Task AjustarDistanciaCarroDeslocamento(decimal distanciaPontos)
+        {
+            var DeslocamentosAbertos = await DatabaseService.Database.ListarCarroDeslocamentoAberto();
+            foreach (var itemCarroDeslocamento in DeslocamentosAbertos)
+            {
+                var itemDeslocamentoCompleto = await DatabaseService.CarregarCarroDeslocamento(itemCarroDeslocamento.Identificador);
+                if (itemDeslocamentoCompleto.ItemCarroEventoPartida.Data <= ItemUltimaPosicao.DataUltimaPosicao)
+                {
+                    itemDeslocamentoCompleto.Distancia = itemDeslocamentoCompleto.Distancia.GetValueOrDefault(0) + distanciaPontos;
+
+                    if (ConectadoPrincipal)
+                    {
+                        using (ApiService srv = new ApiService())
+                        {
+                            var Resultado = await srv.SalvarCarroDeslocamento(itemDeslocamentoCompleto);
+                            if (Resultado.Sucesso)
+                            {
+                                itemDeslocamentoCompleto = await srv.CarregarCarroDeslocamento(Resultado.IdentificadorRegistro);
+                                await DatabaseService.SalvarCarroDeslocamentoReplicada(itemDeslocamentoCompleto);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        await DatabaseService.SalvarCarroDeslocamento(itemDeslocamentoCompleto);
+                    }
+
+                    MessagingService.Current.SendMessage<CarroDeslocamento>(MessageKeys.AtualizarCarroDeslocamentoDistancia, itemDeslocamentoCompleto);
+                }
+            }
+        }
+
+        private async Task AjustarDistanciaAtracao(List<Atracao> AtracoesAbertas, decimal DistanciaPontos)
+        {
+            foreach (var itemAtracao in AtracoesAbertas)
+            {
+                if (itemAtracao.Chegada <= ItemUltimaPosicao.DataUltimaPosicao)
+                {
+                    var itemAtracaoCompleto = await DatabaseService.CarregarAtracao(itemAtracao.Identificador);
+                    itemAtracaoCompleto.Distancia = itemAtracaoCompleto.Distancia.GetValueOrDefault(0) + DistanciaPontos;
+
+                    if (ConectadoPrincipal)
+                    {
+                        using (ApiService srv = new ApiService())
+                        {
+                            var Resultado = await srv.SalvarAtracao(itemAtracaoCompleto);
+                            if (Resultado.Sucesso)
+                            {
+                                itemAtracaoCompleto = await srv.CarregarAtracao(Resultado.IdentificadorRegistro);
+                                await DatabaseService.SalvarAtracaoReplicada(itemAtracaoCompleto);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        await DatabaseService.SalvarAtracao(itemAtracaoCompleto);
+                    }
+
+                    MessagingService.Current.SendMessage<Atracao>(MessageKeys.AtualizarAtracaoDistancia, itemAtracaoCompleto);
+                }
+            }
         }
 
         private bool isPresented;

@@ -59,6 +59,9 @@ namespace CV.Mobile.Data
             database.CreateTableAsync<ViagemAereaAeroporto>().Wait();
             database.CreateTableAsync<Viagem>().Wait();
             database.CreateTableAsync<Amigo>().Wait();
+            database.CreateTableAsync<UlimaPosicao>().Wait();
+
+
         }
 
         //public Task<List<TodoItem>> GetItemsAsync()
@@ -152,6 +155,7 @@ namespace CV.Mobile.Data
             await database.ExecuteAsync("Delete from Sugestao");
             await database.ExecuteAsync("Delete from ViagemAereaAeroporto");
             await database.ExecuteAsync("Delete from Viagem");
+            await database.ExecuteAsync("Delete from UlimaPosicao");
 
         }
 
@@ -1332,7 +1336,10 @@ namespace CV.Mobile.Data
         {
             return await database.Table<CarroDeslocamento>().Where(d => d.Identificador == Id).FirstOrDefaultAsync();
         }
-
+        public async Task<Reabastecimento> RetornarCarroReabastecimento(int? Id)
+        {
+            return await database.Table<Reabastecimento>().Where(d => d.Identificador == Id).FirstOrDefaultAsync();
+        }
 
         public async Task ExcluirCarroDeslocamento(CarroDeslocamento item)
         {
@@ -1741,7 +1748,27 @@ namespace CV.Mobile.Data
             return query.Where(d => !d.DataExclusao.HasValue).OrderBy(d => d.DataInicio).FirstOrDefault();
         }
 
+        public async Task GravarUltimaPosicao(UlimaPosicao itemUltimaPosicao)
+        {
+            var itemLocal = await database.Table<UlimaPosicao>().FirstOrDefaultAsync();
+            if (itemLocal == null)
+                 await database.InsertAsync(itemUltimaPosicao);
+            else
+            {
+                itemLocal.Latitude = itemUltimaPosicao.Latitude;
+                itemLocal.Longitude = itemUltimaPosicao.Longitude;
+                itemLocal.DataUltimaPosicao = itemUltimaPosicao.DataUltimaPosicao;
+                await database.UpdateAsync(itemLocal);
+            }
+                
 
+        }
+
+        public async Task<UlimaPosicao> RetornarUltimaPosicao()
+        {
+            var itemLocal = await database.Table<UlimaPosicao>().FirstOrDefaultAsync();
+            return itemLocal;
+        }
         public async Task<List<ExtratoMoeda>> ConsultarExtratoMoeda(int? IdentificadorUsuario, int? IdentificadorViagem, int? Moeda, DateTime DataInicio)
         {
             var queryInicial = (await database.Table<AporteDinheiro>() .Where(d => d.IdentificadorUsuario == IdentificadorUsuario).Where(d => !d.DataExclusao.HasValue).Where(d => d.IdentificadorViagem == IdentificadorViagem)
@@ -1776,6 +1803,39 @@ namespace CV.Mobile.Data
 
             return Lista.OrderByDescending(d => d.Data).ToList();
 
+        }
+
+        public async Task<List<Atracao>> ListarAtracaoAberta()
+        {
+            var query = database.Table<Atracao>();//.Where(d=>!d.DataExclusao.HasValue);
+            return (await query.ToListAsync()).Where(d => !d.DataExclusao.HasValue).Where(d => d.Chegada.HasValue).Where(d => !d.Partida.HasValue).ToList();
+        }
+
+        public async Task<List<CarroDeslocamento>> ListarCarroDeslocamentoAberto()
+        {
+            var Lista = await database.
+                QueryAsync<CarroDeslocamento>(@"SELECT a.Id, a.Identificador, a.IdentificadorCarro, a.IdentificadorCarroEventoPartida, a.IdentificadorCarroEventoChegada,
+a.DataAtualizacao, a.DataExclusao, a.Observacao, a.AtualizadoBanco,a.Distancia
+From CarroDeslocamento a 
+INNER JOIN CarroEvento b on b.Identificador = a.IdentificadorCarroEventoPartida
+LEFT JOIN CarroEvento c on c.Identificador = a.IdentificadorCarroEventoChegada 
+WHERE b.Data IS NOT NULL and c.Data IS NULL
+");
+            return Lista.Where(d => !d.DataExclusao.HasValue).ToList();
+        }
+
+        public async Task<List<ViagemAerea>> ListarViagemAereaAberto()
+        {
+            var Lista = await database.
+                QueryAsync<ViagemAerea>(@"SELECT distinct a.Id, a.Identificador, a.IdentificadorViagem, a.CompanhiaAerea, a.Distancia,
+a.DataPrevista, a.DataAtualizacao, a.DataExclusao, a.Tipo,a.Descricao, a.AtualizadoBanco
+From ViagemAerea a 
+INNER JOIN ViagemAereaAeroporto b on a.Identificador = b.IdentificadorViagemAerea and b.TipoPonto = 1 and b.DataChegada is not null and b.DataPartida is not null
+LEFT JOIN ViagemAereaAeroporto c on a.Identificador = c.IdentificadorViagemAerea and c.TipoPonto = 2 and c.DataChegada is not null 
+WHERE c.Id Is Null
+AND NOT EXISTS (SELECT 1 FROM ViagemAereaAeroporto d where a.Identificador = d.IdentificadorViagemAerea and d.TipoPonto = 3 and d.DataChegada is not null and d.DataPartida is null)
+");
+            return Lista.Where(d => !d.DataExclusao.HasValue).ToList();
         }
     }
 }

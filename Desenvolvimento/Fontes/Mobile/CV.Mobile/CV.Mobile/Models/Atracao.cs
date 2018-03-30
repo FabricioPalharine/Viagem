@@ -172,6 +172,20 @@ namespace CV.Mobile.Models
             }
         }
         public int? IdentificadorCidade { get; set; }
+        private decimal? _Distancia;
+        public decimal? Distancia
+        {
+            get
+            {
+                return _Distancia;
+            }
+
+            set
+            {
+                SetProperty(ref _Distancia, value);
+            }
+        }
+
         public string NomeCidade { get; set; }
         [Ignore]
         public ObservableCollection<AvaliacaoAtracao> Avaliacoes { get; set; }

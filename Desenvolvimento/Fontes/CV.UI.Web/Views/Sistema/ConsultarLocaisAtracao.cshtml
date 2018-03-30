@@ -47,7 +47,7 @@
                     <div class="panel" ng-repeat="item in itemExtratoMoeda.ListaDetalhes">
                         <div class="panel-body">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-5">
                                     <b>@TextosPaginas.LocaisVisitados_Usuario</b><br />
                                     {{item.NomeUsuario}}
                                 </div>
@@ -55,7 +55,11 @@
                                     <b> @TextosPaginas.LocaisVisitados_Periodo</b><br />
                                     {{item.DataDe | date:'dd/MM/yyyy HH:mm'}} - {{item.DataAte | date:'dd/MM/yyyy HH:mm'}}
                                 </div>
-                                <div class="col-md-3" ng-if="item.Nota">
+                                <div class="col-md-2">
+                                    <b> Distância</b><br />
+                                    {{item.Distancia | number:2}}
+                                </div>
+                                <div class="col-md-2" ng-if="item.Nota">
                                     <b> @TextosPaginas.LocaisVisitados_Nota</b><br />
                                     {{item.Nota}}
                                 </div>

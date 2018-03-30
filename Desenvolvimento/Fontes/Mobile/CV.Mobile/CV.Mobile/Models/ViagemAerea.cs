@@ -19,7 +19,19 @@ namespace CV.Mobile.Models
         public int? IdentificadorViagem { get; set; }
 
         public string CompanhiaAerea { get; set; }
-      
+        private decimal? _Distancia;
+        public decimal? Distancia
+        {
+            get
+            {
+                return _Distancia;
+            }
+
+            set
+            {
+                SetProperty(ref _Distancia, value);
+            }
+        }
 
         public DateTime? DataPrevista { get; set; }
         [Ignore]

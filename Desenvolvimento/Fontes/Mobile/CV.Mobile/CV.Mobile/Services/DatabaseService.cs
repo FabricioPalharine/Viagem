@@ -680,7 +680,7 @@ namespace CV.Mobile.Services
                 }
                 else
                 {
-                    var itemBanco = await Database.RetornarCarroDeslocamento(identificador);
+                    var itemBanco = await Database.RetornarCarroReabastecimento(identificador);
                     if (itemBanco == null || itemBanco.DataAtualizacao < itemLista.DataAtualizacao)
                         await SalvarReabastecimentoReplicada(itemLista);
                 }

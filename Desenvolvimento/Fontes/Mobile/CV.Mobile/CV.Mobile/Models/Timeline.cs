@@ -98,7 +98,7 @@ namespace CV.Mobile.Models
                     ValorTexto += (Usuarios.Count() == 1 ? "comeu" : "comeram") + " no restaurante " + Texto;
                 else if (Tipo == "HotelCheckIn")
                     ValorTexto += (Usuarios.Count() == 1 ? "fez" : "fizeram") + " check in na hospedagem " + Texto;
-                else if (Tipo == "HotelCheckOut")
+                else if (Tipo == "HotelChekckOut")
                     ValorTexto += (Usuarios.Count() == 1 ? "fez" : "fizeram") + " check out na hospedagem " + Texto;
                 else if (Tipo == "HotelEntrada")
                     ValorTexto += (Usuarios.Count() == 1 ? "chegou" : "chegaram") + " na hospedagem " + Texto;

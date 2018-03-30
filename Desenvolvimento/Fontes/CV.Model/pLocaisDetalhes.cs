@@ -10,6 +10,7 @@ namespace CV.Model
     {
         public DateTime? DataDe { get; set; }
         public DateTime? DataAte { get; set; }
+        public decimal? Distancia { get; set; }
         public string NomeUsuario { get; set; }
         public int? Nota { get; set; }
         public string Comentario { get; set; }

@@ -49,6 +49,7 @@ namespace CV.Mobile.ViewModels
                     var itemCS = await DatabaseService.Database.GetControleSincronizacaoAsync();
                     itemCS.SincronizadoEnvio = false;
                     await DatabaseService.Database.SalvarControleSincronizacao(itemCS);
+                    vm.ItemUltimaPosicao = await DatabaseService.Database.RetornarUltimaPosicao();
                 }
                 vm.ItemViagem = itemViagem;
                 //vm.PreencherPaginasViagem(itemViagem);

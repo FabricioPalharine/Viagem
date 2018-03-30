@@ -79,7 +79,16 @@ namespace CV.Mobile.ViewModels
             }
             IsBusy = false;
         }
-
+        
+        public async Task PararGPS()
+        {
+            if (Application.Current?.MainPage is MasterDetailPage)
+            {
+                if (((MasterDetailViewModel)Application.Current?.MainPage.BindingContext).ItemViagem != null)
+                    ((MasterDetailViewModel)Application.Current?.MainPage.BindingContext).ItemViagem.ControlaPosicaoGPS = false;
+                await ((MasterDetailViewModel)Application.Current?.MainPage.BindingContext).IniciarControlePosicao();
+            }
+        }
        
 
         public void PreencherPaginasViagem(Viagem itemViagem)

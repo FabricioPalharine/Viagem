@@ -14,7 +14,8 @@ namespace CV.Mobile.Models
         public int? Nota { get; set; }
         public string Comentario { get; set; }
         public string Pedido { get; set; }
-
+        public decimal? Distancia { get; set; }
+       
         public bool PossuiDataAte
         {
             get

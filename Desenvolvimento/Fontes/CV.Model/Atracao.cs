@@ -69,8 +69,9 @@ private void ValidarNome(Microsoft.Practices.EnterpriseLibrary.Validation.Valida
 			public DateTime? DataAtualizacao { get; set; }
 
 			public DateTime? DataExclusao { get; set; }
+        public decimal? Distancia { get; set; }
 
-			public IList<GastoAtracao> Gastos { get; set; }
+        public IList<GastoAtracao> Gastos { get; set; }
 		 public Atracao Clone()
 		{
 			 return (Atracao) this.MemberwiseClone();
