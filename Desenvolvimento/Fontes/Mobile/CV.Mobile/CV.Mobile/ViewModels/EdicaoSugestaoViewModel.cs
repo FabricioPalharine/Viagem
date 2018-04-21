@@ -121,38 +121,45 @@ namespace CV.Mobile.ViewModels
             SalvarCommand.ChangeCanExecute();
             try
             {
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    var Resultado = await srv.SalvarSugestao(ItemSugestao);
-                    if (Resultado.Sucesso)
+                    using (ApiService srv = new ApiService())
                     {
-                        base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "S", Resultado.IdentificadorRegistro.GetValueOrDefault(), !ItemSugestao.Identificador.HasValue);
-                       
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        var Resultado = await srv.SalvarSugestao(ItemSugestao);
+                        if (Resultado.Sucesso)
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-                        if (!ItemSugestao.Identificador.HasValue)
-                        {
-                            ItemSugestao.Identificador = Resultado.IdentificadorRegistro;
-                            base.SugerirVisitaViagem(ItemSugestao);
-                        }
-                        // ItemListaCompra = JsonConvert.DeserializeXNode < ListaCompra >()
-                        MessagingService.Current.SendMessage<Sugestao>(MessageKeys.ManutencaoSugestao, ItemSugestao);
-                        await PopAsync();
-                    }
-                    else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
-                    {
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
-                        {
-                            Title = "Problemas Validação",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
+                            base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "S", Resultado.IdentificadorRegistro.GetValueOrDefault(), !ItemSugestao.Identificador.HasValue);
 
+                            MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                            {
+                                Title = "Sucesso",
+                                Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                                Cancel = "OK"
+                            });
+                            if (!ItemSugestao.Identificador.HasValue)
+                            {
+                                ItemSugestao.Identificador = Resultado.IdentificadorRegistro;
+                                base.SugerirVisitaViagem(ItemSugestao);
+                            }
+                            // ItemListaCompra = JsonConvert.DeserializeXNode < ListaCompra >()
+                            MessagingService.Current.SendMessage<Sugestao>(MessageKeys.ManutencaoSugestao, ItemSugestao);
+                            await PopAsync();
+                        }
+                        else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
+                        {
+                            MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                            {
+                                Title = "Problemas Validação",
+                                Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                                Cancel = "OK"
+                            });
+
+                        }
                     }
+                }
+                catch
+                {
+                    ApiService.ExibirMensagemErro();
                 }
             }
             finally

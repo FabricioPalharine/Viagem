@@ -79,6 +79,7 @@ namespace CV.Mobile.ViewModels
         {
             if (ListaUsuario == null)
             {
+
                 using (ApiService srv = new ApiService())
                 {
                     ListaUsuario = new ObservableRangeCollection<Usuario>(await srv.CarregarParticipantesAmigo());
@@ -237,15 +238,22 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaDados()
         {
             List<CalendarioRealizado> Dados = new List<CalendarioRealizado>();
-
+            try
+            {
                 using (ApiService srv = new ApiService())
                 {
                     Dados = await srv.ConsultarCalendarioRealizado(ItemCriterioBusca);
 
                 }
-          
-            ListaDados = new ObservableRangeCollection<CalendarioPrevisto>(Dados.Select(d=>new CalendarioPrevisto() { Nome = d.Titulo, DataInicio = d.DataInicio, DataFim = d.DataFim }));
-            OnPropertyChanged("ListaDados");
+
+                ListaDados = new ObservableRangeCollection<CalendarioPrevisto>(Dados.Select(d => new CalendarioPrevisto() { Nome = d.Titulo, DataInicio = d.DataInicio, DataFim = d.DataFim }));
+                OnPropertyChanged("ListaDados");
+            }
+            catch
+            {
+                ApiService.ExibirMensagemErro();
+
+            }
             IsLoadingLista = false;
         }
 

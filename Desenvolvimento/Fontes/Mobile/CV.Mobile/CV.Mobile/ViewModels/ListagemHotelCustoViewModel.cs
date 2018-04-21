@@ -69,9 +69,10 @@ namespace CV.Mobile.ViewModels
             MessagingService.Current.Subscribe<Gasto>(MessageKeys.GastoSelecionado, async (service, item) =>
             {
                 var itemGravar = new GastoHotel() { IdentificadorHotel = ItemHotel.Identificador, IdentificadorGasto = item.Identificador, DataAtualizacao = DateTime.Now.ToUniversalTime() };
-
+                bool Executado = true;
                 if (Conectado)
                 {
+                    try { 
                     using (ApiService srv = new ApiService())
                     {
                         var Resultado = await srv.SalvarGastoHotel(itemGravar);
@@ -85,8 +86,10 @@ namespace CV.Mobile.ViewModels
 
                         }
                     }
+                    }
+                    catch { Executado = false; }
                 }
-                else
+                if(!Executado)
                 {
                     if (!(await DatabaseService.Database.ListarGastoHotel_IdentificadorGasto(item.Identificador)).Where(d=>!d.DataExclusao.HasValue).Any())
                     {
@@ -129,8 +132,10 @@ namespace CV.Mobile.ViewModels
                     if (!result) return;
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     obj.DataExclusao = DateTime.Now.ToUniversalTime();
+                    bool Executado = true;
                     if (Conectado)
                     {
+                        try { 
                         using (ApiService srv = new ApiService())
                         {
                             Resultado = await srv.SalvarGastoHotel(obj);
@@ -141,8 +146,10 @@ namespace CV.Mobile.ViewModels
                                 await DatabaseService.Database.ExcluirGastoHotel(itemBase);
 
                         }
+                        }
+                        catch { Executado = false; }
                     }
-                    else
+                    if (!Executado)
                     {
                         obj.AtualizadoBanco = false;
                         if (obj.Identificador > 0)

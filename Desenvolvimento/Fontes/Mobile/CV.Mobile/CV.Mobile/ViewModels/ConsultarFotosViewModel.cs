@@ -54,31 +54,38 @@ namespace CV.Mobile.ViewModels
         {
            if (ListaFiltro == null)
             {
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    ListaFiltro = new ObservableRangeCollection<object>();
-                    var ListaAtracao = await srv.CarregarFotoAtracao();
-                    if (ListaAtracao.Any())
+                    using (ApiService srv = new ApiService())
                     {
-                        ListaFiltro.Add(new Cabecalho() { Texto = "Atrações" });
-                        foreach (var item in ListaAtracao)
-                            ListaFiltro.Add(item);
+                        ListaFiltro = new ObservableRangeCollection<object>();
+                        var ListaAtracao = await srv.CarregarFotoAtracao();
+                        if (ListaAtracao.Any())
+                        {
+                            ListaFiltro.Add(new Cabecalho() { Texto = "Atrações" });
+                            foreach (var item in ListaAtracao)
+                                ListaFiltro.Add(item);
+                        }
+                        var ListaRefeicao = await srv.CarregarFotoRefeicao();
+                        if (ListaRefeicao.Any())
+                        {
+                            ListaFiltro.Add(new Cabecalho() { Texto = "Refeições" });
+                            foreach (var item in ListaRefeicao)
+                                ListaFiltro.Add(item);
+                        }
+                        var ListaHotel = await srv.CarregarFotoHotel();
+                        if (ListaHotel.Any())
+                        {
+                            ListaFiltro.Add(new Cabecalho() { Texto = "Hotéis" });
+                            foreach (var item in ListaHotel)
+                                ListaFiltro.Add(item);
+                        }
+                        OnPropertyChanged("ListaFiltro");
                     }
-                    var ListaRefeicao = await srv.CarregarFotoRefeicao();
-                    if (ListaRefeicao.Any())
-                    {
-                        ListaFiltro.Add(new Cabecalho() { Texto = "Refeições" });
-                        foreach (var item in ListaRefeicao)
-                            ListaFiltro.Add(item);
-                    }
-                    var ListaHotel = await srv.CarregarFotoHotel();
-                    if (ListaHotel.Any())
-                    {
-                        ListaFiltro.Add(new Cabecalho() { Texto = "Hotéis" });
-                        foreach (var item in ListaHotel)
-                            ListaFiltro.Add(item);
-                    }
-                    OnPropertyChanged("ListaFiltro");
+                }
+                catch
+                {
+                    ApiService.ExibirMensagemErro();
                 }
             }
         }
@@ -137,12 +144,17 @@ namespace CV.Mobile.ViewModels
             ItemCriterioBusca.ListaHoteis = ListaFiltro.OfType<Hotel>().Where(d => d.Selecionado).Select(d => d.Identificador).ToList();
 
             ItemCriterioBusca.ListaRefeicoes = ListaFiltro.OfType<Refeicao>().Where(d => d.Selecionado).Select(d => d.Identificador).ToList();
-
-            using (ApiService srv = new ApiService())
+            try
+            {
+                using (ApiService srv = new ApiService())
                 {
                     Dados = await srv.ListarFoto(ItemCriterioBusca);
                 }
-            
+            }
+            catch
+            {
+                ApiService.ExibirMensagemErro();
+            }
             ListaDados = new ObservableRangeCollection<Foto>(Dados);
             OnPropertyChanged("ListaDados");
 

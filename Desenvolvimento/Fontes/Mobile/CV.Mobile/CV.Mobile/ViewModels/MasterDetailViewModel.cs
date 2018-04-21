@@ -107,12 +107,16 @@ namespace CV.Mobile.ViewModels
                                     {
                                         using (ApiService srv = new ApiService())
                                         {
-                                            var Resultado = await srv.SalvarCalendarioPrevisto(Alerta);
-                                            if (Resultado.Sucesso)
+                                            try
                                             {
-                                                Alerta.Identificador = Resultado.IdentificadorRegistro;
-                                                await AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "CP", Alerta.Identificador.GetValueOrDefault(), false);
+                                                var Resultado = await srv.SalvarCalendarioPrevisto(Alerta);
+                                                if (Resultado.Sucesso)
+                                                {
+                                                    Alerta.Identificador = Resultado.IdentificadorRegistro;
+                                                    await AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "CP", Alerta.Identificador.GetValueOrDefault(), false);
+                                                }
                                             }
+                                            catch { }
                                         }
                                     }
                                     else
@@ -235,23 +239,28 @@ namespace CV.Mobile.ViewModels
             foreach (var itemFoto in ListaFotos.Where(d => d.IdentificadorAtracao.GetValueOrDefault(0) >= 0 && d.IdentificadorHotel.GetValueOrDefault(0) >= 0 && d.IdentificadorRefeicao.GetValueOrDefault(0) >= 0))
             {
                 var DadosFoto = ServiceLocator.Current.GetInstance<IFileHelper>().CarregarStreamFile(itemFoto.CaminhoLocal);
-                using (ApiService srv = new ApiService())
+                try
                 {
-
-                    var ItemUsuario = await srv.CarregarUsuario(_ItemUsuario.Codigo);
-                    if (ItemUsuario.DataToken.GetValueOrDefault().AddSeconds(ItemUsuario.Lifetime.GetValueOrDefault(0) - 60) < DateTime.Now.ToUniversalTime())
+                    using (ApiService srv = new ApiService())
                     {
-                        using (AccountsService srvAccount = new AccountsService())
+
+                        var ItemUsuario = await srv.CarregarUsuario(_ItemUsuario.Codigo);
+                        if (ItemUsuario != null && ItemUsuario.DataToken.GetValueOrDefault().AddSeconds(ItemUsuario.Lifetime.GetValueOrDefault(0) - 60) < DateTime.Now.ToUniversalTime())
                         {
-                            await srvAccount.AtualizarTokenUsuario(ItemUsuario);
+                            using (AccountsService srvAccount = new AccountsService())
+                            {
+                                await srvAccount.AtualizarTokenUsuario(ItemUsuario);
+                            }
                         }
+
+                        new ConfiguracaoViewModel().GravarVideoYouTube(itemFoto, DadosFoto, ItemUsuario, false);
+
+
                     }
 
-                    new ConfiguracaoViewModel().GravarVideoYouTube(itemFoto, DadosFoto, ItemUsuario, false);
-
-
+                    await DatabaseService.Database.ExcluirUploadFoto(itemFoto);
                 }
-                await DatabaseService.Database.ExcluirUploadFoto(itemFoto);
+                catch { }
             }
 
         }
@@ -273,25 +282,29 @@ namespace CV.Mobile.ViewModels
             foreach (var itemFoto in ListaFotos.Where(d => d.IdentificadorAtracao.GetValueOrDefault(0) >= 0 && d.IdentificadorHotel.GetValueOrDefault(0) >= 0 && d.IdentificadorRefeicao.GetValueOrDefault(0) >= 0))
             {
                 byte[] DadosFoto = ServiceLocator.Current.GetInstance<IFileHelper>().CarregarDadosFile(itemFoto.CaminhoLocal);
-                using (ApiService srv = new ApiService())
+                try
                 {
+                    using (ApiService srv = new ApiService())
+                    {
 
-                    var ItemUsuario = await srv.CarregarUsuario(_ItemUsuario.Codigo);
-                    if (ItemUsuario.DataToken.GetValueOrDefault().AddSeconds(ItemUsuario.Lifetime.GetValueOrDefault(0) - 60) < DateTime.Now.ToUniversalTime())
-                    {
-                        using (AccountsService srvAccount = new AccountsService())
+                        var ItemUsuario = await srv.CarregarUsuario(_ItemUsuario.Codigo);
+                        if (ItemUsuario != null && ItemUsuario.DataToken.GetValueOrDefault().AddSeconds(ItemUsuario.Lifetime.GetValueOrDefault(0) - 60) < DateTime.Now.ToUniversalTime())
                         {
-                            await srvAccount.AtualizarTokenUsuario(ItemUsuario);
+                            using (AccountsService srvAccount = new AccountsService())
+                            {
+                                await srvAccount.AtualizarTokenUsuario(ItemUsuario);
+                            }
                         }
+                        using (PhotosService srvFoto = new PhotosService(ItemUsuario.Token))
+                        {
+                            await srvFoto.SubirFoto(_ItemViagem.CodigoAlbum, DadosFoto, itemFoto);
+                        }
+                        var resultadoAPI = await srv.SubirImagem(itemFoto);
+                        await AtualizarViagem(_ItemViagem.Identificador.GetValueOrDefault(), "F", resultadoAPI.IdentificadorRegistro.GetValueOrDefault(), true);
                     }
-                    using (PhotosService srvFoto = new PhotosService(ItemUsuario.Token))
-                    {
-                        await srvFoto.SubirFoto(_ItemViagem.CodigoAlbum, DadosFoto, itemFoto);
-                    }
-                    var resultadoAPI = await srv.SubirImagem(itemFoto);
-                    await AtualizarViagem(_ItemViagem.Identificador.GetValueOrDefault(), "F", resultadoAPI.IdentificadorRegistro.GetValueOrDefault(), true);
+                    await DatabaseService.Database.ExcluirUploadFoto(itemFoto);
                 }
-                await DatabaseService.Database.ExcluirUploadFoto(itemFoto);
+                catch { }
             }
         }
 
@@ -499,12 +512,16 @@ namespace CV.Mobile.ViewModels
             {
                 using (ApiService srv = new ApiService())
                 {
-                    var Hoteis = await srv.ListarHotel(new CriterioBusca() { Situacao = 1 });
-                    if (Hoteis.Any())
+                    try
                     {
-                        _hotelAtual = await srv.CarregarHotel(Hoteis.OrderByDescending(d => d.DataEntrada).Select(d => d.Identificador).FirstOrDefault());
-                        HotelDentro = _hotelAtual.Eventos.Where(d => d.IdentificadorUsuario == ItemUsuario.Codigo).Where(d => !d.DataSaida.HasValue).Any();
+                        var Hoteis = await srv.ListarHotel(new CriterioBusca() { Situacao = 1 });
+                        if (Hoteis.Any())
+                        {
+                            _hotelAtual = await srv.CarregarHotel(Hoteis.OrderByDescending(d => d.DataEntrada).Select(d => d.Identificador).FirstOrDefault());
+                            HotelDentro = _hotelAtual.Eventos.Where(d => d.IdentificadorUsuario == ItemUsuario.Codigo).Where(d => !d.DataSaida.HasValue).Any();
+                        }
                     }
+                    catch { }
                 }
             }
             else
@@ -630,12 +647,21 @@ namespace CV.Mobile.ViewModels
                     {
                         using (ApiService srv = new ApiService())
                         {
-                            var Resultado = await srv.SalvarViagemAerea(itemDeslocamentoCompleto);
-                            if (Resultado.Sucesso)
+                            try
                             {
-                                itemDeslocamentoCompleto = await srv.CarregarViagemAerea(Resultado.IdentificadorRegistro);
-                                await DatabaseService.SalvarViagemAereaReplicada(itemDeslocamentoCompleto);
+                                var Resultado = await srv.SalvarViagemAerea(itemDeslocamentoCompleto);
+                                if (Resultado.Sucesso)
+                                {
+                                    itemDeslocamentoCompleto = await srv.CarregarViagemAerea(Resultado.IdentificadorRegistro);
+                                    await DatabaseService.SalvarViagemAereaReplicada(itemDeslocamentoCompleto);
+                                }
                             }
+                            catch
+                            {
+                                await DatabaseService.SalvarViagemAerea(itemDeslocamentoCompleto);
+
+                            }
+
                         }
                     }
                     else
@@ -662,11 +688,18 @@ namespace CV.Mobile.ViewModels
                     {
                         using (ApiService srv = new ApiService())
                         {
-                            var Resultado = await srv.SalvarCarroDeslocamento(itemDeslocamentoCompleto);
-                            if (Resultado.Sucesso)
+                            try
                             {
-                                itemDeslocamentoCompleto = await srv.CarregarCarroDeslocamento(Resultado.IdentificadorRegistro);
-                                await DatabaseService.SalvarCarroDeslocamentoReplicada(itemDeslocamentoCompleto);
+                                var Resultado = await srv.SalvarCarroDeslocamento(itemDeslocamentoCompleto);
+                                if (Resultado.Sucesso)
+                                {
+                                    itemDeslocamentoCompleto = await srv.CarregarCarroDeslocamento(Resultado.IdentificadorRegistro);
+                                    await DatabaseService.SalvarCarroDeslocamentoReplicada(itemDeslocamentoCompleto);
+                                }
+                            }
+                            catch
+                            {
+                                await DatabaseService.SalvarCarroDeslocamento(itemDeslocamentoCompleto);
                             }
                         }
                     }
@@ -693,11 +726,18 @@ namespace CV.Mobile.ViewModels
                     {
                         using (ApiService srv = new ApiService())
                         {
-                            var Resultado = await srv.SalvarAtracao(itemAtracaoCompleto);
-                            if (Resultado.Sucesso)
+                            try
                             {
-                                itemAtracaoCompleto = await srv.CarregarAtracao(Resultado.IdentificadorRegistro);
-                                await DatabaseService.SalvarAtracaoReplicada(itemAtracaoCompleto);
+                                var Resultado = await srv.SalvarAtracao(itemAtracaoCompleto);
+                                if (Resultado.Sucesso)
+                                {
+                                    itemAtracaoCompleto = await srv.CarregarAtracao(Resultado.IdentificadorRegistro);
+                                    await DatabaseService.SalvarAtracaoReplicada(itemAtracaoCompleto);
+                                }
+                            }
+                            catch
+                            {
+                                await DatabaseService.SalvarAtracao(itemAtracaoCompleto);
                             }
                         }
                     }
@@ -748,17 +788,25 @@ namespace CV.Mobile.ViewModels
         {
             if (cvHubConnection.State != ConnectionState.Connected)
             {
-                cvHubProxy = cvHubConnection.CreateHubProxy("Viagem");
-                cvHubProxy.On<string, int, bool>("avisarAlertaAtualizacao", (Tipo, Identificador, Inclusao) =>
-               {
-                   VerificarAcaoAlteracao(Tipo, Identificador);
-               });
-
-                cvHubProxy.On<AlertaUsuario>("enviarAlertaRequisicao", (itemAlerta) =>
+                try
                 {
-                });
-                await cvHubConnection.Start();
-                await ConectarUsuario(ItemUsuario.Codigo);
+                    cvHubProxy = cvHubConnection.CreateHubProxy("Viagem");
+                    cvHubProxy.On<string, int, bool>("avisarAlertaAtualizacao", (Tipo, Identificador, Inclusao) =>
+                   {
+                       try
+                       {
+                           VerificarAcaoAlteracao(Tipo, Identificador);
+                       }
+                       catch { }
+                   });
+
+                    cvHubProxy.On<AlertaUsuario>("enviarAlertaRequisicao", (itemAlerta) =>
+                    {
+                    });
+                    await cvHubConnection.Start();
+                    await ConectarUsuario(ItemUsuario.Codigo);
+                }
+                catch { }
             }
         }
 
@@ -813,7 +861,11 @@ namespace CV.Mobile.ViewModels
                     itemControle.UltimaDataRecepcao = DateTime.Now.ToUniversalTime();
                     await DatabaseService.Database.SalvarControleSincronizacao(itemControle);
                 }
-                await cvHubProxy.Invoke("viagemAtualizada", IdentificadorViagem, TipoAtualizacao, Identificador, Inclusao);
+                try
+                {
+                    await cvHubProxy.Invoke("viagemAtualizada", IdentificadorViagem, TipoAtualizacao, Identificador, Inclusao);
+                }
+                catch { }
             }
         }
 
@@ -834,15 +886,21 @@ namespace CV.Mobile.ViewModels
 
                     var itemCS = await DatabaseService.Database.GetControleSincronizacaoAsync();
                     var DataSincronizacao = DateTime.Now.ToUniversalTime();
-                    var DadosSincronizar = await srv.RetornarAtualizacoes(new CriterioBusca() { DataInicioDe = itemCS.UltimaDataRecepcao });
+                    try
+                    {
+                        var DadosSincronizar = await srv.RetornarAtualizacoes(new CriterioBusca() { DataInicioDe = itemCS.UltimaDataRecepcao });
 
-                    await DatabaseService.SincronizarDadosServidorLocal(itemCS, DadosSincronizar, ItemUsuario, DataSincronizacao);
-
-                    var item = await DatabaseService.CarregarDadosEnvioSincronizar();
-                    var resultadoSincronizacao = await srv.SincronizarDados(item);
-                    itemCS.UltimaDataEnvio = DateTime.Now.ToUniversalTime();
-                    await DatabaseService.AjustarDePara(item, resultadoSincronizacao, itemCS,this);
-
+                        await DatabaseService.SincronizarDadosServidorLocal(itemCS, DadosSincronizar, ItemUsuario, DataSincronizacao);
+                    }
+                    catch { }
+                    try
+                    {
+                        var item = await DatabaseService.CarregarDadosEnvioSincronizar();
+                        var resultadoSincronizacao = await srv.SincronizarDados(item);
+                        itemCS.UltimaDataEnvio = DateTime.Now.ToUniversalTime();
+                        await DatabaseService.AjustarDePara(item, resultadoSincronizacao, itemCS, this);
+                    }
+                    catch { }
 
                 }
                 else

@@ -132,8 +132,10 @@ namespace CV.Mobile.ViewModels
 
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     ItemItemCompra.DataExclusao = DateTime.Now.ToUniversalTime();
+                    bool Executado = true;
                     if (Conectado)
                     {
+                        try { 
                         using (ApiService srv = new ApiService())
                         {
                             Resultado = await srv.SalvarItemCompra(ItemItemCompra);
@@ -152,8 +154,10 @@ namespace CV.Mobile.ViewModels
                                 await DatabaseService.Database.ExcluirItemCompra(itemBase);
 
                         }
+                        }
+                        catch { Executado = false; }
                     }
-                    else
+                    if (!Executado)
                     {
                         ItemItemCompra.AtualizadoBanco = false;
                         if (ItemItemCompra.IdentificadorListaCompra.HasValue)
@@ -213,6 +217,8 @@ namespace CV.Mobile.ViewModels
                 {
 
                     ListaUsuario = await srv.ListarParticipantesViagem();
+                    if (!ListaUsuario.Any())
+                        ListaUsuario = await DatabaseService.Database.ListarParticipanteViagem();
                 }
             }
             else
@@ -230,14 +236,18 @@ namespace CV.Mobile.ViewModels
         public async void CarregarListaCompra()
         {
             List<ListaCompra> ListaDados = new List<ListaCompra>();
+            bool Executado = true;
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     ListaDados = await srv.CarregarListaPedidos(new CriterioBusca() { IdentificadorParticipante = ItemUsuarioLogado.Codigo });
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
                 ListaDados = await DatabaseService.Database.ListarListaCompra(ItemUsuarioLogado.Codigo);
             ListaListaCompra = new ObservableCollection<ListaCompra>(ListaDados);
             OnPropertyChanged("ListaListaCompra");
@@ -257,12 +267,16 @@ namespace CV.Mobile.ViewModels
             SalvarCommand.ChangeCanExecute();
             try
             {
+                bool Executado = true;
                 ResultadoOperacao Resultado = new ResultadoOperacao();
                 if (Conectado)
                 {
+                    try { 
                     Resultado = await SalvarItemCompraConectado();
+                    }
+                    catch { Executado = false; }
                 }
-                else
+                if (!Executado)
                 {
                     Resultado = await DatabaseService.SalvarItemCompra(ItemItemCompra, _IdentificadorListaCompraInicial);
                 }

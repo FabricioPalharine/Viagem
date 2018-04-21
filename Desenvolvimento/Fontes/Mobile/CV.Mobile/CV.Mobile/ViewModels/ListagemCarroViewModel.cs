@@ -149,14 +149,18 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaDados()
         {
             List<Carro> Dados = new List<Carro>();
+            bool Executado = true;
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     Dados = await srv.ListarCarro(ItemCriterioBusca);
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
                 Dados = await DatabaseService.Database.ListarCarro(ItemCriterioBusca);
             ListaDados = new ObservableCollection<Carro>(Dados);
             OnPropertyChanged("ListaDados");
@@ -167,14 +171,18 @@ namespace CV.Mobile.ViewModels
         private async Task VerificarAcaoItem(ItemTappedEventArgs itemSelecionado)
         {
             Carro ItemCarro = null;
+            bool Executado = true;
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     ItemCarro = await srv.CarregarCarro(((Carro)itemSelecionado.Item).Identificador);
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
                 ItemCarro = await DatabaseService.CarregarCarro(((Carro)itemSelecionado.Item).Identificador);
             var Pagina = new EdicaoCarroPage() { BindingContext = new EdicaoCarroViewModel(ItemCarro, ItemViagem) };
             await PushAsync(Pagina);

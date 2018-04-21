@@ -107,10 +107,16 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaDados()
         {
 
-
-            using (ApiService srv = new ApiService())
+            try
             {
-                ItemResumo = await srv.CarregarResumo(ItemCriterioBusca);
+                using (ApiService srv = new ApiService())
+                {
+                    ItemResumo = await srv.CarregarResumo(ItemCriterioBusca);
+                }
+            }
+            catch
+            {
+                ApiService.ExibirMensagemErro();
             }
 
 

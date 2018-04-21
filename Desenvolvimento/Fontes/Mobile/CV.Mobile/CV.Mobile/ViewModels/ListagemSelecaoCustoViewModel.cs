@@ -136,6 +136,8 @@ namespace CV.Mobile.ViewModels
                 using (ApiService srv = new ApiService())
                 {
                     Dados = await srv.ListarParticipantesViagem();
+                    if (!Dados.Any())
+                        Dados = await DatabaseService.Database.ListarParticipanteViagem();
                     
                 }
             }
@@ -149,15 +151,19 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaDados()
         {
             List<Gasto> Dados = new List<Gasto>();
+            bool Executado = true;
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     Dados = await srv.ListarGasto(ItemCriterioBusca);
 
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
                 Dados = await DatabaseService.Database.ListarGasto(ItemCriterioBusca);
 
             ListaDados = new ObservableCollection<Gasto>(Dados);

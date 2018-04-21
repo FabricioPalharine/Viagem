@@ -623,21 +623,28 @@ namespace CV.Mobile.ViewModels
         {
             if (await VerificarOnline())
             {
-                if (ItemViagem.Aberto)
+                try
                 {
-                    ItemViagem.Aberto = false;
-                    ItemViagem.ControlaPosicaoGPS = false;
+                    if (ItemViagem.Aberto)
+                    {
+                        ItemViagem.Aberto = false;
+                        ItemViagem.ControlaPosicaoGPS = false;
+                    }
+                    else
+                        ItemViagem.Aberto = true;
+                    using (ApiService srv = new ApiService())
+                    {
+                        await srv.SalvarViagemSimples(ItemViagem);
+                    }
+                    await DatabaseService.Database.SalvarViagemAsync(ItemViagem);
+                    AjustarVisibilidadeItens();
+                    ItensMenu = new ObservableCollection<ItemMenu>(ItensMenuCompleto.Where(d => d.Visible));
+                    OnPropertyChanged("ItensMenu");
                 }
-                else
-                    ItemViagem.Aberto = true;
-                using (ApiService srv = new ApiService())
+                catch
                 {
-                    await srv.SalvarViagemSimples(ItemViagem);
+                    ApiService.ExibirMensagemErro(); ;
                 }
-                await DatabaseService.Database.SalvarViagemAsync(ItemViagem);
-                AjustarVisibilidadeItens();
-                ItensMenu = new ObservableCollection<ItemMenu>(ItensMenuCompleto.Where(d => d.Visible));
-                OnPropertyChanged("ItensMenu");
             }
         }
 
@@ -670,16 +677,23 @@ namespace CV.Mobile.ViewModels
         {
             if (await VerificarOnline())
             {
-                Viagem itemEditar = null;
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    itemEditar = await srv.CarregarViagem(_ItemViagem.Identificador);
+                    Viagem itemEditar = null;
+                    using (ApiService srv = new ApiService())
+                    {
+                        itemEditar = await srv.CarregarViagem(_ItemViagem.Identificador);
+                    }
+                    if (itemEditar != null && itemEditar.Identificador.HasValue)
+                    {
+                        foreach (var itemParticipante in itemEditar.Participantes)
+                            itemParticipante.PermiteExcluir = itemParticipante.IdentificadorUsuario != itemEditar.IdentificadorUsuario;
+                        await OnItemMenuSelecionado(new EditarViagemPage() { BindingContext = new EditarViagemViewModel(itemEditar), Title = "Editar" }, false);
+                    }
                 }
-                if (itemEditar != null && itemEditar.Identificador.HasValue)
+                catch
                 {
-                    foreach (var itemParticipante in itemEditar.Participantes)
-                        itemParticipante.PermiteExcluir = itemParticipante.IdentificadorUsuario != itemEditar.IdentificadorUsuario;
-                    await OnItemMenuSelecionado(new EditarViagemPage() { BindingContext = new EditarViagemViewModel(itemEditar), Title = "Editar" }, false);
+                    ApiService.ExibirMensagemErro();
                 }
             }
             

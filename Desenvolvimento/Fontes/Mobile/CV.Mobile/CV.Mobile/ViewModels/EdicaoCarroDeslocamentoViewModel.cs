@@ -134,6 +134,8 @@ namespace CV.Mobile.ViewModels
                     {
 
                         ListaUsuario = await srv.ListarParticipantesViagem();
+                        if (!ListaUsuario.Any())
+                            ListaUsuario = await DatabaseService.Database.ListarParticipanteViagem();
                     }
                 }
                 else
@@ -273,11 +275,12 @@ namespace CV.Mobile.ViewModels
 
                 CarroDeslocamento pItemCarroDeslocamento = null;
                 ResultadoOperacao Resultado = null;
-
+                bool Executado = true;
                 if (Conectado)
                 {
                     using (ApiService srv = new ApiService())
                     {
+                        try { 
                         Resultado = await srv.SalvarCarroDeslocamento(ItemSalvar);
                         if (Resultado.Sucesso)
                         {
@@ -286,10 +289,11 @@ namespace CV.Mobile.ViewModels
                             AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "CD", pItemCarroDeslocamento.Identificador.GetValueOrDefault(), !ItemCarroDeslocamento.Identificador.HasValue);
                             await DatabaseService.SalvarCarroDeslocamentoReplicada(pItemCarroDeslocamento);
                         }
-
+                        }
+                        catch { Executado = false; }
                     }
                 }
-                else
+                if (!Executado)
                 {
                     Resultado = await DatabaseService.SalvarCarroDeslocamento(ItemSalvar);
                     if (Resultado.Sucesso)
@@ -348,8 +352,10 @@ namespace CV.Mobile.ViewModels
                     if (!result) return;
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     ItemCarroDeslocamento.DataExclusao = DateTime.Now.ToUniversalTime();
+                    bool Executado = true;
                     if (Conectado)
                     {
+                        try { 
                         using (ApiService srv = new ApiService())
                         {
                             Resultado = await srv.SalvarCarroDeslocamento(ItemCarroDeslocamento);
@@ -358,8 +364,10 @@ namespace CV.Mobile.ViewModels
                             await DatabaseService.ExcluirCarroDeslocamento(ItemCarroDeslocamento.Identificador, true);
 
                         }
+                        }
+                        catch { Executado = false; }
                     }
-                    else
+                    if (!Executado)
                     {
                         ItemCarroDeslocamento.AtualizadoBanco = false;
                         await DatabaseService.ExcluirCarroDeslocamento(ItemCarroDeslocamento.Identificador, false);

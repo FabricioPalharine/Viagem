@@ -148,6 +148,7 @@ namespace CV.Mobile.ViewModels
             using (ApiService srv = new ApiService())
             {
                 var Dados = await srv.ListarParticipantesViagem();
+                
                 ListaAmigos = new ObservableCollection<Usuario>(Dados);
                 OnPropertyChanged("ListaAmigos");
             }
@@ -156,12 +157,16 @@ namespace CV.Mobile.ViewModels
 
         private async Task CarregarListaPedidos()
         {
-            using (ApiService srv = new ApiService())
+            try
             {
-                var Dados = await srv.ListarListaCompra(ItemCriterioBusca);
-                PedidosCompra = new ObservableCollection<ListaCompra>(Dados);
-                OnPropertyChanged("PedidosCompra");
+                using (ApiService srv = new ApiService())
+                {
+                    var Dados = await srv.ListarListaCompra(ItemCriterioBusca);
+                    PedidosCompra = new ObservableCollection<ListaCompra>(Dados);
+                    OnPropertyChanged("PedidosCompra");
+                }
             }
+            catch { ApiService.ExibirMensagemErro(); }
             IsLoadingLista = false;
         }
 
@@ -176,22 +181,29 @@ namespace CV.Mobile.ViewModels
                 OnCompleted = new Action<bool>(async result =>
                 {
                     if (!result) return;
-                    using (ApiService srv = new ApiService())
+                    try
                     {
-                        var Resultado = await srv.ExcluirListaCompra(itemListaCompra.Identificador);
-                        base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "LC", itemListaCompra.Identificador.GetValueOrDefault(), false);
+                        using (ApiService srv = new ApiService())
+                        {
+                            var Resultado = await srv.ExcluirListaCompra(itemListaCompra.Identificador);
+                            base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "LC", itemListaCompra.Identificador.GetValueOrDefault(), false);
 
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
-                        {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-                        if (PedidosCompra.Where(d => d.Identificador == itemListaCompra.Identificador).Any())
-                        {
-                            var Posicao = PedidosCompra.IndexOf(PedidosCompra.Where(d => d.Identificador == itemListaCompra.Identificador).FirstOrDefault());
-                            PedidosCompra.RemoveAt(Posicao);
+                            MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                            {
+                                Title = "Sucesso",
+                                Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                                Cancel = "OK"
+                            });
+                            if (PedidosCompra.Where(d => d.Identificador == itemListaCompra.Identificador).Any())
+                            {
+                                var Posicao = PedidosCompra.IndexOf(PedidosCompra.Where(d => d.Identificador == itemListaCompra.Identificador).FirstOrDefault());
+                                PedidosCompra.RemoveAt(Posicao);
+                            }
                         }
+                    }
+                    catch
+                    {
+                        ApiService.ExibirMensagemErro();
                     }
 
                 })
@@ -202,9 +214,16 @@ namespace CV.Mobile.ViewModels
         {
             using (ApiService srv = new ApiService())
             {
-                var itemEditar = await srv.CarregarListaCompra(((ListaCompra)itemLista.Item).Identificador);
-                EdicaoPedidoCompraPage pagina = new EdicaoPedidoCompraPage() { BindingContext = new EdicaoPedidoCompraViewModel(itemEditar, ListaAmigos) };
-                await PushAsync(pagina);
+                try
+                {
+                    var itemEditar = await srv.CarregarListaCompra(((ListaCompra)itemLista.Item).Identificador);
+                    EdicaoPedidoCompraPage pagina = new EdicaoPedidoCompraPage() { BindingContext = new EdicaoPedidoCompraViewModel(itemEditar, ListaAmigos) };
+                    await PushAsync(pagina);
+                }
+                catch
+                {
+                    ApiService.ExibirMensagemErro();
+                }
             }
         }
 

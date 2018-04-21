@@ -57,8 +57,10 @@ namespace CV.Mobile.ViewModels
             try
             {
                 ResultadoOperacao Resultado = new ResultadoOperacao();
+                bool Executado = true;
                 if (Conectado)
                 {
+                    try { 
                     using (ApiService srv = new ApiService())
                     {
                         Resultado = await srv.SalvarCotacaoMoeda(ItemCotacao);
@@ -77,8 +79,10 @@ namespace CV.Mobile.ViewModels
                         }
 
                     }
+                    }
+                    catch { Executado = false; }
                 }
-                else
+                if (!Executado)
                 {
                     ItemCotacao.DataAtualizacao = DateTime.Now.ToUniversalTime();
                     ItemCotacao.AtualizadoBanco = false;

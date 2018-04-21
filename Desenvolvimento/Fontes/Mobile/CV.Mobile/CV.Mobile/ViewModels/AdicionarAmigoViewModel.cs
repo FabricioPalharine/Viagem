@@ -44,19 +44,26 @@ namespace CV.Mobile.ViewModels
             if (!string.IsNullOrWhiteSpace(ItemAmigo.EMail))
             {
                 CriterioBusca busca = new CriterioBusca() { EMail = ItemAmigo.EMail };
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    var Lista = await srv.ListarUsuarios(busca);
-                    if (Lista.Any())
+                    using (ApiService srv = new ApiService())
                     {
-                        ItemAmigo.IdentificadorUsuario = Lista[0].Identificador;
-                        ItemAmigo.Nome = Lista[0].Nome;
+                        var Lista = await srv.ListarUsuarios(busca);
+                        if (Lista.Any())
+                        {
+                            ItemAmigo.IdentificadorUsuario = Lista[0].Identificador;
+                            ItemAmigo.Nome = Lista[0].Nome;
+                        }
+                        else
+                        {
+                            ItemAmigo.IdentificadorUsuario = null;
+                            ItemAmigo.Nome = null;
+                        }
                     }
-                    else
-                    {
-                        ItemAmigo.IdentificadorUsuario = null;
-                        ItemAmigo.Nome = null;
-                    }
+                }
+                catch
+                {
+                    ApiService.ExibirMensagemErro();
                 }
             }
             else
@@ -72,34 +79,41 @@ namespace CV.Mobile.ViewModels
             SalvarCommand.ChangeCanExecute();
             try
             {
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    var Resultado = await srv.SalvarAmigo(ItemAmigo);
-                    if (Resultado.Sucesso)
+                    using (ApiService srv = new ApiService())
                     {
-                        if (ItemAmigo.Seguidor && ItemAmigo.IdentificadorUsuario.HasValue)
+                        var Resultado = await srv.SalvarAmigo(ItemAmigo);
+                        if (Resultado.Sucesso)
                         {
-                            DatabaseService.AdicionarAmigoBase(ItemAmigo);
+                            if (ItemAmigo.Seguidor && ItemAmigo.IdentificadorUsuario.HasValue)
+                            {
+                                DatabaseService.AdicionarAmigoBase(ItemAmigo);
+                            }
+                            MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                            {
+                                Title = "Sucesso",
+                                Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                                Cancel = "OK"
+                            });
+                            MessagingService.Current.SendMessage(MessageKeys.AdicionarAmigo);
+                            await PopAsync();
                         }
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-                        MessagingService.Current.SendMessage(MessageKeys.AdicionarAmigo);
-                        await PopAsync();
-                    }
-                    else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
-                    {
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
-                        {
-                            Title = "Problemas Validação",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
+                            MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                            {
+                                Title = "Problemas Validação",
+                                Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                                Cancel = "OK"
+                            });
 
+                        }
                     }
+                }
+                catch
+                {
+                    ApiService.ExibirMensagemErro();
                 }
             }
             finally

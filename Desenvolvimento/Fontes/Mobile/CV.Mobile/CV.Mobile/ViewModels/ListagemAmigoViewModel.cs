@@ -120,11 +120,18 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaAmigos()
         {
             //IsLoadingAmigo = true;
-            using (ApiService srv = new ApiService())
+            try
             {
-                var Dados = await srv.ListarAmigosConsulta();
-                Amigos = new ObservableCollection<ConsultaAmigo>(Dados);
-                OnPropertyChanged("Amigos");
+                using (ApiService srv = new ApiService())
+                {
+                    var Dados = await srv.ListarAmigosConsulta();
+                    Amigos = new ObservableCollection<ConsultaAmigo>(Dados);
+                    OnPropertyChanged("Amigos");
+                }
+            }
+            catch
+            {
+                ApiService.ExibirMensagemErro();
             }
             IsLoadingAmigo = false;
         }
@@ -138,11 +145,18 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaRequisicoes()
         {
             IsLoadingRequisicao = true;
-            using (ApiService srv = new ApiService())
+            try
             {
-                var Dados = await srv.ListarRequisicaoAmizade();
-                Requisicoes = new ObservableCollection<RequisicaoAmizade>(Dados);
-                OnPropertyChanged("Requisicoes");
+                using (ApiService srv = new ApiService())
+                {
+                    var Dados = await srv.ListarRequisicaoAmizade();
+                    Requisicoes = new ObservableCollection<RequisicaoAmizade>(Dados);
+                    OnPropertyChanged("Requisicoes");
+                }
+            }
+            catch
+            {
+                ApiService.ExibirMensagemErro();
             }
             IsLoadingRequisicao = false;
         }
@@ -183,19 +197,26 @@ namespace CV.Mobile.ViewModels
 
         private async Task GravarAlteracaoAmigo(ConsultaAmigo itemAmigo)
         {
-            using (ApiService srv = new ApiService())
+            try
             {
-                if (itemAmigo.Acao == 1 || itemAmigo.Acao == 2)
+                using (ApiService srv = new ApiService())
                 {
-                    DatabaseService.AjustarAmigo(itemAmigo);
+                    if (itemAmigo.Acao == 1 || itemAmigo.Acao == 2)
+                    {
+                        DatabaseService.AjustarAmigo(itemAmigo);
+                    }
+                    var Resultado = await srv.RequisicaoAmizade(itemAmigo);
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
                 }
-                var Resultado = await srv.RequisicaoAmizade(itemAmigo);
-                MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
-                {
-                    Title = "Sucesso",
-                    Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                    Cancel = "OK"
-                });
+            }
+            catch
+            {
+                ApiService.ExibirMensagemErro();
             }
             await CarregarListaAmigos();
 
@@ -213,15 +234,22 @@ namespace CV.Mobile.ViewModels
                 Negative = "Cancelar",
                 OnCompleted = new Action<bool>(async result => {
                     if (!result) return;
-                    using (ApiService srv = new ApiService())
+                    try
                     {
-                        var Resultado = await srv.SalvarRequisicaoAmizade(itemAmigo);
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        using (ApiService srv = new ApiService())
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
+                            var Resultado = await srv.SalvarRequisicaoAmizade(itemAmigo);
+                            MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                            {
+                                Title = "Sucesso",
+                                Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                                Cancel = "OK"
+                            });
+                        }
+                    }
+                    catch
+                    {
+                        ApiService.ExibirMensagemErro();
                     }
                     await CarregarListaRequisicoes();
                 })
@@ -231,15 +259,22 @@ namespace CV.Mobile.ViewModels
         private async Task AprovarAmizade(RequisicaoAmizade itemAmigo)
         {
             itemAmigo.Status = 2;
-            using (ApiService srv = new ApiService())
+            try
             {
-                var Resultado = await srv.SalvarRequisicaoAmizade(itemAmigo);
-                MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                using (ApiService srv = new ApiService())
                 {
-                    Title = "Sucesso",
-                    Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                    Cancel = "OK"
-                });
+                    var Resultado = await srv.SalvarRequisicaoAmizade(itemAmigo);
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+                }
+            }
+            catch
+            {
+                ApiService.ExibirMensagemErro();
             }
             await CarregarListaRequisicoes();
             await CarregarListaAmigos();

@@ -75,8 +75,10 @@ namespace CV.Mobile.ViewModels
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     ItemListaCompra.Status = (int)enumStatusListaCompra.NaoComprar;
                     ItemListaCompra.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                    bool Executado = true;
                     if (Conectado)
                     {
+                        try { 
                         using (ApiService srv = new ApiService())
                         {
                             Resultado = await  srv.SalvarListaCompra(ItemListaCompra);
@@ -90,8 +92,10 @@ namespace CV.Mobile.ViewModels
                             }
                             await DatabaseService.Database.SalvarListaCompra(ItemListaCompra);
                         }
+                        }
+                        catch { Executado = false; }
                     }
-                    else
+                    if (!Executado)
                     {
                           ItemListaCompra.AtualizadoBanco = false;
                            await DatabaseService.Database.SalvarListaCompra(ItemListaCompra);

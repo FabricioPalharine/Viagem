@@ -166,6 +166,8 @@ namespace CV.Mobile.ViewModels
                     {
 
                         ListaUsuario = await srv.ListarParticipantesViagem();
+                        if (!ListaUsuario.Any())
+                            ListaUsuario = await DatabaseService.Database.ListarParticipanteViagem();
                     }
                 }
                 else
@@ -190,15 +192,19 @@ namespace CV.Mobile.ViewModels
         public async void CarregarAtracoesPai()
         {
             List<Atracao> ListaDados = new List<Atracao>();
+            bool Executado = true;
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     ListaDados = await srv.ListarAtracao(new CriterioBusca());
 
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
                 ListaDados = await DatabaseService.Database.ListarAtracao(new CriterioBusca());
             ListaDados.Insert(0, new Atracao() { Identificador = 0, Nome = "Sem Atração Pai" });
             ListaAtracaoPai = new ObservableCollection<Atracao>(ListaDados);
@@ -354,8 +360,10 @@ namespace CV.Mobile.ViewModels
 
                 ResultadoOperacao Resultado = new ResultadoOperacao();
                 Refeicao pItemRefeicao = null;
+                bool Executado = true;
                 if (Conectado)
                 {
+                    try { 
                     using (ApiService srv = new ApiService())
                     {
                         Resultado = await srv.SalvarRefeicao(ItemRefeicao);
@@ -366,9 +374,11 @@ namespace CV.Mobile.ViewModels
                             AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "R", Resultado.IdentificadorRegistro.GetValueOrDefault(), !ItemRefeicao.Identificador.HasValue);
                             await DatabaseService.SalvarRefeicaoReplicada(pItemRefeicao);
                         }
+                        }
                     }
+                    catch { Executado = false; }
                 }
-                else
+                if (!Executado)
                 {
                     Resultado = await DatabaseService.SalvarRefeicao(ItemRefeicao);
                     if (Resultado.Sucesso)
@@ -428,19 +438,22 @@ namespace CV.Mobile.ViewModels
                 OnCompleted = new Action<bool>(async result =>
                 {
                     if (!result) return;
-
+                    bool Executado = true;
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     ItemRefeicao.DataExclusao = DateTime.Now.ToUniversalTime();
                     if (Conectado)
                     {
+                        try { 
                         using (ApiService srv = new ApiService())
                         {
                             Resultado = await srv.ExcluirRefeicao(ItemRefeicao.Identificador);
                             await DatabaseService.ExcluirRefeicao(ItemRefeicao.Identificador, true);
                             AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "R", ItemRefeicao.Identificador.GetValueOrDefault(), false);
                         }
+                        }
+                        catch { Executado = false; }
                     }
-                    else
+                    if (!Executado)
                     {
                         await DatabaseService.ExcluirRefeicao(ItemRefeicao.Identificador, false);
                         Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Refeição Excluída com Sucesso " } };

@@ -60,12 +60,19 @@ namespace CV.Mobile.ViewModels
             IsBusy = true;
             if (AtualizarListaCommand.CanExecute(null))
                 AtualizarListaCommand.ChangeCanExecute();
-            using (ApiService srv = new ApiService())
+            try
             {
-                var Dados = await srv.ListarViagens(_itemCriterioBusca);
-                Viagens.Clear();
-                foreach (var itemViagem in Dados)
-                    Viagens.Add(itemViagem);
+                using (ApiService srv = new ApiService())
+                {
+                    var Dados = await srv.ListarViagens(_itemCriterioBusca);
+                    Viagens.Clear();
+                    foreach (var itemViagem in Dados)
+                        Viagens.Add(itemViagem);
+                }
+            }
+            catch
+            {
+                ApiService.ExibirMensagemErro();
             }
             AtualizarListaCommand.ChangeCanExecute();
             IsBusy = false;

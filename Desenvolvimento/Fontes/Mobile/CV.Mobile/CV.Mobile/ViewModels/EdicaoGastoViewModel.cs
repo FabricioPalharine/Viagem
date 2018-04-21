@@ -107,6 +107,8 @@ namespace CV.Mobile.ViewModels
                     {
 
                         ListaUsuario = await srv.ListarParticipantesViagem();
+                        if (!ListaUsuario.Any())
+                            ListaUsuario = await DatabaseService.Database.ListarParticipanteViagem();
                     }
                 }
                 else
@@ -255,8 +257,10 @@ namespace CV.Mobile.ViewModels
                 }
                 ResultadoOperacao Resultado = null;
                 Gasto pItemGasto = null;
+                bool Executado = true;  
                 if (Conectado)
                 {
+                    try { 
                     using (ApiService srv = new ApiService())
                     {
                         Resultado = await srv.SalvarGasto(ItemGasto);
@@ -268,9 +272,11 @@ namespace CV.Mobile.ViewModels
                             DatabaseService.SalvarGastoSincronizado(pItemGasto);
                         }
 
+                        }
                     }
+                    catch { Executado = false; }
                 }
-                else
+                if (!Executado)
                 {
                     if (!ItemGasto.IdentificadorUsuario.HasValue)
                         ItemGasto.IdentificadorUsuario = ItemUsuarioLogado.Codigo;
@@ -332,9 +338,10 @@ namespace CV.Mobile.ViewModels
                     if (!result) return;
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     ItemGasto.DataExclusao = DateTime.Now.ToUniversalTime();
-
+                    bool Executado = true;
                     if (Conectado)
                     {
+                        try { 
                         using (ApiService srv = new ApiService())
                         {
                             Resultado = await srv.ExcluirGasto(ItemGasto.Identificador);
@@ -342,9 +349,11 @@ namespace CV.Mobile.ViewModels
                             var itemBase = await DatabaseService.CarregarGasto(ItemGasto.Identificador);
                             if (itemBase != null)
                                 await DatabaseService.ExcluirGasto(itemBase, true);
+                            }
                         }
+                        catch { Executado = false; }
                     }
-                    else
+                    if (!Executado)
                     {
                         await DatabaseService.ExcluirGasto(ItemGasto, false);
                         Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Gasto excluído com sucesso " } };

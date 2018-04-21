@@ -169,14 +169,18 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaDados()
         {
             List<AporteDinheiro> Dados = new List<AporteDinheiro>();
+            bool Executado = true;
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     Dados = await srv.ListarAporteDinheiro(ItemCriterioBusca);
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
                 Dados = await DatabaseService.Database.ListarAporteDinheiro(ItemCriterioBusca);
             ListaDados = new ObservableCollection<AporteDinheiro>(Dados);
             OnPropertyChanged("ListaDados");
@@ -198,8 +202,10 @@ namespace CV.Mobile.ViewModels
                 {
                     if (!result) return;
                     ResultadoOperacao Resultado = new ResultadoOperacao();
+                    bool Executado = true;
                     if (Conectado)
                     {
+                        try { 
                         using (ApiService srv = new ApiService())
                         {
                             Resultado = await srv.ExcluirAporteDinheiro(item.Identificador);
@@ -207,8 +213,10 @@ namespace CV.Mobile.ViewModels
                             await DatabaseService.ExcluirAporteDinheiro(item,true);
 
                         }
+                        }
+                        catch { Executado = false; }
                     }
-                    else
+                    if (!Executado)
                     {
                        
                         await DatabaseService.ExcluirAporteDinheiro(item, false);
@@ -232,14 +240,18 @@ namespace CV.Mobile.ViewModels
         private async Task Editar(ItemTappedEventArgs itemLista)
         {
             AporteDinheiro itemEditar = null;
+            bool Executado = true;
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     itemEditar = await srv.CarregarAporteDinheiro(((AporteDinheiro)itemLista.Item).Identificador);
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
 
                 itemEditar = await DatabaseService.CarregarAporteDinheiro(((AporteDinheiro)itemLista.Item).Identificador);
                 var pagina = new EdicaoAporteDinheiro() { BindingContext = new EdicaoAporteDinheiroViewModel(itemEditar) };

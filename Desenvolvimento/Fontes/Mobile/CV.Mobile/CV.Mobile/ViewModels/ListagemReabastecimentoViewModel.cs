@@ -80,8 +80,10 @@ namespace CV.Mobile.ViewModels
                     if (!result) return;
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     obj.DataExclusao = DateTime.Now.ToUniversalTime();
+                    bool Executado = true;
                     if (Conectado)
                     {
+                        try { 
                         using (ApiService srv = new ApiService())
                         {
                             Resultado = await srv.ExcluirReabastecimento(obj.Identificador);
@@ -90,8 +92,10 @@ namespace CV.Mobile.ViewModels
                             await DatabaseService.ExcluirReabastecimento(obj.Identificador, true);
 
                         }
+                        }
+                        catch { Executado = false; }
                     }
-                    else
+                    if (!Executado)
                     {
                         obj.AtualizadoBanco = false;
                         await DatabaseService.ExcluirReabastecimento(obj.Identificador, false);
@@ -115,12 +119,27 @@ namespace CV.Mobile.ViewModels
 
         private async Task VerificarAcaoItem(ItemTappedEventArgs itemSelecionado)
         {
-            using (ApiService srv = new ApiService())
+            bool Executado = true;
+            Reabastecimento ItemReabastecimento = null;
+            if (Conectado)
             {
-                var ItemReabastecimento = await srv.CarregarReabastecimento(((Reabastecimento)itemSelecionado.Item).Identificador);
+                try
+                {
+                    using (ApiService srv = new ApiService())
+                    {
+                        ItemReabastecimento = await srv.CarregarReabastecimento(((Reabastecimento)itemSelecionado.Item).Identificador);
+                    }
+                }
+                catch { Executado = false; }
+            }
+            if (!Executado)
+            {
+                ItemReabastecimento = await DatabaseService.Database.RetornarReabastecimento(((Reabastecimento)itemSelecionado.Item).Identificador);
+
+            }
                 var Pagina = new EdicaoReabastecimentoPage() { BindingContext = new EdicaoReabastecimentoViewModel(ItemReabastecimento) };
                 await PushAsync(Pagina);
-            }
+            
         }
 
         public Viagem ItemViagem { get; set; }

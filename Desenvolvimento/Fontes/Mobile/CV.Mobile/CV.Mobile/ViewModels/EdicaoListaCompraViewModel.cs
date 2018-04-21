@@ -80,8 +80,10 @@ namespace CV.Mobile.ViewModels
                 ResultadoOperacao Resultado = new ResultadoOperacao();
                 if (ItemListaCompra.IdentificadorUsuarioPedido.HasValue)
                     ItemListaCompra.NomeUsuarioPedido = ListaAmigos.Where(d => d.Identificador == ItemListaCompra.IdentificadorUsuarioPedido).Select(d => d.Nome).FirstOrDefault();
+                bool Executado = true;
                 if (Conectado)
                 {
+                    try { 
                     using (ApiService srv = new ApiService())
                     {
                         Resultado = await srv.SalvarListaCompra(ItemListaCompra);
@@ -96,8 +98,10 @@ namespace CV.Mobile.ViewModels
                         ItemListaCompra.DataAtualizacao = DateTime.Now.ToUniversalTime();
                         await DatabaseService.Database.SalvarListaCompra(ItemListaCompra);
                     }
+                    }
+                    catch { Executado = false; }
                 }
-                else
+                if (!Executado)
                 {
                     Resultado = await DatabaseService.SalvarListaCompra(ItemListaCompra);
                 }

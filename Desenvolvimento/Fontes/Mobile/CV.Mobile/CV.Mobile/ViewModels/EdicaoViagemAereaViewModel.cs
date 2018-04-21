@@ -246,6 +246,8 @@ namespace CV.Mobile.ViewModels
                     {
 
                         ListaUsuario = await srv.ListarParticipantesViagem();
+                        if (!ListaUsuario.Any())
+                            ListaUsuario = await DatabaseService.Database.ListarParticipanteViagem();
                     }
                 }
                 else
@@ -441,9 +443,10 @@ namespace CV.Mobile.ViewModels
                 ItemViagemAerea.Aeroportos = new ObservableRangeCollection<ViagemAereaAeroporto>(ListaAvaliacoesAlteradas);
                 ViagemAerea pItemViagemAerea = null;
                 ResultadoOperacao Resultado = null;
-
+                bool Executado = true;
                 if (Conectado)
                 {
+                    try { 
                     using (ApiService srv = new ApiService())
                     {
                         Resultado = await srv.SalvarViagemAerea(ItemViagemAerea);
@@ -457,8 +460,10 @@ namespace CV.Mobile.ViewModels
                         }
 
                     }
+                    }
+                    catch { Executado = false; }
                 }
-                else
+                if (!Executado)
                 {
                     Resultado = await DatabaseService.SalvarViagemAerea(ItemViagemAerea);
                     if (Resultado.Sucesso)
@@ -604,8 +609,10 @@ namespace CV.Mobile.ViewModels
 
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     ItemViagemAerea.DataExclusao = DateTime.Now.ToUniversalTime();
+                    bool Executado = true;
                     if (Conectado)
                     {
+                        try { 
                         using (ApiService srv = new ApiService())
                         {
                             Resultado = await srv.ExcluirViagemAerea(ItemViagemAerea.Identificador);
@@ -614,8 +621,10 @@ namespace CV.Mobile.ViewModels
                             await DatabaseService.ExcluirViagemAerea(ItemViagemAerea.Identificador, true);
 
                         }
+                        }
+                        catch { Executado = false; }
                     }
-                    else
+                    if (!Executado)
                     {
                         ItemViagemAerea.AtualizadoBanco = false;
                         await DatabaseService.ExcluirViagemAerea(ItemViagemAerea.Identificador, false);

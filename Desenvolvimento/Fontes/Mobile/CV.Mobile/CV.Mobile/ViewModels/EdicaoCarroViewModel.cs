@@ -232,6 +232,8 @@ namespace CV.Mobile.ViewModels
                     {
 
                         ListaUsuario = await srv.ListarParticipantesViagem();
+                        if (!ListaUsuario.Any())
+                            ListaUsuario = await DatabaseService.Database.ListarParticipanteViagem();
                     }
                 }
                 else
@@ -469,8 +471,10 @@ namespace CV.Mobile.ViewModels
 
                 ResultadoOperacao Resultado = null;
                 Carro pItemCarro = null;
+                bool Executado = true;
                 if (Conectado)
                 {
+                    try { 
                     using (ApiService srv = new ApiService())
                     {
                         Resultado = await srv.SalvarCarro(ItemCarro);
@@ -483,8 +487,10 @@ namespace CV.Mobile.ViewModels
                         }
 
                     }
+                    }
+                    catch { Executado = false; }
                 }
-                else
+                if (!Executado)
                 {
                     Resultado = await DatabaseService.SalvarCarro(ItemCarro);
                     if (Resultado.Sucesso)
@@ -550,9 +556,10 @@ namespace CV.Mobile.ViewModels
                     if (!result) return;
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     ItemCarro.DataExclusao = DateTime.Now.ToUniversalTime();
-
+                    bool Executado = true;
                     if (Conectado)
                     {
+                        try { 
                         using (ApiService srv = new ApiService())
                         {
                             Resultado = await srv.ExcluirCarro(ItemCarro.Identificador);
@@ -560,8 +567,10 @@ namespace CV.Mobile.ViewModels
 
                             await DatabaseService.ExcluirCarro(ItemCarro.Identificador, true);
                         }
+                        }
+                        catch { Executado = false; }
                     }
-                    else
+                    if (!Executado)
                     {
                         await DatabaseService.ExcluirCarro(ItemCarro.Identificador, false);
                         Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Carro excluído com sucesso " } };

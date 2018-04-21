@@ -93,11 +93,18 @@ namespace CV.Mobile.ViewModels
 
         private async Task CarregarListaListaDados()
         {
-            using (ApiService srv = new ApiService())
+            try
             {
-                var Dados = await srv.ListarCidadePai();
-                ListaDados = new ObservableCollection<Cidade>(Dados);
-                OnPropertyChanged("ListaDados");
+                using (ApiService srv = new ApiService())
+                {
+                    var Dados = await srv.ListarCidadePai();
+                    ListaDados = new ObservableCollection<Cidade>(Dados);
+                    OnPropertyChanged("ListaDados");
+                }
+            }
+            catch
+            {
+                ApiService.ExibirMensagemErro();
             }
             IsLoadingLista = false;
         }
@@ -113,20 +120,27 @@ namespace CV.Mobile.ViewModels
                 OnCompleted = new Action<bool>(async result =>
                 {
                     if (!result) return;
-                    using (ApiService srv = new ApiService())
+                    try
                     {
-                        var Resultado = await srv.ExcluirCidadeGrupo(item.Identificador);
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        using (ApiService srv = new ApiService())
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-                        if (ListaDados.Where(d => d.Identificador == item.Identificador).Any())
-                        {
-                            var Posicao = ListaDados.IndexOf(ListaDados.Where(d => d.Identificador == item.Identificador).FirstOrDefault());
-                            ListaDados.RemoveAt(Posicao);
+                            var Resultado = await srv.ExcluirCidadeGrupo(item.Identificador);
+                            MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                            {
+                                Title = "Sucesso",
+                                Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                                Cancel = "OK"
+                            });
+                            if (ListaDados.Where(d => d.Identificador == item.Identificador).Any())
+                            {
+                                var Posicao = ListaDados.IndexOf(ListaDados.Where(d => d.Identificador == item.Identificador).FirstOrDefault());
+                                ListaDados.RemoveAt(Posicao);
+                            }
                         }
+                    }
+                    catch
+                    {
+                        ApiService.ExibirMensagemErro();
                     }
 
                 })
@@ -137,8 +151,12 @@ namespace CV.Mobile.ViewModels
         {
             using (ApiService srv = new ApiService())
             {
-                var itemEditar = await srv.CarregarCidadeGrupo(((Cidade) item.Item).Identificador);
-                await AbirTela(itemEditar);
+                try
+                {
+                    var itemEditar = await srv.CarregarCidadeGrupo(((Cidade)item.Item).Identificador);
+                    await AbirTela(itemEditar);
+                }
+                catch { }
             }
         }
 
@@ -151,15 +169,18 @@ namespace CV.Mobile.ViewModels
 
         private async Task AbirTela(ManutencaoCidadeGrupo itemManutencao)
         {
-            
-            using (ApiService srv = new ApiService())
+            try
             {
-                var ListaCidadesPai = await srv.ListarCidadeNaoAssociadasFilho();
-                var ListaCidadesFilha = await srv.ListarCidadeNaoAssociadasPai(itemManutencao.IdentificadorCidade.GetValueOrDefault(-1));
-                var vm = new EdicaoAgrupamentoCidadeViewModel(itemManutencao, ListaCidadesPai, ListaCidadesFilha);
-                var pagina = new EdicaoAgrupamentoCidadePage() { BindingContext = vm };
-                await PushAsync(pagina);
+                using (ApiService srv = new ApiService())
+                {
+                    var ListaCidadesPai = await srv.ListarCidadeNaoAssociadasFilho();
+                    var ListaCidadesFilha = await srv.ListarCidadeNaoAssociadasPai(itemManutencao.IdentificadorCidade.GetValueOrDefault(-1));
+                    var vm = new EdicaoAgrupamentoCidadeViewModel(itemManutencao, ListaCidadesPai, ListaCidadesFilha);
+                    var pagina = new EdicaoAgrupamentoCidadePage() { BindingContext = vm };
+                    await PushAsync(pagina);
+                }
             }
+            catch { }
         }
     }
 }

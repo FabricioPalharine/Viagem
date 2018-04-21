@@ -155,15 +155,19 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaCidades()
         {
             List<Cidade> Dados = new List<Cidade>();
+            bool Executado = true;
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     Dados = await srv.ListarCidadeHotel();
 
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
             {
                 Dados = await DatabaseService.Database.ListarCidade_Tipo("H");
             }
@@ -177,15 +181,19 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaDados()
         {
             List<Hotel> Dados = new List<Hotel>();
+            bool Executado = true;
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     Dados = await srv.ListarHotel(ItemCriterioBusca);
 
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
             {
                 Dados = await DatabaseService.Database.ListarHotel(ItemCriterioBusca);
             }
@@ -197,15 +205,19 @@ namespace CV.Mobile.ViewModels
         private async Task VerificarAcaoItem(ItemTappedEventArgs itemSelecionado)
         {
             Hotel ItemHotel = null;
+            bool Executado = true;
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     ItemHotel = await srv.CarregarHotel(((Hotel)itemSelecionado.Item).Identificador);
 
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
                 ItemHotel = await DatabaseService.CarregarHotel(((Hotel)itemSelecionado.Item).Identificador);
 
             var Pagina = new EdicaoHotelPage() { BindingContext = new EdicaoHotelViewModel(ItemHotel, ItemViagem) };

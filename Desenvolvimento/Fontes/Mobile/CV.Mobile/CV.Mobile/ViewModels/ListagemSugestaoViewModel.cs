@@ -145,22 +145,36 @@ namespace CV.Mobile.ViewModels
 
         private async Task CarregarListaCidades()
         {
-            using (ApiService srv = new ApiService())
+            try
             {
-                var Dados = await srv.ListarCidadeSugestao();
-                ListaCidades = new ObservableCollection<Cidade>(Dados);
-                OnPropertyChanged("ListaCidades");
+                using (ApiService srv = new ApiService())
+                {
+                    var Dados = await srv.ListarCidadeSugestao();
+                    ListaCidades = new ObservableCollection<Cidade>(Dados);
+                    OnPropertyChanged("ListaCidades");
+                }
+            }
+            catch
+            {
+                ApiService.ExibirMensagemErro();
             }
         }
 
 
         private async Task CarregarListaPedidos()
         {
-            using (ApiService srv = new ApiService())
+            try
             {
-                var Dados = await srv.ListarSugestao(ItemCriterioBusca);
-                ListaDados = new ObservableCollection<Sugestao>(Dados);
-                OnPropertyChanged("ListaDados");
+                using (ApiService srv = new ApiService())
+                {
+                    var Dados = await srv.ListarSugestao(ItemCriterioBusca);
+                    ListaDados = new ObservableCollection<Sugestao>(Dados);
+                    OnPropertyChanged("ListaDados");
+                }
+            }
+            catch
+            {
+                ApiService.ExibirMensagemErro();
             }
             IsLoadingLista = false;
         }
@@ -176,22 +190,29 @@ namespace CV.Mobile.ViewModels
                 OnCompleted = new Action<bool>(async result =>
                 {
                     if (!result) return;
-                    using (ApiService srv = new ApiService())
+                    try
                     {
-                        var Resultado = await srv.ExcluirSugestao(item.Identificador);
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        using (ApiService srv = new ApiService())
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-                        base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "S",item.Identificador.GetValueOrDefault(),false);
+                            var Resultado = await srv.ExcluirSugestao(item.Identificador);
+                            MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                            {
+                                Title = "Sucesso",
+                                Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                                Cancel = "OK"
+                            });
+                            base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "S", item.Identificador.GetValueOrDefault(), false);
 
-                        if (ListaDados.Where(d => d.Identificador == item.Identificador).Any())
-                        {
-                            var Posicao = ListaDados.IndexOf(ListaDados.Where(d => d.Identificador == item.Identificador).FirstOrDefault());
-                            ListaDados.RemoveAt(Posicao);
+                            if (ListaDados.Where(d => d.Identificador == item.Identificador).Any())
+                            {
+                                var Posicao = ListaDados.IndexOf(ListaDados.Where(d => d.Identificador == item.Identificador).FirstOrDefault());
+                                ListaDados.RemoveAt(Posicao);
+                            }
                         }
+                    }
+                    catch
+                    {
+                        ApiService.ExibirMensagemErro();
                     }
 
                 })
@@ -200,11 +221,18 @@ namespace CV.Mobile.ViewModels
 
         private async Task Editar(ItemTappedEventArgs item)
         {
-            using (ApiService srv = new ApiService())
+            try
             {
-                var itemEditar = await srv.CarregarSugestao(((Sugestao)item.Item).Identificador);
-                var pagina = new EdicaoSugestaoPage() { BindingContext = new EdicaoSugestaoViewModel(itemEditar) };
-                await PushAsync(pagina);
+                using (ApiService srv = new ApiService())
+                {
+                    var itemEditar = await srv.CarregarSugestao(((Sugestao)item.Item).Identificador);
+                    var pagina = new EdicaoSugestaoPage() { BindingContext = new EdicaoSugestaoViewModel(itemEditar) };
+                    await PushAsync(pagina);
+                }
+            }
+            catch
+            {
+                ApiService.ExibirMensagemErro();
             }
         }
 

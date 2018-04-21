@@ -104,6 +104,8 @@ namespace CV.Mobile.ViewModels
                     {
 
                         ListaUsuario = await srv.ListarParticipantesViagem();
+                        if (!ListaUsuario.Any())
+                            ListaUsuario = await DatabaseService.Database.ListarParticipanteViagem();
                     }
                 }
                 else
@@ -240,8 +242,10 @@ namespace CV.Mobile.ViewModels
 
                 ResultadoOperacao Resultado = new ResultadoOperacao();
                 GastoCompra pItemGasto = null;
+                bool Executado = true;
                 if (Conectado)
                 {
+                    try { 
                     using (ApiService srv = new ApiService())
                     {
                         Resultado = await srv.SalvarGastoCompra(ItemCompra);
@@ -253,9 +257,11 @@ namespace CV.Mobile.ViewModels
                             await DatabaseService.SalvarGastoCompra(pItemGasto);
 
                         }
+                        }
                     }
+                    catch { Executado = false; }
                 }
-                else
+                if (!Executado)
                 {
                     Resultado = await DatabaseService.SalvarGastoCompra(ItemCompra);
                     if (Resultado.Sucesso)
@@ -322,11 +328,11 @@ namespace CV.Mobile.ViewModels
                 OnCompleted = new Action<bool>(async result =>
                 {
                     if (!result) return;
-
+                    bool Executado = true;
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     ItemCompra.DataExclusao = DateTime.Now.ToUniversalTime();
                     if (Conectado)
-                    {
+                    {try { 
                         using (ApiService srv = new ApiService())
                         {
                             Resultado = await srv.ExcluirGastoCompra(ItemCompra);
@@ -334,8 +340,10 @@ namespace CV.Mobile.ViewModels
 
                             await DatabaseService.ExcluirGastoCompra(ItemCompra.Identificador, true);
                         }
+                        }
+                        catch { Executado = false; }
                     }
-                    else
+                    if (!Executado)
                     {
                         await DatabaseService.ExcluirGastoCompra(ItemCompra.Identificador, false);
 

@@ -108,30 +108,36 @@ namespace CV.Mobile.ViewModels
             {
                 ItemAporteDinheiro.ItemGasto = _ItemGasto;
                 ResultadoOperacao Resultado = new ResultadoOperacao();
+                bool Salvo = false;
                 if (Conectado)
                 {
+
                     using (ApiService srv = new ApiService())
                     {
-
-                        Resultado = await srv.SalvarAporteDinheiro(ItemAporteDinheiro);
-                        if (Resultado.Sucesso)
+                        try
                         {
-                            base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "AD", ItemAporteDinheiro.Identificador.GetValueOrDefault(Resultado.IdentificadorRegistro.GetValueOrDefault()), !ItemAporteDinheiro.Identificador.HasValue);
-                            var itemAporte = await srv.CarregarAporteDinheiro(ItemAporteDinheiro.Identificador.GetValueOrDefault(Resultado.IdentificadorRegistro.GetValueOrDefault()));
-                            var itemLocal = await DatabaseService.Database.RetornarAporteDinheiro(itemAporte.Identificador);
-                            if (itemLocal != null)
-                                itemAporte.Id = itemLocal.Id;
-                            if (itemAporte.ItemGasto != null)
+                            Resultado = await srv.SalvarAporteDinheiro(ItemAporteDinheiro);
+                            Salvo = true;
+                            if (Resultado.Sucesso)
                             {
-                                var itemGL = await DatabaseService.Database.RetornarGasto(itemAporte.ItemGasto.Identificador);
-                                if (itemGL != null)
-                                    itemAporte.ItemGasto.Id = itemGL.Id;
+                                base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "AD", ItemAporteDinheiro.Identificador.GetValueOrDefault(Resultado.IdentificadorRegistro.GetValueOrDefault()), !ItemAporteDinheiro.Identificador.HasValue);
+                                var itemAporte = await srv.CarregarAporteDinheiro(ItemAporteDinheiro.Identificador.GetValueOrDefault(Resultado.IdentificadorRegistro.GetValueOrDefault()));
+                                var itemLocal = await DatabaseService.Database.RetornarAporteDinheiro(itemAporte.Identificador);
+                                if (itemLocal != null)
+                                    itemAporte.Id = itemLocal.Id;
+                                if (itemAporte.ItemGasto != null)
+                                {
+                                    var itemGL = await DatabaseService.Database.RetornarGasto(itemAporte.ItemGasto.Identificador);
+                                    if (itemGL != null)
+                                        itemAporte.ItemGasto.Id = itemGL.Id;
+                                }
+                                await DatabaseService.GravarDadosAporte(itemAporte);
                             }
-                            await DatabaseService.GravarDadosAporte(itemAporte);
                         }
+                        catch { }
                     }
                 }
-                else
+                if (!Salvo)
                 {
                     ItemAporteDinheiro.AtualizadoBanco = false;
                     if (ItemAporteDinheiro.ItemGasto != null)

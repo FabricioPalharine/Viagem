@@ -66,7 +66,7 @@ namespace CV.Mobile
                     if (CrossConnectivity.Current.IsConnected && await srv.VerificarOnLine())
                     {
                         var itemUsuario = await srv.CarregarUsuario(Codigo);
-
+                        if (itemUsuario != null)
                         await DatabaseService.Database.SalvarUsuarioAsync(itemUsuario);
                     }
 

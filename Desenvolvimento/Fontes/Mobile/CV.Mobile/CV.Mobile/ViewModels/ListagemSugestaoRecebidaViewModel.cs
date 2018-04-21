@@ -153,15 +153,19 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaCidades()
         {
             List<Cidade> Dados = new List<Cidade>();
+            bool Executado = true;
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     Dados = await srv.ListarCidadeSugestao();
 
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
             {
                 Dados = await DatabaseService.Database.ListarCidade_Tipo("S");
             }
@@ -176,7 +180,8 @@ namespace CV.Mobile.ViewModels
                 using (ApiService srv = new ApiService())
                 {
                     Dados = await srv.ListarAmigos();
-
+                    if (!Dados.Any())
+                        Dados = await DatabaseService.Database.ListarAmigos();
                 }
             }
             else
@@ -190,15 +195,19 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaPedidos()
         {
             List<Sugestao> Dados = new List<Sugestao>();
+            bool Executado = true;
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     Dados = await srv.ListarSugestaoRecebida(ItemCriterioBusca);
 
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
                 Dados = await DatabaseService.Database.ListarSugestao(ItemCriterioBusca);
 
             ListaDados = new ObservableCollection<Sugestao>(Dados);

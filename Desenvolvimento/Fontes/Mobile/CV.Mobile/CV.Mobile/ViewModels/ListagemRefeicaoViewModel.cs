@@ -151,15 +151,20 @@ namespace CV.Mobile.ViewModels
         {
 
             List<Cidade> Dados = new List<Cidade>();
+            bool Executado = true;
+            
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     Dados = await srv.ListarCidadeRefeicao();
 
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
             {
                 Dados = await DatabaseService.Database.ListarCidade_Tipo("R");
             }
@@ -173,15 +178,19 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaDados()
         {
             List<Refeicao> Dados = new List<Refeicao>();
+            bool Executado = true;
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     Dados = await srv.ListarRefeicao(ItemCriterioBusca);
 
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
             {
                 Dados = await DatabaseService.Database.ListarRefeicao(ItemCriterioBusca);
             }
@@ -196,15 +205,19 @@ namespace CV.Mobile.ViewModels
         {
 
             Refeicao ItemRefeicao = null;
+            bool Executado = true;
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     ItemRefeicao = await srv.CarregarRefeicao(((Refeicao)itemSelecionado.Item).Identificador);
 
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
                 ItemRefeicao = await DatabaseService.CarregarRefeicao(((Refeicao)itemSelecionado.Item).Identificador);
 
               var Pagina = new EdicaoRefeicaoPage() { BindingContext = new EdicaoRefeicaoViewModel(ItemRefeicao,ItemViagem) };
@@ -215,14 +228,18 @@ namespace CV.Mobile.ViewModels
         {
             var ItemRefeicao = new Refeicao() { Pedidos = new ObservableRangeCollection<RefeicaoPedido>(), Data = DateTime.Now, Hora = DateTime.Now.TimeOfDay };
             Atracao AtracaoAberto = null;
+            bool Executado = true;
             if (Conectado)
             {
-                using (ApiService srv = new ApiService())
+                try {
+                    using (ApiService srv = new ApiService())
                 {
                     AtracaoAberto = await srv.VerificarAtracaoAberto();
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
             {
                 AtracaoAberto = await DatabaseService.Database.RetornarAtracaoAberta();
             }

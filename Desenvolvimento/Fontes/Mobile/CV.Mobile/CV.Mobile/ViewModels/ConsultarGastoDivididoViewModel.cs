@@ -124,13 +124,18 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaDados()
         {
             List<AjusteGastoDividido> Dados = new List<AjusteGastoDividido>();
-  
+            try
+            {
                 using (ApiService srv = new ApiService())
                 {
                     Dados = await srv.ListarAjusteGastos(ItemCriterioBusca);
 
                 }
-         
+            }
+            catch
+            {
+                ApiService.ExibirMensagemErro();
+            }
             ListaDados = new ObservableCollection<AjusteGastoDividido>(Dados);
             OnPropertyChanged("ListaDados");
             IsLoadingLista = false;

@@ -65,25 +65,32 @@ namespace CV.Mobile.ViewModels
                 ItemCalendarioPrevisto.DataInicio = DateTime.SpecifyKind(ItemCalendarioPrevisto.DataInicio.GetValueOrDefault().Date.Add(ItemCalendarioPrevisto.HoraInicio.Value), DateTimeKind.Unspecified);
                 ItemCalendarioPrevisto.DataFim = DateTime.SpecifyKind(ItemCalendarioPrevisto.DataFim.GetValueOrDefault().Date.Add(ItemCalendarioPrevisto.HoraFim.Value), DateTimeKind.Unspecified);
                 ResultadoOperacao Resultado = new ResultadoOperacao();
+                bool Executado = true;
                 if (Conectado)
                 {
                     using (ApiService srv = new ApiService())
                     {
-                        Resultado = await srv.SalvarCalendarioPrevisto(ItemCalendarioPrevisto);
-                        if (Resultado.Sucesso)
+                        try
                         {
-                            var itemRetorno = await srv.CarregarCalendarioPrevisto(Resultado.IdentificadorRegistro);
-                            var itemBase = await DatabaseService.Database.CarregarCalendarioPrevisto(Resultado.IdentificadorRegistro.GetValueOrDefault());
-                            if (itemBase != null)
-                                itemRetorno.Id = itemBase.Id;
-                            itemRetorno.DataProximoAviso = itemRetorno.DataInicio.GetValueOrDefault(new DateTime(1900, 01, 01));
+                            Resultado = await srv.SalvarCalendarioPrevisto(ItemCalendarioPrevisto);
+                            if (Resultado.Sucesso)
+                            {
+                                var itemRetorno = await srv.CarregarCalendarioPrevisto(Resultado.IdentificadorRegistro);
+                                var itemBase = await DatabaseService.Database.CarregarCalendarioPrevisto(Resultado.IdentificadorRegistro.GetValueOrDefault());
+                                if (itemBase != null)
+                                    itemRetorno.Id = itemBase.Id;
+                                itemRetorno.DataProximoAviso = itemRetorno.DataInicio.GetValueOrDefault(new DateTime(1900, 01, 01));
 
-                            await DatabaseService.Database.SalvarCalendarioPrevisto(itemRetorno);
-                            base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "CP", itemRetorno.Identificador.GetValueOrDefault(), !ItemCalendarioPrevisto.Identificador.HasValue);
+                                await DatabaseService.Database.SalvarCalendarioPrevisto(itemRetorno);
+                                base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "CP", itemRetorno.Identificador.GetValueOrDefault(), !ItemCalendarioPrevisto.Identificador.HasValue);
+                            }
+
                         }
+                        catch { Executado = false; }
                     }
                 }
-                else
+                
+                if (!Executado)
                 {
                     ItemCalendarioPrevisto.DataProximoAviso = ItemCalendarioPrevisto.DataInicio.GetValueOrDefault(new DateTime(1900, 01, 01));
 

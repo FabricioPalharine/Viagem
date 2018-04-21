@@ -54,18 +54,24 @@ namespace CV.Mobile.ViewModels
                     filtroLocal.Count = 500;
                     filtroLocal.Tipo = item.Tipo;
                     filtroLocal.Identificador = item.Identificador;
-
-                    using (ApiService srv = new ApiService())
+                    try
                     {
-                        var listaRetorno = await srv.ConsultarTimeline(filtroLocal);
-                        foreach (var itemnovo in listaRetorno.OrderBy(d => d.Data))
+                        using (ApiService srv = new ApiService())
                         {
-                            if (!ListaDados.Where(d => d.Identificador == itemnovo.Identificador && d.Tipo == itemnovo.Tipo).Any())
+                            var listaRetorno = await srv.ConsultarTimeline(filtroLocal);
+                            foreach (var itemnovo in listaRetorno.OrderBy(d => d.Data))
                             {
-                                ListaDados.Insert(0, itemnovo);
+                                if (!ListaDados.Where(d => d.Identificador == itemnovo.Identificador && d.Tipo == itemnovo.Tipo).Any())
+                                {
+                                    ListaDados.Insert(0, itemnovo);
+                                }
                             }
-                        }
 
+                        }
+                    }
+                    catch
+                    {
+                        ApiService.ExibirMensagemErro();
                     }
 
                 }
@@ -148,10 +154,17 @@ namespace CV.Mobile.ViewModels
                 return
               new Command<Timeline>(async (item) =>
               {
-                  using (ApiService srv = new ApiService())
+                  try
                   {
-                      var itemFoto = await srv.CarregarFoto(item.Identificador);
-                      Device.OpenUri(new Uri(string.Concat("https://www.youtube.com/watch?v=", itemFoto.CodigoFoto)));
+                      using (ApiService srv = new ApiService())
+                      {
+                          var itemFoto = await srv.CarregarFoto(item.Identificador);
+                          Device.OpenUri(new Uri(string.Concat("https://www.youtube.com/watch?v=", itemFoto.CodigoFoto)));
+                      }
+                  }
+                  catch
+                  {
+                      ApiService.ExibirMensagemErro();
                   }
 
               });
@@ -174,15 +187,22 @@ namespace CV.Mobile.ViewModels
                 IsLoadingLista = true;
                 _CarregandoMais = true;
                 ItemCriterioBusca.DataInicioDe = ListaDados.Select(d => d.Data).LastOrDefault();
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    var ListaAdicoes = await srv.ConsultarTimeline(ItemCriterioBusca);
-                    foreach (var item in ListaAdicoes.Where(d => d.Tipo == "Video"))
+                    using (ApiService srv = new ApiService())
                     {
-                        item.UrlThumbnail = (await srv.CarregarFoto(item.Identificador)).LinkThumbnail;
+                        var ListaAdicoes = await srv.ConsultarTimeline(ItemCriterioBusca);
+                        foreach (var item in ListaAdicoes.Where(d => d.Tipo == "Video"))
+                        {
+                            item.UrlThumbnail = (await srv.CarregarFoto(item.Identificador)).LinkThumbnail;
+                        }
+                        foreach (var item in ListaAdicoes)
+                            ListaDados.Add(item);
                     }
-                    foreach (var item in ListaAdicoes)
-                        ListaDados.Add(item);
+                }
+                catch
+                {
+                    ApiService.ExibirMensagemErro();
                 }
                 IsLoadingLista = false;
                 _CarregandoMais = false;
@@ -232,16 +252,21 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaDados()
         {
             List<Timeline> Dados = new List<Timeline>();
-
-            using (ApiService srv = new ApiService())
+            try
             {
-                Dados = await srv.ConsultarTimeline(ItemCriterioBusca);
-                foreach (var item in Dados.Where(d=>d.Tipo == "Video"))
+                using (ApiService srv = new ApiService())
                 {
-                    item.UrlThumbnail = (await srv.CarregarFoto(item.Identificador)).LinkThumbnail;
+                    Dados = await srv.ConsultarTimeline(ItemCriterioBusca);
+                    foreach (var item in Dados.Where(d => d.Tipo == "Video"))
+                    {
+                        item.UrlThumbnail = (await srv.CarregarFoto(item.Identificador)).LinkThumbnail;
+                    }
                 }
             }
-
+            catch
+            {
+                ApiService.ExibirMensagemErro();    
+            }
 
             ListaDados = new ObservableCollection<Timeline>(Dados);
             OnPropertyChanged("ListaDados");

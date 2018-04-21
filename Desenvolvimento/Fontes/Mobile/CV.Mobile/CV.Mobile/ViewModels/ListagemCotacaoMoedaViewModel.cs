@@ -97,15 +97,19 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaCotacoes()
         {
             List<CotacaoMoeda> Dados = new List<CotacaoMoeda>();
+            bool Executado = true;
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     Dados = await srv.ListarCotacaoMoeda();
 
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
                 Dados = await DatabaseService.Database.ListarCotacaoMoeda(new CriterioBusca());
             Cotacoes = new ObservableCollection<CotacaoMoeda>(Dados);
             OnPropertyChanged("Cotacoes");
@@ -124,8 +128,10 @@ namespace CV.Mobile.ViewModels
                 {
                     if (!result) return;
                     ResultadoOperacao Resultado = new ResultadoOperacao();
+                    bool Executado = true;
                     if (Conectado)
                     {
+                        try {
                         using (ApiService srv = new ApiService())
                         {
                             Resultado = await srv.ExcluirCotacaoMoeda(itemCotacao.Identificador);
@@ -137,8 +143,10 @@ namespace CV.Mobile.ViewModels
                             
 
                         }
+                        }
+                        catch { Executado = false; }
                     }
-                    else
+                    if (!Executado)
                     {
                         if (itemCotacao.Identificador > 0)
                         {

@@ -38,7 +38,7 @@
         vm.filtraDado = function () {
 
             vm.filtroAtualizacao = jQuery.extend({}, vm.filtro);
-
+            vm.filtro.DataInicioDe = vm.filtroAtualizacao.DataInicioDe = moment(new Date()).format("YYYY-MM-DD")
             if (vm.itemUsuario && vm.itemUsuario.Identificador)
                 vm.filtroAtualizacao.IdentificadorParticipante = vm.itemUsuario.Identificador;
             else

@@ -151,15 +151,21 @@ namespace CV.Mobile.ViewModels
         {
 
             List<Cidade> Dados = new List<Cidade>();
+            bool Executado = true;
             if (Conectado)
             {
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    Dados = await srv.ListarCidadeLoja();
+                    using (ApiService srv = new ApiService())
+                    {
+                        Dados = await srv.ListarCidadeLoja();
 
+                    }
                 }
+                catch { Executado = false; }
+
             }
-            else
+            if (!Executado)
             {
                 Dados = await DatabaseService.Database.ListarCidade_Tipo("L");
             }
@@ -173,15 +179,19 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaDados()
         {
             List<Loja> Dados = new List<Loja>();
+            bool Executado = true;
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     Dados = await srv.ListarLoja(ItemCriterioBusca);
 
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
             {
                 Dados = await DatabaseService.Database.ListarLoja(ItemCriterioBusca);
             }
@@ -195,15 +205,19 @@ namespace CV.Mobile.ViewModels
         {
 
             Loja ItemLoja = null;
+            bool Executado = true;
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     ItemLoja = await srv.CarregarLoja(((Loja)itemSelecionado.Item).Identificador);
 
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
                 ItemLoja = await DatabaseService.CarregarLoja(((Loja)itemSelecionado.Item).Identificador);
 
 
@@ -214,16 +228,19 @@ namespace CV.Mobile.ViewModels
         private async Task Adicionar()
         {
             var ItemLoja = new Loja() { Avaliacoes = new ObservableRangeCollection<AvaliacaoLoja>() };
-
+            bool Executado = true;
             Atracao AtracaoAberto = null;
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     AtracaoAberto = await srv.VerificarAtracaoAberto();
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
             {
                 AtracaoAberto = await DatabaseService.Database.RetornarAtracaoAberta();
             }

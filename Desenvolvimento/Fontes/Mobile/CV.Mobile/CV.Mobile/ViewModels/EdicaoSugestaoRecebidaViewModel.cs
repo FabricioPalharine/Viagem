@@ -141,9 +141,10 @@ namespace CV.Mobile.ViewModels
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     ItemSugestao.Status = 3;
                     ItemSugestao.DataAtualizacao = DateTime.Now.ToUniversalTime();
-
+                    bool Executado = true;
                     if (Conectado)
                     {
+                        try { 
                         using (ApiService srv = new ApiService())
                         {
                            
@@ -159,8 +160,10 @@ namespace CV.Mobile.ViewModels
                             await DatabaseService.Database.SalvarSugestao(ItemSugestao);
 
                         }
+                        }
+                        catch { Executado = false; }
                     }
-                    else
+                    if (!Executado)
                     {
                         ItemSugestao.AtualizadoBanco = false;
                         var itemSugestao = await DatabaseService.Database.RetornarSugestao(ItemSugestao.Identificador);

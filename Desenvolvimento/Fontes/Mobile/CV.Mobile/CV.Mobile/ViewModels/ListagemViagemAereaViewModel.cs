@@ -165,14 +165,20 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaCidades()
         {
             List<Cidade> Dados = new List<Cidade>();
+            bool Executado = true;
+
             if (Conectado)
             {
+                try
+                { 
                 using (ApiService srv = new ApiService())
                 {
                     Dados = await srv.ListarCidadeViagemAerea();
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
             {
                 Dados = await DatabaseService.Database.ListarCidade_Tipo("V");
             }
@@ -185,15 +191,20 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaDados()
         {
             List<ViagemAerea> Dados = new List<ViagemAerea>();
+            bool Executado = true;
             if (Conectado)
             {
+                try
+                { 
                 using (ApiService srv = new ApiService())
                 {
                      Dados = await srv.ListarViagemAerea(ItemCriterioBusca);
 
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
             {
                 Dados = await DatabaseService.Database.ListarViagemAerea(ItemCriterioBusca);
             }
@@ -205,16 +216,21 @@ namespace CV.Mobile.ViewModels
         private async Task VerificarAcaoItem(ItemTappedEventArgs itemSelecionado)
         {
             ViagemAerea ItemViagemAerea = null;
+            bool Executado = true;
+
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     
                     ItemViagemAerea = await srv.CarregarViagemAerea(((ViagemAerea)itemSelecionado.Item).Identificador);
 
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if(!Executado)
             {
                 ItemViagemAerea = await DatabaseService.CarregarViagemAerea(((ViagemAerea)itemSelecionado.Item).Identificador);
 

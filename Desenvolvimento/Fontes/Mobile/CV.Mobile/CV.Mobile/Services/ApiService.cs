@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using CV.Mobile.Helpers;
 using Plugin.Connectivity;
+using FormsToolkit;
 
 namespace CV.Mobile.Services
 {
@@ -100,18 +101,23 @@ namespace CV.Mobile.Services
         public async Task<List<Viagem>> ListarViagens(CriterioBusca criterioBusca)
         {
             var ListaViagem = new List<Viagem>();
-            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Viagem/Get?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
+            try
             {
-                DateTimeZoneHandling = DateTimeZoneHandling.Utc
-            })));
-            var response = await client.GetAsync(uri);
-            var resultado = await response.Content.ReadAsStringAsync();
+                var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Viagem/Get?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
+                {
+                    DateTimeZoneHandling = DateTimeZoneHandling.Utc
+                })));
+                var response = await client.GetAsync(uri);
+                var resultado = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
-            {
-                var itemResultado = JsonConvert.DeserializeObject<ResultadoConsultaTipo<Viagem>>(resultado);
-                ListaViagem = itemResultado.Lista;
+                if (response.IsSuccessStatusCode)
+                {
+                    var itemResultado = JsonConvert.DeserializeObject<ResultadoConsultaTipo<Viagem>>(resultado);
+                    ListaViagem = itemResultado.Lista;
+                }
             }
+            catch
+            { }
 
             return ListaViagem;
         }
@@ -119,16 +125,22 @@ namespace CV.Mobile.Services
         public async Task<List<Usuario>> ListarAmigos()
         {
             var ListaAmigos = new List<Usuario>();
-            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Usuario/listaAmigos"));
-            var response = await client.GetAsync(uri);
-            var resultado = await response.Content.ReadAsStringAsync();
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                var itemResultado = JsonConvert.DeserializeObject<List<Usuario>>(resultado);
-                ListaAmigos = itemResultado;
-            }
+                var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Usuario/listaAmigos"));
+                var response = await client.GetAsync(uri);
+                var resultado = await response.Content.ReadAsStringAsync();
 
+                if (response.IsSuccessStatusCode)
+                {
+                    var itemResultado = JsonConvert.DeserializeObject<List<Usuario>>(resultado);
+                    ListaAmigos = itemResultado;
+                }
+            }
+            catch
+            {
+                ExibirMensagemErro();
+            }
             return ListaAmigos;
         }
 
@@ -136,13 +148,20 @@ namespace CV.Mobile.Services
         {
             var ListaAmigos = new List<Usuario>();
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Usuario/listaAmigosComigo"));
-            var response = await client.GetAsync(uri);
-            var resultado = await response.Content.ReadAsStringAsync();
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                var itemResultado = JsonConvert.DeserializeObject<List<Usuario>>(resultado);
-                ListaAmigos = itemResultado;
+                var response = await client.GetAsync(uri);
+                var resultado = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var itemResultado = JsonConvert.DeserializeObject<List<Usuario>>(resultado);
+                    ListaAmigos = itemResultado;
+                }
+            }
+            catch
+            {
+
             }
 
             return ListaAmigos;
@@ -156,18 +175,24 @@ namespace CV.Mobile.Services
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Acesso/SelecionarViagem"));
             var json = JsonConvert.SerializeObject(itemLogin);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            HttpResponseMessage response = null;
-            response = await client.PostAsync(uri, content);
-            var resultado = await response.Content.ReadAsStringAsync();
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                itemUsuario = JsonConvert.DeserializeObject<UsuarioLogado>(resultado);
-                AuthenticationToken = itemUsuario.AuthenticationToken;
-                var secureSettings = Plugin.SecureStorage.CrossSecureStorage.Current;
+                HttpResponseMessage response = null;
+                response = await client.PostAsync(uri, content);
+                var resultado = await response.Content.ReadAsStringAsync();
 
-                secureSettings.SetValue("AuthenticationToken", itemUsuario.AuthenticationToken);
+                if (response.IsSuccessStatusCode)
+                {
+                    itemUsuario = JsonConvert.DeserializeObject<UsuarioLogado>(resultado);
+                    AuthenticationToken = itemUsuario.AuthenticationToken;
+                    var secureSettings = Plugin.SecureStorage.CrossSecureStorage.Current;
+
+                    secureSettings.SetValue("AuthenticationToken", itemUsuario.AuthenticationToken);
+                }
+            }
+            catch
+            {
+
             }
 
 
@@ -178,7 +203,8 @@ namespace CV.Mobile.Services
         {
             Viagem itemViagem = new Viagem();
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Viagem/Get/", IdentificadorViagem));
-
+            try
+            { 
             HttpResponseMessage response = null;
             response = await client.GetAsync(uri);
             var resultado = await response.Content.ReadAsStringAsync();
@@ -187,15 +213,30 @@ namespace CV.Mobile.Services
             {
                 itemViagem = JsonConvert.DeserializeObject<Viagem>(resultado);
             }
-
+            }
+            catch
+            {
+                ExibirMensagemErro();
+            }
 
             return itemViagem;
+        }
+
+        public static void ExibirMensagemErro()
+        {
+            MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+            {
+                Title = "Erro Comunicação",
+                Message = "Ocorreu um erro inexperado na comunicação com o servidor. Tente Novamente mais tarde",
+                Cancel = "OK"
+            });
         }
 
         public async Task<ResultadoOperacao> SalvarViagem(Viagem itemViagem)
         {
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Viagem/Post"));
+            try { 
             var json = JsonConvert.SerializeObject(itemViagem, new JsonSerializerSettings
             {
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc
@@ -209,6 +250,11 @@ namespace CV.Mobile.Services
             if (response.IsSuccessStatusCode)
             {
                 itemResultado = JsonConvert.DeserializeObject<ResultadoOperacao>(resultado);
+            }
+            }
+            catch
+            {
+                ExibirMensagemErro();
             }
 
 
@@ -220,6 +266,7 @@ namespace CV.Mobile.Services
         {
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Viagem/SalvarSimples"));
+            try { 
             var json = JsonConvert.SerializeObject(itemViagem, new JsonSerializerSettings
             {
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc
@@ -233,6 +280,11 @@ namespace CV.Mobile.Services
             if (response.IsSuccessStatusCode)
             {
                 itemResultado = JsonConvert.DeserializeObject<ResultadoOperacao>(resultado);
+                }
+            }
+            catch
+            {
+                ExibirMensagemErro();
             }
             return itemResultado;
         }
@@ -240,22 +292,29 @@ namespace CV.Mobile.Services
         public async Task<ResultadoOperacao> SalvarUsuario(Usuario itemUsuario)
         {
             ResultadoOperacao itemResultado = new ResultadoOperacao();
-            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Usuario/Post"));
-            var json = JsonConvert.SerializeObject(itemUsuario, new JsonSerializerSettings
+            try
             {
-                DateTimeZoneHandling = DateTimeZoneHandling.Utc
-            });
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Usuario/Post"));
+                var json = JsonConvert.SerializeObject(itemUsuario, new JsonSerializerSettings
+                {
+                    DateTimeZoneHandling = DateTimeZoneHandling.Utc
+                });
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = null;
-            response = await client.PostAsync(uri, content);
-            var resultado = await response.Content.ReadAsStringAsync();
+                HttpResponseMessage response = null;
+                response = await client.PostAsync(uri, content);
+                var resultado = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
-            {
-                itemResultado = JsonConvert.DeserializeObject<ResultadoOperacao>(resultado);
+                if (response.IsSuccessStatusCode)
+                {
+                    itemResultado = JsonConvert.DeserializeObject<ResultadoOperacao>(resultado);
+                }
+
             }
-
+            catch
+            {
+                ExibirMensagemErro();
+            }
 
             return itemResultado;
         }
@@ -263,6 +322,7 @@ namespace CV.Mobile.Services
         public async Task<Usuario> CarregarUsuario(int? Identificador)
         {
             var itemUsuario = new Usuario();
+            try { 
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Usuario/get/", Identificador.GetValueOrDefault(0)));
             var response = await client.GetAsync(uri);
             var resultado = await response.Content.ReadAsStringAsync();
@@ -271,6 +331,12 @@ namespace CV.Mobile.Services
             {
                 itemUsuario = JsonConvert.DeserializeObject<Usuario>(resultado);
 
+            }
+            }
+            catch
+            {
+                ExibirMensagemErro();
+                itemUsuario = null;
             }
 
             return itemUsuario;
@@ -307,6 +373,7 @@ namespace CV.Mobile.Services
         public async Task<List<ConsultaAmigo>> ListarAmigosConsulta()
         {
             var ListaAmigos = new List<ConsultaAmigo>();
+            try { 
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Amigo/get?json={}"));
             var response = await client.GetAsync(uri);
             var resultado = await response.Content.ReadAsStringAsync();
@@ -316,13 +383,18 @@ namespace CV.Mobile.Services
                 var itemResultado = JsonConvert.DeserializeObject<ResultadoConsultaTipo<ConsultaAmigo>>(resultado);
                 ListaAmigos = itemResultado.Lista;
             }
-
+            }
+            catch
+            {
+                ExibirMensagemErro();
+            }
             return ListaAmigos;
         }
 
         public async Task<List<Amigo>> ListarAmigosUsuario()
         {
             var ListaAmigos = new List<Amigo>();
+            try { 
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Amigo/ListarAmigos"));
             var response = await client.GetAsync(uri);
             var resultado = await response.Content.ReadAsStringAsync();
@@ -331,6 +403,11 @@ namespace CV.Mobile.Services
             {
                 ListaAmigos = JsonConvert.DeserializeObject<List<Amigo>>(resultado);
             }
+            }
+            catch
+            {
+                ExibirMensagemErro();
+            }
 
             return ListaAmigos;
         }
@@ -338,6 +415,7 @@ namespace CV.Mobile.Services
         public async Task<List<RequisicaoAmizade>> ListarRequisicaoAmizade()
         {
             var ListaAmigos = new List<RequisicaoAmizade>();
+            try { 
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/RequisicaoAmizade/get?json={}"));
             var response = await client.GetAsync(uri);
             var resultado = await response.Content.ReadAsStringAsync();
@@ -347,13 +425,18 @@ namespace CV.Mobile.Services
                 var itemResultado = JsonConvert.DeserializeObject<ResultadoConsultaTipo<RequisicaoAmizade>>(resultado);
                 ListaAmigos = itemResultado.Lista;
             }
-
+            }
+            catch
+            {
+                ExibirMensagemErro();
+            }
             return ListaAmigos;
         }
 
         public async Task<ResultadoOperacao> RequisicaoAmizade(ConsultaAmigo itemAmigo)
         {
             ResultadoOperacao itemResultado = new ResultadoOperacao();
+            try { 
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Amigo/AjustarAmigo"));
             var json = JsonConvert.SerializeObject(itemAmigo);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -367,13 +450,18 @@ namespace CV.Mobile.Services
                 itemResultado = JsonConvert.DeserializeObject<ResultadoOperacao>(resultado);
             }
 
-
+            }
+            catch
+            {
+                ExibirMensagemErro();
+            }
             return itemResultado;
         }
 
         public async Task<ResultadoOperacao> SalvarRequisicaoAmizade(RequisicaoAmizade itemAmigo)
         {
             ResultadoOperacao itemResultado = new ResultadoOperacao();
+            try { 
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/RequisicaoAmizade/Post"));
             var json = JsonConvert.SerializeObject(itemAmigo, new JsonSerializerSettings
             {
@@ -389,7 +477,11 @@ namespace CV.Mobile.Services
             {
                 itemResultado = JsonConvert.DeserializeObject<ResultadoOperacao>(resultado);
             }
-
+            }
+            catch
+            {
+                ExibirMensagemErro();
+            }
 
             return itemResultado;
         }
@@ -397,6 +489,7 @@ namespace CV.Mobile.Services
         public async Task<List<Usuario>> ListarUsuarios(CriterioBusca criterioBusca)
         {
             var ListaViagem = new List<Usuario>();
+            try { 
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Usuario/Get?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
             {
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc
@@ -409,13 +502,18 @@ namespace CV.Mobile.Services
                 var itemResultado = JsonConvert.DeserializeObject<ResultadoConsultaTipo<Usuario>>(resultado);
                 ListaViagem = itemResultado.Lista;
             }
-
+            }
+            catch
+            {
+                ExibirMensagemErro();
+            }
             return ListaViagem;
         }
 
         public async Task<List<Usuario>> ListarParticipantesViagem()
         {
             var ListaViagem = new List<Usuario>();
+            try { 
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Viagem/CarregarParticipantes"));
             var response = await client.GetAsync(uri);
             var resultado = await response.Content.ReadAsStringAsync();
@@ -425,13 +523,19 @@ namespace CV.Mobile.Services
                 var itemResultado = JsonConvert.DeserializeObject<List<Usuario>>(resultado);
                 ListaViagem = itemResultado;
             }
-
+            }
+            catch
+            {
+                ExibirMensagemErro();
+            }
             return ListaViagem;
         }
 
         public async Task<List<Usuario>> CarregarParticipantesAmigo()
         {
             var ListaViagem = new List<Usuario>();
+            try
+            { 
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Viagem/CarregarParticipantesAmigo"));
             var response = await client.GetAsync(uri);
             var resultado = await response.Content.ReadAsStringAsync();
@@ -441,13 +545,19 @@ namespace CV.Mobile.Services
                 var itemResultado = JsonConvert.DeserializeObject<List<Usuario>>(resultado);
                 ListaViagem = itemResultado;
             }
-
+            }
+            catch
+            {
+                ExibirMensagemErro();
+            }
             return ListaViagem;
         }
         
         public async Task<ResultadoOperacao> SalvarAmigo(ConsultaAmigo itemAmigo)
         {
             ResultadoOperacao itemResultado = new ResultadoOperacao();
+            try
+            { 
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Amigo/Post"));
             var json = JsonConvert.SerializeObject(itemAmigo, new JsonSerializerSettings
             {
@@ -464,7 +574,11 @@ namespace CV.Mobile.Services
                 itemResultado = JsonConvert.DeserializeObject<ResultadoOperacao>(resultado);
             }
 
-
+            }
+            catch
+            {
+                ExibirMensagemErro();
+            }
             return itemResultado;
         }
 
@@ -618,21 +732,23 @@ namespace CV.Mobile.Services
         public async Task<ResultadoOperacao> SalvarListaCompra(ListaCompra itemPedidoCompra)
         {
             ResultadoOperacao itemResultado = new ResultadoOperacao();
-            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/ListaCompra/Post"));
-            var json = JsonConvert.SerializeObject(itemPedidoCompra, new JsonSerializerSettings
-            {
-                DateTimeZoneHandling = DateTimeZoneHandling.Utc
-            });
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            
+                var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/ListaCompra/Post"));
+                var json = JsonConvert.SerializeObject(itemPedidoCompra, new JsonSerializerSettings
+                {
+                    DateTimeZoneHandling = DateTimeZoneHandling.Utc
+                });
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = null;
-            response = await client.PostAsync(uri, content);
-            var resultado = await response.Content.ReadAsStringAsync();
+                HttpResponseMessage response = null;
+                response = await client.PostAsync(uri, content);
+                var resultado = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
-            {
-                itemResultado = JsonConvert.DeserializeObject<ResultadoOperacao>(resultado);
-            }
+                if (response.IsSuccessStatusCode)
+                {
+                    itemResultado = JsonConvert.DeserializeObject<ResultadoOperacao>(resultado);
+                }
+            
 
 
             return itemResultado;
@@ -736,20 +852,27 @@ namespace CV.Mobile.Services
         public async Task<ResultadoOperacao> SalvarCidadeGrupo(ManutencaoCidadeGrupo itemCidadeGrupo)
         {
             ResultadoOperacao itemResultado = new ResultadoOperacao();
-            var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/CidadeGrupo/Post"));
-            var json = JsonConvert.SerializeObject(itemCidadeGrupo, new JsonSerializerSettings
+            try
             {
-                DateTimeZoneHandling = DateTimeZoneHandling.Utc
-            });
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/CidadeGrupo/Post"));
+                var json = JsonConvert.SerializeObject(itemCidadeGrupo, new JsonSerializerSettings
+                {
+                    DateTimeZoneHandling = DateTimeZoneHandling.Utc
+                });
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = null;
-            response = await client.PostAsync(uri, content);
-            var resultado = await response.Content.ReadAsStringAsync();
+                HttpResponseMessage response = null;
+                response = await client.PostAsync(uri, content);
+                var resultado = await response.Content.ReadAsStringAsync();
 
-            if (response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
+                {
+                    itemResultado = JsonConvert.DeserializeObject<ResultadoOperacao>(resultado);
+                }
+            }
+            catch
             {
-                itemResultado = JsonConvert.DeserializeObject<ResultadoOperacao>(resultado);
+                ExibirMensagemErro();
             }
 
 
@@ -2302,6 +2425,7 @@ namespace CV.Mobile.Services
         public async Task<GastoRefeicao> CarregarGastoRefeicao(int? Identificador)
         {
             var itemRefeicao = new GastoRefeicao();
+            
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Gasto/getGastoRefeicao/", Identificador.GetValueOrDefault(0)));
             var response = await client.GetAsync(uri);
             var resultado = await response.Content.ReadAsStringAsync();
@@ -2311,13 +2435,14 @@ namespace CV.Mobile.Services
                 itemRefeicao = JsonConvert.DeserializeObject<GastoRefeicao>(resultado);
 
             }
-
+            
             return itemRefeicao;
         }
 
         public async Task<GastoViagemAerea> CarregarGastoViagemAerea(int? Identificador)
         {
             var itemRefeicao = new GastoViagemAerea();
+           
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Gasto/getGastoViagemAerea/", Identificador.GetValueOrDefault(0)));
             var response = await client.GetAsync(uri);
             var resultado = await response.Content.ReadAsStringAsync();
@@ -2327,13 +2452,14 @@ namespace CV.Mobile.Services
                 itemRefeicao = JsonConvert.DeserializeObject<GastoViagemAerea>(resultado);
 
             }
-
+           
             return itemRefeicao;
         }
 
         public async Task<AluguelGasto> CarregarAluguelGasto(int? Identificador)
         {
             var itemRefeicao = new AluguelGasto();
+            
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Gasto/getAluguelGasto/", Identificador.GetValueOrDefault(0)));
             var response = await client.GetAsync(uri);
             var resultado = await response.Content.ReadAsStringAsync();
@@ -2343,13 +2469,14 @@ namespace CV.Mobile.Services
                 itemRefeicao = JsonConvert.DeserializeObject<AluguelGasto>(resultado);
 
             }
-
+            
             return itemRefeicao;
         }
 
         public async Task<List<ExtratoMoeda>> ListarExtratoMoeda(CriterioBusca criterioBusca)
         {
             var Lista = new List<ExtratoMoeda>();
+            try {
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Consulta/ConsultarExtratoMoeda?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
             {
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc
@@ -2362,13 +2489,18 @@ namespace CV.Mobile.Services
                 Lista = JsonConvert.DeserializeObject<List<ExtratoMoeda>>(resultado);
                 
             }
-
+            }
+            catch
+            {
+                ExibirMensagemErro();
+            }
             return Lista;
         }
 
         public async Task<List<AjusteGastoDividido>> ListarAjusteGastos(CriterioBusca criterioBusca)
         {
             var Lista = new List<AjusteGastoDividido>();
+            try {
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Consulta/ListarGastosAcerto?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
             {
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc
@@ -2381,13 +2513,18 @@ namespace CV.Mobile.Services
                 Lista = JsonConvert.DeserializeObject<List<AjusteGastoDividido>>(resultado);
 
             }
-
+            }
+            catch
+            {
+                ExibirMensagemErro();
+            }
             return Lista;
         }
 
         public async Task<List<RelatorioGastos>> ListarRelatorioGastos(CriterioBusca criterioBusca)
         {
             var Lista = new List<RelatorioGastos>();
+            try { 
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Consulta/ListarRelatorioGastos?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
             {
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc
@@ -2400,12 +2537,17 @@ namespace CV.Mobile.Services
                 Lista = JsonConvert.DeserializeObject<List<RelatorioGastos>>(resultado);
 
             }
-
+            }
+            catch
+            {
+                ExibirMensagemErro();
+            }
             return Lista;
         }
         public async Task<List<CalendarioRealizado>> ConsultarCalendarioRealizado(CriterioBusca criterioBusca)
         {
             var Lista = new List<CalendarioRealizado>();
+            try { 
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Consulta/ConsultarCalendarioRealizado?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
             {
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc
@@ -2418,13 +2560,18 @@ namespace CV.Mobile.Services
                 Lista = JsonConvert.DeserializeObject<List<CalendarioRealizado>>(resultado);
 
             }
-
+            }
+            catch
+            {
+                ExibirMensagemErro();
+            }
             return Lista;
         }
 
         public async Task<ResumoViagem> CarregarResumo(CriterioBusca criterioBusca)
         {
             var item = new ResumoViagem();
+            try { 
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Consulta/CarregarResumo?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
             {
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc
@@ -2437,13 +2584,18 @@ namespace CV.Mobile.Services
                 item = JsonConvert.DeserializeObject<ResumoViagem>(resultado);
 
             }
-
+            }
+            catch
+            {
+                ExibirMensagemErro();
+            }
             return item;
         }
 
         public async Task<List<ConsultaRankings>> ListarRankings(CriterioBusca criterioBusca)
         {
             var Lista = new List<ConsultaRankings>();
+            try { 
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Consulta/ListarRankings?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
             {
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc
@@ -2456,12 +2608,17 @@ namespace CV.Mobile.Services
                 Lista = JsonConvert.DeserializeObject<List<ConsultaRankings>>(resultado);
 
             }
-
+            }
+            catch
+            {
+                ExibirMensagemErro();
+            }
             return Lista;
         }
         public async Task<List<UsuarioConsulta>> ListarAvaliacoesRankings(CriterioBusca criterioBusca)
         {
             var Lista = new List<UsuarioConsulta>();
+            try { 
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Consulta/ListarAvaliacoesRankings?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
             {
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc
@@ -2474,13 +2631,18 @@ namespace CV.Mobile.Services
                 Lista = JsonConvert.DeserializeObject<List<UsuarioConsulta>>(resultado);
 
             }
-
+            }
+            catch
+            {
+                ExibirMensagemErro();
+            }
             return Lista;
         }
 
         public async Task<List<LocaisVisitados>> ListarLocaisVisitados(CriterioBusca criterioBusca)
         {
             var Lista = new List<LocaisVisitados>();
+            try { 
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Consulta/ListarLocaisVisitados?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
             {
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc
@@ -2493,13 +2655,18 @@ namespace CV.Mobile.Services
                 Lista = JsonConvert.DeserializeObject<List<LocaisVisitados>>(resultado);
 
             }
-
+            }
+            catch
+            {
+                ExibirMensagemErro();
+            }
             return Lista;
         }
 
         public async Task<LocaisVisitados> ConsultarDetalheAtracao(CriterioBusca criterioBusca)
         {
             var item = new LocaisVisitados();
+            try { 
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Consulta/ConsultarDetalheAtracao?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
             {
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc
@@ -2512,13 +2679,18 @@ namespace CV.Mobile.Services
                 item = JsonConvert.DeserializeObject<LocaisVisitados>(resultado);
 
             }
-
+            }
+            catch
+            {
+                ExibirMensagemErro();
+            }
             return item;
         }
 
         public async Task<LocaisVisitados> ConsultarDetalheHotel(CriterioBusca criterioBusca)
         {
             var item = new LocaisVisitados();
+            try { 
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Consulta/ConsultarDetalheHotel?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
             {
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc
@@ -2531,13 +2703,18 @@ namespace CV.Mobile.Services
                 item = JsonConvert.DeserializeObject<LocaisVisitados>(resultado);
 
             }
-
+            }
+            catch
+            {
+                ExibirMensagemErro();
+            }
             return item;
         }
 
         public async Task<LocaisVisitados> ConsultarDetalheRestaurante(CriterioBusca criterioBusca)
         {
             var item = new LocaisVisitados();
+            try { 
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Consulta/ConsultarDetalheRestaurante?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
             {
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc
@@ -2550,13 +2727,18 @@ namespace CV.Mobile.Services
                 item = JsonConvert.DeserializeObject<LocaisVisitados>(resultado);
 
             }
-
+            }
+            catch
+            {
+                ExibirMensagemErro();
+            }
             return item;
         }
 
         public async Task<LocaisVisitados> ConsultarDetalheLoja(CriterioBusca criterioBusca)
         {
             var item = new LocaisVisitados();
+            try { 
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Consulta/ConsultarDetalheLoja?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
             {
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc
@@ -2569,12 +2751,17 @@ namespace CV.Mobile.Services
                 item = JsonConvert.DeserializeObject<LocaisVisitados>(resultado);
 
             }
-
+            }
+            catch
+            {
+                ExibirMensagemErro();
+            }
             return item;
         }
         public async Task<List<Foto>> ListarFoto(CriterioBusca criterioBusca)
         {
             var ListaFoto = new List<Foto>();
+            try { 
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Foto/Get?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
             {
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc
@@ -2587,13 +2774,18 @@ namespace CV.Mobile.Services
                 var itemResultado = JsonConvert.DeserializeObject<ResultadoConsultaTipo<Foto>>(resultado);
                 ListaFoto = itemResultado.Lista;
             }
-
+            }
+            catch
+            {
+                ExibirMensagemErro();
+            }
             return ListaFoto;
         }
 
         public async Task<List<Atracao>> CarregarFotoAtracao()
         {
             var ListaFoto = new List<Atracao>();
+            try { 
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Foto/CarregarFoto"));
             var response = await client.GetAsync(uri);
             var resultado = await response.Content.ReadAsStringAsync();
@@ -2603,13 +2795,18 @@ namespace CV.Mobile.Services
                 ListaFoto = JsonConvert.DeserializeObject<List<Atracao>>(resultado);
 
             }
-
+            }
+            catch
+            {
+                ExibirMensagemErro();
+            }
             return ListaFoto;
         }
 
         public async Task<List<Hotel>> CarregarFotoHotel()
         {
             var ListaFoto = new List<Hotel>();
+            try { 
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Foto/CarregarFoto"));
             var response = await client.GetAsync(uri);
             var resultado = await response.Content.ReadAsStringAsync();
@@ -2619,13 +2816,18 @@ namespace CV.Mobile.Services
                 ListaFoto = JsonConvert.DeserializeObject<List<Hotel>>(resultado);
 
             }
-
+            }
+            catch
+            {
+                ExibirMensagemErro();
+            }
             return ListaFoto;
         }
 
         public async Task<List<Refeicao>> CarregarFotoRefeicao()
         {
             var ListaFoto = new List<Refeicao>();
+            try { 
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Foto/CarregarFoto"));
             var response = await client.GetAsync(uri);
             var resultado = await response.Content.ReadAsStringAsync();
@@ -2635,13 +2837,18 @@ namespace CV.Mobile.Services
                 ListaFoto = JsonConvert.DeserializeObject<List<Refeicao>>(resultado);
 
             }
-
+            }
+            catch
+            {
+                ExibirMensagemErro();
+            }
             return ListaFoto;
         }
 
         public async Task<List<Timeline>> ConsultarTimeline(CriterioBusca criterioBusca)
         {
             var Lista = new List<Timeline>();
+            try { 
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Consulta/ConsultarTimeline?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
             {
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc
@@ -2654,13 +2861,18 @@ namespace CV.Mobile.Services
                 Lista = JsonConvert.DeserializeObject<List<Timeline>>(resultado);
 
             }
-
+            }
+            catch
+            {
+                ExibirMensagemErro();
+            }
             return Lista;
         }
 
         public async Task<Foto> CarregarFoto(int? Identificador)
         {
             Foto itemFoto = new Foto();
+            try { 
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Foto/Get/", Identificador));
 
             HttpResponseMessage response = null;
@@ -2671,7 +2883,11 @@ namespace CV.Mobile.Services
             {
                 itemFoto = JsonConvert.DeserializeObject<Foto>(resultado);
             }
-
+            }
+            catch
+            {
+                ExibirMensagemErro();
+            }
 
             return itemFoto;
         }
@@ -2679,6 +2895,7 @@ namespace CV.Mobile.Services
         public async Task<List<PontoMapa>> ListarPontosViagem(CriterioBusca criterioBusca)
         {
             var Lista = new List<PontoMapa>();
+            try { 
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Consulta/ListarPontosViagem?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
             {
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc
@@ -2691,13 +2908,18 @@ namespace CV.Mobile.Services
                 Lista = JsonConvert.DeserializeObject<List<PontoMapa>>(resultado);
 
             }
-
+            }
+            catch
+            {
+                ExibirMensagemErro();
+            }
             return Lista;
         }
 
         public async Task<List<LinhaMapa>> ListarLinhasViagem(CriterioBusca criterioBusca)
         {
             var Lista = new List<LinhaMapa>();
+            try { 
             var uri = new Uri(String.Concat(Settings.BaseWebApi, "Api/Consulta/ListarLinhasViagem?json=", JsonConvert.SerializeObject(criterioBusca, new JsonSerializerSettings
             {
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc
@@ -2710,7 +2932,11 @@ namespace CV.Mobile.Services
                 Lista = JsonConvert.DeserializeObject<List<LinhaMapa>>(resultado);
 
             }
-
+            }
+            catch
+            {
+                ExibirMensagemErro();
+            }
             return Lista;
         }
 

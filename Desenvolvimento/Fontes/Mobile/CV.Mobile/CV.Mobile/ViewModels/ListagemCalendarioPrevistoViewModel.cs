@@ -236,15 +236,19 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaDados()
         {
             List<CalendarioPrevisto> Dados = new List<CalendarioPrevisto>();
+            bool Executado = true;
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     Dados = await srv.ListarCalendarioPrevisto(ItemCriterioBusca);
 
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
                 Dados = await DatabaseService.Database.ListarCalendarioPrevisto(ItemCriterioBusca);
             ListaDados = new ObservableRangeCollection<CalendarioPrevisto>(Dados);
             OnPropertyChanged("ListaDados");
@@ -254,16 +258,19 @@ namespace CV.Mobile.ViewModels
         private async Task VerificarAcaoItem(ItemTappedEventArgs itemSelecionado)
         {
             CalendarioPrevisto ItemCalendarioPrevisto = new CalendarioPrevisto();
-
+            bool Executado = true;
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     ItemCalendarioPrevisto = await srv.CarregarCalendarioPrevisto(((CalendarioPrevisto)itemSelecionado.Item).Identificador);
                 }
+                }
+                catch { Executado = false; }
 
             }
-            else
+            if (!Executado)
             {
                 ItemCalendarioPrevisto = ((CalendarioPrevisto)itemSelecionado.Item).Clone();
             }
@@ -274,15 +281,19 @@ namespace CV.Mobile.ViewModels
         private async Task VerificarAcaoItem(int? itemSelecionado)
         {
             CalendarioPrevisto ItemCalendarioPrevisto = new CalendarioPrevisto();
+            bool Executado = true;
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     ItemCalendarioPrevisto = await srv.CarregarCalendarioPrevisto(itemSelecionado);
 
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
             {
                 ItemCalendarioPrevisto = await DatabaseService.Database.CarregarCalendarioPrevisto(itemSelecionado.GetValueOrDefault());
             }

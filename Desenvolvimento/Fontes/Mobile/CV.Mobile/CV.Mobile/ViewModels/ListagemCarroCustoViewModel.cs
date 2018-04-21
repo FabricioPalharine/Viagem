@@ -71,9 +71,11 @@ namespace CV.Mobile.ViewModels
 
 
                 var itemGravar = new AluguelGasto() { IdentificadorCarro = ItemCarro.Identificador, IdentificadorGasto = item.Identificador, DataAtualizacao = DateTime.Now.ToUniversalTime() };
+                bool Executado = true;
 
                 if (Conectado)
                 {
+                    try { 
                     using (ApiService srv = new ApiService())
                     {
                         var Resultado = await srv.SalvarAluguelGasto(itemGravar);
@@ -87,8 +89,10 @@ namespace CV.Mobile.ViewModels
 
                         }
                     }
+                    }
+                    catch { Executado = false; }
                 }
-                else
+                if (!Executado)
                 {
                     if (!(await DatabaseService.Database.ListarAluguelGasto_IdentificadorGasto(item.Identificador)).Where(d => !d.DataExclusao.HasValue).Any())
                     {
@@ -131,8 +135,10 @@ namespace CV.Mobile.ViewModels
 
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     obj.DataExclusao = DateTime.Now.ToUniversalTime();
+                    bool Executado = true;
                     if (Conectado)
                     {
+                        try { 
                         using (ApiService srv = new ApiService())
                         {
                             Resultado = await srv.SalvarAluguelGasto(obj);
@@ -143,8 +149,10 @@ namespace CV.Mobile.ViewModels
                                 await DatabaseService.Database.ExcluirAluguelGasto(itemBase);
 
                         }
+                        }
+                        catch { Executado = false; }
                     }
-                    else
+                    if (!Executado)
                     {
                         obj.AtualizadoBanco = false;
                         if (obj.Identificador > 0)

@@ -148,12 +148,17 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaDados()
         {
             List<RelatorioGastos> Dados = new List<RelatorioGastos>();
-         
+            try
+            {
                 using (ApiService srv = new ApiService())
                 {
                     Dados = await srv.ListarRelatorioGastos(ItemCriterioBusca);
                 }
-            
+            }
+            catch
+            {
+                ApiService.ExibirMensagemErro();
+            }
             ListaDados = new ObservableCollection<RelatorioGastos>(Dados);
             OnPropertyChanged("ListaDados");
 

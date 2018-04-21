@@ -108,6 +108,8 @@ namespace CV.Mobile.ViewModels
                     {
 
                         ListaUsuario = await srv.ListarParticipantesViagem();
+                        if (!ListaUsuario.Any())
+                            ListaUsuario = await DatabaseService.Database.ListarParticipanteViagem();
                     }
                 }
                 else
@@ -247,9 +249,10 @@ namespace CV.Mobile.ViewModels
                     ItemReabastecimento.Gastos.FirstOrDefault().DataAtualizacao = DateTime.Now.ToUniversalTime();
 
                 ResultadoOperacao Resultado = null;
-
+                bool Executado = true;
                 if (Conectado)
                 {
+                    try { 
                     using (ApiService srv = new ApiService())
                     {
                         Resultado = await srv.SalvarReabastecimento(ItemReabastecimento);
@@ -263,8 +266,10 @@ namespace CV.Mobile.ViewModels
                         }
 
                     }
+                    }
+                    catch { Executado = false; }
                 }
-                else
+                if(!Executado)
                 {
                     Resultado = await DatabaseService.SalvarReabastecimento(ItemReabastecimento);
                     if (Resultado.Sucesso)
@@ -320,8 +325,10 @@ namespace CV.Mobile.ViewModels
                     if (!result) return;
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     ItemReabastecimento.DataExclusao = DateTime.Now.ToUniversalTime();
+                    bool Executado = true;
                     if (Conectado)
                     {
+                        try { 
                         using (ApiService srv = new ApiService())
                         {
                             Resultado = await srv.ExcluirReabastecimento(ItemReabastecimento.Identificador);
@@ -330,8 +337,10 @@ namespace CV.Mobile.ViewModels
                             await DatabaseService.ExcluirReabastecimento(ItemReabastecimento.Identificador, true);
 
                         }
+                        }
+                        catch { Executado = false; }
                     }
-                    else
+                    if (!Executado)
                     {
                         ItemReabastecimento.AtualizadoBanco = false;
                         await DatabaseService.ExcluirReabastecimento(ItemReabastecimento.Identificador, false);

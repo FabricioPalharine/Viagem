@@ -107,14 +107,19 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaDados()
         {
             List<ExtratoMoeda> Dados = new List<ExtratoMoeda>();
+            bool Executado = true;
             if (Conectado)
             {
+                try
+                { 
                 using (ApiService srv = new ApiService())
                 {
                     Dados = await srv.ListarExtratoMoeda(ItemCriterioBusca);
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
                 Dados = await DatabaseService.Database.ConsultarExtratoMoeda(ItemUsuarioLogado.Codigo, ItemViagemSelecionada.Identificador, ItemCriterioBusca.Moeda, ItemCriterioBusca.DataInicioDe.GetValueOrDefault());
             ListaDados = new ObservableCollection<ExtratoMoeda>(Dados);
             OnPropertyChanged("ListaDados");

@@ -59,62 +59,69 @@ namespace CV.Mobile.ViewModels
             itemConsulta.Comentario = ItemRanking.CodigoCoogle;
             itemConsulta.Nome = ItemRanking.Nome;
             LocaisVisitados itemDetalhe = null;
-            using (ApiService srv = new ApiService())
+            try
             {
-                if (ItemRanking.Tipo == "A")
-                    itemDetalhe = await srv.ConsultarDetalheAtracao(itemConsulta);
-                else if (ItemRanking.Tipo == "H")
-                    itemDetalhe = await srv.ConsultarDetalheHotel(itemConsulta);
-                else if(ItemRanking.Tipo == "R")
-                    itemDetalhe = await srv.ConsultarDetalheRestaurante(itemConsulta);
-               else if (ItemRanking.Tipo == "L")
-                    itemDetalhe = await srv.ConsultarDetalheLoja(itemConsulta);
-            }
-            ListaDetalhes = new ObservableCollection<object>();
-            itemDetalhe.Nome = ItemRanking.Nome;
-            itemDetalhe.NomeCidade = ItemRanking.NomeCidade;
-            itemDetalhe.Tipo = ItemRanking.Tipo;
-            itemDetalhe.CodigoCoogle = ItemRanking.CodigoCoogle;
-            itemDetalhe.Latitude = ItemRanking.Latitude;
-            itemDetalhe.Longitude = ItemRanking.Longitude;
-
-            ListaDetalhes.Add(new LocalSelecionado() { ItemLocal = itemDetalhe });
-            if (itemDetalhe.Detalhes != null && itemDetalhe.Detalhes.Any())
-            {
-                ListaDetalhes.Add(new Cabecalho() { Texto = "Visitas" });
-                foreach (var item in itemDetalhe.Detalhes)
-                    ListaDetalhes.Add(item);
-            }
-            if (itemDetalhe.Gastos != null && itemDetalhe.Gastos.Any())
-            {
-                if (itemDetalhe.Tipo == "L")
-                    ListaDetalhes.Add(new Cabecalho() { Texto = "Compras" });
-                else
-                    ListaDetalhes.Add(new Cabecalho() { Texto = "Gastos" });
-                foreach (var item in itemDetalhe.Gastos)
+                using (ApiService srv = new ApiService())
                 {
-                    ListaDetalhes.Add(item);
-                    if (item.Itens != null && item.Itens.Any())
-                    {
-                        ListaDetalhes.Add(new Cabecalho() { Texto = "Itens Comprados" });
+                    if (ItemRanking.Tipo == "A")
+                        itemDetalhe = await srv.ConsultarDetalheAtracao(itemConsulta);
+                    else if (ItemRanking.Tipo == "H")
+                        itemDetalhe = await srv.ConsultarDetalheHotel(itemConsulta);
+                    else if (ItemRanking.Tipo == "R")
+                        itemDetalhe = await srv.ConsultarDetalheRestaurante(itemConsulta);
+                    else if (ItemRanking.Tipo == "L")
+                        itemDetalhe = await srv.ConsultarDetalheLoja(itemConsulta);
+                }
+                ListaDetalhes = new ObservableCollection<object>();
+                itemDetalhe.Nome = ItemRanking.Nome;
+                itemDetalhe.NomeCidade = ItemRanking.NomeCidade;
+                itemDetalhe.Tipo = ItemRanking.Tipo;
+                itemDetalhe.CodigoCoogle = ItemRanking.CodigoCoogle;
+                itemDetalhe.Latitude = ItemRanking.Latitude;
+                itemDetalhe.Longitude = ItemRanking.Longitude;
 
-                        foreach (var itemItem in item.Itens)
+                ListaDetalhes.Add(new LocalSelecionado() { ItemLocal = itemDetalhe });
+                if (itemDetalhe.Detalhes != null && itemDetalhe.Detalhes.Any())
+                {
+                    ListaDetalhes.Add(new Cabecalho() { Texto = "Visitas" });
+                    foreach (var item in itemDetalhe.Detalhes)
+                        ListaDetalhes.Add(item);
+                }
+                if (itemDetalhe.Gastos != null && itemDetalhe.Gastos.Any())
+                {
+                    if (itemDetalhe.Tipo == "L")
+                        ListaDetalhes.Add(new Cabecalho() { Texto = "Compras" });
+                    else
+                        ListaDetalhes.Add(new Cabecalho() { Texto = "Gastos" });
+                    foreach (var item in itemDetalhe.Gastos)
+                    {
+                        ListaDetalhes.Add(item);
+                        if (item.Itens != null && item.Itens.Any())
                         {
-                            ListaDetalhes.Add(itemItem);
+                            ListaDetalhes.Add(new Cabecalho() { Texto = "Itens Comprados" });
+
+                            foreach (var itemItem in item.Itens)
+                            {
+                                ListaDetalhes.Add(itemItem);
+                            }
                         }
                     }
                 }
+                if (itemDetalhe.Fotos != null && itemDetalhe.Fotos.Any())
+                    ListaDetalhes.Add(itemDetalhe.Fotos);
+                if (itemDetalhe.LocaisFilho != null && itemDetalhe.LocaisFilho.Any())
+                {
+                    ListaDetalhes.Add(new Cabecalho() { Texto = "Locais Filho" });
+                    foreach (var item in itemDetalhe.LocaisFilho)
+                        ListaDetalhes.Add(item);
+                }
+                var Pagina = new ConsultarLocalVisitadoDetalhePage() { BindingContext = this };
+                await PushAsync(Pagina);
             }
-            if (itemDetalhe.Fotos != null && itemDetalhe.Fotos.Any())
-                ListaDetalhes.Add(itemDetalhe.Fotos);
-            if (itemDetalhe.LocaisFilho != null && itemDetalhe.LocaisFilho.Any())
+            catch
             {
-                ListaDetalhes.Add(new Cabecalho() { Texto = "Locais Filho" });
-                foreach (var item in itemDetalhe.LocaisFilho)
-                    ListaDetalhes.Add(item);
+                ApiService.ExibirMensagemErro();
             }
-            var Pagina = new ConsultarLocalVisitadoDetalhePage() { BindingContext = this };
-            await PushAsync(Pagina);
 
         }
 
@@ -128,65 +135,73 @@ namespace CV.Mobile.ViewModels
                 itemConsulta.Comentario = ItemRanking.CodigoCoogle;
                 itemConsulta.Nome = ItemRanking.Nome;
                 LocaisVisitados itemDetalhe = null;
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    if (ItemRanking.Tipo == "A")
-                        itemDetalhe = await srv.ConsultarDetalheAtracao(itemConsulta);
-                    else if (ItemRanking.Tipo == "H")
-                        itemDetalhe = await srv.ConsultarDetalheHotel(itemConsulta);
-                    else if (ItemRanking.Tipo == "R")
-                        itemDetalhe = await srv.ConsultarDetalheRestaurante(itemConsulta);
-                    else if (ItemRanking.Tipo == "L")
-                        itemDetalhe = await srv.ConsultarDetalheLoja(itemConsulta);
-                }
-                itemDetalhe.Nome = ItemRanking.Nome;
-                itemDetalhe.NomeCidade = ItemRanking.NomeCidade;
-                itemDetalhe.Tipo = ItemRanking.Tipo;
-                itemDetalhe.CodigoCoogle = ItemRanking.CodigoCoogle;
-                itemDetalhe.Latitude = ItemRanking.Latitude;
-                itemDetalhe.Longitude = ItemRanking.Longitude;
-                var vm = new ConsultarLocaisVisitadosViewModel();
-                vm.ListaDetalhes = new ObservableCollection<object>();
-                vm.ListaDetalhes.Add(new LocalSelecionado() { ItemLocal = itemDetalhe });
-
-                if (itemDetalhe.Detalhes != null && itemDetalhe.Detalhes.Any())
-                {
-                    vm.ListaDetalhes.Add(new Cabecalho() { Texto = "Visitas" });
-                    foreach (var item in itemDetalhe.Detalhes)
-                        vm.ListaDetalhes.Add(item);
-                }
-                if (itemDetalhe.Gastos != null && itemDetalhe.Gastos.Any())
-                {
-                    if (itemDetalhe.Tipo == "L")
-                        vm.ListaDetalhes.Add(new Cabecalho() { Texto = "Compras" });
-                    else
-                        vm.ListaDetalhes.Add(new Cabecalho() { Texto = "Gastos" });
-                    foreach (var item in itemDetalhe.Gastos)
+                    using (ApiService srv = new ApiService())
                     {
-                        vm.ListaDetalhes.Add(item);
-                        if (item.Itens != null && item.Itens.Any())
-                        {
-                            vm.ListaDetalhes.Add(new Cabecalho() { Texto = "Itens Comprados" });
+                        if (ItemRanking.Tipo == "A")
+                            itemDetalhe = await srv.ConsultarDetalheAtracao(itemConsulta);
+                        else if (ItemRanking.Tipo == "H")
+                            itemDetalhe = await srv.ConsultarDetalheHotel(itemConsulta);
+                        else if (ItemRanking.Tipo == "R")
+                            itemDetalhe = await srv.ConsultarDetalheRestaurante(itemConsulta);
+                        else if (ItemRanking.Tipo == "L")
+                            itemDetalhe = await srv.ConsultarDetalheLoja(itemConsulta);
+                    }
+                    itemDetalhe.Nome = ItemRanking.Nome;
+                    itemDetalhe.NomeCidade = ItemRanking.NomeCidade;
+                    itemDetalhe.Tipo = ItemRanking.Tipo;
+                    itemDetalhe.CodigoCoogle = ItemRanking.CodigoCoogle;
+                    itemDetalhe.Latitude = ItemRanking.Latitude;
+                    itemDetalhe.Longitude = ItemRanking.Longitude;
+                    var vm = new ConsultarLocaisVisitadosViewModel();
+                    vm.ListaDetalhes = new ObservableCollection<object>();
+                    vm.ListaDetalhes.Add(new LocalSelecionado() { ItemLocal = itemDetalhe });
 
-                            foreach (var itemItem in item.Itens)
+                    if (itemDetalhe.Detalhes != null && itemDetalhe.Detalhes.Any())
+                    {
+                        vm.ListaDetalhes.Add(new Cabecalho() { Texto = "Visitas" });
+                        foreach (var item in itemDetalhe.Detalhes)
+                            vm.ListaDetalhes.Add(item);
+                    }
+                    if (itemDetalhe.Gastos != null && itemDetalhe.Gastos.Any())
+                    {
+                        if (itemDetalhe.Tipo == "L")
+                            vm.ListaDetalhes.Add(new Cabecalho() { Texto = "Compras" });
+                        else
+                            vm.ListaDetalhes.Add(new Cabecalho() { Texto = "Gastos" });
+                        foreach (var item in itemDetalhe.Gastos)
+                        {
+                            vm.ListaDetalhes.Add(item);
+                            if (item.Itens != null && item.Itens.Any())
                             {
-                                vm.ListaDetalhes.Add(itemItem);
+                                vm.ListaDetalhes.Add(new Cabecalho() { Texto = "Itens Comprados" });
+
+                                foreach (var itemItem in item.Itens)
+                                {
+                                    vm.ListaDetalhes.Add(itemItem);
+                                }
                             }
                         }
                     }
-                }
-                if (itemDetalhe.Fotos != null && itemDetalhe.Fotos.Any())
-                    vm.ListaDetalhes.Add(itemDetalhe.Fotos);
-                if (itemDetalhe.LocaisFilho != null && itemDetalhe.LocaisFilho.Any())
-                {
-                    vm.ListaDetalhes.Add(new Cabecalho() { Texto = "Locais Filho" });
-                    foreach (var item in itemDetalhe.LocaisFilho)
-                        vm.ListaDetalhes.Add(item);
-                }
+                    if (itemDetalhe.Fotos != null && itemDetalhe.Fotos.Any())
+                        vm.ListaDetalhes.Add(itemDetalhe.Fotos);
+                    if (itemDetalhe.LocaisFilho != null && itemDetalhe.LocaisFilho.Any())
+                    {
+                        vm.ListaDetalhes.Add(new Cabecalho() { Texto = "Locais Filho" });
+                        foreach (var item in itemDetalhe.LocaisFilho)
+                            vm.ListaDetalhes.Add(item);
+                    }
 
-                var Pagina = new ConsultarLocalVisitadoDetalhePage() { BindingContext = vm };
-                await PushAsync(Pagina);
+                    var Pagina = new ConsultarLocalVisitadoDetalhePage() { BindingContext = vm };
+                    await PushAsync(Pagina);
+                }
+                catch
+                {
+                    ApiService.ExibirMensagemErro();
+                }
             }
+
 
         }
 

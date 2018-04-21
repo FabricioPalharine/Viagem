@@ -276,6 +276,8 @@ namespace CV.Mobile.ViewModels
                 using (ApiService srv = new ApiService())
                 {
                     Dados = await srv.ListarAmigos();
+                    if (!Dados.Any())
+                        Dados = await DatabaseService.Database.ListarAmigos();
 
                 }
             }
@@ -290,15 +292,19 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaPedidos()
         {
             List<ListaCompra> Dados = new List<Models.ListaCompra>();
+            bool Executado = true;
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     Dados = await srv.ListarListaCompra(ItemCriterioBusca);
 
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
             {
                 Dados = await DatabaseService.Database.ListarListaCompra(ItemCriterioBuscaPedido, ItemUsuarioLogado.Codigo);
 
@@ -310,16 +316,22 @@ namespace CV.Mobile.ViewModels
 
         private async Task CarregarListaRequisicao()
         {
+
             List<ListaCompra> Dados = new List<Models.ListaCompra>();
+            bool Executado = true;
+
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     Dados = await srv.ListarPedidosCompraRecebido(ItemCriterioBuscaPedido);
 
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
             {
                 Dados = await DatabaseService.Database.ListarListaCompra_Requisicao(ItemCriterioBuscaPedido, ItemUsuarioLogado.Codigo);
             }
@@ -340,8 +352,10 @@ namespace CV.Mobile.ViewModels
                 {
                     if (!result) return;
                     ResultadoOperacao Resultado = new ResultadoOperacao();
+                    bool Executado = true;
                     if (Conectado)
                     {
+                        try { 
                         using (ApiService srv = new ApiService())
                         {
                             Resultado = await srv.ExcluirListaCompra(itemListaCompra.Identificador);
@@ -353,8 +367,10 @@ namespace CV.Mobile.ViewModels
                                 await DatabaseService.Database.ExcluirListaCompra(itemBanco);
                             }
                         }
+                        }
+                        catch { Executado = false; }
                     }
-                    else
+                    if (!Executado)
                     {
                         if (itemListaCompra.Identificador > 0)
                         {
@@ -386,15 +402,19 @@ namespace CV.Mobile.ViewModels
         private async Task Editar(ItemTappedEventArgs itemLista)
         {
             ListaCompra itemEditar = new Models.ListaCompra();
+            bool Executado = true;
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     itemEditar = await srv.CarregarListaCompra(((ListaCompra)itemLista.Item).Identificador);
 
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if(!Executado)
             {
                 itemEditar = await DatabaseService.Database.RetornarListaCompra(((ListaCompra)itemLista.Item).Identificador);
             }

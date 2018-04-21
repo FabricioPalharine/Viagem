@@ -97,8 +97,15 @@ namespace CV.Mobile.ViewModels
                 {
                     if (CrossConnectivity.Current.IsConnected && await srv.VerificarOnLine())
                     {
-                        itemUsuario = await srv.CarregarDadosAplicativo(new UsuarioLogado() { CodigoGoogle = autenticacao.Username });
-                        SalvarAmigosLocal(itemUsuario);
+                        try
+                        {
+                            itemUsuario = await srv.CarregarDadosAplicativo(new UsuarioLogado() { CodigoGoogle = autenticacao.Username });
+                            SalvarAmigosLocal(itemUsuario);
+                        }
+                        catch
+                        {
+
+                        }
                     }
                     if (string.IsNullOrEmpty(itemUsuario.CodigoGoogle))
                     {

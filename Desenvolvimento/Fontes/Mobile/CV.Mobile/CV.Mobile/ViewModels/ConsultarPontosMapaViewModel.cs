@@ -227,75 +227,82 @@ namespace CV.Mobile.ViewModels
         {
             List<PontoMapa> Dados = new List<PontoMapa>();
             List<LinhaMapa> Linhas = new List<LinhaMapa>();
-            using (ApiService srv = new ApiService())
+            try
             {
-                Dados = await srv.ListarPontosViagem(ItemCriterioBusca);
-                Linhas = await srv.ListarLinhasViagem(ItemCriterioBusca);
-            }
-
-            ListaDados = new ObservableCollection<PontoMapa>(Dados);
-            ListaLinhas = new ObservableCollection<LinhaMapa>(Linhas);
-            OnPropertyChanged("ListaDados");
-            OnPropertyChanged("ListaLinhas");
-            Pins.Clear();
-            foreach (var itemPonto in Dados)
-            {
-                TKCustomMapPin itemPin = new TKCustomMapPin();
-                itemPin.IsDraggable = false;
-                itemPin.Position = new Position(itemPonto.Latitude.GetValueOrDefault(0), itemPonto.Longitude.GetValueOrDefault(0));
-                //itemPin.Image = ImageSource.FromFile("hotels.png");
-                itemPin.Image = ImageSource.FromFile((itemPonto.Tipo == "A" ? "entertainment" :
-                    itemPonto.Tipo == "CR" || itemPonto.Tipo == "CD" ? "automotive" :
-                    itemPonto.Tipo == "L" ? "shopping" :
-                    itemPonto.Tipo == "H" ? "hotels" :
-                    itemPonto.Tipo == "RC" ? "tiresaccessories" :
-                    itemPonto.Tipo == "R" ? "restaurants" :
-                    itemPonto.Tipo == "P" ? "transport" :
-                    itemPonto.Tipo == "T" ? "cookbooks" :
-                    itemPonto.Tipo == "U" ? "professional" :
-
-                    itemPonto.Tipo == "V" || itemPonto.Tipo == "F" ? "photography" : "pin") + ".png");
-                itemPin.ShowCallout = true;
-                itemPin.Anchor = new Point(0.5, 1);
-                if (itemPonto.Tipo == "V" || itemPonto.Tipo == "F")
-                    itemPin.Title = itemPonto.UrlTumbnail;
-                else
-                    itemPin.Title = itemPonto.Nome;
-                itemPin.Subtitle = itemPonto.Periodo;
-                Pins.Add(itemPin);
-                
-            }
-            foreach (var itemPonto in Linhas)
-            {
-
-                TKPolyline polyline = new TKPolyline()
+                using (ApiService srv = new ApiService())
                 {
-                    Color = itemPonto.Tipo == "C" ? Color.Blue : itemPonto.Tipo == "D" ? Color.Green : Color.Red,
-                    LineWidth = 10,
-                    LineCoordinates =  itemPonto.Pontos.Select(d => new Position(d.Latitude.GetValueOrDefault(), d.Longitude.GetValueOrDefault())).ToList(),
-                };
-                if (itemPonto.Pontos.Count > 500)
-                {
-                    polyline.LineCoordinates = new List<Position>();
-                    polyline.LineCoordinates.Add(new Position(itemPonto.Pontos.FirstOrDefault().Latitude.GetValueOrDefault(), itemPonto.Pontos.FirstOrDefault().Longitude.GetValueOrDefault()));
-                    for (decimal k =0;k<itemPonto.Pontos.Count;k+= itemPonto.Pontos.Count()/500m)
-                    {
-                        polyline.LineCoordinates.Add(new Position(itemPonto.Pontos.ElementAt(Convert.ToInt32(k)).Latitude.GetValueOrDefault(), itemPonto.Pontos.ElementAt(Convert.ToInt32(k)).Longitude.GetValueOrDefault()));
-                        if (itemPonto.Pontos.ElementAt(Convert.ToInt32(k)).Longitude < -46.64093234)
-                        {
+                    Dados = await srv.ListarPontosViagem(ItemCriterioBusca);
+                    Linhas = await srv.ListarLinhasViagem(ItemCriterioBusca);
+                }
 
-                        }
-                    }
-                    polyline.LineCoordinates.Add(new Position(itemPonto.Pontos.LastOrDefault().Latitude.GetValueOrDefault(), itemPonto.Pontos.LastOrDefault().Longitude.GetValueOrDefault()));
+                ListaDados = new ObservableCollection<PontoMapa>(Dados);
+                ListaLinhas = new ObservableCollection<LinhaMapa>(Linhas);
+                OnPropertyChanged("ListaDados");
+                OnPropertyChanged("ListaLinhas");
+                Pins.Clear();
+                foreach (var itemPonto in Dados)
+                {
+                    TKCustomMapPin itemPin = new TKCustomMapPin();
+                    itemPin.IsDraggable = false;
+                    itemPin.Position = new Position(itemPonto.Latitude.GetValueOrDefault(0), itemPonto.Longitude.GetValueOrDefault(0));
+                    //itemPin.Image = ImageSource.FromFile("hotels.png");
+                    itemPin.Image = ImageSource.FromFile((itemPonto.Tipo == "A" ? "entertainment" :
+                        itemPonto.Tipo == "CR" || itemPonto.Tipo == "CD" ? "automotive" :
+                        itemPonto.Tipo == "L" ? "shopping" :
+                        itemPonto.Tipo == "H" ? "hotels" :
+                        itemPonto.Tipo == "RC" ? "tiresaccessories" :
+                        itemPonto.Tipo == "R" ? "restaurants" :
+                        itemPonto.Tipo == "P" ? "transport" :
+                        itemPonto.Tipo == "T" ? "cookbooks" :
+                        itemPonto.Tipo == "U" ? "professional" :
+
+                        itemPonto.Tipo == "V" || itemPonto.Tipo == "F" ? "photography" : "pin") + ".png");
+                    itemPin.ShowCallout = true;
+                    itemPin.Anchor = new Point(0.5, 1);
+                    if (itemPonto.Tipo == "V" || itemPonto.Tipo == "F")
+                        itemPin.Title = itemPonto.UrlTumbnail;
+                    else
+                        itemPin.Title = itemPonto.Nome;
+                    itemPin.Subtitle = itemPonto.Periodo;
+                    Pins.Add(itemPin);
 
                 }
-                Polylines.Add(polyline);
+                foreach (var itemPonto in Linhas)
+                {
+
+                    TKPolyline polyline = new TKPolyline()
+                    {
+                        Color = itemPonto.Tipo == "C" ? Color.Blue : itemPonto.Tipo == "D" ? Color.Green : Color.Red,
+                        LineWidth = 10,
+                        LineCoordinates = itemPonto.Pontos.Select(d => new Position(d.Latitude.GetValueOrDefault(), d.Longitude.GetValueOrDefault())).ToList(),
+                    };
+                    if (itemPonto.Pontos.Count > 500)
+                    {
+                        polyline.LineCoordinates = new List<Position>();
+                        polyline.LineCoordinates.Add(new Position(itemPonto.Pontos.FirstOrDefault().Latitude.GetValueOrDefault(), itemPonto.Pontos.FirstOrDefault().Longitude.GetValueOrDefault()));
+                        for (decimal k = 0; k < itemPonto.Pontos.Count; k += itemPonto.Pontos.Count() / 500m)
+                        {
+                            polyline.LineCoordinates.Add(new Position(itemPonto.Pontos.ElementAt(Convert.ToInt32(k)).Latitude.GetValueOrDefault(), itemPonto.Pontos.ElementAt(Convert.ToInt32(k)).Longitude.GetValueOrDefault()));
+                            if (itemPonto.Pontos.ElementAt(Convert.ToInt32(k)).Longitude < -46.64093234)
+                            {
+
+                            }
+                        }
+                        polyline.LineCoordinates.Add(new Position(itemPonto.Pontos.LastOrDefault().Latitude.GetValueOrDefault(), itemPonto.Pontos.LastOrDefault().Longitude.GetValueOrDefault()));
+
+                    }
+                    Polylines.Add(polyline);
+                }
+                await Task.Delay(2000);
+                // var teste = GetCentralGeoCoordinate(Dados.Select(d => new Position(d.Latitude.GetValueOrDefault(), d.Longitude.GetValueOrDefault())).ToList());
+                //LimiteMapa = GetCentralGeoCoordinate(Dados.Select(d => new Position(d.Latitude.GetValueOrDefault(), d.Longitude.GetValueOrDefault())).ToList());
+                if (ListaDados.Any())
+                    MapCenter = ListaDados.OrderByDescending(d => d.DataInicio).Select(d => new Position(d.Latitude.GetValueOrDefault(), d.Longitude.GetValueOrDefault())).FirstOrDefault();
             }
-            await Task.Delay(2000);
-            // var teste = GetCentralGeoCoordinate(Dados.Select(d => new Position(d.Latitude.GetValueOrDefault(), d.Longitude.GetValueOrDefault())).ToList());
-            //LimiteMapa = GetCentralGeoCoordinate(Dados.Select(d => new Position(d.Latitude.GetValueOrDefault(), d.Longitude.GetValueOrDefault())).ToList());
-            if (ListaDados.Any())
-                MapCenter = ListaDados.OrderByDescending(d => d.DataInicio).Select(d => new Position(d.Latitude.GetValueOrDefault(), d.Longitude.GetValueOrDefault())).FirstOrDefault();
+            catch
+            {
+                ApiService.ExibirMensagemErro();
+            }
             IsLoadingLista = false;
         }
 

@@ -79,8 +79,10 @@ namespace CV.Mobile.ViewModels
                     if (!result) return;
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     obj.DataExclusao = DateTime.Now.ToUniversalTime();
+                    bool Executado = true;
                     if (Conectado)
                     {
+                        try { 
                         using (ApiService srv = new ApiService())
                         {
                             Resultado = await srv.SalvarCarroDeslocamento(obj);
@@ -89,8 +91,10 @@ namespace CV.Mobile.ViewModels
                             await DatabaseService.ExcluirCarroDeslocamento(obj.Identificador, true);
 
                         }
+                        }
+                        catch { Executado = false; }
                     }
-                    else
+                    if (!Executado)
                     {
                         obj.AtualizadoBanco = false;
                         await DatabaseService.ExcluirCarroDeslocamento(obj.Identificador, false);

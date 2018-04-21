@@ -154,15 +154,20 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaCidades()
         {
             List<Cidade> Dados = new List<Cidade>();
+            bool Executado = true;
             if (Conectado)
             {
+                try
+                { 
                 using (ApiService srv = new ApiService())
                 {
                     Dados = await srv.ListarCidadeAtracao();
 
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
             {
                 Dados = await DatabaseService.Database.ListarCidade_Tipo("A");
             }
@@ -174,15 +179,19 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaDados()
         {
             List<Atracao> Dados = new List<Atracao>();
+            bool Executado = true;
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     Dados = await srv.ListarAtracao(ItemCriterioBusca);
 
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
             {
                 Dados = await DatabaseService.Database.ListarAtracao(ItemCriterioBusca);
             }
@@ -194,15 +203,19 @@ namespace CV.Mobile.ViewModels
         private async Task VerificarAcaoItem(ItemTappedEventArgs itemSelecionado)
         {
             Atracao ItemAtracao = null;
+            bool Executado = true;
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                      ItemAtracao = await srv.CarregarAtracao(((Atracao)itemSelecionado.Item).Identificador);
 
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
                 ItemAtracao = await DatabaseService.CarregarAtracao(((Atracao)itemSelecionado.Item).Identificador);
 
             var Pagina = new EdicaoAtracaoPage() { BindingContext = new EdicaoAtracaoViewModel(ItemAtracao, ItemViagem) };
@@ -212,14 +225,18 @@ namespace CV.Mobile.ViewModels
         {
             var ItemAtracao = new Atracao() { Avaliacoes = new ObservableCollection<AvaliacaoAtracao>() };
             Atracao AtracaoAberto = null;
+            bool Executado = true;
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     AtracaoAberto = await srv.VerificarAtracaoAberto();
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
             {
                 AtracaoAberto = await DatabaseService.Database.RetornarAtracaoAberta();
             }

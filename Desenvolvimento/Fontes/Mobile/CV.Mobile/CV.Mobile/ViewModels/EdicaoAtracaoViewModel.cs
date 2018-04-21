@@ -237,6 +237,9 @@ namespace CV.Mobile.ViewModels
                     {
 
                         ListaUsuario = await srv.ListarParticipantesViagem();
+                        if (!ListaUsuario.Any())
+                            ListaUsuario = await DatabaseService.Database.ListarParticipanteViagem();
+
                     }
                 }
                 else
@@ -262,8 +265,15 @@ namespace CV.Mobile.ViewModels
             {
                 using (ApiService srv = new ApiService())
                 {
-                    ListaDados = await srv.ListarAtracao(new CriterioBusca());
+                    try
+                    {
+                        ListaDados = await srv.ListarAtracao(new CriterioBusca());
+                    }
+                    catch
+                    {
+                        ListaDados = await DatabaseService.Database.ListarAtracao(new CriterioBusca());
 
+                    }
                 }
             }
             else
@@ -468,20 +478,26 @@ namespace CV.Mobile.ViewModels
 
                 ResultadoOperacao Resultado = new ResultadoOperacao();
                 Atracao pItemAtracao = null;
+                bool SalvaExecucao = false;
                 if (Conectado)
                 {
                     using (ApiService srv = new ApiService())
                     {
-                        Resultado = await srv.SalvarAtracao(ItemAtracao);
-                        if (Resultado.Sucesso)
+                        try
                         {
-                            pItemAtracao = await srv.CarregarAtracao(Resultado.IdentificadorRegistro);
-                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "A", Resultado.IdentificadorRegistro.GetValueOrDefault(), !ItemAtracao.Identificador.HasValue);
-                            await DatabaseService.SalvarAtracaoReplicada(pItemAtracao);
+                            Resultado = await srv.SalvarAtracao(ItemAtracao);
+                            SalvaExecucao = true;
+                            if (Resultado.Sucesso)
+                            {
+                                pItemAtracao = await srv.CarregarAtracao(Resultado.IdentificadorRegistro);
+                                AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "A", Resultado.IdentificadorRegistro.GetValueOrDefault(), !ItemAtracao.Identificador.HasValue);
+                                await DatabaseService.SalvarAtracaoReplicada(pItemAtracao);
+                            }
                         }
+                        catch { }
                     }
                 }
-                else
+                if (!SalvaExecucao)
                 {
                     Resultado = await DatabaseService.SalvarAtracao(ItemAtracao);
                     if (Resultado.Sucesso)
@@ -550,16 +566,25 @@ namespace CV.Mobile.ViewModels
                     if (!result) return;
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     ItemAtracao.DataExclusao = DateTime.Now.ToUniversalTime();
+                    bool Excluido = false;
                     if (Conectado)
                     {
                         using (ApiService srv = new ApiService())
                         {
-                            Resultado = await srv.ExcluirAtracao(ItemAtracao.Identificador);
-                            await DatabaseService.ExcluirAtracao(ItemAtracao.Identificador, true);
-                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "A", ItemAtracao.Identificador.GetValueOrDefault(), false);
+                            try
+                            {
+                                Resultado = await srv.ExcluirAtracao(ItemAtracao.Identificador);
+                                Excluido = true;
+                                await DatabaseService.ExcluirAtracao(ItemAtracao.Identificador, true);
+                                AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "A", ItemAtracao.Identificador.GetValueOrDefault(), false);
+                            }
+                            catch
+                            {
+
+                            }
                         }
                     }
-                    else
+                    if (!Excluido)
                     {
                         await DatabaseService.ExcluirAtracao(ItemAtracao.Identificador, false);
                         Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Atração Excluída com Sucesso " } };

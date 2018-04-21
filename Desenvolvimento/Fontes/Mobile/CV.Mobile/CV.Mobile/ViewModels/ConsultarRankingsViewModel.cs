@@ -68,16 +68,24 @@ namespace CV.Mobile.ViewModels
             itemConsulta.Tipo = ItemRanking.Tipo;
             itemConsulta.Comentario = ItemRanking.CodigoGoogle;
             itemConsulta.Nome = ItemRanking.Nome;
-
-            using (ApiService srv = new ApiService())
+            try
             {
-                ListaAvaliacoes = new ObservableCollection<UsuarioConsulta>(await srv.ListarAvaliacoesRankings(itemConsulta));
-                OnPropertyChanged("ListaAvaliacoes");
+                using (ApiService srv = new ApiService())
+                {
+                    ListaAvaliacoes = new ObservableCollection<UsuarioConsulta>(await srv.ListarAvaliacoesRankings(itemConsulta));
+                    OnPropertyChanged("ListaAvaliacoes");
+                }
+
+
+
+
+                var Pagina = new ConsultarRankingsDetalhePage() { BindingContext = this };
+                await PushAsync(Pagina);
             }
-
-
-            var Pagina = new ConsultarRankingsDetalhePage() { BindingContext = this };
-            await PushAsync(Pagina);
+            catch
+            {
+                ApiService.ExibirMensagemErro();
+            }
 
         }
 
@@ -181,15 +189,21 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaDados()
         {
             List<ConsultaRankings> Dados = new List<ConsultaRankings>();
-
-            using (ApiService srv = new ApiService())
+            try
             {
-                Dados = await srv.ListarRankings(ItemCriterioBusca);
+                using (ApiService srv = new ApiService())
+                {
+                    Dados = await srv.ListarRankings(ItemCriterioBusca);
+                }
+
+                ListaDados = new ObservableCollection<ConsultaRankings>(Dados);
+                OnPropertyChanged("ListaDados");
+
             }
-
-            ListaDados = new ObservableCollection<ConsultaRankings>(Dados);
-            OnPropertyChanged("ListaDados");
-
+            catch
+            {
+                ApiService.ExibirMensagemErro();
+            }
             IsLoadingLista = false;
         }
 

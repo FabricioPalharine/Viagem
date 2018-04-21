@@ -162,32 +162,39 @@ namespace CV.Mobile.ViewModels
             SalvarCommand.ChangeCanExecute();
             try
             {
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    var Resultado = await srv.SalvarViagem(ItemViagem);
-                    if (Resultado.Sucesso)
+                    using (ApiService srv = new ApiService())
                     {
-                        if (!ItemViagem.Identificador.HasValue)
-                            await GravarViagem(Resultado.IdentificadorRegistro);
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        var Resultado = await srv.SalvarViagem(ItemViagem);
+                        if (Resultado.Sucesso)
                         {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-                        await PopAsync();
-                    }
-                    else if(Resultado.Mensagens != null && Resultado.Mensagens.Any())
-                    {
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                            if (!ItemViagem.Identificador.HasValue)
+                                await GravarViagem(Resultado.IdentificadorRegistro);
+                            MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                            {
+                                Title = "Sucesso",
+                                Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                                Cancel = "OK"
+                            });
+                            await PopAsync();
+                        }
+                        else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
                         {
-                            Title = "Problemas Validação",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d=>d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
+                            MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                            {
+                                Title = "Problemas Validação",
+                                Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                                Cancel = "OK"
+                            });
 
+                        }
                     }
                 }
+                catch
+                {
+                    ApiService.ExibirMensagemErro();
+                };
             }
             finally
             {
@@ -199,17 +206,17 @@ namespace CV.Mobile.ViewModels
 
         private async Task GravarViagem(int? Identificador)
         {
-            IsBusy = true;
-            using (ApiService srv = new ApiService())
-            {
-                 Viagem itemViagem = await srv.CarregarViagem(Identificador);
-                var itemViagemBanco = await DatabaseService.Database.GetViagemAtualAsync();
-                itemViagem.Id = itemViagemBanco?.Id;
-                await DatabaseService.Database.SalvarViagemAsync(itemViagem);
-                DatabaseService.SincronizarParticipanteViagem(itemViagem);
+            
+                using (ApiService srv = new ApiService())
+                {
+                    Viagem itemViagem = await srv.CarregarViagem(Identificador);
+                    var itemViagemBanco = await DatabaseService.Database.GetViagemAtualAsync();
+                    itemViagem.Id = itemViagemBanco?.Id;
+                    await DatabaseService.Database.SalvarViagemAsync(itemViagem);
+                    DatabaseService.SincronizarParticipanteViagem(itemViagem);
 
-            }
-            IsBusy = false;
+                }
+            
         }
 
         private void ExcluirParticipante(ParticipanteViagem ItemParticipante)

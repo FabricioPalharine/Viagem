@@ -103,15 +103,19 @@ namespace CV.Mobile.ViewModels
         public async void CarregarAtracoesPai()
         {
             List<Atracao> ListaDados = new List<Atracao>();
+            bool Executado = true;
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     ListaDados = await srv.ListarAtracao(new CriterioBusca());
 
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
                 ListaDados = await DatabaseService.Database.ListarAtracao(new CriterioBusca());
             ListaDados.Insert(0, new Atracao() { Identificador = 0, Nome = "Sem Atração Pai" });
             ListaAtracaoPai = new ObservableCollection<Atracao>(ListaDados);
@@ -229,8 +233,10 @@ namespace CV.Mobile.ViewModels
 
                 ResultadoOperacao Resultado = new ResultadoOperacao();
                 Loja pItemLoja = null;
+                bool Executado = true;
                 if (Conectado)
                 {
+                    try { 
                     using (ApiService srv = new ApiService())
                     {
                         Resultado = await srv.SalvarLoja(ItemLoja);
@@ -241,8 +247,10 @@ namespace CV.Mobile.ViewModels
                             await DatabaseService.SalvarLojaReplicada(pItemLoja);
                         }
                     }
+                    }
+                    catch { Executado = false; }
                 }
-                else
+                if (!Executado)
                 {
                     Resultado = await DatabaseService.SalvarLoja(ItemLoja);
                     if (Resultado.Sucesso)
@@ -307,16 +315,20 @@ namespace CV.Mobile.ViewModels
 
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     ItemLoja.DataExclusao = DateTime.Now.ToUniversalTime();
+                    bool Executado = true;
                     if (Conectado)
                     {
+                        try { 
                         using (ApiService srv = new ApiService())
                         {
                             Resultado = await srv.ExcluirLoja(ItemLoja.Identificador);
                             await DatabaseService.ExcluirLoja(ItemLoja.Identificador, true);
                             AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "L", ItemLoja.Identificador.GetValueOrDefault(), false);
                         }
+                        }
+                        catch { Executado = false; }
                     }
-                    else
+                    if (!Executado)
                     {
                         await DatabaseService.ExcluirLoja(ItemLoja.Identificador, false);
                         Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Loja Excluída com Sucesso " } };

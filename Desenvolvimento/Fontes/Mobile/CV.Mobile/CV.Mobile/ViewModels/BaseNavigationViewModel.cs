@@ -53,29 +53,36 @@ namespace CV.Mobile.ViewModels
             {
                 await DatabaseService.Database.LimparBancoViagem();
                 Viagem itemViagem = await srv.CarregarViagem(Identificador);
-                var DadosViagem = await srv.SelecionarViagem(itemViagem.Identificador);
-                itemViagem.VejoGastos = DadosViagem.VerCustos;
-                itemViagem.Edicao = DadosViagem.PermiteEdicao;
-                itemViagem.Aberto = DadosViagem.Aberto;
-
-                ControleSincronizacao itemCS = new ControleSincronizacao();
-                itemCS.IdentificadorViagem = itemViagem.Identificador;
-                itemCS.SincronizadoEnvio = false;
-                itemCS.UltimaDataEnvio = DateTime.Now.ToUniversalTime();
-                itemCS.UltimaDataRecepcao = new DateTime(1900, 01, 01);
-                await DatabaseService.Database.SalvarControleSincronizacao(itemCS);
-                await DatabaseService.Database.SalvarViagemAsync(itemViagem);
-                DatabaseService.SincronizarParticipanteViagem(itemViagem);
-                ConectarViagem(itemViagem.Identificador.GetValueOrDefault(), itemViagem.Edicao);
-                var DadosSincronizar = await srv.RetornarAtualizacoes(new CriterioBusca() { DataInicioDe = itemCS.UltimaDataRecepcao });
-
-                await DatabaseService.SincronizarDadosServidorLocal(itemCS, DadosSincronizar, ItemUsuarioLogado, itemCS.UltimaDataRecepcao.Value);
-
-                if (Application.Current?.MainPage is MasterDetailPage)
+                if (itemViagem.Identificador.HasValue)
                 {
-                    ((MasterDetailViewModel)Application.Current?.MainPage.BindingContext).ItemViagem = itemViagem;
+                    var DadosViagem = await srv.SelecionarViagem(itemViagem.Identificador);
+                    itemViagem.VejoGastos = DadosViagem.VerCustos;
+                    itemViagem.Edicao = DadosViagem.PermiteEdicao;
+                    itemViagem.Aberto = DadosViagem.Aberto;
+
+                    ControleSincronizacao itemCS = new ControleSincronizacao();
+                    itemCS.IdentificadorViagem = itemViagem.Identificador;
+                    itemCS.SincronizadoEnvio = false;
+                    itemCS.UltimaDataEnvio = DateTime.Now.ToUniversalTime();
+                    itemCS.UltimaDataRecepcao = new DateTime(1900, 01, 01);
+                    await DatabaseService.Database.SalvarControleSincronizacao(itemCS);
+                    await DatabaseService.Database.SalvarViagemAsync(itemViagem);
+                    DatabaseService.SincronizarParticipanteViagem(itemViagem);
+                    ConectarViagem(itemViagem.Identificador.GetValueOrDefault(), itemViagem.Edicao);
+                    try
+                    {
+                        var DadosSincronizar = await srv.RetornarAtualizacoes(new CriterioBusca() { DataInicioDe = itemCS.UltimaDataRecepcao });
+
+                        await DatabaseService.SincronizarDadosServidorLocal(itemCS, DadosSincronizar, ItemUsuarioLogado, itemCS.UltimaDataRecepcao.Value);
+
+                        if (Application.Current?.MainPage is MasterDetailPage)
+                        {
+                            ((MasterDetailViewModel)Application.Current?.MainPage.BindingContext).ItemViagem = itemViagem;
+                        }
+                        PreencherPaginasViagem(itemViagem);
+                    }
+                    catch { }
                 }
-                PreencherPaginasViagem(itemViagem);
             }
             IsBusy = false;
         }
@@ -408,27 +415,34 @@ namespace CV.Mobile.ViewModels
                     }
                     using (ApiService srv = new ApiService())
                     {
-                        var ItemUsuario = await srv.CarregarUsuario(ItemUsuarioLogado.Codigo);
-                        if (ItemUsuario.DataToken.GetValueOrDefault().AddSeconds(ItemUsuario.Lifetime.GetValueOrDefault(0) - 60) < DateTime.Now.ToUniversalTime())
+                        try
                         {
-                            using (AccountsService srvAccount = new AccountsService())
+                            var ItemUsuario = await srv.CarregarUsuario(ItemUsuarioLogado.Codigo);
+                            if (ItemUsuario != null && ItemUsuario.DataToken.GetValueOrDefault().AddSeconds(ItemUsuario.Lifetime.GetValueOrDefault(0) - 60) < DateTime.Now.ToUniversalTime())
                             {
-                                await srvAccount.AtualizarTokenUsuario(ItemUsuario);
+                                using (AccountsService srvAccount = new AccountsService())
+                                {
+                                    await srvAccount.AtualizarTokenUsuario(ItemUsuario);
+                                }
                             }
-                        }
-                        using (PhotosService srvFoto = new PhotosService(ItemUsuario.Token))
-                        {
-                            await srvFoto.SubirFoto(ItemViagemSelecionada.CodigoAlbum, DadosFoto, itemUpload);
-                        }
-                        var resultadoAPI = await srv.SubirImagem(itemUpload);
-                        AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "F", resultadoAPI.IdentificadorRegistro.GetValueOrDefault(), true);
+                            using (PhotosService srvFoto = new PhotosService(ItemUsuario.Token))
+                            {
+                                await srvFoto.SubirFoto(ItemViagemSelecionada.CodigoAlbum, DadosFoto, itemUpload);
+                            }
+                            var resultadoAPI = await srv.SubirImagem(itemUpload);
+                            AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "F", resultadoAPI.IdentificadorRegistro.GetValueOrDefault(), true);
 
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                            MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                            {
+                                Title = "Sucesso",
+                                Message = "Foto Gravada com Sucesso",
+                                Cancel = "OK"
+                            });
+                        }
+                        catch
                         {
-                            Title = "Sucesso",
-                            Message = "Foto Gravada com Sucesso",
-                            Cancel = "OK"
-                        });
+                            await DatabaseService.Database.SalvarUploadFoto(itemUpload);
+                        }
                     }
                 }
                 else
@@ -476,19 +490,26 @@ namespace CV.Mobile.ViewModels
                    CrossConnectivity.Current.ConnectionTypes.Contains(Plugin.Connectivity.Abstractions.ConnectionType.Wimax) ||
                    CrossConnectivity.Current.ConnectionTypes.Contains(Plugin.Connectivity.Abstractions.ConnectionType.WiFi)))
                 {
-                    using (ApiService srv = new ApiService())
+                    try
                     {
-                        var ItemUsuario = await srv.CarregarUsuario(ItemUsuarioLogado.Codigo);
-                        if (ItemUsuario.DataToken.GetValueOrDefault().AddSeconds(ItemUsuario.Lifetime.GetValueOrDefault(0) - 60) < DateTime.Now.ToUniversalTime())
+                        using (ApiService srv = new ApiService())
                         {
-                            using (AccountsService srvAccount = new AccountsService())
+                            var ItemUsuario = await srv.CarregarUsuario(ItemUsuarioLogado.Codigo);
+                            if (ItemUsuario != null && ItemUsuario.DataToken.GetValueOrDefault().AddSeconds(ItemUsuario.Lifetime.GetValueOrDefault(0) - 60) < DateTime.Now.ToUniversalTime())
                             {
-                                await srvAccount.AtualizarTokenUsuario(ItemUsuario);
+                                using (AccountsService srvAccount = new AccountsService())
+                                {
+                                    await srvAccount.AtualizarTokenUsuario(ItemUsuario);
+                                }
                             }
+                            GravarVideoYouTube(itemUpload, Source, ItemUsuario, true);
+
+
                         }
-                        GravarVideoYouTube(itemUpload, Source, ItemUsuario, true);
-
-
+                    }
+                    catch
+                    {
+                        await DatabaseService.Database.SalvarUploadFoto(itemUpload);
                     }
                 }
                 else

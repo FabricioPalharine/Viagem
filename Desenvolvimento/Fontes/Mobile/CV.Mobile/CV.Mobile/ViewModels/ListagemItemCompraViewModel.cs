@@ -73,28 +73,34 @@ namespace CV.Mobile.ViewModels
 
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     obj.DataExclusao = DateTime.Now.ToUniversalTime();
+                    bool Executado = true;
                     if (Conectado)
                     {
-                        using (ApiService srv = new ApiService())
+                        try
                         {
-                            Resultado = await srv.SalvarItemCompra(obj);
-                            AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "IC", obj.Identificador.GetValueOrDefault(), false);
-                            if (obj.IdentificadorListaCompra.HasValue)
+                            using (ApiService srv = new ApiService())
                             {
-                                AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "LC", obj.IdentificadorListaCompra.GetValueOrDefault(), false);
-                                var ItemListaCompra = await srv.CarregarListaCompra(obj.Identificador);
-                                var itemLCBase = await DatabaseService.Database.RetornarListaCompra(ItemListaCompra.Identificador);
-                                if (itemLCBase != null)
-                                    ItemListaCompra.Id = itemLCBase.Id;
-                                await DatabaseService.Database.SalvarListaCompra(ItemListaCompra);
-                            }
-                            var itemBase = await DatabaseService.Database.RetornarItemCompra(obj.Identificador);
-                            if (itemBase != null)
-                                await DatabaseService.Database.ExcluirItemCompra(itemBase);
+                                Resultado = await srv.SalvarItemCompra(obj);
+                                AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "IC", obj.Identificador.GetValueOrDefault(), false);
+                                if (obj.IdentificadorListaCompra.HasValue)
+                                {
+                                    AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "LC", obj.IdentificadorListaCompra.GetValueOrDefault(), false);
+                                    var ItemListaCompra = await srv.CarregarListaCompra(obj.Identificador);
+                                    var itemLCBase = await DatabaseService.Database.RetornarListaCompra(ItemListaCompra.Identificador);
+                                    if (itemLCBase != null)
+                                        ItemListaCompra.Id = itemLCBase.Id;
+                                    await DatabaseService.Database.SalvarListaCompra(ItemListaCompra);
+                                }
+                                var itemBase = await DatabaseService.Database.RetornarItemCompra(obj.Identificador);
+                                if (itemBase != null)
+                                    await DatabaseService.Database.ExcluirItemCompra(itemBase);
 
+                            }
                         }
+                        catch { Executado = false; }
+
                     }
-                    else
+                    if (!Executado)
                     {
                         obj.AtualizadoBanco = false;
                         if (obj.IdentificadorListaCompra.HasValue)

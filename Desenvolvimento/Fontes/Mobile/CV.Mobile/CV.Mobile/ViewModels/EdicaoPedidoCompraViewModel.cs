@@ -59,35 +59,43 @@ namespace CV.Mobile.ViewModels
             try
             {
 
-                using (ApiService srv = new ApiService())
-                {
-                    var Resultado = await srv.SalvarListaCompra(ItemListaCompra);
-                    if (Resultado.Sucesso)
+                 using (ApiService srv = new ApiService())
                     {
-                        base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "LC", ItemListaCompra.Identificador.GetValueOrDefault( Resultado.IdentificadorRegistro.GetValueOrDefault()), !ItemListaCompra.Identificador.HasValue);
-
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
-                        {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-                        ItemListaCompra.Identificador = Resultado.IdentificadorRegistro;
-                        // ItemListaCompra = JsonConvert.DeserializeXNode < ListaCompra >()
-                        MessagingService.Current.SendMessage<ListaCompra>(MessageKeys.ManutencaoPedidoCompra, ItemListaCompra);
-                        await PopAsync();
-                    }
-                    else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
+                    try
                     {
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                        var Resultado = await srv.SalvarListaCompra(ItemListaCompra);
+                        if (Resultado.Sucesso)
                         {
-                            Title = "Problemas Validação",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
+                            base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "LC", ItemListaCompra.Identificador.GetValueOrDefault(Resultado.IdentificadorRegistro.GetValueOrDefault()), !ItemListaCompra.Identificador.HasValue);
 
+                            MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                            {
+                                Title = "Sucesso",
+                                Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                                Cancel = "OK"
+                            });
+                            ItemListaCompra.Identificador = Resultado.IdentificadorRegistro;
+                            // ItemListaCompra = JsonConvert.DeserializeXNode < ListaCompra >()
+                            MessagingService.Current.SendMessage<ListaCompra>(MessageKeys.ManutencaoPedidoCompra, ItemListaCompra);
+                            await PopAsync();
+                        }
+                        else if (Resultado.Mensagens != null && Resultado.Mensagens.Any())
+                        {
+                            MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                            {
+                                Title = "Problemas Validação",
+                                Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                                Cancel = "OK"
+                            });
+
+                        }
                     }
-                }
+                    catch
+                    {
+                        ApiService.ExibirMensagemErro();
+                    }
+                    }
+               
             }
             finally
             {

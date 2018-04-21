@@ -79,8 +79,10 @@ namespace CV.Mobile.ViewModels
 
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     obj.DataExclusao = DateTime.Now.ToUniversalTime();
+                    bool Executado = true;
                     if (Conectado)
                     {
+                        try { 
                         using (ApiService srv = new ApiService())
                         {
                             Resultado = await srv.ExcluirGastoCompra(obj);
@@ -88,8 +90,10 @@ namespace CV.Mobile.ViewModels
 
                            await DatabaseService.ExcluirGastoCompra(obj.Identificador,true);
                         }
+                        }
+                        catch { Executado = false; }
                     }
-                    else
+                    if (!Executado)
                     {
                         await DatabaseService.ExcluirGastoCompra(obj.Identificador, false);
 

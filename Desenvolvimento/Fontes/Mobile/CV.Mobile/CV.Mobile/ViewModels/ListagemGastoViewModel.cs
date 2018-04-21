@@ -151,15 +151,19 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaDados()
         {
             List<Gasto> Dados = new List<Gasto>();
+            bool Executado = true;
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     Dados = await srv.ListarGasto(ItemCriterioBusca);
 
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
                 Dados = await DatabaseService.Database.ListarGasto(ItemCriterioBusca);
 
             ListaDados = new ObservableCollection<Gasto>(Dados);
@@ -172,15 +176,19 @@ namespace CV.Mobile.ViewModels
         private async Task VerificarAcaoItem(ItemTappedEventArgs itemSelecionado)
         {
             Gasto ItemGasto = null;
+            bool Executado = true;
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     ItemGasto = await srv.CarregarGasto(((Gasto)itemSelecionado.Item).Identificador);
 
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
             {
                 ItemGasto = await DatabaseService.CarregarGasto(((Gasto)itemSelecionado.Item).Identificador);
             }

@@ -59,33 +59,37 @@ namespace CV.Mobile.ViewModels
                 ItemAgenda.DataFim = DateTime.SpecifyKind(ItemAgenda.DataFim.GetValueOrDefault().Date.Add(ItemAgenda.HoraFim.Value),DateTimeKind.Unspecified);
                 itemAgenda.itemCalendario = ItemAgenda;
                 ResultadoOperacao Resultado = new ResultadoOperacao();
+                bool Executado = true;
                 if (Conectado)
                 {
                     using (ApiService srv = new ApiService())
                     {
-                        Resultado = await srv.SalvarAgendarSugestao(itemAgenda);
-                        if (Resultado.Sucesso)
-                        {
-                            base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "CP", Resultado.IdentificadorRegistro.GetValueOrDefault(), true);
-                            ItemAgenda.Identificador = Resultado.IdentificadorRegistro;
-                            itemAgenda.itemCalendario.DataProximoAviso = itemAgenda.itemCalendario.DataInicio.GetValueOrDefault(new DateTime(1900, 01, 01));
-
-                            await DatabaseService.Database.SalvarCalendarioPrevisto(ItemAgenda);
-                            var itemSugestao = await DatabaseService.Database.RetornarSugestao(ItemSugestao.Identificador);
-                            if (itemSugestao != null)
+                        try {
+                            Resultado = await srv.SalvarAgendarSugestao(itemAgenda);
+                            if (Resultado.Sucesso)
                             {
-                                ItemSugestao.Id = itemSugestao.Id;
-                            }
-                            ItemSugestao.Status = 2;
-                            ItemSugestao.AtualizadoBanco = true;
-                            ItemSugestao.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                                base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "CP", Resultado.IdentificadorRegistro.GetValueOrDefault(), true);
+                                ItemAgenda.Identificador = Resultado.IdentificadorRegistro;
+                                itemAgenda.itemCalendario.DataProximoAviso = itemAgenda.itemCalendario.DataInicio.GetValueOrDefault(new DateTime(1900, 01, 01));
 
-                            await DatabaseService.Database.SalvarSugestao(ItemSugestao);
-                          
+                                await DatabaseService.Database.SalvarCalendarioPrevisto(ItemAgenda);
+                                var itemSugestao = await DatabaseService.Database.RetornarSugestao(ItemSugestao.Identificador);
+                                if (itemSugestao != null)
+                                {
+                                    ItemSugestao.Id = itemSugestao.Id;
+                                }
+                                ItemSugestao.Status = 2;
+                                ItemSugestao.AtualizadoBanco = true;
+                                ItemSugestao.DataAtualizacao = DateTime.Now.ToUniversalTime();
+
+                                await DatabaseService.Database.SalvarSugestao(ItemSugestao);
+
+                            }
                         }
-                    }
+                        catch { Executado = false; }
+                        }
                 }
-                else
+                if (!Executado)
                 {
                     itemAgenda.itemSugestao.AtualizadoBanco = false;
                     itemAgenda.itemCalendario.AtualizadoBanco = false;

@@ -150,15 +150,19 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaCidades()
         {
             List<Cidade> Dados = new List<Cidade>();
+            bool Executado = true;
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     Dados = await srv.ListarCidadeComentario();
 
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
             {
                 Dados = await DatabaseService.Database.ListarCidade_Tipo("CO");
             }
@@ -171,15 +175,19 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaDados()
         {
             List<Comentario> Dados = new List<Comentario>();
+            bool Executado = true;
             if (Conectado)
             {
+                try { 
                 using (ApiService srv = new ApiService())
                 {
                     Dados = await srv.ListarComentario(ItemCriterioBusca);
 
                 }
+                }
+                catch { Executado = false; }
             }
-            else
+            if (!Executado)
             {
                 Dados = await DatabaseService.Database.ListarComentario(ItemCriterioBusca);
             }
@@ -192,11 +200,19 @@ namespace CV.Mobile.ViewModels
         private async Task VerificarAcaoItem(ItemTappedEventArgs itemSelecionado)
         {
             Comentario ItemComentario = ((Comentario)itemSelecionado.Item).Clone();
+            
             if (Conectado)
             {
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    ItemComentario = await srv.CarregarComentario(((Comentario)itemSelecionado.Item).Identificador);
+                    using (ApiService srv = new ApiService())
+                    {
+                        ItemComentario = await srv.CarregarComentario(((Comentario)itemSelecionado.Item).Identificador);
+
+                    }
+                }
+                catch
+                {
 
                 }
             }

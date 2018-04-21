@@ -129,8 +129,10 @@ namespace CV.Mobile.ViewModels
                 
                 ItemComentario.Data = DateTime.SpecifyKind(ItemComentario.Data.GetValueOrDefault().Date.Add(ItemComentario.Hora.GetValueOrDefault()), DateTimeKind.Unspecified);
                 ResultadoOperacao Resultado = new ResultadoOperacao();
+                bool Executado = true;
                 if (Conectado)
                 {
+                    try {
                     using (ApiService srv = new ApiService())
                     {
                         bool Inclusao = !ItemComentario.Identificador.HasValue;
@@ -148,10 +150,12 @@ namespace CV.Mobile.ViewModels
                             await DatabaseService.Database.SalvarComentario(itembase);
 
                         }
+                        }
                     }
-                    
+                    catch { Executado = false; }
+
                 }
-                else
+                if (!Executado)
                 {
                     ItemComentario.AtualizadoBanco = false;
                     Resultado = await DatabaseService.SalvarComentario(ItemComentario);
@@ -204,8 +208,10 @@ namespace CV.Mobile.ViewModels
                     if (!result) return;
                     ItemComentario.DataExclusao = DateTime.Now.ToUniversalTime();
                     ResultadoOperacao Resultado = new ResultadoOperacao();
+                    bool Executado = true;
                     if (Conectado)
                     {
+                        try { 
                         using (ApiService srv = new ApiService())
                         {
                             Resultado = await srv.ExcluirComentario(ItemComentario.Identificador);
@@ -215,8 +221,10 @@ namespace CV.Mobile.ViewModels
                              await DatabaseService.Database.ExcluirComentario(itemAjustar);
                             
                         }
+                        }
+                        catch { Executado = false; }
                     }
-                    else
+                    if (!Executado)
                     {
                         if (ItemComentario.Identificador > 0)
                         {
