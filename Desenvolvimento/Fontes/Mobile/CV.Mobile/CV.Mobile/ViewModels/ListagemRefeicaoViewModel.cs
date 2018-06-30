@@ -54,7 +54,7 @@ namespace CV.Mobile.ViewModels
             MessagingService.Current.Subscribe<Refeicao>(MessageKeys.ManutencaoRefeicao, (service, item) =>
             {
                 IsBusy = true;
-                
+
                 if (ListaDados.Where(d => d.Identificador == item.Identificador).Any())
                 {
                     var Posicao = ListaDados.IndexOf(ListaDados.Where(d => d.Identificador == item.Identificador).FirstOrDefault());
@@ -151,16 +151,18 @@ namespace CV.Mobile.ViewModels
         {
 
             List<Cidade> Dados = new List<Cidade>();
-            bool Executado = true;
-            
+            bool Executado = false;
+
             if (Conectado)
             {
-                try { 
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    Dados = await srv.ListarCidadeRefeicao();
+                    using (ApiService srv = new ApiService())
+                    {
+                        Dados = await srv.ListarCidadeRefeicao();
 
-                }
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }
@@ -171,22 +173,24 @@ namespace CV.Mobile.ViewModels
             ListaCidades = new ObservableCollection<Cidade>(Dados);
             OnPropertyChanged("ListaCidades");
 
-          
+
         }
-      
+
 
         private async Task CarregarListaDados()
         {
             List<Refeicao> Dados = new List<Refeicao>();
-            bool Executado = true;
+            bool Executado = false;
             if (Conectado)
             {
-                try { 
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    Dados = await srv.ListarRefeicao(ItemCriterioBusca);
+                    using (ApiService srv = new ApiService())
+                    {
+                        Dados = await srv.ListarRefeicao(ItemCriterioBusca);
 
-                }
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }
@@ -198,44 +202,48 @@ namespace CV.Mobile.ViewModels
             OnPropertyChanged("ListaDados");
             IsLoadingLista = false;
 
-            
+
         }
 
         private async Task VerificarAcaoItem(ItemTappedEventArgs itemSelecionado)
         {
 
             Refeicao ItemRefeicao = null;
-            bool Executado = true;
+            bool Executado = false;
             if (Conectado)
             {
-                try { 
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    ItemRefeicao = await srv.CarregarRefeicao(((Refeicao)itemSelecionado.Item).Identificador);
+                    using (ApiService srv = new ApiService())
+                    {
+                        ItemRefeicao = await srv.CarregarRefeicao(((Refeicao)itemSelecionado.Item).Identificador);
 
-                }
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }
             if (!Executado)
                 ItemRefeicao = await DatabaseService.CarregarRefeicao(((Refeicao)itemSelecionado.Item).Identificador);
 
-              var Pagina = new EdicaoRefeicaoPage() { BindingContext = new EdicaoRefeicaoViewModel(ItemRefeicao,ItemViagem) };
-                await PushAsync(Pagina);
-            
+            var Pagina = new EdicaoRefeicaoPage() { BindingContext = new EdicaoRefeicaoViewModel(ItemRefeicao, ItemViagem) };
+            await PushAsync(Pagina);
+
         }
         private async Task Adicionar()
         {
             var ItemRefeicao = new Refeicao() { Pedidos = new ObservableRangeCollection<RefeicaoPedido>(), Data = DateTime.Now, Hora = DateTime.Now.TimeOfDay };
             Atracao AtracaoAberto = null;
-            bool Executado = true;
+            bool Executado = false;
             if (Conectado)
             {
-                try {
-                    using (ApiService srv = new ApiService())
+                try
                 {
-                    AtracaoAberto = await srv.VerificarAtracaoAberto();
-                }
+                    using (ApiService srv = new ApiService())
+                    {
+                        AtracaoAberto = await srv.VerificarAtracaoAberto();
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }

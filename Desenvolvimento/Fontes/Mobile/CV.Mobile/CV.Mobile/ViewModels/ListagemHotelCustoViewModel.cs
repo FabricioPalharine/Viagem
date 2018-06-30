@@ -69,29 +69,31 @@ namespace CV.Mobile.ViewModels
             MessagingService.Current.Subscribe<Gasto>(MessageKeys.GastoSelecionado, async (service, item) =>
             {
                 var itemGravar = new GastoHotel() { IdentificadorHotel = ItemHotel.Identificador, IdentificadorGasto = item.Identificador, DataAtualizacao = DateTime.Now.ToUniversalTime() };
-                bool Executado = true;
+                bool Executado = false;
                 if (Conectado)
                 {
-                    try { 
-                    using (ApiService srv = new ApiService())
+                    try
                     {
-                        var Resultado = await srv.SalvarGastoHotel(itemGravar);
-                        if (Resultado.Sucesso)
+                        using (ApiService srv = new ApiService())
                         {
-                            itemGravar.Identificador = Resultado.IdentificadorRegistro;
-                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "GH", itemGravar.Identificador.GetValueOrDefault(), true);
-                            itemGravar.ItemGasto = item;
-                            await DatabaseService.Database.SalvarGastoHotel(itemGravar);
-                            MessagingService.Current.SendMessage<GastoHotel>(MessageKeys.ManutencaoGastoHotel, itemGravar);
+                            var Resultado = await srv.SalvarGastoHotel(itemGravar);
+                            if (Resultado.Sucesso)
+                            {
+                                itemGravar.Identificador = Resultado.IdentificadorRegistro;
+                                AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "GH", itemGravar.Identificador.GetValueOrDefault(), true);
+                                itemGravar.ItemGasto = item;
+                                await DatabaseService.Database.SalvarGastoHotel(itemGravar);
+                                MessagingService.Current.SendMessage<GastoHotel>(MessageKeys.ManutencaoGastoHotel, itemGravar);
 
+                            }
+                            Executado = true;
                         }
-                    }
                     }
                     catch { Executado = false; }
                 }
-                if(!Executado)
+                if (!Executado)
                 {
-                    if (!(await DatabaseService.Database.ListarGastoHotel_IdentificadorGasto(item.Identificador)).Where(d=>!d.DataExclusao.HasValue).Any())
+                    if (!(await DatabaseService.Database.ListarGastoHotel_IdentificadorGasto(item.Identificador)).Where(d => !d.DataExclusao.HasValue).Any())
                     {
                         itemGravar.AtualizadoBanco = false;
                         itemGravar.ItemGasto = item;
@@ -132,20 +134,22 @@ namespace CV.Mobile.ViewModels
                     if (!result) return;
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     obj.DataExclusao = DateTime.Now.ToUniversalTime();
-                    bool Executado = true;
+                    bool Executado = false;
                     if (Conectado)
                     {
-                        try { 
-                        using (ApiService srv = new ApiService())
+                        try
                         {
-                            Resultado = await srv.SalvarGastoHotel(obj);
-                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "GH", obj.Identificador.GetValueOrDefault(), false);
+                            using (ApiService srv = new ApiService())
+                            {
+                                Resultado = await srv.SalvarGastoHotel(obj);
+                                AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "GH", obj.Identificador.GetValueOrDefault(), false);
 
-                            var itemBase = await DatabaseService.Database.RetornarGastoHotel(obj.Identificador);
-                            if (itemBase != null)
-                                await DatabaseService.Database.ExcluirGastoHotel(itemBase);
+                                var itemBase = await DatabaseService.Database.RetornarGastoHotel(obj.Identificador);
+                                if (itemBase != null)
+                                    await DatabaseService.Database.ExcluirGastoHotel(itemBase);
 
-                        }
+                            }
+                            Executado = true;
                         }
                         catch { Executado = false; }
                     }

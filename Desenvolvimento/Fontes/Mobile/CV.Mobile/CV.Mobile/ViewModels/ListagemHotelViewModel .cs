@@ -26,7 +26,7 @@ namespace CV.Mobile.ViewModels
         public ListagemHotelViewModel(Viagem pitemViagem)
         {
             ItemViagem = pitemViagem;
-            ItemCriterioBusca = new CriterioBusca() { Situacao=1};
+            ItemCriterioBusca = new CriterioBusca() { Situacao = 1 };
             PageAppearingCommand = new Command(
                                                                    async () =>
                                                                    {
@@ -58,7 +58,7 @@ namespace CV.Mobile.ViewModels
             MessagingService.Current.Subscribe<Hotel>(MessageKeys.ManutencaoHotel, (service, item) =>
             {
                 IsBusy = true;
-                
+
                 if (ListaDados.Where(d => d.Identificador == item.Identificador).Any())
                 {
                     var Posicao = ListaDados.IndexOf(ListaDados.Where(d => d.Identificador == item.Identificador).FirstOrDefault());
@@ -155,15 +155,17 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaCidades()
         {
             List<Cidade> Dados = new List<Cidade>();
-            bool Executado = true;
+            bool Executado = false;
             if (Conectado)
             {
-                try { 
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    Dados = await srv.ListarCidadeHotel();
+                    using (ApiService srv = new ApiService())
+                    {
+                        Dados = await srv.ListarCidadeHotel();
 
-                }
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }
@@ -174,22 +176,24 @@ namespace CV.Mobile.ViewModels
             ListaCidades = new ObservableCollection<Cidade>(Dados);
             OnPropertyChanged("ListaCidades");
 
-           
+
         }
-      
+
 
         private async Task CarregarListaDados()
         {
             List<Hotel> Dados = new List<Hotel>();
-            bool Executado = true;
+            bool Executado = false;
             if (Conectado)
             {
-                try { 
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    Dados = await srv.ListarHotel(ItemCriterioBusca);
+                    using (ApiService srv = new ApiService())
+                    {
+                        Dados = await srv.ListarHotel(ItemCriterioBusca);
 
-                }
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }
@@ -205,15 +209,17 @@ namespace CV.Mobile.ViewModels
         private async Task VerificarAcaoItem(ItemTappedEventArgs itemSelecionado)
         {
             Hotel ItemHotel = null;
-            bool Executado = true;
+            bool Executado = false;
             if (Conectado)
             {
-                try { 
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    ItemHotel = await srv.CarregarHotel(((Hotel)itemSelecionado.Item).Identificador);
+                    using (ApiService srv = new ApiService())
+                    {
+                        ItemHotel = await srv.CarregarHotel(((Hotel)itemSelecionado.Item).Identificador);
 
-                }
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }
@@ -226,12 +232,12 @@ namespace CV.Mobile.ViewModels
 
         private async Task Adicionar()
         {
-            var ItemHotel = new Hotel() { Avaliacoes = new ObservableRangeCollection<HotelAvaliacao>(), Eventos= new ObservableRangeCollection<HotelEvento>()  } ;
-           
-                    var Pagina = new EdicaoHotelPage() { BindingContext = new EdicaoHotelViewModel(ItemHotel, ItemViagem) };
-                    await PushAsync(Pagina);
-                
-            
+            var ItemHotel = new Hotel() { Avaliacoes = new ObservableRangeCollection<HotelAvaliacao>(), Eventos = new ObservableRangeCollection<HotelEvento>() };
+
+            var Pagina = new EdicaoHotelPage() { BindingContext = new EdicaoHotelViewModel(ItemHotel, ItemViagem) };
+            await PushAsync(Pagina);
+
+
         }
 
     }

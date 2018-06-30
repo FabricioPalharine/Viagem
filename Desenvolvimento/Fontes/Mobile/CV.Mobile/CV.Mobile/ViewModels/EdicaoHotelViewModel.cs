@@ -82,7 +82,7 @@ namespace CV.Mobile.ViewModels
 
         private async Task TrocarSituacaoEvento()
         {
-            bool Executado = true;
+            bool Executado = false;
             if (Conectado)
             {
                 try
@@ -107,6 +107,7 @@ namespace CV.Mobile.ViewModels
                             AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "HE", pItemEvento.Identificador.GetValueOrDefault(), false);
                         }
                     }
+                    Executado = true;
                 }
                 catch { Executado = false; }
 
@@ -472,7 +473,7 @@ namespace CV.Mobile.ViewModels
             {
                 ItemAvaliacao.DataAtualizacao = DateTime.Now.ToUniversalTime();
                 Hotel pItemHotel = new Hotel();
-                bool Executado = true;
+                bool Executado = false;
                 if (Conectado && ItemHotel.Identificador.HasValue && ItemHotel.Identificador > 0)
                 {
                     try
@@ -482,6 +483,7 @@ namespace CV.Mobile.ViewModels
                         {
                             pItemHotel = await srv.CarregarHotel(ItemHotel.Identificador.GetValueOrDefault(-1));
                         }
+                        Executado = true;
                     }
                     catch { Executado = false; }
                 }
@@ -649,7 +651,7 @@ namespace CV.Mobile.ViewModels
                 OnCompleted = new Action<bool>(async result =>
                 {
                     if (!result) return;
-                    bool Executado = true;
+                    bool Executado = false;
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     ItemHotel.DataExclusao = DateTime.Now.ToUniversalTime();
                     if (Conectado)
@@ -662,6 +664,7 @@ namespace CV.Mobile.ViewModels
                                 await DatabaseService.ExcluirHotel(ItemHotel.Identificador, true);
                                 AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "H", ItemHotel.Identificador.GetValueOrDefault(), false);
                             }
+                            Executado = true;
                         }
                         catch { Executado = false; }
                     }

@@ -23,11 +23,11 @@ namespace CV.Mobile.ViewModels
 
         private MapSpan _Bounds;
         private Position _MapCenter;
-        public EdicaoCalendarioPrevistoViewModel(CalendarioPrevisto pItemCalendarioPrevisto )
+        public EdicaoCalendarioPrevistoViewModel(CalendarioPrevisto pItemCalendarioPrevisto)
         {
             ItemCalendarioPrevisto = pItemCalendarioPrevisto;
             ExcluirCommand = new Command(
-                                 () =>  Cancelar(),
+                                 () => Cancelar(),
                                 () => true);
             PageAppearingCommand = new Command(async () => await CarregarPagina(), () => true);
             SalvarCommand = new Command(async () => await Salvar(), () => true);
@@ -65,7 +65,7 @@ namespace CV.Mobile.ViewModels
                 ItemCalendarioPrevisto.DataInicio = DateTime.SpecifyKind(ItemCalendarioPrevisto.DataInicio.GetValueOrDefault().Date.Add(ItemCalendarioPrevisto.HoraInicio.Value), DateTimeKind.Unspecified);
                 ItemCalendarioPrevisto.DataFim = DateTime.SpecifyKind(ItemCalendarioPrevisto.DataFim.GetValueOrDefault().Date.Add(ItemCalendarioPrevisto.HoraFim.Value), DateTimeKind.Unspecified);
                 ResultadoOperacao Resultado = new ResultadoOperacao();
-                bool Executado = true;
+                bool Executado = false;
                 if (Conectado)
                 {
                     using (ApiService srv = new ApiService())
@@ -84,12 +84,13 @@ namespace CV.Mobile.ViewModels
                                 await DatabaseService.Database.SalvarCalendarioPrevisto(itemRetorno);
                                 base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "CP", itemRetorno.Identificador.GetValueOrDefault(), !ItemCalendarioPrevisto.Identificador.HasValue);
                             }
+                            Executado = true;
 
                         }
                         catch { Executado = false; }
                     }
                 }
-                
+
                 if (!Executado)
                 {
                     ItemCalendarioPrevisto.DataProximoAviso = ItemCalendarioPrevisto.DataInicio.GetValueOrDefault(new DateTime(1900, 01, 01));
@@ -159,7 +160,7 @@ namespace CV.Mobile.ViewModels
             PermiteExcluir = ItemCalendarioPrevisto.Identificador.HasValue;
             if (Bounds == null)
                 await CarregarPosicao();
- 
+
         }
         public async Task CarregarPosicao()
         {
@@ -177,7 +178,7 @@ namespace CV.Mobile.ViewModels
             }
 
         }
-       
+
         public CalendarioPrevisto ItemCalendarioPrevisto
         {
             get
@@ -200,7 +201,7 @@ namespace CV.Mobile.ViewModels
 
             set
             {
-                SetProperty(ref _PermiteExcluir, value); 
+                SetProperty(ref _PermiteExcluir, value);
             }
         }
 
@@ -217,7 +218,7 @@ namespace CV.Mobile.ViewModels
             }
         }
 
-        
+
         public Position MapCenter
         {
             get
@@ -231,7 +232,7 @@ namespace CV.Mobile.ViewModels
             }
         }
 
-        private  void Cancelar()
+        private void Cancelar()
         {
             MessagingService.Current.SendMessage<MessagingServiceQuestion>(MessageKeys.DisplayQuestion, new MessagingServiceQuestion()
             {
@@ -253,7 +254,7 @@ namespace CV.Mobile.ViewModels
                             if (itemBase != null)
 
                                 await DatabaseService.Database.ExcluirCalendarioPrevisto(itemBase);
-                            base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "CP", ItemCalendarioPrevisto.Identificador.GetValueOrDefault(),false);
+                            base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "CP", ItemCalendarioPrevisto.Identificador.GetValueOrDefault(), false);
 
                         }
                     }
@@ -288,7 +289,7 @@ namespace CV.Mobile.ViewModels
                 })
             });
 
-           
+
         }
     }
 }

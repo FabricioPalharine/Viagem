@@ -53,7 +53,7 @@ namespace CV.Mobile.ViewModels
            });
         }
 
-       
+
 
         private bool _IsLoadingCotacao;
         private CotacaoMoeda _CotacaoSelecionada;
@@ -97,15 +97,17 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaCotacoes()
         {
             List<CotacaoMoeda> Dados = new List<CotacaoMoeda>();
-            bool Executado = true;
+            bool Executado = false;
             if (Conectado)
             {
-                try { 
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    Dados = await srv.ListarCotacaoMoeda();
+                    using (ApiService srv = new ApiService())
+                    {
+                        Dados = await srv.ListarCotacaoMoeda();
 
-                }
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }
@@ -128,21 +130,23 @@ namespace CV.Mobile.ViewModels
                 {
                     if (!result) return;
                     ResultadoOperacao Resultado = new ResultadoOperacao();
-                    bool Executado = true;
+                    bool Executado = false;
                     if (Conectado)
                     {
-                        try {
-                        using (ApiService srv = new ApiService())
+                        try
                         {
-                            Resultado = await srv.ExcluirCotacaoMoeda(itemCotacao.Identificador);
-                            base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "CM", itemCotacao.Identificador.GetValueOrDefault(Resultado.IdentificadorRegistro.GetValueOrDefault()), false);
+                            using (ApiService srv = new ApiService())
+                            {
+                                Resultado = await srv.ExcluirCotacaoMoeda(itemCotacao.Identificador);
+                                base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "CM", itemCotacao.Identificador.GetValueOrDefault(Resultado.IdentificadorRegistro.GetValueOrDefault()), false);
 
-                            var itemAjustar = await DatabaseService.Database.RetornarCotacaoMoeda(itemCotacao.Identificador);
-                            if (itemAjustar != null)
-                                await DatabaseService.Database.ExcluirCotacaoMoeda(itemAjustar);
-                            
+                                var itemAjustar = await DatabaseService.Database.RetornarCotacaoMoeda(itemCotacao.Identificador);
+                                if (itemAjustar != null)
+                                    await DatabaseService.Database.ExcluirCotacaoMoeda(itemAjustar);
 
-                        }
+
+                            }
+                            Executado = true;
                         }
                         catch { Executado = false; }
                     }
@@ -191,7 +195,7 @@ namespace CV.Mobile.ViewModels
 
         private async Task AbrirInclusao()
         {
-            var itemEditar = new CotacaoMoeda() { DataCotacao = DateTime.Today, IdentificadorViagem = ItemViagem.Identificador, Moeda = ItemViagem.Moeda , ValorCotacao=0};
+            var itemEditar = new CotacaoMoeda() { DataCotacao = DateTime.Today, IdentificadorViagem = ItemViagem.Identificador, Moeda = ItemViagem.Moeda, ValorCotacao = 0 };
             EdicaoCotacaoPage pagina = new EdicaoCotacaoPage() { BindingContext = new EditarCotacaoViewModel(itemEditar) };
             await PushAsync(pagina);
 

@@ -15,7 +15,7 @@ namespace CV.Mobile.ViewModels
 {
     public class ListagemViagemAereaCustoViewModel : BaseNavigationViewModel
     {
-       
+
         private GastoViagemAerea _ItemSelecionado;
         private ViagemAerea _ItemViagemAerea;
 
@@ -64,30 +64,31 @@ namespace CV.Mobile.ViewModels
                 }
                 IsBusy = false;
             });
-            
+
 
             MessagingService.Current.Subscribe<Gasto>(MessageKeys.GastoSelecionado, async (service, item) =>
             {
                 var itemGravar = new GastoViagemAerea() { IdentificadorViagemAerea = ItemViagemAerea.Identificador, IdentificadorGasto = item.Identificador, DataAtualizacao = DateTime.Now.ToUniversalTime() };
-                bool Executado = true;
+                bool Executado = false;
 
                 if (Conectado)
                 {
                     try
-                    { 
-                    using (ApiService srv = new ApiService())
                     {
-                        var Resultado = await srv.SalvarGastoViagemAerea(itemGravar);
-                        if (Resultado.Sucesso)
+                        using (ApiService srv = new ApiService())
                         {
-                            itemGravar.Identificador = Resultado.IdentificadorRegistro;
-                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "GV", itemGravar.Identificador.GetValueOrDefault(), true);
-                            itemGravar.ItemGasto = item;
-                            await DatabaseService.Database.SalvarGastoViagemAerea(itemGravar);
-                            MessagingService.Current.SendMessage<GastoViagemAerea>(MessageKeys.ManutencaoGastoViagemAerea, itemGravar);
+                            var Resultado = await srv.SalvarGastoViagemAerea(itemGravar);
+                            if (Resultado.Sucesso)
+                            {
+                                itemGravar.Identificador = Resultado.IdentificadorRegistro;
+                                AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "GV", itemGravar.Identificador.GetValueOrDefault(), true);
+                                itemGravar.ItemGasto = item;
+                                await DatabaseService.Database.SalvarGastoViagemAerea(itemGravar);
+                                MessagingService.Current.SendMessage<GastoViagemAerea>(MessageKeys.ManutencaoGastoViagemAerea, itemGravar);
 
+                            }
                         }
-                    }
+                        Executado = true;
                     }
                     catch { Executado = false; }
                 }
@@ -106,17 +107,17 @@ namespace CV.Mobile.ViewModels
 
 
             });
-            MessagingService.Current.Subscribe<Gasto>(MessageKeys.GastoIncluido,  (service, item) =>
-            {
-                var itemGravar = new GastoViagemAerea() { IdentificadorViagemAerea = ItemViagemAerea.Identificador, IdentificadorGasto = item.Identificador, DataAtualizacao = DateTime.Now.ToUniversalTime() };
-               
-                        itemGravar.Identificador = item.Atracoes.Select(d => d.Identificador).FirstOrDefault();
-                        itemGravar.ItemGasto = item;
-                        MessagingService.Current.SendMessage<GastoViagemAerea>(MessageKeys.ManutencaoGastoViagemAerea, itemGravar);
-                   
-                
+            MessagingService.Current.Subscribe<Gasto>(MessageKeys.GastoIncluido, (service, item) =>
+           {
+               var itemGravar = new GastoViagemAerea() { IdentificadorViagemAerea = ItemViagemAerea.Identificador, IdentificadorGasto = item.Identificador, DataAtualizacao = DateTime.Now.ToUniversalTime() };
 
-            });
+               itemGravar.Identificador = item.Atracoes.Select(d => d.Identificador).FirstOrDefault();
+               itemGravar.ItemGasto = item;
+               MessagingService.Current.SendMessage<GastoViagemAerea>(MessageKeys.ManutencaoGastoViagemAerea, itemGravar);
+
+
+
+           });
         }
 
         private void VerificarExclusao(GastoViagemAerea obj)
@@ -133,21 +134,22 @@ namespace CV.Mobile.ViewModels
 
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     obj.DataExclusao = DateTime.Now.ToUniversalTime();
-                    bool Executado = true;
+                    bool Executado = false;
                     if (Conectado)
                     {
                         try
-                        { 
-                        using (ApiService srv = new ApiService())
                         {
-                            Resultado = await srv.SalvarGastoViagemAerea(obj);
-                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "Gv", obj.Identificador.GetValueOrDefault(), false);
+                            using (ApiService srv = new ApiService())
+                            {
+                                Resultado = await srv.SalvarGastoViagemAerea(obj);
+                                AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "Gv", obj.Identificador.GetValueOrDefault(), false);
 
-                            var itemBase = await DatabaseService.Database.RetornarGastoViagemAerea(obj.Identificador);
-                            if (itemBase != null)
-                                await DatabaseService.Database.ExcluirGastoViagemAerea(itemBase);
+                                var itemBase = await DatabaseService.Database.RetornarGastoViagemAerea(obj.Identificador);
+                                if (itemBase != null)
+                                    await DatabaseService.Database.ExcluirGastoViagemAerea(itemBase);
 
-                        }
+                            }
+                            Executado = true;
                         }
                         catch { Executado = false; }
                     }
@@ -178,7 +180,7 @@ namespace CV.Mobile.ViewModels
         }
 
         public Viagem ItemViagem { get; set; }
-           
+
 
 
         public ObservableCollection<GastoViagemAerea> ListaDados { get; set; }
@@ -187,7 +189,7 @@ namespace CV.Mobile.ViewModels
         public Command ItemTappedCommand { get; set; }
         public Command AdicionarCommand { get; set; }
 
-        
+
 
         public GastoViagemAerea ItemSelecionado
         {
@@ -216,11 +218,11 @@ namespace CV.Mobile.ViewModels
             }
         }
 
-       
-      
+
+
         private async Task Adicionar()
         {
-            var action = await Application.Current.MainPage.DisplayActionSheet(string.Empty,"Cancelar",null,
+            var action = await Application.Current.MainPage.DisplayActionSheet(string.Empty, "Cancelar", null,
                        "Novo Custo",
                        "Custo Existente"
                       );
@@ -242,7 +244,7 @@ namespace CV.Mobile.ViewModels
                     Moeda = ItemViagem.Moeda,
                     Usuarios = new MvvmHelpers.ObservableRangeCollection<GastoDividido>(),
                     Alugueis = new MvvmHelpers.ObservableRangeCollection<AluguelGasto>(),
-                    ViagenAereas = new MvvmHelpers.ObservableRangeCollection<GastoViagemAerea>(new GastoViagemAerea[] { CustoViagemAerea}),
+                    ViagenAereas = new MvvmHelpers.ObservableRangeCollection<GastoViagemAerea>(new GastoViagemAerea[] { CustoViagemAerea }),
                     Compras = new MvvmHelpers.ObservableRangeCollection<GastoCompra>(),
                     Atracoes = new MvvmHelpers.ObservableRangeCollection<GastoAtracao>(),
                     Reabastecimentos = new MvvmHelpers.ObservableRangeCollection<ReabastecimentoGasto>(),

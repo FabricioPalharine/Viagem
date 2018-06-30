@@ -23,7 +23,7 @@ namespace CV.Mobile.ViewModels
     public class EdicaoCarroViewModel : BaseNavigationViewModel
     {
         private Carro _ItemCarro;
-        private double _TamanhoGrid=0;
+        private double _TamanhoGrid = 0;
         private bool _PermiteExcluir = true;
         private bool _PossoComentar = false;
         private bool _VisitaIniciada = false;
@@ -471,22 +471,24 @@ namespace CV.Mobile.ViewModels
 
                 ResultadoOperacao Resultado = null;
                 Carro pItemCarro = null;
-                bool Executado = true;
+                bool Executado = false;
                 if (Conectado)
                 {
-                    try { 
-                    using (ApiService srv = new ApiService())
+                    try
                     {
-                        Resultado = await srv.SalvarCarro(ItemCarro);
-                        if (Resultado.Sucesso)
+                        using (ApiService srv = new ApiService())
                         {
+                            Resultado = await srv.SalvarCarro(ItemCarro);
+                            if (Resultado.Sucesso)
+                            {
 
-                            pItemCarro = await srv.CarregarCarro(Resultado.IdentificadorRegistro);
-                            AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "C", pItemCarro.Identificador.GetValueOrDefault(), !ItemCarro.Identificador.HasValue);
-                            await DatabaseService.SalvarCarroReplicada(pItemCarro);
+                                pItemCarro = await srv.CarregarCarro(Resultado.IdentificadorRegistro);
+                                AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "C", pItemCarro.Identificador.GetValueOrDefault(), !ItemCarro.Identificador.HasValue);
+                                await DatabaseService.SalvarCarroReplicada(pItemCarro);
+                            }
+
                         }
-
-                    }
+                        Executado = true;
                     }
                     catch { Executado = false; }
                 }
@@ -556,17 +558,19 @@ namespace CV.Mobile.ViewModels
                     if (!result) return;
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     ItemCarro.DataExclusao = DateTime.Now.ToUniversalTime();
-                    bool Executado = true;
+                    bool Executado = false;
                     if (Conectado)
                     {
-                        try { 
-                        using (ApiService srv = new ApiService())
+                        try
                         {
-                            Resultado = await srv.ExcluirCarro(ItemCarro.Identificador);
-                            AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "C", ItemCarro.Identificador.GetValueOrDefault(), false);
+                            using (ApiService srv = new ApiService())
+                            {
+                                Resultado = await srv.ExcluirCarro(ItemCarro.Identificador);
+                                AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "C", ItemCarro.Identificador.GetValueOrDefault(), false);
 
-                            await DatabaseService.ExcluirCarro(ItemCarro.Identificador, true);
-                        }
+                                await DatabaseService.ExcluirCarro(ItemCarro.Identificador, true);
+                            }
+                            Executado = true;
                         }
                         catch { Executado = false; }
                     }

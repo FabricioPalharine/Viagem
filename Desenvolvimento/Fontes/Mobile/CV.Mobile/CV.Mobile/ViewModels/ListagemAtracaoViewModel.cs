@@ -25,7 +25,7 @@ namespace CV.Mobile.ViewModels
         public ListagemAtracaoViewModel(Viagem pitemViagem)
         {
             ItemViagem = pitemViagem;
-            ItemCriterioBusca = new CriterioBusca() { Situacao=1};
+            ItemCriterioBusca = new CriterioBusca() { Situacao = 1 };
             PageAppearingCommand = new Command(
                                                                    async () =>
                                                                    {
@@ -57,7 +57,7 @@ namespace CV.Mobile.ViewModels
             MessagingService.Current.Subscribe<Atracao>(MessageKeys.ManutencaoAtracao, (service, item) =>
             {
                 IsBusy = true;
-                
+
                 if (ListaDados.Where(d => d.Identificador == item.Identificador).Any())
                 {
                     var Posicao = ListaDados.IndexOf(ListaDados.Where(d => d.Identificador == item.Identificador).FirstOrDefault());
@@ -154,16 +154,17 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaCidades()
         {
             List<Cidade> Dados = new List<Cidade>();
-            bool Executado = true;
+            bool Executado = false;
             if (Conectado)
             {
                 try
-                { 
-                using (ApiService srv = new ApiService())
                 {
-                    Dados = await srv.ListarCidadeAtracao();
+                    using (ApiService srv = new ApiService())
+                    {
+                        Dados = await srv.ListarCidadeAtracao();
 
-                }
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }
@@ -174,20 +175,22 @@ namespace CV.Mobile.ViewModels
             ListaCidades = new ObservableCollection<Cidade>(Dados);
             OnPropertyChanged("ListaCidades");
         }
-      
+
 
         private async Task CarregarListaDados()
         {
             List<Atracao> Dados = new List<Atracao>();
-            bool Executado = true;
+            bool Executado = false;
             if (Conectado)
             {
-                try { 
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    Dados = await srv.ListarAtracao(ItemCriterioBusca);
+                    using (ApiService srv = new ApiService())
+                    {
+                        Dados = await srv.ListarAtracao(ItemCriterioBusca);
 
-                }
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }
@@ -203,15 +206,17 @@ namespace CV.Mobile.ViewModels
         private async Task VerificarAcaoItem(ItemTappedEventArgs itemSelecionado)
         {
             Atracao ItemAtracao = null;
-            bool Executado = true;
+            bool Executado = false;
             if (Conectado)
             {
-                try { 
-                using (ApiService srv = new ApiService())
+                try
                 {
-                     ItemAtracao = await srv.CarregarAtracao(((Atracao)itemSelecionado.Item).Identificador);
+                    using (ApiService srv = new ApiService())
+                    {
+                        ItemAtracao = await srv.CarregarAtracao(((Atracao)itemSelecionado.Item).Identificador);
 
-                }
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }
@@ -225,14 +230,16 @@ namespace CV.Mobile.ViewModels
         {
             var ItemAtracao = new Atracao() { Avaliacoes = new ObservableCollection<AvaliacaoAtracao>() };
             Atracao AtracaoAberto = null;
-            bool Executado = true;
+            bool Executado = false;
             if (Conectado)
             {
-                try { 
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    AtracaoAberto = await srv.VerificarAtracaoAberto();
-                }
+                    using (ApiService srv = new ApiService())
+                    {
+                        AtracaoAberto = await srv.VerificarAtracaoAberto();
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }

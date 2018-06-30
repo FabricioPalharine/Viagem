@@ -23,7 +23,7 @@ namespace CV.Mobile.ViewModels
     {
         private CarroDeslocamento _ItemCarroDeslocamento;
         private bool _PermiteExcluir = true;
-        private double _TamanhoGrid ;
+        private double _TamanhoGrid;
         private bool _VisitaConcluida = false;
         private Usuario _ParticipanteSelecionado;
         private readonly DateTime _dataMinima = new DateTime(1900, 01, 01);
@@ -100,7 +100,7 @@ namespace CV.Mobile.ViewModels
                 ItemCarroDeslocamento.ItemCarroEventoChegada.Data = _dataMinima;
                 ItemCarroDeslocamento.ItemCarroEventoChegada.Hora = new TimeSpan();
             }
-            
+
         }
 
         public async Task CarregarPosicao()
@@ -275,20 +275,22 @@ namespace CV.Mobile.ViewModels
 
                 CarroDeslocamento pItemCarroDeslocamento = null;
                 ResultadoOperacao Resultado = null;
-                bool Executado = true;
+                bool Executado = false;
                 if (Conectado)
                 {
                     using (ApiService srv = new ApiService())
                     {
-                        try { 
-                        Resultado = await srv.SalvarCarroDeslocamento(ItemSalvar);
-                        if (Resultado.Sucesso)
+                        try
                         {
+                            Resultado = await srv.SalvarCarroDeslocamento(ItemSalvar);
+                            if (Resultado.Sucesso)
+                            {
 
-                            pItemCarroDeslocamento = await srv.CarregarCarroDeslocamento(Resultado.IdentificadorRegistro);
-                            AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "CD", pItemCarroDeslocamento.Identificador.GetValueOrDefault(), !ItemCarroDeslocamento.Identificador.HasValue);
-                            await DatabaseService.SalvarCarroDeslocamentoReplicada(pItemCarroDeslocamento);
-                        }
+                                pItemCarroDeslocamento = await srv.CarregarCarroDeslocamento(Resultado.IdentificadorRegistro);
+                                AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "CD", pItemCarroDeslocamento.Identificador.GetValueOrDefault(), !ItemCarroDeslocamento.Identificador.HasValue);
+                                await DatabaseService.SalvarCarroDeslocamentoReplicada(pItemCarroDeslocamento);
+                            }
+                            Executado = true;
                         }
                         catch { Executado = false; }
                     }
@@ -297,7 +299,7 @@ namespace CV.Mobile.ViewModels
                 {
                     Resultado = await DatabaseService.SalvarCarroDeslocamento(ItemSalvar);
                     if (Resultado.Sucesso)
-                     pItemCarroDeslocamento = await DatabaseService.CarregarCarroDeslocamento(ItemSalvar.Identificador);
+                        pItemCarroDeslocamento = await DatabaseService.CarregarCarroDeslocamento(ItemSalvar.Identificador);
                 }
 
 
@@ -352,18 +354,20 @@ namespace CV.Mobile.ViewModels
                     if (!result) return;
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     ItemCarroDeslocamento.DataExclusao = DateTime.Now.ToUniversalTime();
-                    bool Executado = true;
+                    bool Executado = false;
                     if (Conectado)
                     {
-                        try { 
-                        using (ApiService srv = new ApiService())
+                        try
                         {
-                            Resultado = await srv.SalvarCarroDeslocamento(ItemCarroDeslocamento);
-                            AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "CD", ItemCarroDeslocamento.Identificador.GetValueOrDefault(), false);
+                            using (ApiService srv = new ApiService())
+                            {
+                                Resultado = await srv.SalvarCarroDeslocamento(ItemCarroDeslocamento);
+                                AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "CD", ItemCarroDeslocamento.Identificador.GetValueOrDefault(), false);
 
-                            await DatabaseService.ExcluirCarroDeslocamento(ItemCarroDeslocamento.Identificador, true);
+                                await DatabaseService.ExcluirCarroDeslocamento(ItemCarroDeslocamento.Identificador, true);
 
-                        }
+                            }
+                            Executado = true;
                         }
                         catch { Executado = false; }
                     }

@@ -73,7 +73,7 @@ namespace CV.Mobile.ViewModels
 
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     obj.DataExclusao = DateTime.Now.ToUniversalTime();
-                    bool Executado = true;
+                    bool Executado = false;
                     if (Conectado)
                     {
                         try
@@ -96,6 +96,7 @@ namespace CV.Mobile.ViewModels
                                     await DatabaseService.Database.ExcluirItemCompra(itemBase);
 
                             }
+                            Executado = true;
                         }
                         catch { Executado = false; }
 

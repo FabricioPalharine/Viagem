@@ -25,14 +25,16 @@ namespace CV.Mobile.ViewModels
         public ConsultarExtratoViewModel()
         {
             ItemCriterioBusca = new CriterioBusca() { DataInicioDe = ItemViagemSelecionada.DataInicio, Moeda = ItemViagemSelecionada.Moeda };
-           
+
             PesquisarCommand = new Command(
-                                                                    async () => { await CarregarListaDados();
+                                                                    async () =>
+                                                                    {
+                                                                        await CarregarListaDados();
                                                                         var Pagina = new ConsultarExtratoListaPage() { BindingContext = this };
                                                                         await PushAsync(Pagina);
-                                                                        },
+                                                                    },
                                                                     () => true);
-           
+
             RecarregarListaCommand = new Command(
                                                       async () =>
                                                       {
@@ -100,22 +102,23 @@ namespace CV.Mobile.ViewModels
         }
 
 
-        
+
 
 
 
         private async Task CarregarListaDados()
         {
             List<ExtratoMoeda> Dados = new List<ExtratoMoeda>();
-            bool Executado = true;
+            bool Executado = false;
             if (Conectado)
             {
                 try
-                { 
-                using (ApiService srv = new ApiService())
                 {
-                    Dados = await srv.ListarExtratoMoeda(ItemCriterioBusca);
-                }
+                    using (ApiService srv = new ApiService())
+                    {
+                        Dados = await srv.ListarExtratoMoeda(ItemCriterioBusca);
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }
@@ -127,6 +130,6 @@ namespace CV.Mobile.ViewModels
             IsLoadingLista = false;
         }
 
-  
+
     }
 }

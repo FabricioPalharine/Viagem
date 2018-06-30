@@ -25,15 +25,15 @@ namespace CV.Mobile.ViewModels
         private MapSpan _Bounds;
         private bool _PermiteExcluir = true;
 
-   
+
         public EdicaoComentarioViewModel(Comentario pItemComentario, Viagem pItemViagem)
         {
-          
-             ItemComentario = pItemComentario;
+
+            ItemComentario = pItemComentario;
 
             ItemViagem = pItemViagem;
-            
-            
+
+
             SalvarCommand = new Command(
                                 async () => await Salvar(),
                                 () => !IsBusy);
@@ -44,14 +44,14 @@ namespace CV.Mobile.ViewModels
                                                                   },
                                                                   () => true);
 
- 
-            ExcluirCommand = new Command(() =>  Excluir());
-           
+
+            ExcluirCommand = new Command(() => Excluir());
+
         }
-      public Command SalvarCommand { get; set; }
+        public Command SalvarCommand { get; set; }
         public Command PageAppearingCommand { get; set; }
         public Command ExcluirCommand { get; set; }
-      
+
 
         public Viagem ItemViagem { get; set; }
 
@@ -62,7 +62,7 @@ namespace CV.Mobile.ViewModels
             if (_ItemComentario.Latitude.HasValue && _ItemComentario.Longitude.HasValue)
             {
                 Bounds = MapSpan.FromCenterAndRadius(new Position(_ItemComentario.Latitude.Value, _ItemComentario.Longitude.Value), new Distance(5000));
-               
+
 
             }
             else
@@ -74,8 +74,8 @@ namespace CV.Mobile.ViewModels
                 ItemComentario.Longitude = posicao.Longitude;
                 ItemComentario.Latitude = posicao.Latitude;
             }
-           
-            
+
+
 
         }
 
@@ -92,7 +92,7 @@ namespace CV.Mobile.ViewModels
             }
         }
 
-     
+
         public MapSpan Bounds
         {
             get
@@ -119,38 +119,40 @@ namespace CV.Mobile.ViewModels
             }
         }
 
-        
+
         private async Task Salvar()
         {
             IsBusy = true;
             SalvarCommand.ChangeCanExecute();
             try
             {
-                
+
                 ItemComentario.Data = DateTime.SpecifyKind(ItemComentario.Data.GetValueOrDefault().Date.Add(ItemComentario.Hora.GetValueOrDefault()), DateTimeKind.Unspecified);
                 ResultadoOperacao Resultado = new ResultadoOperacao();
-                bool Executado = true;
+                bool Executado = false;
                 if (Conectado)
                 {
-                    try {
-                    using (ApiService srv = new ApiService())
+                    try
                     {
-                        bool Inclusao = !ItemComentario.Identificador.HasValue;
-                        Resultado = await srv.SalvarComentario(ItemComentario);
-                        if (Resultado.Sucesso)
+                        using (ApiService srv = new ApiService())
                         {
-                            base.AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "T", ItemComentario.Identificador.GetValueOrDefault(Resultado.IdentificadorRegistro.GetValueOrDefault()), Inclusao);
-                            var itembase = await srv.CarregarComentario(ItemComentario.Identificador.GetValueOrDefault(Resultado.IdentificadorRegistro.GetValueOrDefault()));
-                            var itemAjustar = await DatabaseService.Database.RetornarComentario(ItemComentario.Identificador);
-                            if (itemAjustar != null)
+                            bool Inclusao = !ItemComentario.Identificador.HasValue;
+                            Resultado = await srv.SalvarComentario(ItemComentario);
+                            if (Resultado.Sucesso)
                             {
-                                itembase.Id = itemAjustar.Id;
-                                itemAjustar.DataAtualizacao = DateTime.Now.ToUniversalTime();
-                            }
-                            await DatabaseService.Database.SalvarComentario(itembase);
+                                base.AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "T", ItemComentario.Identificador.GetValueOrDefault(Resultado.IdentificadorRegistro.GetValueOrDefault()), Inclusao);
+                                var itembase = await srv.CarregarComentario(ItemComentario.Identificador.GetValueOrDefault(Resultado.IdentificadorRegistro.GetValueOrDefault()));
+                                var itemAjustar = await DatabaseService.Database.RetornarComentario(ItemComentario.Identificador);
+                                if (itemAjustar != null)
+                                {
+                                    itembase.Id = itemAjustar.Id;
+                                    itemAjustar.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                                }
+                                await DatabaseService.Database.SalvarComentario(itembase);
 
+                            }
                         }
-                        }
+                        Executado = true;
                     }
                     catch { Executado = false; }
 
@@ -208,19 +210,21 @@ namespace CV.Mobile.ViewModels
                     if (!result) return;
                     ItemComentario.DataExclusao = DateTime.Now.ToUniversalTime();
                     ResultadoOperacao Resultado = new ResultadoOperacao();
-                    bool Executado = true;
+                    bool Executado = false;
                     if (Conectado)
                     {
-                        try { 
-                        using (ApiService srv = new ApiService())
+                        try
                         {
-                            Resultado = await srv.ExcluirComentario(ItemComentario.Identificador);
-                            base.AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "T", ItemComentario.Identificador.GetValueOrDefault(), false);
-                            var itemAjustar = await DatabaseService.Database.RetornarComentario(ItemComentario.Identificador);
-                            if (itemAjustar != null )
-                             await DatabaseService.Database.ExcluirComentario(itemAjustar);
-                            
-                        }
+                            using (ApiService srv = new ApiService())
+                            {
+                                Resultado = await srv.ExcluirComentario(ItemComentario.Identificador);
+                                base.AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "T", ItemComentario.Identificador.GetValueOrDefault(), false);
+                                var itemAjustar = await DatabaseService.Database.RetornarComentario(ItemComentario.Identificador);
+                                if (itemAjustar != null)
+                                    await DatabaseService.Database.ExcluirComentario(itemAjustar);
+
+                            }
+                            Executado = true;
                         }
                         catch { Executado = false; }
                     }
@@ -252,6 +256,6 @@ namespace CV.Mobile.ViewModels
 
         }
 
-      
+
     }
 }

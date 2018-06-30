@@ -69,7 +69,7 @@ namespace CV.Mobile.ViewModels
             MessagingService.Current.Subscribe<Gasto>(MessageKeys.GastoSelecionado, async (service, item) =>
             {
                 var itemGravar = new GastoRefeicao() { IdentificadorRefeicao = ItemRefeicao.Identificador, IdentificadorGasto = item.Identificador, DataAtualizacao = DateTime.Now.ToUniversalTime() };
-                bool Executado = true;
+                bool Executado = false;
                 if (Conectado)
                 {
                     try
@@ -87,6 +87,7 @@ namespace CV.Mobile.ViewModels
 
                             }
                         }
+                        Executado = true;
                     }
                     catch { Executado = false; }
                 }
@@ -133,20 +134,22 @@ namespace CV.Mobile.ViewModels
 
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     obj.DataExclusao = DateTime.Now.ToUniversalTime();
-                    bool Executado = true;
+                    bool Executado = false;
                     if (Conectado)
                     {
-                        try { 
-                        using (ApiService srv = new ApiService())
+                        try
                         {
-                            Resultado = await srv.SalvarGastoRefeicao(obj);
-                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "GR", obj.Identificador.GetValueOrDefault(), false);
+                            using (ApiService srv = new ApiService())
+                            {
+                                Resultado = await srv.SalvarGastoRefeicao(obj);
+                                AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "GR", obj.Identificador.GetValueOrDefault(), false);
 
-                            var itemBase = await DatabaseService.Database.RetornarGastoRefeicao(obj.Identificador);
+                                var itemBase = await DatabaseService.Database.RetornarGastoRefeicao(obj.Identificador);
 
-                            if (itemBase != null)
-                                await DatabaseService.Database.ExcluirGastoRefeicao(itemBase);
-                        }
+                                if (itemBase != null)
+                                    await DatabaseService.Database.ExcluirGastoRefeicao(itemBase);
+                            }
+                            Executado = true;
                         }
                         catch { Executado = false; }
                     }

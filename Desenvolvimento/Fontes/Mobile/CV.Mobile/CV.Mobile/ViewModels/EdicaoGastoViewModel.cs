@@ -27,7 +27,7 @@ namespace CV.Mobile.ViewModels
         private bool _ExibeHora = false;
         private bool _VoltarPagina = false;
         private Usuario _ParticipanteSelecionado;
-        private double _TamanhoGrid ;
+        private double _TamanhoGrid;
         public EdicaoGastoViewModel(Gasto pItemGasto)
         {
 
@@ -218,7 +218,7 @@ namespace CV.Mobile.ViewModels
 
             set
             {
-               SetProperty(ref _TamanhoGrid , value);
+                SetProperty(ref _TamanhoGrid, value);
             }
         }
 
@@ -257,22 +257,24 @@ namespace CV.Mobile.ViewModels
                 }
                 ResultadoOperacao Resultado = null;
                 Gasto pItemGasto = null;
-                bool Executado = true;  
+                bool Executado = false;
                 if (Conectado)
                 {
-                    try { 
-                    using (ApiService srv = new ApiService())
+                    try
                     {
-                        Resultado = await srv.SalvarGasto(ItemGasto);
-                        if (Resultado.Sucesso)
+                        using (ApiService srv = new ApiService())
                         {
-                            var Jresultado = (JObject)Resultado.ItemRegistro;
-                            pItemGasto = Jresultado.ToObject<Gasto>();
-                            AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "G", pItemGasto.Identificador.GetValueOrDefault(), !ItemGasto.Identificador.HasValue);
-                            DatabaseService.SalvarGastoSincronizado(pItemGasto);
-                        }
+                            Resultado = await srv.SalvarGasto(ItemGasto);
+                            if (Resultado.Sucesso)
+                            {
+                                var Jresultado = (JObject)Resultado.ItemRegistro;
+                                pItemGasto = Jresultado.ToObject<Gasto>();
+                                AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "G", pItemGasto.Identificador.GetValueOrDefault(), !ItemGasto.Identificador.HasValue);
+                                DatabaseService.SalvarGastoSincronizado(pItemGasto);
+                            }
 
                         }
+                        Executado = true;
                     }
                     catch { Executado = false; }
                 }
@@ -338,18 +340,20 @@ namespace CV.Mobile.ViewModels
                     if (!result) return;
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     ItemGasto.DataExclusao = DateTime.Now.ToUniversalTime();
-                    bool Executado = true;
+                    bool Executado = false;
                     if (Conectado)
                     {
-                        try { 
-                        using (ApiService srv = new ApiService())
+                        try
                         {
-                            Resultado = await srv.ExcluirGasto(ItemGasto.Identificador);
-                            AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "G", ItemGasto.Identificador.GetValueOrDefault(), false);
-                            var itemBase = await DatabaseService.CarregarGasto(ItemGasto.Identificador);
-                            if (itemBase != null)
-                                await DatabaseService.ExcluirGasto(itemBase, true);
+                            using (ApiService srv = new ApiService())
+                            {
+                                Resultado = await srv.ExcluirGasto(ItemGasto.Identificador);
+                                AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "G", ItemGasto.Identificador.GetValueOrDefault(), false);
+                                var itemBase = await DatabaseService.CarregarGasto(ItemGasto.Identificador);
+                                if (itemBase != null)
+                                    await DatabaseService.ExcluirGasto(itemBase, true);
                             }
+                            Executado = true;
                         }
                         catch { Executado = false; }
                     }

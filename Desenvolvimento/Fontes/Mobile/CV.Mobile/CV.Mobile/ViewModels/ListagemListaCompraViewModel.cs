@@ -32,11 +32,11 @@ namespace CV.Mobile.ViewModels
         public ListagemListaCompraViewModel(Viagem pitemViagem)
         {
             ItemViagem = pitemViagem;
-            ItemCriterioBusca = new CriterioBusca() { Situacao=1 } ;
+            ItemCriterioBusca = new CriterioBusca() { Situacao = 1 };
             ItemCriterioBuscaPedido = new CriterioBusca() { Situacao = 1 };
             PageAppearingCommand = new Command(
                                                                    async () =>
-                                                                   {                                                                       
+                                                                   {
                                                                        await CarregarListaRequisicao();
                                                                        await CarregarListaAmigos();
                                                                        await CarregarListaPedidos();
@@ -46,7 +46,7 @@ namespace CV.Mobile.ViewModels
                                                                     async () => await VerificarPesquisa(),
                                                                     () => true);
 
-            ItemTappedCommand   = new Command<ItemTappedEventArgs>(
+            ItemTappedCommand = new Command<ItemTappedEventArgs>(
                                                                     async (obj) => await VerificarAcaoItem(obj));
             PesquisarPedidoCompraCommand = new Command(
                                                         async () => await VerificarPesquisaRequisicao(),
@@ -292,15 +292,17 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaPedidos()
         {
             List<ListaCompra> Dados = new List<Models.ListaCompra>();
-            bool Executado = true;
+            bool Executado = false;
             if (Conectado)
             {
-                try { 
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    Dados = await srv.ListarListaCompra(ItemCriterioBusca);
+                    using (ApiService srv = new ApiService())
+                    {
+                        Dados = await srv.ListarListaCompra(ItemCriterioBusca);
 
-                }
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }
@@ -318,16 +320,18 @@ namespace CV.Mobile.ViewModels
         {
 
             List<ListaCompra> Dados = new List<Models.ListaCompra>();
-            bool Executado = true;
+            bool Executado = false;
 
             if (Conectado)
             {
-                try { 
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    Dados = await srv.ListarPedidosCompraRecebido(ItemCriterioBuscaPedido);
+                    using (ApiService srv = new ApiService())
+                    {
+                        Dados = await srv.ListarPedidosCompraRecebido(ItemCriterioBuscaPedido);
 
-                }
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }
@@ -352,21 +356,23 @@ namespace CV.Mobile.ViewModels
                 {
                     if (!result) return;
                     ResultadoOperacao Resultado = new ResultadoOperacao();
-                    bool Executado = true;
+                    bool Executado = false;
                     if (Conectado)
                     {
-                        try { 
-                        using (ApiService srv = new ApiService())
+                        try
                         {
-                            Resultado = await srv.ExcluirListaCompra(itemListaCompra.Identificador);
-                            base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "LC", itemListaCompra.Identificador.GetValueOrDefault(), false);
-
-                            var itemBanco = await DatabaseService.Database.RetornarListaCompra(itemListaCompra.Identificador);
-                            if (itemBanco != null)
+                            using (ApiService srv = new ApiService())
                             {
-                                await DatabaseService.Database.ExcluirListaCompra(itemBanco);
+                                Resultado = await srv.ExcluirListaCompra(itemListaCompra.Identificador);
+                                base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "LC", itemListaCompra.Identificador.GetValueOrDefault(), false);
+
+                                var itemBanco = await DatabaseService.Database.RetornarListaCompra(itemListaCompra.Identificador);
+                                if (itemBanco != null)
+                                {
+                                    await DatabaseService.Database.ExcluirListaCompra(itemBanco);
+                                }
                             }
-                        }
+                            Executado = true;
                         }
                         catch { Executado = false; }
                     }
@@ -402,19 +408,21 @@ namespace CV.Mobile.ViewModels
         private async Task Editar(ItemTappedEventArgs itemLista)
         {
             ListaCompra itemEditar = new Models.ListaCompra();
-            bool Executado = true;
+            bool Executado = false;
             if (Conectado)
             {
-                try { 
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    itemEditar = await srv.CarregarListaCompra(((ListaCompra)itemLista.Item).Identificador);
+                    using (ApiService srv = new ApiService())
+                    {
+                        itemEditar = await srv.CarregarListaCompra(((ListaCompra)itemLista.Item).Identificador);
 
-                }
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }
-            if(!Executado)
+            if (!Executado)
             {
                 itemEditar = await DatabaseService.Database.RetornarListaCompra(((ListaCompra)itemLista.Item).Identificador);
             }
@@ -424,7 +432,7 @@ namespace CV.Mobile.ViewModels
 
         private async Task AbrirInclusao()
         {
-            var itemEditar = new ListaCompra() { IdentificadorUsuario = ItemUsuarioLogado.Codigo, Status = (int) enumStatusListaCompra.Pendente, Moeda = ItemViagem.Moeda, Reembolsavel=false};
+            var itemEditar = new ListaCompra() { IdentificadorUsuario = ItemUsuarioLogado.Codigo, Status = (int)enumStatusListaCompra.Pendente, Moeda = ItemViagem.Moeda, Reembolsavel = false };
             EdicaoListaCompraPage pagina = new EdicaoListaCompraPage() { BindingContext = new EdicaoListaCompraViewModel(itemEditar, ListaAmigos) };
             await PushAsync(pagina);
 

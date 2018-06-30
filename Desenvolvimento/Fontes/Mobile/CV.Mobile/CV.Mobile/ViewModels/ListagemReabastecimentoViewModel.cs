@@ -80,18 +80,20 @@ namespace CV.Mobile.ViewModels
                     if (!result) return;
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     obj.DataExclusao = DateTime.Now.ToUniversalTime();
-                    bool Executado = true;
+                    bool Executado = false;
                     if (Conectado)
                     {
-                        try { 
-                        using (ApiService srv = new ApiService())
+                        try
                         {
-                            Resultado = await srv.ExcluirReabastecimento(obj.Identificador);
-                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "CR", obj.Identificador.GetValueOrDefault(), false);
+                            using (ApiService srv = new ApiService())
+                            {
+                                Resultado = await srv.ExcluirReabastecimento(obj.Identificador);
+                                AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "CR", obj.Identificador.GetValueOrDefault(), false);
 
-                            await DatabaseService.ExcluirReabastecimento(obj.Identificador, true);
+                                await DatabaseService.ExcluirReabastecimento(obj.Identificador, true);
 
-                        }
+                            }
+                            Executado = true;
                         }
                         catch { Executado = false; }
                     }
@@ -102,15 +104,15 @@ namespace CV.Mobile.ViewModels
                         Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Reabastecimento excluído com sucesso " } };
                     }
 
-                   
-                        MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
-                        {
-                            Title = "Sucesso",
-                            Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
-                            Cancel = "OK"
-                        });
-                        ListaDados.Remove(obj);
-                    
+
+                    MessagingService.Current.SendMessage<MessagingServiceAlert>(MessageKeys.DisplayAlert, new MessagingServiceAlert()
+                    {
+                        Title = "Sucesso",
+                        Message = String.Join(Environment.NewLine, Resultado.Mensagens.Select(d => d.Mensagem).ToArray()),
+                        Cancel = "OK"
+                    });
+                    ListaDados.Remove(obj);
+
 
 
                 })
@@ -119,7 +121,7 @@ namespace CV.Mobile.ViewModels
 
         private async Task VerificarAcaoItem(ItemTappedEventArgs itemSelecionado)
         {
-            bool Executado = true;
+            bool Executado = false;
             Reabastecimento ItemReabastecimento = null;
             if (Conectado)
             {
@@ -129,6 +131,7 @@ namespace CV.Mobile.ViewModels
                     {
                         ItemReabastecimento = await srv.CarregarReabastecimento(((Reabastecimento)itemSelecionado.Item).Identificador);
                     }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }
@@ -137,9 +140,9 @@ namespace CV.Mobile.ViewModels
                 ItemReabastecimento = await DatabaseService.Database.RetornarReabastecimento(((Reabastecimento)itemSelecionado.Item).Identificador);
 
             }
-                var Pagina = new EdicaoReabastecimentoPage() { BindingContext = new EdicaoReabastecimentoViewModel(ItemReabastecimento) };
-                await PushAsync(Pagina);
-            
+            var Pagina = new EdicaoReabastecimentoPage() { BindingContext = new EdicaoReabastecimentoViewModel(ItemReabastecimento) };
+            await PushAsync(Pagina);
+
         }
 
         public Viagem ItemViagem { get; set; }

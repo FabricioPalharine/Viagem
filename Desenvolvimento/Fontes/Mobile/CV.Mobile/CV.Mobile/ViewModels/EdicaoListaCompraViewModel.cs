@@ -17,7 +17,7 @@ namespace CV.Mobile.ViewModels
     {
         private ListaCompra _ItemListaCompra;
         private bool _CadastradoComoAmigo;
-        public EdicaoListaCompraViewModel(ListaCompra pItemListaCompra, ObservableCollection<Usuario> pListaAmigos )
+        public EdicaoListaCompraViewModel(ListaCompra pItemListaCompra, ObservableCollection<Usuario> pListaAmigos)
         {
             ItemListaCompra = pItemListaCompra;
             CadastradoComoAmigo = ItemListaCompra.IdentificadorUsuarioPedido.HasValue;
@@ -80,24 +80,26 @@ namespace CV.Mobile.ViewModels
                 ResultadoOperacao Resultado = new ResultadoOperacao();
                 if (ItemListaCompra.IdentificadorUsuarioPedido.HasValue)
                     ItemListaCompra.NomeUsuarioPedido = ListaAmigos.Where(d => d.Identificador == ItemListaCompra.IdentificadorUsuarioPedido).Select(d => d.Nome).FirstOrDefault();
-                bool Executado = true;
+                bool Executado = false;
                 if (Conectado)
                 {
-                    try { 
-                    using (ApiService srv = new ApiService())
+                    try
                     {
-                        Resultado = await srv.SalvarListaCompra(ItemListaCompra);
-                        base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "LC", ItemListaCompra.Identificador.GetValueOrDefault(Resultado.IdentificadorRegistro.GetValueOrDefault()), !ItemListaCompra.Identificador.HasValue);
-                        var itemBanco = await DatabaseService.Database.RetornarListaCompra(Resultado.IdentificadorRegistro);
-                        if (itemBanco != null)
+                        using (ApiService srv = new ApiService())
                         {
-                            ItemListaCompra.Id = itemBanco.Id;
+                            Resultado = await srv.SalvarListaCompra(ItemListaCompra);
+                            base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "LC", ItemListaCompra.Identificador.GetValueOrDefault(Resultado.IdentificadorRegistro.GetValueOrDefault()), !ItemListaCompra.Identificador.HasValue);
+                            var itemBanco = await DatabaseService.Database.RetornarListaCompra(Resultado.IdentificadorRegistro);
+                            if (itemBanco != null)
+                            {
+                                ItemListaCompra.Id = itemBanco.Id;
 
+                            }
+                            ItemListaCompra.AtualizadoBanco = true;
+                            ItemListaCompra.DataAtualizacao = DateTime.Now.ToUniversalTime();
+                            await DatabaseService.Database.SalvarListaCompra(ItemListaCompra);
                         }
-                        ItemListaCompra.AtualizadoBanco = true;
-                        ItemListaCompra.DataAtualizacao = DateTime.Now.ToUniversalTime();
-                        await DatabaseService.Database.SalvarListaCompra(ItemListaCompra);
-                    }
+                        Executado = true;
                     }
                     catch { Executado = false; }
                 }
@@ -130,7 +132,7 @@ namespace CV.Mobile.ViewModels
                     });
 
                 }
-                
+
             }
             finally
             {
