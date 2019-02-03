@@ -52,8 +52,8 @@ namespace CV.Mobile.ViewModels
             VisitaIniciada = pItemAtracao.Chegada.GetValueOrDefault(_dataMinima) != _dataMinima;
             PossoComentar = VisitaConcluida && pItemAtracao.Avaliacoes.Where(d => d.IdentificadorUsuario == ItemUsuarioLogado.Codigo).Any();
             ItemViagem = pItemViagem;
-            
-            
+
+
             SalvarCommand = new Command(
                                 async () => await Salvar(),
                                 () => !IsBusy);
@@ -65,12 +65,12 @@ namespace CV.Mobile.ViewModels
                                                                   () => true);
 
             VisitaConcluidaToggledCommand = new Command<ToggledEventArgs>(
-                                                                   (obj) =>  VerificarAcaoConcluidoItem(obj));
+                                                                   (obj) => VerificarAcaoConcluidoItem(obj));
 
             VisitaIniciadaToggledCommand = new Command<ToggledEventArgs>(
                                                                    (obj) => VerificarAcaoIniciadaItem(obj));
 
-            ExcluirCommand = new Command(() =>  Excluir());
+            ExcluirCommand = new Command(() => Excluir());
             AbrirCustosCommand = new Command(async () => await AbrirJanelaCustos());
 
             MessagingService.Current.Unsubscribe<Atracao>(MessageKeys.AtualizarAtracaoDistancia);
@@ -88,22 +88,22 @@ namespace CV.Mobile.ViewModels
 
         private void VerificarAcaoConcluidoItem(ToggledEventArgs obj)
         {
- 
-                if (obj.Value)
-                {
-                    if (ItemAtracao.Partida.GetValueOrDefault(_dataMinima) == _dataMinima)
-                    {
 
-                        ItemAtracao.Partida = DateTime.Today;
-                        ItemAtracao.HoraPartida = DateTime.Now.TimeOfDay;
-                    }
-                }
-                else
+            if (obj.Value)
+            {
+                if (ItemAtracao.Partida.GetValueOrDefault(_dataMinima) == _dataMinima)
                 {
-                    PossoComentar = false;
-                    ItemAtracao.Partida = _dataMinima;
-                    ItemAtracao.HoraPartida = new TimeSpan();
+
+                    ItemAtracao.Partida = DateTime.Today;
+                    ItemAtracao.HoraPartida = DateTime.Now.TimeOfDay;
                 }
+            }
+            else
+            {
+                PossoComentar = false;
+                ItemAtracao.Partida = _dataMinima;
+                ItemAtracao.HoraPartida = new TimeSpan();
+            }
         }
 
 
@@ -208,7 +208,7 @@ namespace CV.Mobile.ViewModels
             if (_ItemAtracao.Latitude.HasValue && _ItemAtracao.Longitude.HasValue)
             {
                 Bounds = MapSpan.FromCenterAndRadius(new Position(_ItemAtracao.Latitude.Value, _ItemAtracao.Longitude.Value), new Distance(5000));
-               
+
 
             }
             else
@@ -220,8 +220,8 @@ namespace CV.Mobile.ViewModels
                 ItemAtracao.Longitude = posicao.Longitude;
                 ItemAtracao.Latitude = posicao.Latitude;
             }
-           
-            
+
+
 
         }
 
@@ -357,13 +357,13 @@ namespace CV.Mobile.ViewModels
                 SetProperty(ref _VisitaIniciada, value);
                 if (value)
                 {
-                  
-                   
+
+
                 }
                 else
                 {
                     VisitaConcluida = false;
-                    
+
                 }
             }
         }
@@ -380,13 +380,13 @@ namespace CV.Mobile.ViewModels
                 SetProperty(ref _VisitaConcluida, value);
                 if (value)
                 {
-                   if (Participantes.Any())
-                    PossoComentar = Participantes.Where(d => d.Identificador == ItemUsuarioLogado.Codigo && d.Selecionado).Any();
+                    if (Participantes.Any())
+                        PossoComentar = Participantes.Where(d => d.Identificador == ItemUsuarioLogado.Codigo && d.Selecionado).Any();
                 }
                 else
                 {
                     PossoComentar = false;
-                   
+
                 }
             }
         }
@@ -453,7 +453,7 @@ namespace CV.Mobile.ViewModels
                             itemNovaAvaliacao.DataAtualizacao = DateTime.Now.ToUniversalTime();
                             ItemAtracao.Avaliacoes.Add(itemNovaAvaliacao);
                         }
-                        
+
                     }
                     else
                     {
@@ -474,7 +474,7 @@ namespace CV.Mobile.ViewModels
                 if (!VisitaConcluida)
                     ItemAtracao.Partida = null;
                 else
-                    ItemAtracao.Partida = DateTime.SpecifyKind(ItemAtracao.Partida.GetValueOrDefault().Date.Add(ItemAtracao.HoraPartida.GetValueOrDefault()),DateTimeKind.Unspecified);
+                    ItemAtracao.Partida = DateTime.SpecifyKind(ItemAtracao.Partida.GetValueOrDefault().Date.Add(ItemAtracao.HoraPartida.GetValueOrDefault()), DateTimeKind.Unspecified);
 
                 ResultadoOperacao Resultado = new ResultadoOperacao();
                 Atracao pItemAtracao = null;

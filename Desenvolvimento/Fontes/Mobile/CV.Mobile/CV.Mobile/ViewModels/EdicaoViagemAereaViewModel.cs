@@ -27,7 +27,7 @@ namespace CV.Mobile.ViewModels
         private bool _PossoComentar = false;
         private AvaliacaoAerea _ItemAvaliacao = new AvaliacaoAerea();
         private Usuario _ParticipanteSelecionado;
-        private double _TamanhoGrid ;
+        private double _TamanhoGrid;
         private ViagemAereaAeroporto _AeroportoSelecionado;
 
         private readonly DateTime _dataMinima = new DateTime(1900, 01, 01);
@@ -443,23 +443,25 @@ namespace CV.Mobile.ViewModels
                 ItemViagemAerea.Aeroportos = new ObservableRangeCollection<ViagemAereaAeroporto>(ListaAvaliacoesAlteradas);
                 ViagemAerea pItemViagemAerea = null;
                 ResultadoOperacao Resultado = null;
-                bool Executado = true;
+                bool Executado = false;
                 if (Conectado)
                 {
-                    try { 
-                    using (ApiService srv = new ApiService())
+                    try
                     {
-                        Resultado = await srv.SalvarViagemAerea(ItemViagemAerea);
-                        if (Resultado.Sucesso)
+                        using (ApiService srv = new ApiService())
                         {
+                            Resultado = await srv.SalvarViagemAerea(ItemViagemAerea);
+                            if (Resultado.Sucesso)
+                            {
 
-                            AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "VA", Resultado.IdentificadorRegistro.GetValueOrDefault(), !ItemViagemAerea.Identificador.HasValue);
-                            pItemViagemAerea = await srv.CarregarViagemAerea(Resultado.IdentificadorRegistro);
-                            if (pItemViagemAerea.Identificador.HasValue)
-                            await DatabaseService.SalvarViagemAereaReplicada(pItemViagemAerea);
+                                AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "VA", Resultado.IdentificadorRegistro.GetValueOrDefault(), !ItemViagemAerea.Identificador.HasValue);
+                                pItemViagemAerea = await srv.CarregarViagemAerea(Resultado.IdentificadorRegistro);
+                                if (pItemViagemAerea.Identificador.HasValue)
+                                    await DatabaseService.SalvarViagemAereaReplicada(pItemViagemAerea);
+                            }
+
                         }
-
-                    }
+                        Executado = true;
                     }
                     catch { Executado = false; }
                 }
@@ -609,18 +611,20 @@ namespace CV.Mobile.ViewModels
 
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     ItemViagemAerea.DataExclusao = DateTime.Now.ToUniversalTime();
-                    bool Executado = true;
+                    bool Executado = false;
                     if (Conectado)
                     {
-                        try { 
-                        using (ApiService srv = new ApiService())
+                        try
                         {
-                            Resultado = await srv.ExcluirViagemAerea(ItemViagemAerea.Identificador);
-                            AtualizarViagem(ItemViagemAerea.Identificador.GetValueOrDefault(), "VA", ItemViagemAerea.Identificador.GetValueOrDefault(), false);
+                            using (ApiService srv = new ApiService())
+                            {
+                                Resultado = await srv.ExcluirViagemAerea(ItemViagemAerea.Identificador);
+                                AtualizarViagem(ItemViagemAerea.Identificador.GetValueOrDefault(), "VA", ItemViagemAerea.Identificador.GetValueOrDefault(), false);
 
-                            await DatabaseService.ExcluirViagemAerea(ItemViagemAerea.Identificador, true);
+                                await DatabaseService.ExcluirViagemAerea(ItemViagemAerea.Identificador, true);
 
-                        }
+                            }
+                            Executado = true;
                         }
                         catch { Executado = false; }
                     }

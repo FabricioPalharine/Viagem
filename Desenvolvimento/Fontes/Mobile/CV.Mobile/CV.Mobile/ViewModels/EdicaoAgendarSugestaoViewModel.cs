@@ -59,7 +59,7 @@ namespace CV.Mobile.ViewModels
                 ItemAgenda.DataFim = DateTime.SpecifyKind(ItemAgenda.DataFim.GetValueOrDefault().Date.Add(ItemAgenda.HoraFim.Value),DateTimeKind.Unspecified);
                 itemAgenda.itemCalendario = ItemAgenda;
                 ResultadoOperacao Resultado = new ResultadoOperacao();
-                bool Executado = true;
+                bool Executado = false;
                 if (Conectado)
                 {
                     using (ApiService srv = new ApiService())
@@ -85,6 +85,7 @@ namespace CV.Mobile.ViewModels
                                 await DatabaseService.Database.SalvarSugestao(ItemSugestao);
 
                             }
+                            Executado = true;
                         }
                         catch { Executado = false; }
                         }

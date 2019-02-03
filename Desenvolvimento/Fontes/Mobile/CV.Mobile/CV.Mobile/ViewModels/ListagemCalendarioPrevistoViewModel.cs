@@ -43,7 +43,7 @@ namespace CV.Mobile.ViewModels
 
                                                                        await Task.Delay(100);
                                                                        OnPropertyChanged("ModoLista");
-                                                                       
+
                                                                    },
                                                                    () => true);
             PesquisarCommand = new Command(
@@ -85,7 +85,7 @@ namespace CV.Mobile.ViewModels
             });
         }
 
-      
+
 
         public CriterioBusca ItemCriterioBusca
         {
@@ -116,7 +116,7 @@ namespace CV.Mobile.ViewModels
             }
         }
 
-        private async Task AjustarPosicaoCalendario( int _posicao)
+        private async Task AjustarPosicaoCalendario(int _posicao)
         {
             AlterandoPosicao = true;
             var item = DatasCalendario[_posicao];
@@ -195,8 +195,8 @@ namespace CV.Mobile.ViewModels
             set
             {
                 bool Prosseguir = (_Data != value) && !AlterandoPosicao;
-                
-                 SetProperty(ref _Data, value);
+
+                SetProperty(ref _Data, value);
                 if (Prosseguir)
                 {
                     DatasCalendario = new ObservableCollection<Models.DataCalendario>(new DataCalendario[] { new DataCalendario() { Data = _Data.AddDays(-1) }, new DataCalendario() { Data = _Data }, new DataCalendario() { Data = _Data.AddDays(1) } });
@@ -236,15 +236,17 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaDados()
         {
             List<CalendarioPrevisto> Dados = new List<CalendarioPrevisto>();
-            bool Executado = true;
+            bool Executado = false;
             if (Conectado)
             {
-                try { 
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    Dados = await srv.ListarCalendarioPrevisto(ItemCriterioBusca);
+                    using (ApiService srv = new ApiService())
+                    {
+                        Dados = await srv.ListarCalendarioPrevisto(ItemCriterioBusca);
 
-                }
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }
@@ -258,14 +260,16 @@ namespace CV.Mobile.ViewModels
         private async Task VerificarAcaoItem(ItemTappedEventArgs itemSelecionado)
         {
             CalendarioPrevisto ItemCalendarioPrevisto = new CalendarioPrevisto();
-            bool Executado = true;
+            bool Executado = false;
             if (Conectado)
             {
-                try { 
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    ItemCalendarioPrevisto = await srv.CarregarCalendarioPrevisto(((CalendarioPrevisto)itemSelecionado.Item).Identificador);
-                }
+                    using (ApiService srv = new ApiService())
+                    {
+                        ItemCalendarioPrevisto = await srv.CarregarCalendarioPrevisto(((CalendarioPrevisto)itemSelecionado.Item).Identificador);
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
 
@@ -281,15 +285,17 @@ namespace CV.Mobile.ViewModels
         private async Task VerificarAcaoItem(int? itemSelecionado)
         {
             CalendarioPrevisto ItemCalendarioPrevisto = new CalendarioPrevisto();
-            bool Executado = true;
+            bool Executado = false;
             if (Conectado)
             {
-                try { 
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    ItemCalendarioPrevisto = await srv.CarregarCalendarioPrevisto(itemSelecionado);
+                    using (ApiService srv = new ApiService())
+                    {
+                        ItemCalendarioPrevisto = await srv.CarregarCalendarioPrevisto(itemSelecionado);
 
-                }
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }
@@ -303,13 +309,13 @@ namespace CV.Mobile.ViewModels
         }
         private async Task Adicionar()
         {
-            var ItemCalendarioPrevisto = new CalendarioPrevisto() { DataInicio = DateTime.Today, HoraInicio = new TimeSpan(), DataFim = DateTime.Today, HoraFim = new TimeSpan(), Prioridade = 1, AvisarHorario=false };
-            
+            var ItemCalendarioPrevisto = new CalendarioPrevisto() { DataInicio = DateTime.Today, HoraInicio = new TimeSpan(), DataFim = DateTime.Today, HoraFim = new TimeSpan(), Prioridade = 1, AvisarHorario = false };
 
-                var Pagina = new EdicaoCalendarioPrevistoPage() { BindingContext = new EdicaoCalendarioPrevistoViewModel(ItemCalendarioPrevisto) };
-                await PushAsync(Pagina);
 
-            
+            var Pagina = new EdicaoCalendarioPrevistoPage() { BindingContext = new EdicaoCalendarioPrevistoViewModel(ItemCalendarioPrevisto) };
+            await PushAsync(Pagina);
+
+
 
 
         }

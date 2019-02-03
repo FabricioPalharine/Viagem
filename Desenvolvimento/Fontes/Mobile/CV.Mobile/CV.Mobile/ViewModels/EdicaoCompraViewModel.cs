@@ -242,21 +242,23 @@ namespace CV.Mobile.ViewModels
 
                 ResultadoOperacao Resultado = new ResultadoOperacao();
                 GastoCompra pItemGasto = null;
-                bool Executado = true;
+                bool Executado = false;
                 if (Conectado)
                 {
-                    try { 
-                    using (ApiService srv = new ApiService())
+                    try
                     {
-                        Resultado = await srv.SalvarGastoCompra(ItemCompra);
-                        if (Resultado.Sucesso)
+                        using (ApiService srv = new ApiService())
                         {
-                            var Jresultado = (JObject)Resultado.ItemRegistro;
-                            pItemGasto = Jresultado.ToObject<GastoCompra>();
-                            AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "GL", Resultado.IdentificadorRegistro.GetValueOrDefault(), !ItemCompra.Identificador.HasValue);
-                            await DatabaseService.SalvarGastoCompra(pItemGasto);
+                            Resultado = await srv.SalvarGastoCompra(ItemCompra);
+                            if (Resultado.Sucesso)
+                            {
+                                var Jresultado = (JObject)Resultado.ItemRegistro;
+                                pItemGasto = Jresultado.ToObject<GastoCompra>();
+                                AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "GL", Resultado.IdentificadorRegistro.GetValueOrDefault(), !ItemCompra.Identificador.HasValue);
+                                await DatabaseService.SalvarGastoCompra(pItemGasto);
 
-                        }
+                            }
+                            Executado = true;
                         }
                     }
                     catch { Executado = false; }
@@ -328,18 +330,21 @@ namespace CV.Mobile.ViewModels
                 OnCompleted = new Action<bool>(async result =>
                 {
                     if (!result) return;
-                    bool Executado = true;
+                    bool Executado = false;
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     ItemCompra.DataExclusao = DateTime.Now.ToUniversalTime();
                     if (Conectado)
-                    {try { 
-                        using (ApiService srv = new ApiService())
+                    {
+                        try
                         {
-                            Resultado = await srv.ExcluirGastoCompra(ItemCompra);
-                            AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "GL", ItemCompra.Identificador.GetValueOrDefault(), false);
+                            using (ApiService srv = new ApiService())
+                            {
+                                Resultado = await srv.ExcluirGastoCompra(ItemCompra);
+                                AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "GL", ItemCompra.Identificador.GetValueOrDefault(), false);
 
-                            await DatabaseService.ExcluirGastoCompra(ItemCompra.Identificador, true);
-                        }
+                                await DatabaseService.ExcluirGastoCompra(ItemCompra.Identificador, true);
+                            }
+                            Executado = true;
                         }
                         catch { Executado = false; }
                     }

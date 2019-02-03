@@ -192,15 +192,17 @@ namespace CV.Mobile.ViewModels
         public async void CarregarAtracoesPai()
         {
             List<Atracao> ListaDados = new List<Atracao>();
-            bool Executado = true;
+            bool Executado = false;
             if (Conectado)
             {
-                try { 
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    ListaDados = await srv.ListarAtracao(new CriterioBusca());
+                    using (ApiService srv = new ApiService())
+                    {
+                        ListaDados = await srv.ListarAtracao(new CriterioBusca());
 
-                }
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }
@@ -356,24 +358,26 @@ namespace CV.Mobile.ViewModels
                 if (ItemRefeicao.IdentificadorAtracao == 0)
                     ItemRefeicao.IdentificadorAtracao = null;
 
-                ItemRefeicao.Data = DateTime.SpecifyKind(ItemRefeicao.Data.GetValueOrDefault().Date.Add(ItemRefeicao.Hora.GetValueOrDefault()), DateTimeKind.Unspecified) ;
+                ItemRefeicao.Data = DateTime.SpecifyKind(ItemRefeicao.Data.GetValueOrDefault().Date.Add(ItemRefeicao.Hora.GetValueOrDefault()), DateTimeKind.Unspecified);
 
                 ResultadoOperacao Resultado = new ResultadoOperacao();
                 Refeicao pItemRefeicao = null;
-                bool Executado = true;
+                bool Executado = false;
                 if (Conectado)
                 {
-                    try { 
-                    using (ApiService srv = new ApiService())
+                    try
                     {
-                        Resultado = await srv.SalvarRefeicao(ItemRefeicao);
-                        if (Resultado.Sucesso)
+                        using (ApiService srv = new ApiService())
                         {
-                            var Jresultado = (JObject)Resultado.ItemRegistro;
-                            pItemRefeicao = Jresultado.ToObject<Refeicao>();
-                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "R", Resultado.IdentificadorRegistro.GetValueOrDefault(), !ItemRefeicao.Identificador.HasValue);
-                            await DatabaseService.SalvarRefeicaoReplicada(pItemRefeicao);
-                        }
+                            Resultado = await srv.SalvarRefeicao(ItemRefeicao);
+                            if (Resultado.Sucesso)
+                            {
+                                var Jresultado = (JObject)Resultado.ItemRegistro;
+                                pItemRefeicao = Jresultado.ToObject<Refeicao>();
+                                AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "R", Resultado.IdentificadorRegistro.GetValueOrDefault(), !ItemRefeicao.Identificador.HasValue);
+                                await DatabaseService.SalvarRefeicaoReplicada(pItemRefeicao);
+                            }
+                            Executado = true;
                         }
                     }
                     catch { Executado = false; }
@@ -438,18 +442,20 @@ namespace CV.Mobile.ViewModels
                 OnCompleted = new Action<bool>(async result =>
                 {
                     if (!result) return;
-                    bool Executado = true;
+                    bool Executado = false;
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     ItemRefeicao.DataExclusao = DateTime.Now.ToUniversalTime();
                     if (Conectado)
                     {
-                        try { 
-                        using (ApiService srv = new ApiService())
+                        try
                         {
-                            Resultado = await srv.ExcluirRefeicao(ItemRefeicao.Identificador);
-                            await DatabaseService.ExcluirRefeicao(ItemRefeicao.Identificador, true);
-                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "R", ItemRefeicao.Identificador.GetValueOrDefault(), false);
-                        }
+                            using (ApiService srv = new ApiService())
+                            {
+                                Resultado = await srv.ExcluirRefeicao(ItemRefeicao.Identificador);
+                                await DatabaseService.ExcluirRefeicao(ItemRefeicao.Identificador, true);
+                                AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "R", ItemRefeicao.Identificador.GetValueOrDefault(), false);
+                            }
+                            Executado = true;
                         }
                         catch { Executado = false; }
                     }

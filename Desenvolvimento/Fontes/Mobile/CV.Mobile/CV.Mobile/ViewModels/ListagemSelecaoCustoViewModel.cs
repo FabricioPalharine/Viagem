@@ -36,18 +36,18 @@ namespace CV.Mobile.ViewModels
             PesquisarCommand = new Command(
                                                                     async () => await VerificarPesquisa(),
                                                                     () => true);
-                RecarregarListaCommand = new Command(
-                                                      async () =>
-                                                      {
-                                                          await CarregarListaDados();
-                                                      },
-                                                      () => true);
+            RecarregarListaCommand = new Command(
+                                                  async () =>
+                                                  {
+                                                      await CarregarListaDados();
+                                                  },
+                                                  () => true);
 
             ItemTappedCommand = new Command<ItemTappedEventArgs>(
                                                                   async (obj) => await VerificarAcaoItem(obj));
-       
 
-           
+
+
         }
 
         public CriterioBusca ItemCriterioBusca
@@ -138,7 +138,7 @@ namespace CV.Mobile.ViewModels
                     Dados = await srv.ListarParticipantesViagem();
                     if (!Dados.Any())
                         Dados = await DatabaseService.Database.ListarParticipanteViagem();
-                    
+
                 }
             }
             else
@@ -146,20 +146,22 @@ namespace CV.Mobile.ViewModels
             ListaAmigos = new ObservableCollection<Usuario>(Dados);
             OnPropertyChanged("ListaAmigos");
         }
-      
+
 
         private async Task CarregarListaDados()
         {
             List<Gasto> Dados = new List<Gasto>();
-            bool Executado = true;
+            bool Executado = false;
             if (Conectado)
             {
-                try { 
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    Dados = await srv.ListarGasto(ItemCriterioBusca);
+                    using (ApiService srv = new ApiService())
+                    {
+                        Dados = await srv.ListarGasto(ItemCriterioBusca);
 
-                }
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }
@@ -178,6 +180,6 @@ namespace CV.Mobile.ViewModels
             await PopAsync();
 
         }
-     
+
     }
 }

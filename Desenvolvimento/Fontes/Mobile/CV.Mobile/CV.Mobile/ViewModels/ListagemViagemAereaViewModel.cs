@@ -25,7 +25,7 @@ namespace CV.Mobile.ViewModels
         public ListagemViagemAereaViewModel(Viagem pitemViagem)
         {
             ItemViagem = pitemViagem;
-            ItemCriterioBusca = new CriterioBusca() { Situacao=1};
+            ItemCriterioBusca = new CriterioBusca() { Situacao = 1 };
             PageAppearingCommand = new Command(
                                                                    async () =>
                                                                    {
@@ -67,7 +67,7 @@ namespace CV.Mobile.ViewModels
             MessagingService.Current.Subscribe<ViagemAerea>(MessageKeys.ManutencaoViagemAerea, (service, item) =>
             {
                 IsBusy = true;
-                
+
                 if (ListaDados.Where(d => d.Identificador == item.Identificador).Any())
                 {
                     var Posicao = ListaDados.IndexOf(ListaDados.Where(d => d.Identificador == item.Identificador).FirstOrDefault());
@@ -165,16 +165,17 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaCidades()
         {
             List<Cidade> Dados = new List<Cidade>();
-            bool Executado = true;
+            bool Executado = false;
 
             if (Conectado)
             {
                 try
-                { 
-                using (ApiService srv = new ApiService())
                 {
-                    Dados = await srv.ListarCidadeViagemAerea();
-                }
+                    using (ApiService srv = new ApiService())
+                    {
+                        Dados = await srv.ListarCidadeViagemAerea();
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }
@@ -191,16 +192,17 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaDados()
         {
             List<ViagemAerea> Dados = new List<ViagemAerea>();
-            bool Executado = true;
+            bool Executado = false;
             if (Conectado)
             {
                 try
-                { 
-                using (ApiService srv = new ApiService())
                 {
-                     Dados = await srv.ListarViagemAerea(ItemCriterioBusca);
+                    using (ApiService srv = new ApiService())
+                    {
+                        Dados = await srv.ListarViagemAerea(ItemCriterioBusca);
 
-                }
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }
@@ -216,21 +218,23 @@ namespace CV.Mobile.ViewModels
         private async Task VerificarAcaoItem(ItemTappedEventArgs itemSelecionado)
         {
             ViagemAerea ItemViagemAerea = null;
-            bool Executado = true;
+            bool Executado = false;
 
             if (Conectado)
             {
-                try { 
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    
-                    ItemViagemAerea = await srv.CarregarViagemAerea(((ViagemAerea)itemSelecionado.Item).Identificador);
+                    using (ApiService srv = new ApiService())
+                    {
 
-                }
+                        ItemViagemAerea = await srv.CarregarViagemAerea(((ViagemAerea)itemSelecionado.Item).Identificador);
+
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }
-            if(!Executado)
+            if (!Executado)
             {
                 ItemViagemAerea = await DatabaseService.CarregarViagemAerea(((ViagemAerea)itemSelecionado.Item).Identificador);
 
@@ -241,14 +245,14 @@ namespace CV.Mobile.ViewModels
         private async Task Adicionar()
         {
             var itemPontoOrigem = new ViagemAereaAeroporto() { TipoPonto = (int)enumTipoParada.Origem };
-            var itemPontoDestino = new ViagemAereaAeroporto() { TipoPonto = (int)enumTipoParada.Destino};
+            var itemPontoDestino = new ViagemAereaAeroporto() { TipoPonto = (int)enumTipoParada.Destino };
 
-            var ItemViagemAerea = new ViagemAerea() { Avaliacoes = new MvvmHelpers.ObservableRangeCollection<AvaliacaoAerea>(), Aeroportos = new MvvmHelpers.ObservableRangeCollection<ViagemAereaAeroporto>(new[] {itemPontoOrigem, itemPontoDestino }), DataPrevista = DateTime.Today  } ;
-           
+            var ItemViagemAerea = new ViagemAerea() { Avaliacoes = new MvvmHelpers.ObservableRangeCollection<AvaliacaoAerea>(), Aeroportos = new MvvmHelpers.ObservableRangeCollection<ViagemAereaAeroporto>(new[] { itemPontoOrigem, itemPontoDestino }), DataPrevista = DateTime.Today };
+
             var Pagina = new EdicaoViagemAereaPage() { BindingContext = new EdicaoViagemAereaViewModel(ItemViagemAerea, ItemViagem) };
             await PushAsync(Pagina);
-                
-            
+
+
         }
 
     }

@@ -25,7 +25,7 @@ namespace CV.Mobile.ViewModels
         public ListagemGastoViewModel(Viagem pitemViagem)
         {
             ItemViagem = pitemViagem;
-            ItemCriterioBusca = new CriterioBusca() { Situacao=1, IdentificadorParticipante = ItemUsuarioLogado.Codigo};
+            ItemCriterioBusca = new CriterioBusca() { Situacao = 1, IdentificadorParticipante = ItemUsuarioLogado.Codigo };
             PageAppearingCommand = new Command(
                                                                    async () =>
                                                                    {
@@ -47,11 +47,11 @@ namespace CV.Mobile.ViewModels
 
             ItemTappedCommand = new Command<ItemTappedEventArgs>(
                                                                   async (obj) => await VerificarAcaoItem(obj));
-              MessagingService.Current.Unsubscribe<Gasto>(MessageKeys.ManutencaoGasto);
+            MessagingService.Current.Unsubscribe<Gasto>(MessageKeys.ManutencaoGasto);
             MessagingService.Current.Subscribe<Gasto>(MessageKeys.ManutencaoGasto, (service, item) =>
             {
                 IsBusy = true;
-                
+
                 if (ListaDados.Where(d => d.Identificador == item.Identificador).Any())
                 {
                     var Posicao = ListaDados.IndexOf(ListaDados.Where(d => d.Identificador == item.Identificador).FirstOrDefault());
@@ -145,21 +145,23 @@ namespace CV.Mobile.ViewModels
 
         }
 
-      
-      
+
+
 
         private async Task CarregarListaDados()
         {
             List<Gasto> Dados = new List<Gasto>();
-            bool Executado = true;
+            bool Executado = false;
             if (Conectado)
             {
-                try { 
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    Dados = await srv.ListarGasto(ItemCriterioBusca);
+                    using (ApiService srv = new ApiService())
+                    {
+                        Dados = await srv.ListarGasto(ItemCriterioBusca);
 
-                }
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }
@@ -170,21 +172,23 @@ namespace CV.Mobile.ViewModels
             OnPropertyChanged("ListaDados");
             IsLoadingLista = false;
 
-           
+
         }
 
         private async Task VerificarAcaoItem(ItemTappedEventArgs itemSelecionado)
         {
             Gasto ItemGasto = null;
-            bool Executado = true;
+            bool Executado = false;
             if (Conectado)
             {
-                try { 
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    ItemGasto = await srv.CarregarGasto(((Gasto)itemSelecionado.Item).Identificador);
+                    using (ApiService srv = new ApiService())
+                    {
+                        ItemGasto = await srv.CarregarGasto(((Gasto)itemSelecionado.Item).Identificador);
 
-                }
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }
@@ -214,11 +218,11 @@ namespace CV.Mobile.ViewModels
                 Refeicoes = new MvvmHelpers.ObservableRangeCollection<GastoRefeicao>(),
                 ViagenAereas = new MvvmHelpers.ObservableRangeCollection<GastoViagemAerea>()
             };
-  
-                var Pagina = new EdicaoGastoPage() { BindingContext = new EdicaoGastoViewModel(ItemGasto) };
-                await PushAsync(Pagina);
 
-            
+            var Pagina = new EdicaoGastoPage() { BindingContext = new EdicaoGastoViewModel(ItemGasto) };
+            await PushAsync(Pagina);
+
+
         }
 
     }

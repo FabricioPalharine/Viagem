@@ -141,7 +141,7 @@ namespace CV.Mobile.ViewModels
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     ItemSugestao.Status = 3;
                     ItemSugestao.DataAtualizacao = DateTime.Now.ToUniversalTime();
-                    bool Executado = true;
+                    bool Executado = false;
                     if (Conectado)
                     {
                         try { 
@@ -160,6 +160,7 @@ namespace CV.Mobile.ViewModels
                             await DatabaseService.Database.SalvarSugestao(ItemSugestao);
 
                         }
+                            Executado = true;
                         }
                         catch { Executado = false; }
                     }

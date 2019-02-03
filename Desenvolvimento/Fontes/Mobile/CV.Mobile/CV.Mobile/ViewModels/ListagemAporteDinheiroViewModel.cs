@@ -28,7 +28,7 @@ namespace CV.Mobile.ViewModels
         public ListagemAporteDinheiroViewModel(Viagem pitemViagem)
         {
             ItemViagem = pitemViagem;
-            ItemCriterioBusca = new CriterioBusca() { } ;
+            ItemCriterioBusca = new CriterioBusca() { };
             PageAppearingCommand = new Command(
                                                                    async () =>
                                                                    {
@@ -48,7 +48,7 @@ namespace CV.Mobile.ViewModels
                                                       },
                                                       () => true);
 
-          
+
             ExcluirCommand = new Command<AporteDinheiro>((item) => Excluir(item));
             EditarCommand = new Command<ItemTappedEventArgs>(async (item) => await Editar(item));
             AdicionarCommand = new Command(async () => await AbrirInclusao(), () => true);
@@ -112,7 +112,7 @@ namespace CV.Mobile.ViewModels
 
 
         public ObservableCollection<AporteDinheiro> ListaDados { get; set; }
-  
+
         public Command AdicionarCommand { get; set; }
         public Command EditarCommand { get; set; }
         public Command ExcluirCommand { get; set; }
@@ -147,8 +147,8 @@ namespace CV.Mobile.ViewModels
             }
         }
 
-    
-       
+
+
 
 
         private async Task VerificarPesquisa()
@@ -164,19 +164,21 @@ namespace CV.Mobile.ViewModels
 
         }
 
-     
+
 
         private async Task CarregarListaDados()
         {
             List<AporteDinheiro> Dados = new List<AporteDinheiro>();
-            bool Executado = true;
+            bool Executado = false;
             if (Conectado)
             {
-                try { 
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    Dados = await srv.ListarAporteDinheiro(ItemCriterioBusca);
-                }
+                    using (ApiService srv = new ApiService())
+                    {
+                        Dados = await srv.ListarAporteDinheiro(ItemCriterioBusca);
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }
@@ -188,7 +190,7 @@ namespace CV.Mobile.ViewModels
             IsLoadingLista = false;
         }
 
-    
+
 
         private void Excluir(AporteDinheiro item)
         {
@@ -202,23 +204,25 @@ namespace CV.Mobile.ViewModels
                 {
                     if (!result) return;
                     ResultadoOperacao Resultado = new ResultadoOperacao();
-                    bool Executado = true;
+                    bool Executado = false;
                     if (Conectado)
                     {
-                        try { 
-                        using (ApiService srv = new ApiService())
+                        try
                         {
-                            Resultado = await srv.ExcluirAporteDinheiro(item.Identificador);
-                            base.AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "AD", item.Identificador.GetValueOrDefault(), false);
-                            await DatabaseService.ExcluirAporteDinheiro(item,true);
+                            using (ApiService srv = new ApiService())
+                            {
+                                Resultado = await srv.ExcluirAporteDinheiro(item.Identificador);
+                                base.AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "AD", item.Identificador.GetValueOrDefault(), false);
+                                await DatabaseService.ExcluirAporteDinheiro(item, true);
 
-                        }
+                            }
+                            Executado = true;
                         }
                         catch { Executado = false; }
                     }
                     if (!Executado)
                     {
-                       
+
                         await DatabaseService.ExcluirAporteDinheiro(item, false);
                         Resultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Compra de Moeda excluída com Sucesso " } };
                     }
@@ -240,28 +244,30 @@ namespace CV.Mobile.ViewModels
         private async Task Editar(ItemTappedEventArgs itemLista)
         {
             AporteDinheiro itemEditar = null;
-            bool Executado = true;
+            bool Executado = false;
             if (Conectado)
             {
-                try { 
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    itemEditar = await srv.CarregarAporteDinheiro(((AporteDinheiro)itemLista.Item).Identificador);
-                }
+                    using (ApiService srv = new ApiService())
+                    {
+                        itemEditar = await srv.CarregarAporteDinheiro(((AporteDinheiro)itemLista.Item).Identificador);
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }
             if (!Executado)
 
                 itemEditar = await DatabaseService.CarregarAporteDinheiro(((AporteDinheiro)itemLista.Item).Identificador);
-                var pagina = new EdicaoAporteDinheiro() { BindingContext = new EdicaoAporteDinheiroViewModel(itemEditar) };
-                await PushAsync(pagina);
-            
+            var pagina = new EdicaoAporteDinheiro() { BindingContext = new EdicaoAporteDinheiroViewModel(itemEditar) };
+            await PushAsync(pagina);
+
         }
 
         private async Task AbrirInclusao()
         {
-            var itemEditar = new AporteDinheiro() { DataAporte=DateTime.Today, Moeda = ItemViagem.Moeda };
+            var itemEditar = new AporteDinheiro() { DataAporte = DateTime.Today, Moeda = ItemViagem.Moeda };
             var pagina = new EdicaoAporteDinheiro() { BindingContext = new EdicaoAporteDinheiroViewModel(itemEditar) };
             await PushAsync(pagina);
 

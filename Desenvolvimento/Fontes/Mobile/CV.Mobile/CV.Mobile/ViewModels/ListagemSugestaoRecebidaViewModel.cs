@@ -26,7 +26,7 @@ namespace CV.Mobile.ViewModels
         {
             IsLoadingLista = true;
             ItemViagem = pitemViagem;
-            ItemCriterioBusca = new CriterioBusca() { Situacao=1};
+            ItemCriterioBusca = new CriterioBusca() { Situacao = 1 };
             PageAppearingCommand = new Command(
                                                                    async () =>
                                                                    {
@@ -153,15 +153,17 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaCidades()
         {
             List<Cidade> Dados = new List<Cidade>();
-            bool Executado = true;
+            bool Executado = false;
             if (Conectado)
             {
-                try { 
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    Dados = await srv.ListarCidadeSugestao();
+                    using (ApiService srv = new ApiService())
+                    {
+                        Dados = await srv.ListarCidadeSugestao();
 
-                }
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }
@@ -195,15 +197,17 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaPedidos()
         {
             List<Sugestao> Dados = new List<Sugestao>();
-            bool Executado = true;
+            bool Executado = false;
             if (Conectado)
             {
-                try { 
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    Dados = await srv.ListarSugestaoRecebida(ItemCriterioBusca);
+                    using (ApiService srv = new ApiService())
+                    {
+                        Dados = await srv.ListarSugestaoRecebida(ItemCriterioBusca);
 
-                }
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }
@@ -222,7 +226,7 @@ namespace CV.Mobile.ViewModels
             await PushAsync(Pagina);
         }
 
-      
+
 
 
     }

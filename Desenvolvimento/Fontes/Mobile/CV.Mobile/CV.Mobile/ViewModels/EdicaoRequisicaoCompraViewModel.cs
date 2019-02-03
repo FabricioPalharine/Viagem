@@ -75,7 +75,7 @@ namespace CV.Mobile.ViewModels
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     ItemListaCompra.Status = (int)enumStatusListaCompra.NaoComprar;
                     ItemListaCompra.DataAtualizacao = DateTime.Now.ToUniversalTime();
-                    bool Executado = true;
+                    bool Executado = false;
                     if (Conectado)
                     {
                         try { 
@@ -92,6 +92,7 @@ namespace CV.Mobile.ViewModels
                             }
                             await DatabaseService.Database.SalvarListaCompra(ItemListaCompra);
                         }
+                            Executado = true;
                         }
                         catch { Executado = false; }
                     }

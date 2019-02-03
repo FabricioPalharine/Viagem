@@ -12,7 +12,7 @@ using FormsToolkit;
 
 namespace CV.Mobile.ViewModels
 {
-    public class EditarCotacaoViewModel: BaseNavigationViewModel
+    public class EditarCotacaoViewModel : BaseNavigationViewModel
     {
         private CotacaoMoeda _ItemCotacao;
 
@@ -57,28 +57,30 @@ namespace CV.Mobile.ViewModels
             try
             {
                 ResultadoOperacao Resultado = new ResultadoOperacao();
-                bool Executado = true;
+                bool Executado = false;
                 if (Conectado)
                 {
-                    try { 
-                    using (ApiService srv = new ApiService())
+                    try
                     {
-                        Resultado = await srv.SalvarCotacaoMoeda(ItemCotacao);
-                        if (Resultado.Sucesso)
+                        using (ApiService srv = new ApiService())
                         {
-                            base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "CM", ItemCotacao.Identificador.GetValueOrDefault(Resultado.IdentificadorRegistro.GetValueOrDefault()), !ItemCotacao.Identificador.HasValue);
-                            ItemCotacao = await srv.CarregarCotacaoMoeda(ItemCotacao.Identificador.GetValueOrDefault(Resultado.IdentificadorRegistro.GetValueOrDefault()));
+                            Resultado = await srv.SalvarCotacaoMoeda(ItemCotacao);
+                            if (Resultado.Sucesso)
+                            {
+                                base.AtualizarViagem(ItemViagemSelecionada.Identificador.GetValueOrDefault(), "CM", ItemCotacao.Identificador.GetValueOrDefault(Resultado.IdentificadorRegistro.GetValueOrDefault()), !ItemCotacao.Identificador.HasValue);
+                                ItemCotacao = await srv.CarregarCotacaoMoeda(ItemCotacao.Identificador.GetValueOrDefault(Resultado.IdentificadorRegistro.GetValueOrDefault()));
 
-                            var itemAjustar = await DatabaseService.Database.RetornarCotacaoMoeda(ItemCotacao.Identificador.GetValueOrDefault(Resultado.IdentificadorRegistro.GetValueOrDefault()));
-                            if (itemAjustar != null)
-                                ItemCotacao.Id = itemAjustar.Id;
-                            itemAjustar.DataExclusao = DateTime.Now.ToUniversalTime();
-                            await DatabaseService.Database.SalvarCotacaoMoeda(ItemCotacao);
-                            
+                                var itemAjustar = await DatabaseService.Database.RetornarCotacaoMoeda(ItemCotacao.Identificador.GetValueOrDefault(Resultado.IdentificadorRegistro.GetValueOrDefault()));
+                                if (itemAjustar != null)
+                                    ItemCotacao.Id = itemAjustar.Id;
+                                itemAjustar.DataExclusao = DateTime.Now.ToUniversalTime();
+                                await DatabaseService.Database.SalvarCotacaoMoeda(ItemCotacao);
+
+
+                            }
 
                         }
-
-                    }
+                        Executado = true;
                     }
                     catch { Executado = false; }
                 }

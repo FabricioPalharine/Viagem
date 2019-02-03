@@ -15,7 +15,7 @@ namespace CV.Mobile.ViewModels
 {
     public class ListagemCarroCustoViewModel : BaseNavigationViewModel
     {
-       
+
         private AluguelGasto _ItemSelecionado;
         private Carro _ItemCarro;
 
@@ -64,31 +64,33 @@ namespace CV.Mobile.ViewModels
                 }
                 IsBusy = false;
             });
-            
+
 
             MessagingService.Current.Subscribe<Gasto>(MessageKeys.GastoSelecionado, async (service, item) =>
             {
 
 
                 var itemGravar = new AluguelGasto() { IdentificadorCarro = ItemCarro.Identificador, IdentificadorGasto = item.Identificador, DataAtualizacao = DateTime.Now.ToUniversalTime() };
-                bool Executado = true;
+                bool Executado = false;
 
                 if (Conectado)
                 {
-                    try { 
-                    using (ApiService srv = new ApiService())
+                    try
                     {
-                        var Resultado = await srv.SalvarAluguelGasto(itemGravar);
-                        if (Resultado.Sucesso)
+                        using (ApiService srv = new ApiService())
                         {
-                            itemGravar.Identificador = Resultado.IdentificadorRegistro;
-                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "GC", itemGravar.Identificador.GetValueOrDefault(), true);
-                            itemGravar.ItemGasto = item;
-                            await DatabaseService.Database.SalvarAluguelGasto(itemGravar);
-                            MessagingService.Current.SendMessage<AluguelGasto>(MessageKeys.ManutencaoAluguelGasto, itemGravar);
+                            var Resultado = await srv.SalvarAluguelGasto(itemGravar);
+                            if (Resultado.Sucesso)
+                            {
+                                itemGravar.Identificador = Resultado.IdentificadorRegistro;
+                                AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "GC", itemGravar.Identificador.GetValueOrDefault(), true);
+                                itemGravar.ItemGasto = item;
+                                await DatabaseService.Database.SalvarAluguelGasto(itemGravar);
+                                MessagingService.Current.SendMessage<AluguelGasto>(MessageKeys.ManutencaoAluguelGasto, itemGravar);
 
+                            }
                         }
-                    }
+                        Executado = true;
                     }
                     catch { Executado = false; }
                 }
@@ -105,20 +107,20 @@ namespace CV.Mobile.ViewModels
                     }
                 }
 
-                
+
 
             });
-            MessagingService.Current.Subscribe<Gasto>(MessageKeys.GastoIncluido,  (service, item) =>
-            {
-                var itemGravar = new AluguelGasto() { IdentificadorCarro = ItemCarro.Identificador, IdentificadorGasto = item.Identificador, DataAtualizacao = DateTime.Now.ToUniversalTime() };
-               
-                        itemGravar.Identificador = item.Atracoes.Select(d => d.Identificador).FirstOrDefault();
-                        itemGravar.ItemGasto = item;
-                        MessagingService.Current.SendMessage<AluguelGasto>(MessageKeys.ManutencaoAluguelGasto, itemGravar);
-                   
-                
+            MessagingService.Current.Subscribe<Gasto>(MessageKeys.GastoIncluido, (service, item) =>
+           {
+               var itemGravar = new AluguelGasto() { IdentificadorCarro = ItemCarro.Identificador, IdentificadorGasto = item.Identificador, DataAtualizacao = DateTime.Now.ToUniversalTime() };
 
-            });
+               itemGravar.Identificador = item.Atracoes.Select(d => d.Identificador).FirstOrDefault();
+               itemGravar.ItemGasto = item;
+               MessagingService.Current.SendMessage<AluguelGasto>(MessageKeys.ManutencaoAluguelGasto, itemGravar);
+
+
+
+           });
         }
 
         private void VerificarExclusao(AluguelGasto obj)
@@ -135,20 +137,22 @@ namespace CV.Mobile.ViewModels
 
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     obj.DataExclusao = DateTime.Now.ToUniversalTime();
-                    bool Executado = true;
+                    bool Executado = false;
                     if (Conectado)
                     {
-                        try { 
-                        using (ApiService srv = new ApiService())
+                        try
                         {
-                            Resultado = await srv.SalvarAluguelGasto(obj);
-                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "GC", obj.Identificador.GetValueOrDefault(), false);
+                            using (ApiService srv = new ApiService())
+                            {
+                                Resultado = await srv.SalvarAluguelGasto(obj);
+                                AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "GC", obj.Identificador.GetValueOrDefault(), false);
 
-                            var itemBase = await DatabaseService.Database.RetornarAluguelGasto(obj.Identificador);
-                            if (itemBase != null)
-                                await DatabaseService.Database.ExcluirAluguelGasto(itemBase);
+                                var itemBase = await DatabaseService.Database.RetornarAluguelGasto(obj.Identificador);
+                                if (itemBase != null)
+                                    await DatabaseService.Database.ExcluirAluguelGasto(itemBase);
 
-                        }
+                            }
+                            Executado = true;
                         }
                         catch { Executado = false; }
                     }
@@ -172,15 +176,15 @@ namespace CV.Mobile.ViewModels
                     });
                     ListaDados.Remove(obj);
 
-                   
-                    
+
+
 
                 })
             });
         }
 
         public Viagem ItemViagem { get; set; }
-           
+
 
 
         public ObservableCollection<AluguelGasto> ListaDados { get; set; }
@@ -189,7 +193,7 @@ namespace CV.Mobile.ViewModels
         public Command ItemTappedCommand { get; set; }
         public Command AdicionarCommand { get; set; }
 
-        
+
 
         public AluguelGasto ItemSelecionado
         {
@@ -218,11 +222,11 @@ namespace CV.Mobile.ViewModels
             }
         }
 
-       
-      
+
+
         private async Task Adicionar()
         {
-            var action = await Application.Current.MainPage.DisplayActionSheet(string.Empty,"Cancelar",null,
+            var action = await Application.Current.MainPage.DisplayActionSheet(string.Empty, "Cancelar", null,
                        "Novo Custo",
                        "Custo Existente"
                       );
@@ -244,7 +248,7 @@ namespace CV.Mobile.ViewModels
                     Moeda = ItemViagem.Moeda,
                     Usuarios = new MvvmHelpers.ObservableRangeCollection<GastoDividido>(),
                     Hoteis = new MvvmHelpers.ObservableRangeCollection<GastoHotel>(),
-                    Alugueis = new MvvmHelpers.ObservableRangeCollection<AluguelGasto>(new AluguelGasto[] { CustoCarro}),
+                    Alugueis = new MvvmHelpers.ObservableRangeCollection<AluguelGasto>(new AluguelGasto[] { CustoCarro }),
                     Compras = new MvvmHelpers.ObservableRangeCollection<GastoCompra>(),
                     Atracoes = new MvvmHelpers.ObservableRangeCollection<GastoAtracao>(),
                     Reabastecimentos = new MvvmHelpers.ObservableRangeCollection<ReabastecimentoGasto>(),

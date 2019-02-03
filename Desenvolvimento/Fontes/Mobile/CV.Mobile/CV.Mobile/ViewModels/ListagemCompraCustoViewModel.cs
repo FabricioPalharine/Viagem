@@ -79,17 +79,19 @@ namespace CV.Mobile.ViewModels
 
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     obj.DataExclusao = DateTime.Now.ToUniversalTime();
-                    bool Executado = true;
+                    bool Executado = false;
                     if (Conectado)
                     {
-                        try { 
-                        using (ApiService srv = new ApiService())
+                        try
                         {
-                            Resultado = await srv.ExcluirGastoCompra(obj);
-                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "GL", obj.Identificador.GetValueOrDefault(), false);
+                            using (ApiService srv = new ApiService())
+                            {
+                                Resultado = await srv.ExcluirGastoCompra(obj);
+                                AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "GL", obj.Identificador.GetValueOrDefault(), false);
 
-                           await DatabaseService.ExcluirGastoCompra(obj.Identificador,true);
-                        }
+                                await DatabaseService.ExcluirGastoCompra(obj.Identificador, true);
+                            }
+                            Executado = true;
                         }
                         catch { Executado = false; }
                     }
@@ -109,7 +111,7 @@ namespace CV.Mobile.ViewModels
                     });
                     ListaDados.Remove(obj);
 
-                   
+
 
 
                 })
@@ -158,11 +160,11 @@ namespace CV.Mobile.ViewModels
 
         private async Task VerificarAcaoItem(ItemTappedEventArgs itemSelecionado)
         {
-           
-                var Item = ((GastoCompra)itemSelecionado.Item);
-                var Pagina = new EdicaoCompraPage() { BindingContext = new EdicaoCompraViewModel(Item) };
-                await PushAsync(Pagina);
-            
+
+            var Item = ((GastoCompra)itemSelecionado.Item);
+            var Pagina = new EdicaoCompraPage() { BindingContext = new EdicaoCompraViewModel(Item) };
+            await PushAsync(Pagina);
+
         }
 
         private async Task Adicionar()

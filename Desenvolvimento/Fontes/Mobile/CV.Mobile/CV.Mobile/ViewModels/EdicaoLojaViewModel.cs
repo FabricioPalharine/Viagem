@@ -25,7 +25,7 @@ namespace CV.Mobile.ViewModels
         private MapSpan _Bounds;
         private bool _PermiteExcluir = true;
         private bool _PossoComentar = false;
-        
+
         private AvaliacaoLoja _ItemAvaliacao = new AvaliacaoLoja();
         private readonly DateTime _dataMinima = new DateTime(1900, 01, 01);
         public EdicaoLojaViewModel(Loja pItemLoja, Viagem pItemViagem)
@@ -103,15 +103,17 @@ namespace CV.Mobile.ViewModels
         public async void CarregarAtracoesPai()
         {
             List<Atracao> ListaDados = new List<Atracao>();
-            bool Executado = true;
+            bool Executado = false;
             if (Conectado)
             {
-                try { 
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    ListaDados = await srv.ListarAtracao(new CriterioBusca());
+                    using (ApiService srv = new ApiService())
+                    {
+                        ListaDados = await srv.ListarAtracao(new CriterioBusca());
 
-                }
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }
@@ -233,20 +235,22 @@ namespace CV.Mobile.ViewModels
 
                 ResultadoOperacao Resultado = new ResultadoOperacao();
                 Loja pItemLoja = null;
-                bool Executado = true;
+                bool Executado = false;
                 if (Conectado)
                 {
-                    try { 
-                    using (ApiService srv = new ApiService())
+                    try
                     {
-                        Resultado = await srv.SalvarLoja(ItemLoja);
-                        if (Resultado.Sucesso)
+                        using (ApiService srv = new ApiService())
                         {
-                            pItemLoja = await srv.CarregarLoja(Resultado.IdentificadorRegistro);
-                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "L", Resultado.IdentificadorRegistro.GetValueOrDefault(), !ItemLoja.Identificador.HasValue);
-                            await DatabaseService.SalvarLojaReplicada(pItemLoja);
+                            Resultado = await srv.SalvarLoja(ItemLoja);
+                            if (Resultado.Sucesso)
+                            {
+                                pItemLoja = await srv.CarregarLoja(Resultado.IdentificadorRegistro);
+                                AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "L", Resultado.IdentificadorRegistro.GetValueOrDefault(), !ItemLoja.Identificador.HasValue);
+                                await DatabaseService.SalvarLojaReplicada(pItemLoja);
+                            }
                         }
-                    }
+                        Executado = true;
                     }
                     catch { Executado = false; }
                 }
@@ -270,7 +274,7 @@ namespace CV.Mobile.ViewModels
                     ItemLoja.Identificador = Resultado.IdentificadorRegistro;
                     // var Jresultado = (JObject)Resultado.ItemRegistro;
                     // Loja pItemLoja = Jresultado.ToObject<Loja>();
-                  
+
                     if (pItemLoja.IdentificadorAtracao == null)
                         pItemLoja.IdentificadorAtracao = 0;
 
@@ -315,16 +319,18 @@ namespace CV.Mobile.ViewModels
 
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     ItemLoja.DataExclusao = DateTime.Now.ToUniversalTime();
-                    bool Executado = true;
+                    bool Executado = false;
                     if (Conectado)
                     {
-                        try { 
-                        using (ApiService srv = new ApiService())
+                        try
                         {
-                            Resultado = await srv.ExcluirLoja(ItemLoja.Identificador);
-                            await DatabaseService.ExcluirLoja(ItemLoja.Identificador, true);
-                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "L", ItemLoja.Identificador.GetValueOrDefault(), false);
-                        }
+                            using (ApiService srv = new ApiService())
+                            {
+                                Resultado = await srv.ExcluirLoja(ItemLoja.Identificador);
+                                await DatabaseService.ExcluirLoja(ItemLoja.Identificador, true);
+                                AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "L", ItemLoja.Identificador.GetValueOrDefault(), false);
+                            }
+                            Executado = true;
                         }
                         catch { Executado = false; }
                     }

@@ -149,14 +149,16 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaDados()
         {
             List<Carro> Dados = new List<Carro>();
-            bool Executado = true;
+            bool Executado = false;
             if (Conectado)
             {
-                try { 
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    Dados = await srv.ListarCarro(ItemCriterioBusca);
-                }
+                    using (ApiService srv = new ApiService())
+                    {
+                        Dados = await srv.ListarCarro(ItemCriterioBusca);
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }
@@ -171,14 +173,16 @@ namespace CV.Mobile.ViewModels
         private async Task VerificarAcaoItem(ItemTappedEventArgs itemSelecionado)
         {
             Carro ItemCarro = null;
-            bool Executado = true;
+            bool Executado = false;
             if (Conectado)
             {
-                try { 
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    ItemCarro = await srv.CarregarCarro(((Carro)itemSelecionado.Item).Identificador);
-                }
+                    using (ApiService srv = new ApiService())
+                    {
+                        ItemCarro = await srv.CarregarCarro(((Carro)itemSelecionado.Item).Identificador);
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }

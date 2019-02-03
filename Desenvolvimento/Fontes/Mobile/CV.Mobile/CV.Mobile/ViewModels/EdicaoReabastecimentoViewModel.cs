@@ -249,7 +249,7 @@ namespace CV.Mobile.ViewModels
                     ItemReabastecimento.Gastos.FirstOrDefault().DataAtualizacao = DateTime.Now.ToUniversalTime();
 
                 ResultadoOperacao Resultado = null;
-                bool Executado = true;
+                bool Executado = false;
                 if (Conectado)
                 {
                     try { 
@@ -266,6 +266,7 @@ namespace CV.Mobile.ViewModels
                         }
 
                     }
+                        Executado = true;
                     }
                     catch { Executado = false; }
                 }
@@ -325,7 +326,7 @@ namespace CV.Mobile.ViewModels
                     if (!result) return;
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     ItemReabastecimento.DataExclusao = DateTime.Now.ToUniversalTime();
-                    bool Executado = true;
+                    bool Executado = false;
                     if (Conectado)
                     {
                         try { 
@@ -337,6 +338,7 @@ namespace CV.Mobile.ViewModels
                             await DatabaseService.ExcluirReabastecimento(ItemReabastecimento.Identificador, true);
 
                         }
+                            Executado = true;
                         }
                         catch { Executado = false; }
                     }

@@ -79,18 +79,20 @@ namespace CV.Mobile.ViewModels
                     if (!result) return;
                     ResultadoOperacao Resultado = new ResultadoOperacao();
                     obj.DataExclusao = DateTime.Now.ToUniversalTime();
-                    bool Executado = true;
+                    bool Executado = false;
                     if (Conectado)
                     {
-                        try { 
-                        using (ApiService srv = new ApiService())
+                        try
                         {
-                            Resultado = await srv.SalvarCarroDeslocamento(obj);
-                            AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "CD", obj.Identificador.GetValueOrDefault(), false);
+                            using (ApiService srv = new ApiService())
+                            {
+                                Resultado = await srv.SalvarCarroDeslocamento(obj);
+                                AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "CD", obj.Identificador.GetValueOrDefault(), false);
 
-                            await DatabaseService.ExcluirCarroDeslocamento(obj.Identificador, true);
+                                await DatabaseService.ExcluirCarroDeslocamento(obj.Identificador, true);
 
-                        }
+                            }
+                            Executado = true;
                         }
                         catch { Executado = false; }
                     }

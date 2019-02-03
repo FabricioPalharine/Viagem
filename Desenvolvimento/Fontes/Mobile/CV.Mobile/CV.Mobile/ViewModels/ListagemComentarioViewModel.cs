@@ -54,7 +54,7 @@ namespace CV.Mobile.ViewModels
             MessagingService.Current.Subscribe<Comentario>(MessageKeys.ManutencaoComentario, (service, item) =>
             {
                 IsBusy = true;
-                
+
                 if (ListaDados.Where(d => d.Identificador == item.Identificador).Any())
                 {
                     var Posicao = ListaDados.IndexOf(ListaDados.Where(d => d.Identificador == item.Identificador).FirstOrDefault());
@@ -150,15 +150,17 @@ namespace CV.Mobile.ViewModels
         private async Task CarregarListaCidades()
         {
             List<Cidade> Dados = new List<Cidade>();
-            bool Executado = true;
+            bool Executado = false;
             if (Conectado)
             {
-                try { 
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    Dados = await srv.ListarCidadeComentario();
+                    using (ApiService srv = new ApiService())
+                    {
+                        Dados = await srv.ListarCidadeComentario();
 
-                }
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }
@@ -170,20 +172,22 @@ namespace CV.Mobile.ViewModels
             ListaCidades = new ObservableCollection<Cidade>(Dados);
             OnPropertyChanged("ListaCidades");
         }
-      
+
 
         private async Task CarregarListaDados()
         {
             List<Comentario> Dados = new List<Comentario>();
-            bool Executado = true;
+            bool Executado = false;
             if (Conectado)
             {
-                try { 
-                using (ApiService srv = new ApiService())
+                try
                 {
-                    Dados = await srv.ListarComentario(ItemCriterioBusca);
+                    using (ApiService srv = new ApiService())
+                    {
+                        Dados = await srv.ListarComentario(ItemCriterioBusca);
 
-                }
+                    }
+                    Executado = true;
                 }
                 catch { Executado = false; }
             }
@@ -200,7 +204,7 @@ namespace CV.Mobile.ViewModels
         private async Task VerificarAcaoItem(ItemTappedEventArgs itemSelecionado)
         {
             Comentario ItemComentario = ((Comentario)itemSelecionado.Item).Clone();
-            
+
             if (Conectado)
             {
                 try
@@ -221,12 +225,12 @@ namespace CV.Mobile.ViewModels
         }
         private async Task Adicionar()
         {
-            var ItemComentario = new Comentario() { Data=DateTime.Now, Hora = DateTime.Now.TimeOfDay  } ;
-           
+            var ItemComentario = new Comentario() { Data = DateTime.Now, Hora = DateTime.Now.TimeOfDay };
+
             var Pagina = new EdicaoComentarioPage() { BindingContext = new EdicaoComentarioViewModel(ItemComentario, ItemViagem) };
             await PushAsync(Pagina);
-                
-            
+
+
         }
 
     }
