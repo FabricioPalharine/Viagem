@@ -48,7 +48,8 @@ namespace CV.UI.Web.Controllers.WebAPI
         public ResultadoOperacao Post([FromBody] Atracao itemAtracao)
         {
             ViagemBusiness biz = new ViagemBusiness();
-            itemAtracao.IdentificadorCidade =  biz.RetornarCidadeGeocoding(itemAtracao.Latitude, itemAtracao.Longitude);
+            if (!itemAtracao.IdentificadorCidade.HasValue)
+                itemAtracao.IdentificadorCidade =  biz.RetornarCidadeGeocoding(itemAtracao.Latitude, itemAtracao.Longitude);
             itemAtracao.IdentificadorViagem = token.IdentificadorViagem;
             itemAtracao.DataAtualizacao = DateTime.Now.ToUniversalTime();
             biz.SalvarAtracao(itemAtracao);

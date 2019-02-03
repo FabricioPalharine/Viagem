@@ -135,7 +135,9 @@ UploadVideo.prototype.pollForVideoStatus = function () {
                 console.log(response.error.message);
                 setTimeout(this.pollForVideoStatus.bind(this), STATUS_POLLING_INTERVAL_MILLIS);
             } else {
-                var uploadStatus = response.items[0].status.uploadStatus;
+                var uploadStatus = "uploaded";
+                if (response.items && response.items.length > 0)
+                    uploadStatus=response.items[0].status.uploadStatus;
                 switch (uploadStatus) {
                     // This is a non-final status, so we need to poll again.
                     case 'uploaded':

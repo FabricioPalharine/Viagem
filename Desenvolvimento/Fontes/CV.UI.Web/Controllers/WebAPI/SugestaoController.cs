@@ -44,7 +44,8 @@ namespace CV.UI.Web.Controllers.WebAPI
             itemSugestao.IdentificadorViagem = token.IdentificadorViagem;
             if (!itemSugestao.IdentificadorUsuario.HasValue)
                 itemSugestao.IdentificadorUsuario = token.IdentificadorUsuario;
-            itemSugestao.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemSugestao.Latitude, itemSugestao.Longitude);
+            if (!itemSugestao.IdentificadorCidade.HasValue)
+                itemSugestao.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemSugestao.Latitude, itemSugestao.Longitude);
              biz.SalvarSugestao(itemSugestao);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();

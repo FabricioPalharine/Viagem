@@ -48,7 +48,8 @@ namespace CV.UI.Web.Controllers.WebAPI
             itemViagemAerea.DataAtualizacao = DateTime.Now.ToUniversalTime();
             foreach (var itemAeroporto in itemViagemAerea.Aeroportos)
             {
-                itemAeroporto.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemAeroporto.Latitude, itemAeroporto.Longitude);
+                if (!itemAeroporto.IdentificadorCidade.HasValue)
+                    itemAeroporto.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemAeroporto.Latitude, itemAeroporto.Longitude);
                 itemAeroporto.DataAtualizacao = DateTime.Now.ToUniversalTime();
             }
             //itemViagemAerea.Descricao = String.Concat(itemViagemAerea.CompanhiaAerea, " - ", itemViagemAerea.Aeroportos.Where(d => d.TipoPonto == (int)enumTipoParada.Origem).Select(d => d.Aeroporto).FirstOrDefault(), " - ", itemViagemAerea.Aeroportos.Where(d => d.TipoPonto == (int)enumTipoParada.Destino).Select(d => d.Aeroporto).FirstOrDefault());

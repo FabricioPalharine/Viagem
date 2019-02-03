@@ -58,7 +58,7 @@ namespace CV.Mobile.Models
                 if (Latitude.GetValueOrDefault(0) != 0 || Longitude.GetValueOrDefault(0) != 0)
                  url = "https://maps.googleapis.com/maps/api/staticmap?center=" + Latitude.GetValueOrDefault().ToString("F8",new System.Globalization.CultureInfo("en-US")) + "," + Longitude.GetValueOrDefault().ToString("F8", new System.Globalization.CultureInfo("en-US")) +
                "&zoom=16&size=400x400&maptype=roadmap&markers=color:blue%7C" + Latitude.GetValueOrDefault().ToString("F8", new System.Globalization.CultureInfo("en-US")) + "," + Longitude.GetValueOrDefault().ToString("F8", new System.Globalization.CultureInfo("en-US")) +
-               "&key=AIzaSyAlUpOpwZWS_ZGlMAtB6lY76oy1QBWk97g";
+               "&key=AIzaSyDrQ7UWqjZRnqcdVTdHwVEZHMJLtx3O_nA ";
                 return url;
             }
         }

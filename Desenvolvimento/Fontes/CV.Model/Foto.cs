@@ -43,7 +43,7 @@ private void ValidarLinkThumbnail(Microsoft.Practices.EnterpriseLibrary.Validati
             new Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult(Resource.MensagemModelo.Foto_LinkThumbnail, this, "LinkThumbnail", null, null);
       results.AddResult(result);
   }
-  else if (LinkThumbnail.Length > 200)
+  else if (LinkThumbnail.Length > 500)
   {
       Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult result =
             new Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult(Resource.MensagemModelo.Foto_LinkThumbnail_Tamanho, this, "LinkThumbnail", null, null);
@@ -61,7 +61,7 @@ private void ValidarLinkFoto(Microsoft.Practices.EnterpriseLibrary.Validation.Va
             new Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult(Resource.MensagemModelo.Foto_LinkFoto, this, "LinkFoto", null, null);
       results.AddResult(result);
   }
-  else if (LinkFoto.Length > 200)
+  else if (LinkFoto.Length > 500)
   {
       Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult result =
             new Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult(Resource.MensagemModelo.Foto_LinkFoto_Tamanho, this, "LinkFoto", null, null);
@@ -79,7 +79,7 @@ private void ValidarCodigoFoto(Microsoft.Practices.EnterpriseLibrary.Validation.
             new Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult(Resource.MensagemModelo.Foto_CodigoFoto, this, "CodigoFoto", null, null);
       results.AddResult(result);
   }
-  else if (CodigoFoto.Length > 50)
+  else if (CodigoFoto.Length > 500)
   {
       Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult result =
             new Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult(Resource.MensagemModelo.Foto_CodigoFoto_Tamanho, this, "CodigoFoto", null, null);

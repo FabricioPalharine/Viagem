@@ -46,7 +46,8 @@ namespace CV.UI.Web.Controllers.WebAPI
             itemComentario.DataAtualizacao = DateTime.Now.ToUniversalTime();
             itemComentario.IdentificadorUsuario = token.IdentificadorUsuario;
             itemComentario.IdentificadorViagem = token.IdentificadorViagem;
-            itemComentario.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemComentario.Latitude, itemComentario.Longitude);
+            if (!itemComentario.IdentificadorCidade.HasValue)
+                itemComentario.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemComentario.Latitude, itemComentario.Longitude);
 
             biz.SalvarComentario(itemComentario);
             ResultadoOperacao itemResultado = new ResultadoOperacao();

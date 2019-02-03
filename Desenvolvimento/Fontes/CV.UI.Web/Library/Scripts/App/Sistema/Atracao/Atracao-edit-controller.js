@@ -378,6 +378,7 @@
                 };
                 uploadVideo.ready(result[1], item.name, item, function (link, status) {
                     var itemFoto = {
+                        NomeArquivo: item.name,
                         ImageMime: item.type, DataArquivo: moment.utc(item.lastModifiedDate).local().format("YYYY-MM-DDTHH:mm:ss"), CodigoGoogle: uploadVideo.videoId, Thumbnail: uploadVideo.thumbnail, IdentificadorAtracao: vm.itemAtracao.Identificador,
                         LinkGoogle: link
                     };
@@ -438,7 +439,7 @@
                 item,
                 function (img, dados) {
                     var imageURL = img.toDataURL();
-                    var itemFoto = { Base64: imageURL, ImageMime: item.type, DataArquivo: moment.utc(item.lastModifiedDate).local().format("YYYY-MM-DDTHH:mm:ss"), IdentificadorAtracao: vm.itemAtracao.Identificador };
+                    var itemFoto = { NomeArquivo: item.name, Base64: imageURL, ImageMime: item.type, DataArquivo: moment.utc(item.lastModifiedDate).local().format("YYYY-MM-DDTHH:mm:ss"), IdentificadorAtracao: vm.itemAtracao.Identificador };
                     if (dados && dados.exif) {
                         var tags = dados.exif.getAll()
                         if (tags.GPSLatitude) {

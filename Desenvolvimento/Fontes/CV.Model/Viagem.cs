@@ -73,7 +73,9 @@ private void ValidarNome(Microsoft.Practices.EnterpriseLibrary.Validation.Valida
 			public DateTime? DataExclusao { get; set; }
 
 			public string CodigoAlbum { get; set; }
-		 public Viagem Clone()
+        public string ShareToken { get; set; }
+
+         public Viagem Clone()
 		{
 			 return (Viagem) this.MemberwiseClone();
 		}

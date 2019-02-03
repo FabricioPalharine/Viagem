@@ -35,6 +35,7 @@ namespace CV.Data.Configuration
 			this.Property(i => i.DataAlteracao).HasColumnName("DT_ATUALIZACAO");
 			this.Property(i => i.DataExclusao).HasColumnName("DT_EXCLUSAO");
 			this.Property(i => i.CodigoAlbum).HasColumnName("CD_ALBUM");
+            this.Property(d => d.ShareToken).HasColumnName("CD_SHARE_TOKEN");
 		MapearCamposManualmente();
 		}
 	}

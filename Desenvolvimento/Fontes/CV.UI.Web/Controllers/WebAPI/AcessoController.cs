@@ -65,6 +65,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             if (itemViagem != null)
             {
                 token.IdentificadorViagem = itemLogin.IdentificadorViagem;
+                biz.JuntarAlbumCompartilhado(itemViagem, token.IdentificadorUsuario);
                 itemResultado.IdentificadorViagem = itemLogin.IdentificadorViagem;
                 itemResultado.NomeViagem = itemViagem.Nome;
                 itemResultado.PermiteEdicao = itemViagem.IdentificadorUsuario == token.IdentificadorUsuario || biz.ListarParticipanteViagem(d => d.IdentificadorUsuario == token.IdentificadorUsuario && d.IdentificadorViagem == itemLogin.IdentificadorViagem).Any();

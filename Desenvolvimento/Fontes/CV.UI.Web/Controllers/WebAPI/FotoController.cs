@@ -23,7 +23,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             ResultadoConsultaTipo<Foto> resultado = new ResultadoConsultaTipo<Foto>();
             ViagemBusiness biz = new ViagemBusiness();
 
-            List<Foto> _itens = biz.ListarFotos(json.Identificador, token.IdentificadorViagem.GetValueOrDefault(), json.DataInicioDe, json.DataInicioAte, json.Comentario, json.ListaAtracoes, json.ListaHoteis, json.ListaRefeicoes, json.IdentificadorCidade, json.Index.Value, json.Count.Value).ToList();
+            List<Foto> _itens = biz.ListarFotos(json.Identificador, token.IdentificadorViagem.GetValueOrDefault(), json.DataInicioDe, json.DataInicioAte, json.Comentario, json.ListaAtracoes, json.ListaHoteis, json.ListaRefeicoes, json.IdentificadorCidade, json.Index.Value, json.Count.Value, token.IdentificadorUsuario).ToList();
             //resultado.TotalRegistros = _itens.Count();
             //if (json.SortField != null && json.SortField.Any())
             //    _itens = _itens.AsQueryable().OrderByField<Foto>(json.SortField, json.SortOrder).ToList();
@@ -49,7 +49,8 @@ namespace CV.UI.Web.Controllers.WebAPI
             ViagemBusiness biz = new ViagemBusiness();
             if (itemFoto.Latitude.HasValue && itemFoto.Longitude.HasValue)
             {
-                itemFoto.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemFoto.Latitude, itemFoto.Longitude);
+                if (!itemFoto.IdentificadorCidade.HasValue)
+                    itemFoto.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemFoto.Latitude, itemFoto.Longitude);
             }
             else
                 itemFoto.IdentificadorCidade = null;

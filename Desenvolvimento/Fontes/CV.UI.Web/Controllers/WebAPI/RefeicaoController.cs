@@ -58,7 +58,8 @@ namespace CV.UI.Web.Controllers.WebAPI
         public ResultadoOperacao Post([FromBody] Refeicao itemRefeicao)
         {
             ViagemBusiness biz = new ViagemBusiness();
-            itemRefeicao.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemRefeicao.Latitude, itemRefeicao.Longitude);
+            if (!itemRefeicao.IdentificadorCidade.HasValue)
+                itemRefeicao.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemRefeicao.Latitude, itemRefeicao.Longitude);
             itemRefeicao.IdentificadorViagem = token.IdentificadorViagem;
             itemRefeicao.DataAtualizacao = DateTime.Now.ToUniversalTime();
             biz.SalvarRefeicao(itemRefeicao);

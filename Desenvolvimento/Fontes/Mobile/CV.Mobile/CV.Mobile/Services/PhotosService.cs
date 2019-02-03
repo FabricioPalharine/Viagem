@@ -40,32 +40,43 @@ namespace CV.Mobile.Services
 
         public async Task SubirFoto(string AlbumId, byte[] Imagem, UploadFoto itemUpload)
         {
-
-            string Uri = String.Concat("user/default/albumid/default", "?alt=json-in-script");
+            string Uri = String.Concat("https://photoslibrary.googleapis.com/v1/uploads");
             HttpResponseMessage response = null;
-           
+
 
             using (MemoryStream ms = new MemoryStream(Imagem))
             {
                 System.Net.Http.StreamContent content = new StreamContent(ms);
                 content.Headers.ContentLength = Imagem.Length;
                 content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(itemUpload.ImageMime);
+                content.Headers.Add("X-Goog-Upload-File-Name", itemUpload.NomeArquivo);
+                content.Headers.Add("X-Goog-Upload-Protocol", "raw");
                 response = await _httpClient.PostAsync(Uri, content);
 
                 var resultado = await response.Content.ReadAsStringAsync();
 
                 if (response.IsSuccessStatusCode)
                 {
+                    string UPLOAD_TOKEN = resultado;
 
-                    resultado = resultado.Substring(0, resultado.Length - 2).Replace("gdata.io.handleScriptLoaded(", "");
+                    List<object> dados = new List<object>();
+                    dados.Add(new { description = "", simpleMediaItem = new { uploadToken = UPLOAD_TOKEN } });
+                    var albumData = new { albumId = AlbumId, newMediaItems = dados.ToArray() };
+                    Uri = String.Concat("https://photoslibrary.googleapis.com/v1/mediaItems:batchCreate");
 
-                    var newimageinfo = JsonConvert.DeserializeObject<dynamic>(resultado);
+                    var json = JsonConvert.SerializeObject(albumData);
+                    var contentjson = new StringContent(json, Encoding.UTF8, "application/json");
 
-                    itemUpload.CodigoGoogle = ((Newtonsoft.Json.Linq.JContainer)(newimageinfo.entry["gphoto$id"])).First.First.ToString();
+                    response = await _httpClient.PostAsync(Uri, contentjson);
 
+                    resultado = await response.Content.ReadAsStringAsync();
 
-                    itemUpload.LinkGoogle = newimageinfo.entry["media$group"]["media$content"][0]["url"].ToString();
-                    itemUpload.Thumbnail = newimageinfo.entry["media$group"]["media$thumbnail"][1]["url"].ToString();
+                    if (response.IsSuccessStatusCode)
+                    {
+                        dynamic resultadoDinamico = JObject.Parse(resultado);
+                        itemUpload.LinkGoogle = itemUpload.Thumbnail = resultadoDinamico.newMediaItemResults[0].mediaItem.productUrl;
+                        itemUpload.CodigoGoogle = resultadoDinamico.newMediaItemResults[0].mediaItem.id;
+                    }
 
                 }
             }

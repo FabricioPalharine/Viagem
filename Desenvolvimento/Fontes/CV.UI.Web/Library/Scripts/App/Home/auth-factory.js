@@ -18,9 +18,9 @@
         $rootScope.isLogged = false;
         AuthBase.currentUser = {};
         
-        AuthBase.apiKey = 'AIzaSyAlUpOpwZWS_ZGlMAtB6lY76oy1QBWk97g';
-        AuthBase.clientId = '210037759249.apps.googleusercontent.com';
-        AuthBase.scopes = 'profile https://picasaweb.google.com/data/ https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtube';
+        AuthBase.apiKey = 'AIzaSyDrQ7UWqjZRnqcdVTdHwVEZHMJLtx3O_nA';
+        AuthBase.clientId = '997990659234-nb4rfquq8l9aakikqhpmer7p1uq7gp4n.apps.googleusercontent.com';
+        AuthBase.scopes = 'profile https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/photoslibrary.sharing https://www.googleapis.com/auth/photoslibrary';
         AuthBase.auth2 = null;
        
 

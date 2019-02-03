@@ -33,5 +33,6 @@ namespace CV.Mobile.Models
         public string CaminhoLocal { get; set; }
 
         public bool Video { get; set; }
+        public string NomeArquivo { get; set; }
     }
 }

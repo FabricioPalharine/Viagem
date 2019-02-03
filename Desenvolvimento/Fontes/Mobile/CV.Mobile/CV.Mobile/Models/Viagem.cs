@@ -30,6 +30,7 @@ namespace CV.Mobile.Models
         private ObservableRangeCollection<ParticipanteViagem> _Participantes = new ObservableRangeCollection<ParticipanteViagem>();
         private ObservableRangeCollection<UsuarioGasto> _UsuariosGastos = new ObservableRangeCollection<UsuarioGasto>();
         private bool _ControlaPosicaoGPS;
+        private string _ShareToken;
 
         [PrimaryKey, AutoIncrement]
 
@@ -226,6 +227,20 @@ namespace CV.Mobile.Models
             set
             {
                 SetProperty(ref _CodigoAlbum, value);
+            }
+        }
+
+
+        public string ShareToken
+        {
+            get
+            {
+                return _ShareToken;
+            }
+
+            set
+            {
+                SetProperty(ref _ShareToken, value);
             }
         }
 

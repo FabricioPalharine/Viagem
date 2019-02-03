@@ -62,7 +62,8 @@ namespace CV.UI.Web.Controllers.WebAPI
             ViagemBusiness biz = new ViagemBusiness();
             itemGasto.IdentificadorViagem = token.IdentificadorViagem;
             itemGasto.DataAtualizacao = DateTime.Now.ToUniversalTime();
-            itemGasto.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemGasto.Latitude, itemGasto.Longitude);
+            if (!itemGasto.IdentificadorCidade.HasValue)
+                itemGasto.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemGasto.Latitude, itemGasto.Longitude);
             biz.SalvarGasto_Completo(itemGasto);
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             itemResultado.Sucesso = biz.IsValid();

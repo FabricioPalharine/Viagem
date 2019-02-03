@@ -359,6 +359,7 @@ namespace CV.Mobile.ViewModels
         {
             itemUpload.CaminhoLocal = retorno.Path;
             itemUpload.ImageMime = "image/jpeg";
+            itemUpload.NomeArquivo = System.IO.Path.GetFileName(retorno.Path);
             var Source = retorno.GetStream();
             var exif = ExifReader.ReadJpeg(Source);
             

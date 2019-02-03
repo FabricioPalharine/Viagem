@@ -27,7 +27,7 @@ namespace CV.Mobile.Droid.Services
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DefaultSignIn)
         .RequestEmail()
         .RequestProfile()
-        .RequestScopes(new Scope("https://picasaweb.google.com/data/"), new Scope("https://www.googleapis.com/auth/youtube.upload"), new Scope("https://www.googleapis.com/auth/youtube"))
+        .RequestScopes( new Scope("https://www.googleapis.com/auth/youtube.upload"), new Scope("https://www.googleapis.com/auth/youtube"), new Scope("https://www.googleapis.com/auth/photoslibrary"), new Scope("https://www.googleapis.com/auth/photoslibrary.sharing"))
         .RequestIdToken(Constants.ClientId)
         .RequestServerAuthCode(Constants.ClientId, true)
 
@@ -38,10 +38,10 @@ namespace CV.Mobile.Droid.Services
                 .AddApi(Android.Gms.Auth.Api.Auth.GOOGLE_SIGN_IN_API, gso)
 
                 .AddScope(new Scope(Scopes.Profile))
-                .AddScope(new Scope("https://picasaweb.google.com/data/"))
                 .AddScope(new Scope("https://www.googleapis.com/auth/youtube.upload"))
                 .AddScope(new Scope("https://www.googleapis.com/auth/youtube"))
-
+                                .AddScope(new Scope("https://www.googleapis.com/auth/photoslibrary"))
+                .AddScope(new Scope("https://www.googleapis.com/auth/photoslibrary.sharing"))
                 .Build();
             mGoogleApiClient.Connect();
             await Task.Delay(5000);

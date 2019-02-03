@@ -59,7 +59,8 @@ resultado.TotalRegistros = _itens.Count();
         {
             ViagemBusiness biz = new ViagemBusiness();
             itemReabastecimento.DataAtualizacao = DateTime.Now.ToUniversalTime();
-            itemReabastecimento.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemReabastecimento.Latitude, itemReabastecimento.Longitude);
+            if (!itemReabastecimento.IdentificadorCidade.HasValue)
+                itemReabastecimento.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemReabastecimento.Latitude, itemReabastecimento.Longitude);
             itemReabastecimento.Gastos[0].ItemGasto.IdentificadorCidade = itemReabastecimento.IdentificadorCidade;
             itemReabastecimento.Gastos[0].ItemGasto.DataAtualizacao = DateTime.Now.ToUniversalTime();
             itemReabastecimento.Gastos[0].ItemGasto.IdentificadorViagem = token.IdentificadorViagem;

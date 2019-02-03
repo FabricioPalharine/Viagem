@@ -3063,6 +3063,7 @@ namespace CV.Mobile.Services
             foreach (var itemGastoAtracao in item.Gastos)
             {
                 itemGastoAtracao.ItemGasto = await Database.RetornarGasto(itemGastoAtracao.IdentificadorGasto);
+                if (itemGastoAtracao.ItemGasto != null)
                 itemGastoAtracao.ItemGasto.Usuarios = new ObservableRangeCollection<GastoDividido>(await Database.ListarGastoDividido_IdentificadorGasto(itemGastoAtracao.IdentificadorGasto));
 
             }

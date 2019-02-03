@@ -62,7 +62,8 @@ namespace CV.UI.Web.Controllers.WebAPI
         public ResultadoOperacao Post([FromBody] Loja itemLoja)
         {
             ViagemBusiness biz = new ViagemBusiness();
-            itemLoja.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemLoja.Latitude, itemLoja.Longitude);
+            if (!itemLoja.IdentificadorCidade.HasValue)
+                itemLoja.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemLoja.Latitude, itemLoja.Longitude);
             itemLoja.IdentificadorViagem = token.IdentificadorViagem;
             itemLoja.DataAtualizacao = DateTime.Now.ToUniversalTime();
             biz.SalvarLoja(itemLoja);

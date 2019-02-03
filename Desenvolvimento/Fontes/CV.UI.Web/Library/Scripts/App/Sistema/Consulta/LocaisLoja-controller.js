@@ -45,7 +45,7 @@
         vm.RetornarURLMap = function (item) {
             var url = "https://maps.googleapis.com/maps/api/staticmap?center=" + item.Latitude + ',' + item.Longitude +
                 '&zoom=16&size=200x200&maptype=roadmap&markers=color:blue%7C' + item.Latitude + ',' + item.Longitude +
-                '&key=AIzaSyAlUpOpwZWS_ZGlMAtB6lY76oy1QBWk97g';
+                '&key=AIzaSyDrQ7UWqjZRnqcdVTdHwVEZHMJLtx3O_nA ';
             return url;
         };
 

@@ -11,9 +11,9 @@ using System.Net;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.IO;
+using Newtonsoft.Json.Linq;
 
 namespace CV.Business
-
 {
     public partial class ViagemBusiness : BusinessBase
     {
@@ -646,8 +646,8 @@ namespace CV.Business
                 WebClient client = new WebClient();
                 // creates the post data for the POST request
                 System.Collections.Specialized.NameValueCollection values = new System.Collections.Specialized.NameValueCollection();
-                values.Add("client_id", "210037759249.apps.googleusercontent.com");
-                values.Add("client_secret", "H1CNNlmDu-uNnGll5ylQmvgp");
+                values.Add("client_id", "997990659234-nb4rfquq8l9aakikqhpmer7p1uq7gp4n.apps.googleusercontent.com");
+                values.Add("client_secret", "oDVFqpJmcur_crTGx1CHvRQ5");
                 values.Add("refresh_token", ItemUsuario.RefreshToken);
                 values.Add("grant_type", "refresh_token");
 
@@ -713,8 +713,8 @@ namespace CV.Business
 
             // creates the post data for the POST request
             System.Collections.Specialized.NameValueCollection values = new System.Collections.Specialized.NameValueCollection();
-            values.Add("client_id", "210037759249.apps.googleusercontent.com");
-            values.Add("client_secret", "H1CNNlmDu-uNnGll5ylQmvgp");
+            values.Add("client_id", "997990659234-nb4rfquq8l9aakikqhpmer7p1uq7gp4n.apps.googleusercontent.com");
+            values.Add("client_secret", "oDVFqpJmcur_crTGx1CHvRQ5");
             values.Add("redirect_uri", "postmessage");
             values.Add("code", itemLogin.CodigoValidacao);
             values.Add("grant_type", "authorization_code");
@@ -1007,42 +1007,118 @@ namespace CV.Business
             }
         }
 
-        public string CriarAlbum(Usuario itemUsuario, string Nome)
+        public string CriarAlbum(Usuario itemUsuario, string Nome, Viagem itemViagem)
         {
             AtualizarTokenUsuario(itemUsuario);
-            using (WebClient wc = new WebClient())
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://photoslibrary.googleapis.com/v1/albums");
+            request.Method = "POST";
+            var albumData = new { album = new { title = Nome } };
+            request.ContentType = "application/json";
+            request.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + itemUsuario.Token);
+
+            using (var streamWriter = new StreamWriter(request.GetRequestStream()))
             {
+                string json = JsonConvert.SerializeObject(albumData);
 
-                wc.Headers[HttpRequestHeader.Authorization] = "Bearer " + itemUsuario.Token;
-                wc.Headers["GData-Version"] = "3";
-                //var jsonData = wc.DownloadString("https://picasaweb.google.com/data/feed/api/user/default?alt=json");
-                //var albuminfo = JsonConvert.DeserializeObject<dynamic>(jsonData);
-                //var entries = ((Newtonsoft.Json.Linq.JArray)albuminfo.feed.entry);
-                //foreach (var itemEntry in entries)
-                //{
-                //    if (itemEntry["title"].First.First.ToString() == "CurtindoViagem")
-                //    {
-                //        return itemEntry["gphoto$id"].First.First.ToString();
-                //    }
-                //}
-
-                string XMLEntrada = @"<entry xmlns='http://www.w3.org/2005/Atom'
-    xmlns:media='http://search.yahoo.com/mrss/'
-    xmlns:gphoto='http://schemas.google.com/photos/2007'>
-  <title type='text'>" + Nome + @"</title>
-  <gphoto:access>public</gphoto:access>
-  <category scheme='http://schemas.google.com/g/2005#kind'
-    term='http://schemas.google.com/photos/2007#album'></category>
-</entry>";
-                wc.Headers[HttpRequestHeader.ContentType] = "application/atom+xml";
-
-
-                
-                string URI = "https://picasaweb.google.com/data/feed/api/user/default?alt=json";
-                string HtmlResult = wc.UploadString(URI, "POST", XMLEntrada);
-                var newalbuminfo = JsonConvert.DeserializeObject<dynamic>(HtmlResult);
-                return ((Newtonsoft.Json.Linq.JObject)newalbuminfo.entry)["gphoto$id"].First.First.ToString();
+                streamWriter.Write(json);
+                streamWriter.Flush();
+                streamWriter.Close();
             }
+            string CodigoAlbum = null;
+
+            try
+            {
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                StreamReader responseReader = new StreamReader(response.GetResponseStream());
+
+                string responseStr = responseReader.ReadToEnd();
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    dynamic resultado = JObject.Parse(responseStr);
+                    CodigoAlbum = resultado.id;
+                    itemViagem.CodigoAlbum = CodigoAlbum;
+                    itemViagem.ShareToken = CompartilharAlbum(itemUsuario, CodigoAlbum);
+                }
+            }
+            catch (WebException ex)
+            {
+                StreamReader responseReader = new StreamReader(ex.Response.GetResponseStream());
+
+                string responseStr = responseReader.ReadToEnd();
+                throw;
+
+            }
+            return CodigoAlbum;
+                 
+        }
+
+        public void JuntarAlbumCompartilhado(Viagem itemViagem, int IdentificadorUsuario)
+        {
+            Usuario itemUsuario = SelecionarUsuario(IdentificadorUsuario);
+            AtualizarTokenUsuario(itemUsuario);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://photoslibrary.googleapis.com/v1/sharedAlbums:join");
+            request.Method = "POST";
+            var albumData = new { shareToken = itemViagem.ShareToken };
+            request.ContentType = "application/json";
+            request.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + itemUsuario.Token);
+
+            using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+            {
+                string json = JsonConvert.SerializeObject(albumData);
+
+                streamWriter.Write(json);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+
+            try
+            {
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                StreamReader responseReader = new StreamReader(response.GetResponseStream());
+
+                string responseStr = responseReader.ReadToEnd();
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    dynamic resultado = JObject.Parse(responseStr);
+                }
+            }
+            catch (WebException ex)
+            {
+                StreamReader responseReader = new StreamReader(ex.Response.GetResponseStream());
+                string responseStr = responseReader.ReadToEnd();
+
+
+            }
+        }
+
+        public string CompartilharAlbum(Usuario itemUsuario, string CodigoAlbum)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(String.Format("https://photoslibrary.googleapis.com/v1/albums/{0}:share", CodigoAlbum));
+            request.Method = "POST";
+            request.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + itemUsuario.Token);
+            var albumData = new { sharedAlbumOptions = new { isCollaborative = true, isCommentable=true } };
+            request.ContentType = "application/json";
+            request.Method = "POST";
+            string ShareToken = null;
+            using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+            {
+                string json = JsonConvert.SerializeObject(albumData);
+
+                streamWriter.Write(json);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            StreamReader responseReader = new StreamReader(response.GetResponseStream());
+
+            string responseStr = responseReader.ReadToEnd();
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                dynamic resultado = JObject.Parse(responseStr);
+                ShareToken = resultado.shareInfo.shareToken;
+            }
+            return ShareToken;
 
         }
 
@@ -1056,7 +1132,7 @@ namespace CV.Business
                 if (string.IsNullOrEmpty(itemViagem.CodigoAlbum))
                 {
                     Usuario itemUsuario = SelecionarUsuario(itemViagem.IdentificadorUsuario);
-                    itemViagem.CodigoAlbum = string.Empty;// CriarAlbum(itemUsuario, itemViagem.Nome);
+                    itemViagem.CodigoAlbum =  CriarAlbum(itemUsuario, itemViagem.Nome, itemViagem);
                 }
                 SalvarViagem_Completa(itemViagem);
             }
@@ -1067,7 +1143,7 @@ namespace CV.Business
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             Viagem itemViagem = SelecionarViagem(IdentificadoViagem);
             AtualizarTokenUsuario(itemUsuario);
-            SubirImagemPicasa(itemFoto, itemUsuario, itemViagem);
+            SubirImagemGooglePhotos(itemFoto, itemUsuario, itemViagem);
             itemResultado.ItemRegistro = CadastrarNovaFoto(itemViagem, itemUsuario, itemFoto, false);
             return itemResultado;
         }
@@ -1078,6 +1154,76 @@ namespace CV.Business
             Viagem itemViagem = SelecionarViagem(IdentificadoViagem);
             itemResultado.ItemRegistro = CadastrarNovaFoto(itemViagem, itemUsuario, itemFoto, false);
             return itemResultado;
+        }
+
+        private void SubirImagemGooglePhotos(UploadFoto itemFoto, Usuario itemUsuario, Viagem itemViagem)
+        {
+            string Album = itemViagem.CodigoAlbum;
+            string Base64 = itemFoto.Base64;
+            if (!string.IsNullOrEmpty(Base64))
+            {
+                int Posicao = Base64.IndexOf("base64,");
+                if (Posicao >= 0)
+                    Base64 = Base64.Substring(Posicao + 7);
+            }
+            byte[] Dados = Convert.FromBase64String(Base64);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://photoslibrary.googleapis.com/v1/uploads");
+            request.Method = "POST";
+            request.ContentType = itemFoto.ImageMime;
+            request.ContentLength = Dados.Length;
+            request.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + itemUsuario.Token);
+            request.Headers.Add("X-Goog-Upload-File-Name", itemFoto.NomeArquivo);
+            request.Headers.Add("X-Goog-Upload-Protocol", "raw");
+
+            using (Stream requestStream = request.GetRequestStream())
+            {
+                requestStream.Write(Dados, 0, Dados.Length);
+
+                requestStream.Close();
+            }
+
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            StreamReader responseReader = new StreamReader(response.GetResponseStream());
+
+            string UPLOAD_TOKEN = responseReader.ReadToEnd();
+            request = (HttpWebRequest)WebRequest.Create("https://photoslibrary.googleapis.com/v1/mediaItems:batchCreate");
+            request.Method = "POST";
+
+            List<object> dados = new List<object>();
+            dados.Add(new { description = "", simpleMediaItem = new { uploadToken = UPLOAD_TOKEN } });
+            var albumData = new { albumId = Album, newMediaItems = dados.ToArray() };
+            request.ContentType = "application/json";
+            request.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + itemUsuario.Token);
+
+            using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+            {
+                string json = JsonConvert.SerializeObject(albumData);
+
+                streamWriter.Write(json);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+
+            try
+            {
+                response = (HttpWebResponse)request.GetResponse();
+                 responseReader = new StreamReader(response.GetResponseStream());
+
+                string responseStr = responseReader.ReadToEnd();
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    dynamic resultado = JObject.Parse(responseStr);
+                    itemFoto.LinkGoogle = itemFoto.Thumbnail = resultado.newMediaItemResults[0].mediaItem.productUrl;
+                    itemFoto.CodigoGoogle = resultado.newMediaItemResults[0].mediaItem.id;
+                }
+            }
+            catch (WebException ex)
+            {
+                responseReader = new StreamReader(ex.Response.GetResponseStream());
+                string responseStr = responseReader.ReadToEnd();
+                throw;
+
+            }
         }
 
         private void SubirImagemPicasa(UploadFoto itemFoto, Usuario itemUsuario, Viagem itemViagem)
@@ -1157,7 +1303,7 @@ namespace CV.Business
             else
                 LocalizarPosicaoFoto(itemViagem.Identificador, itemUsuario.Identificador, itemGravarFoto.Data, itemGravarFoto);
 
-            if (itemGravarFoto.Latitude.HasValue && itemGravarFoto.Longitude.HasValue)
+            if (itemGravarFoto.Latitude.HasValue && itemGravarFoto.Longitude.HasValue && !itemGravarFoto.IdentificadorCidade.HasValue)
             {
                 itemGravarFoto.IdentificadorCidade = RetornarCidadeGeocoding(itemGravarFoto.Latitude, itemGravarFoto.Longitude);
             }
@@ -1296,7 +1442,7 @@ namespace CV.Business
                 {
                     NoKeepAlivesWebClient client = new NoKeepAlivesWebClient();
                     client.Encoding = System.Text.Encoding.UTF8;
-                    string LocationInformation = client.DownloadString("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude.GetValueOrDefault(0).ToString("F6", System.Globalization.CultureInfo.GetCultureInfo("en-Us")) + "," + longitude.GetValueOrDefault(0).ToString("F6", System.Globalization.CultureInfo.GetCultureInfo("en-Us")) + "&key=AIzaSyAlUpOpwZWS_ZGlMAtB6lY76oy1QBWk97g");
+                    string LocationInformation = client.DownloadString("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude.GetValueOrDefault(0).ToString("F6", System.Globalization.CultureInfo.GetCultureInfo("en-Us")) + "," + longitude.GetValueOrDefault(0).ToString("F6", System.Globalization.CultureInfo.GetCultureInfo("en-Us")) + "&key=AIzaSyDrQ7UWqjZRnqcdVTdHwVEZHMJLtx3O_nA ");
 
                     var locationinfo = JsonConvert.DeserializeObject<dynamic>(LocationInformation);
                     if (locationinfo.status == "OK")
@@ -1357,19 +1503,59 @@ namespace CV.Business
         }
 
         public List<Foto> ListarFotos(int? IdentificadorFoto, int IdentificadorViagem, DateTime? DataDe, DateTime? DataAte, string Comentario, List<int?> IdentificadorAtracao,
-           List<int?> IdentificadorHotel, List<int?> IdentificadorRefeicao, int? IdentificadorCidade, int Skip, int Count)
+           List<int?> IdentificadorHotel, List<int?> IdentificadorRefeicao, int? IdentificadorCidade, int Skip, int Count, int IdentificadorUsuario)
         {
             using (ViagemRepository repositorio = new ViagemRepository())
             {
                 var lista = repositorio.ListarFotos(IdentificadorFoto, IdentificadorViagem, DataDe, DataAte, Comentario, IdentificadorAtracao, IdentificadorHotel, IdentificadorRefeicao, IdentificadorCidade, Skip, Count);
-                foreach (var itemFoto in lista)
+                if (lista.Any())
                 {
-                    itemFoto.Atracoes.ToList().ForEach(d => { d.ItemFoto = null; d.ItemAtracao.Fotos = null; d.ItemAtracao.ItemAtracaoPai = null; });
-                    itemFoto.Hoteis.ToList().ForEach(d => { d.ItemFoto = null; d.ItemHotel.Fotos = null; });
-                    itemFoto.ItensCompra.ToList().ForEach(d => { d.ItemFoto = null; d.ItemItemCompra.Fotos = null; });
-                    itemFoto.Refeicoes.ToList().ForEach(d => { d.ItemFoto = null; d.ItemRefeicao.Fotos = null; });
-                    
 
+                    Usuario itemUsuario = SelecionarUsuario(IdentificadorUsuario);
+                    AtualizarTokenUsuario(itemUsuario);
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://photoslibrary.googleapis.com/v1/mediaItems:batchGet?" + string.Join("&",lista.Where(d=>!d.Video.GetValueOrDefault()).Select(d=> "mediaItemIds=" + d.CodigoFoto).ToArray()));
+                    request.Method = "GET";
+                    request.ContentType = "application/json";
+                    request.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + itemUsuario.Token);
+
+
+                    try
+                    {
+                        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                        StreamReader responseReader = new StreamReader(response.GetResponseStream());
+
+                        string responseStr = responseReader.ReadToEnd();
+                        if (response.StatusCode == HttpStatusCode.OK)
+                        {
+                            dynamic resultado = JObject.Parse(responseStr);
+                            Newtonsoft.Json.Linq.JArray obj = resultado.mediaItemResults;
+                            foreach (dynamic itemObj in obj.ToArray())
+                            {
+                                string Id = itemObj.mediaItem.id;
+                                string BaseUrl = itemObj.mediaItem.baseUrl;
+                                var itemFoto = lista.Where(d => d.CodigoFoto == Id).FirstOrDefault();
+                                itemFoto.LinkFoto = BaseUrl;
+                                itemFoto.LinkThumbnail = BaseUrl + "=w256-h256-c";
+                            }
+                        }
+                    }
+                    catch (WebException ex)
+                    {
+                        StreamReader responseReader = new StreamReader(ex.Response.GetResponseStream());
+                        string responseStr = responseReader.ReadToEnd();
+
+
+                    }
+
+                    foreach (var itemFoto in lista)
+                    {
+                        itemFoto.Atracoes.ToList().ForEach(d => { d.ItemFoto = null; d.ItemAtracao.Fotos = null; d.ItemAtracao.ItemAtracaoPai = null; });
+                        itemFoto.Hoteis.ToList().ForEach(d => { d.ItemFoto = null; d.ItemHotel.Fotos = null; });
+                        itemFoto.ItensCompra.ToList().ForEach(d => { d.ItemFoto = null; d.ItemItemCompra.Fotos = null; });
+                        itemFoto.Refeicoes.ToList().ForEach(d => { d.ItemFoto = null; d.ItemRefeicao.Fotos = null; });
+
+
+                    }
                 }
                 return lista;
             }
@@ -2268,7 +2454,8 @@ namespace CV.Business
                 foreach (var item in itemGasto.Usuarios)
                     item.IdentificadorGasto = itemGasto.Identificador;
                 itemGasto.IdentificadorViagem = identificadorViagem;
-                itemGasto.IdentificadorCidade = RetornarCidadeGeocoding(itemGasto.Latitude, itemGasto.Longitude);
+                if(!itemGasto.IdentificadorCidade.HasValue)
+                    itemGasto.IdentificadorCidade = RetornarCidadeGeocoding(itemGasto.Latitude, itemGasto.Longitude);
                 SalvarGasto_Completo(itemGasto);
 
                 itemDePara.IdentificadorDetino = itemGasto.Identificador;
@@ -2459,7 +2646,8 @@ namespace CV.Business
                     item.Gastos[0].DataExclusao = DateTime.Now.ToUniversalTime();
                     item.Gastos[0].ItemGasto.Usuarios = new List<GastoDividido>();
                 }
-                item.IdentificadorCidade = RetornarCidadeGeocoding(item.Latitude, item.Longitude);
+                if (!item.IdentificadorCidade.HasValue)
+                    item.IdentificadorCidade = RetornarCidadeGeocoding(item.Latitude, item.Longitude);
 
                 if (item.IdentificadorCarro.HasValue && item.IdentificadorCarro < 0)
                 {
@@ -2543,7 +2731,8 @@ namespace CV.Business
                 if (item.ItemCarroEventoPartida != null)
                 {
                     itemDeParaPartida = new DeParaIdentificador() { IdentificadorOrigem = item.IdentificadorCarroEventoPartida, TipoObjeto = "CE" };
-                    item.ItemCarroEventoPartida.IdentificadorCidade = RetornarCidadeGeocoding(item.ItemCarroEventoPartida.Latitude, item.ItemCarroEventoPartida.Longitude);
+                    if (!item.ItemCarroEventoPartida.IdentificadorCidade.HasValue)
+                        item.ItemCarroEventoPartida.IdentificadorCidade = RetornarCidadeGeocoding(item.ItemCarroEventoPartida.Latitude, item.ItemCarroEventoPartida.Longitude);
                     item.ItemCarroEventoPartida.DataAtualizacao = DateTime.Now.ToUniversalTime();
 
                 }
@@ -2555,7 +2744,8 @@ namespace CV.Business
                     itemDeParaChegada = new DeParaIdentificador() { IdentificadorOrigem = item.IdentificadorCarroEventoChegada, TipoObjeto = "CE" };
                     if (item.ItemCarroEventoChegada.Data == new DateTime(1900, 01, 01))
                         item.ItemCarroEventoChegada.Data = null;
-                    item.ItemCarroEventoChegada.IdentificadorCidade = RetornarCidadeGeocoding(item.ItemCarroEventoChegada.Latitude, item.ItemCarroEventoChegada.Longitude);
+                    if (!item.ItemCarroEventoChegada.IdentificadorCidade.HasValue)
+                        item.ItemCarroEventoChegada.IdentificadorCidade = RetornarCidadeGeocoding(item.ItemCarroEventoChegada.Latitude, item.ItemCarroEventoChegada.Longitude);
                     item.ItemCarroEventoChegada.DataAtualizacao = DateTime.Now.ToUniversalTime();
 
                 }
@@ -2615,7 +2805,8 @@ namespace CV.Business
                 foreach (var itemAvaliacao in item.Aeroportos)
                 {
                     itemAvaliacao.IdentificadorViagemAerea = item.Identificador;
-                    itemAvaliacao.IdentificadorCidade = RetornarCidadeGeocoding(itemAvaliacao.Latitude, itemAvaliacao.Longitude);
+                    if (!itemAvaliacao.IdentificadorCidade.HasValue)
+                        itemAvaliacao.IdentificadorCidade = RetornarCidadeGeocoding(itemAvaliacao.Latitude, itemAvaliacao.Longitude);
                     DeParaIdentificador itemDP = new DeParaIdentificador() { IdentificadorOrigem = itemAvaliacao.Identificador, TipoObjeto = "VAA" };
                     listaResultado.Add(itemDP);
                     ListaSincroniza.Add(itemAvaliacao, itemDP);
@@ -2676,7 +2867,8 @@ namespace CV.Business
                 if (item.ItemCarroEventoDevolucao != null)
                 {
                     itemDeParaDevolucao = new DeParaIdentificador() { IdentificadorOrigem = item.IdentificadorCarroEventoDevolucao, TipoObjeto = "CE" };
-                    item.ItemCarroEventoDevolucao.IdentificadorCidade = RetornarCidadeGeocoding(item.ItemCarroEventoDevolucao.Latitude, item.ItemCarroEventoDevolucao.Longitude);
+                    if (!item.ItemCarroEventoDevolucao.IdentificadorCidade.HasValue)
+                        item.ItemCarroEventoDevolucao.IdentificadorCidade = RetornarCidadeGeocoding(item.ItemCarroEventoDevolucao.Latitude, item.ItemCarroEventoDevolucao.Longitude);
                     item.ItemCarroEventoDevolucao.DataAtualizacao = DateTime.Now.ToUniversalTime();
                     
                 }
@@ -2686,8 +2878,8 @@ namespace CV.Business
                 if (item.ItemCarroEventoRetirada != null)
                 {
                     itemDeParaRetirada = new DeParaIdentificador() { IdentificadorOrigem = item.IdentificadorCarroEventoRetirada, TipoObjeto = "CE" };
-
-                    item.ItemCarroEventoRetirada.IdentificadorCidade = RetornarCidadeGeocoding(item.ItemCarroEventoRetirada.Latitude, item.ItemCarroEventoRetirada.Longitude);
+                    if (!item.ItemCarroEventoRetirada.IdentificadorCidade.HasValue)
+                        item.ItemCarroEventoRetirada.IdentificadorCidade = RetornarCidadeGeocoding(item.ItemCarroEventoRetirada.Latitude, item.ItemCarroEventoRetirada.Longitude);
                     item.ItemCarroEventoRetirada.DataAtualizacao = DateTime.Now.ToUniversalTime();
 
                 }
@@ -2740,7 +2932,8 @@ namespace CV.Business
                 itemDePara.TipoObjeto = "H";
                 if (item.Identificador < 0)
                     item.Identificador = null;
-                item.IdentificadorCidade = RetornarCidadeGeocoding(item.Latitude, item.Longitude);
+                if (!item.IdentificadorCidade.HasValue)
+                    item.IdentificadorCidade = RetornarCidadeGeocoding(item.Latitude, item.Longitude);
 
                 foreach (var itemAvaliacao in item.Avaliacoes)
                     itemAvaliacao.IdentificadorHotel = item.Identificador;
@@ -2785,8 +2978,8 @@ namespace CV.Business
                     item.Identificador = null;
                 foreach (var itemAvaliacao in item.Avaliacoes)
                     itemAvaliacao.IdentificadorLoja = item.Identificador;
-
-                item.IdentificadorCidade = RetornarCidadeGeocoding(item.Latitude, item.Longitude);
+                if (!item.IdentificadorCidade.HasValue)
+                    item.IdentificadorCidade = RetornarCidadeGeocoding(item.Latitude, item.Longitude);
                 if (item.IdentificadorAtracao.HasValue && item.IdentificadorAtracao < 0)
                 {
                     var ItemNovoCodigo = listaResultado.Where(d => d.IdentificadorOrigem == item.IdentificadorAtracao && d.TipoObjeto == "A").FirstOrDefault();
@@ -2840,8 +3033,8 @@ namespace CV.Business
                 foreach (var itemAvaliacao in item.Pedidos)
                     itemAvaliacao.IdentificadorRefeicao = item.Identificador;
 
-
-                item.IdentificadorCidade = RetornarCidadeGeocoding(item.Latitude, item.Longitude);
+                if (!item.IdentificadorCidade.HasValue)
+                    item.IdentificadorCidade = RetornarCidadeGeocoding(item.Latitude, item.Longitude);
                 if (item.IdentificadorAtracao.HasValue && item.IdentificadorAtracao < 0)
                 {
                     var ItemNovoCodigo = listaResultado.Where(d => d.IdentificadorOrigem == item.IdentificadorAtracao && d.TipoObjeto == "A").FirstOrDefault();
@@ -2894,8 +3087,8 @@ namespace CV.Business
                     item.Identificador = null;
                 foreach (var itemAvaliacao in item.Avaliacoes)
                     itemAvaliacao.IdentificadorAtracao = item.Identificador;
-
-                item.IdentificadorCidade = RetornarCidadeGeocoding(item.Latitude, item.Longitude);
+                if (!item.IdentificadorCidade.HasValue)
+                    item.IdentificadorCidade = RetornarCidadeGeocoding(item.Latitude, item.Longitude);
                 int? IdentificadorPaiAjustar = null;
                 if (item.IdentificadorAtracaoPai.HasValue && item.IdentificadorAtracaoPai < 0)
                 {
@@ -3072,7 +3265,8 @@ namespace CV.Business
                 itemDePara.TipoObjeto = "T";
                 if (itemCP.Identificador < 0)
                     itemCP.Identificador = null;
-                itemCP.IdentificadorCidade = RetornarCidadeGeocoding(itemCP.Latitude, itemCP.Longitude);
+                if (!itemCP.IdentificadorCidade.HasValue)
+                    itemCP.IdentificadorCidade = RetornarCidadeGeocoding(itemCP.Latitude, itemCP.Longitude);
 
                 SalvarComentario(itemCP);
                 itemDePara.ItemRetorno = SelecionarComentario(itemCP.Identificador);
@@ -3097,7 +3291,8 @@ namespace CV.Business
                 itemDePara.TipoObjeto = "S";
                 if (itemCP.Identificador < 0)
                     itemCP.Identificador = null;
-                itemCP.IdentificadorCidade = RetornarCidadeGeocoding(itemCP.Latitude, itemCP.Longitude);
+                if (!itemCP.IdentificadorCidade.HasValue)
+                    itemCP.IdentificadorCidade = RetornarCidadeGeocoding(itemCP.Latitude, itemCP.Longitude);
 
                 SalvarSugestao(itemCP);
                 itemDePara.ItemRetorno = SelecionarSugestao(itemCP.Identificador);

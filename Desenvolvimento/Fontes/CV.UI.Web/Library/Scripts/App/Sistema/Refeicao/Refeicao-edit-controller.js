@@ -344,7 +344,7 @@
 	            };
 	            uploadVideo.ready(result[1], item.name, item, function (link, status) {
 	                var itemFoto = {
-	                    ImageMime: item.type, DataArquivo: moment.utc(item.lastModifiedDate).local().format("YYYY-MM-DDTHH:mm:ss"), CodigoGoogle: uploadVideo.videoId, Thumbnail: uploadVideo.thumbnail, IdentificadorRefeicao: vm.itemRefeicao.Identificador,
+	                    NomeArquivo: item.name, ImageMime: item.type, DataArquivo: moment.utc(item.lastModifiedDate).local().format("YYYY-MM-DDTHH:mm:ss"), CodigoGoogle: uploadVideo.videoId, Thumbnail: uploadVideo.thumbnail, IdentificadorRefeicao: vm.itemRefeicao.Identificador,
 	                    LinkGoogle: link
 	                };
 	                if (status == null) {
@@ -403,7 +403,7 @@
                 item,
                 function (img, dados) {
                     var imageURL = img.toDataURL();
-                    var itemFoto = { Base64: imageURL, ImageMime: item.type, DataArquivo: moment.utc(item.lastModifiedDate).local().format("YYYY-MM-DDTHH:mm:ss"), IdentificadorRefeicao: vm.itemRefeicao.Identificador };
+                    var itemFoto = { NomeArquivo: item.name, Base64: imageURL, ImageMime: item.type, DataArquivo: moment.utc(item.lastModifiedDate).local().format("YYYY-MM-DDTHH:mm:ss"), IdentificadorRefeicao: vm.itemRefeicao.Identificador };
                     if (dados && dados.exif) {
                         var tags = dados.exif.getAll()
                         if (tags.GPSLatitude) {

@@ -59,12 +59,14 @@ namespace CV.UI.Web.Controllers.WebAPI
             itemCarro.DataAtualizacao = DateTime.Now.ToUniversalTime();
             if (itemCarro.ItemCarroEventoDevolucao != null)
             {
-                itemCarro.ItemCarroEventoDevolucao.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemCarro.ItemCarroEventoDevolucao.Latitude, itemCarro.ItemCarroEventoDevolucao.Longitude);
+                if (!itemCarro.ItemCarroEventoDevolucao.IdentificadorCidade.HasValue)
+                    itemCarro.ItemCarroEventoDevolucao.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemCarro.ItemCarroEventoDevolucao.Latitude, itemCarro.ItemCarroEventoDevolucao.Longitude);
                 itemCarro.ItemCarroEventoDevolucao.DataAtualizacao = DateTime.Now.ToUniversalTime();
             }
             if (itemCarro.ItemCarroEventoRetirada != null)
             {
-                itemCarro.ItemCarroEventoRetirada.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemCarro.ItemCarroEventoRetirada.Latitude, itemCarro.ItemCarroEventoRetirada.Longitude);
+                if (!itemCarro.ItemCarroEventoRetirada.IdentificadorCidade.HasValue)
+                    itemCarro.ItemCarroEventoRetirada.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemCarro.ItemCarroEventoRetirada.Latitude, itemCarro.ItemCarroEventoRetirada.Longitude);
                 itemCarro.ItemCarroEventoRetirada.DataAtualizacao = DateTime.Now.ToUniversalTime();
 
             }
@@ -117,12 +119,14 @@ namespace CV.UI.Web.Controllers.WebAPI
             itemCarroDeslocamento.DataAtualizacao = DateTime.Now.ToUniversalTime();
             if (itemCarroDeslocamento.ItemCarroEventoChegada != null)
             {
-                itemCarroDeslocamento.ItemCarroEventoChegada.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemCarroDeslocamento.ItemCarroEventoChegada.Latitude, itemCarroDeslocamento.ItemCarroEventoChegada.Longitude);
+                if (!itemCarroDeslocamento.ItemCarroEventoChegada.IdentificadorCidade.HasValue)
+                    itemCarroDeslocamento.ItemCarroEventoChegada.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemCarroDeslocamento.ItemCarroEventoChegada.Latitude, itemCarroDeslocamento.ItemCarroEventoChegada.Longitude);
                 itemCarroDeslocamento.ItemCarroEventoChegada.DataAtualizacao = DateTime.Now.ToUniversalTime();
             }
             if (itemCarroDeslocamento.ItemCarroEventoPartida != null)
             {
-                itemCarroDeslocamento.ItemCarroEventoPartida.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemCarroDeslocamento.ItemCarroEventoPartida.Latitude, itemCarroDeslocamento.ItemCarroEventoPartida.Longitude);
+                if (!itemCarroDeslocamento.ItemCarroEventoPartida.IdentificadorCidade.HasValue)
+                    itemCarroDeslocamento.ItemCarroEventoPartida.IdentificadorCidade = biz.RetornarCidadeGeocoding(itemCarroDeslocamento.ItemCarroEventoPartida.Latitude, itemCarroDeslocamento.ItemCarroEventoPartida.Longitude);
                 itemCarroDeslocamento.ItemCarroEventoPartida.DataAtualizacao = DateTime.Now.ToUniversalTime();
             }
 

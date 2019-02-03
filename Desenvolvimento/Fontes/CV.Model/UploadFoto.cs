@@ -22,6 +22,7 @@ namespace CV.Model
         public string LinkGoogle { get; set; }
 
         public string Comentario { get; set; }
+        public string NomeArquivo { get; set; }
 
         public int? IdentificadorRefeicao { get; set; }
         public int? IdentificadorHotel { get; set; }
