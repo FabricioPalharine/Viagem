@@ -7,15 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CV.Mobile", "CV.Mobile\CV.M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CV.Mobile.Droid", "CV.Mobile\CV.Mobile.Droid\CV.Mobile.Droid.csproj", "{7602421F-C422-47FC-BFEA-E7D9F6BFBD79}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CV.Mobile.iOS", "CV.Mobile\CV.Mobile.iOS\CV.Mobile.iOS.csproj", "{729CF07C-AC9D-43CE-8DAC-7CC063D7B62D}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TK.CustomMap", "TK.CustomMap", "{6EEABD2C-2091-4000-9FC3-077EDE193915}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TK.CustomMap", "..\..\..\TK.CustomMap\TK.CustomMap\TK.CustomMap\TK.CustomMap.csproj", "{14C534B6-1984-41A9-A384-D3A5508588E3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TK.CustomMap.Android", "..\..\..\TK.CustomMap\TK.CustomMap\TK.CustomMap.Android\TK.CustomMap.Android.csproj", "{AD2D2DB4-E781-4CF1-9B62-3AAD264F196D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TK.CustomMap.iOSUnified", "..\..\..\TK.CustomMap\TK.CustomMap\TK.CustomMap.iOSUnified\TK.CustomMap.iOSUnified.csproj", "{D525F236-6A2D-4010-B1CC-4A4B8581C90B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

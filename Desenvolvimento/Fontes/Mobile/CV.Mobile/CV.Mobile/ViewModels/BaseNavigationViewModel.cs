@@ -540,7 +540,7 @@ namespace CV.Mobile.ViewModels
 
             Video video = new Video();
             video.Snippet = new VideoSnippet();
-            video.Snippet.Title = itemUpload.CaminhoLocal;
+            video.Snippet.Title = String.Concat(ItemViagemSelecionada.Nome, " ", DateTime.Now.ToString("yyyyMMddHHmm"));
             video.Snippet.Description = itemUpload.Comentario;
             video.Status = new VideoStatus();
             video.Status.PrivacyStatus = "unlisted";
@@ -555,10 +555,20 @@ namespace CV.Mobile.ViewModels
 
                 itemUpload.CodigoGoogle = retorno.Id;
                 itemUpload.Thumbnail = retorno.Snippet.Thumbnails.Medium.Url;
+                List<Video> vid = new List<Video>();
+
                 var vidstream = youtube.Videos.List("snippet,Player,FileDetails");
                 vidstream.Id = retorno.Id;
                 VideoListResponse ser = vidstream.Execute();
-                List<Video> vid = ser.Items.ToList();
+                vid = ser.Items.ToList();
+                while (vid.Count() == 0)
+                {
+                    await Task.Delay(2000);
+                    vidstream = youtube.Videos.List("snippet,Player,FileDetails");
+                    vidstream.Id = retorno.Id;
+                    ser = vidstream.Execute();
+                    vid = ser.Items.ToList();
+                }
                 XmlReader xmlReader = XmlReader.Create(new StringReader(vid.FirstOrDefault().Player.EmbedHtml.Replace("allowfullscreen",null)));
                 xmlReader.MoveToContent();
                 itemUpload.LinkGoogle = xmlReader.GetAttribute("src");

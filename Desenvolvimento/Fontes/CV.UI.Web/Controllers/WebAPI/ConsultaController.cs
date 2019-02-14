@@ -57,7 +57,7 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             
             ConsultaBusiness biz = new ConsultaBusiness();
-            return biz.CarregarTimeline(token.IdentificadorViagem, token.IdentificadorUsuario, json.IdentificadorParticipante, json.DataInicioDe,json.DataInicioAte, json.Count.GetValueOrDefault(20),json.Tipo,json.Identificador);
+            return biz.CarregarTimeline(token.IdentificadorViagem, token.IdentificadorUsuario, json.IdentificadorParticipante, json.DataInicioDe,json.DataInicioAte, json.Count.GetValueOrDefault(20),json.Tipo,json.Identificador, token.IdentificadorUsuario);
         }
 
         [Authorize]
@@ -84,7 +84,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             if (DataFim.HasValue)
                 DataFim = DataFim.Value.AddDays(1);
             ConsultaBusiness biz = new ConsultaBusiness();
-            return biz.CarregarDetalhesAtracao(token.IdentificadorViagem, json.DataInicioDe, DataFim, json.Nome, json.Comentario);
+            return biz.CarregarDetalhesAtracao(token.IdentificadorViagem, json.DataInicioDe, DataFim, json.Nome, json.Comentario, token.IdentificadorUsuario);
         }
 
         [Authorize]
@@ -97,7 +97,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             if (DataFim.HasValue)
                 DataFim = DataFim.Value.AddDays(1);
             ConsultaBusiness biz = new ConsultaBusiness();
-            return biz.CarregarDetalhesHotel(token.IdentificadorViagem, json.DataInicioDe, DataFim, json.Nome, json.Comentario);
+            return biz.CarregarDetalhesHotel(token.IdentificadorViagem, json.DataInicioDe, DataFim, json.Nome, json.Comentario, token.IdentificadorUsuario);
         }
 
         [Authorize]
@@ -110,7 +110,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             if (DataFim.HasValue)
                 DataFim = DataFim.Value.AddDays(1);
             ConsultaBusiness biz = new ConsultaBusiness();
-            return biz.CarregarDetalhesRefeicao(token.IdentificadorViagem, json.DataInicioDe, DataFim, json.Nome, json.Comentario);
+            return biz.CarregarDetalhesRefeicao(token.IdentificadorViagem, json.DataInicioDe, DataFim, json.Nome, json.Comentario, token.IdentificadorUsuario);
         }
 
         [Authorize]
@@ -133,7 +133,7 @@ namespace CV.UI.Web.Controllers.WebAPI
         public List<PontoMapa> ListarPontosViagem(CriterioBusca json)
         {
             ConsultaBusiness biz = new ConsultaBusiness();
-            return biz.ListarPontosViagem(token.IdentificadorViagem, json.IdentificadorParticipante, json.DataInicioDe, json.DataInicioAte, json.Tipo);
+            return biz.ListarPontosViagem(token.IdentificadorViagem, json.IdentificadorParticipante, json.DataInicioDe, json.DataInicioAte, json.Tipo, token.IdentificadorUsuario);
         }
 
         [Authorize]

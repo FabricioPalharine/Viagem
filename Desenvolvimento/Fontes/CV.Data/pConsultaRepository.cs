@@ -233,10 +233,10 @@ namespace CV.Data
                 queryConsulta = queryConsulta.Where(d => d.Identificador == Identificador);
             var queryResultado = queryConsulta
                 .Where(d => !d.Partida.HasValue || d.Partida > DbFunctions.AddMinutes(d.Chegada, 2))
-                .SelectMany(d => d.Avaliacoes.Select(e => new {Identificador = d.Identificador,  Data = d.Chegada, Tipo = "AtracaoChegada", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.Nome, Url = "", Comentario = "", IdentificadorUsuario = e.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" }));//, Usuarios = d.Avaliacoes.Where(e => listaInteiros.Contains(e.IdentificadorUsuario)).Select(e => new UsuarioConsulta() { Comentario = "", Nome = e.ItemUsuario.Nome, Identificador = e.IdentificadorUsuario, Nota = null, Pedido = null }) });
+                .SelectMany(d => d.Avaliacoes.Select(e => new {Identificador = d.Identificador,  Data = d.Chegada, Tipo = "AtracaoChegada", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.Nome, Url = "", Comentario = "", IdentificadorUsuario = e.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "", GoogleId = string.Empty }));//, Usuarios = d.Avaliacoes.Where(e => listaInteiros.Contains(e.IdentificadorUsuario)).Select(e => new UsuarioConsulta() { Comentario = "", Nome = e.ItemUsuario.Nome, Identificador = e.IdentificadorUsuario, Nota = null, Pedido = null }) });
             queryResultado = queryResultado.Union(
                 queryConsulta.Where(d => d.Partida.HasValue)
-                .SelectMany(d => d.Avaliacoes.Select(e => new { Identificador = d.Identificador, Data = d.Partida, Tipo = d.Partida > DbFunctions.AddMinutes(d.Chegada, 2) ? "AtracaoPartida" : "AtracaoVisita", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.Nome, Url = "", Comentario = "", IdentificadorUsuario = e.IdentificadorUsuario, Nota = e.Nota, NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = e.Comentario, Pedido = "" })));
+                .SelectMany(d => d.Avaliacoes.Select(e => new { Identificador = d.Identificador, Data = d.Partida, Tipo = d.Partida > DbFunctions.AddMinutes(d.Chegada, 2) ? "AtracaoPartida" : "AtracaoVisita", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.Nome, Url = "", Comentario = "", IdentificadorUsuario = e.IdentificadorUsuario, Nota = e.Nota, NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = e.Comentario, Pedido = "", GoogleId = string.Empty })));
 
             if (String.IsNullOrEmpty(Tipo) || Tipo == "R")
             {
@@ -246,7 +246,7 @@ namespace CV.Data
                     queryRefeicao = queryRefeicao.Where(d => d.Identificador == Identificador);
                 queryResultado = queryResultado.Union(
         queryRefeicao
-        .SelectMany(d => d.Pedidos.Select(e => new {Identificador = d.Identificador, Data = d.Data, Tipo = "Refeicao", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.Nome, Url = "", Comentario = "", IdentificadorUsuario = e.IdentificadorUsuario, Nota = e.Nota, NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = e.Comentario, Pedido = e.Pedido })));
+        .SelectMany(d => d.Pedidos.Select(e => new {Identificador = d.Identificador, Data = d.Data, Tipo = "Refeicao", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.Nome, Url = "", Comentario = "", IdentificadorUsuario = e.IdentificadorUsuario, Nota = e.Nota, NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = e.Comentario, Pedido = e.Pedido, GoogleId = string.Empty })));
 
             }
 
@@ -260,12 +260,12 @@ namespace CV.Data
 
                 queryResultado = queryResultado.Union(
         queryHotel
-        .SelectMany(d => d.Avaliacoes.Select(e => new { Identificador = d.Identificador, Data = d.DataEntrada, Tipo = "HotelCheckIn", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.Nome, Url = "", Comentario = "", IdentificadorUsuario = e.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" })));
+        .SelectMany(d => d.Avaliacoes.Select(e => new { Identificador = d.Identificador, Data = d.DataEntrada, Tipo = "HotelCheckIn", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.Nome, Url = "", Comentario = "", IdentificadorUsuario = e.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "", GoogleId = string.Empty })));
 
 
                 queryResultado = queryResultado.Union(
         queryHotel.Where(d => d.DataSaidia.HasValue)
-        .SelectMany(d => d.Avaliacoes.Select(e => new { Identificador = d.Identificador, Data = d.DataSaidia, Tipo = "HotelChekckOut", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.Nome, Url = "", Comentario = "", IdentificadorUsuario = e.IdentificadorUsuario, Nota = e.Nota, NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = e.Comentario, Pedido = "" })));
+        .SelectMany(d => d.Avaliacoes.Select(e => new { Identificador = d.Identificador, Data = d.DataSaidia, Tipo = "HotelChekckOut", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.Nome, Url = "", Comentario = "", IdentificadorUsuario = e.IdentificadorUsuario, Nota = e.Nota, NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = e.Comentario, Pedido = "", GoogleId = string.Empty })));
             }
             if (String.IsNullOrEmpty(Tipo) || Tipo == "HE")
             {
@@ -275,10 +275,10 @@ namespace CV.Data
 
                 queryResultado = queryResultado.Union(
     queryHotelEvento
-    .Select(d => new { Identificador = d.Identificador, Data = d.DataEntrada, Tipo = "HotelEntrada", Latitude = d.ItemHotel.Latitude, Longitude = d.ItemHotel.Longitude, Texto = d.ItemHotel.Nome, Url = "", Comentario = "", IdentificadorUsuario = d.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = d.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" }));
+    .Select(d => new { Identificador = d.Identificador, Data = d.DataEntrada, Tipo = "HotelEntrada", Latitude = d.ItemHotel.Latitude, Longitude = d.ItemHotel.Longitude, Texto = d.ItemHotel.Nome, Url = "", Comentario = "", IdentificadorUsuario = d.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = d.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "", GoogleId = string.Empty }));
                 queryResultado = queryResultado.Union(
     queryHotelEvento.Where(d => d.DataSaida.HasValue)
-    .Select(d => new { Identificador = d.Identificador, Data = d.DataSaida, Tipo = "HotelSaida", Latitude = d.ItemHotel.Latitude, Longitude = d.ItemHotel.Longitude, Texto = d.ItemHotel.Nome, Url = "", Comentario = "", IdentificadorUsuario = d.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = d.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" }));
+    .Select(d => new { Identificador = d.Identificador, Data = d.DataSaida, Tipo = "HotelSaida", Latitude = d.ItemHotel.Latitude, Longitude = d.ItemHotel.Longitude, Texto = d.ItemHotel.Nome, Url = "", Comentario = "", IdentificadorUsuario = d.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = d.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "", GoogleId = string.Empty }));
 
             }
             if (String.IsNullOrEmpty(Tipo) || Tipo == "C")
@@ -291,12 +291,12 @@ namespace CV.Data
 
                 queryResultado = queryResultado.Union(
     queryCarro
-    .SelectMany(d => d.Avaliacoes.Select(e => new { Identificador = d.Identificador, Data = d.ItemCarroEventoRetirada.Data, Tipo = "CarroRetirada", Latitude = d.ItemCarroEventoRetirada.Latitude, Longitude = d.ItemCarroEventoRetirada.Longitude, Texto = d.Descricao, Url = "", Comentario = d.Locadora, IdentificadorUsuario = e.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" })));
+    .SelectMany(d => d.Avaliacoes.Select(e => new { Identificador = d.Identificador, Data = d.ItemCarroEventoRetirada.Data, Tipo = "CarroRetirada", Latitude = d.ItemCarroEventoRetirada.Latitude, Longitude = d.ItemCarroEventoRetirada.Longitude, Texto = d.Descricao, Url = "", Comentario = d.Locadora, IdentificadorUsuario = e.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "", GoogleId = string.Empty })));
 
 
                 queryResultado = queryResultado.Union(
         queryCarro.Where(d => d.ItemCarroEventoDevolucao.Data.HasValue)
-        .SelectMany(d => d.Avaliacoes.Select(e => new { Identificador = d.Identificador, Data = d.ItemCarroEventoDevolucao.Data, Tipo = "CarroDevolucao", Latitude = d.ItemCarroEventoDevolucao.Latitude, Longitude = d.ItemCarroEventoDevolucao.Longitude, Texto = d.Descricao, Url = "", Comentario = d.Locadora, IdentificadorUsuario = e.IdentificadorUsuario, Nota = e.Nota, NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = e.Comentario, Pedido = "" })));
+        .SelectMany(d => d.Avaliacoes.Select(e => new { Identificador = d.Identificador, Data = d.ItemCarroEventoDevolucao.Data, Tipo = "CarroDevolucao", Latitude = d.ItemCarroEventoDevolucao.Latitude, Longitude = d.ItemCarroEventoDevolucao.Longitude, Texto = d.Descricao, Url = "", Comentario = d.Locadora, IdentificadorUsuario = e.IdentificadorUsuario, Nota = e.Nota, NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = e.Comentario, Pedido = "", GoogleId = string.Empty })));
             }
             if (String.IsNullOrEmpty(Tipo) || Tipo == "CD")
             {
@@ -307,11 +307,11 @@ namespace CV.Data
 
                 queryResultado = queryResultado.Union(
              queryCarroDeslocamento
-             .SelectMany(d => d.Usuarios.Select(e => new { Identificador = d.Identificador, Data = d.ItemCarroEventoPartida.Data, Tipo = "CarroPartida", Latitude = d.ItemCarroEventoPartida.Latitude, Longitude = d.ItemCarroEventoPartida.Longitude, Texto = d.ItemCarro.Descricao, Url = "", Comentario = d.Observacao, IdentificadorUsuario = e.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" })));
+             .SelectMany(d => d.Usuarios.Select(e => new { Identificador = d.Identificador, Data = d.ItemCarroEventoPartida.Data, Tipo = "CarroPartida", Latitude = d.ItemCarroEventoPartida.Latitude, Longitude = d.ItemCarroEventoPartida.Longitude, Texto = d.ItemCarro.Descricao, Url = "", Comentario = d.Observacao, IdentificadorUsuario = e.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "", GoogleId = string.Empty })));
 
                 queryResultado = queryResultado.Union(
              queryCarroDeslocamento.Where(d => d.ItemCarroEventoChegada.Data.HasValue)
-             .SelectMany(d => d.Usuarios.Select(e => new { Identificador = d.Identificador, Data = d.ItemCarroEventoChegada.Data, Tipo = "CarroChegada", Latitude = d.ItemCarroEventoChegada.Latitude, Longitude = d.ItemCarroEventoChegada.Longitude, Texto = d.ItemCarro.Descricao, Url = "", Comentario = d.Observacao, IdentificadorUsuario = e.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" })));
+             .SelectMany(d => d.Usuarios.Select(e => new { Identificador = d.Identificador, Data = d.ItemCarroEventoChegada.Data, Tipo = "CarroChegada", Latitude = d.ItemCarroEventoChegada.Latitude, Longitude = d.ItemCarroEventoChegada.Longitude, Texto = d.ItemCarro.Descricao, Url = "", Comentario = d.Observacao, IdentificadorUsuario = e.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "", GoogleId = string.Empty })));
             }
 
             if (String.IsNullOrEmpty(Tipo) || Tipo == "CR")
@@ -324,7 +324,7 @@ namespace CV.Data
 
                 queryResultado = queryResultado.Union(
                     queryCarroReabastecimento
-                    .Select(d => new { Identificador = d.Identificador, Data = d.Data, Tipo = "Reabastecimento", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.ItemCarro.Descricao, Url = "", Comentario = "", IdentificadorUsuario = d.ItemCarro.ItemViagem.ItemUsuario.Identificador, Nota = new Nullable<int>(), NomeUsuario = d.ItemCarro.ItemViagem.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" }));
+                    .Select(d => new { Identificador = d.Identificador, Data = d.Data, Tipo = "Reabastecimento", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.ItemCarro.Descricao, Url = "", Comentario = "", IdentificadorUsuario = d.ItemCarro.ItemViagem.ItemUsuario.Identificador, Nota = new Nullable<int>(), NomeUsuario = d.ItemCarro.ItemViagem.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "", GoogleId = string.Empty }));
             }
             if (String.IsNullOrEmpty(Tipo) || Tipo == "T")
             {
@@ -333,7 +333,7 @@ namespace CV.Data
                     queryComentario = queryComentario.Where(d => d.Identificador == Identificador);
                 queryResultado = queryResultado.Union(
     queryComentario
-    .Select(d => new { Identificador = d.Identificador, Data = d.Data, Tipo = "Comentario", Latitude = d.Latitude, Longitude = d.Longitude, Texto = "", Url = "", Comentario = d.Texto, IdentificadorUsuario = d.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = d.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" }));
+    .Select(d => new { Identificador = d.Identificador, Data = d.Data, Tipo = "Comentario", Latitude = d.Latitude, Longitude = d.Longitude, Texto = "", Url = "", Comentario = d.Texto, IdentificadorUsuario = d.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = d.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "", GoogleId = string.Empty }));
             }
             if (String.IsNullOrEmpty(Tipo) || Tipo == "GL")
             {
@@ -342,7 +342,7 @@ namespace CV.Data
                     queryCompra = queryCompra.Where(d => d.Identificador == Identificador);
                 queryResultado = queryResultado.Union(
     queryCompra
-    .Select(d => new { Identificador = d.Identificador, Data = d.ItemGasto.Data, Tipo = "Compra", Latitude = d.ItemLoja.Latitude, Longitude = d.ItemLoja.Longitude, Texto = d.ItemLoja.Nome, Url = "", Comentario = d.ItemGasto.Descricao, IdentificadorUsuario = d.ItemGasto.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = d.ItemGasto.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" }));
+    .Select(d => new { Identificador = d.Identificador, Data = d.ItemGasto.Data, Tipo = "Compra", Latitude = d.ItemLoja.Latitude, Longitude = d.ItemLoja.Longitude, Texto = d.ItemLoja.Nome, Url = "", Comentario = d.ItemGasto.Descricao, IdentificadorUsuario = d.ItemGasto.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = d.ItemGasto.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "", GoogleId = string.Empty }));
 
             }
             if (String.IsNullOrEmpty(Tipo) || Tipo == "F")
@@ -352,7 +352,7 @@ namespace CV.Data
                     queryFoto = queryFoto.Where(d => d.Identificador == Identificador);
                 queryResultado = queryResultado.Union(
     queryFoto
-    .Select(d => new { Identificador = d.Identificador, Data = d.Data, Tipo = d.Video.Value ? "Video" : "Foto", Latitude = d.Latitude, Longitude = d.Longitude, Texto = "", Url = d.LinkFoto, Comentario = d.Comentario, IdentificadorUsuario = d.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = d.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "" }));
+    .Select(d => new { Identificador = d.Identificador, Data = d.Data, Tipo = d.Video.Value ? "Video" : "Foto",  Latitude = d.Latitude, Longitude = d.Longitude, Texto = "", Url = d.LinkFoto, Comentario = d.Comentario, IdentificadorUsuario = d.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = d.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "", GoogleId = d.Video.Value ?string.Empty: d.CodigoFoto }));
 
 
             }
@@ -379,7 +379,8 @@ namespace CV.Data
         Nota = new Nullable<int>(),
         NomeUsuario = e.ItemUsuario.Nome,
         ComentarioUsuario = "",
-        Pedido = ""
+        Pedido = "",
+        GoogleId = string.Empty
     })));
 
 
@@ -402,6 +403,8 @@ namespace CV.Data
             NomeUsuario = e.ItemUsuario.Nome,
             ComentarioUsuario = d.TipoPonto == (int)enumTipoParada.Destino ? e.Comentario : null,
             Pedido = ""
+            ,
+            GoogleId = string.Empty
         })));
 
 
@@ -413,7 +416,7 @@ namespace CV.Data
                 queryResultado = queryResultado.Where(d => d.Data > DataMinima);
 
             var resultado = queryResultado.GroupBy(
-                d => new { d.Comentario, d.Data, d.Latitude, d.Longitude, d.Texto, d.Tipo, d.Url,d.Identificador })
+                d => new { d.Comentario, d.Data, d.Latitude, d.Longitude, d.Texto, d.Tipo, d.Url,d.Identificador ,d.GoogleId})
                 .Select(d => new Timeline()
 
                 {
@@ -425,6 +428,7 @@ namespace CV.Data
                     Texto = d.Key.Texto,
                     Tipo = d.Key.Tipo,
                     Url = d.Key.Url,
+                    GoogleId=d.Key.GoogleId,
                     Usuarios = d.Select(e => new UsuarioConsulta() { Comentario = e.ComentarioUsuario, Identificador = e.IdentificadorUsuario, Nome = e.NomeUsuario, Nota = e.Nota, Pedido = e.Pedido })
                 })
                 .OrderByDescending(d => d.Data)
@@ -798,7 +802,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
         public List<PontoMapa> ListarPontosViagem(int? IdentificadorViagem, int? IdentificadorUsuario, DateTime? DataDe, DateTime? DataAte, string Tipo)
         {
             IQueryable<PontoMapa> queryFinal = this.Context.Viagemes.Where(d => d.Identificador == -1)
-                .Select(d => new PontoMapa( ) { DataFim = null, DataInicio = null, Latitude =0, Longitude = 0, Nome=null, Tipo="P", Url=null, UrlTumbnail=null });
+                .Select(d => new PontoMapa( ) { DataFim = null, DataInicio = null, Latitude =0, Longitude = 0, Nome=null, Tipo="P", Url=null, UrlTumbnail=null, GoogleId=null });
             if (string.IsNullOrEmpty(Tipo) || Tipo == "A")
             {
                 var queryAtracao = this.Context.AvaliacaoAtracoes.Where(d => d.IdentificadorUsuario == IdentificadorUsuario)
@@ -808,7 +812,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                     queryAtracao = queryAtracao.Where(d => d.ItemAtracao.Chegada >= DataDe || (d.ItemAtracao.Partida.HasValue && d.ItemAtracao.Partida >= DataDe));
                 if (DataAte.HasValue)
                     queryAtracao = queryAtracao.Where(d => d.ItemAtracao.Chegada < DataAte && (!d.ItemAtracao.Partida.HasValue || d.ItemAtracao.Partida < DataAte));
-                queryFinal = queryFinal.Union(queryAtracao.Select(d => new PontoMapa() { DataFim = d.ItemAtracao.Partida, DataInicio = d.ItemAtracao.Chegada, Latitude = d.ItemAtracao.Latitude, Longitude = d.ItemAtracao.Longitude, Nome = d.ItemAtracao.Nome, Tipo = "A", Url = null, UrlTumbnail = null }));
+                queryFinal = queryFinal.Union(queryAtracao.Select(d => new PontoMapa() { DataFim = d.ItemAtracao.Partida, DataInicio = d.ItemAtracao.Chegada, Latitude = d.ItemAtracao.Latitude, Longitude = d.ItemAtracao.Longitude, Nome = d.ItemAtracao.Nome, Tipo = "A", Url = null, UrlTumbnail = null, GoogleId = null }));
             }
             if (string.IsNullOrEmpty(Tipo) || Tipo == "H")
             {
@@ -819,7 +823,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                     queryHotel = queryHotel.Where(d => d.ItemHotel.DataEntrada >= DataDe || (d.ItemHotel.DataSaidia.HasValue && d.ItemHotel.DataSaidia >= DataDe));
                 if (DataAte.HasValue)
                     queryHotel = queryHotel.Where(d => d.ItemHotel.DataEntrada < DataAte && (!d.ItemHotel.DataSaidia.HasValue || d.ItemHotel.DataSaidia < DataAte));
-                queryFinal = queryFinal.Union(queryHotel.Select(d => new PontoMapa() { DataFim = d.ItemHotel.DataSaidia, DataInicio = d.ItemHotel.DataEntrada, Latitude = d.ItemHotel.Latitude, Longitude = d.ItemHotel.Longitude, Nome = d.ItemHotel.Nome, Tipo = "H", Url = null, UrlTumbnail = null }));
+                queryFinal = queryFinal.Union(queryHotel.Select(d => new PontoMapa() { DataFim = d.ItemHotel.DataSaidia, DataInicio = d.ItemHotel.DataEntrada, Latitude = d.ItemHotel.Latitude, Longitude = d.ItemHotel.Longitude, Nome = d.ItemHotel.Nome, Tipo = "H", Url = null, UrlTumbnail = null, GoogleId = null }));
             }
             if (string.IsNullOrEmpty(Tipo) || Tipo == "R")
             {
@@ -830,7 +834,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                     queryRefeicao = queryRefeicao.Where(d => d.ItemRefeicao.Data >= DataDe);
                 if (DataAte.HasValue)
                     queryRefeicao = queryRefeicao.Where(d => d.ItemRefeicao.Data < DataAte);
-                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.ItemRefeicao.Data, Latitude = d.ItemRefeicao.Latitude, Longitude = d.ItemRefeicao.Longitude, Nome = d.ItemRefeicao.Nome, Tipo = "R", Url = null, UrlTumbnail = null }));
+                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.ItemRefeicao.Data, Latitude = d.ItemRefeicao.Latitude, Longitude = d.ItemRefeicao.Longitude, Nome = d.ItemRefeicao.Nome, Tipo = "R", Url = null, UrlTumbnail = null, GoogleId = null }));
             }
             if (string.IsNullOrEmpty(Tipo) || Tipo == "L")
             {
@@ -841,7 +845,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                     queryRefeicao = queryRefeicao.Where(d => d.ItemGasto.Data >= DataDe);
                 if (DataAte.HasValue)
                     queryRefeicao = queryRefeicao.Where(d => d.ItemGasto.Data < DataAte);
-                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.ItemGasto.Data, Latitude = d.ItemLoja.Latitude, Longitude = d.ItemLoja.Longitude, Nome = d.ItemLoja.Nome, Tipo = "L", Url = null, UrlTumbnail = null }));
+                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.ItemGasto.Data, Latitude = d.ItemLoja.Latitude, Longitude = d.ItemLoja.Longitude, Nome = d.ItemLoja.Nome, Tipo = "L", Url = null, UrlTumbnail = null, GoogleId = null }));
             }
             if (string.IsNullOrEmpty(Tipo) || Tipo == "CR")
             {
@@ -852,7 +856,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                     queryRefeicao = queryRefeicao.Where(d => d.ItemCarro.ItemCarroEventoRetirada.Data >= DataDe);
                 if (DataAte.HasValue)
                     queryRefeicao = queryRefeicao.Where(d => d.ItemCarro.ItemCarroEventoRetirada.Data < DataAte);
-                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.ItemCarro.ItemCarroEventoRetirada.Data, Latitude = d.ItemCarro.ItemCarroEventoRetirada.Latitude, Longitude = d.ItemCarro.ItemCarroEventoRetirada.Longitude, Nome = d.ItemCarro.Descricao, Tipo = "CR", Url = null, UrlTumbnail = null }));
+                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.ItemCarro.ItemCarroEventoRetirada.Data, Latitude = d.ItemCarro.ItemCarroEventoRetirada.Latitude, Longitude = d.ItemCarro.ItemCarroEventoRetirada.Longitude, Nome = d.ItemCarro.Descricao, Tipo = "CR", Url = null, UrlTumbnail = null, GoogleId = null }));
             }
             if (string.IsNullOrEmpty(Tipo) || Tipo == "CD")
             {
@@ -863,7 +867,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                     queryRefeicao = queryRefeicao.Where(d => d.ItemCarro.ItemCarroEventoDevolucao.Data >= DataDe);
                 if (DataAte.HasValue)
                     queryRefeicao = queryRefeicao.Where(d => d.ItemCarro.ItemCarroEventoDevolucao.Data < DataAte);
-                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.ItemCarro.ItemCarroEventoDevolucao.Data, Latitude = d.ItemCarro.ItemCarroEventoDevolucao.Latitude, Longitude = d.ItemCarro.ItemCarroEventoDevolucao.Longitude, Nome = d.ItemCarro.Descricao, Tipo = "CD", Url = null, UrlTumbnail = null }));
+                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.ItemCarro.ItemCarroEventoDevolucao.Data, Latitude = d.ItemCarro.ItemCarroEventoDevolucao.Latitude, Longitude = d.ItemCarro.ItemCarroEventoDevolucao.Longitude, Nome = d.ItemCarro.Descricao, Tipo = "CD", Url = null, UrlTumbnail = null, GoogleId = null }));
             }
             if (string.IsNullOrEmpty(Tipo) || Tipo == "RC")
             {
@@ -875,7 +879,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                     queryRefeicao = queryRefeicao.Where(d => d.Data >= DataDe);
                 if (DataAte.HasValue)
                     queryRefeicao = queryRefeicao.Where(d => d.Data < DataAte);
-                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.Data, Latitude = d.Latitude, Longitude = d.Longitude, Nome = d.ItemCarro.Descricao, Tipo = "RC", Url = null, UrlTumbnail = null }));
+                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.Data, Latitude = d.Latitude, Longitude = d.Longitude, Nome = d.ItemCarro.Descricao, Tipo = "RC", Url = null, UrlTumbnail = null, GoogleId = null }));
             }
             if (string.IsNullOrEmpty(Tipo) || Tipo == "P")
             {
@@ -887,7 +891,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                     queryRefeicao = queryRefeicao.Where(d => d.DataChegada >= DataDe || (d.DataPartida.HasValue && d.DataPartida >= DataDe));
                 if (DataAte.HasValue)
                     queryRefeicao = queryRefeicao.Where(d => d.DataChegada < DataAte && (!d.DataPartida.HasValue || d.DataPartida < DataAte));
-                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = d.DataPartida, DataInicio = d.DataChegada, Latitude = d.Latitude, Longitude = d.Longitude, Nome = d.Aeroporto, Tipo = "P", Url = null, UrlTumbnail = null }));
+                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = d.DataPartida, DataInicio = d.DataChegada, Latitude = d.Latitude, Longitude = d.Longitude, Nome = d.Aeroporto, Tipo = "P", Url = null, UrlTumbnail = null, GoogleId = null }));
             }
             //if (string.IsNullOrEmpty(Tipo) || Tipo == "G")
             //{
@@ -912,7 +916,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                     queryRefeicao = queryRefeicao.Where(d => d.Data >= DataDe);
                 if (DataAte.HasValue)
                     queryRefeicao = queryRefeicao.Where(d => d.Data < DataAte);
-                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.Data, Latitude = d.Latitude, Longitude = d.Longitude, Nome = d.Texto, Tipo = "T", Url = null, UrlTumbnail = null }));
+                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.Data, Latitude = d.Latitude, Longitude = d.Longitude, Nome = d.Texto, Tipo = "T", Url = null, UrlTumbnail = null, GoogleId = null }));
             }
             if (string.IsNullOrEmpty(Tipo) || Tipo == "F" || Tipo == "V")
             {
@@ -926,7 +930,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                     queryRefeicao = queryRefeicao.Where(d => d.Data >= DataDe);
                 if (DataAte.HasValue)
                     queryRefeicao = queryRefeicao.Where(d => d.Data < DataAte);
-                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.Data, Latitude = d.Latitude, Longitude = d.Longitude, Nome = d.Comentario, Tipo = d.Video.Value?"V":"F", Url = d.LinkFoto, UrlTumbnail = d.LinkThumbnail }));
+                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.Data, Latitude = d.Latitude, Longitude = d.Longitude, Nome = d.Comentario, Tipo = d.Video.Value?"V":"F", Url = d.LinkFoto, UrlTumbnail = d.LinkThumbnail , GoogleId =d.Video.Value?null:d.CodigoFoto}));
             }
             if (string.IsNullOrEmpty(Tipo) || Tipo == "U")
             {
@@ -939,7 +943,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                 if (DataAte.HasValue)
                     queryUltimoPonto = queryUltimoPonto.Where(d => d.DataLocal < DataAte);
                 queryUltimoPonto = queryUltimoPonto.OrderByDescending(d => d.DataLocal).Take(1);
-                queryFinal = queryFinal.Union(queryUltimoPonto.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.DataGMT, Latitude = d.Latitude, Longitude = d.Longitude, Nome = "Última Posição", Tipo = "U", Url = null, UrlTumbnail = null }));
+                queryFinal = queryFinal.Union(queryUltimoPonto.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.DataGMT, Latitude = d.Latitude, Longitude = d.Longitude, Nome = "Última Posição", Tipo = "U", Url = null, UrlTumbnail = null, GoogleId = null }));
 
             }
 

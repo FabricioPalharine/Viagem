@@ -1097,6 +1097,7 @@ namespace CV.Mobile.Droid
 			global::TK.CustomMap.Droid.Resource.Id.dark = global::CV.Mobile.Droid.Resource.Id.dark;
 			global::TK.CustomMap.Droid.Resource.Id.decor_content_parent = global::CV.Mobile.Droid.Resource.Id.decor_content_parent;
 			global::TK.CustomMap.Droid.Resource.Id.default_activity_button = global::CV.Mobile.Droid.Resource.Id.default_activity_button;
+			global::TK.CustomMap.Droid.Resource.Id.demoImageView = global::CV.Mobile.Droid.Resource.Id.demoImageView;
 			global::TK.CustomMap.Droid.Resource.Id.design_bottom_sheet = global::CV.Mobile.Droid.Resource.Id.design_bottom_sheet;
 			global::TK.CustomMap.Droid.Resource.Id.design_menu_item_action_area = global::CV.Mobile.Droid.Resource.Id.design_menu_item_action_area;
 			global::TK.CustomMap.Droid.Resource.Id.design_menu_item_action_area_stub = global::CV.Mobile.Droid.Resource.Id.design_menu_item_action_area_stub;
@@ -1301,6 +1302,7 @@ namespace CV.Mobile.Droid
 			global::TK.CustomMap.Droid.Resource.Layout.design_navigation_menu = global::CV.Mobile.Droid.Resource.Layout.design_navigation_menu;
 			global::TK.CustomMap.Droid.Resource.Layout.design_navigation_menu_item = global::CV.Mobile.Droid.Resource.Layout.design_navigation_menu_item;
 			global::TK.CustomMap.Droid.Resource.Layout.design_text_input_password_icon = global::CV.Mobile.Droid.Resource.Layout.design_text_input_password_icon;
+			global::TK.CustomMap.Droid.Resource.Layout.MapImage = global::CV.Mobile.Droid.Resource.Layout.MapImage;
 			global::TK.CustomMap.Droid.Resource.Layout.mr_chooser_dialog = global::CV.Mobile.Droid.Resource.Layout.mr_chooser_dialog;
 			global::TK.CustomMap.Droid.Resource.Layout.mr_chooser_list_item = global::CV.Mobile.Droid.Resource.Layout.mr_chooser_list_item;
 			global::TK.CustomMap.Droid.Resource.Layout.mr_controller_material_dialog_b = global::CV.Mobile.Droid.Resource.Layout.mr_controller_material_dialog_b;
@@ -5580,8 +5582,8 @@ namespace CV.Mobile.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f0d00b0
-			public const int action0 = 2131558576;
+			// aapt resource value: 0x7f0d00b1
+			public const int action0 = 2131558577;
 			
 			// aapt resource value: 0x7f0d006c
 			public const int action_bar = 2131558508;
@@ -5604,17 +5606,17 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0d0049
 			public const int action_bar_title = 2131558473;
 			
-			// aapt resource value: 0x7f0d00ad
-			public const int action_container = 2131558573;
+			// aapt resource value: 0x7f0d00ae
+			public const int action_container = 2131558574;
 			
 			// aapt resource value: 0x7f0d006d
 			public const int action_context_bar = 2131558509;
 			
-			// aapt resource value: 0x7f0d00b4
-			public const int action_divider = 2131558580;
+			// aapt resource value: 0x7f0d00b5
+			public const int action_divider = 2131558581;
 			
-			// aapt resource value: 0x7f0d00ae
-			public const int action_image = 2131558574;
+			// aapt resource value: 0x7f0d00af
+			public const int action_image = 2131558575;
 			
 			// aapt resource value: 0x7f0d0003
 			public const int action_menu_divider = 2131558403;
@@ -5631,11 +5633,11 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0d004b
 			public const int action_mode_close_button = 2131558475;
 			
-			// aapt resource value: 0x7f0d00af
-			public const int action_text = 2131558575;
+			// aapt resource value: 0x7f0d00b0
+			public const int action_text = 2131558576;
 			
-			// aapt resource value: 0x7f0d00bd
-			public const int actions = 2131558589;
+			// aapt resource value: 0x7f0d00be
+			public const int actions = 2131558590;
 			
 			// aapt resource value: 0x7f0d004c
 			public const int activity_chooser_view_content = 2131558476;
@@ -5670,8 +5672,8 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0d0053
 			public const int buttonPanel = 2131558483;
 			
-			// aapt resource value: 0x7f0d00b1
-			public const int cancel_action = 2131558577;
+			// aapt resource value: 0x7f0d00b2
+			public const int cancel_action = 2131558578;
 			
 			// aapt resource value: 0x7f0d0038
 			public const int center = 2131558456;
@@ -5685,8 +5687,8 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0d0063
 			public const int checkbox = 2131558499;
 			
-			// aapt resource value: 0x7f0d00b9
-			public const int chronometer = 2131558585;
+			// aapt resource value: 0x7f0d00ba
+			public const int chronometer = 2131558586;
 			
 			// aapt resource value: 0x7f0d0041
 			public const int clip_horizontal = 2131558465;
@@ -5721,6 +5723,9 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0d004f
 			public const int default_activity_button = 2131558479;
 			
+			// aapt resource value: 0x7f0d0093
+			public const int demoImageView = 2131558547;
+			
 			// aapt resource value: 0x7f0d0081
 			public const int design_bottom_sheet = 2131558529;
 			
@@ -5748,8 +5753,8 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0d002a
 			public const int end = 2131558442;
 			
-			// aapt resource value: 0x7f0d00c3
-			public const int end_padder = 2131558595;
+			// aapt resource value: 0x7f0d00c4
+			public const int end_padder = 2131558596;
 			
 			// aapt resource value: 0x7f0d0033
 			public const int enterAlways = 2131558451;
@@ -5790,8 +5795,8 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0d0051
 			public const int icon = 2131558481;
 			
-			// aapt resource value: 0x7f0d00be
-			public const int icon_group = 2131558590;
+			// aapt resource value: 0x7f0d00bf
+			public const int icon_group = 2131558591;
 			
 			// aapt resource value: 0x7f0d0014
 			public const int icon_only = 2131558420;
@@ -5802,8 +5807,8 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0d004e
 			public const int image = 2131558478;
 			
-			// aapt resource value: 0x7f0d00ba
-			public const int info = 2131558586;
+			// aapt resource value: 0x7f0d00bb
+			public const int info = 2131558587;
 			
 			// aapt resource value: 0x7f0d0000
 			public const int item_touch_helper_previous_elevation = 2131558400;
@@ -5817,11 +5822,11 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0d0019
 			public const int light = 2131558425;
 			
-			// aapt resource value: 0x7f0d00bf
-			public const int line1 = 2131558591;
+			// aapt resource value: 0x7f0d00c0
+			public const int line1 = 2131558592;
 			
-			// aapt resource value: 0x7f0d00c1
-			public const int line3 = 2131558593;
+			// aapt resource value: 0x7f0d00c2
+			public const int line3 = 2131558594;
 			
 			// aapt resource value: 0x7f0d001a
 			public const int listMode = 2131558426;
@@ -5838,11 +5843,11 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0d008d
 			public const int loadingProgressWheel = 2131558541;
 			
-			// aapt resource value: 0x7f0d00cf
-			public const int masked = 2131558607;
+			// aapt resource value: 0x7f0d00d0
+			public const int masked = 2131558608;
 			
-			// aapt resource value: 0x7f0d00b3
-			public const int media_actions = 2131558579;
+			// aapt resource value: 0x7f0d00b4
+			public const int media_actions = 2131558580;
 			
 			// aapt resource value: 0x7f0d002b
 			public const int middle = 2131558443;
@@ -5850,80 +5855,80 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0d0046
 			public const int mini = 2131558470;
 			
-			// aapt resource value: 0x7f0d009f
-			public const int mr_art = 2131558559;
-			
-			// aapt resource value: 0x7f0d0094
-			public const int mr_chooser_list = 2131558548;
-			
-			// aapt resource value: 0x7f0d0097
-			public const int mr_chooser_route_desc = 2131558551;
+			// aapt resource value: 0x7f0d00a0
+			public const int mr_art = 2131558560;
 			
 			// aapt resource value: 0x7f0d0095
-			public const int mr_chooser_route_icon = 2131558549;
-			
-			// aapt resource value: 0x7f0d0096
-			public const int mr_chooser_route_name = 2131558550;
-			
-			// aapt resource value: 0x7f0d0093
-			public const int mr_chooser_title = 2131558547;
-			
-			// aapt resource value: 0x7f0d009c
-			public const int mr_close = 2131558556;
-			
-			// aapt resource value: 0x7f0d00a2
-			public const int mr_control_divider = 2131558562;
-			
-			// aapt resource value: 0x7f0d00a8
-			public const int mr_control_playback_ctrl = 2131558568;
-			
-			// aapt resource value: 0x7f0d00ab
-			public const int mr_control_subtitle = 2131558571;
-			
-			// aapt resource value: 0x7f0d00aa
-			public const int mr_control_title = 2131558570;
-			
-			// aapt resource value: 0x7f0d00a9
-			public const int mr_control_title_container = 2131558569;
-			
-			// aapt resource value: 0x7f0d009d
-			public const int mr_custom_control = 2131558557;
-			
-			// aapt resource value: 0x7f0d009e
-			public const int mr_default_control = 2131558558;
-			
-			// aapt resource value: 0x7f0d0099
-			public const int mr_dialog_area = 2131558553;
+			public const int mr_chooser_list = 2131558549;
 			
 			// aapt resource value: 0x7f0d0098
-			public const int mr_expandable_area = 2131558552;
+			public const int mr_chooser_route_desc = 2131558552;
 			
-			// aapt resource value: 0x7f0d00ac
-			public const int mr_group_expand_collapse = 2131558572;
+			// aapt resource value: 0x7f0d0096
+			public const int mr_chooser_route_icon = 2131558550;
 			
-			// aapt resource value: 0x7f0d00a0
-			public const int mr_media_main_control = 2131558560;
+			// aapt resource value: 0x7f0d0097
+			public const int mr_chooser_route_name = 2131558551;
 			
-			// aapt resource value: 0x7f0d009b
-			public const int mr_name = 2131558555;
+			// aapt resource value: 0x7f0d0094
+			public const int mr_chooser_title = 2131558548;
 			
-			// aapt resource value: 0x7f0d00a1
-			public const int mr_playback_control = 2131558561;
-			
-			// aapt resource value: 0x7f0d009a
-			public const int mr_title_bar = 2131558554;
+			// aapt resource value: 0x7f0d009d
+			public const int mr_close = 2131558557;
 			
 			// aapt resource value: 0x7f0d00a3
-			public const int mr_volume_control = 2131558563;
+			public const int mr_control_divider = 2131558563;
+			
+			// aapt resource value: 0x7f0d00a9
+			public const int mr_control_playback_ctrl = 2131558569;
+			
+			// aapt resource value: 0x7f0d00ac
+			public const int mr_control_subtitle = 2131558572;
+			
+			// aapt resource value: 0x7f0d00ab
+			public const int mr_control_title = 2131558571;
+			
+			// aapt resource value: 0x7f0d00aa
+			public const int mr_control_title_container = 2131558570;
+			
+			// aapt resource value: 0x7f0d009e
+			public const int mr_custom_control = 2131558558;
+			
+			// aapt resource value: 0x7f0d009f
+			public const int mr_default_control = 2131558559;
+			
+			// aapt resource value: 0x7f0d009a
+			public const int mr_dialog_area = 2131558554;
+			
+			// aapt resource value: 0x7f0d0099
+			public const int mr_expandable_area = 2131558553;
+			
+			// aapt resource value: 0x7f0d00ad
+			public const int mr_group_expand_collapse = 2131558573;
+			
+			// aapt resource value: 0x7f0d00a1
+			public const int mr_media_main_control = 2131558561;
+			
+			// aapt resource value: 0x7f0d009c
+			public const int mr_name = 2131558556;
+			
+			// aapt resource value: 0x7f0d00a2
+			public const int mr_playback_control = 2131558562;
+			
+			// aapt resource value: 0x7f0d009b
+			public const int mr_title_bar = 2131558555;
 			
 			// aapt resource value: 0x7f0d00a4
-			public const int mr_volume_group_list = 2131558564;
+			public const int mr_volume_control = 2131558564;
 			
-			// aapt resource value: 0x7f0d00a6
-			public const int mr_volume_item_icon = 2131558566;
+			// aapt resource value: 0x7f0d00a5
+			public const int mr_volume_group_list = 2131558565;
 			
 			// aapt resource value: 0x7f0d00a7
-			public const int mr_volume_slider = 2131558567;
+			public const int mr_volume_item_icon = 2131558567;
+			
+			// aapt resource value: 0x7f0d00a8
+			public const int mr_volume_slider = 2131558568;
 			
 			// aapt resource value: 0x7f0d0022
 			public const int multiply = 2131558434;
@@ -5940,14 +5945,14 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0d000f
 			public const int normal = 2131558415;
 			
-			// aapt resource value: 0x7f0d00bc
-			public const int notification_background = 2131558588;
+			// aapt resource value: 0x7f0d00bd
+			public const int notification_background = 2131558589;
+			
+			// aapt resource value: 0x7f0d00b7
+			public const int notification_main_column = 2131558583;
 			
 			// aapt resource value: 0x7f0d00b6
-			public const int notification_main_column = 2131558582;
-			
-			// aapt resource value: 0x7f0d00b5
-			public const int notification_main_column_container = 2131558581;
+			public const int notification_main_column_container = 2131558582;
 			
 			// aapt resource value: 0x7f0d003f
 			public const int parallax = 2131558463;
@@ -5958,29 +5963,29 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0d0040
 			public const int pin = 2131558464;
 			
-			// aapt resource value: 0x7f0d00c6
-			public const int place_autocomplete_clear_button = 2131558598;
-			
-			// aapt resource value: 0x7f0d00c8
-			public const int place_autocomplete_powered_by_google = 2131558600;
-			
-			// aapt resource value: 0x7f0d00ca
-			public const int place_autocomplete_prediction_primary_text = 2131558602;
-			
-			// aapt resource value: 0x7f0d00cb
-			public const int place_autocomplete_prediction_secondary_text = 2131558603;
+			// aapt resource value: 0x7f0d00c7
+			public const int place_autocomplete_clear_button = 2131558599;
 			
 			// aapt resource value: 0x7f0d00c9
-			public const int place_autocomplete_progress = 2131558601;
+			public const int place_autocomplete_powered_by_google = 2131558601;
 			
-			// aapt resource value: 0x7f0d00c4
-			public const int place_autocomplete_search_button = 2131558596;
+			// aapt resource value: 0x7f0d00cb
+			public const int place_autocomplete_prediction_primary_text = 2131558603;
+			
+			// aapt resource value: 0x7f0d00cc
+			public const int place_autocomplete_prediction_secondary_text = 2131558604;
+			
+			// aapt resource value: 0x7f0d00ca
+			public const int place_autocomplete_progress = 2131558602;
 			
 			// aapt resource value: 0x7f0d00c5
-			public const int place_autocomplete_search_input = 2131558597;
+			public const int place_autocomplete_search_button = 2131558597;
 			
-			// aapt resource value: 0x7f0d00c7
-			public const int place_autocomplete_separator = 2131558599;
+			// aapt resource value: 0x7f0d00c6
+			public const int place_autocomplete_search_input = 2131558598;
+			
+			// aapt resource value: 0x7f0d00c8
+			public const int place_autocomplete_separator = 2131558600;
 			
 			// aapt resource value: 0x7f0d0006
 			public const int progress_circular = 2131558406;
@@ -5994,11 +5999,11 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0d003d
 			public const int right = 2131558461;
 			
-			// aapt resource value: 0x7f0d00bb
-			public const int right_icon = 2131558587;
+			// aapt resource value: 0x7f0d00bc
+			public const int right_icon = 2131558588;
 			
-			// aapt resource value: 0x7f0d00b7
-			public const int right_side = 2131558583;
+			// aapt resource value: 0x7f0d00b8
+			public const int right_side = 2131558584;
 			
 			// aapt resource value: 0x7f0d0010
 			public const int satellite = 2131558416;
@@ -6072,8 +6077,8 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0d0091
 			public const int sign_out_button = 2131558545;
 			
-			// aapt resource value: 0x7f0d00cc
-			public const int sliding_tabs = 2131558604;
+			// aapt resource value: 0x7f0d00cd
+			public const int sliding_tabs = 2131558605;
 			
 			// aapt resource value: 0x7f0d007c
 			public const int smallLabel = 2131558524;
@@ -6111,8 +6116,8 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0d008f
 			public const int status = 2131558543;
 			
-			// aapt resource value: 0x7f0d00b2
-			public const int status_bar_latest_event_content = 2131558578;
+			// aapt resource value: 0x7f0d00b3
+			public const int status_bar_latest_event_content = 2131558579;
 			
 			// aapt resource value: 0x7f0d0066
 			public const int submenuarrow = 2131558502;
@@ -6126,11 +6131,11 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0d0011
 			public const int terrain = 2131558417;
 			
-			// aapt resource value: 0x7f0d00c2
-			public const int text = 2131558594;
+			// aapt resource value: 0x7f0d00c3
+			public const int text = 2131558595;
 			
-			// aapt resource value: 0x7f0d00c0
-			public const int text2 = 2131558592;
+			// aapt resource value: 0x7f0d00c1
+			public const int text2 = 2131558593;
 			
 			// aapt resource value: 0x7f0d005a
 			public const int textSpacerNoButtons = 2131558490;
@@ -6150,8 +6155,8 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0d000b
 			public const int textinput_error = 2131558411;
 			
-			// aapt resource value: 0x7f0d00b8
-			public const int time = 2131558584;
+			// aapt resource value: 0x7f0d00b9
+			public const int time = 2131558585;
 			
 			// aapt resource value: 0x7f0d0052
 			public const int title = 2131558482;
@@ -6165,8 +6170,8 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0d008e
 			public const int title_text = 2131558542;
 			
-			// aapt resource value: 0x7f0d00cd
-			public const int toolbar = 2131558605;
+			// aapt resource value: 0x7f0d00ce
+			public const int toolbar = 2131558606;
 			
 			// aapt resource value: 0x7f0d0032
 			public const int top = 2131558450;
@@ -6186,11 +6191,11 @@ namespace CV.Mobile.Droid
 			// aapt resource value: 0x7f0d000c
 			public const int view_offset_helper = 2131558412;
 			
-			// aapt resource value: 0x7f0d00ce
-			public const int visible = 2131558606;
+			// aapt resource value: 0x7f0d00cf
+			public const int visible = 2131558607;
 			
-			// aapt resource value: 0x7f0d00a5
-			public const int volume_item_container = 2131558565;
+			// aapt resource value: 0x7f0d00a6
+			public const int volume_item_container = 2131558566;
 			
 			// aapt resource value: 0x7f0d007b
 			public const int webview = 2131558523;
@@ -6427,97 +6432,100 @@ namespace CV.Mobile.Droid
 			public const int login = 2130903085;
 			
 			// aapt resource value: 0x7f03002e
-			public const int mr_chooser_dialog = 2130903086;
+			public const int MapImage = 2130903086;
 			
 			// aapt resource value: 0x7f03002f
-			public const int mr_chooser_list_item = 2130903087;
+			public const int mr_chooser_dialog = 2130903087;
 			
 			// aapt resource value: 0x7f030030
-			public const int mr_controller_material_dialog_b = 2130903088;
+			public const int mr_chooser_list_item = 2130903088;
 			
 			// aapt resource value: 0x7f030031
-			public const int mr_controller_volume_item = 2130903089;
+			public const int mr_controller_material_dialog_b = 2130903089;
 			
 			// aapt resource value: 0x7f030032
-			public const int mr_playback_control = 2130903090;
+			public const int mr_controller_volume_item = 2130903090;
 			
 			// aapt resource value: 0x7f030033
-			public const int mr_volume_control = 2130903091;
+			public const int mr_playback_control = 2130903091;
 			
 			// aapt resource value: 0x7f030034
-			public const int notification_action = 2130903092;
+			public const int mr_volume_control = 2130903092;
 			
 			// aapt resource value: 0x7f030035
-			public const int notification_action_tombstone = 2130903093;
+			public const int notification_action = 2130903093;
 			
 			// aapt resource value: 0x7f030036
-			public const int notification_media_action = 2130903094;
+			public const int notification_action_tombstone = 2130903094;
 			
 			// aapt resource value: 0x7f030037
-			public const int notification_media_cancel_action = 2130903095;
+			public const int notification_media_action = 2130903095;
 			
 			// aapt resource value: 0x7f030038
-			public const int notification_template_big_media = 2130903096;
+			public const int notification_media_cancel_action = 2130903096;
 			
 			// aapt resource value: 0x7f030039
-			public const int notification_template_big_media_custom = 2130903097;
+			public const int notification_template_big_media = 2130903097;
 			
 			// aapt resource value: 0x7f03003a
-			public const int notification_template_big_media_narrow = 2130903098;
+			public const int notification_template_big_media_custom = 2130903098;
 			
 			// aapt resource value: 0x7f03003b
-			public const int notification_template_big_media_narrow_custom = 2130903099;
+			public const int notification_template_big_media_narrow = 2130903099;
 			
 			// aapt resource value: 0x7f03003c
-			public const int notification_template_custom_big = 2130903100;
+			public const int notification_template_big_media_narrow_custom = 2130903100;
 			
 			// aapt resource value: 0x7f03003d
-			public const int notification_template_icon_group = 2130903101;
+			public const int notification_template_custom_big = 2130903101;
 			
 			// aapt resource value: 0x7f03003e
-			public const int notification_template_lines_media = 2130903102;
+			public const int notification_template_icon_group = 2130903102;
 			
 			// aapt resource value: 0x7f03003f
-			public const int notification_template_media = 2130903103;
+			public const int notification_template_lines_media = 2130903103;
 			
 			// aapt resource value: 0x7f030040
-			public const int notification_template_media_custom = 2130903104;
+			public const int notification_template_media = 2130903104;
 			
 			// aapt resource value: 0x7f030041
-			public const int notification_template_part_chronometer = 2130903105;
+			public const int notification_template_media_custom = 2130903105;
 			
 			// aapt resource value: 0x7f030042
-			public const int notification_template_part_time = 2130903106;
+			public const int notification_template_part_chronometer = 2130903106;
 			
 			// aapt resource value: 0x7f030043
-			public const int place_autocomplete_fragment = 2130903107;
+			public const int notification_template_part_time = 2130903107;
 			
 			// aapt resource value: 0x7f030044
-			public const int place_autocomplete_item_powered_by_google = 2130903108;
+			public const int place_autocomplete_fragment = 2130903108;
 			
 			// aapt resource value: 0x7f030045
-			public const int place_autocomplete_item_prediction = 2130903109;
+			public const int place_autocomplete_item_powered_by_google = 2130903109;
 			
 			// aapt resource value: 0x7f030046
-			public const int place_autocomplete_progress = 2130903110;
+			public const int place_autocomplete_item_prediction = 2130903110;
 			
 			// aapt resource value: 0x7f030047
-			public const int select_dialog_item_material = 2130903111;
+			public const int place_autocomplete_progress = 2130903111;
 			
 			// aapt resource value: 0x7f030048
-			public const int select_dialog_multichoice_material = 2130903112;
+			public const int select_dialog_item_material = 2130903112;
 			
 			// aapt resource value: 0x7f030049
-			public const int select_dialog_singlechoice_material = 2130903113;
+			public const int select_dialog_multichoice_material = 2130903113;
 			
 			// aapt resource value: 0x7f03004a
-			public const int support_simple_spinner_dropdown_item = 2130903114;
+			public const int select_dialog_singlechoice_material = 2130903114;
 			
 			// aapt resource value: 0x7f03004b
-			public const int Tabbar = 2130903115;
+			public const int support_simple_spinner_dropdown_item = 2130903115;
 			
 			// aapt resource value: 0x7f03004c
-			public const int Toolbar = 2130903116;
+			public const int Tabbar = 2130903116;
+			
+			// aapt resource value: 0x7f03004d
+			public const int Toolbar = 2130903117;
 			
 			static Layout()
 			{

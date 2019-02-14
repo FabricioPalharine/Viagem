@@ -1298,16 +1298,16 @@ namespace TK.CustomMap.Droid
                     imagen.SetImageBitmap(imageBitmap);
 
                     //var infoTitle = view.FindViewById<TextView>(Resource.Id.InfoWindowTitle);
-                    var infoSubtitle = view.FindViewById<TextView>(Resource.Id.InfoWindowSubtitle);
+                    //var infoSubtitle = view.FindViewById<TextView>(Resource.Id.InfoWindowSubtitle);
 
-                    //if (infoTitle != null)
+                    ////if (infoTitle != null)
+                    ////{
+                    ////    infoTitle.Text = marker.Title;
+                    ////}
+                    //if (infoSubtitle != null)
                     //{
-                    //    infoTitle.Text = marker.Title;
+                    //    infoSubtitle.Text = marker.Snippet;
                     //}
-                    if (infoSubtitle != null)
-                    {
-                        infoSubtitle.Text = marker.Snippet;
-                    }
 
                     return view;
                 }

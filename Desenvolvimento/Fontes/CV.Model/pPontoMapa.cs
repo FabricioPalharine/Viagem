@@ -17,7 +17,7 @@ namespace CV.Model
 
         public string UrlTumbnail { get; set; }
         public string Url { get; set; }
-
+        public string GoogleId { get; set; }
         public string Periodo
         {
             get

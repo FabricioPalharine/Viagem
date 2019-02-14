@@ -15,6 +15,7 @@ namespace CV.Model
         public DateTime? Data { get; set; }
         public decimal? Latitude { get; set; }
         public decimal? Longitude { get; set; }
+        public string GoogleId { get; set; }
 
         public int? Identificador { get; set; }
         public IEnumerable<UsuarioConsulta> Usuarios { get; set; }

@@ -5,7 +5,8 @@
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 	<application android:label="Curtindo Uma Viagem" android:icon="@drawable/icon">
-		<meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyDrQ7UWqjZRnqcdVTdHwVEZHMJLtx3O_nA " />
+		<meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyDrQ7UWqjZRnqcdVTdHwVEZHMJLtx3O_nA" />
+    <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
 		<provider android:name="android.support.v4.content.FileProvider" android:authorities="Palharine.com.CV.fileprovider" android:exported="false" android:grantUriPermissions="true">
 			<meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths"></meta-data>
 		</provider>

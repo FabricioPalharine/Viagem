@@ -3067,11 +3067,8 @@ namespace TK.CustomMap.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f0c0087
-			public static int InfoWindowSubtitle = 2131492999;
-			
-			// aapt resource value: 0x7f0c00a6
-			public static int action0 = 2131493030;
+			// aapt resource value: 0x7f0c00a5
+			public static int action0 = 2131493029;
 			
 			// aapt resource value: 0x7f0c006c
 			public static int action_bar = 2131492972;
@@ -3094,17 +3091,17 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f0c0049
 			public static int action_bar_title = 2131492937;
 			
-			// aapt resource value: 0x7f0c00a3
-			public static int action_container = 2131493027;
+			// aapt resource value: 0x7f0c00a2
+			public static int action_container = 2131493026;
 			
 			// aapt resource value: 0x7f0c006d
 			public static int action_context_bar = 2131492973;
 			
-			// aapt resource value: 0x7f0c00aa
-			public static int action_divider = 2131493034;
+			// aapt resource value: 0x7f0c00a9
+			public static int action_divider = 2131493033;
 			
-			// aapt resource value: 0x7f0c00a4
-			public static int action_image = 2131493028;
+			// aapt resource value: 0x7f0c00a3
+			public static int action_image = 2131493027;
 			
 			// aapt resource value: 0x7f0c0005
 			public static int action_menu_divider = 2131492869;
@@ -3121,11 +3118,11 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f0c004b
 			public static int action_mode_close_button = 2131492939;
 			
-			// aapt resource value: 0x7f0c00a5
-			public static int action_text = 2131493029;
+			// aapt resource value: 0x7f0c00a4
+			public static int action_text = 2131493028;
 			
-			// aapt resource value: 0x7f0c00b3
-			public static int actions = 2131493043;
+			// aapt resource value: 0x7f0c00b2
+			public static int actions = 2131493042;
 			
 			// aapt resource value: 0x7f0c004c
 			public static int activity_chooser_view_content = 2131492940;
@@ -3160,8 +3157,8 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f0c0053
 			public static int buttonPanel = 2131492947;
 			
-			// aapt resource value: 0x7f0c00a7
-			public static int cancel_action = 2131493031;
+			// aapt resource value: 0x7f0c00a6
+			public static int cancel_action = 2131493030;
 			
 			// aapt resource value: 0x7f0c0020
 			public static int center = 2131492896;
@@ -3175,8 +3172,8 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f0c0063
 			public static int checkbox = 2131492963;
 			
-			// aapt resource value: 0x7f0c00af
-			public static int chronometer = 2131493039;
+			// aapt resource value: 0x7f0c00ae
+			public static int chronometer = 2131493038;
 			
 			// aapt resource value: 0x7f0c002b
 			public static int clip_horizontal = 2131492907;
@@ -3205,8 +3202,8 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f0c004f
 			public static int default_activity_button = 2131492943;
 			
-			// aapt resource value: 0x7f0c0088
-			public static int demoImageView = 2131493000;
+			// aapt resource value: 0x7f0c0087
+			public static int demoImageView = 2131492999;
 			
 			// aapt resource value: 0x7f0c007e
 			public static int design_bottom_sheet = 2131492990;
@@ -3232,8 +3229,8 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f0c0023
 			public static int end = 2131492899;
 			
-			// aapt resource value: 0x7f0c00b9
-			public static int end_padder = 2131493049;
+			// aapt resource value: 0x7f0c00b8
+			public static int end_padder = 2131493048;
 			
 			// aapt resource value: 0x7f0c001a
 			public static int enterAlways = 2131492890;
@@ -3274,8 +3271,8 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f0c0051
 			public static int icon = 2131492945;
 			
-			// aapt resource value: 0x7f0c00b4
-			public static int icon_group = 2131493044;
+			// aapt resource value: 0x7f0c00b3
+			public static int icon_group = 2131493043;
 			
 			// aapt resource value: 0x7f0c0014
 			public static int icon_only = 2131492884;
@@ -3286,8 +3283,8 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f0c004e
 			public static int image = 2131492942;
 			
-			// aapt resource value: 0x7f0c00b0
-			public static int info = 2131493040;
+			// aapt resource value: 0x7f0c00af
+			public static int info = 2131493039;
 			
 			// aapt resource value: 0x7f0c000c
 			public static int item_touch_helper_previous_elevation = 2131492876;
@@ -3301,11 +3298,11 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f0c0019
 			public static int light = 2131492889;
 			
-			// aapt resource value: 0x7f0c00b5
-			public static int line1 = 2131493045;
+			// aapt resource value: 0x7f0c00b4
+			public static int line1 = 2131493044;
 			
-			// aapt resource value: 0x7f0c00b7
-			public static int line3 = 2131493047;
+			// aapt resource value: 0x7f0c00b6
+			public static int line3 = 2131493046;
 			
 			// aapt resource value: 0x7f0c0038
 			public static int listMode = 2131492920;
@@ -3313,11 +3310,11 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f0c0050
 			public static int list_item = 2131492944;
 			
-			// aapt resource value: 0x7f0c00c3
-			public static int masked = 2131493059;
+			// aapt resource value: 0x7f0c00c2
+			public static int masked = 2131493058;
 			
-			// aapt resource value: 0x7f0c00a9
-			public static int media_actions = 2131493033;
+			// aapt resource value: 0x7f0c00a8
+			public static int media_actions = 2131493032;
 			
 			// aapt resource value: 0x7f0c0043
 			public static int middle = 2131492931;
@@ -3325,80 +3322,80 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f0c0030
 			public static int mini = 2131492912;
 			
-			// aapt resource value: 0x7f0c0095
-			public static int mr_art = 2131493013;
-			
-			// aapt resource value: 0x7f0c008a
-			public static int mr_chooser_list = 2131493002;
-			
-			// aapt resource value: 0x7f0c008d
-			public static int mr_chooser_route_desc = 2131493005;
-			
-			// aapt resource value: 0x7f0c008b
-			public static int mr_chooser_route_icon = 2131493003;
-			
-			// aapt resource value: 0x7f0c008c
-			public static int mr_chooser_route_name = 2131493004;
+			// aapt resource value: 0x7f0c0094
+			public static int mr_art = 2131493012;
 			
 			// aapt resource value: 0x7f0c0089
-			public static int mr_chooser_title = 2131493001;
+			public static int mr_chooser_list = 2131493001;
 			
-			// aapt resource value: 0x7f0c0092
-			public static int mr_close = 2131493010;
+			// aapt resource value: 0x7f0c008c
+			public static int mr_chooser_route_desc = 2131493004;
 			
-			// aapt resource value: 0x7f0c0098
-			public static int mr_control_divider = 2131493016;
+			// aapt resource value: 0x7f0c008a
+			public static int mr_chooser_route_icon = 2131493002;
 			
-			// aapt resource value: 0x7f0c009e
-			public static int mr_control_play_pause = 2131493022;
+			// aapt resource value: 0x7f0c008b
+			public static int mr_chooser_route_name = 2131493003;
 			
-			// aapt resource value: 0x7f0c00a1
-			public static int mr_control_subtitle = 2131493025;
-			
-			// aapt resource value: 0x7f0c00a0
-			public static int mr_control_title = 2131493024;
-			
-			// aapt resource value: 0x7f0c009f
-			public static int mr_control_title_container = 2131493023;
-			
-			// aapt resource value: 0x7f0c0093
-			public static int mr_custom_control = 2131493011;
-			
-			// aapt resource value: 0x7f0c0094
-			public static int mr_default_control = 2131493012;
-			
-			// aapt resource value: 0x7f0c008f
-			public static int mr_dialog_area = 2131493007;
-			
-			// aapt resource value: 0x7f0c008e
-			public static int mr_expandable_area = 2131493006;
-			
-			// aapt resource value: 0x7f0c00a2
-			public static int mr_group_expand_collapse = 2131493026;
-			
-			// aapt resource value: 0x7f0c0096
-			public static int mr_media_main_control = 2131493014;
+			// aapt resource value: 0x7f0c0088
+			public static int mr_chooser_title = 2131493000;
 			
 			// aapt resource value: 0x7f0c0091
-			public static int mr_name = 2131493009;
+			public static int mr_close = 2131493009;
 			
 			// aapt resource value: 0x7f0c0097
-			public static int mr_playback_control = 2131493015;
-			
-			// aapt resource value: 0x7f0c0090
-			public static int mr_title_bar = 2131493008;
-			
-			// aapt resource value: 0x7f0c0099
-			public static int mr_volume_control = 2131493017;
-			
-			// aapt resource value: 0x7f0c009a
-			public static int mr_volume_group_list = 2131493018;
-			
-			// aapt resource value: 0x7f0c009c
-			public static int mr_volume_item_icon = 2131493020;
+			public static int mr_control_divider = 2131493015;
 			
 			// aapt resource value: 0x7f0c009d
-			public static int mr_volume_slider = 2131493021;
+			public static int mr_control_play_pause = 2131493021;
+			
+			// aapt resource value: 0x7f0c00a0
+			public static int mr_control_subtitle = 2131493024;
+			
+			// aapt resource value: 0x7f0c009f
+			public static int mr_control_title = 2131493023;
+			
+			// aapt resource value: 0x7f0c009e
+			public static int mr_control_title_container = 2131493022;
+			
+			// aapt resource value: 0x7f0c0092
+			public static int mr_custom_control = 2131493010;
+			
+			// aapt resource value: 0x7f0c0093
+			public static int mr_default_control = 2131493011;
+			
+			// aapt resource value: 0x7f0c008e
+			public static int mr_dialog_area = 2131493006;
+			
+			// aapt resource value: 0x7f0c008d
+			public static int mr_expandable_area = 2131493005;
+			
+			// aapt resource value: 0x7f0c00a1
+			public static int mr_group_expand_collapse = 2131493025;
+			
+			// aapt resource value: 0x7f0c0095
+			public static int mr_media_main_control = 2131493013;
+			
+			// aapt resource value: 0x7f0c0090
+			public static int mr_name = 2131493008;
+			
+			// aapt resource value: 0x7f0c0096
+			public static int mr_playback_control = 2131493014;
+			
+			// aapt resource value: 0x7f0c008f
+			public static int mr_title_bar = 2131493007;
+			
+			// aapt resource value: 0x7f0c0098
+			public static int mr_volume_control = 2131493016;
+			
+			// aapt resource value: 0x7f0c0099
+			public static int mr_volume_group_list = 2131493017;
+			
+			// aapt resource value: 0x7f0c009b
+			public static int mr_volume_item_icon = 2131493019;
+			
+			// aapt resource value: 0x7f0c009c
+			public static int mr_volume_slider = 2131493020;
 			
 			// aapt resource value: 0x7f0c0033
 			public static int multiply = 2131492915;
@@ -3415,14 +3412,14 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f0c000f
 			public static int normal = 2131492879;
 			
-			// aapt resource value: 0x7f0c00b2
-			public static int notification_background = 2131493042;
-			
-			// aapt resource value: 0x7f0c00ac
-			public static int notification_main_column = 2131493036;
+			// aapt resource value: 0x7f0c00b1
+			public static int notification_background = 2131493041;
 			
 			// aapt resource value: 0x7f0c00ab
-			public static int notification_main_column_container = 2131493035;
+			public static int notification_main_column = 2131493035;
+			
+			// aapt resource value: 0x7f0c00aa
+			public static int notification_main_column_container = 2131493034;
 			
 			// aapt resource value: 0x7f0c0029
 			public static int parallax = 2131492905;
@@ -3433,29 +3430,29 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f0c002a
 			public static int pin = 2131492906;
 			
-			// aapt resource value: 0x7f0c00bc
-			public static int place_autocomplete_clear_button = 2131493052;
-			
-			// aapt resource value: 0x7f0c00be
-			public static int place_autocomplete_powered_by_google = 2131493054;
-			
-			// aapt resource value: 0x7f0c00c0
-			public static int place_autocomplete_prediction_primary_text = 2131493056;
-			
-			// aapt resource value: 0x7f0c00c1
-			public static int place_autocomplete_prediction_secondary_text = 2131493057;
-			
-			// aapt resource value: 0x7f0c00bf
-			public static int place_autocomplete_progress = 2131493055;
-			
-			// aapt resource value: 0x7f0c00ba
-			public static int place_autocomplete_search_button = 2131493050;
-			
 			// aapt resource value: 0x7f0c00bb
-			public static int place_autocomplete_search_input = 2131493051;
+			public static int place_autocomplete_clear_button = 2131493051;
 			
 			// aapt resource value: 0x7f0c00bd
-			public static int place_autocomplete_separator = 2131493053;
+			public static int place_autocomplete_powered_by_google = 2131493053;
+			
+			// aapt resource value: 0x7f0c00bf
+			public static int place_autocomplete_prediction_primary_text = 2131493055;
+			
+			// aapt resource value: 0x7f0c00c0
+			public static int place_autocomplete_prediction_secondary_text = 2131493056;
+			
+			// aapt resource value: 0x7f0c00be
+			public static int place_autocomplete_progress = 2131493054;
+			
+			// aapt resource value: 0x7f0c00b9
+			public static int place_autocomplete_search_button = 2131493049;
+			
+			// aapt resource value: 0x7f0c00ba
+			public static int place_autocomplete_search_input = 2131493050;
+			
+			// aapt resource value: 0x7f0c00bc
+			public static int place_autocomplete_separator = 2131493052;
 			
 			// aapt resource value: 0x7f0c0008
 			public static int progress_circular = 2131492872;
@@ -3469,11 +3466,11 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f0c0026
 			public static int right = 2131492902;
 			
-			// aapt resource value: 0x7f0c00b1
-			public static int right_icon = 2131493041;
+			// aapt resource value: 0x7f0c00b0
+			public static int right_icon = 2131493040;
 			
-			// aapt resource value: 0x7f0c00ad
-			public static int right_side = 2131493037;
+			// aapt resource value: 0x7f0c00ac
+			public static int right_side = 2131493036;
 			
 			// aapt resource value: 0x7f0c0010
 			public static int satellite = 2131492880;
@@ -3574,8 +3571,8 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f0c0027
 			public static int start = 2131492903;
 			
-			// aapt resource value: 0x7f0c00a8
-			public static int status_bar_latest_event_content = 2131493032;
+			// aapt resource value: 0x7f0c00a7
+			public static int status_bar_latest_event_content = 2131493031;
 			
 			// aapt resource value: 0x7f0c0066
 			public static int submenuarrow = 2131492966;
@@ -3589,11 +3586,11 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f0c0011
 			public static int terrain = 2131492881;
 			
-			// aapt resource value: 0x7f0c00b8
-			public static int text = 2131493048;
+			// aapt resource value: 0x7f0c00b7
+			public static int text = 2131493047;
 			
-			// aapt resource value: 0x7f0c00b6
-			public static int text2 = 2131493046;
+			// aapt resource value: 0x7f0c00b5
+			public static int text2 = 2131493045;
 			
 			// aapt resource value: 0x7f0c005a
 			public static int textSpacerNoButtons = 2131492954;
@@ -3610,8 +3607,8 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f0c0001
 			public static int textinput_error = 2131492865;
 			
-			// aapt resource value: 0x7f0c00ae
-			public static int time = 2131493038;
+			// aapt resource value: 0x7f0c00ad
+			public static int time = 2131493037;
 			
 			// aapt resource value: 0x7f0c0052
 			public static int title = 2131492946;
@@ -3640,11 +3637,11 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f0c0002
 			public static int view_offset_helper = 2131492866;
 			
-			// aapt resource value: 0x7f0c00c2
-			public static int visible = 2131493058;
+			// aapt resource value: 0x7f0c00c1
+			public static int visible = 2131493057;
 			
-			// aapt resource value: 0x7f0c009b
-			public static int volume_item_container = 2131493019;
+			// aapt resource value: 0x7f0c009a
+			public static int volume_item_container = 2131493018;
 			
 			// aapt resource value: 0x7f0c0016
 			public static int wide = 2131492886;
