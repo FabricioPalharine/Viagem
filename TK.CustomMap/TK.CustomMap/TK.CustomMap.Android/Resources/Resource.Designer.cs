@@ -254,32 +254,32 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f010127
 			public static int barLength = 2130772263;
 			
-			// aapt resource value: 0x7f010057
-			public static int behavior_autoHide = 2130772055;
+			// aapt resource value: 0x7f010040
+			public static int behavior_autoHide = 2130772032;
 			
-			// aapt resource value: 0x7f010034
-			public static int behavior_hideable = 2130772020;
+			// aapt resource value: 0x7f01001d
+			public static int behavior_hideable = 2130771997;
 			
-			// aapt resource value: 0x7f010060
-			public static int behavior_overlapTop = 2130772064;
+			// aapt resource value: 0x7f010049
+			public static int behavior_overlapTop = 2130772041;
 			
-			// aapt resource value: 0x7f010033
-			public static int behavior_peekHeight = 2130772019;
+			// aapt resource value: 0x7f01001c
+			public static int behavior_peekHeight = 2130771996;
 			
-			// aapt resource value: 0x7f010035
-			public static int behavior_skipCollapsed = 2130772021;
+			// aapt resource value: 0x7f01001e
+			public static int behavior_skipCollapsed = 2130771998;
 			
-			// aapt resource value: 0x7f010055
-			public static int borderWidth = 2130772053;
+			// aapt resource value: 0x7f01003e
+			public static int borderWidth = 2130772030;
 			
 			// aapt resource value: 0x7f0100e1
 			public static int borderlessButtonStyle = 2130772193;
 			
-			// aapt resource value: 0x7f01004f
-			public static int bottomSheetDialogTheme = 2130772047;
+			// aapt resource value: 0x7f010038
+			public static int bottomSheetDialogTheme = 2130772024;
 			
-			// aapt resource value: 0x7f010050
-			public static int bottomSheetStyle = 2130772048;
+			// aapt resource value: 0x7f010039
+			public static int bottomSheetStyle = 2130772025;
 			
 			// aapt resource value: 0x7f0100de
 			public static int buttonBarButtonStyle = 2130772190;
@@ -332,23 +332,23 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f010005
 			public static int cameraZoom = 2130771973;
 			
-			// aapt resource value: 0x7f010017
-			public static int cardBackgroundColor = 2130771991;
+			// aapt resource value: 0x7f010069
+			public static int cardBackgroundColor = 2130772073;
 			
-			// aapt resource value: 0x7f010018
-			public static int cardCornerRadius = 2130771992;
+			// aapt resource value: 0x7f01006a
+			public static int cardCornerRadius = 2130772074;
 			
-			// aapt resource value: 0x7f010019
-			public static int cardElevation = 2130771993;
+			// aapt resource value: 0x7f01006b
+			public static int cardElevation = 2130772075;
 			
-			// aapt resource value: 0x7f01001a
-			public static int cardMaxElevation = 2130771994;
+			// aapt resource value: 0x7f01006c
+			public static int cardMaxElevation = 2130772076;
 			
-			// aapt resource value: 0x7f01001c
-			public static int cardPreventCornerOverlap = 2130771996;
+			// aapt resource value: 0x7f01006e
+			public static int cardPreventCornerOverlap = 2130772078;
 			
-			// aapt resource value: 0x7f01001b
-			public static int cardUseCompatPadding = 2130771995;
+			// aapt resource value: 0x7f01006d
+			public static int cardUseCompatPadding = 2130772077;
 			
 			// aapt resource value: 0x7f010112
 			public static int checkboxStyle = 2130772242;
@@ -371,11 +371,11 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f010158
 			public static int collapseIcon = 2130772312;
 			
-			// aapt resource value: 0x7f010042
-			public static int collapsedTitleGravity = 2130772034;
+			// aapt resource value: 0x7f01002b
+			public static int collapsedTitleGravity = 2130772011;
 			
-			// aapt resource value: 0x7f01003c
-			public static int collapsedTitleTextAppearance = 2130772028;
+			// aapt resource value: 0x7f010025
+			public static int collapsedTitleTextAppearance = 2130772005;
 			
 			// aapt resource value: 0x7f010121
 			public static int color = 2130772257;
@@ -431,38 +431,38 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f01009a
 			public static int contentInsetStartWithNavigation = 2130772122;
 			
-			// aapt resource value: 0x7f01001d
-			public static int contentPadding = 2130771997;
+			// aapt resource value: 0x7f01006f
+			public static int contentPadding = 2130772079;
 			
-			// aapt resource value: 0x7f010021
-			public static int contentPaddingBottom = 2130772001;
+			// aapt resource value: 0x7f010073
+			public static int contentPaddingBottom = 2130772083;
 			
-			// aapt resource value: 0x7f01001e
-			public static int contentPaddingLeft = 2130771998;
+			// aapt resource value: 0x7f010070
+			public static int contentPaddingLeft = 2130772080;
 			
-			// aapt resource value: 0x7f01001f
-			public static int contentPaddingRight = 2130771999;
+			// aapt resource value: 0x7f010071
+			public static int contentPaddingRight = 2130772081;
 			
-			// aapt resource value: 0x7f010020
-			public static int contentPaddingTop = 2130772000;
+			// aapt resource value: 0x7f010072
+			public static int contentPaddingTop = 2130772082;
 			
-			// aapt resource value: 0x7f01003d
-			public static int contentScrim = 2130772029;
+			// aapt resource value: 0x7f010026
+			public static int contentScrim = 2130772006;
 			
 			// aapt resource value: 0x7f010105
 			public static int controlBackground = 2130772229;
 			
-			// aapt resource value: 0x7f010076
-			public static int counterEnabled = 2130772086;
+			// aapt resource value: 0x7f01005f
+			public static int counterEnabled = 2130772063;
 			
-			// aapt resource value: 0x7f010077
-			public static int counterMaxLength = 2130772087;
+			// aapt resource value: 0x7f010060
+			public static int counterMaxLength = 2130772064;
 			
-			// aapt resource value: 0x7f010079
-			public static int counterOverflowTextAppearance = 2130772089;
+			// aapt resource value: 0x7f010062
+			public static int counterOverflowTextAppearance = 2130772066;
 			
-			// aapt resource value: 0x7f010078
-			public static int counterTextAppearance = 2130772088;
+			// aapt resource value: 0x7f010061
+			public static int counterTextAppearance = 2130772065;
 			
 			// aapt resource value: 0x7f01008f
 			public static int customNavigationLayout = 2130772111;
@@ -515,47 +515,47 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f01009c
 			public static int elevation = 2130772124;
 			
-			// aapt resource value: 0x7f010074
-			public static int errorEnabled = 2130772084;
+			// aapt resource value: 0x7f01005d
+			public static int errorEnabled = 2130772061;
 			
-			// aapt resource value: 0x7f010075
-			public static int errorTextAppearance = 2130772085;
+			// aapt resource value: 0x7f01005e
+			public static int errorTextAppearance = 2130772062;
 			
 			// aapt resource value: 0x7f0100a0
 			public static int expandActivityOverflowButtonDrawable = 2130772128;
 			
-			// aapt resource value: 0x7f01002e
-			public static int expanded = 2130772014;
+			// aapt resource value: 0x7f010017
+			public static int expanded = 2130771991;
 			
-			// aapt resource value: 0x7f010043
-			public static int expandedTitleGravity = 2130772035;
+			// aapt resource value: 0x7f01002c
+			public static int expandedTitleGravity = 2130772012;
 			
-			// aapt resource value: 0x7f010036
-			public static int expandedTitleMargin = 2130772022;
+			// aapt resource value: 0x7f01001f
+			public static int expandedTitleMargin = 2130771999;
 			
-			// aapt resource value: 0x7f01003a
-			public static int expandedTitleMarginBottom = 2130772026;
+			// aapt resource value: 0x7f010023
+			public static int expandedTitleMarginBottom = 2130772003;
 			
-			// aapt resource value: 0x7f010039
-			public static int expandedTitleMarginEnd = 2130772025;
+			// aapt resource value: 0x7f010022
+			public static int expandedTitleMarginEnd = 2130772002;
 			
-			// aapt resource value: 0x7f010037
-			public static int expandedTitleMarginStart = 2130772023;
+			// aapt resource value: 0x7f010020
+			public static int expandedTitleMarginStart = 2130772000;
 			
-			// aapt resource value: 0x7f010038
-			public static int expandedTitleMarginTop = 2130772024;
+			// aapt resource value: 0x7f010021
+			public static int expandedTitleMarginTop = 2130772001;
 			
-			// aapt resource value: 0x7f01003b
-			public static int expandedTitleTextAppearance = 2130772027;
+			// aapt resource value: 0x7f010024
+			public static int expandedTitleTextAppearance = 2130772004;
 			
-			// aapt resource value: 0x7f01002d
-			public static int externalRouteEnabledDrawable = 2130772013;
+			// aapt resource value: 0x7f01007f
+			public static int externalRouteEnabledDrawable = 2130772095;
 			
-			// aapt resource value: 0x7f010053
-			public static int fabSize = 2130772051;
+			// aapt resource value: 0x7f01003c
+			public static int fabSize = 2130772028;
 			
-			// aapt resource value: 0x7f010058
-			public static int foregroundInsidePadding = 2130772056;
+			// aapt resource value: 0x7f010041
+			public static int foregroundInsidePadding = 2130772033;
 			
 			// aapt resource value: 0x7f010124
 			public static int gapBetweenBars = 2130772260;
@@ -563,8 +563,8 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f01013b
 			public static int goIcon = 2130772283;
 			
-			// aapt resource value: 0x7f01005e
-			public static int headerLayout = 2130772062;
+			// aapt resource value: 0x7f010047
+			public static int headerLayout = 2130772039;
 			
 			// aapt resource value: 0x7f010081
 			public static int height = 2130772097;
@@ -572,14 +572,14 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f010095
 			public static int hideOnContentScroll = 2130772117;
 			
-			// aapt resource value: 0x7f01007a
-			public static int hintAnimationEnabled = 2130772090;
+			// aapt resource value: 0x7f010063
+			public static int hintAnimationEnabled = 2130772067;
 			
-			// aapt resource value: 0x7f010073
-			public static int hintEnabled = 2130772083;
+			// aapt resource value: 0x7f01005c
+			public static int hintEnabled = 2130772060;
 			
-			// aapt resource value: 0x7f010072
-			public static int hintTextAppearance = 2130772082;
+			// aapt resource value: 0x7f01005b
+			public static int hintTextAppearance = 2130772059;
 			
 			// aapt resource value: 0x7f0100db
 			public static int homeAsUpIndicator = 2130772187;
@@ -608,29 +608,29 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f01009f
 			public static int initialActivityCount = 2130772127;
 			
-			// aapt resource value: 0x7f01005f
-			public static int insetForeground = 2130772063;
+			// aapt resource value: 0x7f010048
+			public static int insetForeground = 2130772040;
 			
 			// aapt resource value: 0x7f010082
 			public static int isLightTheme = 2130772098;
 			
-			// aapt resource value: 0x7f01005c
-			public static int itemBackground = 2130772060;
+			// aapt resource value: 0x7f010045
+			public static int itemBackground = 2130772037;
 			
-			// aapt resource value: 0x7f01005a
-			public static int itemIconTint = 2130772058;
+			// aapt resource value: 0x7f010043
+			public static int itemIconTint = 2130772035;
 			
 			// aapt resource value: 0x7f010094
 			public static int itemPadding = 2130772116;
 			
-			// aapt resource value: 0x7f01005d
-			public static int itemTextAppearance = 2130772061;
+			// aapt resource value: 0x7f010046
+			public static int itemTextAppearance = 2130772038;
 			
-			// aapt resource value: 0x7f01005b
-			public static int itemTextColor = 2130772059;
+			// aapt resource value: 0x7f010044
+			public static int itemTextColor = 2130772036;
 			
-			// aapt resource value: 0x7f010047
-			public static int keylines = 2130772039;
+			// aapt resource value: 0x7f010030
+			public static int keylines = 2130772016;
 			
 			// aapt resource value: 0x7f010136
 			public static int layout = 2130772278;
@@ -638,35 +638,35 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f010164
 			public static int layoutManager = 2130772324;
 			
-			// aapt resource value: 0x7f01004a
-			public static int layout_anchor = 2130772042;
+			// aapt resource value: 0x7f010033
+			public static int layout_anchor = 2130772019;
 			
-			// aapt resource value: 0x7f01004c
-			public static int layout_anchorGravity = 2130772044;
-			
-			// aapt resource value: 0x7f010049
-			public static int layout_behavior = 2130772041;
-			
-			// aapt resource value: 0x7f010045
-			public static int layout_collapseMode = 2130772037;
-			
-			// aapt resource value: 0x7f010046
-			public static int layout_collapseParallaxMultiplier = 2130772038;
-			
-			// aapt resource value: 0x7f01004e
-			public static int layout_dodgeInsetEdges = 2130772046;
-			
-			// aapt resource value: 0x7f01004d
-			public static int layout_insetEdge = 2130772045;
-			
-			// aapt resource value: 0x7f01004b
-			public static int layout_keyline = 2130772043;
-			
-			// aapt resource value: 0x7f010031
-			public static int layout_scrollFlags = 2130772017;
+			// aapt resource value: 0x7f010035
+			public static int layout_anchorGravity = 2130772021;
 			
 			// aapt resource value: 0x7f010032
-			public static int layout_scrollInterpolator = 2130772018;
+			public static int layout_behavior = 2130772018;
+			
+			// aapt resource value: 0x7f01002e
+			public static int layout_collapseMode = 2130772014;
+			
+			// aapt resource value: 0x7f01002f
+			public static int layout_collapseParallaxMultiplier = 2130772015;
+			
+			// aapt resource value: 0x7f010037
+			public static int layout_dodgeInsetEdges = 2130772023;
+			
+			// aapt resource value: 0x7f010036
+			public static int layout_insetEdge = 2130772022;
+			
+			// aapt resource value: 0x7f010034
+			public static int layout_keyline = 2130772020;
+			
+			// aapt resource value: 0x7f01001a
+			public static int layout_scrollFlags = 2130771994;
+			
+			// aapt resource value: 0x7f01001b
+			public static int layout_scrollInterpolator = 2130771995;
 			
 			// aapt resource value: 0x7f0100fc
 			public static int listChoiceBackgroundIndicator = 2130772220;
@@ -713,8 +713,8 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f010000
 			public static int mapType = 2130771968;
 			
-			// aapt resource value: 0x7f010061
-			public static int maxActionInlineWidth = 2130772065;
+			// aapt resource value: 0x7f01004a
+			public static int maxActionInlineWidth = 2130772042;
 			
 			// aapt resource value: 0x7f010156
 			public static int maxButtonHeight = 2130772310;
@@ -722,41 +722,41 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f010129
 			public static int measureWithLargestChild = 2130772265;
 			
-			// aapt resource value: 0x7f010022
-			public static int mediaRouteAudioTrackDrawable = 2130772002;
+			// aapt resource value: 0x7f010074
+			public static int mediaRouteAudioTrackDrawable = 2130772084;
 			
-			// aapt resource value: 0x7f010023
-			public static int mediaRouteButtonStyle = 2130772003;
+			// aapt resource value: 0x7f010075
+			public static int mediaRouteButtonStyle = 2130772085;
 			
-			// aapt resource value: 0x7f010024
-			public static int mediaRouteCloseDrawable = 2130772004;
+			// aapt resource value: 0x7f010076
+			public static int mediaRouteCloseDrawable = 2130772086;
 			
-			// aapt resource value: 0x7f010025
-			public static int mediaRouteControlPanelThemeOverlay = 2130772005;
+			// aapt resource value: 0x7f010077
+			public static int mediaRouteControlPanelThemeOverlay = 2130772087;
 			
-			// aapt resource value: 0x7f010026
-			public static int mediaRouteDefaultIconDrawable = 2130772006;
+			// aapt resource value: 0x7f010078
+			public static int mediaRouteDefaultIconDrawable = 2130772088;
 			
-			// aapt resource value: 0x7f010027
-			public static int mediaRoutePauseDrawable = 2130772007;
+			// aapt resource value: 0x7f010079
+			public static int mediaRoutePauseDrawable = 2130772089;
 			
-			// aapt resource value: 0x7f010028
-			public static int mediaRoutePlayDrawable = 2130772008;
+			// aapt resource value: 0x7f01007a
+			public static int mediaRoutePlayDrawable = 2130772090;
 			
-			// aapt resource value: 0x7f010029
-			public static int mediaRouteSpeakerGroupIconDrawable = 2130772009;
+			// aapt resource value: 0x7f01007b
+			public static int mediaRouteSpeakerGroupIconDrawable = 2130772091;
 			
-			// aapt resource value: 0x7f01002a
-			public static int mediaRouteSpeakerIconDrawable = 2130772010;
+			// aapt resource value: 0x7f01007c
+			public static int mediaRouteSpeakerIconDrawable = 2130772092;
 			
-			// aapt resource value: 0x7f01002b
-			public static int mediaRouteTheme = 2130772011;
+			// aapt resource value: 0x7f01007d
+			public static int mediaRouteTheme = 2130772093;
 			
-			// aapt resource value: 0x7f01002c
-			public static int mediaRouteTvIconDrawable = 2130772012;
+			// aapt resource value: 0x7f01007e
+			public static int mediaRouteTvIconDrawable = 2130772094;
 			
-			// aapt resource value: 0x7f010059
-			public static int menu = 2130772057;
+			// aapt resource value: 0x7f010042
+			public static int menu = 2130772034;
 			
 			// aapt resource value: 0x7f0100a3
 			public static int multiChoiceItemLayout = 2130772131;
@@ -794,20 +794,20 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f0100fa
 			public static int panelMenuListWidth = 2130772218;
 			
-			// aapt resource value: 0x7f01007d
-			public static int passwordToggleContentDescription = 2130772093;
+			// aapt resource value: 0x7f010066
+			public static int passwordToggleContentDescription = 2130772070;
 			
-			// aapt resource value: 0x7f01007c
-			public static int passwordToggleDrawable = 2130772092;
+			// aapt resource value: 0x7f010065
+			public static int passwordToggleDrawable = 2130772069;
 			
-			// aapt resource value: 0x7f01007b
-			public static int passwordToggleEnabled = 2130772091;
+			// aapt resource value: 0x7f010064
+			public static int passwordToggleEnabled = 2130772068;
 			
-			// aapt resource value: 0x7f01007e
-			public static int passwordToggleTint = 2130772094;
+			// aapt resource value: 0x7f010067
+			public static int passwordToggleTint = 2130772071;
 			
-			// aapt resource value: 0x7f01007f
-			public static int passwordToggleTintMode = 2130772095;
+			// aapt resource value: 0x7f010068
+			public static int passwordToggleTintMode = 2130772072;
 			
 			// aapt resource value: 0x7f0100e7
 			public static int popupMenuStyle = 2130772199;
@@ -821,8 +821,8 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f010130
 			public static int preserveIconSpacing = 2130772272;
 			
-			// aapt resource value: 0x7f010054
-			public static int pressedTranslationZ = 2130772052;
+			// aapt resource value: 0x7f01003d
+			public static int pressedTranslationZ = 2130772029;
 			
 			// aapt resource value: 0x7f010093
 			public static int progressBarPadding = 2130772115;
@@ -851,17 +851,17 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f010166
 			public static int reverseLayout = 2130772326;
 			
-			// aapt resource value: 0x7f010052
-			public static int rippleColor = 2130772050;
+			// aapt resource value: 0x7f01003b
+			public static int rippleColor = 2130772027;
 			
 			// aapt resource value: 0x7f010016
 			public static int scopeUris = 2130771990;
 			
-			// aapt resource value: 0x7f010041
-			public static int scrimAnimationDuration = 2130772033;
+			// aapt resource value: 0x7f01002a
+			public static int scrimAnimationDuration = 2130772010;
 			
-			// aapt resource value: 0x7f010040
-			public static int scrimVisibleHeightTrigger = 2130772032;
+			// aapt resource value: 0x7f010029
+			public static int scrimVisibleHeightTrigger = 2130772009;
 			
 			// aapt resource value: 0x7f01013d
 			public static int searchHintIcon = 2130772285;
@@ -920,17 +920,17 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f010133
 			public static int state_above_anchor = 2130772275;
 			
-			// aapt resource value: 0x7f01002f
-			public static int state_collapsed = 2130772015;
+			// aapt resource value: 0x7f010018
+			public static int state_collapsed = 2130771992;
 			
-			// aapt resource value: 0x7f010030
-			public static int state_collapsible = 2130772016;
+			// aapt resource value: 0x7f010019
+			public static int state_collapsible = 2130771993;
 			
-			// aapt resource value: 0x7f010048
-			public static int statusBarBackground = 2130772040;
+			// aapt resource value: 0x7f010031
+			public static int statusBarBackground = 2130772017;
 			
-			// aapt resource value: 0x7f01003e
-			public static int statusBarScrim = 2130772030;
+			// aapt resource value: 0x7f010027
+			public static int statusBarScrim = 2130772007;
 			
 			// aapt resource value: 0x7f010131
 			public static int subMenuArrow = 2130772273;
@@ -965,53 +965,53 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f010149
 			public static int switchTextAppearance = 2130772297;
 			
-			// aapt resource value: 0x7f010065
-			public static int tabBackground = 2130772069;
+			// aapt resource value: 0x7f01004e
+			public static int tabBackground = 2130772046;
 			
-			// aapt resource value: 0x7f010064
-			public static int tabContentStart = 2130772068;
+			// aapt resource value: 0x7f01004d
+			public static int tabContentStart = 2130772045;
 			
-			// aapt resource value: 0x7f010067
-			public static int tabGravity = 2130772071;
+			// aapt resource value: 0x7f010050
+			public static int tabGravity = 2130772048;
 			
-			// aapt resource value: 0x7f010062
-			public static int tabIndicatorColor = 2130772066;
+			// aapt resource value: 0x7f01004b
+			public static int tabIndicatorColor = 2130772043;
 			
-			// aapt resource value: 0x7f010063
-			public static int tabIndicatorHeight = 2130772067;
+			// aapt resource value: 0x7f01004c
+			public static int tabIndicatorHeight = 2130772044;
 			
-			// aapt resource value: 0x7f010069
-			public static int tabMaxWidth = 2130772073;
+			// aapt resource value: 0x7f010052
+			public static int tabMaxWidth = 2130772050;
 			
-			// aapt resource value: 0x7f010068
-			public static int tabMinWidth = 2130772072;
+			// aapt resource value: 0x7f010051
+			public static int tabMinWidth = 2130772049;
 			
-			// aapt resource value: 0x7f010066
-			public static int tabMode = 2130772070;
+			// aapt resource value: 0x7f01004f
+			public static int tabMode = 2130772047;
 			
-			// aapt resource value: 0x7f010071
-			public static int tabPadding = 2130772081;
+			// aapt resource value: 0x7f01005a
+			public static int tabPadding = 2130772058;
 			
-			// aapt resource value: 0x7f010070
-			public static int tabPaddingBottom = 2130772080;
+			// aapt resource value: 0x7f010059
+			public static int tabPaddingBottom = 2130772057;
 			
-			// aapt resource value: 0x7f01006f
-			public static int tabPaddingEnd = 2130772079;
+			// aapt resource value: 0x7f010058
+			public static int tabPaddingEnd = 2130772056;
 			
-			// aapt resource value: 0x7f01006d
-			public static int tabPaddingStart = 2130772077;
+			// aapt resource value: 0x7f010056
+			public static int tabPaddingStart = 2130772054;
 			
-			// aapt resource value: 0x7f01006e
-			public static int tabPaddingTop = 2130772078;
+			// aapt resource value: 0x7f010057
+			public static int tabPaddingTop = 2130772055;
 			
-			// aapt resource value: 0x7f01006c
-			public static int tabSelectedTextColor = 2130772076;
+			// aapt resource value: 0x7f010055
+			public static int tabSelectedTextColor = 2130772053;
 			
-			// aapt resource value: 0x7f01006a
-			public static int tabTextAppearance = 2130772074;
+			// aapt resource value: 0x7f010053
+			public static int tabTextAppearance = 2130772051;
 			
-			// aapt resource value: 0x7f01006b
-			public static int tabTextColor = 2130772075;
+			// aapt resource value: 0x7f010054
+			public static int tabTextColor = 2130772052;
 			
 			// aapt resource value: 0x7f0100ab
 			public static int textAllCaps = 2130772139;
@@ -1040,8 +1040,8 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f01010b
 			public static int textColorAlertDialogListItem = 2130772235;
 			
-			// aapt resource value: 0x7f010051
-			public static int textColorError = 2130772049;
+			// aapt resource value: 0x7f01003a
+			public static int textColorError = 2130772026;
 			
 			// aapt resource value: 0x7f0100ee
 			public static int textColorSearchUrl = 2130772206;
@@ -1073,8 +1073,8 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f010083
 			public static int title = 2130772099;
 			
-			// aapt resource value: 0x7f010044
-			public static int titleEnabled = 2130772036;
+			// aapt resource value: 0x7f01002d
+			public static int titleEnabled = 2130772013;
 			
 			// aapt resource value: 0x7f010150
 			public static int titleMargin = 2130772304;
@@ -1103,8 +1103,8 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f010087
 			public static int titleTextStyle = 2130772103;
 			
-			// aapt resource value: 0x7f01003f
-			public static int toolbarId = 2130772031;
+			// aapt resource value: 0x7f010028
+			public static int toolbarId = 2130772008;
 			
 			// aapt resource value: 0x7f0100e6
 			public static int toolbarNavigationButtonStyle = 2130772198;
@@ -1142,8 +1142,8 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f01000c
 			public static int uiZoomGestures = 2130771980;
 			
-			// aapt resource value: 0x7f010056
-			public static int useCompatPadding = 2130772054;
+			// aapt resource value: 0x7f01003f
+			public static int useCompatPadding = 2130772031;
 			
 			// aapt resource value: 0x7f01000d
 			public static int useViewLifecycle = 2130771981;
@@ -1342,17 +1342,17 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f070038
 			public static int button_material_light = 2131165240;
 			
-			// aapt resource value: 0x7f070017
-			public static int cardview_dark_background = 2131165207;
+			// aapt resource value: 0x7f070022
+			public static int cardview_dark_background = 2131165218;
 			
-			// aapt resource value: 0x7f070018
-			public static int cardview_light_background = 2131165208;
+			// aapt resource value: 0x7f070023
+			public static int cardview_light_background = 2131165219;
 			
-			// aapt resource value: 0x7f070019
-			public static int cardview_shadow_end_color = 2131165209;
+			// aapt resource value: 0x7f070024
+			public static int cardview_shadow_end_color = 2131165220;
 			
-			// aapt resource value: 0x7f07001a
-			public static int cardview_shadow_start_color = 2131165210;
+			// aapt resource value: 0x7f070025
+			public static int cardview_shadow_start_color = 2131165221;
 			
 			// aapt resource value: 0x7f07000e
 			public static int common_action_bar_splitter = 2131165198;
@@ -1417,41 +1417,41 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f07000b
 			public static int common_plus_signin_btn_text_light_pressed = 2131165195;
 			
-			// aapt resource value: 0x7f07001b
-			public static int design_bottom_navigation_shadow_color = 2131165211;
+			// aapt resource value: 0x7f070017
+			public static int design_bottom_navigation_shadow_color = 2131165207;
 			
 			// aapt resource value: 0x7f07007a
 			public static int design_error = 2131165306;
 			
+			// aapt resource value: 0x7f070018
+			public static int design_fab_shadow_end_color = 2131165208;
+			
+			// aapt resource value: 0x7f070019
+			public static int design_fab_shadow_mid_color = 2131165209;
+			
+			// aapt resource value: 0x7f07001a
+			public static int design_fab_shadow_start_color = 2131165210;
+			
+			// aapt resource value: 0x7f07001b
+			public static int design_fab_stroke_end_inner_color = 2131165211;
+			
 			// aapt resource value: 0x7f07001c
-			public static int design_fab_shadow_end_color = 2131165212;
+			public static int design_fab_stroke_end_outer_color = 2131165212;
 			
 			// aapt resource value: 0x7f07001d
-			public static int design_fab_shadow_mid_color = 2131165213;
+			public static int design_fab_stroke_top_inner_color = 2131165213;
 			
 			// aapt resource value: 0x7f07001e
-			public static int design_fab_shadow_start_color = 2131165214;
+			public static int design_fab_stroke_top_outer_color = 2131165214;
 			
 			// aapt resource value: 0x7f07001f
-			public static int design_fab_stroke_end_inner_color = 2131165215;
+			public static int design_snackbar_background_color = 2131165215;
 			
 			// aapt resource value: 0x7f070020
-			public static int design_fab_stroke_end_outer_color = 2131165216;
+			public static int design_textinput_error_color_dark = 2131165216;
 			
 			// aapt resource value: 0x7f070021
-			public static int design_fab_stroke_top_inner_color = 2131165217;
-			
-			// aapt resource value: 0x7f070022
-			public static int design_fab_stroke_top_outer_color = 2131165218;
-			
-			// aapt resource value: 0x7f070023
-			public static int design_snackbar_background_color = 2131165219;
-			
-			// aapt resource value: 0x7f070024
-			public static int design_textinput_error_color_dark = 2131165220;
-			
-			// aapt resource value: 0x7f070025
-			public static int design_textinput_error_color_light = 2131165221;
+			public static int design_textinput_error_color_light = 2131165217;
 			
 			// aapt resource value: 0x7f07007b
 			public static int design_tint_password_toggle = 2131165307;
@@ -1838,128 +1838,128 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f08003d
 			public static int abc_text_size_title_material_toolbar = 2131230781;
 			
-			// aapt resource value: 0x7f08000a
-			public static int cardview_compat_inset_shadow = 2131230730;
-			
-			// aapt resource value: 0x7f08000b
-			public static int cardview_default_elevation = 2131230731;
-			
-			// aapt resource value: 0x7f08000c
-			public static int cardview_default_radius = 2131230732;
-			
-			// aapt resource value: 0x7f08001b
-			public static int design_appbar_elevation = 2131230747;
-			
-			// aapt resource value: 0x7f08001c
-			public static int design_bottom_navigation_active_item_max_width = 2131230748;
-			
-			// aapt resource value: 0x7f08001d
-			public static int design_bottom_navigation_active_text_size = 2131230749;
-			
-			// aapt resource value: 0x7f08001e
-			public static int design_bottom_navigation_elevation = 2131230750;
-			
-			// aapt resource value: 0x7f08001f
-			public static int design_bottom_navigation_height = 2131230751;
-			
-			// aapt resource value: 0x7f080020
-			public static int design_bottom_navigation_item_max_width = 2131230752;
-			
-			// aapt resource value: 0x7f080021
-			public static int design_bottom_navigation_item_min_width = 2131230753;
-			
-			// aapt resource value: 0x7f080022
-			public static int design_bottom_navigation_margin = 2131230754;
-			
-			// aapt resource value: 0x7f080023
-			public static int design_bottom_navigation_shadow_height = 2131230755;
-			
-			// aapt resource value: 0x7f080024
-			public static int design_bottom_navigation_text_size = 2131230756;
-			
-			// aapt resource value: 0x7f080025
-			public static int design_bottom_sheet_modal_elevation = 2131230757;
-			
-			// aapt resource value: 0x7f080026
-			public static int design_bottom_sheet_peek_height_min = 2131230758;
-			
-			// aapt resource value: 0x7f080027
-			public static int design_fab_border_width = 2131230759;
-			
-			// aapt resource value: 0x7f080028
-			public static int design_fab_elevation = 2131230760;
-			
-			// aapt resource value: 0x7f080029
-			public static int design_fab_image_size = 2131230761;
-			
-			// aapt resource value: 0x7f08002a
-			public static int design_fab_size_mini = 2131230762;
-			
-			// aapt resource value: 0x7f08002b
-			public static int design_fab_size_normal = 2131230763;
-			
-			// aapt resource value: 0x7f08002c
-			public static int design_fab_translation_z_pressed = 2131230764;
-			
-			// aapt resource value: 0x7f08002d
-			public static int design_navigation_elevation = 2131230765;
-			
-			// aapt resource value: 0x7f08002e
-			public static int design_navigation_icon_padding = 2131230766;
-			
-			// aapt resource value: 0x7f08002f
-			public static int design_navigation_icon_size = 2131230767;
-			
-			// aapt resource value: 0x7f080013
-			public static int design_navigation_max_width = 2131230739;
-			
 			// aapt resource value: 0x7f080030
-			public static int design_navigation_padding_bottom = 2131230768;
+			public static int cardview_compat_inset_shadow = 2131230768;
 			
 			// aapt resource value: 0x7f080031
-			public static int design_navigation_separator_vertical_padding = 2131230769;
-			
-			// aapt resource value: 0x7f080014
-			public static int design_snackbar_action_inline_max_width = 2131230740;
-			
-			// aapt resource value: 0x7f080015
-			public static int design_snackbar_background_corner_radius = 2131230741;
+			public static int cardview_default_elevation = 2131230769;
 			
 			// aapt resource value: 0x7f080032
-			public static int design_snackbar_elevation = 2131230770;
+			public static int cardview_default_radius = 2131230770;
+			
+			// aapt resource value: 0x7f080012
+			public static int design_appbar_elevation = 2131230738;
+			
+			// aapt resource value: 0x7f080013
+			public static int design_bottom_navigation_active_item_max_width = 2131230739;
+			
+			// aapt resource value: 0x7f080014
+			public static int design_bottom_navigation_active_text_size = 2131230740;
+			
+			// aapt resource value: 0x7f080015
+			public static int design_bottom_navigation_elevation = 2131230741;
 			
 			// aapt resource value: 0x7f080016
-			public static int design_snackbar_extra_spacing_horizontal = 2131230742;
+			public static int design_bottom_navigation_height = 2131230742;
 			
 			// aapt resource value: 0x7f080017
-			public static int design_snackbar_max_width = 2131230743;
+			public static int design_bottom_navigation_item_max_width = 2131230743;
 			
 			// aapt resource value: 0x7f080018
-			public static int design_snackbar_min_width = 2131230744;
-			
-			// aapt resource value: 0x7f080033
-			public static int design_snackbar_padding_horizontal = 2131230771;
-			
-			// aapt resource value: 0x7f080034
-			public static int design_snackbar_padding_vertical = 2131230772;
+			public static int design_bottom_navigation_item_min_width = 2131230744;
 			
 			// aapt resource value: 0x7f080019
-			public static int design_snackbar_padding_vertical_2lines = 2131230745;
-			
-			// aapt resource value: 0x7f080035
-			public static int design_snackbar_text_size = 2131230773;
-			
-			// aapt resource value: 0x7f080036
-			public static int design_tab_max_width = 2131230774;
+			public static int design_bottom_navigation_margin = 2131230745;
 			
 			// aapt resource value: 0x7f08001a
-			public static int design_tab_scrollable_min_width = 2131230746;
+			public static int design_bottom_navigation_shadow_height = 2131230746;
 			
-			// aapt resource value: 0x7f080037
-			public static int design_tab_text_size = 2131230775;
+			// aapt resource value: 0x7f08001b
+			public static int design_bottom_navigation_text_size = 2131230747;
 			
-			// aapt resource value: 0x7f080038
-			public static int design_tab_text_size_2line = 2131230776;
+			// aapt resource value: 0x7f08001c
+			public static int design_bottom_sheet_modal_elevation = 2131230748;
+			
+			// aapt resource value: 0x7f08001d
+			public static int design_bottom_sheet_peek_height_min = 2131230749;
+			
+			// aapt resource value: 0x7f08001e
+			public static int design_fab_border_width = 2131230750;
+			
+			// aapt resource value: 0x7f08001f
+			public static int design_fab_elevation = 2131230751;
+			
+			// aapt resource value: 0x7f080020
+			public static int design_fab_image_size = 2131230752;
+			
+			// aapt resource value: 0x7f080021
+			public static int design_fab_size_mini = 2131230753;
+			
+			// aapt resource value: 0x7f080022
+			public static int design_fab_size_normal = 2131230754;
+			
+			// aapt resource value: 0x7f080023
+			public static int design_fab_translation_z_pressed = 2131230755;
+			
+			// aapt resource value: 0x7f080024
+			public static int design_navigation_elevation = 2131230756;
+			
+			// aapt resource value: 0x7f080025
+			public static int design_navigation_icon_padding = 2131230757;
+			
+			// aapt resource value: 0x7f080026
+			public static int design_navigation_icon_size = 2131230758;
+			
+			// aapt resource value: 0x7f08000a
+			public static int design_navigation_max_width = 2131230730;
+			
+			// aapt resource value: 0x7f080027
+			public static int design_navigation_padding_bottom = 2131230759;
+			
+			// aapt resource value: 0x7f080028
+			public static int design_navigation_separator_vertical_padding = 2131230760;
+			
+			// aapt resource value: 0x7f08000b
+			public static int design_snackbar_action_inline_max_width = 2131230731;
+			
+			// aapt resource value: 0x7f08000c
+			public static int design_snackbar_background_corner_radius = 2131230732;
+			
+			// aapt resource value: 0x7f080029
+			public static int design_snackbar_elevation = 2131230761;
+			
+			// aapt resource value: 0x7f08000d
+			public static int design_snackbar_extra_spacing_horizontal = 2131230733;
+			
+			// aapt resource value: 0x7f08000e
+			public static int design_snackbar_max_width = 2131230734;
+			
+			// aapt resource value: 0x7f08000f
+			public static int design_snackbar_min_width = 2131230735;
+			
+			// aapt resource value: 0x7f08002a
+			public static int design_snackbar_padding_horizontal = 2131230762;
+			
+			// aapt resource value: 0x7f08002b
+			public static int design_snackbar_padding_vertical = 2131230763;
+			
+			// aapt resource value: 0x7f080010
+			public static int design_snackbar_padding_vertical_2lines = 2131230736;
+			
+			// aapt resource value: 0x7f08002c
+			public static int design_snackbar_text_size = 2131230764;
+			
+			// aapt resource value: 0x7f08002d
+			public static int design_tab_max_width = 2131230765;
+			
+			// aapt resource value: 0x7f080011
+			public static int design_tab_scrollable_min_width = 2131230737;
+			
+			// aapt resource value: 0x7f08002e
+			public static int design_tab_text_size = 2131230766;
+			
+			// aapt resource value: 0x7f08002f
+			public static int design_tab_text_size_2line = 2131230767;
 			
 			// aapt resource value: 0x7f080087
 			public static int disabled_alpha_material_dark = 2131230855;
@@ -1997,23 +1997,23 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f08009d
 			public static int item_touch_helper_swipe_escape_velocity = 2131230877;
 			
-			// aapt resource value: 0x7f08000d
-			public static int mr_controller_volume_group_list_item_height = 2131230733;
+			// aapt resource value: 0x7f080033
+			public static int mr_controller_volume_group_list_item_height = 2131230771;
 			
-			// aapt resource value: 0x7f08000e
-			public static int mr_controller_volume_group_list_item_icon_size = 2131230734;
+			// aapt resource value: 0x7f080034
+			public static int mr_controller_volume_group_list_item_icon_size = 2131230772;
 			
-			// aapt resource value: 0x7f08000f
-			public static int mr_controller_volume_group_list_max_height = 2131230735;
+			// aapt resource value: 0x7f080035
+			public static int mr_controller_volume_group_list_max_height = 2131230773;
 			
-			// aapt resource value: 0x7f080012
-			public static int mr_controller_volume_group_list_padding_top = 2131230738;
+			// aapt resource value: 0x7f080038
+			public static int mr_controller_volume_group_list_padding_top = 2131230776;
 			
-			// aapt resource value: 0x7f080010
-			public static int mr_dialog_fixed_width_major = 2131230736;
+			// aapt resource value: 0x7f080036
+			public static int mr_dialog_fixed_width_major = 2131230774;
 			
-			// aapt resource value: 0x7f080011
-			public static int mr_dialog_fixed_width_minor = 2131230737;
+			// aapt resource value: 0x7f080037
+			public static int mr_dialog_fixed_width_minor = 2131230775;
 			
 			// aapt resource value: 0x7f080090
 			public static int notification_action_icon_size = 2131230864;
@@ -3067,539 +3067,539 @@ namespace TK.CustomMap.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f0c00a5
-			public static int action0 = 2131493029;
-			
-			// aapt resource value: 0x7f0c006c
-			public static int action_bar = 2131492972;
-			
-			// aapt resource value: 0x7f0c0003
-			public static int action_bar_activity_content = 2131492867;
-			
-			// aapt resource value: 0x7f0c006b
-			public static int action_bar_container = 2131492971;
-			
-			// aapt resource value: 0x7f0c0067
-			public static int action_bar_root = 2131492967;
-			
-			// aapt resource value: 0x7f0c0004
-			public static int action_bar_spinner = 2131492868;
-			
-			// aapt resource value: 0x7f0c004a
-			public static int action_bar_subtitle = 2131492938;
-			
-			// aapt resource value: 0x7f0c0049
-			public static int action_bar_title = 2131492937;
-			
-			// aapt resource value: 0x7f0c00a2
-			public static int action_container = 2131493026;
-			
-			// aapt resource value: 0x7f0c006d
-			public static int action_context_bar = 2131492973;
-			
-			// aapt resource value: 0x7f0c00a9
-			public static int action_divider = 2131493033;
-			
-			// aapt resource value: 0x7f0c00a3
-			public static int action_image = 2131493027;
-			
-			// aapt resource value: 0x7f0c0005
-			public static int action_menu_divider = 2131492869;
-			
-			// aapt resource value: 0x7f0c0006
-			public static int action_menu_presenter = 2131492870;
-			
-			// aapt resource value: 0x7f0c0069
-			public static int action_mode_bar = 2131492969;
-			
-			// aapt resource value: 0x7f0c0068
-			public static int action_mode_bar_stub = 2131492968;
-			
-			// aapt resource value: 0x7f0c004b
-			public static int action_mode_close_button = 2131492939;
-			
-			// aapt resource value: 0x7f0c00a4
-			public static int action_text = 2131493028;
-			
-			// aapt resource value: 0x7f0c00b2
-			public static int actions = 2131493042;
-			
-			// aapt resource value: 0x7f0c004c
-			public static int activity_chooser_view_content = 2131492940;
-			
-			// aapt resource value: 0x7f0c0040
-			public static int add = 2131492928;
-			
-			// aapt resource value: 0x7f0c0012
-			public static int adjust_height = 2131492882;
-			
-			// aapt resource value: 0x7f0c0013
-			public static int adjust_width = 2131492883;
-			
-			// aapt resource value: 0x7f0c0060
-			public static int alertTitle = 2131492960;
-			
-			// aapt resource value: 0x7f0c002f
-			public static int all = 2131492911;
-			
-			// aapt resource value: 0x7f0c0044
-			public static int always = 2131492932;
-			
-			// aapt resource value: 0x7f0c0017
-			public static int auto = 2131492887;
-			
-			// aapt resource value: 0x7f0c0042
-			public static int beginning = 2131492930;
-			
-			// aapt resource value: 0x7f0c001f
-			public static int bottom = 2131492895;
-			
-			// aapt resource value: 0x7f0c0053
-			public static int buttonPanel = 2131492947;
-			
-			// aapt resource value: 0x7f0c00a6
-			public static int cancel_action = 2131493030;
-			
-			// aapt resource value: 0x7f0c0020
-			public static int center = 2131492896;
-			
-			// aapt resource value: 0x7f0c0021
-			public static int center_horizontal = 2131492897;
-			
-			// aapt resource value: 0x7f0c0022
-			public static int center_vertical = 2131492898;
-			
-			// aapt resource value: 0x7f0c0063
-			public static int checkbox = 2131492963;
-			
-			// aapt resource value: 0x7f0c00ae
-			public static int chronometer = 2131493038;
-			
-			// aapt resource value: 0x7f0c002b
-			public static int clip_horizontal = 2131492907;
-			
-			// aapt resource value: 0x7f0c002c
-			public static int clip_vertical = 2131492908;
-			
-			// aapt resource value: 0x7f0c0045
-			public static int collapseActionView = 2131492933;
-			
-			// aapt resource value: 0x7f0c0056
-			public static int contentPanel = 2131492950;
-			
-			// aapt resource value: 0x7f0c005d
-			public static int custom = 2131492957;
-			
-			// aapt resource value: 0x7f0c005c
-			public static int customPanel = 2131492956;
-			
-			// aapt resource value: 0x7f0c0018
-			public static int dark = 2131492888;
-			
-			// aapt resource value: 0x7f0c006a
-			public static int decor_content_parent = 2131492970;
-			
-			// aapt resource value: 0x7f0c004f
-			public static int default_activity_button = 2131492943;
-			
-			// aapt resource value: 0x7f0c0087
-			public static int demoImageView = 2131492999;
-			
-			// aapt resource value: 0x7f0c007e
-			public static int design_bottom_sheet = 2131492990;
-			
-			// aapt resource value: 0x7f0c0085
-			public static int design_menu_item_action_area = 2131492997;
-			
-			// aapt resource value: 0x7f0c0084
-			public static int design_menu_item_action_area_stub = 2131492996;
-			
-			// aapt resource value: 0x7f0c0083
-			public static int design_menu_item_text = 2131492995;
-			
-			// aapt resource value: 0x7f0c0082
-			public static int design_navigation_view = 2131492994;
-			
-			// aapt resource value: 0x7f0c003a
-			public static int disableHome = 2131492922;
+			// aapt resource value: 0x7f0c00a7
+			public static int action0 = 2131493031;
 			
 			// aapt resource value: 0x7f0c006e
-			public static int edit_query = 2131492974;
+			public static int action_bar = 2131492974;
 			
-			// aapt resource value: 0x7f0c0023
-			public static int end = 2131492899;
+			// aapt resource value: 0x7f0c0005
+			public static int action_bar_activity_content = 2131492869;
 			
-			// aapt resource value: 0x7f0c00b8
-			public static int end_padder = 2131493048;
+			// aapt resource value: 0x7f0c006d
+			public static int action_bar_container = 2131492973;
 			
-			// aapt resource value: 0x7f0c001a
-			public static int enterAlways = 2131492890;
+			// aapt resource value: 0x7f0c0069
+			public static int action_bar_root = 2131492969;
 			
-			// aapt resource value: 0x7f0c001b
-			public static int enterAlwaysCollapsed = 2131492891;
+			// aapt resource value: 0x7f0c0006
+			public static int action_bar_spinner = 2131492870;
 			
-			// aapt resource value: 0x7f0c001c
-			public static int exitUntilCollapsed = 2131492892;
+			// aapt resource value: 0x7f0c004c
+			public static int action_bar_subtitle = 2131492940;
 			
-			// aapt resource value: 0x7f0c004d
-			public static int expand_activities_button = 2131492941;
+			// aapt resource value: 0x7f0c004b
+			public static int action_bar_title = 2131492939;
 			
-			// aapt resource value: 0x7f0c0062
-			public static int expanded_menu = 2131492962;
-			
-			// aapt resource value: 0x7f0c002d
-			public static int fill = 2131492909;
-			
-			// aapt resource value: 0x7f0c002e
-			public static int fill_horizontal = 2131492910;
-			
-			// aapt resource value: 0x7f0c0024
-			public static int fill_vertical = 2131492900;
-			
-			// aapt resource value: 0x7f0c0031
-			public static int @fixed = 2131492913;
-			
-			// aapt resource value: 0x7f0c0007
-			public static int home = 2131492871;
-			
-			// aapt resource value: 0x7f0c003b
-			public static int homeAsUp = 2131492923;
-			
-			// aapt resource value: 0x7f0c000d
-			public static int hybrid = 2131492877;
-			
-			// aapt resource value: 0x7f0c0051
-			public static int icon = 2131492945;
-			
-			// aapt resource value: 0x7f0c00b3
-			public static int icon_group = 2131493043;
-			
-			// aapt resource value: 0x7f0c0014
-			public static int icon_only = 2131492884;
-			
-			// aapt resource value: 0x7f0c0046
-			public static int ifRoom = 2131492934;
-			
-			// aapt resource value: 0x7f0c004e
-			public static int image = 2131492942;
-			
-			// aapt resource value: 0x7f0c00af
-			public static int info = 2131493039;
-			
-			// aapt resource value: 0x7f0c000c
-			public static int item_touch_helper_previous_elevation = 2131492876;
-			
-			// aapt resource value: 0x7f0c007c
-			public static int largeLabel = 2131492988;
-			
-			// aapt resource value: 0x7f0c0025
-			public static int left = 2131492901;
-			
-			// aapt resource value: 0x7f0c0019
-			public static int light = 2131492889;
-			
-			// aapt resource value: 0x7f0c00b4
-			public static int line1 = 2131493044;
-			
-			// aapt resource value: 0x7f0c00b6
-			public static int line3 = 2131493046;
-			
-			// aapt resource value: 0x7f0c0038
-			public static int listMode = 2131492920;
-			
-			// aapt resource value: 0x7f0c0050
-			public static int list_item = 2131492944;
-			
-			// aapt resource value: 0x7f0c00c2
-			public static int masked = 2131493058;
-			
-			// aapt resource value: 0x7f0c00a8
-			public static int media_actions = 2131493032;
-			
-			// aapt resource value: 0x7f0c0043
-			public static int middle = 2131492931;
-			
-			// aapt resource value: 0x7f0c0030
-			public static int mini = 2131492912;
-			
-			// aapt resource value: 0x7f0c0094
-			public static int mr_art = 2131493012;
-			
-			// aapt resource value: 0x7f0c0089
-			public static int mr_chooser_list = 2131493001;
-			
-			// aapt resource value: 0x7f0c008c
-			public static int mr_chooser_route_desc = 2131493004;
-			
-			// aapt resource value: 0x7f0c008a
-			public static int mr_chooser_route_icon = 2131493002;
-			
-			// aapt resource value: 0x7f0c008b
-			public static int mr_chooser_route_name = 2131493003;
-			
-			// aapt resource value: 0x7f0c0088
-			public static int mr_chooser_title = 2131493000;
-			
-			// aapt resource value: 0x7f0c0091
-			public static int mr_close = 2131493009;
-			
-			// aapt resource value: 0x7f0c0097
-			public static int mr_control_divider = 2131493015;
-			
-			// aapt resource value: 0x7f0c009d
-			public static int mr_control_play_pause = 2131493021;
-			
-			// aapt resource value: 0x7f0c00a0
-			public static int mr_control_subtitle = 2131493024;
-			
-			// aapt resource value: 0x7f0c009f
-			public static int mr_control_title = 2131493023;
-			
-			// aapt resource value: 0x7f0c009e
-			public static int mr_control_title_container = 2131493022;
-			
-			// aapt resource value: 0x7f0c0092
-			public static int mr_custom_control = 2131493010;
-			
-			// aapt resource value: 0x7f0c0093
-			public static int mr_default_control = 2131493011;
-			
-			// aapt resource value: 0x7f0c008e
-			public static int mr_dialog_area = 2131493006;
-			
-			// aapt resource value: 0x7f0c008d
-			public static int mr_expandable_area = 2131493005;
-			
-			// aapt resource value: 0x7f0c00a1
-			public static int mr_group_expand_collapse = 2131493025;
-			
-			// aapt resource value: 0x7f0c0095
-			public static int mr_media_main_control = 2131493013;
-			
-			// aapt resource value: 0x7f0c0090
-			public static int mr_name = 2131493008;
-			
-			// aapt resource value: 0x7f0c0096
-			public static int mr_playback_control = 2131493014;
-			
-			// aapt resource value: 0x7f0c008f
-			public static int mr_title_bar = 2131493007;
-			
-			// aapt resource value: 0x7f0c0098
-			public static int mr_volume_control = 2131493016;
-			
-			// aapt resource value: 0x7f0c0099
-			public static int mr_volume_group_list = 2131493017;
-			
-			// aapt resource value: 0x7f0c009b
-			public static int mr_volume_item_icon = 2131493019;
-			
-			// aapt resource value: 0x7f0c009c
-			public static int mr_volume_slider = 2131493020;
-			
-			// aapt resource value: 0x7f0c0033
-			public static int multiply = 2131492915;
-			
-			// aapt resource value: 0x7f0c0081
-			public static int navigation_header_container = 2131492993;
-			
-			// aapt resource value: 0x7f0c0047
-			public static int never = 2131492935;
-			
-			// aapt resource value: 0x7f0c000e
-			public static int none = 2131492878;
-			
-			// aapt resource value: 0x7f0c000f
-			public static int normal = 2131492879;
-			
-			// aapt resource value: 0x7f0c00b1
-			public static int notification_background = 2131493041;
-			
-			// aapt resource value: 0x7f0c00ab
-			public static int notification_main_column = 2131493035;
-			
-			// aapt resource value: 0x7f0c00aa
-			public static int notification_main_column_container = 2131493034;
-			
-			// aapt resource value: 0x7f0c0029
-			public static int parallax = 2131492905;
-			
-			// aapt resource value: 0x7f0c0055
-			public static int parentPanel = 2131492949;
-			
-			// aapt resource value: 0x7f0c002a
-			public static int pin = 2131492906;
-			
-			// aapt resource value: 0x7f0c00bb
-			public static int place_autocomplete_clear_button = 2131493051;
-			
-			// aapt resource value: 0x7f0c00bd
-			public static int place_autocomplete_powered_by_google = 2131493053;
-			
-			// aapt resource value: 0x7f0c00bf
-			public static int place_autocomplete_prediction_primary_text = 2131493055;
-			
-			// aapt resource value: 0x7f0c00c0
-			public static int place_autocomplete_prediction_secondary_text = 2131493056;
-			
-			// aapt resource value: 0x7f0c00be
-			public static int place_autocomplete_progress = 2131493054;
-			
-			// aapt resource value: 0x7f0c00b9
-			public static int place_autocomplete_search_button = 2131493049;
-			
-			// aapt resource value: 0x7f0c00ba
-			public static int place_autocomplete_search_input = 2131493050;
-			
-			// aapt resource value: 0x7f0c00bc
-			public static int place_autocomplete_separator = 2131493052;
-			
-			// aapt resource value: 0x7f0c0008
-			public static int progress_circular = 2131492872;
-			
-			// aapt resource value: 0x7f0c0009
-			public static int progress_horizontal = 2131492873;
-			
-			// aapt resource value: 0x7f0c0065
-			public static int radio = 2131492965;
-			
-			// aapt resource value: 0x7f0c0026
-			public static int right = 2131492902;
-			
-			// aapt resource value: 0x7f0c00b0
-			public static int right_icon = 2131493040;
-			
-			// aapt resource value: 0x7f0c00ac
-			public static int right_side = 2131493036;
-			
-			// aapt resource value: 0x7f0c0010
-			public static int satellite = 2131492880;
-			
-			// aapt resource value: 0x7f0c0034
-			public static int screen = 2131492916;
-			
-			// aapt resource value: 0x7f0c001d
-			public static int scroll = 2131492893;
-			
-			// aapt resource value: 0x7f0c005b
-			public static int scrollIndicatorDown = 2131492955;
-			
-			// aapt resource value: 0x7f0c0057
-			public static int scrollIndicatorUp = 2131492951;
-			
-			// aapt resource value: 0x7f0c0058
-			public static int scrollView = 2131492952;
-			
-			// aapt resource value: 0x7f0c0032
-			public static int scrollable = 2131492914;
-			
-			// aapt resource value: 0x7f0c0070
-			public static int search_badge = 2131492976;
+			// aapt resource value: 0x7f0c00a4
+			public static int action_container = 2131493028;
 			
 			// aapt resource value: 0x7f0c006f
-			public static int search_bar = 2131492975;
+			public static int action_context_bar = 2131492975;
 			
-			// aapt resource value: 0x7f0c0071
-			public static int search_button = 2131492977;
+			// aapt resource value: 0x7f0c00ab
+			public static int action_divider = 2131493035;
 			
-			// aapt resource value: 0x7f0c0076
-			public static int search_close_btn = 2131492982;
+			// aapt resource value: 0x7f0c00a5
+			public static int action_image = 2131493029;
 			
-			// aapt resource value: 0x7f0c0072
-			public static int search_edit_frame = 2131492978;
+			// aapt resource value: 0x7f0c0007
+			public static int action_menu_divider = 2131492871;
 			
-			// aapt resource value: 0x7f0c0078
-			public static int search_go_btn = 2131492984;
+			// aapt resource value: 0x7f0c0008
+			public static int action_menu_presenter = 2131492872;
 			
-			// aapt resource value: 0x7f0c0073
-			public static int search_mag_icon = 2131492979;
+			// aapt resource value: 0x7f0c006b
+			public static int action_mode_bar = 2131492971;
 			
-			// aapt resource value: 0x7f0c0074
-			public static int search_plate = 2131492980;
+			// aapt resource value: 0x7f0c006a
+			public static int action_mode_bar_stub = 2131492970;
 			
-			// aapt resource value: 0x7f0c0075
-			public static int search_src_text = 2131492981;
+			// aapt resource value: 0x7f0c004d
+			public static int action_mode_close_button = 2131492941;
 			
-			// aapt resource value: 0x7f0c0079
-			public static int search_voice_btn = 2131492985;
+			// aapt resource value: 0x7f0c00a6
+			public static int action_text = 2131493030;
 			
-			// aapt resource value: 0x7f0c007a
-			public static int select_dialog_listview = 2131492986;
+			// aapt resource value: 0x7f0c00b4
+			public static int actions = 2131493044;
 			
-			// aapt resource value: 0x7f0c0064
-			public static int shortcut = 2131492964;
+			// aapt resource value: 0x7f0c004e
+			public static int activity_chooser_view_content = 2131492942;
 			
-			// aapt resource value: 0x7f0c003c
-			public static int showCustom = 2131492924;
+			// aapt resource value: 0x7f0c0042
+			public static int add = 2131492930;
 			
-			// aapt resource value: 0x7f0c003d
-			public static int showHome = 2131492925;
-			
-			// aapt resource value: 0x7f0c003e
-			public static int showTitle = 2131492926;
-			
-			// aapt resource value: 0x7f0c007b
-			public static int smallLabel = 2131492987;
-			
-			// aapt resource value: 0x7f0c0080
-			public static int snackbar_action = 2131492992;
-			
-			// aapt resource value: 0x7f0c007f
-			public static int snackbar_text = 2131492991;
-			
-			// aapt resource value: 0x7f0c001e
-			public static int snap = 2131492894;
-			
-			// aapt resource value: 0x7f0c0054
-			public static int spacer = 2131492948;
-			
-			// aapt resource value: 0x7f0c000a
-			public static int split_action_bar = 2131492874;
-			
-			// aapt resource value: 0x7f0c0035
-			public static int src_atop = 2131492917;
-			
-			// aapt resource value: 0x7f0c0036
-			public static int src_in = 2131492918;
-			
-			// aapt resource value: 0x7f0c0037
-			public static int src_over = 2131492919;
+			// aapt resource value: 0x7f0c0014
+			public static int adjust_height = 2131492884;
 			
 			// aapt resource value: 0x7f0c0015
-			public static int standard = 2131492885;
+			public static int adjust_width = 2131492885;
 			
-			// aapt resource value: 0x7f0c0027
-			public static int start = 2131492903;
+			// aapt resource value: 0x7f0c0062
+			public static int alertTitle = 2131492962;
 			
-			// aapt resource value: 0x7f0c00a7
-			public static int status_bar_latest_event_content = 2131493031;
+			// aapt resource value: 0x7f0c0031
+			public static int all = 2131492913;
 			
-			// aapt resource value: 0x7f0c0066
-			public static int submenuarrow = 2131492966;
+			// aapt resource value: 0x7f0c0046
+			public static int always = 2131492934;
 			
-			// aapt resource value: 0x7f0c0077
-			public static int submit_area = 2131492983;
+			// aapt resource value: 0x7f0c0019
+			public static int auto = 2131492889;
 			
-			// aapt resource value: 0x7f0c0039
-			public static int tabMode = 2131492921;
+			// aapt resource value: 0x7f0c0044
+			public static int beginning = 2131492932;
 			
-			// aapt resource value: 0x7f0c0011
-			public static int terrain = 2131492881;
+			// aapt resource value: 0x7f0c0021
+			public static int bottom = 2131492897;
 			
-			// aapt resource value: 0x7f0c00b7
-			public static int text = 2131493047;
+			// aapt resource value: 0x7f0c0055
+			public static int buttonPanel = 2131492949;
 			
-			// aapt resource value: 0x7f0c00b5
-			public static int text2 = 2131493045;
+			// aapt resource value: 0x7f0c00a8
+			public static int cancel_action = 2131493032;
 			
-			// aapt resource value: 0x7f0c005a
-			public static int textSpacerNoButtons = 2131492954;
+			// aapt resource value: 0x7f0c0022
+			public static int center = 2131492898;
 			
-			// aapt resource value: 0x7f0c0059
-			public static int textSpacerNoTitle = 2131492953;
+			// aapt resource value: 0x7f0c0023
+			public static int center_horizontal = 2131492899;
+			
+			// aapt resource value: 0x7f0c0024
+			public static int center_vertical = 2131492900;
+			
+			// aapt resource value: 0x7f0c0065
+			public static int checkbox = 2131492965;
+			
+			// aapt resource value: 0x7f0c00b0
+			public static int chronometer = 2131493040;
+			
+			// aapt resource value: 0x7f0c002d
+			public static int clip_horizontal = 2131492909;
+			
+			// aapt resource value: 0x7f0c002e
+			public static int clip_vertical = 2131492910;
+			
+			// aapt resource value: 0x7f0c0047
+			public static int collapseActionView = 2131492935;
+			
+			// aapt resource value: 0x7f0c0058
+			public static int contentPanel = 2131492952;
+			
+			// aapt resource value: 0x7f0c005f
+			public static int custom = 2131492959;
+			
+			// aapt resource value: 0x7f0c005e
+			public static int customPanel = 2131492958;
+			
+			// aapt resource value: 0x7f0c001a
+			public static int dark = 2131492890;
+			
+			// aapt resource value: 0x7f0c006c
+			public static int decor_content_parent = 2131492972;
+			
+			// aapt resource value: 0x7f0c0051
+			public static int default_activity_button = 2131492945;
+			
+			// aapt resource value: 0x7f0c0089
+			public static int demoImageView = 2131493001;
+			
+			// aapt resource value: 0x7f0c0080
+			public static int design_bottom_sheet = 2131492992;
+			
+			// aapt resource value: 0x7f0c0087
+			public static int design_menu_item_action_area = 2131492999;
 			
 			// aapt resource value: 0x7f0c0086
-			public static int text_input_password_toggle = 2131492998;
+			public static int design_menu_item_action_area_stub = 2131492998;
+			
+			// aapt resource value: 0x7f0c0085
+			public static int design_menu_item_text = 2131492997;
+			
+			// aapt resource value: 0x7f0c0084
+			public static int design_navigation_view = 2131492996;
+			
+			// aapt resource value: 0x7f0c003c
+			public static int disableHome = 2131492924;
+			
+			// aapt resource value: 0x7f0c0070
+			public static int edit_query = 2131492976;
+			
+			// aapt resource value: 0x7f0c0025
+			public static int end = 2131492901;
+			
+			// aapt resource value: 0x7f0c00ba
+			public static int end_padder = 2131493050;
+			
+			// aapt resource value: 0x7f0c001c
+			public static int enterAlways = 2131492892;
+			
+			// aapt resource value: 0x7f0c001d
+			public static int enterAlwaysCollapsed = 2131492893;
+			
+			// aapt resource value: 0x7f0c001e
+			public static int exitUntilCollapsed = 2131492894;
+			
+			// aapt resource value: 0x7f0c004f
+			public static int expand_activities_button = 2131492943;
+			
+			// aapt resource value: 0x7f0c0064
+			public static int expanded_menu = 2131492964;
+			
+			// aapt resource value: 0x7f0c002f
+			public static int fill = 2131492911;
+			
+			// aapt resource value: 0x7f0c0030
+			public static int fill_horizontal = 2131492912;
+			
+			// aapt resource value: 0x7f0c0026
+			public static int fill_vertical = 2131492902;
+			
+			// aapt resource value: 0x7f0c0033
+			public static int @fixed = 2131492915;
+			
+			// aapt resource value: 0x7f0c0009
+			public static int home = 2131492873;
+			
+			// aapt resource value: 0x7f0c003d
+			public static int homeAsUp = 2131492925;
+			
+			// aapt resource value: 0x7f0c000f
+			public static int hybrid = 2131492879;
+			
+			// aapt resource value: 0x7f0c0053
+			public static int icon = 2131492947;
+			
+			// aapt resource value: 0x7f0c00b5
+			public static int icon_group = 2131493045;
+			
+			// aapt resource value: 0x7f0c0016
+			public static int icon_only = 2131492886;
+			
+			// aapt resource value: 0x7f0c0048
+			public static int ifRoom = 2131492936;
+			
+			// aapt resource value: 0x7f0c0050
+			public static int image = 2131492944;
+			
+			// aapt resource value: 0x7f0c00b1
+			public static int info = 2131493041;
+			
+			// aapt resource value: 0x7f0c000e
+			public static int item_touch_helper_previous_elevation = 2131492878;
+			
+			// aapt resource value: 0x7f0c007e
+			public static int largeLabel = 2131492990;
+			
+			// aapt resource value: 0x7f0c0027
+			public static int left = 2131492903;
+			
+			// aapt resource value: 0x7f0c001b
+			public static int light = 2131492891;
+			
+			// aapt resource value: 0x7f0c00b6
+			public static int line1 = 2131493046;
+			
+			// aapt resource value: 0x7f0c00b8
+			public static int line3 = 2131493048;
+			
+			// aapt resource value: 0x7f0c003a
+			public static int listMode = 2131492922;
+			
+			// aapt resource value: 0x7f0c0052
+			public static int list_item = 2131492946;
+			
+			// aapt resource value: 0x7f0c00c4
+			public static int masked = 2131493060;
+			
+			// aapt resource value: 0x7f0c00aa
+			public static int media_actions = 2131493034;
+			
+			// aapt resource value: 0x7f0c0045
+			public static int middle = 2131492933;
+			
+			// aapt resource value: 0x7f0c0032
+			public static int mini = 2131492914;
+			
+			// aapt resource value: 0x7f0c0096
+			public static int mr_art = 2131493014;
+			
+			// aapt resource value: 0x7f0c008b
+			public static int mr_chooser_list = 2131493003;
+			
+			// aapt resource value: 0x7f0c008e
+			public static int mr_chooser_route_desc = 2131493006;
+			
+			// aapt resource value: 0x7f0c008c
+			public static int mr_chooser_route_icon = 2131493004;
+			
+			// aapt resource value: 0x7f0c008d
+			public static int mr_chooser_route_name = 2131493005;
+			
+			// aapt resource value: 0x7f0c008a
+			public static int mr_chooser_title = 2131493002;
+			
+			// aapt resource value: 0x7f0c0093
+			public static int mr_close = 2131493011;
+			
+			// aapt resource value: 0x7f0c0099
+			public static int mr_control_divider = 2131493017;
+			
+			// aapt resource value: 0x7f0c009f
+			public static int mr_control_play_pause = 2131493023;
+			
+			// aapt resource value: 0x7f0c00a2
+			public static int mr_control_subtitle = 2131493026;
+			
+			// aapt resource value: 0x7f0c00a1
+			public static int mr_control_title = 2131493025;
+			
+			// aapt resource value: 0x7f0c00a0
+			public static int mr_control_title_container = 2131493024;
+			
+			// aapt resource value: 0x7f0c0094
+			public static int mr_custom_control = 2131493012;
+			
+			// aapt resource value: 0x7f0c0095
+			public static int mr_default_control = 2131493013;
+			
+			// aapt resource value: 0x7f0c0090
+			public static int mr_dialog_area = 2131493008;
+			
+			// aapt resource value: 0x7f0c008f
+			public static int mr_expandable_area = 2131493007;
+			
+			// aapt resource value: 0x7f0c00a3
+			public static int mr_group_expand_collapse = 2131493027;
+			
+			// aapt resource value: 0x7f0c0097
+			public static int mr_media_main_control = 2131493015;
+			
+			// aapt resource value: 0x7f0c0092
+			public static int mr_name = 2131493010;
+			
+			// aapt resource value: 0x7f0c0098
+			public static int mr_playback_control = 2131493016;
+			
+			// aapt resource value: 0x7f0c0091
+			public static int mr_title_bar = 2131493009;
+			
+			// aapt resource value: 0x7f0c009a
+			public static int mr_volume_control = 2131493018;
+			
+			// aapt resource value: 0x7f0c009b
+			public static int mr_volume_group_list = 2131493019;
+			
+			// aapt resource value: 0x7f0c009d
+			public static int mr_volume_item_icon = 2131493021;
+			
+			// aapt resource value: 0x7f0c009e
+			public static int mr_volume_slider = 2131493022;
+			
+			// aapt resource value: 0x7f0c0035
+			public static int multiply = 2131492917;
+			
+			// aapt resource value: 0x7f0c0083
+			public static int navigation_header_container = 2131492995;
+			
+			// aapt resource value: 0x7f0c0049
+			public static int never = 2131492937;
+			
+			// aapt resource value: 0x7f0c0010
+			public static int none = 2131492880;
+			
+			// aapt resource value: 0x7f0c0011
+			public static int normal = 2131492881;
+			
+			// aapt resource value: 0x7f0c00b3
+			public static int notification_background = 2131493043;
+			
+			// aapt resource value: 0x7f0c00ad
+			public static int notification_main_column = 2131493037;
+			
+			// aapt resource value: 0x7f0c00ac
+			public static int notification_main_column_container = 2131493036;
+			
+			// aapt resource value: 0x7f0c002b
+			public static int parallax = 2131492907;
+			
+			// aapt resource value: 0x7f0c0057
+			public static int parentPanel = 2131492951;
+			
+			// aapt resource value: 0x7f0c002c
+			public static int pin = 2131492908;
+			
+			// aapt resource value: 0x7f0c00bd
+			public static int place_autocomplete_clear_button = 2131493053;
+			
+			// aapt resource value: 0x7f0c00bf
+			public static int place_autocomplete_powered_by_google = 2131493055;
+			
+			// aapt resource value: 0x7f0c00c1
+			public static int place_autocomplete_prediction_primary_text = 2131493057;
+			
+			// aapt resource value: 0x7f0c00c2
+			public static int place_autocomplete_prediction_secondary_text = 2131493058;
+			
+			// aapt resource value: 0x7f0c00c0
+			public static int place_autocomplete_progress = 2131493056;
+			
+			// aapt resource value: 0x7f0c00bb
+			public static int place_autocomplete_search_button = 2131493051;
+			
+			// aapt resource value: 0x7f0c00bc
+			public static int place_autocomplete_search_input = 2131493052;
+			
+			// aapt resource value: 0x7f0c00be
+			public static int place_autocomplete_separator = 2131493054;
+			
+			// aapt resource value: 0x7f0c000a
+			public static int progress_circular = 2131492874;
+			
+			// aapt resource value: 0x7f0c000b
+			public static int progress_horizontal = 2131492875;
+			
+			// aapt resource value: 0x7f0c0067
+			public static int radio = 2131492967;
+			
+			// aapt resource value: 0x7f0c0028
+			public static int right = 2131492904;
+			
+			// aapt resource value: 0x7f0c00b2
+			public static int right_icon = 2131493042;
+			
+			// aapt resource value: 0x7f0c00ae
+			public static int right_side = 2131493038;
+			
+			// aapt resource value: 0x7f0c0012
+			public static int satellite = 2131492882;
+			
+			// aapt resource value: 0x7f0c0036
+			public static int screen = 2131492918;
+			
+			// aapt resource value: 0x7f0c001f
+			public static int scroll = 2131492895;
+			
+			// aapt resource value: 0x7f0c005d
+			public static int scrollIndicatorDown = 2131492957;
+			
+			// aapt resource value: 0x7f0c0059
+			public static int scrollIndicatorUp = 2131492953;
+			
+			// aapt resource value: 0x7f0c005a
+			public static int scrollView = 2131492954;
+			
+			// aapt resource value: 0x7f0c0034
+			public static int scrollable = 2131492916;
+			
+			// aapt resource value: 0x7f0c0072
+			public static int search_badge = 2131492978;
+			
+			// aapt resource value: 0x7f0c0071
+			public static int search_bar = 2131492977;
+			
+			// aapt resource value: 0x7f0c0073
+			public static int search_button = 2131492979;
+			
+			// aapt resource value: 0x7f0c0078
+			public static int search_close_btn = 2131492984;
+			
+			// aapt resource value: 0x7f0c0074
+			public static int search_edit_frame = 2131492980;
+			
+			// aapt resource value: 0x7f0c007a
+			public static int search_go_btn = 2131492986;
+			
+			// aapt resource value: 0x7f0c0075
+			public static int search_mag_icon = 2131492981;
+			
+			// aapt resource value: 0x7f0c0076
+			public static int search_plate = 2131492982;
+			
+			// aapt resource value: 0x7f0c0077
+			public static int search_src_text = 2131492983;
+			
+			// aapt resource value: 0x7f0c007b
+			public static int search_voice_btn = 2131492987;
+			
+			// aapt resource value: 0x7f0c007c
+			public static int select_dialog_listview = 2131492988;
+			
+			// aapt resource value: 0x7f0c0066
+			public static int shortcut = 2131492966;
+			
+			// aapt resource value: 0x7f0c003e
+			public static int showCustom = 2131492926;
+			
+			// aapt resource value: 0x7f0c003f
+			public static int showHome = 2131492927;
+			
+			// aapt resource value: 0x7f0c0040
+			public static int showTitle = 2131492928;
+			
+			// aapt resource value: 0x7f0c007d
+			public static int smallLabel = 2131492989;
+			
+			// aapt resource value: 0x7f0c0082
+			public static int snackbar_action = 2131492994;
+			
+			// aapt resource value: 0x7f0c0081
+			public static int snackbar_text = 2131492993;
+			
+			// aapt resource value: 0x7f0c0020
+			public static int snap = 2131492896;
+			
+			// aapt resource value: 0x7f0c0056
+			public static int spacer = 2131492950;
+			
+			// aapt resource value: 0x7f0c000c
+			public static int split_action_bar = 2131492876;
+			
+			// aapt resource value: 0x7f0c0037
+			public static int src_atop = 2131492919;
+			
+			// aapt resource value: 0x7f0c0038
+			public static int src_in = 2131492920;
+			
+			// aapt resource value: 0x7f0c0039
+			public static int src_over = 2131492921;
+			
+			// aapt resource value: 0x7f0c0017
+			public static int standard = 2131492887;
+			
+			// aapt resource value: 0x7f0c0029
+			public static int start = 2131492905;
+			
+			// aapt resource value: 0x7f0c00a9
+			public static int status_bar_latest_event_content = 2131493033;
+			
+			// aapt resource value: 0x7f0c0068
+			public static int submenuarrow = 2131492968;
+			
+			// aapt resource value: 0x7f0c0079
+			public static int submit_area = 2131492985;
+			
+			// aapt resource value: 0x7f0c003b
+			public static int tabMode = 2131492923;
+			
+			// aapt resource value: 0x7f0c0013
+			public static int terrain = 2131492883;
+			
+			// aapt resource value: 0x7f0c00b9
+			public static int text = 2131493049;
+			
+			// aapt resource value: 0x7f0c00b7
+			public static int text2 = 2131493047;
+			
+			// aapt resource value: 0x7f0c005c
+			public static int textSpacerNoButtons = 2131492956;
+			
+			// aapt resource value: 0x7f0c005b
+			public static int textSpacerNoTitle = 2131492955;
+			
+			// aapt resource value: 0x7f0c0088
+			public static int text_input_password_toggle = 2131493000;
 			
 			// aapt resource value: 0x7f0c0000
 			public static int textinput_counter = 2131492864;
@@ -3607,50 +3607,56 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f0c0001
 			public static int textinput_error = 2131492865;
 			
-			// aapt resource value: 0x7f0c00ad
-			public static int time = 2131493037;
+			// aapt resource value: 0x7f0c00af
+			public static int time = 2131493039;
 			
-			// aapt resource value: 0x7f0c0052
-			public static int title = 2131492946;
+			// aapt resource value: 0x7f0c0054
+			public static int title = 2131492948;
+			
+			// aapt resource value: 0x7f0c0063
+			public static int titleDividerNoCustom = 2131492963;
 			
 			// aapt resource value: 0x7f0c0061
-			public static int titleDividerNoCustom = 2131492961;
+			public static int title_template = 2131492961;
 			
-			// aapt resource value: 0x7f0c005f
-			public static int title_template = 2131492959;
+			// aapt resource value: 0x7f0c002a
+			public static int top = 2131492906;
 			
-			// aapt resource value: 0x7f0c0028
-			public static int top = 2131492904;
+			// aapt resource value: 0x7f0c0060
+			public static int topPanel = 2131492960;
 			
-			// aapt resource value: 0x7f0c005e
-			public static int topPanel = 2131492958;
+			// aapt resource value: 0x7f0c007f
+			public static int touch_outside = 2131492991;
 			
-			// aapt resource value: 0x7f0c007d
-			public static int touch_outside = 2131492989;
+			// aapt resource value: 0x7f0c0003
+			public static int transition_current_scene = 2131492867;
 			
-			// aapt resource value: 0x7f0c000b
-			public static int up = 2131492875;
+			// aapt resource value: 0x7f0c0004
+			public static int transition_scene_layoutid_cache = 2131492868;
 			
-			// aapt resource value: 0x7f0c003f
-			public static int useLogo = 2131492927;
+			// aapt resource value: 0x7f0c000d
+			public static int up = 2131492877;
+			
+			// aapt resource value: 0x7f0c0041
+			public static int useLogo = 2131492929;
 			
 			// aapt resource value: 0x7f0c0002
 			public static int view_offset_helper = 2131492866;
 			
-			// aapt resource value: 0x7f0c00c1
-			public static int visible = 2131493057;
+			// aapt resource value: 0x7f0c00c3
+			public static int visible = 2131493059;
 			
-			// aapt resource value: 0x7f0c009a
-			public static int volume_item_container = 2131493018;
+			// aapt resource value: 0x7f0c009c
+			public static int volume_item_container = 2131493020;
 			
-			// aapt resource value: 0x7f0c0016
-			public static int wide = 2131492886;
+			// aapt resource value: 0x7f0c0018
+			public static int wide = 2131492888;
 			
-			// aapt resource value: 0x7f0c0048
-			public static int withText = 2131492936;
+			// aapt resource value: 0x7f0c004a
+			public static int withText = 2131492938;
 			
-			// aapt resource value: 0x7f0c0041
-			public static int wrap_content = 2131492929;
+			// aapt resource value: 0x7f0c0043
+			public static int wrap_content = 2131492931;
 			
 			static Id()
 			{
@@ -3671,35 +3677,35 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f0a000a
 			public static int abc_config_activityShortDur = 2131361802;
 			
-			// aapt resource value: 0x7f0a0005
-			public static int app_bar_elevation_anim_duration = 2131361797;
+			// aapt resource value: 0x7f0a0002
+			public static int app_bar_elevation_anim_duration = 2131361794;
 			
-			// aapt resource value: 0x7f0a0006
-			public static int bottom_sheet_slide_duration = 2131361798;
+			// aapt resource value: 0x7f0a0003
+			public static int bottom_sheet_slide_duration = 2131361795;
 			
 			// aapt resource value: 0x7f0a000b
 			public static int cancel_button_image_alpha = 2131361803;
 			
-			// aapt resource value: 0x7f0a0004
-			public static int design_snackbar_text_max_lines = 2131361796;
+			// aapt resource value: 0x7f0a0001
+			public static int design_snackbar_text_max_lines = 2131361793;
 			
 			// aapt resource value: 0x7f0a0000
 			public static int google_play_services_version = 2131361792;
 			
+			// aapt resource value: 0x7f0a0004
+			public static int hide_password_duration = 2131361796;
+			
+			// aapt resource value: 0x7f0a0006
+			public static int mr_controller_volume_group_list_animation_duration_ms = 2131361798;
+			
 			// aapt resource value: 0x7f0a0007
-			public static int hide_password_duration = 2131361799;
-			
-			// aapt resource value: 0x7f0a0001
-			public static int mr_controller_volume_group_list_animation_duration_ms = 2131361793;
-			
-			// aapt resource value: 0x7f0a0002
-			public static int mr_controller_volume_group_list_fade_in_duration_ms = 2131361794;
-			
-			// aapt resource value: 0x7f0a0003
-			public static int mr_controller_volume_group_list_fade_out_duration_ms = 2131361795;
+			public static int mr_controller_volume_group_list_fade_in_duration_ms = 2131361799;
 			
 			// aapt resource value: 0x7f0a0008
-			public static int show_password_duration = 2131361800;
+			public static int mr_controller_volume_group_list_fade_out_duration_ms = 2131361800;
+			
+			// aapt resource value: 0x7f0a0005
+			public static int show_password_duration = 2131361797;
 			
 			// aapt resource value: 0x7f0a000c
 			public static int status_bar_notification_info_maxnum = 2131361804;
@@ -4055,8 +4061,8 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f09004f
 			public static int abc_toolbar_collapse_description = 2131296335;
 			
-			// aapt resource value: 0x7f090035
-			public static int appbar_scrolling_view_behavior = 2131296309;
+			// aapt resource value: 0x7f090021
+			public static int appbar_scrolling_view_behavior = 2131296289;
 			
 			// aapt resource value: 0x7f090003
 			public static int auth_google_play_services_client_facebook_display_name = 2131296259;
@@ -4064,11 +4070,11 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f090002
 			public static int auth_google_play_services_client_google_display_name = 2131296258;
 			
-			// aapt resource value: 0x7f090036
-			public static int bottom_sheet_behavior = 2131296310;
+			// aapt resource value: 0x7f090022
+			public static int bottom_sheet_behavior = 2131296290;
 			
-			// aapt resource value: 0x7f090037
-			public static int character_counter_pattern = 2131296311;
+			// aapt resource value: 0x7f090023
+			public static int character_counter_pattern = 2131296291;
 			
 			// aapt resource value: 0x7f09001a
 			public static int common_google_play_services_api_unavailable_text = 2131296282;
@@ -4157,80 +4163,83 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f090020
 			public static int common_signin_button_text_long = 2131296288;
 			
-			// aapt resource value: 0x7f090021
-			public static int mr_button_content_description = 2131296289;
-			
-			// aapt resource value: 0x7f090022
-			public static int mr_cast_button_connected = 2131296290;
-			
-			// aapt resource value: 0x7f090023
-			public static int mr_cast_button_connecting = 2131296291;
-			
-			// aapt resource value: 0x7f090024
-			public static int mr_cast_button_disconnected = 2131296292;
-			
-			// aapt resource value: 0x7f090025
-			public static int mr_chooser_searching = 2131296293;
-			
-			// aapt resource value: 0x7f090026
-			public static int mr_chooser_title = 2131296294;
-			
-			// aapt resource value: 0x7f090027
-			public static int mr_controller_album_art = 2131296295;
-			
-			// aapt resource value: 0x7f090028
-			public static int mr_controller_casting_screen = 2131296296;
+			// aapt resource value: 0x7f09005e
+			public static int library_name = 2131296350;
 			
 			// aapt resource value: 0x7f090029
-			public static int mr_controller_close_description = 2131296297;
+			public static int mr_button_content_description = 2131296297;
 			
 			// aapt resource value: 0x7f09002a
-			public static int mr_controller_collapse_group = 2131296298;
+			public static int mr_cast_button_connected = 2131296298;
 			
 			// aapt resource value: 0x7f09002b
-			public static int mr_controller_disconnect = 2131296299;
+			public static int mr_cast_button_connecting = 2131296299;
 			
 			// aapt resource value: 0x7f09002c
-			public static int mr_controller_expand_group = 2131296300;
+			public static int mr_cast_button_disconnected = 2131296300;
 			
 			// aapt resource value: 0x7f09002d
-			public static int mr_controller_no_info_available = 2131296301;
+			public static int mr_chooser_searching = 2131296301;
 			
 			// aapt resource value: 0x7f09002e
-			public static int mr_controller_no_media_selected = 2131296302;
+			public static int mr_chooser_title = 2131296302;
 			
 			// aapt resource value: 0x7f09002f
-			public static int mr_controller_pause = 2131296303;
+			public static int mr_controller_album_art = 2131296303;
 			
 			// aapt resource value: 0x7f090030
-			public static int mr_controller_play = 2131296304;
+			public static int mr_controller_casting_screen = 2131296304;
 			
 			// aapt resource value: 0x7f090031
-			public static int mr_controller_stop = 2131296305;
+			public static int mr_controller_close_description = 2131296305;
 			
 			// aapt resource value: 0x7f090032
-			public static int mr_controller_volume_slider = 2131296306;
+			public static int mr_controller_collapse_group = 2131296306;
 			
 			// aapt resource value: 0x7f090033
-			public static int mr_system_route_name = 2131296307;
+			public static int mr_controller_disconnect = 2131296307;
 			
 			// aapt resource value: 0x7f090034
-			public static int mr_user_route_category_name = 2131296308;
+			public static int mr_controller_expand_group = 2131296308;
+			
+			// aapt resource value: 0x7f090035
+			public static int mr_controller_no_info_available = 2131296309;
+			
+			// aapt resource value: 0x7f090036
+			public static int mr_controller_no_media_selected = 2131296310;
+			
+			// aapt resource value: 0x7f090037
+			public static int mr_controller_pause = 2131296311;
 			
 			// aapt resource value: 0x7f090038
-			public static int password_toggle_content_description = 2131296312;
+			public static int mr_controller_play = 2131296312;
 			
 			// aapt resource value: 0x7f090039
-			public static int path_password_eye = 2131296313;
+			public static int mr_controller_stop = 2131296313;
 			
 			// aapt resource value: 0x7f09003a
-			public static int path_password_eye_mask_strike_through = 2131296314;
+			public static int mr_controller_volume_slider = 2131296314;
 			
 			// aapt resource value: 0x7f09003b
-			public static int path_password_eye_mask_visible = 2131296315;
+			public static int mr_system_route_name = 2131296315;
 			
 			// aapt resource value: 0x7f09003c
-			public static int path_password_strike_through = 2131296316;
+			public static int mr_user_route_category_name = 2131296316;
+			
+			// aapt resource value: 0x7f090024
+			public static int password_toggle_content_description = 2131296292;
+			
+			// aapt resource value: 0x7f090025
+			public static int path_password_eye = 2131296293;
+			
+			// aapt resource value: 0x7f090026
+			public static int path_password_eye_mask_strike_through = 2131296294;
+			
+			// aapt resource value: 0x7f090027
+			public static int path_password_eye_mask_visible = 2131296295;
+			
+			// aapt resource value: 0x7f090028
+			public static int path_password_strike_through = 2131296296;
 			
 			// aapt resource value: 0x7f090001
 			public static int place_autocomplete_clear_button = 2131296257;
@@ -4269,8 +4278,8 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f0b00cc
 			public static int Animation_AppCompat_DropDownUp = 2131427532;
 			
-			// aapt resource value: 0x7f0b0011
-			public static int Animation_Design_BottomSheetDialog = 2131427345;
+			// aapt resource value: 0x7f0b0002
+			public static int Animation_Design_BottomSheetDialog = 2131427330;
 			
 			// aapt resource value: 0x7f0b00cd
 			public static int Base_AlertDialog_AppCompat = 2131427533;
@@ -4284,8 +4293,8 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f0b00d0
 			public static int Base_Animation_AppCompat_DropDownUp = 2131427536;
 			
-			// aapt resource value: 0x7f0b0001
-			public static int Base_CardView = 2131427329;
+			// aapt resource value: 0x7f0b001c
+			public static int Base_CardView = 2131427356;
 			
 			// aapt resource value: 0x7f0b00d1
 			public static int Base_DialogWindowTitle_AppCompat = 2131427537;
@@ -4731,20 +4740,20 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f0b00ae
 			public static int Base_Widget_AppCompat_Toolbar_Button_Navigation = 2131427502;
 			
-			// aapt resource value: 0x7f0b0012
-			public static int Base_Widget_Design_AppBarLayout = 2131427346;
-			
-			// aapt resource value: 0x7f0b0013
-			public static int Base_Widget_Design_TabLayout = 2131427347;
-			
-			// aapt resource value: 0x7f0b0000
-			public static int CardView = 2131427328;
-			
-			// aapt resource value: 0x7f0b0002
-			public static int CardView_Dark = 2131427330;
-			
 			// aapt resource value: 0x7f0b0003
-			public static int CardView_Light = 2131427331;
+			public static int Base_Widget_Design_AppBarLayout = 2131427331;
+			
+			// aapt resource value: 0x7f0b0004
+			public static int Base_Widget_Design_TabLayout = 2131427332;
+			
+			// aapt resource value: 0x7f0b001b
+			public static int CardView = 2131427355;
+			
+			// aapt resource value: 0x7f0b001d
+			public static int CardView_Dark = 2131427357;
+			
+			// aapt resource value: 0x7f0b001e
+			public static int CardView_Light = 2131427358;
 			
 			// aapt resource value: 0x7f0b0048
 			public static int Platform_AppCompat = 2131427400;
@@ -5001,35 +5010,35 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f0b0128
 			public static int TextAppearance_AppCompat_Widget_TextView_SpinnerItem = 2131427624;
 			
-			// aapt resource value: 0x7f0b0014
-			public static int TextAppearance_Design_CollapsingToolbar_Expanded = 2131427348;
-			
-			// aapt resource value: 0x7f0b0015
-			public static int TextAppearance_Design_Counter = 2131427349;
-			
-			// aapt resource value: 0x7f0b0016
-			public static int TextAppearance_Design_Counter_Overflow = 2131427350;
-			
-			// aapt resource value: 0x7f0b0017
-			public static int TextAppearance_Design_Error = 2131427351;
-			
-			// aapt resource value: 0x7f0b0018
-			public static int TextAppearance_Design_Hint = 2131427352;
-			
-			// aapt resource value: 0x7f0b0019
-			public static int TextAppearance_Design_Snackbar_Message = 2131427353;
-			
-			// aapt resource value: 0x7f0b001a
-			public static int TextAppearance_Design_Tab = 2131427354;
-			
-			// aapt resource value: 0x7f0b0004
-			public static int TextAppearance_MediaRouter_PrimaryText = 2131427332;
-			
 			// aapt resource value: 0x7f0b0005
-			public static int TextAppearance_MediaRouter_SecondaryText = 2131427333;
+			public static int TextAppearance_Design_CollapsingToolbar_Expanded = 2131427333;
 			
 			// aapt resource value: 0x7f0b0006
-			public static int TextAppearance_MediaRouter_Title = 2131427334;
+			public static int TextAppearance_Design_Counter = 2131427334;
+			
+			// aapt resource value: 0x7f0b0007
+			public static int TextAppearance_Design_Counter_Overflow = 2131427335;
+			
+			// aapt resource value: 0x7f0b0008
+			public static int TextAppearance_Design_Error = 2131427336;
+			
+			// aapt resource value: 0x7f0b0009
+			public static int TextAppearance_Design_Hint = 2131427337;
+			
+			// aapt resource value: 0x7f0b000a
+			public static int TextAppearance_Design_Snackbar_Message = 2131427338;
+			
+			// aapt resource value: 0x7f0b000b
+			public static int TextAppearance_Design_Tab = 2131427339;
+			
+			// aapt resource value: 0x7f0b001f
+			public static int TextAppearance_MediaRouter_PrimaryText = 2131427359;
+			
+			// aapt resource value: 0x7f0b0020
+			public static int TextAppearance_MediaRouter_SecondaryText = 2131427360;
+			
+			// aapt resource value: 0x7f0b0021
+			public static int TextAppearance_MediaRouter_Title = 2131427361;
 			
 			// aapt resource value: 0x7f0b0056
 			public static int TextAppearance_StatusBar_EventContent = 2131427414;
@@ -5118,35 +5127,35 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f0b0139
 			public static int Theme_AppCompat_NoActionBar = 2131427641;
 			
-			// aapt resource value: 0x7f0b001b
-			public static int Theme_Design = 2131427355;
+			// aapt resource value: 0x7f0b000c
+			public static int Theme_Design = 2131427340;
 			
-			// aapt resource value: 0x7f0b001c
-			public static int Theme_Design_BottomSheetDialog = 2131427356;
+			// aapt resource value: 0x7f0b000d
+			public static int Theme_Design_BottomSheetDialog = 2131427341;
 			
-			// aapt resource value: 0x7f0b001d
-			public static int Theme_Design_Light = 2131427357;
+			// aapt resource value: 0x7f0b000e
+			public static int Theme_Design_Light = 2131427342;
 			
-			// aapt resource value: 0x7f0b001e
-			public static int Theme_Design_Light_BottomSheetDialog = 2131427358;
+			// aapt resource value: 0x7f0b000f
+			public static int Theme_Design_Light_BottomSheetDialog = 2131427343;
 			
-			// aapt resource value: 0x7f0b001f
-			public static int Theme_Design_Light_NoActionBar = 2131427359;
+			// aapt resource value: 0x7f0b0010
+			public static int Theme_Design_Light_NoActionBar = 2131427344;
 			
-			// aapt resource value: 0x7f0b0020
-			public static int Theme_Design_NoActionBar = 2131427360;
+			// aapt resource value: 0x7f0b0011
+			public static int Theme_Design_NoActionBar = 2131427345;
 			
-			// aapt resource value: 0x7f0b0007
-			public static int Theme_MediaRouter = 2131427335;
+			// aapt resource value: 0x7f0b0022
+			public static int Theme_MediaRouter = 2131427362;
 			
-			// aapt resource value: 0x7f0b0008
-			public static int Theme_MediaRouter_Light = 2131427336;
+			// aapt resource value: 0x7f0b0023
+			public static int Theme_MediaRouter_Light = 2131427363;
 			
-			// aapt resource value: 0x7f0b0009
-			public static int Theme_MediaRouter_Light_DarkControlPanel = 2131427337;
+			// aapt resource value: 0x7f0b0024
+			public static int Theme_MediaRouter_Light_DarkControlPanel = 2131427364;
 			
-			// aapt resource value: 0x7f0b000a
-			public static int Theme_MediaRouter_LightControlPanel = 2131427338;
+			// aapt resource value: 0x7f0b0025
+			public static int Theme_MediaRouter_LightControlPanel = 2131427365;
 			
 			// aapt resource value: 0x7f0b013a
 			public static int ThemeOverlay_AppCompat = 2131427642;
@@ -5169,11 +5178,11 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f0b0140
 			public static int ThemeOverlay_AppCompat_Light = 2131427648;
 			
-			// aapt resource value: 0x7f0b000b
-			public static int ThemeOverlay_MediaRouter_Dark = 2131427339;
+			// aapt resource value: 0x7f0b0026
+			public static int ThemeOverlay_MediaRouter_Dark = 2131427366;
 			
-			// aapt resource value: 0x7f0b000c
-			public static int ThemeOverlay_MediaRouter_Light = 2131427340;
+			// aapt resource value: 0x7f0b0027
+			public static int ThemeOverlay_MediaRouter_Light = 2131427367;
 			
 			// aapt resource value: 0x7f0b0141
 			public static int Widget_AppCompat_ActionBar = 2131427649;
@@ -5397,44 +5406,44 @@ namespace TK.CustomMap.Droid
 			// aapt resource value: 0x7f0b0188
 			public static int Widget_AppCompat_Toolbar_Button_Navigation = 2131427720;
 			
-			// aapt resource value: 0x7f0b0010
-			public static int Widget_Design_AppBarLayout = 2131427344;
+			// aapt resource value: 0x7f0b0001
+			public static int Widget_Design_AppBarLayout = 2131427329;
 			
-			// aapt resource value: 0x7f0b0021
-			public static int Widget_Design_BottomNavigationView = 2131427361;
+			// aapt resource value: 0x7f0b0012
+			public static int Widget_Design_BottomNavigationView = 2131427346;
 			
-			// aapt resource value: 0x7f0b0022
-			public static int Widget_Design_BottomSheet_Modal = 2131427362;
+			// aapt resource value: 0x7f0b0013
+			public static int Widget_Design_BottomSheet_Modal = 2131427347;
 			
-			// aapt resource value: 0x7f0b0023
-			public static int Widget_Design_CollapsingToolbar = 2131427363;
+			// aapt resource value: 0x7f0b0014
+			public static int Widget_Design_CollapsingToolbar = 2131427348;
 			
-			// aapt resource value: 0x7f0b0024
-			public static int Widget_Design_CoordinatorLayout = 2131427364;
+			// aapt resource value: 0x7f0b0015
+			public static int Widget_Design_CoordinatorLayout = 2131427349;
 			
-			// aapt resource value: 0x7f0b0025
-			public static int Widget_Design_FloatingActionButton = 2131427365;
+			// aapt resource value: 0x7f0b0016
+			public static int Widget_Design_FloatingActionButton = 2131427350;
 			
-			// aapt resource value: 0x7f0b0026
-			public static int Widget_Design_NavigationView = 2131427366;
+			// aapt resource value: 0x7f0b0017
+			public static int Widget_Design_NavigationView = 2131427351;
 			
-			// aapt resource value: 0x7f0b0027
-			public static int Widget_Design_ScrimInsetsFrameLayout = 2131427367;
+			// aapt resource value: 0x7f0b0018
+			public static int Widget_Design_ScrimInsetsFrameLayout = 2131427352;
+			
+			// aapt resource value: 0x7f0b0019
+			public static int Widget_Design_Snackbar = 2131427353;
+			
+			// aapt resource value: 0x7f0b0000
+			public static int Widget_Design_TabLayout = 2131427328;
+			
+			// aapt resource value: 0x7f0b001a
+			public static int Widget_Design_TextInputLayout = 2131427354;
 			
 			// aapt resource value: 0x7f0b0028
-			public static int Widget_Design_Snackbar = 2131427368;
-			
-			// aapt resource value: 0x7f0b000f
-			public static int Widget_Design_TabLayout = 2131427343;
+			public static int Widget_MediaRouter_Light_MediaRouteButton = 2131427368;
 			
 			// aapt resource value: 0x7f0b0029
-			public static int Widget_Design_TextInputLayout = 2131427369;
-			
-			// aapt resource value: 0x7f0b000d
-			public static int Widget_MediaRouter_Light_MediaRouteButton = 2131427341;
-			
-			// aapt resource value: 0x7f0b000e
-			public static int Widget_MediaRouter_MediaRouteButton = 2131427342;
+			public static int Widget_MediaRouter_MediaRouteButton = 2131427369;
 			
 			static Style()
 			{
@@ -5649,7 +5658,7 @@ namespace TK.CustomMap.Droid
 			
 			public static int[] AppBarLayout = new int[] {
 					16842964,
-					2130772014,
+					2130771991,
 					2130772124};
 			
 			// aapt resource value: 0
@@ -5662,8 +5671,8 @@ namespace TK.CustomMap.Droid
 			public static int AppBarLayout_expanded = 1;
 			
 			public static int[] AppBarLayoutStates = new int[] {
-					2130772015,
-					2130772016};
+					2130771992,
+					2130771993};
 			
 			// aapt resource value: 0
 			public static int AppBarLayoutStates_state_collapsed = 0;
@@ -5672,8 +5681,8 @@ namespace TK.CustomMap.Droid
 			public static int AppBarLayoutStates_state_collapsible = 1;
 			
 			public static int[] AppBarLayout_Layout = new int[] {
-					2130772017,
-					2130772018};
+					2130771994,
+					2130771995};
 			
 			// aapt resource value: 0
 			public static int AppBarLayout_Layout_layout_scrollFlags = 0;
@@ -6212,10 +6221,10 @@ namespace TK.CustomMap.Droid
 			public static int AppCompatTheme_windowNoTitle = 3;
 			
 			public static int[] BottomNavigationView = new int[] {
-					2130772057,
-					2130772058,
-					2130772059,
-					2130772060,
+					2130772034,
+					2130772035,
+					2130772036,
+					2130772037,
 					2130772124};
 			
 			// aapt resource value: 4
@@ -6234,9 +6243,9 @@ namespace TK.CustomMap.Droid
 			public static int BottomNavigationView_menu = 0;
 			
 			public static int[] BottomSheetBehavior_Layout = new int[] {
-					2130772019,
-					2130772020,
-					2130772021};
+					2130771996,
+					2130771997,
+					2130771998};
 			
 			// aapt resource value: 1
 			public static int BottomSheetBehavior_Layout_behavior_hideable = 1;
@@ -6256,17 +6265,17 @@ namespace TK.CustomMap.Droid
 			public static int[] CardView = new int[] {
 					16843071,
 					16843072,
-					2130771991,
-					2130771992,
-					2130771993,
-					2130771994,
-					2130771995,
-					2130771996,
-					2130771997,
-					2130771998,
-					2130771999,
-					2130772000,
-					2130772001};
+					2130772073,
+					2130772074,
+					2130772075,
+					2130772076,
+					2130772077,
+					2130772078,
+					2130772079,
+					2130772080,
+					2130772081,
+					2130772082,
+					2130772083};
 			
 			// aapt resource value: 1
 			public static int CardView_android_minHeight = 1;
@@ -6308,21 +6317,21 @@ namespace TK.CustomMap.Droid
 			public static int CardView_contentPaddingTop = 11;
 			
 			public static int[] CollapsingToolbarLayout = new int[] {
-					2130772022,
-					2130772023,
-					2130772024,
-					2130772025,
-					2130772026,
-					2130772027,
-					2130772028,
-					2130772029,
-					2130772030,
-					2130772031,
-					2130772032,
-					2130772033,
-					2130772034,
-					2130772035,
-					2130772036,
+					2130771999,
+					2130772000,
+					2130772001,
+					2130772002,
+					2130772003,
+					2130772004,
+					2130772005,
+					2130772006,
+					2130772007,
+					2130772008,
+					2130772009,
+					2130772010,
+					2130772011,
+					2130772012,
+					2130772013,
 					2130772099};
 			
 			// aapt resource value: 12
@@ -6374,8 +6383,8 @@ namespace TK.CustomMap.Droid
 			public static int CollapsingToolbarLayout_toolbarId = 9;
 			
 			public static int[] CollapsingToolbarLayout_Layout = new int[] {
-					2130772037,
-					2130772038};
+					2130772014,
+					2130772015};
 			
 			// aapt resource value: 0
 			public static int CollapsingToolbarLayout_Layout_layout_collapseMode = 0;
@@ -6412,8 +6421,8 @@ namespace TK.CustomMap.Droid
 			public static int CompoundButton_buttonTintMode = 2;
 			
 			public static int[] CoordinatorLayout = new int[] {
-					2130772039,
-					2130772040};
+					2130772016,
+					2130772017};
 			
 			// aapt resource value: 0
 			public static int CoordinatorLayout_keylines = 0;
@@ -6423,12 +6432,12 @@ namespace TK.CustomMap.Droid
 			
 			public static int[] CoordinatorLayout_Layout = new int[] {
 					16842931,
-					2130772041,
-					2130772042,
-					2130772043,
-					2130772044,
-					2130772045,
-					2130772046};
+					2130772018,
+					2130772019,
+					2130772020,
+					2130772021,
+					2130772022,
+					2130772023};
 			
 			// aapt resource value: 0
 			public static int CoordinatorLayout_Layout_android_layout_gravity = 0;
@@ -6452,9 +6461,9 @@ namespace TK.CustomMap.Droid
 			public static int CoordinatorLayout_Layout_layout_keyline = 3;
 			
 			public static int[] DesignTheme = new int[] {
-					2130772047,
-					2130772048,
-					2130772049};
+					2130772024,
+					2130772025,
+					2130772026};
 			
 			// aapt resource value: 0
 			public static int DesignTheme_bottomSheetDialogTheme = 0;
@@ -6500,11 +6509,11 @@ namespace TK.CustomMap.Droid
 			public static int DrawerArrowToggle_thickness = 7;
 			
 			public static int[] FloatingActionButton = new int[] {
-					2130772050,
-					2130772051,
-					2130772052,
-					2130772053,
-					2130772054,
+					2130772027,
+					2130772028,
+					2130772029,
+					2130772030,
+					2130772031,
 					2130772124,
 					2130772322,
 					2130772323};
@@ -6534,7 +6543,7 @@ namespace TK.CustomMap.Droid
 			public static int FloatingActionButton_useCompatPadding = 4;
 			
 			public static int[] FloatingActionButton_Behavior_Layout = new int[] {
-					2130772055};
+					2130772032};
 			
 			// aapt resource value: 0
 			public static int FloatingActionButton_Behavior_Layout_behavior_autoHide = 0;
@@ -6542,7 +6551,7 @@ namespace TK.CustomMap.Droid
 			public static int[] ForegroundLinearLayout = new int[] {
 					16843017,
 					16843264,
-					2130772056};
+					2130772033};
 			
 			// aapt resource value: 0
 			public static int ForegroundLinearLayout_android_foreground = 0;
@@ -6706,7 +6715,7 @@ namespace TK.CustomMap.Droid
 			public static int[] MediaRouteButton = new int[] {
 					16843071,
 					16843072,
-					2130772013,
+					2130772095,
 					2130772255};
 			
 			// aapt resource value: 1
@@ -6859,12 +6868,12 @@ namespace TK.CustomMap.Droid
 					16842964,
 					16842973,
 					16843039,
-					2130772057,
-					2130772058,
-					2130772059,
-					2130772060,
-					2130772061,
-					2130772062,
+					2130772034,
+					2130772035,
+					2130772036,
+					2130772037,
+					2130772038,
+					2130772039,
 					2130772124};
 			
 			// aapt resource value: 0
@@ -6954,13 +6963,13 @@ namespace TK.CustomMap.Droid
 			public static int RecyclerView_stackFromEnd = 5;
 			
 			public static int[] ScrimInsetsFrameLayout = new int[] {
-					2130772063};
+					2130772040};
 			
 			// aapt resource value: 0
 			public static int ScrimInsetsFrameLayout_insetForeground = 0;
 			
 			public static int[] ScrollingViewBehavior_Layout = new int[] {
-					2130772064};
+					2130772041};
 			
 			// aapt resource value: 0
 			public static int ScrollingViewBehavior_Layout_behavior_overlapTop = 0;
@@ -7051,7 +7060,7 @@ namespace TK.CustomMap.Droid
 			
 			public static int[] SnackbarLayout = new int[] {
 					16843039,
-					2130772065,
+					2130772042,
 					2130772124};
 			
 			// aapt resource value: 0
@@ -7158,22 +7167,22 @@ namespace TK.CustomMap.Droid
 			public static int TabItem_android_text = 2;
 			
 			public static int[] TabLayout = new int[] {
-					2130772066,
-					2130772067,
-					2130772068,
-					2130772069,
-					2130772070,
-					2130772071,
-					2130772072,
-					2130772073,
-					2130772074,
-					2130772075,
-					2130772076,
-					2130772077,
-					2130772078,
-					2130772079,
-					2130772080,
-					2130772081};
+					2130772043,
+					2130772044,
+					2130772045,
+					2130772046,
+					2130772047,
+					2130772048,
+					2130772049,
+					2130772050,
+					2130772051,
+					2130772052,
+					2130772053,
+					2130772054,
+					2130772055,
+					2130772056,
+					2130772057,
+					2130772058};
 			
 			// aapt resource value: 3
 			public static int TabLayout_tabBackground = 3;
@@ -7268,20 +7277,20 @@ namespace TK.CustomMap.Droid
 			public static int[] TextInputLayout = new int[] {
 					16842906,
 					16843088,
-					2130772082,
-					2130772083,
-					2130772084,
-					2130772085,
-					2130772086,
-					2130772087,
-					2130772088,
-					2130772089,
-					2130772090,
-					2130772091,
-					2130772092,
-					2130772093,
-					2130772094,
-					2130772095};
+					2130772059,
+					2130772060,
+					2130772061,
+					2130772062,
+					2130772063,
+					2130772064,
+					2130772065,
+					2130772066,
+					2130772067,
+					2130772068,
+					2130772069,
+					2130772070,
+					2130772071,
+					2130772072};
 			
 			// aapt resource value: 1
 			public static int TextInputLayout_android_hint = 1;

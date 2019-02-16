@@ -14,7 +14,7 @@ namespace CV.Mobile.Services
         private string Scope1;
 
         public OAuth2AuthenticatorToken(string clientId, string clientSecret, string scope, Uri authorizeURL, Uri redirectUrl, Uri UserTokenURL) :
-            base(clientId, clientSecret, scope, authorizeURL, redirectUrl, UserTokenURL,null,true)
+            base(clientId, clientSecret, scope, authorizeURL, redirectUrl, UserTokenURL)
         {
             AuthorizeUrl1 = authorizeURL;
             RedirectUrl = redirectUrl;

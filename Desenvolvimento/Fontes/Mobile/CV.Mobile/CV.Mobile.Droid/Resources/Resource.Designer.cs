@@ -1397,6 +1397,7 @@ namespace CV.Mobile.Droid
 			global::TK.CustomMap.Droid.Resource.String.common_open_on_phone = global::CV.Mobile.Droid.Resource.String.common_open_on_phone;
 			global::TK.CustomMap.Droid.Resource.String.common_signin_button_text = global::CV.Mobile.Droid.Resource.String.common_signin_button_text;
 			global::TK.CustomMap.Droid.Resource.String.common_signin_button_text_long = global::CV.Mobile.Droid.Resource.String.common_signin_button_text_long;
+			global::TK.CustomMap.Droid.Resource.String.library_name = global::CV.Mobile.Droid.Resource.String.library_name;
 			global::TK.CustomMap.Droid.Resource.String.mr_button_content_description = global::CV.Mobile.Droid.Resource.String.mr_button_content_description;
 			global::TK.CustomMap.Droid.Resource.String.mr_cast_button_connected = global::CV.Mobile.Droid.Resource.String.mr_cast_button_connected;
 			global::TK.CustomMap.Droid.Resource.String.mr_cast_button_connecting = global::CV.Mobile.Droid.Resource.String.mr_cast_button_connecting;
