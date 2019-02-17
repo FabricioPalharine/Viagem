@@ -6,6 +6,7 @@ using System.Text;
 using Xamarin.Auth;
 using CV.Mobile.Models;
 using System.Threading.Tasks;
+using Google.SignIn;
 
 namespace CV.Mobile.iOS.Services
 {
@@ -14,6 +15,7 @@ namespace CV.Mobile.iOS.Services
         public async Task Desconectar()
         {
             await Task.Delay(1);
+            SignIn.SharedInstance.SignOutUser();
         }
 
         public async Task<Account> RetornarAutenticacaoAplicacao()

@@ -41,6 +41,8 @@ namespace CV.Mobile.ViewModels
                                                                         await CarregarListaDados();
                                                                         var Pagina = new ConsultarMapaExibicaoPage() { BindingContext = this };
                                                                         await PushAsync(Pagina);
+                                                                        await AjustarCentroMapa();
+
                                                                     },
                                                                     () => true);
 
@@ -223,6 +225,16 @@ namespace CV.Mobile.ViewModels
             
         }
 
+        private async Task AjustarCentroMapa()
+        {
+            await Task.Delay(2000);
+            // var teste = GetCentralGeoCoordinate(Dados.Select(d => new Position(d.Latitude.GetValueOrDefault(), d.Longitude.GetValueOrDefault())).ToList());
+            //LimiteMapa = GetCentralGeoCoordinate(Dados.Select(d => new Position(d.Latitude.GetValueOrDefault(), d.Longitude.GetValueOrDefault())).ToList());
+            if (ListaDados != null && ListaDados.Any())
+                MapCenter = ListaDados.OrderByDescending(d => d.DataInicio).Select(d => new Position(d.Latitude.GetValueOrDefault(), d.Longitude.GetValueOrDefault())).FirstOrDefault();
+
+        }
+
         private async Task CarregarListaDados()
         {
             List<PontoMapa> Dados = new List<PontoMapa>();
@@ -260,7 +272,7 @@ namespace CV.Mobile.ViewModels
                     itemPin.ShowCallout = true;
                     itemPin.Anchor = new Point(0.5, 1);
                     if (itemPonto.Tipo == "V" || itemPonto.Tipo == "F")
-                        itemPin.Title = itemPonto.UrlTumbnail;
+                        itemPin.DetailImage = itemPonto.UrlTumbnail;
                     else
                         itemPin.Title = itemPonto.Nome;
                     itemPin.Subtitle = itemPonto.Periodo;
@@ -293,11 +305,6 @@ namespace CV.Mobile.ViewModels
                     }
                     Polylines.Add(polyline);
                 }
-                await Task.Delay(2000);
-                // var teste = GetCentralGeoCoordinate(Dados.Select(d => new Position(d.Latitude.GetValueOrDefault(), d.Longitude.GetValueOrDefault())).ToList());
-                //LimiteMapa = GetCentralGeoCoordinate(Dados.Select(d => new Position(d.Latitude.GetValueOrDefault(), d.Longitude.GetValueOrDefault())).ToList());
-                if (ListaDados.Any())
-                    MapCenter = ListaDados.OrderByDescending(d => d.DataInicio).Select(d => new Position(d.Latitude.GetValueOrDefault(), d.Longitude.GetValueOrDefault())).FirstOrDefault();
             }
             catch
             {

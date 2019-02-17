@@ -3,10 +3,17 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">   
+	<TextView
+        android:id="@+id/InfoWindowSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="InfoWindowSubtitle"
+        android:textColor="@android:color/black" />
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:id="@+id/demoImageView"
         android:scaleType="fitCenter" />
+
 </LinearLayout>
 

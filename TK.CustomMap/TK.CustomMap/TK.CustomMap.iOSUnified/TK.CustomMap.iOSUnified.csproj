@@ -58,6 +58,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <InterfaceDefinition Include="Resources\ViewImageMapa.xib">
+      <SubType>Designer</SubType>
+    </InterfaceDefinition>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms">

@@ -63,18 +63,20 @@ namespace CV.Mobile.Services
 
             if (response.IsSuccessStatusCode)
             {
-                var retornoCompleto = JsonConvert.DeserializeObject<dynamic>(resultado);
+                JObject retornoCompleto = JsonConvert.DeserializeObject<JObject>(resultado);
                 item = new DadosGoogleToken();
-                item.expires_in  = retornoCompleto.expires_in;
-                item.access_token = retornoCompleto.access_token;
-                item.refresh_token = retornoCompleto.refresh_token;
-               
+                item.expires_in  = retornoCompleto["expires_in"].ToString();
+                item.access_token = retornoCompleto["access_token"].ToString();
+                item.refresh_token = retornoCompleto["refresh_token"].ToString();
+
+
             }
 
             return item;
         }
 
-        public async Task AtualizarTokenUsuario(Usuario itemUsuario)
+
+       public async Task AtualizarTokenUsuario(Usuario itemUsuario)
         {
       
             string Uri = String.Concat("token");
@@ -97,9 +99,9 @@ namespace CV.Mobile.Services
 
             if (response.IsSuccessStatusCode)
             {
-                var retornoCompleto = JsonConvert.DeserializeObject<dynamic>(resultado);
-                itemUsuario.Token = retornoCompleto.access_token;
-                itemUsuario.Lifetime = retornoCompleto.expires_in;
+                JObject retornoCompleto = JsonConvert.DeserializeObject<JObject>(resultado);
+                itemUsuario.Token = retornoCompleto["access_token"].ToString();;
+                itemUsuario.Lifetime = Convert.ToInt32( retornoCompleto["expires_in"].ToString());;
                 itemUsuario.DataToken = DateTime.Now.ToUniversalTime();
                 using (ApiService srv = new ApiService())
                 {

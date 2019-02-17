@@ -1280,7 +1280,8 @@ namespace TK.CustomMap.Droid
 
         public Android.Views.View GetInfoContents(Marker marker)
         {
-            if (marker.Title.ToLower().StartsWith("https://"))
+            var pin = GetPinByMarker(marker);
+            if (pin != null && !string.IsNullOrEmpty( pin.DetailImage))
             {
                 var inflater = Android.App.Application.Context.GetSystemService("layout_inflater") as Android.Views.LayoutInflater;
                 if (inflater != null)
@@ -1294,20 +1295,20 @@ namespace TK.CustomMap.Droid
                     var imagen = view.FindViewById<ImageView>(Resource.Id.demoImageView);
 
               
-                    Android.Graphics.Bitmap  imageBitmap = GetImageBitmapFromUrl(marker.Title) as Android.Graphics.Bitmap;
+                    Android.Graphics.Bitmap  imageBitmap = GetImageBitmapFromUrl(pin.DetailImage) as Android.Graphics.Bitmap;
                     imagen.SetImageBitmap(imageBitmap);
 
-                    //var infoTitle = view.FindViewById<TextView>(Resource.Id.InfoWindowTitle);
-                    //var infoSubtitle = view.FindViewById<TextView>(Resource.Id.InfoWindowSubtitle);
+                   // var infoTitle = view.FindViewById<TextView>(Resource.Id.InfoWindowTitle);
+                    var infoSubtitle = view.FindViewById<TextView>(Resource.Id.InfoWindowSubtitle);
 
-                    ////if (infoTitle != null)
-                    ////{
-                    ////    infoTitle.Text = marker.Title;
-                    ////}
-                    //if (infoSubtitle != null)
+                    //if (infoTitle != null)
                     //{
-                    //    infoSubtitle.Text = marker.Snippet;
+                    //    infoTitle.Text = marker.Title;
                     //}
+                    if (infoSubtitle != null)
+                    {
+                        infoSubtitle.Text = pin.Subtitle;
+                    }
 
                     return view;
                 }

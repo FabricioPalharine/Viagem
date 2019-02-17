@@ -29,16 +29,12 @@
   </ContentPage.ToolbarItems>
   <ContentPage.Content>
     <ScrollView>
-
-            <RelativeLayout  VerticalOptions="FillAndExpand" >
+            <StackLayout Orientation="Vertical" >
                 <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="Blue" />
 
-                <StackLayout
-                                  RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent,
-            Property=Height,Factor=0,Constant=60}"
-                          RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width,Factor=1,Constant=0}"
-                         >
-        <Label Text="Atração Pai"  />
+                <Label Text="Nome"  />
+            <Entry Text="{Binding ItemAtracao.Nome}"/>
+            <Label Text="Atração Pai"  />
         <controles:ExtendedPicker
                               DisplayProperty="Nome"
                               KeyMemberPath="Identificador"
@@ -115,17 +111,9 @@
         </ListView>    
   
       </StackLayout>
-      <Label Text="Nome"  RelativeLayout.YConstraint="{ConstraintExpression Constant=0}"
-     RelativeLayout.XConstraint="{ConstraintExpression  Constant=0}"/>
 
-      <controles:PlacesSearch Bounds="{Binding Bounds}" PlaceSelectedCommand="{Binding PlaceSelectedCommand}" Text="{Binding ItemAtracao.Nome}" Placeholder=""
-                       RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent,
-            Property=Height,Factor=0,Constant=10}"
-                        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1,Constant=10}"
-     RelativeLayout.XConstraint="{ConstraintExpression  Constant=0}"
-                                    ></controles:PlacesSearch>
       
-    </RelativeLayout>
+
     </ScrollView>
 
   </ContentPage.Content>
