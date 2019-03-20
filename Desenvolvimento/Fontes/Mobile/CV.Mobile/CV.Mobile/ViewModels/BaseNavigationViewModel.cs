@@ -308,7 +308,8 @@ namespace CV.Mobile.ViewModels
             List<string> Acoes = new List<string>(new string[]
             {
                         "Selecionar Foto",
-                        "Selecionar Video"
+                        "Selecionar Video",
+                        "Selecionar YouTube"
             });
             if (CrossMedia.Current.IsCameraAvailable && CrossMedia.Current.IsTakePhotoSupported)
             {
@@ -351,6 +352,27 @@ namespace CV.Mobile.ViewModels
                 if (retorno != null)
                 {
                     await GravarVideo(itemUpload, retorno,true);
+                }
+            }
+            else if (action == "Selecionar YouTube")
+            {
+                if (Conectado)
+                {
+                    using (ApiService srv = new ApiService())
+                    {
+                        var ItemUsuario = await srv.CarregarUsuario(ItemUsuarioLogado.Codigo);
+                        if (ItemUsuario != null && ItemUsuario.DataToken.GetValueOrDefault().AddSeconds(ItemUsuario.Lifetime.GetValueOrDefault(0) - 60) < DateTime.Now.ToUniversalTime())
+                        {
+                            using (AccountsService srvAccount = new AccountsService())
+                            {
+                                await srvAccount.AtualizarTokenUsuario(ItemUsuario);
+                            }
+                        }
+                        var VM = new VideoYouTubeViewModel(ItemViagemSelecionada, ItemUsuario);
+                        var Pagina = new Views.ListagemVideosPage() { BindingContext = VM };
+                        await PushAsync(Pagina);
+
+                    }
                 }
             }
         }

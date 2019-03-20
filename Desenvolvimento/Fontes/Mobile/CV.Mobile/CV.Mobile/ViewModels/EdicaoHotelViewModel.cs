@@ -91,9 +91,9 @@ namespace CV.Mobile.ViewModels
                     {
                         var itemHotel = await srv.CarregarHotel(_ItemHotel.Identificador);
                         bool NoHotel = itemHotel.Eventos.Where(d => d.IdentificadorUsuario == ItemUsuarioLogado.Codigo).Where(d => !d.DataSaida.HasValue).Any();
-                        HotelEvento itemEvento = new HotelEvento() { DataEntrada = DateTime.Now, IdentificadorHotel = itemHotel.Identificador, IdentificadorUsuario = ItemUsuarioLogado.Codigo, DataAtualizacao = DateTime.Now.ToUniversalTime() };
+                        HotelEvento itemEvento = new HotelEvento() { DataEntrada = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Unspecified), IdentificadorHotel = itemHotel.Identificador, IdentificadorUsuario = ItemUsuarioLogado.Codigo, DataAtualizacao = DateTime.Now.ToUniversalTime() };
                         if (NoHotel)
-                            itemEvento.DataSaida = DateTime.Now;
+                            itemEvento.DataSaida = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Unspecified);
                         var Resultado = await srv.SalvarHotelEvento(itemEvento);
                         TextoComandoTrocar = NoHotel ? "Cheguei Hotel" : "Deixei Hotel";
                         if (Resultado.Sucesso)
@@ -118,10 +118,10 @@ namespace CV.Mobile.ViewModels
                 var itemEvento = itemHotel.Eventos.Where(d => d.IdentificadorUsuario == ItemUsuarioLogado.Codigo).Where(d => !d.DataSaida.HasValue).OrderByDescending(d => d.DataEntrada).FirstOrDefault();
                 bool NoHotel = itemEvento != null;
                 if (itemEvento == null)
-                    itemEvento = new HotelEvento() { DataEntrada = DateTime.Now, IdentificadorHotel = itemHotel.Identificador, IdentificadorUsuario = ItemUsuarioLogado.Codigo, DataAtualizacao = DateTime.Now.ToUniversalTime(), AtualizadoBanco = false };
+                    itemEvento = new HotelEvento() { DataEntrada = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Unspecified), IdentificadorHotel = itemHotel.Identificador, IdentificadorUsuario = ItemUsuarioLogado.Codigo, DataAtualizacao = DateTime.Now.ToUniversalTime(), AtualizadoBanco = false };
                 else
                 {
-                    itemEvento.DataSaida = DateTime.Now;
+                    itemEvento.DataSaida = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Unspecified);
                     itemEvento.DataAtualizacao = DateTime.Now.ToUniversalTime();
                     itemEvento.AtualizadoBanco = false;
                 }

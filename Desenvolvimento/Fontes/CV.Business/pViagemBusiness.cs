@@ -1270,8 +1270,17 @@ namespace CV.Business
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             Viagem itemViagem = SelecionarViagem(IdentificadoViagem);
 
-            itemResultado.ItemRegistro = CadastrarNovaFoto(itemViagem, itemUsuario, itemFoto, true);
-
+            if (!ExistirFoto(IdentificadoViagem.GetValueOrDefault(), true, itemFoto.CodigoGoogle))
+            {
+                itemResultado.ItemRegistro = CadastrarNovaFoto(itemViagem, itemUsuario, itemFoto, true);
+                itemResultado.Sucesso = true;
+                itemResultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Vídeo adicionado com sucesso" } };
+            }
+            else
+            {
+                itemResultado.Sucesso = false;
+                itemResultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = "Vídeo já Associado a viagem" } };
+            }
             return itemResultado;
         }
 
@@ -3298,6 +3307,13 @@ namespace CV.Business
                 itemDePara.ItemRetorno = SelecionarSugestao(itemCP.Identificador);
                 itemDePara.IdentificadorDetino = itemCP.Identificador;
                 listaResultado.Add(itemDePara);
+            }
+        }
+        public bool ExistirFoto(int IdentificadorViagem, bool Video, string GoogleId)
+        {
+            using (ViagemRepository data = new ViagemRepository())
+            {
+                return data.ExistirFoto(IdentificadorViagem, Video, GoogleId);
             }
         }
     }

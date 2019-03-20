@@ -650,6 +650,13 @@ namespace CV.Data
             return query.ToList();
         }
 
+        public bool ExistirFoto(int IdentificadorViagem, bool Video, string GoogleId )
+        {
+            return this.Context.Fotos.Where(d => d.IdentificadorViagem == IdentificadorViagem)
+                .Where(d => d.Video == Video)
+                .Where(d => d.CodigoFoto == GoogleId)
+                .Any();
+        }
         public List<Cidade> CarregarCidadeViagemFoto(int? IdentificadorViagem)
         {
             IQueryable<Cidade> query = this.Context.Fotos.Where(d => d.IdentificadorViagem == IdentificadorViagem).Select(d => d.ItemCidade);
