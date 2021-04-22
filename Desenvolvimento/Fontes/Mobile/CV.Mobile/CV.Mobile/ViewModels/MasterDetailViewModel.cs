@@ -43,7 +43,7 @@ namespace CV.Mobile.ViewModels
             cvHubConnection = new HubConnection(String.Concat(Settings.BaseWebApi, "signalr/hubs"));
 
             locator = CrossGeolocator.Current;
-            locator.DesiredAccuracy = 10;
+            locator.DesiredAccuracy = 5;
             locator.AllowsBackgroundUpdates = true;
             locator.PositionChanged += Locator_PositionChanged;
             MenuViewModel vmMenu = new MenuViewModel(itemUsuario);
@@ -566,12 +566,13 @@ namespace CV.Mobile.ViewModels
 
         public async Task IniciarControlePosicao()
         {
+
             if (locator.IsGeolocationEnabled && locator.IsGeolocationAvailable)
             {
                 if (_ItemViagem != null && _ItemViagem.Edicao && _ItemViagem.Aberto && _ItemViagem.DataInicio < DateTime.Now && _ItemViagem.ControlaPosicaoGPS)
                 {
                     if (!locator.IsListening)
-                        await locator.StartListeningAsync(500, 5, true);
+                        await locator.StartListeningAsync(3000, 10, true);
                 }
                 else
                 {
@@ -605,7 +606,7 @@ namespace CV.Mobile.ViewModels
 
         private async void AtualizarDistancias(Position itemPosition)
         {
-            if (_ItemViagem != null )
+            if (_ItemViagem != null && itemPosition != null)
             {
                 if (ItemUltimaPosicao != null)
                 {

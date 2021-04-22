@@ -19,6 +19,7 @@ using FFImageLoading.Forms.Droid;
 using Android.Content;
 using Android.Gms.Auth.Api.SignIn;
 using Android.Gms.Auth.Api;
+using Android;
 
 namespace CV.Mobile.Droid
 {
@@ -70,7 +71,15 @@ namespace CV.Mobile.Droid
             PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
         }
+        protected override void OnStart()
+        {
+            base.OnStart();
+            if (CheckSelfPermission(Manifest.Permission.AccessCoarseLocation) != (int)Permission.Granted)
+            {
+                RequestPermissions(new string[] { Manifest.Permission.AccessCoarseLocation, Manifest.Permission.AccessFineLocation }, 0);
+            }
 
+        }
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
             base.OnActivityResult(requestCode, resultCode, data);

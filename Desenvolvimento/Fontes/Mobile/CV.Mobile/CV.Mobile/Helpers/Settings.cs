@@ -28,6 +28,7 @@ namespace CV.Mobile.Helpers
 
 #else
         private static readonly string CVBaseWebApiDefault = "http://192.168.15.11/CV/";
+        //private static readonly string CVBaseWebApiDefault = "http://fabriciopalharine.sytes.net:40020/";
 #endif
         private const string CVModoSincronizacaoKey = "CVModoSincronizacaoKey";
         private static readonly string CVModoSincronizacaoDefault = "1";

@@ -554,7 +554,7 @@ namespace CV.Mobile.ViewModels
                     }
                 }
                 ResultadoOperacao Resultado = new ResultadoOperacao();
-                Executado = true;
+                Executado = false;
                 if (Conectado)
                 {
                     try
@@ -577,9 +577,10 @@ namespace CV.Mobile.ViewModels
                                     AtualizarViagem(ItemViagem.Identificador.GetValueOrDefault(), "HE", itemEvento.Identificador.GetValueOrDefault(), false);
 
                             }
+                            Executado = true;
                         }
                     }
-                    catch { Executado = false; }
+                    catch { }
                 }
                 if (!Executado)
                 {
