@@ -8,62 +8,47 @@ using CV.Model.Resource;
 namespace CV.Model
 {
 
-	[HasSelfValidation()]
-	public partial class ViagemAerea
-	{
-		public ViagemAerea ()
-		{
-		}
+    [HasSelfValidation()]
+    public partial class ViagemAerea
+    {
+        public ViagemAerea()
+        {
+        }
 
-			public int? Identificador { get; set; }
+        public int? Identificador { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="ViagemAerea_IdentificadorViagem",MessageTemplateResourceType=typeof(MensagemModelo))]
-			public int? IdentificadorViagem { get; set; }
+        [NotNullValidator(MessageTemplateResourceName = "ViagemAerea_IdentificadorViagem", MessageTemplateResourceType = typeof(MensagemModelo))]
+        public int? IdentificadorViagem { get; set; }
 
-			public string CompanhiaAerea { get; set; }
-			[SelfValidation]
-private void ValidarCompanhiaAerea(Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResults results)
-{
- if (CompanhiaAerea == null)
-  {
-      Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult result =
-            new Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult(Resource.MensagemModelo.ViagemAerea_CompanhiaAerea, this, "CompanhiaAerea", null, null);
-      results.AddResult(result);
-  }
-  else if (CompanhiaAerea.Length > 50)
-  {
-      Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult result =
-            new Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult(Resource.MensagemModelo.ViagemAerea_CompanhiaAerea_Tamanho, this, "CompanhiaAerea", null, null);
-      results.AddResult(result);
-  }
-}
+        public string CompanhiaAerea { get; set; }
+       
 
-			[NotNullValidator(MessageTemplateResourceName="ViagemAerea_DataPrevista",MessageTemplateResourceType=typeof(MensagemModelo))]
-			public DateTime? DataPrevista { get; set; }
+        [NotNullValidator(MessageTemplateResourceName = "ViagemAerea_DataPrevista", MessageTemplateResourceType = typeof(MensagemModelo))]
+        public DateTime? DataPrevista { get; set; }
 
-			public Viagem ItemViagem { get; set; }
+        public Viagem ItemViagem { get; set; }
 
-			public IList<GastoViagemAerea> Gastos { get; set; }
+        public IList<GastoViagemAerea> Gastos { get; set; }
 
-			public IList<ViagemAereaAeroporto> Aeroportos { get; set; }
+        public IList<ViagemAereaAeroporto> Aeroportos { get; set; }
 
-			public IList<AvaliacaoAerea> Avaliacoes { get; set; }
+        public IList<AvaliacaoAerea> Avaliacoes { get; set; }
 
-			public DateTime? DataAtualizacao { get; set; }
+        public DateTime? DataAtualizacao { get; set; }
 
-			public DateTime? DataExclusao { get; set; }
+        public DateTime? DataExclusao { get; set; }
 
         public decimal? Distancia { get; set; }
 
 
-        [NotNullValidator(MessageTemplateResourceName="ViagemAerea_Tipo",MessageTemplateResourceType=typeof(MensagemModelo))]
-			public int? Tipo { get; set; }
+        [NotNullValidator(MessageTemplateResourceName = "ViagemAerea_Tipo", MessageTemplateResourceType = typeof(MensagemModelo))]
+        public int? Tipo { get; set; }
 
-			public string Descricao { get; set; }
-		 public ViagemAerea Clone()
-		{
-			 return (ViagemAerea) this.MemberwiseClone();
-		}
-	}
+        public string Descricao { get; set; }
+        public ViagemAerea Clone()
+        {
+            return (ViagemAerea)this.MemberwiseClone();
+        }
+    }
 
 }

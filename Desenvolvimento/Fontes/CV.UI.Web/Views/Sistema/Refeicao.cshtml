@@ -145,10 +145,10 @@
 
                 <div class="row">
                     @*<div class="col-md-6">
-                            <label>@TextosPaginas.Refeicao_EnderecoBase</label>
-                            <input type="text" class="form-control" ng-model="item.Endereco" maxlength="100" empty-to-null>
+            <label>@TextosPaginas.Refeicao_EnderecoBase</label>
+            <input type="text" class="form-control" ng-model="item.Endereco" maxlength="100" empty-to-null>
 
-                        </div>*@
+        </div>*@
                     <div class="col-md-6">
                         <label>@TextosPaginas.Refeicao_Nome</label>
                         <input type="text" class="form-control" ng-model="itemEdit.itemRefeicao.Nome" maxlength="100" empty-to-null ng-if="(!itemEdit.itemRefeicao.Latitude || !itemEdit.itemRefeicao.Longitude) && !itemEdit.position.lat">
@@ -187,6 +187,35 @@
                     <div class="col-md-3">
                         <label>&nbsp;</label>
                         <input type="text" class="form-control" ng-model="itemEdit.itemRefeicao.strHora" input-mask="{mask: 'h:s:s'}" empty-to-null>
+
+                    </div>
+                    <div class="col-md-3" ng-if="itemEdit.RefeicaoConcluida">
+                        <label>@TextosPaginas.Refeicao_Concluida</label>
+                        <input type="checkbox" ng-model="itemEdit.RefeicaoConcluida" ng-click="itemEdit.AjustarHoraTermino();" class="checkbox">
+                    </div>
+
+
+                    <div class="col-md-3" ng-if="itemEdit.RefeicaoConcluida">
+                        <label>@TextosPaginas.Refeicao_DataTermino</label>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" role="button" data-toggle="dropdown">
+                                <div class="input-group">
+                                    <input date-input ng-model="itemEdit.itemRefeicao.DataTermino" class="form-control" input-mask="{mask: 'd/m/y'}"
+                                           datapattern="dd/MM/yyyy">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker data-ng-model="itemEdit.itemRefeicao.DataTermino"
+                                                data-datetimepicker-config="{  minView:'day' , langCode:itemRefeicao.Idioma()  }" />
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3" ng-if="itemEdit.RefeicaoConcluida">
+                        <label>&nbsp;</label>
+                        <input type="text" class="form-control" ng-model="itemEdit.itemRefeicao.strHoraTermino" input-mask="{mask: 'h:s:s'}" empty-to-null>
 
                     </div>
 

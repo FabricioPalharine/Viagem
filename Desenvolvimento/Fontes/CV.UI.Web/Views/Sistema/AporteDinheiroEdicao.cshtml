@@ -31,7 +31,7 @@
                         
                         <div class="form-group col-md-6" ng-class="{ 'has-error':itemAporteDinheiroEdit.CamposInvalidos.Valor}">
                             <label>@TextosPaginas.AporteDinheiro_Valor</label>
-                            <input type="text" class="form-control" ng-model="itemAporteDinheiroEdit.itemAporteDinheiro.Valor" empty-to-null decimal-input="{digits:2, integerDigits:16}">
+                            <input type="text" class="form-control" ng-model="itemAporteDinheiroEdit.itemAporteDinheiro.Valor" empty-to-null decimal-input="{digits:2, integerDigits:16}" ng-change="itemAporteDinheiroEdit.TrocarValor()">
                         </div>
                         
                         <div class="form-group col-md-6" ng-class="{ 'has-error':itemAporteDinheiroEdit.CamposInvalidos.Moeda}">
@@ -60,7 +60,7 @@
                         </div>
                         <div class="form-group col-md-6" ng-class="{ 'has-error':itemAporteDinheiroEdit.CamposInvalidos.Cotacao}">
                             <label>@TextosPaginas.AporteDinheiro_Cotacao</label>
-                            <input type="text" class="form-control" ng-model="itemAporteDinheiroEdit.itemAporteDinheiro.Cotacao" empty-to-null decimal-input="{digits:6, integerDigits:12}">
+                            <input type="text" class="form-control" ng-model="itemAporteDinheiroEdit.itemAporteDinheiro.Cotacao" empty-to-null decimal-input="{digits:6, integerDigits:12}" ng-change="itemAporteDinheiroEdit.TrocarValor()">
                         </div>
                         <div class="form-group col-md-6" ng-class="{ 'has-error':itemGastoEdit.CamposInvalidos.BaixarMoeda}">
                             <label>@TextosPaginas.AporteDinheiro_BaixaMoeda</label>

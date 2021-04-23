@@ -1415,10 +1415,9 @@ namespace CV.Business
             }
             else if (!itemFoto.IdentificadorHotel.HasValue && !itemFoto.IdentificadorAtracao.HasValue )
             {
-                DateTime dataInicio = itemGravarFoto.Data.GetValueOrDefault().AddMinutes(-5);
-                DateTime dataFim = itemGravarFoto.Data.GetValueOrDefault().AddMinutes(5);
+                DateTime dataInicio = itemGravarFoto.Data.GetValueOrDefault();
 
-                var itemRefeicao = ListarRefeicao(d => d.IdentificadorViagem == IdentificadorViagem && d.Data >= dataInicio && d.Data <= dataFim).FirstOrDefault();
+                var itemRefeicao = ListarRefeicao(d => d.IdentificadorViagem == IdentificadorViagem && d.Data <= dataInicio && (!d.DataTermino.HasValue || d.DataTermino > dataInicio)).FirstOrDefault();
                 if (itemRefeicao != null)
                     itemGravarFoto.Refeicoes.Add(new FotoRefeicao() { DataAtualizacao = DateTime.Now, IdentificadorRefeicao = itemRefeicao.Identificador });
             }

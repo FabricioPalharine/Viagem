@@ -641,7 +641,11 @@
 		        itemEvento.DataAlteracao = itemEvento.Original.DataAlteracao;
 		        itemEvento.Original = null;
 		    }
-		};
+        };
+
+       
+		      
+		    
 
 		vm.SalvarEvento = function (itemEvento) {
 		    if (itemEvento.ItemUsuario && itemEvento.ItemUsuario.Identificador)
@@ -657,7 +661,12 @@
 		        else
 		            itemEvento.DataEntrada = moment(itemEvento.DataEntrada).format("YYYY-MM-DDT");
 		        itemEvento.DataEntrada += (itemEvento.strHoraEntrada) ? itemEvento.strHoraEntrada : "00:00:00";
-
+                if ((!itemEvento.Original || !itemEvento.Original.DataEntrada) && navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                        itemEvento.LatitudeEntrada = position.coords.latitude;
+                        itemEvento.LongitudeEntrada = position.coords.longitude;
+                    });
+                }
 		    }
 
 		    if (itemEvento.DataSaida) {
@@ -667,7 +676,12 @@
 		        else
 		            itemEvento.DataSaida = moment(itemEvento.DataSaida).format("YYYY-MM-DDT");
 		        itemEvento.DataSaida += (itemEvento.strHoraSaida) ? itemEvento.strHoraSaida : "00:00:00";
-
+                if ((!itemEvento.Original || !itemEvento.Original.DataSaida) && navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                        itemEvento.LatitudeSaida = position.coords.latitude;
+                        itemEvento.LongitudeSaida = position.coords.longitude;
+                    });
+                }
 		    }
 		    itemEvento.DataAtualizacao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
 		    vm.loading = true;

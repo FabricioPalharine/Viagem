@@ -233,7 +233,7 @@ namespace CV.Data
                 queryConsulta = queryConsulta.Where(d => d.Identificador == Identificador);
             var queryResultado = queryConsulta
                 .Where(d => !d.Partida.HasValue || d.Partida > DbFunctions.AddMinutes(d.Chegada, 2))
-                .SelectMany(d => d.Avaliacoes.Select(e => new {Identificador = d.Identificador,  Data = d.Chegada, Tipo = "AtracaoChegada", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.Nome, Url = "", Comentario = "", IdentificadorUsuario = e.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "", GoogleId = string.Empty }));//, Usuarios = d.Avaliacoes.Where(e => listaInteiros.Contains(e.IdentificadorUsuario)).Select(e => new UsuarioConsulta() { Comentario = "", Nome = e.ItemUsuario.Nome, Identificador = e.IdentificadorUsuario, Nota = null, Pedido = null }) });
+                .SelectMany(d => d.Avaliacoes.Select(e => new { Identificador = d.Identificador, Data = d.Chegada, Tipo = "AtracaoChegada", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.Nome, Url = "", Comentario = "", IdentificadorUsuario = e.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "", GoogleId = string.Empty }));//, Usuarios = d.Avaliacoes.Where(e => listaInteiros.Contains(e.IdentificadorUsuario)).Select(e => new UsuarioConsulta() { Comentario = "", Nome = e.ItemUsuario.Nome, Identificador = e.IdentificadorUsuario, Nota = null, Pedido = null }) });
             queryResultado = queryResultado.Union(
                 queryConsulta.Where(d => d.Partida.HasValue)
                 .SelectMany(d => d.Avaliacoes.Select(e => new { Identificador = d.Identificador, Data = d.Partida, Tipo = d.Partida > DbFunctions.AddMinutes(d.Chegada, 2) ? "AtracaoPartida" : "AtracaoVisita", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.Nome, Url = "", Comentario = "", IdentificadorUsuario = e.IdentificadorUsuario, Nota = e.Nota, NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = e.Comentario, Pedido = "", GoogleId = string.Empty })));
@@ -246,8 +246,11 @@ namespace CV.Data
                     queryRefeicao = queryRefeicao.Where(d => d.Identificador == Identificador);
                 queryResultado = queryResultado.Union(
         queryRefeicao
-        .SelectMany(d => d.Pedidos.Select(e => new {Identificador = d.Identificador, Data = d.Data, Tipo = "Refeicao", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.Nome, Url = "", Comentario = "", IdentificadorUsuario = e.IdentificadorUsuario, Nota = e.Nota, NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = e.Comentario, Pedido = e.Pedido, GoogleId = string.Empty })));
-
+        .SelectMany(d => d.Pedidos.Select(e => new { Identificador = d.Identificador, Data = d.Data, Tipo = "Refeicao", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.Nome, Url = "", Comentario = "", IdentificadorUsuario = e.IdentificadorUsuario, Nota = e.Nota, NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = e.Comentario, Pedido = e.Pedido, GoogleId = string.Empty })));
+/*                queryResultado = queryResultado.Union(
+        queryRefeicao.Where(d=>d.DataTermino.HasValue)
+        .SelectMany(d => d.Pedidos.Select(e => new { Identificador = d.Identificador, Data = d.DataTermino, Tipo = "RefeicaoFim", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.Nome, Url = "", Comentario = "", IdentificadorUsuario = e.IdentificadorUsuario, Nota = e.Nota, NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = e.Comentario, Pedido = e.Pedido, GoogleId = string.Empty })));
+        */
             }
 
 
@@ -260,12 +263,12 @@ namespace CV.Data
 
                 queryResultado = queryResultado.Union(
         queryHotel
-        .SelectMany(d => d.Avaliacoes.Select(e => new { Identificador = d.Identificador, Data = d.DataEntrada, Tipo = "HotelCheckIn", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.Nome, Url = "", Comentario = "", IdentificadorUsuario = e.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "", GoogleId = string.Empty })));
+        .SelectMany(d => d.Avaliacoes.Select(e => new { Identificador = d.Identificador, Data = d.DataEntrada, Tipo = "HotelCheckIn", Latitude = d.Movel?d.Eventos.OrderBy(f=>f.DataEntrada).Select(f=> f.LatitudeEntrada).FirstOrDefault():d.Latitude, Longitude = d.Movel ? d.Eventos.OrderBy(f => f.DataEntrada).Select(f => f.LongitudeEntrada).FirstOrDefault() : d.Latitude, Texto = d.Nome, Url = "", Comentario = "", IdentificadorUsuario = e.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "", GoogleId = string.Empty })));
 
 
                 queryResultado = queryResultado.Union(
         queryHotel.Where(d => d.DataSaidia.HasValue)
-        .SelectMany(d => d.Avaliacoes.Select(e => new { Identificador = d.Identificador, Data = d.DataSaidia, Tipo = "HotelChekckOut", Latitude = d.Latitude, Longitude = d.Longitude, Texto = d.Nome, Url = "", Comentario = "", IdentificadorUsuario = e.IdentificadorUsuario, Nota = e.Nota, NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = e.Comentario, Pedido = "", GoogleId = string.Empty })));
+        .SelectMany(d => d.Avaliacoes.Select(e => new { Identificador = d.Identificador, Data = d.DataSaidia, Tipo = "HotelChekckOut", Latitude = d.Movel ? d.Eventos.OrderBy(f => f.DataEntrada).Select(f => f.LatitudeSaida).LastOrDefault() : d.Latitude, Longitude = d.Movel ? d.Eventos.OrderBy(f => f.DataEntrada).Select(f => f.LongitudeSaida).LastOrDefault() : d.Latitude, Texto = d.Nome, Url = "", Comentario = "", IdentificadorUsuario = e.IdentificadorUsuario, Nota = e.Nota, NomeUsuario = e.ItemUsuario.Nome, ComentarioUsuario = e.Comentario, Pedido = "", GoogleId = string.Empty })));
             }
             if (String.IsNullOrEmpty(Tipo) || Tipo == "HE")
             {
@@ -274,11 +277,11 @@ namespace CV.Data
                     queryHotelEvento = queryHotelEvento.Where(d => d.Identificador == Identificador);
 
                 queryResultado = queryResultado.Union(
-    queryHotelEvento
-    .Select(d => new { Identificador = d.Identificador, Data = d.DataEntrada, Tipo = "HotelEntrada", Latitude = d.ItemHotel.Latitude, Longitude = d.ItemHotel.Longitude, Texto = d.ItemHotel.Nome, Url = "", Comentario = "", IdentificadorUsuario = d.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = d.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "", GoogleId = string.Empty }));
+    queryHotelEvento.Where(d=>d.DataEntrada != d.ItemHotel.DataEntrada)
+    .Select(d => new { Identificador = d.Identificador, Data = d.DataEntrada, Tipo = "HotelEntrada", Latitude = d.LatitudeEntrada, Longitude = d.LongitudeEntrada, Texto = d.ItemHotel.Nome, Url = "", Comentario = "", IdentificadorUsuario = d.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = d.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "", GoogleId = string.Empty }));
                 queryResultado = queryResultado.Union(
-    queryHotelEvento.Where(d => d.DataSaida.HasValue)
-    .Select(d => new { Identificador = d.Identificador, Data = d.DataSaida, Tipo = "HotelSaida", Latitude = d.ItemHotel.Latitude, Longitude = d.ItemHotel.Longitude, Texto = d.ItemHotel.Nome, Url = "", Comentario = "", IdentificadorUsuario = d.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = d.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "", GoogleId = string.Empty }));
+    queryHotelEvento.Where(d => d.DataSaida.HasValue).Where(d=>d.DataSaida != d.ItemHotel.DataSaidia)
+    .Select(d => new { Identificador = d.Identificador, Data = d.DataSaida, Tipo = "HotelSaida", Latitude = d.LatitudeSaida, Longitude = d.LongitudeSaida, Texto = d.ItemHotel.Nome, Url = "", Comentario = "", IdentificadorUsuario = d.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = d.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "", GoogleId = string.Empty }));
 
             }
             if (String.IsNullOrEmpty(Tipo) || Tipo == "C")
@@ -352,7 +355,7 @@ namespace CV.Data
                     queryFoto = queryFoto.Where(d => d.Identificador == Identificador);
                 queryResultado = queryResultado.Union(
     queryFoto
-    .Select(d => new { Identificador = d.Identificador, Data = d.Data, Tipo = d.Video.Value ? "Video" : "Foto",  Latitude = d.Latitude, Longitude = d.Longitude, Texto = "", Url = d.LinkFoto, Comentario = d.Comentario, IdentificadorUsuario = d.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = d.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "", GoogleId = d.Video.Value ?string.Empty: d.CodigoFoto }));
+    .Select(d => new { Identificador = d.Identificador, Data = d.Data, Tipo = d.Video.Value ? "Video" : "Foto", Latitude = d.Latitude, Longitude = d.Longitude, Texto = "", Url = d.LinkFoto, Comentario = d.Comentario, IdentificadorUsuario = d.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = d.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "", GoogleId = d.Video.Value ? string.Empty : d.CodigoFoto }));
 
 
             }
@@ -364,7 +367,7 @@ namespace CV.Data
                     queryAeroportos = queryAeroportos.Where(d => d.IdentificadorViagemAerea == Identificador);
 
                 queryResultado = queryResultado.Union(
-    queryAeroportos.Where(d => !d.DataPartida.HasValue || d.DataPartida > DbFunctions.AddMinutes(d.DataChegada, 2))
+    queryAeroportos.Where(d => !d.DataPartida.HasValue || d.DataPartida > DbFunctions.AddMinutes(d.DataChegada, 5))
     .SelectMany(d => d.ItemViagemAerea.Avaliacoes.Select(e => new
     {
         Identificador = d.Identificador,
@@ -390,7 +393,7 @@ namespace CV.Data
         {
             Identificador = d.Identificador,
             Data = d.DataPartida,
-            Tipo = (d.DataPartida > DbFunctions.AddMinutes(d.DataChegada, 2)) ?
+            Tipo = (d.DataPartida > DbFunctions.AddMinutes(d.DataChegada, 5)) ?
                 d.TipoPonto == (int)enumTipoParada.Origem ? "DeslocamentoPartidaOrigem" : d.TipoPonto == (int)enumTipoParada.Destino ? "DeslocamentoPartidaDestino" : "DeslocamentoPartidaEscala" :
                 d.TipoPonto == (int)enumTipoParada.Origem ? "DeslocamentoOrigem" : d.TipoPonto == (int)enumTipoParada.Destino ? "DeslocamentoDestino" : "DeslocamentoEscala",
             Latitude = d.Latitude,
@@ -416,7 +419,7 @@ namespace CV.Data
                 queryResultado = queryResultado.Where(d => d.Data > DataMinima);
 
             var resultado = queryResultado.GroupBy(
-                d => new { d.Comentario, d.Data, d.Latitude, d.Longitude, d.Texto, d.Tipo, d.Url,d.Identificador ,d.GoogleId})
+                d => new { d.Comentario, d.Data, d.Latitude, d.Longitude, d.Texto, d.Tipo, d.Url, d.Identificador, d.GoogleId })
                 .Select(d => new Timeline()
 
                 {
@@ -428,7 +431,7 @@ namespace CV.Data
                     Texto = d.Key.Texto,
                     Tipo = d.Key.Tipo,
                     Url = d.Key.Url,
-                    GoogleId=d.Key.GoogleId,
+                    GoogleId = d.Key.GoogleId,
                     Usuarios = d.Select(e => new UsuarioConsulta() { Comentario = e.ComentarioUsuario, Identificador = e.IdentificadorUsuario, Nome = e.NomeUsuario, Nota = e.Nota, Pedido = e.Pedido })
                 })
                 .OrderByDescending(d => d.Data)
@@ -484,8 +487,8 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                     IdentificadorCidade = d.Key.IdentificadorCidade,
                     NomeCidade = d.Key.NomeCidade,
                     Tipo = "H",
-                    Latitude = d.Where(e => e.Latitude.HasValue && e.Longitude.HasValue).Select(e => e.Latitude).FirstOrDefault(),
-                    Longitude = d.Where(e => e.Latitude.HasValue && e.Longitude.HasValue).Select(e => e.Longitude).FirstOrDefault(),
+                    Latitude = d.Where(e => e.Latitude.HasValue && e.Longitude.HasValue && !e.Movel).Select(e => e.Latitude).FirstOrDefault(),
+                    Longitude = d.Where(e => e.Latitude.HasValue && e.Longitude.HasValue && !e.Movel).Select(e => e.Longitude).FirstOrDefault(),
                 }).ToList()).ToList();
             }
 
@@ -802,12 +805,12 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
         public List<PontoMapa> ListarPontosViagem(int? IdentificadorViagem, int? IdentificadorUsuario, DateTime? DataDe, DateTime? DataAte, string Tipo)
         {
             IQueryable<PontoMapa> queryFinal = this.Context.Viagemes.Where(d => d.Identificador == -1)
-                .Select(d => new PontoMapa( ) { DataFim = null, DataInicio = null, Latitude =0, Longitude = 0, Nome=null, Tipo="P", Url=null, UrlTumbnail=null, GoogleId=null });
+                .Select(d => new PontoMapa() { DataFim = null, DataInicio = null, Latitude = 0, Longitude = 0, Nome = null, Tipo = "P", Url = null, UrlTumbnail = null, GoogleId = null });
             if (string.IsNullOrEmpty(Tipo) || Tipo == "A")
             {
                 var queryAtracao = this.Context.AvaliacaoAtracoes.Where(d => d.IdentificadorUsuario == IdentificadorUsuario)
                 .Where(d => !d.DataExclusao.HasValue).Where(d => d.ItemAtracao.IdentificadorViagem == IdentificadorViagem).Where(d => d.ItemAtracao.Chegada.HasValue)
-                .Where(d => !d.ItemAtracao.DataExclusao.HasValue).Where(d=>d.ItemAtracao.Latitude.HasValue && d.ItemAtracao.Longitude.HasValue && (d.ItemAtracao.Longitude != 0 || d.ItemAtracao.Latitude != 0));
+                .Where(d => !d.ItemAtracao.DataExclusao.HasValue).Where(d => d.ItemAtracao.Latitude.HasValue && d.ItemAtracao.Longitude.HasValue && (d.ItemAtracao.Longitude != 0 || d.ItemAtracao.Latitude != 0));
                 if (DataDe.HasValue)
                     queryAtracao = queryAtracao.Where(d => d.ItemAtracao.Chegada >= DataDe || (d.ItemAtracao.Partida.HasValue && d.ItemAtracao.Partida >= DataDe));
                 if (DataAte.HasValue)
@@ -850,7 +853,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
             if (string.IsNullOrEmpty(Tipo) || Tipo == "CR")
             {
                 var queryRefeicao = this.Context.AvaliacaoAlugueis.Where(d => d.IdentificadorUsuario == IdentificadorUsuario)
-                .Where(d => !d.DataExclusao.HasValue).Where(d => d.ItemCarro.IdentificadorViagem == IdentificadorViagem).Where(d=>d.ItemCarro.ItemCarroEventoRetirada.Data.HasValue)
+                .Where(d => !d.DataExclusao.HasValue).Where(d => d.ItemCarro.IdentificadorViagem == IdentificadorViagem).Where(d => d.ItemCarro.ItemCarroEventoRetirada.Data.HasValue)
                 .Where(d => !d.ItemCarro.DataExclusao.HasValue).Where(d => d.ItemCarro.ItemCarroEventoRetirada.Latitude.HasValue && d.ItemCarro.ItemCarroEventoRetirada.Longitude.HasValue && (d.ItemCarro.ItemCarroEventoRetirada.Longitude != 0 || d.ItemCarro.ItemCarroEventoRetirada.Latitude != 0));
                 if (DataDe.HasValue)
                     queryRefeicao = queryRefeicao.Where(d => d.ItemCarro.ItemCarroEventoRetirada.Data >= DataDe);
@@ -873,7 +876,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
             {
                 var queryRefeicao = this.Context.AvaliacaoAlugueis.Where(d => d.IdentificadorUsuario == IdentificadorUsuario)
                 .Where(d => !d.DataExclusao.HasValue).Where(d => d.ItemCarro.IdentificadorViagem == IdentificadorViagem).Where(d => !d.ItemCarro.DataExclusao.HasValue)
-                .SelectMany(d=>d.ItemCarro.Reabastecimentos).Where(d=>!d.DataExclusao.HasValue)
+                .SelectMany(d => d.ItemCarro.Reabastecimentos).Where(d => !d.DataExclusao.HasValue)
                 .Where(d => d.Latitude.HasValue && d.Longitude.HasValue && (d.Longitude != 0 || d.Latitude != 0));
                 if (DataDe.HasValue)
                     queryRefeicao = queryRefeicao.Where(d => d.Data >= DataDe);
@@ -922,7 +925,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
             {
                 var queryRefeicao = this.Context.Fotos.Where(d => d.IdentificadorUsuario == IdentificadorUsuario)
                 .Where(d => !d.DataExclusao.HasValue)
-                .Where(d=>d.IdentificadorViagem == IdentificadorViagem)
+                .Where(d => d.IdentificadorViagem == IdentificadorViagem)
                 .Where(d => d.Latitude.HasValue && d.Longitude.HasValue && (d.Longitude != 0 || d.Latitude != 0));
                 if (!string.IsNullOrEmpty(Tipo))
                     queryRefeicao = queryRefeicao.Where(d => d.Video == (Tipo == "V"));
@@ -930,11 +933,11 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                     queryRefeicao = queryRefeicao.Where(d => d.Data >= DataDe);
                 if (DataAte.HasValue)
                     queryRefeicao = queryRefeicao.Where(d => d.Data < DataAte);
-                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.Data, Latitude = d.Latitude, Longitude = d.Longitude, Nome = d.Comentario, Tipo = d.Video.Value?"V":"F", Url = d.LinkFoto, UrlTumbnail = d.LinkThumbnail , GoogleId =d.Video.Value?null:d.CodigoFoto}));
+                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.Data, Latitude = d.Latitude, Longitude = d.Longitude, Nome = d.Comentario, Tipo = d.Video.Value ? "V" : "F", Url = d.LinkFoto, UrlTumbnail = d.LinkThumbnail, GoogleId = d.Video.Value ? null : d.CodigoFoto }));
             }
             if (string.IsNullOrEmpty(Tipo) || Tipo == "U")
             {
-                var queryUltimoPonto = this.Context.Posicoes.Where(d=>d.IdentificadorUsuario == IdentificadorUsuario)
+                var queryUltimoPonto = this.Context.Posicoes.Where(d => d.IdentificadorUsuario == IdentificadorUsuario)
                                     .Where(d => d.IdentificadorViagem == IdentificadorViagem)
 
                                     .Where(d => d.Latitude.HasValue && d.Longitude.HasValue && (d.Longitude != 0 || d.Latitude != 0));
@@ -950,7 +953,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
             return queryFinal.ToList();
         }
 
-        public List<CalendarioRealizado> CarregarCalendarioRealizado(int? IdentificadorViagem,  int? IdentificadorUsuario)
+        public List<CalendarioRealizado> CarregarCalendarioRealizado(int? IdentificadorViagem, int? IdentificadorUsuario)
         {
 
 
@@ -1146,7 +1149,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
 
             itemResumo.AtracoesVisitadas = queryAtracao.Where(d => d.ItemAtracao.Chegada.HasValue).Count();
             itemResumo.MinutosAtracao = TimeSpan.FromMinutes(queryAtracao.Where(d => !d.ItemAtracao.IdentificadorAtracaoPai.HasValue).Where(d => d.ItemAtracao.Partida.HasValue)
-                .Sum(d => DbFunctions.DiffMinutes( d.ItemAtracao.Chegada, d.ItemAtracao.Partida)).GetValueOrDefault());
+                .Sum(d => DbFunctions.DiffMinutes(d.ItemAtracao.Chegada, d.ItemAtracao.Partida)).GetValueOrDefault());
             itemResumo.NotaMediaAtracao = queryAtracao.Where(d => d.Nota.HasValue).Average(d => d.Nota);
 
             var queryGasto = this.Context.Gastos.Where(d => !d.DataExclusao.HasValue).Where(d => d.IdentificadorViagem == IdentificadorViagem).Where(d => !d.ApenasBaixa.Value);
@@ -1191,7 +1194,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                     ValorReal = g.Moeda != (int)enumMoeda.BRL && g.Especie.Value ? g.Valor.Value * (cm.Where(d => d.DataAporte <= g.Data).Any() ? cm.Where(d => d.DataAporte <= g.DataPagamento).Select(e => e.Cotacao.Value).FirstOrDefault() : 0) : g.ValorReal.Value
                 });
 
-            itemResumo.TotalReaisAtracao = queryFinal.Any()? queryFinal.Sum(d => d.ValorReal):0;
+            itemResumo.TotalReaisAtracao = queryFinal.Any() ? queryFinal.Sum(d => d.ValorReal) : 0;
         }
 
         public void CarregarResumoHotel(ResumoViagem itemResumo, int? IdentificadorViagem, int? IdentificadorUsuario, DateTime? DataDe, DateTime? DataAte)
@@ -1218,7 +1221,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
 
 
             itemResumo.TempoHotel = TimeSpan.FromMinutes(queryHotelEvento.Where(d => d.DataSaida.HasValue)
-                .Sum(d => DbFunctions.DiffMinutes( d.DataEntrada, d.DataSaida)).GetValueOrDefault());
+                .Sum(d => DbFunctions.DiffMinutes(d.DataEntrada, d.DataSaida)).GetValueOrDefault());
 
             itemResumo.NotaMediaHotel = queryHotel.Where(d => d.Nota.HasValue).Average(d => d.Nota);
 
@@ -1394,7 +1397,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                     ValorReal = g.Moeda != (int)enumMoeda.BRL && g.Especie.Value ? g.Valor.Value * (cm.Where(d => d.DataAporte <= g.Data).Any() ? cm.Where(d => d.DataAporte <= g.DataPagamento).Select(e => e.Cotacao.Value).FirstOrDefault() : 0) : g.ValorReal.Value
                 });
 
-            itemResumo.TotalReaisCompra =   queryFinal.Any() ? queryFinal.Sum(d => d.ValorReal) : 0;
+            itemResumo.TotalReaisCompra = queryFinal.Any() ? queryFinal.Sum(d => d.ValorReal) : 0;
         }
 
         public void CarregarResumoDiversos(ResumoViagem itemResumo, int? IdentificadorViagem, int? IdentificadorUsuario, DateTime? DataDe, DateTime? DataAte)
@@ -1450,7 +1453,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
             itemResumo.MinutosAguardando = TimeSpan.FromMinutes(queryAeroporto
            .Where(e => e.DataChegada.HasValue).Where(e => e.DataPartida.HasValue)
 
-                .Select(e => DbFunctions.DiffMinutes( e.DataChegada, e.DataPartida)).Sum().GetValueOrDefault());
+                .Select(e => DbFunctions.DiffMinutes(e.DataChegada, e.DataPartida)).Sum().GetValueOrDefault());
 
             itemResumo.DeslcamentosRealizados = queryViagemAerea.Where(d => d.ItemViagemAerea.Aeroportos.Where(e => e.TipoPonto == (int)enumTipoParada.Origem).Where(e => e.DataChegada.HasValue).Any()).Count();
 
@@ -1476,7 +1479,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                 ).ToList();
 
             itemResumo.MinutosViajando = TimeSpan.FromMinutes(
-                ListaIntervalo.Select(d => 
+                ListaIntervalo.Select(d =>
                 (d.DataChegada.GetValueOrDefault(DateTime.Today) <= dataAteBase ? d.DataChegada.GetValueOrDefault(DateTime.Today) : dataAteBase)
                 .Subtract(d.DataPartida > dataDeBase ? d.DataPartida.GetValueOrDefault() : dataAteBase).TotalMinutes)
                 .Sum());
@@ -1515,7 +1518,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                     ValorReal = g.Moeda != (int)enumMoeda.BRL && g.Especie.Value ? g.Valor.Value * (cm.Where(d => d.DataAporte <= g.Data).Any() ? cm.Where(d => d.DataAporte <= g.DataPagamento).Select(e => e.Cotacao.Value).FirstOrDefault() : 0) : g.ValorReal.Value
                 });
 
-            itemResumo.TotalReaisDeslocamento =   queryFinal.Any() ? queryFinal.Sum(d => d.ValorReal) : 0;
+            itemResumo.TotalReaisDeslocamento = queryFinal.Any() ? queryFinal.Sum(d => d.ValorReal) : 0;
             ListaSaida = ListaIntervalo.Select(d => new IntervaloDeslocamento() { Tipo = "V", Chegada = d.DataChegada, Partida = d.DataPartida }).ToList();
             return ListaSaida;
         }
@@ -1530,10 +1533,10 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
             DateTime dataDeBase = DataDe ?? new DateTime(1900, 01, 01);
             DateTime dataAteBase = DataAte ?? DateTime.Today.AddDays(1);
 
-            itemResumo.CarrosUtilizados = queryViagemAerea.Where(d => d.ItemCarro.Deslocamentos.Where(e=>!e.DataExclusao.HasValue) .Where(e => e.ItemCarroEventoPartida.Data >= dataDeBase || (e.ItemCarroEventoChegada.Data.HasValue && e.ItemCarroEventoChegada.Data >= dataDeBase))
+            itemResumo.CarrosUtilizados = queryViagemAerea.Where(d => d.ItemCarro.Deslocamentos.Where(e => !e.DataExclusao.HasValue).Where(e => e.ItemCarroEventoPartida.Data >= dataDeBase || (e.ItemCarroEventoChegada.Data.HasValue && e.ItemCarroEventoChegada.Data >= dataDeBase))
             .Where(e => e.ItemCarroEventoPartida.Data < dataAteBase && (!e.ItemCarroEventoChegada.Data.HasValue || e.ItemCarroEventoChegada.Data < dataAteBase)).Any()).Count();
 
-             itemResumo.NotaMediaAluguel = queryViagemAerea.Where(d => d.Nota.HasValue).Average(d => d.Nota);
+            itemResumo.NotaMediaAluguel = queryViagemAerea.Where(d => d.Nota.HasValue).Average(d => d.Nota);
 
             var queryGasto = this.Context.Gastos.Where(d => !d.DataExclusao.HasValue).Where(d => d.IdentificadorViagem == IdentificadorViagem).Where(d => !d.ApenasBaixa.Value);
 
@@ -1548,7 +1551,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
          ).Any()
          );
 
-          
+
 
             var queryAjuste
                  = queryGasto.Select(
@@ -1592,54 +1595,54 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
             if (IdentificadorUsuario.HasValue)
                 queryGasto = queryGasto.Where(d => d.IdentificadorUsuario == IdentificadorUsuario || d.Usuarios.Where(e => e.IdentificadorUsuario == IdentificadorUsuario).Any());
 
-            queryGasto = queryGasto.Where(d=>d.Reabastecimentos.Where(e => !e.DataExclusao.HasValue)
+            queryGasto = queryGasto.Where(d => d.Reabastecimentos.Where(e => !e.DataExclusao.HasValue)
      .Where(e => queryViagemAerea.Where(f => f.IdentificadorCarro == e.ItemReabastecimento.IdentificadorCarro && e.ItemReabastecimento.Data >= dataDeBase && e.ItemReabastecimento.Data <= dataAteBase).Any()
      ).Any()
      );
 
 
 
-             queryAjuste
-                 = queryGasto.Select(
-                    d => new
-                    {
-                        Moeda = d.Moeda,
-                        Valor = d.Valor / (d.Usuarios.Count() + 1),
-                        Especie = d.Especie,
-                        DataPagamento = d.DataPagamento,
-                        IdentificadorUsuarioGasto = d.Identificador,
-                        Data = d.Data
-                    }
-                    );
+            queryAjuste
+                = queryGasto.Select(
+                   d => new
+                   {
+                       Moeda = d.Moeda,
+                       Valor = d.Valor / (d.Usuarios.Count() + 1),
+                       Especie = d.Especie,
+                       DataPagamento = d.DataPagamento,
+                       IdentificadorUsuarioGasto = d.Identificador,
+                       Data = d.Data
+                   }
+                   );
 
 
-             queryFinal = queryAjuste.
-                GroupJoin(this.Context.CotacaoMoedas.Where(d => d.IdentificadorViagem == IdentificadorViagem).Where(d => !d.DataExclusao.HasValue), d => d.Moeda, d => d.Moeda,
-                (g, cm) => new
-                {
-                    g.IdentificadorUsuarioGasto,
-                    g.DataPagamento,
-                    g.Especie,
-                    g.Moeda,
-                    g.Valor,
-                    g.Data,
-                    ValorReal = g.Moeda != (int)enumMoeda.BRL && !g.Especie.Value ? g.Valor * (cm.Where(d => d.DataCotacao <= g.DataPagamento).Any() ? cm.Where(d => d.DataCotacao <= g.DataPagamento).Select(e => e.ValorCotacao).FirstOrDefault() : 0) : g.Valor
-                }).GroupJoin(this.Context.AporteDinheiros.Where(d => d.IdentificadorViagem == IdentificadorViagem).Where(d => !d.DataExclusao.HasValue),
-                d => new { IdentificadorUsuario = d.IdentificadorUsuarioGasto, d.Moeda },
-                           d => new { d.IdentificadorUsuario, d.Moeda },
-                (g, cm) => new RelatorioGastos
-                {
+            queryFinal = queryAjuste.
+               GroupJoin(this.Context.CotacaoMoedas.Where(d => d.IdentificadorViagem == IdentificadorViagem).Where(d => !d.DataExclusao.HasValue), d => d.Moeda, d => d.Moeda,
+               (g, cm) => new
+               {
+                   g.IdentificadorUsuarioGasto,
+                   g.DataPagamento,
+                   g.Especie,
+                   g.Moeda,
+                   g.Valor,
+                   g.Data,
+                   ValorReal = g.Moeda != (int)enumMoeda.BRL && !g.Especie.Value ? g.Valor * (cm.Where(d => d.DataCotacao <= g.DataPagamento).Any() ? cm.Where(d => d.DataCotacao <= g.DataPagamento).Select(e => e.ValorCotacao).FirstOrDefault() : 0) : g.Valor
+               }).GroupJoin(this.Context.AporteDinheiros.Where(d => d.IdentificadorViagem == IdentificadorViagem).Where(d => !d.DataExclusao.HasValue),
+               d => new { IdentificadorUsuario = d.IdentificadorUsuarioGasto, d.Moeda },
+                          d => new { d.IdentificadorUsuario, d.Moeda },
+               (g, cm) => new RelatorioGastos
+               {
 
-                    ValorReal = g.Moeda != (int)enumMoeda.BRL && g.Especie.Value ? g.Valor.Value * (cm.Where(d => d.DataAporte <= g.Data).Any() ? cm.Where(d => d.DataAporte <= g.DataPagamento).Select(e => e.Cotacao.Value).FirstOrDefault() : 0) : g.ValorReal.Value
-                });
+                   ValorReal = g.Moeda != (int)enumMoeda.BRL && g.Especie.Value ? g.Valor.Value * (cm.Where(d => d.DataAporte <= g.Data).Any() ? cm.Where(d => d.DataAporte <= g.DataPagamento).Select(e => e.Cotacao.Value).FirstOrDefault() : 0) : g.ValorReal.Value
+               });
 
-            itemResumo.TotalReaisReabastecimento =   queryFinal.Any() ? queryFinal.Sum(d => d.ValorReal) : 0;
+            itemResumo.TotalReaisReabastecimento = queryFinal.Any() ? queryFinal.Sum(d => d.ValorReal) : 0;
 
             var queryDeslocamentos = queryViagemAerea.SelectMany(d => d.ItemCarro.Deslocamentos.Where(e => !e.DataExclusao.HasValue).Where(e => e.ItemCarroEventoPartida.Data >= dataDeBase || (e.ItemCarroEventoChegada.Data.HasValue && e.ItemCarroEventoChegada.Data >= dataDeBase))
             .Where(e => e.ItemCarroEventoPartida.Data < dataAteBase && (!e.ItemCarroEventoChegada.Data.HasValue || e.ItemCarroEventoChegada.Data < dataAteBase)));
 
             itemResumo.MinutosDeslocamentoCarro = TimeSpan.FromMinutes(queryDeslocamentos.Where(d => d.ItemCarroEventoChegada.Data.HasValue)
-               .Sum(d => DbFunctions.DiffMinutes( d.ItemCarroEventoPartida.Data, d.ItemCarroEventoChegada.Data)).GetValueOrDefault());
+               .Sum(d => DbFunctions.DiffMinutes(d.ItemCarroEventoPartida.Data, d.ItemCarroEventoChegada.Data)).GetValueOrDefault());
 
             itemResumo.KmDeslocamentoCarro = Convert.ToInt32(queryDeslocamentos.Where(d => d.ItemCarroEventoChegada.Data.HasValue).Where(d => d.ItemCarroEventoPartida.Odometro.HasValue)
                 .Where(d => d.ItemCarroEventoChegada.Odometro.HasValue)
@@ -1665,7 +1668,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
             return ListaSaida;
         }
 
-        public List<Posicao> ListarPosicao( int? IdentificadorViagem, int? IdentificadorUsuario, DateTime? DataDe, DateTime? DataAte)
+        public List<Posicao> ListarPosicao(int? IdentificadorViagem, int? IdentificadorUsuario, DateTime? DataDe, DateTime? DataAte)
         {
             var query = this.Context.Posicoes.Where(d => d.IdentificadorViagem == IdentificadorViagem).Where(d => d.IdentificadorUsuario == IdentificadorUsuario);
             if (DataDe.HasValue)
@@ -1674,8 +1677,8 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                 query = query.Where(d => d.DataLocal < DataAte);
             return query.OrderBy(d => d.DataLocal).AsNoTracking().ToList();
         }
-        
-        public List<ConsultaRankings> ListarRankings (int? IdentificadorViagem,int? IdentificadorUsuario, bool ApenasAmigos, int? IdentificadorAmigo, string Tipo, int? NumeroRegistros, string CodigoGoogle, string Nome)
+
+        public List<ConsultaRankings> ListarRankings(int? IdentificadorViagem, int? IdentificadorUsuario, bool ApenasAmigos, int? IdentificadorAmigo, string Tipo, int? NumeroRegistros, string CodigoGoogle, string Nome)
         {
             List<ConsultaRankings> lista = new List<ConsultaRankings>();
             var queryUsuarios = this.Context.ParticipanteViagemes.Where(d => d.IdentificadorUsuario == IdentificadorUsuario || this.Context.Amigos.Where(e => e.IdentificadorAmigo == IdentificadorUsuario && e.IdentificadorUsuario == d.IdentificadorUsuario).Any());
@@ -1685,7 +1688,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
             bool Detalhe = !string.IsNullOrEmpty(CodigoGoogle) || !string.IsNullOrEmpty(Nome);
             if (string.IsNullOrEmpty(Tipo) || Tipo == "A")
             {
-                var queryAtracao = this.Context.AvaliacaoAtracoes.Where(d => !d.DataExclusao.HasValue).Where(d=>d.Nota.HasValue).Where(d=>!d.ItemAtracao.DataExclusao.HasValue);
+                var queryAtracao = this.Context.AvaliacaoAtracoes.Where(d => !d.DataExclusao.HasValue).Where(d => d.Nota.HasValue).Where(d => !d.ItemAtracao.DataExclusao.HasValue);
                 if (ApenasAmigos || IdentificadorAmigo.HasValue)
                     queryAtracao = queryAtracao.Where(d => listaInteiros.Contains(d.IdentificadorUsuario));
                 if (!string.IsNullOrWhiteSpace(CodigoGoogle))
@@ -1815,7 +1818,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
 
             if (string.IsNullOrEmpty(Tipo) || Tipo == "C")
             {
-                var queryAtracao = this.Context.AvaliacaoAlugueis.Where(d => !d.DataExclusao.HasValue).Where(d => d.Nota.HasValue).Where(d=>d.ItemCarro.Alugado.Value) .Where(d => !d.ItemCarro.DataExclusao.HasValue);
+                var queryAtracao = this.Context.AvaliacaoAlugueis.Where(d => !d.DataExclusao.HasValue).Where(d => d.Nota.HasValue).Where(d => d.ItemCarro.Alugado.Value).Where(d => !d.ItemCarro.DataExclusao.HasValue);
                 if (ApenasAmigos || IdentificadorAmigo.HasValue)
                     queryAtracao = queryAtracao.Where(d => listaInteiros.Contains(d.IdentificadorUsuario));
                 if (!string.IsNullOrEmpty(Nome))
@@ -1825,7 +1828,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                 if (IdentificadorViagem.HasValue)
                     queryAtracao = queryAtracao.Where(e => e.ItemCarro.IdentificadorViagem == IdentificadorViagem);
 
-                var listaSaida = queryAtracao.GroupBy(d => new { CodigoGoogle =  string.Empty , Nome = d.ItemCarro.Locadora })
+                var listaSaida = queryAtracao.GroupBy(d => new { CodigoGoogle = string.Empty, Nome = d.ItemCarro.Locadora })
                     .Select(d => new ConsultaRankings()
                     {
                         CodigoGoogle = d.Key.CodigoGoogle,
@@ -1936,10 +1939,10 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                         Nome = d.Select(e => e.ItemHotel.Nome).FirstOrDefault(),
                         Tipo = "H",
                         Media = d.Average(e => e.Nota),
-                        Avaliacoes = d.Select(e => new UsuarioConsulta() { Comentario = e.Comentario, Nome = e.ItemUsuario.Nome, DataAvaliacao = e.DataAtualizacao, Nota = e.Nota }) ,
+                        Avaliacoes = d.Select(e => new UsuarioConsulta() { Comentario = e.Comentario, Nome = e.ItemUsuario.Nome, DataAvaliacao = e.DataAtualizacao, Nota = e.Nota }),
                         NumeroAvaliacoes = d.Count()
 
-                    }).SelectMany(d => d.Avaliacoes).OrderByDescending(d=>d.DataAvaliacao);
+                    }).SelectMany(d => d.Avaliacoes).OrderByDescending(d => d.DataAvaliacao);
                 lista.AddRange(listaSaida.ToList());
             }
             if (string.IsNullOrEmpty(Tipo) || Tipo == "L")
@@ -1965,7 +1968,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                         Nome = d.Select(e => e.ItemLoja.Nome).FirstOrDefault(),
                         Tipo = "L",
                         Media = d.Average(e => e.Nota),
-                        Avaliacoes =  d.Select(e => new UsuarioConsulta() { Comentario = e.Comentario, Nome = e.ItemUsuario.Nome, DataAvaliacao = e.DataAtualizacao, Nota = e.Nota }) ,
+                        Avaliacoes = d.Select(e => new UsuarioConsulta() { Comentario = e.Comentario, Nome = e.ItemUsuario.Nome, DataAvaliacao = e.DataAtualizacao, Nota = e.Nota }),
                         NumeroAvaliacoes = d.Count()
 
                     }).SelectMany(d => d.Avaliacoes).OrderByDescending(d => d.DataAvaliacao);
@@ -1995,7 +1998,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                         Nome = d.Select(e => e.ItemRefeicao.Nome).FirstOrDefault(),
                         Tipo = "R",
                         Media = d.Average(e => e.Nota),
-                        Avaliacoes = d.Select(e => new UsuarioConsulta() { Comentario = e.Comentario, Nome = e.ItemUsuario.Nome, DataAvaliacao = e.DataAtualizacao, Nota = e.Nota }) ,
+                        Avaliacoes = d.Select(e => new UsuarioConsulta() { Comentario = e.Comentario, Nome = e.ItemUsuario.Nome, DataAvaliacao = e.DataAtualizacao, Nota = e.Nota }),
                         NumeroAvaliacoes = d.Count()
 
                     }).SelectMany(d => d.Avaliacoes).OrderByDescending(d => d.DataAvaliacao);
@@ -2021,7 +2024,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                         Nome = d.Key.Nome,
                         Tipo = "C",
                         Media = d.Average(e => e.Nota),
-                        Avaliacoes =  d.Select(e => new UsuarioConsulta() { Comentario = e.Comentario, Nome = e.ItemUsuario.Nome, DataAvaliacao = e.DataAtualizacao, Nota = e.Nota }) ,
+                        Avaliacoes = d.Select(e => new UsuarioConsulta() { Comentario = e.Comentario, Nome = e.ItemUsuario.Nome, DataAvaliacao = e.DataAtualizacao, Nota = e.Nota }),
                         NumeroAvaliacoes = d.Count()
 
                     }).SelectMany(d => d.Avaliacoes).OrderByDescending(d => d.DataAvaliacao);
@@ -2047,13 +2050,13 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                         Nome = d.Key.Nome,
                         Tipo = "VA",
                         Media = d.Average(e => e.Nota),
-                        Avaliacoes =  d.Select(e => new UsuarioConsulta() { Comentario = e.Comentario, Nome = e.ItemUsuario.Nome, DataAvaliacao = e.DataAtualizacao, Nota = e.Nota }) ,
+                        Avaliacoes = d.Select(e => new UsuarioConsulta() { Comentario = e.Comentario, Nome = e.ItemUsuario.Nome, DataAvaliacao = e.DataAtualizacao, Nota = e.Nota }),
                         NumeroAvaliacoes = d.Count()
 
                     }).SelectMany(d => d.Avaliacoes).OrderByDescending(d => d.DataAvaliacao);
                 lista.AddRange(listaSaida.ToList());
             }
-           
+
             return lista;
         }
 

@@ -2,7 +2,7 @@
     [ID_VIAGEM_AEREA_AEROPORTO] INT             IDENTITY (1, 1) NOT NULL,
     [ID_VIAGEM_AEREA]           INT             NOT NULL,
     [ID_CIDADE]                 INT             NULL,
-    [DS_AEROPORTO]              VARCHAR (200)   NOT NULL,
+    [DS_AEROPORTO]              VARCHAR (200)   NULL,
     [NR_LATITUDE]               NUMERIC (12, 8) NULL,
     [NR_LONGITUDE]              NUMERIC (12, 8) NULL,
     [CD_TIPO_PONTO]             INT             NOT NULL,

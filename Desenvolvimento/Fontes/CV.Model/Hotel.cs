@@ -8,76 +8,76 @@ using CV.Model.Resource;
 namespace CV.Model
 {
 
-	[HasSelfValidation()]
-	public partial class Hotel
-	{
-		public Hotel ()
-		{
-		}
+    [HasSelfValidation()]
+    public partial class Hotel
+    {
+        public Hotel()
+        {
+        }
 
-			public int? Identificador { get; set; }
+        public int? Identificador { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="Hotel_IdentificadorViagem",MessageTemplateResourceType=typeof(MensagemModelo))]
-			public int? IdentificadorViagem { get; set; }
+        [NotNullValidator(MessageTemplateResourceName = "Hotel_IdentificadorViagem", MessageTemplateResourceType = typeof(MensagemModelo))]
+        public int? IdentificadorViagem { get; set; }
 
-			public int? IdentificadorCidade { get; set; }
+        public int? IdentificadorCidade { get; set; }
 
-			public string Nome { get; set; }
-			[SelfValidation]
-private void ValidarNome(Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResults results)
-{
- if (Nome == null)
-  {
-      Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult result =
-            new Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult(Resource.MensagemModelo.Hotel_Nome, this, "Nome", null, null);
-      results.AddResult(result);
-  }
-  else if (Nome.Length > 200)
-  {
-      Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult result =
-            new Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult(Resource.MensagemModelo.Hotel_Nome_Tamanho, this, "Nome", null, null);
-      results.AddResult(result);
-  }
-}
+        public string Nome { get; set; }
 
-			public string CodigoPlace { get; set; }
+        public bool Movel { get; set; }
+        [SelfValidation]
+        private void ValidarNome(Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResults results)
+        {
+            if (Nome == null)
+            {
+                Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult result =
+                      new Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult(Resource.MensagemModelo.Hotel_Nome, this, "Nome", null, null);
+                results.AddResult(result);
+            }
+            else if (Nome.Length > 200)
+            {
+                Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult result =
+                      new Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult(Resource.MensagemModelo.Hotel_Nome_Tamanho, this, "Nome", null, null);
+                results.AddResult(result);
+            }
+        }
 
-			public DateTime? DataEntrada { get; set; }
+        public string CodigoPlace { get; set; }
 
-			public DateTime? DataSaidia { get; set; }
+        public DateTime? DataEntrada { get; set; }
 
-			public decimal? Longitude { get; set; }
+        public DateTime? DataSaidia { get; set; }
 
-			public decimal? Latitude { get; set; }
+        public decimal? Longitude { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="Hotel_EntradaPrevista",MessageTemplateResourceType=typeof(MensagemModelo))]
-			public DateTime? EntradaPrevista { get; set; }
+        public decimal? Latitude { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="Hotel_SaidaPrevista",MessageTemplateResourceType=typeof(MensagemModelo))]
-			public DateTime? SaidaPrevista { get; set; }
+         public DateTime? EntradaPrevista { get; set; }
 
-			public Cidade ItemCidade { get; set; }
+        public DateTime? SaidaPrevista { get; set; }
 
-			public IList<FotoHotel> Fotos { get; set; }
+        public Cidade ItemCidade { get; set; }
 
-			public IList<GastoHotel> Gastos { get; set; }
+        public IList<FotoHotel> Fotos { get; set; }
 
-			public IList<HotelAvaliacao> Avaliacoes { get; set; }
+        public IList<GastoHotel> Gastos { get; set; }
 
-			public Viagem ItemViagem { get; set; }
+        public IList<HotelAvaliacao> Avaliacoes { get; set; }
 
-			public IList<HotelEvento> Eventos { get; set; }
+        public Viagem ItemViagem { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="Hotel_Raio",MessageTemplateResourceType=typeof(MensagemModelo))]
-			public int? Raio { get; set; }
+        public IList<HotelEvento> Eventos { get; set; }
 
-			public DateTime? DataAtualizacao { get; set; }
+        [NotNullValidator(MessageTemplateResourceName = "Hotel_Raio", MessageTemplateResourceType = typeof(MensagemModelo))]
+        public int? Raio { get; set; }
 
-			public DateTime? DataExclusao { get; set; }
-		 public Hotel Clone()
-		{
-			 return (Hotel) this.MemberwiseClone();
-		}
-	}
+        public DateTime? DataAtualizacao { get; set; }
+
+        public DateTime? DataExclusao { get; set; }
+        public Hotel Clone()
+        {
+            return (Hotel)this.MemberwiseClone();
+        }
+    }
 
 }

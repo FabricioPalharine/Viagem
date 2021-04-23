@@ -19,7 +19,7 @@ namespace CV.UI.Web.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class TextosPaginas {
@@ -2545,6 +2545,15 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Móvel.
+        /// </summary>
+        public static string Hotel_Movel {
+            get {
+                return ResourceManager.GetString("Hotel_Movel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nome.
         /// </summary>
         public static string Hotel_Nome {
@@ -3751,6 +3760,15 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Refeição Concluída.
+        /// </summary>
+        public static string Refeicao_Concluida {
+            get {
+                return ResourceManager.GetString("Refeicao_Concluida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gastos.
         /// </summary>
         public static string Refeicao_Custos {
@@ -3783,6 +3801,15 @@ namespace CV.UI.Web.Resources {
         public static string Refeicao_DataExclusao {
             get {
                 return ResourceManager.GetString("Refeicao_DataExclusao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data Término.
+        /// </summary>
+        public static string Refeicao_DataTermino {
+            get {
+                return ResourceManager.GetString("Refeicao_DataTermino", resourceCulture);
             }
         }
         
@@ -5434,7 +5461,7 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aeroporto/Porto/Estação.
+        ///   Looks up a localized string similar to Ponto.
         /// </summary>
         public static string ViagemAerea_Aeroporto {
             get {
@@ -5443,7 +5470,7 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chegada Aeroporto/Porto/Estação.
+        ///   Looks up a localized string similar to Chegada .
         /// </summary>
         public static string ViagemAerea_Chegada {
             get {
@@ -5488,7 +5515,7 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data Chegada Aeroporto/Porto/Estação.
+        ///   Looks up a localized string similar to Data Chegada .
         /// </summary>
         public static string ViagemAerea_DataChegada {
             get {
@@ -5524,7 +5551,7 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data Partida Aeroporto/Porto/Estação.
+        ///   Looks up a localized string similar to Data Partida .
         /// </summary>
         public static string ViagemAerea_DataPartida {
             get {

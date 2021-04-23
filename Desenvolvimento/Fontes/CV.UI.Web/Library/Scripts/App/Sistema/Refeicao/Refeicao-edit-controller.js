@@ -15,7 +15,7 @@
 	    vm.ItemAvaliacao = {};
 	    vm.slickLoaded = false;
 	    vm.itemOriginal = {};
-
+        vm.RefeicaoConcluida = false;
 
 	    vm.position = null;
 	    vm.AjustarPosicao = function (position) {
@@ -57,7 +57,8 @@
 	                        return e.IdentificadorUsuario == item.Identificador;
 	                    }).length > 0;
 	                    vm.ListaParticipante.push(item);
-	                });
+                    });
+                    vm.RefeicaoConcluida = item.DataTermino != null;
 	                vm.RecarregarFotos();
 	                vm.loading = false;
 	            });
@@ -88,8 +89,18 @@
 	                    vm.itemRefeicao.Data = moment(vm.itemRefeicao.Data).format("YYYY-MM-DDT");
 	                vm.itemRefeicao.Data += (vm.itemRefeicao.strHora) ? vm.itemRefeicao.strHora : "00:00:00";
 
-	            }
+                }
 
+                if (vm.itemRefeicao.DataTermino) {
+                    if (typeof vm.itemRefeicao.DataTermino == "string") {
+
+                        vm.itemRefeicao.DataTermino = moment(vm.itemRefeicao.DataTermino).format("YYYY-MM-DDT");
+                    }
+                    else
+                        vm.itemRefeicao.DataTermino = moment(vm.itemRefeicao.DataTermino).format("YYYY-MM-DDT");
+                    vm.itemRefeicao.DataTermino += (vm.itemRefeicao.strHoraTermino) ? vm.itemRefeicao.strHoraTermino : "00:00:00";
+
+                }
 	            
 	            angular.forEach(vm.ListaParticipante, function (item) {
 	                var itens =
@@ -448,7 +459,20 @@
 	        $scope.$parent.itemRefeicao.modalPopupTrigger(vm.itemRefeicao, $translate.instant('MensagemExclusao'), $translate.instant('Sim'), $translate.instant('Nao'), function () {
 	            $scope.$parent.itemRefeicao.Excluir(vm.itemRefeicao)
 	        });
-	    };
+        };
+
+        vm.AjustarHoraTermino = function () {
+            if (vm.RefeicaoConcluida) {
+                vm.itemRefeicao.DataTermino = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+                vm.itemAtritemRefeicaoacao.strHoraTermino = moment(new Date()).format("HH:mm:ss");
+
+            }
+            else {
+                vm.itemRefeicao.DataTermino = vm.itemAtracao.strHoraTermino = null;
+
+            }
+        };
+
 
 	    vm.Cancelar = function () {
 	        $scope.$parent.itemRefeicao.Cancelar(vm.itemRefeicao);

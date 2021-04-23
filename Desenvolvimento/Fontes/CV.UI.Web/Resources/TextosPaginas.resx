@@ -1201,10 +1201,10 @@
     <value>Descrição</value>
   </data>
   <data name="ViagemAerea_Aeroporto" xml:space="preserve">
-    <value>Aeroporto/Porto/Estação</value>
+    <value>Ponto</value>
   </data>
   <data name="ViagemAerea_Chegada" xml:space="preserve">
-    <value>Chegada Aeroporto/Porto/Estação</value>
+    <value>Chegada </value>
   </data>
   <data name="ViagemAerea_CidadeDestino" xml:space="preserve">
     <value>Cidade Destino</value>
@@ -1213,10 +1213,10 @@
     <value>Cidade Origem</value>
   </data>
   <data name="ViagemAerea_DataChegada" xml:space="preserve">
-    <value>Data Chegada Aeroporto/Porto/Estação</value>
+    <value>Data Chegada </value>
   </data>
   <data name="ViagemAerea_DataPartida" xml:space="preserve">
-    <value>Data Partida Aeroporto/Porto/Estação</value>
+    <value>Data Partida </value>
   </data>
   <data name="ViagemAerea_Destino" xml:space="preserve">
     <value>Destino</value>
@@ -1976,5 +1976,14 @@
   </data>
   <data name="Tipo_Ponto" xml:space="preserve">
     <value>Tipo Ponto</value>
+  </data>
+  <data name="Hotel_Movel" xml:space="preserve">
+    <value>Móvel</value>
+  </data>
+  <data name="Refeicao_Concluida" xml:space="preserve">
+    <value>Refeição Concluída</value>
+  </data>
+  <data name="Refeicao_DataTermino" xml:space="preserve">
+    <value>Data Término</value>
   </data>
 </root>

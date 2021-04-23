@@ -8,38 +8,43 @@ using CV.Model.Resource;
 namespace CV.Model
 {
 
-	[HasSelfValidation()]
-	public partial class HotelEvento
-	{
-		public HotelEvento ()
-		{
-		}
+    [HasSelfValidation()]
+    public partial class HotelEvento
+    {
+        public HotelEvento()
+        {
+        }
 
-			public int? Identificador { get; set; }
+        public int? Identificador { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="HotelEvento_IdentificadorHotel",MessageTemplateResourceType=typeof(MensagemModelo))]
-			public int? IdentificadorHotel { get; set; }
+        [NotNullValidator(MessageTemplateResourceName = "HotelEvento_IdentificadorHotel", MessageTemplateResourceType = typeof(MensagemModelo))]
+        public int? IdentificadorHotel { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="HotelEvento_DataEntrada",MessageTemplateResourceType=typeof(MensagemModelo))]
-			public DateTime? DataEntrada { get; set; }
+        [NotNullValidator(MessageTemplateResourceName = "HotelEvento_DataEntrada", MessageTemplateResourceType = typeof(MensagemModelo))]
+        public DateTime? DataEntrada { get; set; }
 
-			public DateTime? DataSaida { get; set; }
+        public DateTime? DataSaida { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="HotelEvento_DataAtualizacao",MessageTemplateResourceType=typeof(MensagemModelo))]
-			public DateTime? DataAtualizacao { get; set; }
+        [NotNullValidator(MessageTemplateResourceName = "HotelEvento_DataAtualizacao", MessageTemplateResourceType = typeof(MensagemModelo))]
+        public DateTime? DataAtualizacao { get; set; }
 
-			public Hotel ItemHotel { get; set; }
+        public Hotel ItemHotel { get; set; }
 
-			public DateTime? DataExclusao { get; set; }
+        public DateTime? DataExclusao { get; set; }
 
-			[NotNullValidator(MessageTemplateResourceName="HotelEvento_IdentificadorUsuario",MessageTemplateResourceType=typeof(MensagemModelo))]
-			public int? IdentificadorUsuario { get; set; }
+        [NotNullValidator(MessageTemplateResourceName = "HotelEvento_IdentificadorUsuario", MessageTemplateResourceType = typeof(MensagemModelo))]
+        public int? IdentificadorUsuario { get; set; }
 
-			public Usuario ItemUsuario { get; set; }
-		 public HotelEvento Clone()
-		{
-			 return (HotelEvento) this.MemberwiseClone();
-		}
-	}
+        public decimal? LatitudeEntrada { get; set; }
+        public decimal? LongitudeEntrada { get; set; }
+        
+        public decimal? LatitudeSaida { get; set; }
+        public decimal? LongitudeSaida { get; set; }
+        public Usuario ItemUsuario { get; set; }
+        public HotelEvento Clone()
+        {
+            return (HotelEvento)this.MemberwiseClone();
+        }
+    }
 
 }

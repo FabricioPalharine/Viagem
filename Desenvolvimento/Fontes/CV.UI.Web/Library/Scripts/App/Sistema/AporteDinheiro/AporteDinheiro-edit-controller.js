@@ -99,6 +99,12 @@
             });
         };
 
+        vm.TrocarValor = function () {
+            if (vm.BaixarMoeda && vm.itemAporteDinheiro.Cotacao && vm.itemAporteDinheiro.Valor) {
+                vm.itemGasto.Valor = vm.itemAporteDinheiro.Cotacao * vm.itemAporteDinheiro.Valor;
+            }
+        };
+
 
         vm.close = function () {
 
@@ -109,7 +115,8 @@
 
         vm.trocarBaixa = function () {
             if (vm.BaixarMoeda) {
-                vm.itemGasto = { Especie: true, ApenasBaixa : true, Dividido: false, Descricao: 'Baixa Moeda'};
+                vm.itemGasto = { Especie: true, ApenasBaixa: true, Dividido: false, Descricao: 'Baixa Moeda' };
+                vm.TrocarValor();
             }
             else
                 vm.itemGasto = null;
