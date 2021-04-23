@@ -490,6 +490,21 @@ namespace TK.CustomMap.iOSUnified
             
             this.SetAnnotationViewVisibility(annotationView, customAnnotation.CustomPin);
             this.UpdateImage(annotationView, customAnnotation.CustomPin);
+            if(!string.IsNullOrEmpty(customAnnotation.CustomPin.DetailImage))
+            {
+                UIImage image = null;
+                using (var url = new NSUrl(customAnnotation.CustomPin.DetailImage))
+                using (var data = NSData.FromUrl(url))
+                    image = UIImage.LoadFromData(data);
+                UIImageView imageView = new UIImageView(image);
+                
+                UITextView uITextView = new UITextView();
+                uITextView.Text = customAnnotation.CustomPin.Subtitle;
+                UIStackView uIStackView = new UIStackView(new UIView[] { imageView, uITextView });
+
+                annotationView.DetailCalloutAccessoryView = uIStackView;
+            }
+
 
             if (FormsMap.CalloutClickedCommand != null)
             {

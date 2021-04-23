@@ -29,13 +29,13 @@
   </ContentPage.ToolbarItems>
   <ContentPage.Content>
     <ScrollView>
-    <RelativeLayout  VerticalOptions="FillAndExpand" >
-      <StackLayout
-                                  RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent,
-            Property=Height,Factor=0,Constant=60}"
-                          RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width,Factor=1,Constant=0}"
-                        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1,Constant=60}"
-
+    <RelativeLayout>
+                <Label Text="Nome"  RelativeLayout.YConstraint="{ConstraintExpression Constant=0}"
+     RelativeLayout.XConstraint="{ConstraintExpression  Constant=0}"/>
+        
+                <StackLayout HeightRequest="400"
+                   RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                   RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Factor=0, Property=Y, Constant=70}"           
                          >
 
         <Label Text="Tipo"  />
@@ -67,15 +67,13 @@
         </StackLayout>
 
       </StackLayout>
-      <Label Text="Nome"  RelativeLayout.YConstraint="{ConstraintExpression Constant=0}"
-     RelativeLayout.XConstraint="{ConstraintExpression  Constant=0}"/>
+    
 
       <controles:PlacesSearch Bounds="{Binding Bounds}" PlaceSelectedCommand="{Binding PlaceSelectedCommand}" Text="{Binding ItemCalendarioPrevisto.Nome}" Placeholder=""
                        RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent,
-            Property=Height,Factor=0,Constant=10}"
-                        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1,Constant=10}"
-     RelativeLayout.XConstraint="{ConstraintExpression  Constant=0}"
-                                    ></controles:PlacesSearch>
+            Property=Height,Factor=0,Constant=25}"
+                        
+                                    ></controles:PlacesSearch> 
       
     </RelativeLayout>
     </ScrollView>

@@ -340,7 +340,7 @@ namespace CV.Mobile.ViewModels
                     Posicao itemPosicao = new Posicao()
                     {
                         DataGMT = e.Position.Timestamp.DateTime,
-                        DataLocal = new DateTime(DateTime.Now.Ticks),
+                        DataLocal = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Unspecified),
                         IdentificadorUsuario = _ItemUsuario.Codigo,
                         IdentificadorViagem = _ItemViagem.Identificador,
                         Latitude = e.Position.Latitude,
@@ -374,9 +374,9 @@ namespace CV.Mobile.ViewModels
                     if (estaDentro != HotelDentro)
                     {
                         HotelDentro = estaDentro;
-                        HotelEvento itemEvento = new HotelEvento() { DataEntrada = DateTime.Now, IdentificadorHotel = _hotelAtual.Identificador, IdentificadorUsuario = ItemUsuario.Codigo, DataAtualizacao = DateTime.Now.ToUniversalTime() };
+                        HotelEvento itemEvento = new HotelEvento() { DataEntrada = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Unspecified), IdentificadorHotel = _hotelAtual.Identificador, IdentificadorUsuario = ItemUsuario.Codigo, DataAtualizacao = DateTime.Now.ToUniversalTime() };
                         if (!estaDentro)
-                            itemEvento.DataSaida = DateTime.Now;
+                            itemEvento.DataSaida = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Unspecified);
                         if (ConectadoPrincipal)
                         {
                             using (ApiService srv = new ApiService())
@@ -409,7 +409,7 @@ namespace CV.Mobile.ViewModels
                             {
                                 itemAtual.DataAtualizacao = DateTime.Now.ToUniversalTime();
                                 itemAtual.AtualizadoBanco = false;
-                                itemAtual.DataSaida = DateTime.Now;
+                                itemAtual.DataSaida = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Unspecified);
                                 await DatabaseService.Database.SalvarHotelEvento(itemAtual);
                             }
                             else if (itemAtual == null && estaDentro)

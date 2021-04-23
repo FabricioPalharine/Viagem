@@ -1,0 +1,1272 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DD3372BA-30B3-4EF9-BFA5-5AB6BCCDA226}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CV.Mobile</RootNamespace>
+    <AssemblyName>CV.Mobile</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile259</TargetFrameworkProfile>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\BindableToolbarItem.cs" />
+    <Compile Include="Controls\CalendarioControl.cs" />
+    <Compile Include="Controls\ChildBindableTabbedPage.cs" />
+    <Compile Include="Controls\FormattedNumberEntry.cs" />
+    <Compile Include="Controls\GesturesContentView.cs" />
+    <Compile Include="Controls\ImageButton.cs" />
+    <Compile Include="Controls\ImageButtonSourceConverter.cs" />
+    <Compile Include="Controls\ImageGallery.cs" />
+    <Compile Include="Controls\NullableDatePicker.cs" />
+    <Compile Include="Controls\ExtendedPicker.cs" />
+    <Compile Include="Controls\PlacesSearch.cs" />
+    <Compile Include="Controls\StarControl.cs" />
+    <Compile Include="Data\CVDatabase.cs" />
+    <Compile Include="Helpers\BooleanFileImageSourceConverter.cs" />
+    <Compile Include="Helpers\ConsultaFotoTemplateSelector.cs" />
+    <Compile Include="Helpers\DetalheLocalTemplateSelector.cs" />
+    <Compile Include="Helpers\IntegerImageSourceConverter.cs" />
+    <Compile Include="Helpers\EnumHelperExtension.cs" />
+    <Compile Include="Helpers\enumMoeda.cs" />
+    <Compile Include="Helpers\enumStatusListaCompra.cs" />
+    <Compile Include="Helpers\ImageResourceExtension.cs" />
+    <Compile Include="Helpers\IntDecimalConverter.cs" />
+    <Compile Include="Helpers\BooleanImageSourceConverter.cs" />
+    <Compile Include="Helpers\InvertedBooleanConverter.cs" />
+    <Compile Include="Helpers\TipoFontAttributeConverter.cs" />
+    <Compile Include="Helpers\IntStringConverter.cs" />
+    <Compile Include="Helpers\InverseBooleanConverter.cs" />
+    <Compile Include="Helpers\Settings.cs" />
+    <Compile Include="Interfaces\IFileHelper.cs" />
+    <Compile Include="Interfaces\IValidaAutenticacao.cs" />
+    <Compile Include="MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AgendarSugestao.cs" />
+    <Compile Include="Models\AjusteGastoDividido.cs" />
+    <Compile Include="Models\AlertaUsuario.cs" />
+    <Compile Include="Models\Amigo.cs" />
+    <Compile Include="Models\AporteDinheiro.cs" />
+    <Compile Include="Models\AtualizacaoConsulta.cs" />
+    <Compile Include="Models\Cabecalho.cs" />
+    <Compile Include="Models\CalendarioPrevisto.cs" />
+    <Compile Include="Models\CalendarioRealizado.cs" />
+    <Compile Include="Models\Carro.cs" />
+    <Compile Include="Models\CarroDeslocamento.cs" />
+    <Compile Include="Models\CarroDeslocamentoUsuario.cs" />
+    <Compile Include="Models\CarroEvento.cs" />
+    <Compile Include="Models\Cidade.cs" />
+    <Compile Include="Models\ClasseSincronizacao.cs" />
+    <Compile Include="Models\Comentario.cs" />
+    <Compile Include="Models\ConsultaRankings.cs" />
+    <Compile Include="Models\CotacaoMoeda.cs" />
+    <Compile Include="Models\DataCalendario.cs" />
+    <Compile Include="Models\DeParaIdentificador.cs" />
+    <Compile Include="Models\ExtratoMoeda.cs" />
+    <Compile Include="Models\FotoRefeicao.cs" />
+    <Compile Include="Models\FotoHotel.cs" />
+    <Compile Include="Models\FotoAtracao.cs" />
+    <Compile Include="Models\Gasto.cs" />
+    <Compile Include="Models\Atracao.cs" />
+    <Compile Include="Models\AvaliacaoAerea.cs" />
+    <Compile Include="Models\AvaliacaoAluguel.cs" />
+    <Compile Include="Models\Foto.cs" />
+    <Compile Include="Models\GestureInterest.cs" />
+    <Compile Include="Models\GestureResult.cs" />
+    <Compile Include="Models\Hotel.cs" />
+    <Compile Include="Models\HotelEvento.cs" />
+    <Compile Include="Models\ItemCompra.cs" />
+    <Compile Include="Models\LinhaMapa.cs" />
+    <Compile Include="Models\LocaisDetalhes.cs" />
+    <Compile Include="Models\LocaisVisitados.cs" />
+    <Compile Include="Models\LocalSelecionado.cs" />
+    <Compile Include="Models\Loja.cs" />
+    <Compile Include="Models\LojaItens.cs" />
+    <Compile Include="Models\PontoMapa.cs" />
+    <Compile Include="Models\UlimaPosicao.cs" />
+    <Compile Include="Models\Reabastecimento.cs" />
+    <Compile Include="Models\ReabastecimentoGasto.cs" />
+    <Compile Include="Models\GastoCompra.cs" />
+    <Compile Include="Models\GastoRefeicao.cs" />
+    <Compile Include="Models\AluguelGasto.cs" />
+    <Compile Include="Models\GastoViagemAerea.cs" />
+    <Compile Include="Models\GastoHotel.cs" />
+    <Compile Include="Models\GastoAtracao.cs" />
+    <Compile Include="Models\GmsPlacesSearch.cs" />
+    <Compile Include="Models\ItemLista.cs" />
+    <Compile Include="Models\ListaCompra.cs" />
+    <Compile Include="Models\ManutencaoCidadeGrupo.cs" />
+    <Compile Include="Models\MensagemErro.cs" />
+    <Compile Include="Models\PocoLogin.cs" />
+    <Compile Include="Models\Posicao.cs" />
+    <Compile Include="Models\Refeicao.cs" />
+    <Compile Include="Models\RefeicaoPedido.cs" />
+    <Compile Include="Models\AvaliacaoLoja.cs" />
+    <Compile Include="Models\HotelAvaliacao.cs" />
+    <Compile Include="Models\AvaliacaoAtracao.cs" />
+    <Compile Include="Models\Constants.cs" />
+    <Compile Include="Models\ConsultaAmigo.cs" />
+    <Compile Include="Models\ControleSincronizacao.cs" />
+    <Compile Include="Models\CriterioBusca.cs" />
+    <Compile Include="Models\DadosGoogleToken.cs" />
+    <Compile Include="Models\ItemMenu.cs" />
+    <Compile Include="Models\MessageKeys.cs" />
+    <Compile Include="Models\ParticipanteViagem.cs" />
+    <Compile Include="Models\RelatorioGastos.cs" />
+    <Compile Include="Models\RequisicaoAmizade.cs" />
+    <Compile Include="Models\ResultadoConsultaTipo.cs" />
+    <Compile Include="Models\ResultadoOperacao.cs" />
+    <Compile Include="Models\ResumoViagem.cs" />
+    <Compile Include="Models\Sugestao.cs" />
+    <Compile Include="Models\Timeline.cs" />
+    <Compile Include="Models\UploadFoto.cs" />
+    <Compile Include="Models\Usuario.cs" />
+    <Compile Include="Models\GastoDividido.cs" />
+    <Compile Include="Models\UsuarioConsulta.cs" />
+    <Compile Include="Models\UsuarioGasto.cs" />
+    <Compile Include="Models\UsuarioLogado.cs" />
+    <Compile Include="Models\Viagem.cs" />
+    <Compile Include="Models\ViagemAerea.cs" />
+    <Compile Include="Models\ViagemAereaAeroporto.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resource\EnumDescription.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EnumDescription.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\MensagemModelo.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MensagemModelo.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\ApiService.cs" />
+    <Compile Include="Services\AccountsService.cs" />
+    <Compile Include="Services\DatabaseService.cs" />
+    <Compile Include="Services\PhotosService.cs" />
+    <Compile Include="Services\GoogleServices.cs" />
+    <Compile Include="Services\OAuth2AuthenticatorToken.cs" />
+    <Compile Include="ViewModels\AdicionarAmigoViewModel.cs" />
+    <Compile Include="ViewModels\BaseNavigationViewModel.cs" />
+    <Compile Include="ViewModels\ConfiguracaoViewModel.cs" />
+    <Compile Include="ViewModels\ConsultarLocaisVisitadosViewModel.cs" />
+    <Compile Include="ViewModels\ConsultarRankingsViewModel.cs" />
+    <Compile Include="ViewModels\ConsultarFotosViewModel.cs" />
+    <Compile Include="ViewModels\ConsultarPontosMapaViewModel.cs" />
+    <Compile Include="ViewModels\ConsultarTimelineViewModel.cs" />
+    <Compile Include="ViewModels\ConsultarResumoViewModel.cs" />
+    <Compile Include="ViewModels\ConsultarRelatorioGastosViewModel.cs" />
+    <Compile Include="ViewModels\ConsultasViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoAporteDinheiroViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoAgendarSugestaoViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoCalendarioPrevistoViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoViagemAereaViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoComentarioViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoCompraViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoCarroDeslocamentoViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoCarroViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoReabastecimentoViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoItemCompraViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoLojaViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoRefeicaoViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoHotelViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoGastoViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoSugestaoRecebidaViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoAtracaoViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoSugestaoViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoListaCompraViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoRequisicaoCompraViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoPedidoCompraViewModel.cs" />
+    <Compile Include="ViewModels\EdicaoAgrupamentoCidadeViewModel.cs" />
+    <Compile Include="ViewModels\EditarCotacaoViewModel.cs" />
+    <Compile Include="ViewModels\ListagemAmigoViewModel.cs" />
+    <Compile Include="ViewModels\ListagemAgrupamentoCidadeViewModel.cs" />
+    <Compile Include="ViewModels\ConsultarGastoDivididoViewModel.cs" />
+    <Compile Include="ViewModels\ListagemCalendarioRealizadoViewModel.cs" />
+    <Compile Include="ViewModels\ListagemCalendarioPrevistoViewModel.cs" />
+    <Compile Include="ViewModels\ConsultarExtratoViewModel.cs" />
+    <Compile Include="ViewModels\ListagemViagemAereaCustoViewModel.cs" />
+    <Compile Include="ViewModels\ListagemViagemAereaViewModel.cs" />
+    <Compile Include="ViewModels\ListagemGastoViewModel.cs" />
+    <Compile Include="ViewModels\ListagemComentarioViewModel.cs" />
+    <Compile Include="ViewModels\ListagemCarroCustoViewModel.cs" />
+    <Compile Include="ViewModels\ListagemCarroDeslocamentoViewModel.cs" />
+    <Compile Include="ViewModels\ListagemCarroViewModel.cs" />
+    <Compile Include="ViewModels\ListagemReabastecimentoViewModel.cs" />
+    <Compile Include="ViewModels\ListagemItemCompraViewModel.cs" />
+    <Compile Include="ViewModels\ListagemLojaViewModel.cs" />
+    <Compile Include="ViewModels\ListagemCompraCustoViewModel.cs" />
+    <Compile Include="ViewModels\ListagemRefeicaoViewModel.cs" />
+    <Compile Include="ViewModels\ListagemRefeicaoCustoViewModel.cs" />
+    <Compile Include="ViewModels\ListagemHotelCustoViewModel.cs" />
+    <Compile Include="ViewModels\ListagemAtracaoCustoViewModel.cs" />
+    <Compile Include="ViewModels\ListagemHotelViewModel .cs" />
+    <Compile Include="ViewModels\ListagemSelecaoCustoViewModel.cs" />
+    <Compile Include="ViewModels\ListagemCotacaoMoedaViewModel.cs" />
+    <Compile Include="ViewModels\ListagemAporteDinheiroViewModel.cs" />
+    <Compile Include="ViewModels\ListagemListaCompraViewModel.cs" />
+    <Compile Include="ViewModels\ListagemAtracaoViewModel.cs" />
+    <Compile Include="ViewModels\ListagemSugestaoRecebidaViewModel.cs" />
+    <Compile Include="ViewModels\ListagemSugestaoViewModel.cs" />
+    <Compile Include="ViewModels\ListagemPedidoCompraViewModel.cs" />
+    <Compile Include="ViewModels\AguardeProcessandoViewmModel.cs" />
+    <Compile Include="ViewModels\LoadingViewModel.cs" />
+    <Compile Include="ViewModels\MasterDetailViewModel.cs" />
+    <Compile Include="ViewModels\MenuInicialViewModel.cs" />
+    <Compile Include="ViewModels\MenuViewModel.cs" />
+    <Compile Include="ViewModels\EditarViagemViewModel.cs" />
+    <Compile Include="ViewModels\PosicaoMapaViewModel.cs" />
+    <Compile Include="ViewModels\SelecionarViagemViewModel.cs" />
+    <Compile Include="ViewModels\TextPopupViewModel.cs" />
+    <Compile Include="Views\AdicionarAmigoPage.xaml.cs">
+      <DependentUpon>AdicionarAmigoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AguardeProcessandoPage.xaml.cs">
+      <DependentUpon>AguardeProcessandoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AutenticacaoPage.xaml.cs">
+      <DependentUpon>AutenticacaoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarCalendarioRealizadoPage.xaml.cs">
+      <DependentUpon>ConsultarCalendarioRealizadoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarMapaPage.xaml.cs">
+      <DependentUpon>ConsultarMapaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarTimelinePage.xaml.cs">
+      <DependentUpon>ConsultarTimelinePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarFotoListaPage.xaml.cs">
+      <DependentUpon>ConsultarFotoListaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarLocalVisitadoDetalhePage.xaml.cs">
+      <DependentUpon>ConsultarLocalVisitadoDetalhePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarRankingsDetalhePage.xaml.cs">
+      <DependentUpon>ConsultarRankingsDetalhePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarLocaisVisitadosListaPage.xaml.cs">
+      <DependentUpon>ConsultarLocaisVisitadosListaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarRankingsPage.xaml.cs">
+      <DependentUpon>ConsultarRankingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarRankingsListaPage.xaml.cs">
+      <DependentUpon>ConsultarRankingsListaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarLocaisVisitadoPage.xaml.cs">
+      <DependentUpon>ConsultarLocaisVisitadoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarFotoPage.xaml.cs">
+      <DependentUpon>ConsultarFotoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarResumoDadosPage.xaml.cs">
+      <DependentUpon>ConsultarResumoDadosPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarResumoPage.xaml.cs">
+      <DependentUpon>ConsultarResumoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarRelatorioGastoPage.xaml.cs">
+      <DependentUpon>ConsultarRelatorioGastoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarRelatorioGastoListaPage.xaml.cs">
+      <DependentUpon>ConsultarRelatorioGastoListaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoAgrupamentoCidadePage.xaml.cs">
+      <DependentUpon>EdicaoAgrupamentoCidadePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoCalendarioPrevistoPage.xaml.cs">
+      <DependentUpon>EdicaoCalendarioPrevistoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConfiguracaoPage.xaml.cs">
+      <DependentUpon>ConfiguracaoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarExtratoPage.xaml.cs">
+      <DependentUpon>ConsultarExtratoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarGastoDivididoPage.xaml.cs">
+      <DependentUpon>ConsultarGastoDivididoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemCalendarioRealizadoPage.xaml.cs">
+      <DependentUpon>ListagemCalendarioRealizadoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemCalendarioPrevistoPage.xaml.cs">
+      <DependentUpon>ListagemCalendarioPrevistoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultasPage.xaml.cs">
+      <DependentUpon>ConsultasPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarExtratoListaPage.xaml.cs">
+      <DependentUpon>ConsultarExtratoListaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsultarMapaExibicaoPage.xaml.cs">
+      <DependentUpon>ConsultarMapaExibicaoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TextoPopupPage.xaml.cs">
+      <DependentUpon>TextoPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoViagemAereaPage.xaml.cs">
+      <DependentUpon>EdicaoViagemAereaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoCarroDeslocamentoPage.xaml.cs">
+      <DependentUpon>EdicaoCarroDeslocamentoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoComentarioPage.xaml.cs">
+      <DependentUpon>EdicaoComentarioPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoCarroPage.xaml.cs">
+      <DependentUpon>EdicaoCarroPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoReabastecimentoPage.xaml.cs">
+      <DependentUpon>EdicaoReabastecimentoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoItemCompraPage.xaml.cs">
+      <DependentUpon>EdicaoItemCompraPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoLojaPage.xaml.cs">
+      <DependentUpon>EdicaoLojaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoRefeicaoPage.xaml.cs">
+      <DependentUpon>EdicaoRefeicaoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoHotelPage.xaml.cs">
+      <DependentUpon>EdicaoHotelPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoGastoPage.xaml.cs">
+      <DependentUpon>EdicaoGastoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoCotacaoPage.xaml.cs">
+      <DependentUpon>EdicaoCotacaoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoAporteDinheiroPage.xaml.cs">
+      <DependentUpon>EdicaoAporteDinheiroPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoAgendarSugestaoPage.xaml.cs">
+      <DependentUpon>EdicaoAgendarSugestaoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoAtracaoPage.xaml.cs">
+      <DependentUpon>EdicaoAtracaoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoSugestaoRecebidaPage.xaml.cs">
+      <DependentUpon>EdicaoSugestaoRecebidaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoSugestaoPage.xaml.cs">
+      <DependentUpon>EdicaoSugestaoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoListaCompraPage.xaml.cs">
+      <DependentUpon>EdicaoListaCompraPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoRequisicaoCompraPage.xaml.cs">
+      <DependentUpon>EdicaoRequisicaoCompraPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoPedidoCompraPage.xaml.cs">
+      <DependentUpon>EdicaoPedidoCompraPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoViagemDados.xaml.cs">
+      <DependentUpon>EdicaoViagemDados.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EdicaoCompraPage.xaml.cs">
+      <DependentUpon>EdicaoCompraPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemAgrupamentoCidadePage.xaml.cs">
+      <DependentUpon>ListagemAgrupamentoCidadePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemViagemAereaCustoPage.xaml.cs">
+      <DependentUpon>ListagemViagemAereaCustoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemViagemAereaPage.xaml.cs">
+      <DependentUpon>ListagemViagemAereaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemGastoPage.xaml.cs">
+      <DependentUpon>ListagemGastoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemComentarioPage.xaml.cs">
+      <DependentUpon>ListagemComentarioPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemCompraCustoPage.xaml.cs">
+      <DependentUpon>ListagemCompraCustoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemCarroCustoPage.xaml.cs">
+      <DependentUpon>ListagemCarroCustoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemCarroDeslocamentoPage.xaml.cs">
+      <DependentUpon>ListagemCarroDeslocamentoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemCarroPage.xaml.cs">
+      <DependentUpon>ListagemCarroPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemReabastecimentoPage.xaml.cs">
+      <DependentUpon>ListagemReabastecimentoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemItemCompraPage.xaml.cs">
+      <DependentUpon>ListagemItemCompraPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemLojaPage.xaml.cs">
+      <DependentUpon>ListagemLojaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemRefeicaoPage.xaml.cs">
+      <DependentUpon>ListagemRefeicaoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemRefeicaoCustoPage.xaml.cs">
+      <DependentUpon>ListagemRefeicaoCustoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemHotelCustoPage.xaml.cs">
+      <DependentUpon>ListagemHotelCustoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemAtracaoCustoPage.xaml.cs">
+      <DependentUpon>ListagemAtracaoCustoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemHotelPage.xaml.cs">
+      <DependentUpon>ListagemHotelPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemSelecaoCustoPage.xaml.cs">
+      <DependentUpon>ListagemSelecaoCustoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemListaCompraPage.xaml.cs">
+      <DependentUpon>ListagemListaCompraPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemAmigoPage.xaml.cs">
+      <DependentUpon>ListagemAmigoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemCotacaoMoedaPage.xaml.cs">
+      <DependentUpon>ListagemCotacaoMoedaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemAporteDinheiroPage.xaml.cs">
+      <DependentUpon>ListagemAporteDinheiroPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemAtracaoPage.xaml.cs">
+      <DependentUpon>ListagemAtracaoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemSugestaoRecebidaPage.xaml.cs">
+      <DependentUpon>ListagemSugestaoRecebidaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemSugestaoPage.xaml.cs">
+      <DependentUpon>ListagemSugestaoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListagemPedidoCompraPage.xaml.cs">
+      <DependentUpon>ListagemPedidoCompraPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoadingPage.xaml.cs">
+      <DependentUpon>LoadingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MasterDetailPage.xaml.cs">
+      <DependentUpon>MasterDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MenuInicialPage.xaml.cs">
+      <DependentUpon>MenuInicialPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MenuPage.xaml.cs">
+      <DependentUpon>MenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EditarViagemPage.xaml.cs">
+      <DependentUpon>EditarViagemPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlacesAutoComplete.cs" />
+    <Compile Include="Views\PosicaoMapaPage.xaml.cs">
+      <DependentUpon>PosicaoMapaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SelecionarViagemPage.xaml.cs">
+      <DependentUpon>SelecionarViagemPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Acr.UserDialogs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Acr.UserDialogs.6.3.3\lib\portable-win+net45+wp8+win8+wpa81\Acr.UserDialogs.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Acr.UserDialogs.Interface, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Acr.UserDialogs.6.3.3\lib\portable-win+net45+wp8+win8+wpa81\Acr.UserDialogs.Interface.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.3.5.0\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Autofac.Extras.CommonServiceLocator, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.Extras.CommonServiceLocator.4.0.0\lib\portable40-net40+sl5+win8+wp8+wpa81\Autofac.Extras.CommonServiceLocator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Behaviors, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Behaviors.Forms.1.1.0\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Behaviors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ExifLib, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ExifLib.PCL.1.0.1\lib\portable-net45+sl50+win+WindowsPhoneApp81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10\ExifLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FFImageLoading, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xamarin.FFImageLoading.2.2.25\lib\portable-win+net45+wp80+win81+wpa81\FFImageLoading.dll</HintPath>
+    </Reference>
+    <Reference Include="FFImageLoading.Forms">
+      <HintPath>..\..\packages\Xamarin.FFImageLoading.Forms.2.2.25\lib\portable-win+net45+wp80+win81+wpa81\FFImageLoading.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="FormsToolkit, Version=1.1.18.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FormsToolkit.1.1.18\lib\portable-net45+wp8+win8+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10+UAP10\FormsToolkit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis, Version=1.20.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Google.Apis.1.20.0\lib\portable-net45+sl50+netcore45+wpa81+wp8\Google.Apis.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Auth, Version=1.20.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Google.Apis.Auth.1.20.0\lib\portable-net45+sl50+netcore45+wpa81+wp8\Google.Apis.Auth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Core, Version=1.20.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Google.Apis.Core.1.20.0\lib\portable-net45+sl50+netcore45+wpa81+wp8\Google.Apis.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.YouTube.v3, Version=1.20.0.701, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Google.Apis.YouTube.v3.1.20.0.701\lib\portable-net45+netcore45+wpa81+wp8\Google.Apis.YouTube.v3.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Client, Version=2.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.SignalR.Client.2.2.1\lib\portable-net45+sl50+win+wpa81+wp80\Microsoft.AspNet.SignalR.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\portable-net45+win8+wp8+wpa81\Microsoft.Threading.Tasks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\portable-net45+win8+wp8+wpa81\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ModernHttpClient, Version=2.4.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\modernhttpclient.2.4.2\lib\Portable-Net45+WinRT45+WP8+WPA81\ModernHttpClient.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MvvmHelpers, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Refractored.MvvmHelpers.1.1.0\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+UAP10\MvvmHelpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PCLCrypto, Version=2.0.0.0, Culture=neutral, PublicKeyToken=d4421c8a4786956c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\PCLCrypto.2.0.147\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\PCLCrypto.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Plugin.Connectivity, Version=2.2.12.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xam.Plugin.Connectivity.2.2.12\lib\portable-net45+wp80+wp81+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+Xamarin.Mac20+UAP10\Plugin.Connectivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Plugin.Connectivity.Abstractions, Version=2.2.12.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xam.Plugin.Connectivity.2.2.12\lib\portable-net45+wp80+wp81+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+Xamarin.Mac20+UAP10\Plugin.Connectivity.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Plugin.Geolocator, Version=3.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xam.Plugin.Geolocator.3.0.4\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+UAP10\Plugin.Geolocator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Plugin.Geolocator.Abstractions, Version=3.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xam.Plugin.Geolocator.3.0.4\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+UAP10\Plugin.Geolocator.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Plugin.Media, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xam.Plugin.Media.3.0.1\lib\netstandard1.0\Plugin.Media.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Plugin.Media.Abstractions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xam.Plugin.Media.3.0.1\lib\netstandard1.0\Plugin.Media.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Plugin.Permissions, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Plugin.Permissions.2.1.0\lib\netstandard1.0\Plugin.Permissions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Plugin.Permissions.Abstractions, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Plugin.Permissions.2.1.0\lib\netstandard1.0\Plugin.Permissions.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Plugin.SecureStorage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\sameerIOTApps.Plugin.SecureStorage.1.2.1\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Plugin.SecureStorage.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Plugin.SecureStorage.Abstractions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\sameerIOTApps.Plugin.SecureStorage.1.2.1\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Plugin.SecureStorage.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Plugin.Settings, Version=2.5.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xam.Plugins.Settings.2.5.1.0\lib\portable-net45+wp80+win8+wpa81\Plugin.Settings.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Plugin.Settings.Abstractions, Version=2.5.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xam.Plugins.Settings.2.5.1.0\lib\portable-net45+wp80+win8+wpa81\Plugin.Settings.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Plugin.Share, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Plugin.Share.7.0.1\lib\netstandard1.0\Plugin.Share.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Plugin.Share.Abstractions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Plugin.Share.7.0.1\lib\netstandard1.0\Plugin.Share.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Plugin.Vibrate, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xam.Plugins.Vibrate.2.0.0\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+UAP10\Plugin.Vibrate.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Plugin.Vibrate.Abstractions, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xam.Plugins.Vibrate.2.0.0\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+UAP10\Plugin.Vibrate.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Splat, Version=1.6.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Splat.1.6.2\lib\Portable-net45+win+wpa81+wp80\Splat.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SQLite-net, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\sqlite-net-pcl.1.2.1\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLite-net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SQLitePCLRaw.batteries_green, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a84b7dcfb1391f7f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SQLitePCLRaw.bundle_green.1.1.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLitePCLRaw.batteries_green.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SQLitePCLRaw.batteries_v2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8226ea5df37bcae9, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SQLitePCLRaw.bundle_green.1.1.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLitePCLRaw.batteries_v2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SQLitePCLRaw.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1488e028ca7ab535, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SQLitePCLRaw.core.1.1.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLitePCLRaw.core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Extensions, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Validation, Version=2.2.0.0, Culture=neutral, PublicKeyToken=2fc06f0d701809a7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Validation.2.2.8\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\Validation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xamarin.Auth">
+      <HintPath>..\..\..\..\..\..\Xamarin.Auth-v.1.4.1\source\Xamarin.Auth.Portable\bin\Debug\Xamarin.Auth.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Forms.CarouselView, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xamarin.Forms.CarouselView.2.3.0-pre2\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.CarouselView.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xamarin.Forms.2.3.3.193\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Maps, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xamarin.Forms.Maps.2.3.3.193\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10\Xamarin.Forms.Maps.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Platform, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xamarin.Forms.2.3.3.193\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Platform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Xaml, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xamarin.Forms.2.3.3.193\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.Xaml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Zlib.Portable, Version=1.11.0.0, Culture=neutral, PublicKeyToken=431cba815f6a8b5b, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Zlib.Portable.Signed.1.11.0\lib\portable-net4+sl5+wp8+win8+wpa81+MonoTouch+MonoAndroid\Zlib.Portable.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="GettingStarted.Xamarin" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource\EnumDescription.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>EnumDescription.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\MensagemModelo.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MensagemModelo.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\MenuInicialPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\LoadingPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\AutenticacaoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MasterDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MenuPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\SelecionarViagemPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EditarViagemPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icones\checkmark24.png" />
+    <EmbeddedResource Include="Icones\search24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icones\add24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icones\delete24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoViagemDados.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemAmigoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icones\checked24.png" />
+    <EmbeddedResource Include="Icones\unchecked24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icones\cancel24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\AdicionarAmigoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemCotacaoMoedaPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icones\pencil24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoCotacaoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemPedidoCompraPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoPedidoCompraPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemListaCompraPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoRequisicaoCompraPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoListaCompraPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemAgrupamentoCidadePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoAgrupamentoCidadePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoAporteDinheiroPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemAporteDinheiroPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\PosicaoMapaPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\TK.CustomMap\TK.CustomMap\TK.CustomMap\TK.CustomMap.csproj">
+      <Project>{14c534b6-1984-41a9-a384-d3a5508588e3}</Project>
+      <Name>TK.CustomMap</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemSugestaoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoSugestaoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemSugestaoRecebidaPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoSugestaoRecebidaPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoAgendarSugestaoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemAtracaoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoAtracaoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icones\star_outline.png" />
+    <EmbeddedResource Include="Icones\star_selected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemAtracaoCustoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemSelecaoCustoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoGastoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemHotelPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemHotelCustoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoHotelPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemRefeicaoCustoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoRefeicaoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemRefeicaoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemComentarioPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoComentarioPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoLojaPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemLojaPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoCompraPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemCompraCustoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemItemCompraPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoItemCompraPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemCarroCustoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoReabastecimentoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemReabastecimentoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoCarroDeslocamentoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoCarroPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemCarroDeslocamentoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemCarroPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemGastoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemViagemAereaPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemViagemAereaCustoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoViagemAereaPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\TextoPopupPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\EdicaoCalendarioPrevistoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemCalendarioPrevistoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConfiguracaoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\AguardeProcessandoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultasPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarExtratoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarExtratoListaPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarGastoDivididoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarRelatorioGastoListaPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarRelatorioGastoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ListagemCalendarioRealizadoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarCalendarioRealizadoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarResumoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarResumoDadosPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarRankingsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarRankingsListaPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarRankingsDetalhePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarLocaisVisitadoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarLocaisVisitadosListaPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarLocalVisitadoDetalhePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarFotoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarFotoListaPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarTimelinePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarMapaPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ConsultarMapaExibicaoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Xamarin.Forms.2.3.3.193\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Xamarin.Forms.2.3.3.193\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets'))" />
+  </Target>
+  <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Import Project="..\..\packages\Xamarin.Forms.2.3.3.193\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.3.193\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
+</Project>

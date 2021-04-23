@@ -73,9 +73,9 @@ namespace CV.Mobile.Services
 
                     if (response.IsSuccessStatusCode)
                     {
-                        dynamic resultadoDinamico = JObject.Parse(resultado);
-                        itemUpload.LinkGoogle = itemUpload.Thumbnail = resultadoDinamico.newMediaItemResults[0].mediaItem.productUrl;
-                        itemUpload.CodigoGoogle = resultadoDinamico.newMediaItemResults[0].mediaItem.id;
+                        JObject resultadoDinamico = JObject.Parse(resultado);
+                        itemUpload.LinkGoogle = itemUpload.Thumbnail = ((JObject)((JObject)resultadoDinamico["newMediaItemResults"][0])["mediaItem"])["productUrl"].ToString();
+                        itemUpload.CodigoGoogle = ((JObject)((JObject)resultadoDinamico["newMediaItemResults"][0])["mediaItem"])["id"].ToString();
                     }
 
                 }

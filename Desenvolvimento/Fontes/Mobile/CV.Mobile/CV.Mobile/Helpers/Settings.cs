@@ -24,6 +24,8 @@ namespace CV.Mobile.Helpers
         private const string CVBaseWebApiKey = "CVBaseWebApiKey";
 #if !DEBUG
         private static readonly string CVBaseWebApiDefault = "http://sites.architettura.com.br:5131/";
+       // private static readonly string CVBaseWebApiDefault = "http://curtindoviaggem.azurewebsites.net/";
+
 #else
         private static readonly string CVBaseWebApiDefault = "http://192.168.15.11/CV/";
 #endif

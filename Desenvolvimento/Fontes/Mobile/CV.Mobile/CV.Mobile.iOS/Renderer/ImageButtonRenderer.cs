@@ -232,18 +232,27 @@ namespace CV.Mobile.iOS.Renderer
             using (UIImage image = await handler.LoadImageAsync(source))
             {
                 UIImage scaled = image;
-                if (heightRequest > 0 && widthRequest > 0 && (image.Size.Height != heightRequest || image.Size.Width != widthRequest))
+
+                if (image != null)
                 {
-                    scaled = scaled.Scale(new CGSize(widthRequest, heightRequest));
+                    if (heightRequest > 0 && widthRequest > 0 && (image.Size.Height != heightRequest || image.Size.Width != widthRequest))
+                    {
+                        scaled = scaled.Scale(new CGSize(widthRequest, heightRequest));
+                    }
+                    if (tintColor != null)
+                    {
+
+                        targetButton.SetImage(scaled.ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate), state);
+                    }
+                    else
+                        targetButton.SetImage(scaled.ImageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal), state);
                 }
 
                 if (tintColor != null)
                 {
                     targetButton.TintColor = tintColor;
-                    targetButton.SetImage(scaled.ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate), state);
                 }
-                else 
-                    targetButton.SetImage(scaled.ImageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal), state);
+              
             }
         }
 

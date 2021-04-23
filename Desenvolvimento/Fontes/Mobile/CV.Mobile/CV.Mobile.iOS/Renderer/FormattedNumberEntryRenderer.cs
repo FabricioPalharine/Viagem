@@ -27,6 +27,7 @@ namespace CV.Mobile.iOS.Renderer
                 Control.EditingChanged += Control_EditingChanged;
             }
             var element = ((FormattedNumberEntry)Element);
+            if (element != null)
             element.Formato = String.Concat("N", element.DecimalPlaces);
 
         }

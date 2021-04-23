@@ -41,6 +41,11 @@ namespace CV.Mobile.iOS
             var cv = typeof(Xamarin.Forms.CarouselView);
             var assembly = Assembly.Load(cv.FullName);
             CachedImageRenderer.Init();
+            Behaviors.EventHandlerBehavior evt = new Behaviors.EventHandlerBehavior();
+            Behaviors.InvokeCommandAction cmd = new Behaviors.InvokeCommandAction();
+
+
+            Xamarin.FormsMaps.Init();
             LoadApplication(new App());
             RegisterDependencies();
             return base.FinishedLaunching(app, options);
