@@ -38,20 +38,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             Loja itemLoja = biz.SelecionarLoja_Completo(id);
             
 
-            foreach (var item in itemLoja.Compras)
-            {
-                item.ItemLoja = null;
-                item.ItemGasto.Compras = null;
-                foreach (var itemItemCompra in item.ItensComprados)
-                {
-                    itemItemCompra.ItemGastoCompra = null;
-                    foreach (var itemFoto in itemItemCompra.Fotos)
-                    {
-                        itemFoto.ItemItemCompra = null;
-                        itemFoto.ItemFoto.ItensCompra = null;
-                    }
-                }
-            }
+           
             foreach (var item in itemLoja.Avaliacoes)
             {
                 item.ItemLoja = null;
@@ -85,19 +72,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             ViagemBusiness biz = new ViagemBusiness();
             Loja itemLoja = biz.SelecionarLoja_Completo(id);
             itemLoja.DataExclusao = DateTime.Now.ToUniversalTime();
-            foreach (var item in itemLoja.Compras.Where(d => !d.DataExclusao.HasValue))
-            {
-                item.DataExclusao = DateTime.Now.ToUniversalTime();
-                item.ItemGasto.DataExclusao = DateTime.Now.ToUniversalTime();
-                foreach (var itemItemCompra in item.ItensComprados)
-                {
-                    itemItemCompra.DataExclusao = DateTime.Now.ToUniversalTime();
-                    foreach (var itemFoto in itemItemCompra.Fotos)
-                    {
-                        itemFoto.DataExclusao = DateTime.Now.ToUniversalTime();
-                    }
-                }
-            }
+       
             foreach (var item in itemLoja.Avaliacoes.Where(d=>!d.DataExclusao.HasValue))
             {
                 item.DataExclusao = DateTime.Now.ToUniversalTime();
@@ -113,15 +88,6 @@ namespace CV.UI.Web.Controllers.WebAPI
             return itemResultado;
         }
 
-        [Authorize]
-        [ActionName("CarregarFoto")]
-        [HttpGet]
-        public List<ItemCompra> CarregarFoto()
-        {
-            ViagemBusiness biz = new ViagemBusiness();
-            return biz.ListarItemCompra(d => d.ItemGastoCompra.ItemLoja.IdentificadorViagem == token.IdentificadorViagem);
-        }
-
 
         [Authorize]
         [ActionName("CarregarItemCompra")]
@@ -132,67 +98,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             return biz.SelecionarItemCompra(Id);
         }
 
-        [Authorize]
-        [ActionName("saveCompra")]
-        [HttpPost]
-        public ResultadoOperacao saveCompra(GastoCompra itemCompra)
-        {
-            ViagemBusiness biz = new ViagemBusiness();
-            itemCompra.DataAtualizacao = DateTime.Now.ToUniversalTime();
-            itemCompra.ItemGasto.DataAtualizacao = DateTime.Now.ToUniversalTime();
-
-            biz.SalvarGastoCompra_Completo(itemCompra);
-            ResultadoOperacao itemResultado = new ResultadoOperacao();
-            itemResultado.Sucesso = biz.IsValid();
-            itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
-            if (itemResultado.Sucesso)
-            {
-                itemResultado.IdentificadorRegistro = itemCompra.Identificador;
-                GastoCompra item = biz.SelecionarGastoCompra(itemCompra.Identificador);
-                item.ItemLoja = null;
-                item.ItemGasto.Compras = null;
-                foreach (var itemItemCompra in item.ItensComprados)
-                {
-                    itemItemCompra.ItemGastoCompra = null;
-                    foreach (var itemFoto in itemItemCompra.Fotos)
-                    {
-                        itemFoto.ItemItemCompra = null;
-                        itemFoto.ItemFoto.ItensCompra = null;
-                    }
-                }
-                itemResultado.ItemRegistro = item;
-            }
-            return itemResultado;
-        }
-
-        [Authorize]
-        [ActionName("excluirCompra")]
-        [HttpPost]
-        public ResultadoOperacao excluirCompra(GastoCompra itemCompra)
-        {
-            ViagemBusiness biz = new ViagemBusiness();
-            GastoCompra item = biz.SelecionarGastoCompra(itemCompra.Identificador);
-            itemCompra.DataExclusao = DateTime.Now.ToUniversalTime();
-            itemCompra.ItemGasto.DataExclusao = DateTime.Now.ToUniversalTime();
-            foreach (var itemItemCompra in item.ItensComprados)
-            {
-                itemItemCompra.DataExclusao = DateTime.Now.ToUniversalTime();
-                foreach (var itemFoto in itemItemCompra.Fotos)
-                {
-                    itemFoto.DataExclusao = DateTime.Now.ToUniversalTime();
-                }
-            }
-            biz.SalvarGastoCompra_Item_Completo(itemCompra);
-
-            ResultadoOperacao itemResultado = new ResultadoOperacao();
-            itemResultado.Sucesso = biz.IsValid();
-            itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
-            if (itemResultado.Sucesso)
-                itemResultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = MensagemBusiness.RetornaMensagens("Viagem_ExcluirGastoCompra_OK") } };
-
-            return itemResultado;
-        }
-
+        
         [Authorize]
         [ActionName("SalvarItemCompra")]
         [HttpPost]

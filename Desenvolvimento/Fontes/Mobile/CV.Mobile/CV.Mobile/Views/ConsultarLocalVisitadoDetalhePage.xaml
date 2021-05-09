@@ -170,9 +170,9 @@
       <local:DetalheLocalTemplateSelector x:Key="tipoTemplateSelector"
           CabecalhoTemplate="{StaticResource cabecalhoTemplate}"
           ItemCompraTemplate="{StaticResource itemCompraTemplate}"
-           RelatorioGastoTemplate="{StaticResource gastoTemplate}"
-           DetalheLocalTemplate="{StaticResource itemDetalheTemplate}"
-               ItemLocalTemplate="{StaticResource itemDadosTemplate}"       
+          RelatorioGastoTemplate="{StaticResource gastoTemplate}"
+          DetalheLocalTemplate="{StaticResource itemDetalheTemplate}"
+          ItemLocalTemplate="{StaticResource itemDadosTemplate}"       
           FotoTemplate="{StaticResource fotoTemplate}"                           
 
           LocaisFilhoTemplate="{StaticResource itemFilhoTemplate}"/>

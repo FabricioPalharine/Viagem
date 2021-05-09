@@ -24,6 +24,15 @@ namespace CV.UI.Web.Controllers.WebAPI
             ViagemBusiness biz = new ViagemBusiness();
 
             List<CotacaoMoeda> _itens = biz.ListarCotacaoMoeda(d => d.IdentificadorViagem == token.IdentificadorViagem && !d.DataExclusao.HasValue).ToList();
+            if (json != null)
+            {
+                if (json.Moeda.HasValue)
+                    _itens = _itens.Where(d => d.Moeda == json.Moeda).ToList();
+                if (json.DataInicioDe.HasValue)
+                    _itens = _itens.Where(d => d.DataCotacao >= json.DataInicioDe).ToList();
+                if (json.DataInicioAte.HasValue)
+                    _itens = _itens.Where(d => d.DataCotacao >= json.DataInicioAte).ToList();
+            }
             resultado.Lista = _itens;
 
             return resultado;

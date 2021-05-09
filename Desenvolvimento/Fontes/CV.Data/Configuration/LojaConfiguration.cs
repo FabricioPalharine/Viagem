@@ -24,7 +24,6 @@ namespace CV.Data.Configuration
 			this.Property(i => i.Latitude).HasColumnName("NR_LATITUDE").HasPrecision(12,8);
 			this.Property(i => i.Longitude).HasColumnName("NR_LONGITUDE").HasPrecision(12,8);
 			this.Property(i => i.CodigoPlace).HasColumnName("CD_PLACE");
-			this.HasMany(i => i.Compras).WithRequired().HasForeignKey(d=>d.IdentificadorLoja);
 			this.HasRequired(i => i.ItemViagem).WithMany().HasForeignKey(d=>d.IdentificadorViagem);
 			this.Property(i => i.IdentificadorAtracao).HasColumnName("ID_ATRACAO");
 			this.HasOptional(i => i.ItemAtracao).WithMany().HasForeignKey(d=>d.IdentificadorAtracao);
@@ -32,6 +31,9 @@ namespace CV.Data.Configuration
 			this.Property(i => i.DataAtualizacao).HasColumnName("DT_ATUALIZACAO");
 			this.Property(i => i.DataExclusao).HasColumnName("DT_EXCLUSAO");
 			this.Property(i => i.IdentificadorCidade).HasColumnName("ID_CIDADE");
+            this.Property(d => d.Data).HasColumnName("DT_COMPRA");
+            this.Property(d => d.Valor).HasColumnName("VL_COMPRA");
+            this.Property(d => d.Moeda).HasColumnName("CD_MOEDA");
 			this.HasOptional(i => i.ItemCidade).WithMany().HasForeignKey(d=>d.IdentificadorCidade);
 		MapearCamposManualmente();
 		}

@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.Consultas.LocaisDetalhePage"     
+              xmlns:viewModelBase="clr-namespace:CV.Mobile.ViewModels.Base"
+             xmlns:helper="clr-namespace:CV.Mobile.Helper"
+              xmlns:local="clr-namespace:CV.Mobile.Selector"
+             viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+             x:Name="ListagemPage"             
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:behaviors="clr-namespace:CV.Mobile.Behaviors">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+              <DataTemplate x:Key="cabecalhoTemplate">
+                <ViewCell>
+                    <Label Text="{Binding Texto}"></Label>
+                </ViewCell>
+            </DataTemplate>
+            <DataTemplate  x:Key="itemFilhoTemplate">
+                <ViewCell >
+                    <StackLayout Orientation="Horizontal">
+                        <ffimageloading:CachedImage HorizontalOptions="Center" VerticalOptions="Center"
+  WidthRequest="100" HeightRequest="100"
+  DownsampleToViewSize="true" IsVisible="{Binding TemPosicao}"
+  Source = "{Binding URLMapa}">
+
+                        </ffimageloading:CachedImage>
+                        <StackLayout>
+                            <StackLayout Orientation="Horizontal">
+
+                                <Label Text="{Binding Nome}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+
+                                <Label Text="{Binding TipoDescricao}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+
+                            </StackLayout>
+
+                        </StackLayout>
+                    </StackLayout>
+
+                </ViewCell>
+
+            </DataTemplate>
+
+            <DataTemplate x:Key="itemDetalheTemplate">
+                <ViewCell>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="50" />
+
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+
+                        </Grid.RowDefinitions>
+                        <Label Text="{Binding NomeUsuario}" HorizontalTextAlignment="Start" Grid.Column="0" ></Label>
+                        <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.Row="1" VerticalOptions="Fill">
+                            <Label Text="{Binding DataDe, StringFormat='{0:dd/MM/yyyy HH:mm}'}"></Label>
+                            <Label Text="-" IsVisible="{Binding PossuiDataAte}"></Label>
+                            <Label Text="{Binding DataAte, StringFormat='{0:dd/MM/yyyy HH:mm}'}" IsVisible="{Binding PossuiDataAte}"></Label>
+
+                        </StackLayout>
+                        <Label Text="{Binding Nota}" HorizontalTextAlignment="Center" Grid.Column="1"></Label>
+                        <Label Text="{Binding Pedido}" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" IsVisible="{Binding Pedido, Converter={StaticResource StringNullOrEmptyBoolConverter}}" />
+                        <Label Text="{Binding Comentario}" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2"  IsVisible="{Binding Comentario, Converter={StaticResource StringNullOrEmptyBoolConverter}}" />
+
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+            <DataTemplate x:Key="itemDadosTemplate">
+                <ViewCell>
+                    <StackLayout>
+                        <StackLayout Orientation="Horizontal">
+
+                            <Label Text="{Binding ItemLocal.Nome}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+
+                            <Label Text="{Binding ItemLocal.TipoDescricao}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Nota Média" HorizontalTextAlignment="Start"></Label>
+                            <Label Text="{Binding ItemLocal.Media, StringFormat='{0:N1}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+
+                        </StackLayout>
+
+                        <ffimageloading:CachedImage HorizontalOptions="Center" VerticalOptions="Center"
+  WidthRequest="200" HeightRequest="200"
+  DownsampleToViewSize="true" IsVisible="{Binding ItemLocal.TemPosicao}"
+  Source = "{Binding ItemLocal.URLMapa}">
+                            <ffimageloading:CachedImage.GestureRecognizers>
+                                <TapGestureRecognizer
+                    Command="{Binding Path=BindingContext.AbrirMapaCommand,  Source={x:Reference ListagemPage}}"
+                    CommandParameter="{Binding .}" />
+                            </ffimageloading:CachedImage.GestureRecognizers>
+                        </ffimageloading:CachedImage>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+
+            <DataTemplate x:Key="fotoTemplate">
+                <ViewCell>
+                    <CarouselView ItemsSource="{Binding .}" PeekAreaInsets="80" HeightRequest="150">
+                        <CarouselView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Horizontal" />
+                        </CarouselView.ItemsLayout>
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout>
+
+                                    <ffimageloading:CachedImage HorizontalOptions="Center" VerticalOptions="Center"
+                                    WidthRequest="150"
+                                    Source = "{Binding LinkThumbnail}">
+                                        <ffimageloading:CachedImage.GestureRecognizers>
+                                            <TapGestureRecognizer
+                    Command="{Binding Path=BindingContext.AbrirImagemCommand,  Source={x:Reference ListagemPage}}"
+                    CommandParameter="{Binding .}" />
+                                        </ffimageloading:CachedImage.GestureRecognizers>
+                                    </ffimageloading:CachedImage>
+                                    
+                              
+                                         
+                                            <Label Text="{Binding Comentario}"
+                               FontAttributes="Italic"
+                               HorizontalOptions="Center"
+                               MaxLines="5"
+                               LineBreakMode="TailTruncation" />
+
+                                 
+                                </StackLayout>
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
+                    
+                </ViewCell>
+            </DataTemplate>
+            <DataTemplate x:Key="gastoTemplate">
+                <ViewCell >
+                    <StackLayout>
+                        <StackLayout Orientation="Horizontal">                          
+                            <Label Text="{Binding NomeUsuario}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">                           
+                            <Label Text="{Binding Data, StringFormat='{0:dd/MM/yyyy}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+                            
+                            <Label Text="Descrição:" >
+                            </Label>
+                            <Label Text="{Binding Descricao}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal" IsVisible="{Binding Source={x:Reference ListagemPage}, Path=BindingContext.VerCustos}">
+                            <Label Text="{Binding MoedaSigla, StringFormat='Valor {0}:'}" HorizontalTextAlignment="Start"  ></Label>
+
+                            <Label Text="{Binding Valor, StringFormat='{0:N2}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+
+                        </StackLayout>
+                    </StackLayout>
+
+
+                </ViewCell>
+
+            </DataTemplate>
+            <local:DetalheLocalTemplateSelector x:Key="tipoTemplateSelector"
+          CabecalhoTemplate="{StaticResource cabecalhoTemplate}"
+          RelatorioGastoTemplate="{StaticResource gastoTemplate}"
+          DetalheLocalTemplate="{StaticResource itemDetalheTemplate}"
+          ItemLocalTemplate="{StaticResource itemDadosTemplate}"       
+          FotoTemplate="{StaticResource fotoTemplate}"                           
+
+          LocaisFilhoTemplate="{StaticResource itemFilhoTemplate}"/>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <StackLayout>
+                <ListView Grid.Row="0" VerticalOptions="FillAndExpand" SeparatorVisibility="None" ItemsSource="{Binding Dados}"
+                    CachingStrategy="RecycleElement" HasUnevenRows="True" SelectionMode="None" 
+                    IsPullToRefreshEnabled="False"  ItemTemplate="{StaticResource tipoTemplateSelector}"           
+                    >
+                    <ListView.Behaviors>
+                        <behaviors:EventToCommandBehavior 
+                                EventName="ItemTapped" 
+                                Command="{Binding AbrirDetalheLocalCommand}"
+                                EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}"
+                              />
+
+                    </ListView.Behaviors>
+                    <ListView.Footer>
+                        <Label/>
+                    </ListView.Footer>
+                </ListView>
+
+            </StackLayout>
+            <ActivityIndicator 
+            Grid.Row="0"
+            Grid.RowSpan="1"
+            Color="{StaticResource SpinnerColor}"
+            IsRunning="{Binding IsBusy}"  
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Center"
+            HorizontalOptions="Center">
+                <ActivityIndicator.WidthRequest>
+                    <OnPlatform x:TypeArguments="x:Double">
+                        <On Platform="iOS, Android" Value="100" />
+                    </OnPlatform>
+                </ActivityIndicator.WidthRequest>
+            </ActivityIndicator>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

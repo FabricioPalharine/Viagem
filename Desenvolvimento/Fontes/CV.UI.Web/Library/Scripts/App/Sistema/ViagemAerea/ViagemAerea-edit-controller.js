@@ -204,12 +204,7 @@
 		            MinhaAvaliacao[0].Nota = vm.ItemAvaliacao.Nota;
 		        }
 		      
-		        if (possuiPontoSemNome) {
-		            vm.messages = [];
-		            vm.messages.push({ Mensagem: $translate.instant("ViagemAerea_AeroportoObrigatorio") });
-		            vm.loading = false;
-		        }
-		        else {
+		        
 		            ViagemAerea.save(vm.itemViagemAerea, function (data) {
 		                vm.loading = false;
 		                if (data.Sucesso) {
@@ -223,7 +218,7 @@
 		                vm.loading = false;
 		                Error.showError('error', 'Ops!', $translate.instant("ErroSalvar"), true);
 		            });
-		        }
+		        
 		    }
 		    vm.submitted = false;
 		};

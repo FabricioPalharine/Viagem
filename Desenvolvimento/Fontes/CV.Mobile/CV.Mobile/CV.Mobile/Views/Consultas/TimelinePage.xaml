@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.Consultas.TimelinePage"    
+             xmlns:viewModelBase="clr-namespace:CV.Mobile.ViewModels.Base"
+             xmlns:helper="clr-namespace:CV.Mobile.Helper"
+             viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+             x:Name="ListagemPage"      
+             Title="Timeline"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:mm="clr-namespace:MediaManager.Forms;assembly=MediaManager.Forms"
+             xmlns:behaviors="clr-namespace:CV.Mobile.Behaviors">
+    <ContentPage.Behaviors>
+        <behaviors:PageEventToCommandBehavior
+							EventName="Appearing"
+							Command="{Binding PageAppearingCommand}" />
+    </ContentPage.Behaviors>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem   Command="{Binding FiltrarCommand}" >
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="{Static helper:IconFont.Filter}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <StackLayout>
+                <ListView Grid.Row="0" VerticalOptions="FillAndExpand" SeparatorVisibility="Default" ItemsSource="{Binding Dados}"
+                    CachingStrategy="RecycleElement" HasUnevenRows="True" SelectionMode="None" SeparatorColor="{StaticResource CorDestaque}" 
+                    IsPullToRefreshEnabled="True"  RefreshCommand="{Binding RecarregarListaCommand}"  IsRefreshing="{Binding IsBusy}"          
+                    >
+                    <ListView.Behaviors>
+                        <behaviors:EventToCommandBehavior 
+                                EventName="ItemAppearing" 
+                                Command="{Binding CarregarMaisCommand}"                                
+                              />
+
+                    </ListView.Behaviors>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell >
+                                <StackLayout>
+                                    <Label Text="{Binding Data, StringFormat='{0:dd/MM/yyyy HH:mm}'}" />
+                                    <Label Text="{Binding TextoCompleto}" />
+                                    <StackLayout BindableLayout.ItemsSource="{Binding Usuarios}" AbsoluteLayout.LayoutFlags="SizeProportional"  IsVisible="{Binding LinhaRefeicao}" Spacing="2">
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackLayout Orientation="Horizontal" Spacing="2" IsVisible="{Binding Pedido, Converter={StaticResource StringNullOrEmptyBoolConverter}}">
+                                                    <Label Text="Pedido " />
+                                                    <Label Text="{Binding Pedido}" />
+                                                </StackLayout>
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+                                    </StackLayout>
+                                    <Label IsVisible="{Binding ExibeImagem}" Text="teste"></Label>
+                                    <ffimageloading:CachedImage HorizontalOptions="Center" VerticalOptions="Center"
+ IsVisible="{Binding ExibeImagem}" 
+Source = "{Binding UrlThumbnail}">
+                                        <ffimageloading:CachedImage.GestureRecognizers>
+                                                <TapGestureRecognizer
+                        Command="{Binding Path=BindingContext.AbrirImagemCommand,  Source={x:Reference ListagemPage}}"
+                        CommandParameter="{Binding .}" />
+                                        </ffimageloading:CachedImage.GestureRecognizers>
+                                    </ffimageloading:CachedImage>
+                                    <StackLayout BindableLayout.ItemsSource="{Binding Avaliacoes}" AbsoluteLayout.LayoutFlags="SizeProportional"  IsVisible="{Binding TemAvaliacoes}" Spacing="2">
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackLayout>
+                                                    <StackLayout Orientation="Horizontal" Spacing="1" IsVisible="{Binding Nota, Converter={StaticResource StringNullOrEmptyBoolConverter}}">
+                                                        <Label Text="Avaliação "></Label>
+                                                        <Label Text="{Binding Nota}" />
+                                                    </StackLayout>
+                                                    <Label Text="{Binding Comentario}"  />
+                                                </StackLayout>
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+                                    </StackLayout>
+
+                                    <Label Text="{Binding Comentario}" IsVisible="{Binding LinhaComentario}" />
+
+
+                                    <ffimageloading:CachedImage HorizontalOptions="Center" VerticalOptions="Center"
+WidthRequest="200" HeightRequest="200"
+DownsampleToViewSize="true" IsVisible="{Binding TemPosicao}"
+Source = "{Binding URLMapa}">
+                                        <ffimageloading:CachedImage.GestureRecognizers>
+                                            <TapGestureRecognizer
+                        Command="{Binding Path=BindingContext.AbrirMapaCommand,  Source={x:Reference ListagemPage}}"
+                        CommandParameter="{Binding .}" />
+                                        </ffimageloading:CachedImage.GestureRecognizers>
+                                    </ffimageloading:CachedImage>
+
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.Footer>
+                        <Label/>
+                    </ListView.Footer>
+                </ListView>
+
+            </StackLayout>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -5632,7 +5632,7 @@ namespace CV.UI.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Partida Aeroporto/Porto/Estação.
+        ///   Looks up a localized string similar to Partida.
         /// </summary>
         public static string ViagemAerea_Partida {
             get {

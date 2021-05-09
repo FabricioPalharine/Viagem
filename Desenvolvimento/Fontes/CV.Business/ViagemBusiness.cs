@@ -1358,70 +1358,7 @@ namespace CV.Business
                 }
             }
         }
-        public GastoCompra SelecionarGastoCompra(int? Identificador)
-        {
-            LimparValidacao();
-            GastoCompra RetornoAcao = null;
-            if (IsValid())
-            {
-                using (ViagemRepository data = new ViagemRepository())
-                {
-                    RetornoAcao = data.SelecionarGastoCompra(Identificador);
-                }
-            }
-            return RetornoAcao;
-        }
-        public IList<GastoCompra> ListarGastoCompra()
-        {
-            LimparValidacao();
-            IList<GastoCompra> RetornoAcao = new List<GastoCompra>();
-            if (IsValid())
-            {
-                using (ViagemRepository data = new ViagemRepository())
-                {
-                    RetornoAcao = data.ListarGastoCompra();
-                }
-            }
-            return RetornoAcao;
-        }
-        public void SalvarGastoCompra(GastoCompra itemGravar)
-        {
-            LimparValidacao();
-            ValidateService(itemGravar);
-            ValidarRegrasNegocioGastoCompra(itemGravar);
-            if (IsValid())
-            {
-                using (ViagemRepository data = new ViagemRepository())
-                {
-                    data.SalvarGastoCompra(itemGravar);
-                    Message msg = new Message();
-                    msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_SalvarGastoCompra_OK") });
-                    ServiceResult resultado = new ServiceResult();
-                    resultado.Success = true;
-                    resultado.Messages.Add(msg);
-                    serviceResult.Add(resultado);
-                }
-            }
-        }
-        public void ExcluirGastoCompra(GastoCompra itemGravar)
-        {
-            LimparValidacao();
-            ValidateService(itemGravar);
-            ValidarRegrasExclusaoGastoCompra(itemGravar);
-            if (IsValid())
-            {
-                using (ViagemRepository data = new ViagemRepository())
-                {
-                    data.ExcluirGastoCompra(itemGravar);
-                    Message msg = new Message();
-                    msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_ExcluirGastoCompra_OK") });
-                    ServiceResult resultado = new ServiceResult();
-                    resultado.Success = true;
-                    resultado.Messages.Add(msg);
-                    serviceResult.Add(resultado);
-                }
-            }
-        }
+        
         public GastoHotel SelecionarGastoHotel(int? Identificador)
         {
             LimparValidacao();
@@ -3368,25 +3305,7 @@ namespace CV.Business
                 }
             }
         }
-        public void SalvarGastoCompra_Item_Completo(GastoCompra itemGravar)
-        {
-            LimparValidacao();
-            ValidateService(itemGravar);
-            ValidarRegrasNegocioGastoCompra(itemGravar);
-            if (IsValid())
-            {
-                using (ViagemRepository data = new ViagemRepository())
-                {
-                    data.SalvarGastoCompra_Item_Completo(itemGravar);
-                    Message msg = new Message();
-                    msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_SalvarGastoCompra_Item_Completo_OK") });
-                    ServiceResult resultado = new ServiceResult();
-                    resultado.Success = true;
-                    resultado.Messages.Add(msg);
-                    serviceResult.Add(resultado);
-                }
-            }
-        }
+       
         public void SalvarCidadeGrupo_Lista(List<CidadeGrupo> itensGravar)
         {
             LimparValidacao();

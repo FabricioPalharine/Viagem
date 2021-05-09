@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.ConfiguracaoPage"                 
+             xmlns:viewModelBase="clr-namespace:CV.Mobile.ViewModels.Base"
+              xmlns:behaviors="clr-namespace:CV.Mobile.Behaviors"
+             xmlns:helper="clr-namespace:CV.Mobile.Helper"
+             viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+    <ContentPage.Behaviors>
+      
+    </ContentPage.Behaviors>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem   Command="{Binding SalvarCommand}" >
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="{Static helper:IconFont.Floppy}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+
+            <StackLayout Spacing="1"  >
+                <Label  Text="Manter Online"  />
+
+
+                <Picker Title="Manter Online" SelectedItem="{Binding ManterOnline.Value, Mode=TwoWay}" 
+                        ItemDisplayBinding="{Binding Descricao}" ItemsSource="{Binding ListaTipoOnline}" >
+                    <Picker.Behaviors>
+                        <behaviors:EventToCommandBehavior
+							EventName="SelectedIndexChanged"
+							Command="{Binding ValidarManterOnlineCommand}" />
+                    </Picker.Behaviors>
+                </Picker>
+                <Label Text="{Binding ManterOnline.Errors, Converter={StaticResource FirstValidationErrorConverter}}" Style="{StaticResource ValidationErrorLabelStyle}" />
+
+            </StackLayout>
+
+            <StackLayout Spacing="1"  >
+                <Label  Text="Sincronizar Dados"  />
+
+
+                <Picker Title="Sincronizar Dados" SelectedItem="{Binding SincronizarDados.Value, Mode=TwoWay}" 
+                        ItemDisplayBinding="{Binding Descricao}" ItemsSource="{Binding TiposAtualizacao}" >
+                    <Picker.Behaviors>
+                        <behaviors:EventToCommandBehavior
+							EventName="SelectedIndexChanged"
+							Command="{Binding ValidarSincronizarDadosCommand}" />
+                    </Picker.Behaviors>
+                </Picker>
+                <Label Text="{Binding SincronizarDados.Errors, Converter={StaticResource FirstValidationErrorConverter}}" Style="{StaticResource ValidationErrorLabelStyle}" />
+
+            </StackLayout>
+
+
+            <StackLayout Spacing="1"  >
+                <Label  Text="Enviar Imagens"  />
+
+
+                <Picker Title="Enviar Imagens" SelectedItem="{Binding EnviarImagens.Value, Mode=TwoWay}" 
+                        ItemDisplayBinding="{Binding Descricao}" ItemsSource="{Binding TiposAtualizacao}" >
+                    <Picker.Behaviors>
+                        <behaviors:EventToCommandBehavior
+							EventName="SelectedIndexChanged"
+							Command="{Binding ValidarEnviarImagensCommand}" />
+                    </Picker.Behaviors>
+                </Picker>
+                <Label Text="{Binding EnviarImagens.Errors, Converter={StaticResource FirstValidationErrorConverter}}" Style="{StaticResource ValidationErrorLabelStyle}" />
+
+            </StackLayout>
+
+            <StackLayout Spacing="1"  >
+                <Label  Text="Enviar Vídeos"  />
+
+
+                <Picker Title="Enviar Vídeos" SelectedItem="{Binding EnviarVideos.Value, Mode=TwoWay}" 
+                        ItemDisplayBinding="{Binding Descricao}" ItemsSource="{Binding TiposAtualizacao}" >
+                    <Picker.Behaviors>
+                        <behaviors:EventToCommandBehavior
+							EventName="SelectedIndexChanged"
+							Command="{Binding ValidarEnviarVideosCommand}" />
+                    </Picker.Behaviors>
+                </Picker>
+                <Label Text="{Binding EnviarVideos.Errors, Converter={StaticResource FirstValidationErrorConverter}}" Style="{StaticResource ValidationErrorLabelStyle}" />
+
+            </StackLayout>
+
+
+        </StackLayout>
+
+    </ContentPage.Content>
+</ContentPage>

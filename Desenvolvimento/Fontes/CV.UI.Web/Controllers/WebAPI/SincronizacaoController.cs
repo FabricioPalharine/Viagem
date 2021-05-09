@@ -27,23 +27,12 @@ namespace CV.UI.Web.Controllers.WebAPI
             itemViagem.Participantes.ToList().ForEach(d => d.ItemViagem = null);
 
             itemSincronizar.ItemViagem = itemViagem;
-            itemSincronizar.CidadesAtracao = biz.CarregarCidadeAtracao(token.IdentificadorViagem);
-            itemSincronizar.CidadesComentario = biz.CarregarCidadeComentario(token.IdentificadorViagem);
-            itemSincronizar.CidadesHotel = biz.CarregarCidadeHotel(token.IdentificadorViagem);
-            itemSincronizar.CidadesLoja = biz.CarregarCidadeLoja(token.IdentificadorViagem);
-            itemSincronizar.CidadesRefeicao = biz.CarregarCidadeRefeicao(token.IdentificadorViagem);
-            itemSincronizar.CidadesSugestao = biz.CarregarCidadeSugestao(token.IdentificadorViagem);
-            itemSincronizar.CidadesViagemAerea = biz.CarregarCidadeViagemAerea(token.IdentificadorViagem);
-      
+     
             itemSincronizar.CotacoesMoeda = biz.ListarCotacaoMoeda(d => d.IdentificadorViagem == token.IdentificadorViagem && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
             itemSincronizar.Comentarios = biz.ListarComentario(d => d.IdentificadorViagem == token.IdentificadorViagem && d.IdentificadorUsuario == token.IdentificadorUsuario && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
             itemSincronizar.AportesDinheiro = biz.ListarAporteDinheiro(d => d.IdentificadorUsuario == token.IdentificadorUsuario && d.IdentificadorViagem == token.IdentificadorViagem && d.IdentificadorUsuario == token.IdentificadorUsuario && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
-            itemSincronizar.Gastos = biz.ListarGasto(d => d.IdentificadorViagem == token.IdentificadorViagem && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
-            itemSincronizar.CalendariosPrevistos = biz.ListarCalendarioPrevisto(d => d.IdentificadorViagem == token.IdentificadorViagem && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
-            itemSincronizar.Sugestoes = biz.ListarSugestao(d => d.IdentificadorViagem == token.IdentificadorViagem && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
-            itemSincronizar.ListaCompra = biz.ListarListaCompra(token.IdentificadorUsuario, d => d.IdentificadorViagem == token.IdentificadorViagem && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
-            foreach (var item in itemSincronizar.Gastos.SelectMany(d => d.Alugueis))
-                item.ItemGasto = null;
+            itemSincronizar.Gastos = biz.ListarGasto(d => d.IdentificadorViagem == token.IdentificadorViagem && d.IdentificadorUsuario == token.IdentificadorUsuario && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
+
             foreach (var item in itemSincronizar.Gastos.SelectMany(d => d.Atracoes))
                 item.ItemGasto = null;
             foreach (var item in itemSincronizar.Gastos.SelectMany(d => d.Hoteis))
@@ -53,7 +42,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             foreach (var item in itemSincronizar.Gastos.SelectMany(d => d.ViagenAereas))
                 item.ItemGasto = null;
 
-            itemSincronizar.Atracoes = biz.ListarAtracao_Completo(d => d.IdentificadorViagem == token.IdentificadorViagem && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
+            itemSincronizar.Atracoes = biz.ListarAtracao_Completo(d => d.Avaliacoes.Where(f=>f.IdentificadorUsuario == token.IdentificadorUsuario).Any() && d.IdentificadorViagem == token.IdentificadorViagem && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
             foreach (var item in itemSincronizar.Atracoes.SelectMany(d => d.Avaliacoes))
                 item.ItemAtracao = null;
             foreach (var item in itemSincronizar.Atracoes)
@@ -61,55 +50,32 @@ namespace CV.UI.Web.Controllers.WebAPI
                 item.ItemAtracaoPai = null;
                 item.Atracoes = null;
             }
-            itemSincronizar.Hoteis = biz.ListarHotel_Completo(d => d.IdentificadorViagem == token.IdentificadorViagem && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
+            itemSincronizar.Hoteis = biz.ListarHotel_Completo(d => d.Avaliacoes.Where(f => f.IdentificadorUsuario == token.IdentificadorUsuario).Any() && d.IdentificadorViagem == token.IdentificadorViagem && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
             foreach (var item in itemSincronizar.Hoteis.SelectMany(d => d.Avaliacoes))
                 item.ItemHotel = null;
-            itemSincronizar.Lojas = biz.ListarLoja(d => d.IdentificadorViagem == token.IdentificadorViagem && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
-            foreach (var item in itemSincronizar.Lojas.SelectMany(d => d.Avaliacoes))
-                item.ItemLoja = null;
 
-            itemSincronizar.Refeicoes = biz.ListarRefeicao_Completo(d => d.IdentificadorViagem == token.IdentificadorViagem && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
+            itemSincronizar.Refeicoes = biz.ListarRefeicao_Completo(d => d.Pedidos.Where(f => f.IdentificadorUsuario == token.IdentificadorUsuario).Any() && d.IdentificadorViagem == token.IdentificadorViagem && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
             foreach (var item in itemSincronizar.Refeicoes.SelectMany(d => d.Pedidos))
                 item.ItemRefeicao = null;
 
-            itemSincronizar.Carros = biz.ListarCarro(d => d.IdentificadorViagem == token.IdentificadorViagem && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
-            foreach (var item in itemSincronizar.Carros.SelectMany(d => d.Avaliacoes))
-                item.ItemCarro = null;
-
-            itemSincronizar.Deslocamentos = biz.ListarViagemAerea(d => d.IdentificadorViagem == token.IdentificadorViagem && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
+            itemSincronizar.Deslocamentos = biz.ListarViagemAerea(d => d.Avaliacoes.Where(f => f.IdentificadorUsuario == token.IdentificadorUsuario).Any() && d.IdentificadorViagem == token.IdentificadorViagem && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
             foreach (var item in itemSincronizar.Deslocamentos.SelectMany(d => d.Avaliacoes))
                 item.ItemViagemAerea = null;
             foreach (var item in itemSincronizar.Deslocamentos.SelectMany(d => d.Aeroportos))
                 item.ItemViagemAerea = null;
 
-            itemSincronizar.Compras = biz.ListarGastoCompra(token.IdentificadorViagem, token.IdentificadorUsuario, d => d.ItemGasto.IdentificadorUsuario == token.IdentificadorUsuario && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
-            foreach (var item in itemSincronizar.Compras.Select(d => d.ItemGasto))
-                item.Compras = null;
-            itemSincronizar.Reabastecimento = biz.ListarReabastecimento(token.IdentificadorViagem, d => (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
-            foreach (var item in itemSincronizar.Reabastecimento.SelectMany(d => d.Gastos))
-            {
-                item.ItemReabastecimento = null;
-                item.ItemGasto.Reabastecimentos = null;
-            }
+        
+            itemSincronizar.EventosHotel = biz.ListarHotelEvento(token.IdentificadorViagem, d => d.ItemHotel.Avaliacoes.Where(f=>f.IdentificadorUsuario == token.IdentificadorUsuario).Any() &&  (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
 
-            itemSincronizar.EventosHotel = biz.ListarHotelEvento(token.IdentificadorViagem, d => (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
-            itemSincronizar.CarroDeslocamentos =biz.ListarCarroDeslocamento(token.IdentificadorViagem, d => (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
-            foreach (var item in itemSincronizar.CarroDeslocamentos.SelectMany(d => d.Usuarios))
-                item.ItemCarroDeslocamento = null;
+            itemSincronizar.GastosAtracao = biz.ListarGastoAtracao(token.IdentificadorViagem, d => d.ItemAtracao.Avaliacoes.Where(f => f.IdentificadorUsuario == token.IdentificadorUsuario).Any() && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
+            itemSincronizar.GastosHotel = biz.ListarGastoHotel(token.IdentificadorViagem, d => d.ItemHotel.Avaliacoes.Where(f => f.IdentificadorUsuario == token.IdentificadorUsuario).Any() && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
+            itemSincronizar.GastosRefeicao = biz.ListarGastoRefeicao(token.IdentificadorViagem, d => d.ItemRefeicao.Pedidos.Where(f => f.IdentificadorUsuario == token.IdentificadorUsuario).Any() && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
+            itemSincronizar.GastosDeslocamento = biz.ListarGastoViagemAerea(token.IdentificadorViagem, d => d.ItemViagemAerea.Avaliacoes.Where(f => f.IdentificadorUsuario == token.IdentificadorUsuario).Any() && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
 
-            itemSincronizar.ItensComprados = biz.ListarItemCompra(token.IdentificadorViagem, d => (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
-
-            itemSincronizar.GastosCarro = biz.ListarAluguelGasto(token.IdentificadorViagem, d => (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
-            itemSincronizar.GastosAtracao = biz.ListarGastoAtracao(token.IdentificadorViagem, d => (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
-            itemSincronizar.GastosHotel = biz.ListarGastoHotel(token.IdentificadorViagem, d => (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
-            itemSincronizar.GastosRefeicao = biz.ListarGastoRefeicao(token.IdentificadorViagem, d => (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
-            itemSincronizar.GastosDeslocamento = biz.ListarGastoViagemAerea(token.IdentificadorViagem, d => (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
-
-            itemSincronizar.GastosCarro = itemSincronizar.GastosCarro.Where(d => !itemSincronizar.Gastos.SelectMany(f => f.Alugueis).Where(f => f.Identificador == d.Identificador).Any()).ToList();
-            itemSincronizar.GastosAtracao = itemSincronizar.GastosAtracao.Where(d => !itemSincronizar.Gastos.SelectMany(f => f.Atracoes).Where(f => f.Identificador == d.Identificador).Any()).ToList();
-            itemSincronizar.GastosHotel = itemSincronizar.GastosHotel.Where(d => !itemSincronizar.Gastos.SelectMany(f => f.Hoteis).Where(f => f.Identificador == d.Identificador).Any()).ToList();
-            itemSincronizar.GastosRefeicao = itemSincronizar.GastosRefeicao.Where(d => !itemSincronizar.Gastos.SelectMany(f => f.Refeicoes).Where(f => f.Identificador == d.Identificador).Any()).ToList();
-            itemSincronizar.GastosDeslocamento = itemSincronizar.GastosDeslocamento.Where(d => !itemSincronizar.Gastos.SelectMany(f => f.ViagenAereas).Where(f => f.Identificador == d.Identificador).Any()).ToList();
+            //itemSincronizar.GastosAtracao = itemSincronizar.GastosAtracao.Where(d => !itemSincronizar.Gastos.SelectMany(f => f.Atracoes).Where(f => f.Identificador == d.Identificador).Any()).ToList();
+           // itemSincronizar.GastosHotel = itemSincronizar.GastosHotel.Where(d => !itemSincronizar.Gastos.SelectMany(f => f.Hoteis).Where(f => f.Identificador == d.Identificador).Any()).ToList();
+           // itemSincronizar.GastosRefeicao = itemSincronizar.GastosRefeicao.Where(d => !itemSincronizar.Gastos.SelectMany(f => f.Refeicoes).Where(f => f.Identificador == d.Identificador).Any()).ToList();
+           // itemSincronizar.GastosDeslocamento = itemSincronizar.GastosDeslocamento.Where(d => !itemSincronizar.Gastos.SelectMany(f => f.ViagenAereas).Where(f => f.Identificador == d.Identificador).Any()).ToList();
 
             itemSincronizar.Amigos = biz.ListarAmigo(d => d.IdentificadorUsuario == token.IdentificadorUsuario && d.IdentificadorAmigo.HasValue);
             return itemSincronizar;

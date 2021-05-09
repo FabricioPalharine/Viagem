@@ -41,7 +41,6 @@ using CV.Model;
 		public DbSet<FotoItemCompra> FotoItemCompras { get; set; }
 		public DbSet<FotoRefeicao> FotoRefeicoes { get; set; }
 		public DbSet<Gasto> Gastos { get; set; }
-		public DbSet<GastoCompra> GastoCompras { get; set; }
 		public DbSet<GastoHotel> GastoHoteis { get; set; }
 		public DbSet<GastoRefeicao> GastoRefeicoes { get; set; }
 		public DbSet<GastoViagemAerea> GastoViagemAereas { get; set; }
@@ -95,7 +94,6 @@ using CV.Model;
 			modelBuilder.Configurations.Add(new FotoItemCompraConfiguration());
 			modelBuilder.Configurations.Add(new FotoRefeicaoConfiguration());
 			modelBuilder.Configurations.Add(new GastoConfiguration());
-			modelBuilder.Configurations.Add(new GastoCompraConfiguration());
 			modelBuilder.Configurations.Add(new GastoHotelConfiguration());
 			modelBuilder.Configurations.Add(new GastoRefeicaoConfiguration());
 			modelBuilder.Configurations.Add(new GastoViagemAereaConfiguration());

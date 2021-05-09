@@ -255,13 +255,13 @@
           "lib/MonoAndroid/OkHttp.dll": {}
         }
       },
-      "Newtonsoft.Json/9.0.1": {
+      "Newtonsoft.Json/13.0.1": {
         "type": "package",
         "compile": {
-          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         },
         "runtime": {
-          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
       },
       "PCLCrypto/0.5.0.14108": {
@@ -1206,9 +1206,9 @@
         "dependencies": {
           "Microsoft.Bcl.Build": "1.0.21",
           "Microsoft.Net.Http": "2.2.29",
-          "Newtonsoft.Json": "8.0.3",
-          "Xamarin.Forms": "2.3.3.193",
-          "Xamarin.Forms.Maps": "2.3.3.193",
+          "Newtonsoft.Json": "13.0.1",
+          "Xamarin.Forms": "5.0.0.2012",
+          "Xamarin.Forms.Maps": "5.0.0.2012",
           "modernhttpclient": "2.4.2"
         },
         "compile": {
@@ -1220,29 +1220,7 @@
       },
       "TK.CustomMap.Android/1.0.0": {
         "type": "project",
-        "framework": "MonoAndroid,Version=v7.0",
-        "dependencies": {
-          "Microsoft.Bcl.Build": "1.0.21",
-          "TK.CustomMap": "1.0.0",
-          "Xamarin.Android.Support.Animated.Vector.Drawable": "25.4.0.1",
-          "Xamarin.Android.Support.Compat": "25.4.0.1",
-          "Xamarin.Android.Support.Core.UI": "25.4.0.1",
-          "Xamarin.Android.Support.Core.Utils": "25.4.0.1",
-          "Xamarin.Android.Support.Design": "25.4.0.1",
-          "Xamarin.Android.Support.Fragment": "25.4.0.1",
-          "Xamarin.Android.Support.Media.Compat": "25.4.0.1",
-          "Xamarin.Android.Support.Vector.Drawable": "25.4.0.1",
-          "Xamarin.Android.Support.v4": "25.4.0.1",
-          "Xamarin.Android.Support.v7.AppCompat": "25.4.0.1",
-          "Xamarin.Android.Support.v7.CardView": "25.4.0.1",
-          "Xamarin.Android.Support.v7.MediaRouter": "25.4.0.1",
-          "Xamarin.Android.Support.v7.RecyclerView": "25.4.0.1",
-          "Xamarin.Build.Download": "0.4.2",
-          "Xamarin.Forms": "2.3.3.193",
-          "Xamarin.Forms.Maps": "2.3.3.193",
-          "Xamarin.GooglePlayServices.Basement": "29.0.0.2",
-          "Xamarin.GooglePlayServices.Location": "29.0.0.2"
-        },
+        "framework": "Unsupported,Version=v0.0",
         "compile": {
           "bin/placeholder/TK.CustomMap.Android.dll": {}
         },
@@ -1740,15 +1718,14 @@
         "modernhttpclient.nuspec"
       ]
     },
-    "Newtonsoft.Json/9.0.1": {
-      "sha512": "U82mHQSKaIk+lpSVCbWYKNavmNH1i5xrExDEquU1i6I5pV6UMOqRnJRSlKO3cMPfcpp0RgDY+8jUXHdQ4IfXvw==",
+    "Newtonsoft.Json/13.0.1": {
+      "sha512": "ppPFpBcvxdsfUonNcvITKqLl3bqxWbDCZIzDWHzjpdAHRFfZe0Dw9HmA0+za13IdyrgJwpkDTDA9fHaxOrt20A==",
       "type": "package",
-      "path": "newtonsoft.json/9.0.1",
-      "hasTools": true,
+      "path": "newtonsoft.json/13.0.1",
       "files": [
         ".nupkg.metadata",
-        "Newtonsoft.Json.9.0.1.nupkg.sha512",
-        "Newtonsoft.Json.nuspec",
+        ".signature.p7s",
+        "LICENSE.md",
         "lib/net20/Newtonsoft.Json.dll",
         "lib/net20/Newtonsoft.Json.xml",
         "lib/net35/Newtonsoft.Json.dll",
@@ -1759,11 +1736,13 @@
         "lib/net45/Newtonsoft.Json.xml",
         "lib/netstandard1.0/Newtonsoft.Json.dll",
         "lib/netstandard1.0/Newtonsoft.Json.xml",
-        "lib/portable-net40+sl5+wp80+win8+wpa81/Newtonsoft.Json.dll",
-        "lib/portable-net40+sl5+wp80+win8+wpa81/Newtonsoft.Json.xml",
-        "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll",
-        "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.xml",
-        "tools/install.ps1"
+        "lib/netstandard1.3/Newtonsoft.Json.dll",
+        "lib/netstandard1.3/Newtonsoft.Json.xml",
+        "lib/netstandard2.0/Newtonsoft.Json.dll",
+        "lib/netstandard2.0/Newtonsoft.Json.xml",
+        "newtonsoft.json.13.0.1.nupkg.sha512",
+        "newtonsoft.json.nuspec",
+        "packageIcon.png"
       ]
     },
     "PCLCrypto/0.5.0.14108": {
@@ -3684,13 +3663,12 @@
       ]
     },
     "Xam.Plugins.Settings/2.5.1": {
-      "sha512": "qLFxTF5NXC4VvLt4+DtdYc31d33bXOQkophUlm4mGRZoefeF/bu4ScnrcK0OZYAXimt1ONqO9kId2e6YcsW5dA==",
+      "sha512": "74FJFEiDiItFm73B+k5bBGXu7ZJF1J8u+GNjS/xYgtgSqty+5Nc8ZWwxx0BqzlrDmGnKPSnNcTf2vm5Sw46bIw==",
       "type": "package",
       "path": "xam.plugins.settings/2.5.1",
       "files": [
         ".nupkg.metadata",
-        "Xam.Plugins.Settings.2.5.1.nupkg.sha512",
-        "Xam.Plugins.Settings.nuspec",
+        ".signature.p7s",
         "content/MonoAndroid10/Helpers/Settings.cs.pp",
         "content/UAP10/Helpers/Settings.cs.pp",
         "content/Xamarin.iOS10/Helpers/Settings.cs.pp",
@@ -3731,7 +3709,9 @@
         "lib/wpa81/Plugin.Settings.Abstractions.xml",
         "lib/wpa81/Plugin.Settings.dll",
         "lib/wpa81/Plugin.Settings.xml",
-        "readme.txt"
+        "readme.txt",
+        "xam.plugins.settings.2.5.1.nupkg.sha512",
+        "xam.plugins.settings.nuspec"
       ]
     },
     "Xam.Plugins.Vibrate/2.0.0": {
@@ -4521,40 +4501,50 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\fabricio.palharine\\.nuget\\packages\\": {}
+    "C:\\Users\\fabricio.palharine\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Desenvolvimento\\ViagemNew\\Desenvolvimento\\Fontes\\Mobile\\CV.Mobile\\CV.Mobile.Droid\\CV.Mobile.Droid.csproj",
+      "projectUniqueName": "C:\\Sandboxes\\Fabricio\\Viagem\\Desenvolvimento\\Fontes\\Mobile\\CV.Mobile\\CV.Mobile.Droid\\CV.Mobile.Droid.csproj",
       "projectName": "CV.Mobile.Droid",
-      "projectPath": "C:\\Desenvolvimento\\ViagemNew\\Desenvolvimento\\Fontes\\Mobile\\CV.Mobile\\CV.Mobile.Droid\\CV.Mobile.Droid.csproj",
+      "projectPath": "C:\\Sandboxes\\Fabricio\\Viagem\\Desenvolvimento\\Fontes\\Mobile\\CV.Mobile\\CV.Mobile.Droid\\CV.Mobile.Droid.csproj",
       "packagesPath": "C:\\Users\\fabricio.palharine\\.nuget\\packages\\",
-      "outputPath": "C:\\Desenvolvimento\\ViagemNew\\Desenvolvimento\\Fontes\\Mobile\\CV.Mobile\\CV.Mobile.Droid\\obj\\",
+      "outputPath": "C:\\Sandboxes\\Fabricio\\Viagem\\Desenvolvimento\\Fontes\\Mobile\\CV.Mobile\\CV.Mobile.Droid\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+      ],
       "configFilePaths": [
         "C:\\Users\\fabricio.palharine\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 20.1.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "monoandroid70"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\DevExpress 20.1\\Components\\System\\Components\\Packages": {},
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "monoandroid70": {
           "projectReferences": {
-            "C:\\Desenvolvimento\\ViagemNew\\Desenvolvimento\\Fontes\\Mobile\\CV.Mobile\\CV.Mobile\\CV.Mobile.csproj": {
-              "projectPath": "C:\\Desenvolvimento\\ViagemNew\\Desenvolvimento\\Fontes\\Mobile\\CV.Mobile\\CV.Mobile\\CV.Mobile.csproj"
+            "C:\\Sandboxes\\Fabricio\\Viagem\\Desenvolvimento\\Fontes\\Mobile\\CV.Mobile\\CV.Mobile\\CV.Mobile.csproj": {
+              "projectPath": "C:\\Sandboxes\\Fabricio\\Viagem\\Desenvolvimento\\Fontes\\Mobile\\CV.Mobile\\CV.Mobile\\CV.Mobile.csproj"
             },
-            "C:\\Desenvolvimento\\ViagemNew\\TK.CustomMap\\TK.CustomMap\\TK.CustomMap.Android\\TK.CustomMap.Android.csproj": {
-              "projectPath": "C:\\Desenvolvimento\\ViagemNew\\TK.CustomMap\\TK.CustomMap\\TK.CustomMap.Android\\TK.CustomMap.Android.csproj"
+            "C:\\Sandboxes\\Fabricio\\Viagem\\TK.CustomMap\\TK.CustomMap\\TK.CustomMap.Android\\TK.CustomMap.Android.csproj": {
+              "projectPath": "C:\\Sandboxes\\Fabricio\\Viagem\\TK.CustomMap\\TK.CustomMap\\TK.CustomMap.Android\\TK.CustomMap.Android.csproj"
             },
-            "C:\\Desenvolvimento\\ViagemNew\\TK.CustomMap\\TK.CustomMap\\TK.CustomMap\\TK.CustomMap.csproj": {
-              "projectPath": "C:\\Desenvolvimento\\ViagemNew\\TK.CustomMap\\TK.CustomMap\\TK.CustomMap\\TK.CustomMap.csproj"
+            "C:\\Sandboxes\\Fabricio\\Viagem\\TK.CustomMap\\TK.CustomMap\\TK.CustomMap\\TK.CustomMap.csproj": {
+              "projectPath": "C:\\Sandboxes\\Fabricio\\Viagem\\TK.CustomMap\\TK.CustomMap\\TK.CustomMap\\TK.CustomMap.csproj"
             }
           }
         }
@@ -4744,8 +4734,37 @@
       "code": "NU1605",
       "level": "Warning",
       "warningLevel": 1,
+      "message": "Detected package downgrade: Xamarin.Forms from 5.0.0.2012 to 2.3.3.193. Reference the package directly from the project to select a different version. \r\n CV.Mobile.Droid -> TK.CustomMap -> Xamarin.Forms (>= 5.0.0.2012) \r\n CV.Mobile.Droid -> Xamarin.Forms (>= 2.3.3.193)",
+      "libraryId": "Xamarin.Forms",
+      "targetGraphs": [
+        "MonoAndroid,Version=v7.0"
+      ]
+    },
+    {
+      "code": "NU1605",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Detected package downgrade: Xamarin.Forms.Maps from 5.0.0.2012 to 2.3.3.193. Reference the package directly from the project to select a different version. \r\n CV.Mobile.Droid -> TK.CustomMap -> Xamarin.Forms.Maps (>= 5.0.0.2012) \r\n CV.Mobile.Droid -> Xamarin.Forms.Maps (>= 2.3.3.193)",
+      "libraryId": "Xamarin.Forms.Maps",
+      "targetGraphs": [
+        "MonoAndroid,Version=v7.0"
+      ]
+    },
+    {
+      "code": "NU1605",
+      "level": "Warning",
+      "warningLevel": 1,
       "message": "Detected package downgrade: Xamarin.FFImageLoading.Forms from 2.2.25 to 2.2.8. Reference the package directly from the project to select a different version. \r\n CV.Mobile.Droid -> CV.Mobile -> Xamarin.FFImageLoading.Forms (>= 2.2.25) \r\n CV.Mobile.Droid -> Xamarin.FFImageLoading.Forms (>= 2.2.8)",
       "libraryId": "Xamarin.FFImageLoading.Forms",
+      "targetGraphs": [
+        "MonoAndroid,Version=v7.0"
+      ]
+    },
+    {
+      "code": "NU1201",
+      "level": "Error",
+      "message": "Project TK.CustomMap.Android is not compatible with monoandroid70 (MonoAndroid,Version=v7.0). Project TK.CustomMap.Android supports: monoandroid10.0 (MonoAndroid,Version=v10.0)",
+      "libraryId": "TK.CustomMap.Android",
       "targetGraphs": [
         "MonoAndroid,Version=v7.0"
       ]

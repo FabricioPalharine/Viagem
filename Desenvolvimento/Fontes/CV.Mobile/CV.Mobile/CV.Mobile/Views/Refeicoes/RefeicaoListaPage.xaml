@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.Refeicoes.RefeicaoListaPage"
+             xmlns:viewModelBase="clr-namespace:CV.Mobile.ViewModels.Base"
+             viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+             xmlns:behaviors="clr-namespace:CV.Mobile.Behaviors"
+             xmlns:helper="clr-namespace:CV.Mobile.Helper"
+             x:Name="ListagemPage"
+             xmlns:converters="clr-namespace:CV.Mobile.Converters">
+    <ContentPage.Behaviors>
+        <behaviors:PageEventToCommandBehavior
+							EventName="Appearing"
+							Command="{Binding PageAppearingCommand}" />
+    </ContentPage.Behaviors>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem   Command="{Binding FiltrarCommand}" >
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="{Static helper:IconFont.Filter}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <ToolbarItem   Command="{Binding IncluirCommand}" >
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="{Static helper:IconFont.Plus}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView Grid.Row="0" VerticalOptions="FillAndExpand" SeparatorVisibility="Default" ItemsSource="{Binding Refeicoes}"
+                    CachingStrategy="RecycleElement" HasUnevenRows="True" SelectionMode="None" 
+                    IsPullToRefreshEnabled="True"  RefreshCommand="{Binding RecarregarListaCommand}"               
+                    >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell >
+                            <SwipeView >
+                                <SwipeView.RightItems >
+                                    <SwipeItem Text="Alterar"      
+                                       BackgroundColor="{StaticResource CorSucesso}" 
+                                                           CommandParameter="{Binding .}"
+                                                           Command="{Binding Path=BindingContext.EditarCommand, Source={x:Reference Name=ListagemPage}}"
+                                                           >
+                                        <SwipeItem.IconImageSource>
+                                            <FontImageSource Glyph="{Static helper:IconFont.PencilBox}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+                                        </SwipeItem.IconImageSource>
+                                    </SwipeItem>
+                                    <SwipeItem Text="Excluir"      
+                                       BackgroundColor="{StaticResource ErrorColor}" 
+                                                           CommandParameter="{Binding .}"
+                                                           Command="{Binding Path=BindingContext.ExcluirCommand, Source={x:Reference Name=ListagemPage}}"
+                                                           >
+                                        <SwipeItem.IconImageSource>
+                                            <FontImageSource Glyph="{Static helper:IconFont.TrashCan}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+                                        </SwipeItem.IconImageSource>
+                                    </SwipeItem>
+                                </SwipeView.RightItems>
+                                <Grid ColumnSpacing="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout HorizontalOptions="Fill" Grid.Row="0" Grid.Column="0" Orientation="Horizontal" VerticalOptions="Center" Spacing="0" Padding="10,0,0,0">
+                                        <Label Text="{Binding Nome}"></Label>
+                                        <Label Text="{Binding Tipo, StringFormat=' - {0}'}" IsVisible="{Binding Tipo, Converter={StaticResource  StringNullOrEmptyBoolConverter}}"></Label>
+                                    </StackLayout>
+                                    <StackLayout HorizontalOptions="Fill" Grid.Row="1" Grid.Column="0" Orientation="Horizontal" VerticalOptions="Center" Spacing="0" Padding="10,0,0,0" IsVisible="{Binding Data, Converter={StaticResource  StringNullOrEmptyBoolConverter}}" >
+                                        <Label Text="Data: "></Label>
+                                        <Label Text="{Binding Data, StringFormat='{0:dd/MM/yyyy HH:mm}'}"></Label>
+                                        <StackLayout HorizontalOptions="Fill" Grid.Row="1" Grid.Column="0" Orientation="Horizontal" VerticalOptions="Center" Spacing="0" Padding="10,0,0,0" IsVisible="{Binding DataTermino, Converter={StaticResource  StringNullOrEmptyBoolConverter}}" >
+                                            <Label Text=" até "></Label>
+                                            <Label Text="{Binding DataTermino, StringFormat='{0:dd/MM/yyyy HH:mm}'}"></Label>
+                                        </StackLayout>
+                                    </StackLayout>
+
+                                </Grid>
+                            </SwipeView>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.Footer>
+                    <Label/>
+                </ListView.Footer>
+            </ListView>
+
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

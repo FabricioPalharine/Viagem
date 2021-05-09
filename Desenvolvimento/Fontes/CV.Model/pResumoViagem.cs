@@ -49,7 +49,7 @@ namespace CV.Model
         public int? CidadesRegistradas { get; set; }
         public TimeSpan? MinutosViajando { get; set; }
         public TimeSpan? MinutosAguardando { get; set; }
-        public int? KmDeslocamento { get; set; }
+        public decimal? KmDeslocamento { get; set; }
         public double? NotaMediaDeslocamento { get; set; }
         public decimal? TotalReaisDeslocamento { get; set; }
 
@@ -57,7 +57,9 @@ namespace CV.Model
         public int? FotosTirada { get; set; }
         public int? VideosGravados { get; set; }
 
-        public int? KmTotaisDeslocados { get; set; }
-        public int? KmCaminhados { get; set; }
+        public decimal? KmTotaisDeslocados { get; set; }
+        public decimal? KmCaminhados { get; set; }
+        public decimal? KmAtracoes { get; set; }
+
     }
 }

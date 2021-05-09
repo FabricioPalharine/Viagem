@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.Comentarios.ComentarioEdicaoPage"             
+             Title="Comentário"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             xmlns:viewModelBase="clr-namespace:CV.Mobile.ViewModels.Base"                          
+             xmlns:behaviors="clr-namespace:CV.Mobile.Behaviors"
+             xmlns:controls="clr-namespace:CV.Mobile.Controls"
+             xmlns:helper="clr-namespace:CV.Mobile.Helper"
+             viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem   Command="{Binding SelecionarMapaCommand}" >
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="{Static helper:IconFont.MarkerCheck}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+       
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+
+            </Grid.RowDefinitions>
+            <StackLayout  HorizontalOptions="Start" VerticalOptions="Center">
+                <Label Text="Comentário"  Style="{StaticResource TituloLabelStyel}"></Label>
+            </StackLayout>
+
+            <Grid Grid.Row="1">
+
+                <ScrollView Grid.Row="0">
+                    <StackLayout>
+                       
+
+
+                        <StackLayout Spacing="1">
+                            <Label  Text="Data:"  />
+                            <DatePicker Date="{Binding Data.Value, Mode=TwoWay}"  >
+
+                                <DatePicker.Behaviors>
+                                    <behaviors:EventToCommandBehavior
+							EventName="DateSelected"
+							Command="{Binding ValidarDataCommad}" />
+                                </DatePicker.Behaviors>
+                                <DatePicker.Triggers>
+                                    <DataTrigger 
+							TargetType="DatePicker"
+							Binding="{Binding Data.IsValid}"
+							Value="False">
+                                        <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                        <Setter Property="behaviors:LineColorBehavior.ApplyLineColor" Value="{Binding Data.IsValid, Converter={StaticResource InverseBoolConverter}}"  />
+
+                                    </DataTrigger>
+                                </DatePicker.Triggers>
+                            </DatePicker>
+                            <Label Text="{Binding Data.Errors, Converter={StaticResource FirstValidationErrorConverter}}" Style="{StaticResource ValidationErrorLabelStyle}" />
+                        </StackLayout>
+
+
+                        <StackLayout Spacing="1">
+                            <Label  Text="Hora:"  />
+                            <TimePicker Time="{Binding Hora.Value, Mode=TwoWay}"   >
+
+                                
+                                <TimePicker.Triggers>
+                                    <DataTrigger 
+							TargetType="TimePicker"
+							Binding="{Binding Hora.IsValid}"
+							Value="False">
+                                        <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                        <Setter Property="behaviors:LineColorBehavior.ApplyLineColor" Value="{Binding Hora.IsValid, Converter={StaticResource InverseBoolConverter}}"  />
+
+                                    </DataTrigger>
+                                </TimePicker.Triggers>
+                            </TimePicker>
+                            <Label Text="{Binding Hora.Errors, Converter={StaticResource FirstValidationErrorConverter}}" Style="{StaticResource ValidationErrorLabelStyle}" />
+                        </StackLayout>
+
+                        <StackLayout Spacing="1">
+                            <Label  Text="Comentário:"  />
+                            <Editor Text="{Binding Texto.Value, Mode=TwoWay}" AutoSize="TextChanges">
+                                <Editor.Keyboard>
+                                    <Keyboard x:FactoryMethod="Create">
+                                        <x:Arguments>
+                                            <KeyboardFlags>Suggestions</KeyboardFlags>
+                                        </x:Arguments>
+                                    </Keyboard>
+                                </Editor.Keyboard>
+                                <Editor.Behaviors>
+                                    <behaviors:EventToCommandBehavior
+							EventName="TextChanged"
+							Command="{Binding ValidarTextoCommad}" />
+                                </Editor.Behaviors>
+                                <Editor.Triggers>
+                                    <DataTrigger 
+							TargetType="Editor"
+							Binding="{Binding Texto.IsValid}"
+							Value="False">
+                                        <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                        <Setter Property="behaviors:LineColorBehavior.ApplyLineColor" Value="{Binding Texto.IsValid, Converter={StaticResource InverseBoolConverter}}"  />
+
+                                    </DataTrigger>
+                                </Editor.Triggers>
+                            </Editor>
+                            <Label Text="{Binding Texto.Errors, Converter={StaticResource FirstValidationErrorConverter}}" Style="{StaticResource ValidationErrorLabelStyle}" />
+                        </StackLayout>
+
+                    </StackLayout>
+
+                </ScrollView>
+
+            </Grid>
+
+
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Text="Salvar" Grid.Column="0" Margin="10,0,10,0" Command="{Binding SalvarCommand}" ></Button>
+                <Button Text="Cancelar" Grid.Column="1" Margin="10,0,10,0" Command="{Binding CancelarCommand}" Style="{StaticResource BotaoInverso}" ></Button>
+            </Grid>
+
+            <ActivityIndicator 
+            Grid.Row="0"
+            Grid.RowSpan="3"
+            Color="{StaticResource SpinnerColor}"
+            IsRunning="{Binding IsBusy}"  
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Center"
+            HorizontalOptions="Center">
+                <ActivityIndicator.WidthRequest>
+                    <OnPlatform x:TypeArguments="x:Double">
+                        <On Platform="iOS, Android" Value="100" />
+                    </OnPlatform>
+                </ActivityIndicator.WidthRequest>
+            </ActivityIndicator>
+
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

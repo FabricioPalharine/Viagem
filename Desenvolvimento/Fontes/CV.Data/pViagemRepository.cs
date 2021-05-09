@@ -24,50 +24,7 @@ namespace CV.Data
             Context.SaveChanges();
         }
 
-        public void SalvarGastoCompra_Completo(GastoCompra itemGravar)
-        {
-            GastoCompra itemBase = Context.GastoCompras
-.Include("ItemGasto").Include("ItemGasto.Usuarios").Where(f => f.Identificador == itemGravar.Identificador).FirstOrDefault();
-            if (itemBase == null)
-            {
-                itemBase = Context.GastoCompras.Create();
-                Context.Entry<GastoCompra>(itemBase).State = System.Data.Entity.EntityState.Added;
-            }
-            AtualizarPropriedades<GastoCompra>(itemBase, itemGravar);
-            Gasto itemGasto = itemGravar.ItemGasto;
-            Gasto itemBaseGasto = null;
-            if (itemGasto != null)
-            {
-                itemBaseGasto = Context.Gastos.Where(f => f.Identificador == itemGasto.Identificador).FirstOrDefault();
-                if (itemBaseGasto == null)
-                {
-                    itemBaseGasto = Context.Gastos.Create();
-                    itemBaseGasto.Usuarios = new List<GastoDividido>();
-                    Context.Entry<Gasto>(itemBaseGasto).State = System.Data.Entity.EntityState.Added;
-                }
-                AtualizarPropriedades<Gasto>(itemBaseGasto, itemGasto);
-                itemBase.ItemGasto = itemBaseGasto;
-                foreach (GastoDividido itemGastoDividido in new List<GastoDividido>(itemBaseGasto.Usuarios))
-                {
-                    if (!itemGasto.Usuarios.Where(f => f.Identificador == itemGastoDividido.Identificador).Any())
-                    {
-                        Context.Entry<GastoDividido>(itemGastoDividido).State = EntityState.Deleted;
-                    }
-                }
-                foreach (GastoDividido itemGastoDividido in new List<GastoDividido>(itemGasto.Usuarios))
-                {
-                    GastoDividido itemBaseGastoDividido = !itemGastoDividido.Identificador.HasValue ? null : itemBaseGasto.Usuarios.Where(f => f.Identificador == itemGastoDividido.Identificador).FirstOrDefault();
-                    if (itemBaseGastoDividido == null)
-                    {
-                        itemBaseGastoDividido = Context.GastoDivididos.Create();
-                        itemBaseGasto.Usuarios.Add(itemBaseGastoDividido);
-                    }
-                    AtualizarPropriedades<GastoDividido>(itemBaseGastoDividido, itemGastoDividido);
-                }
-            }
-            Context.SaveChanges();
-            itemGravar.Identificador = itemBase.Identificador;
-        }
+       
 
         public void SalvarCarro_Completo(Carro itemGravar)
         {
@@ -315,7 +272,7 @@ namespace CV.Data
                 itemBase.ItemCarroEventoRetirada = itemBaseCarroEvento;
                 if (itemBaseCarroEvento.Identificador.HasValue)
 
-                    itemBase.Identificador = itemBaseCarroEvento.Identificador;
+                    itemBase.IdentificadorCarroEventoRetirada = itemBaseCarroEvento.Identificador;
 
             }
             else if (itemBase.ItemCarroEventoRetirada != null)
@@ -841,7 +798,7 @@ namespace CV.Data
         public List<Gasto> ListarGasto(Expression<Func<Gasto, bool>> predicate)
         {
             return Context.Gastos.Include("Usuarios").Include("Alugueis").Include("Atracoes").Include("Hoteis").Include("Refeicoes").Include("ViagenAereas")
-                         .Where(d => !d.Compras.Any()).Where(d => !d.Reabastecimentos.Any()).Where(d =>  !d.ApenasBaixa.Value).Where(predicate).ToList();
+                         .Where(d => !d.Reabastecimentos.Any()).Where(d =>  !d.ApenasBaixa.Value).Where(predicate).ToList();
         }
 
 
@@ -861,10 +818,7 @@ namespace CV.Data
             return Context.Refeicoes.Include("ItemCidade").Include("Pedidos").Where(predicate).ToList();
         }
 
-        public List<Loja> ListarLoja(Expression<Func<Loja, bool>> predicate)
-        {
-            return Context.Lojas.Include("ItemCidade").Include("Avaliacoes").Where(predicate).ToList();
-        }
+       
 
         public List<Carro> ListarCarro(Expression<Func<Carro, bool>> predicate)
         {
@@ -876,22 +830,7 @@ namespace CV.Data
             return Context.ViagemAereas.Include("Avaliacoes").Include("Aeroportos").Include("Aeroportos.ItemCidade").Where(predicate).ToList();
         }
 
-        public List<GastoCompra> ListarGastoCompra(int? IdentificadorViagem,int? IdentificadorUsuario, Expression<Func<GastoCompra, bool>> predicate)
-        {
-            return Context.GastoCompras.Include("ItemGasto")
-                .Where(d=>d.ItemLoja.IdentificadorViagem == IdentificadorViagem)
-                .Where(d => d.ItemGasto.IdentificadorUsuario == IdentificadorUsuario)
-
-                .Where(predicate).ToList();
-        }
-
-
-        public List<GastoCompra> ListarGastoCompra( Expression<Func<GastoCompra, bool>> predicate)
-        {
-            return Context.GastoCompras
-
-                .Where(predicate).ToList();
-        }
+     
 
         public List<ReabastecimentoGasto> ListarReabastecimentoGastos(Expression<Func<ReabastecimentoGasto, bool>> predicate)
         {
@@ -920,13 +859,7 @@ namespace CV.Data
                 .Where(predicate).ToList();
         }
 
-        public List<ItemCompra> ListarItemCompra(int? IdentificadorViagem, Expression<Func<ItemCompra, bool>> predicate)
-        {
-            return Context.ItemCompras.Include("ItemUsuario")
-                .Where(d => d.ItemGastoCompra.ItemLoja.IdentificadorViagem == IdentificadorViagem)
-                .Where(predicate).ToList();
-        }
-
+       
         public List<AluguelGasto> ListarAluguelGasto(int? IdentificadorViagem, Expression<Func<AluguelGasto, bool>> predicate)
         {
             return Context.AluguelGastos
@@ -1054,7 +987,6 @@ namespace CV.Data
                 DataAte = DataAte.GetValueOrDefault().AddDays(1);
                 query = query.Where(d => d.Data < DataAte);
             }
-            query = query.Where(d => !d.Compras.Any());
             query = query.Where(d => !d.Reabastecimentos.Any());
             query = query.Where(d => !d.ApenasBaixa.Value);
             query = query.Where(d => !d.DataExclusao.HasValue);
@@ -1239,11 +1171,11 @@ namespace CV.Data
                 query = query.Where(d => d.Identificador == IdentificadorLoja);
             query = query.Where(d => d.IdentificadorViagem == IdentificadorViagem);
             if (DataDe.HasValue)
-                query = query.Where(f => f.Compras.Where(d => d.ItemGasto.Data >= DataDe).Any());
+                query = query.Where(f => f.Data >= DataDe);
             if (DataAte.HasValue)
             {
                 DataAte = DataAte.GetValueOrDefault().AddDays(1);
-                query = query.Where(f => f.Compras.Where(d => d.ItemGasto.Data < DataAte).Any());
+                query = query.Where(f => f.Data < DataAte);
             }
 
             if (!string.IsNullOrWhiteSpace(Nome))

@@ -113,18 +113,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             return biz.CarregarDetalhesRefeicao(token.IdentificadorViagem, json.DataInicioDe, DataFim, json.Nome, json.Comentario, token.IdentificadorUsuario);
         }
 
-        [Authorize]
-        [BindJson(typeof(CriterioBusca), "json")]
-        [ActionName("ConsultarDetalheLoja")]
-        [HttpGet]
-        public LocaisVisitados ConsultarDetalheLoja(CriterioBusca json)
-        {
-            DateTime? DataFim = json.DataInicioAte;
-            if (DataFim.HasValue)
-                DataFim = DataFim.Value.AddDays(1);
-            ConsultaBusiness biz = new ConsultaBusiness();
-            return biz.CarregarDetalhesLoja(token.IdentificadorViagem, json.DataInicioDe, DataFim, json.Nome, json.Comentario);
-        }
+     
 
         [Authorize]
         [BindJson(typeof(CriterioBusca), "json")]

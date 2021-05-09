@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.Consultas.ExtratoDinheiroPage"            
+             xmlns:viewModelBase="clr-namespace:CV.Mobile.ViewModels.Base"
+             xmlns:helper="clr-namespace:CV.Mobile.Helper"
+             Title="Extrato"
+             viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+             x:Name="ListagemPage"
+             xmlns:behaviors="clr-namespace:CV.Mobile.Behaviors">
+    <ContentPage.Behaviors>
+        <behaviors:PageEventToCommandBehavior
+							EventName="Appearing"
+							Command="{Binding PageAppearingCommand}" />
+    </ContentPage.Behaviors>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem   Command="{Binding FiltrarCommand}" >
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="{Static helper:IconFont.Filter}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <StackLayout>
+            <ListView Grid.Row="0" VerticalOptions="FillAndExpand" SeparatorVisibility="Default" ItemsSource="{Binding Dados}"
+                    CachingStrategy="RecycleElement" HasUnevenRows="True" SelectionMode="None" 
+                    IsPullToRefreshEnabled="True"  RefreshCommand="{Binding RecarregarListaCommand}"               
+                    >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell >
+
+                            <Grid ColumnSpacing="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <StackLayout HorizontalOptions="Fill" Grid.Row="0" Grid.Column="0" Orientation="Horizontal" VerticalOptions="Center" Spacing="0" Padding="10,0,0,0" >
+                                 
+                                    <Label Text="{Binding Data, StringFormat='{0:dd/MM/yyyy}'}">
+                                        <Label.Triggers>
+                                            <DataTrigger 
+							TargetType="Label"
+							Binding="{Binding TipoLinha}"
+							Value="S">
+                                                <Setter Property="FontAttributes" Value="Bold"></Setter>
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+
+                                </StackLayout>
+                                <StackLayout HorizontalOptions="Fill" Grid.Row="1" Grid.Column="0" Orientation="Horizontal" VerticalOptions="Center" Spacing="0" Padding="10,0,0,0" >
+                                    <Label Text="{Binding Descricao}">
+                                        <Label.Triggers>
+                                            <DataTrigger 
+							TargetType="Label"
+							Binding="{Binding TipoLinha}"
+							Value="S">
+                                                <Setter Property="FontAttributes" Value="Bold"></Setter>
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                </StackLayout>
+                                
+                                <StackLayout HorizontalOptions="Fill" Grid.Row="2" Grid.Column="0" Orientation="Horizontal" VerticalOptions="Center" Spacing="0" Padding="10,0,0,0" >
+                               
+                                    <Label Text="{Binding Valor, StringFormat='{0:N2}'}">
+                                   
+                                            <Label.Triggers>
+                                                <DataTrigger 
+							TargetType="Label"
+							Binding="{Binding TipoLinha}"
+							Value="S">
+                                                    <Setter Property="FontAttributes" Value="Bold"></Setter>
+                                                </DataTrigger>
+                                            </Label.Triggers>
+    
+                                    </Label>
+                                </StackLayout>
+
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.Footer>
+                    <Label/>
+                </ListView.Footer>
+            </ListView>
+
+        </StackLayout>
+            <ActivityIndicator 
+            Grid.Row="0"
+            Grid.RowSpan="1"
+            Color="{StaticResource SpinnerColor}"
+            IsRunning="{Binding IsBusy}"  
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Center"
+            HorizontalOptions="Center">
+                <ActivityIndicator.WidthRequest>
+                    <OnPlatform x:TypeArguments="x:Double">
+                        <On Platform="iOS, Android" Value="100" />
+                    </OnPlatform>
+                </ActivityIndicator.WidthRequest>
+            </ActivityIndicator>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

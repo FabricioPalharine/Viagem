@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.Consultas.ResumoPage"     
+             xmlns:viewModelBase="clr-namespace:CV.Mobile.ViewModels.Base"
+             viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+              Shell.PresentationMode="ModalAnimated"             
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             Title="Resumo"
+             xmlns:Controls="clr-namespace:CV.Mobile.Controls"
+             xmlns:helper="clr-namespace:CV.Mobile.Helper"
+             xmlns:behaviors="clr-namespace:CV.Mobile.Behaviors"
+             >
+    <ContentPage.Behaviors>
+        <behaviors:PageEventToCommandBehavior
+							EventName="Appearing"
+							Command="{Binding PageAppearingCommand}" />
+    </ContentPage.Behaviors>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem   Command="{Binding FiltrarCommand}" >
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="{Static helper:IconFont.Filter}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+
+            </Grid.RowDefinitions>
+
+            <ScrollView Grid.Row="0">
+                <StackLayout Spacing="0">
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Atrações Visitadas:" >
+                        </Label>
+                        <Label Text="{Binding ItemResumo.AtracoesVisitadas}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Tempo em Atração:" >
+                        </Label>
+                        <Label Text="{Binding ItemResumo.MinutosAtracao, StringFormat='{0:h\\:mm}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Nota Média Atração:" >
+                        </Label>
+                        <Label Text="{Binding ItemResumo.NotaMediaAtracao, StringFormat='{0:N1}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+                    </StackLayout>
+                   
+
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Hospedagem Utilizadas:" >
+                        </Label>
+                        <Label Text="{Binding ItemResumo.NumeroHotel}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Noites Hospedadas:" >
+                        </Label>
+                        <Label Text="{Binding ItemResumo.NoitesHotel}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Tempo nas Hospedagens:" >
+                        </Label>
+                        <Label Text="{Binding ItemResumo.TempoHotel, StringFormat='{0:h\\:mm}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Nota Média Hospedagem:" >
+                        </Label>
+                        <Label Text="{Binding ItemResumo.NotaMediaHotel, StringFormat='{0:N1}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+                    </StackLayout>
+                  
+
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Refeições Realizadas:" >
+                        </Label>
+                        <Label Text="{Binding ItemResumo.RefeicoesRealizadas}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Nota Média Refeições:" >
+                        </Label>
+                        <Label Text="{Binding ItemResumo.NotaMediaRefeicao, StringFormat='{0:N1}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+                    </StackLayout>
+               
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Deslocamentos Realizados" >
+                        </Label>
+                        <Label Text="{Binding ItemResumo.DeslcamentosRealizados}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Nota Média Deslocamentos:" >
+                        </Label>
+                        <Label Text="{Binding ItemResumo.NotaMediaDeslocamento, StringFormat='{0:N1}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Tempo em Deslocamentos:" >
+                        </Label>
+                        <Label Text="{Binding ItemResumo.MinutosViajando, StringFormat='{0:h\\:mm}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Tempo em Paradas de Deslocamento:" >
+                        </Label>
+                        <Label Text="{Binding ItemResumo.MinutosAguardando, StringFormat='{0:h\\:mm}'}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+                    </StackLayout>
+                  
+
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Comentários Feitos" >
+                        </Label>
+                        <Label Text="{Binding ItemResumo.ComentariosFeitos}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Fotos Tiradas" >
+                        </Label>
+                        <Label Text="{Binding ItemResumo.FotosTirada}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Vídeos Gravados" >
+                        </Label>
+                        <Label Text="{Binding ItemResumo.VideosGravados}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+                    </StackLayout>
+                   
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Distância(Km) percorrida Atrações" >
+                        </Label>
+                        <Label Text="{Binding ItemResumo.KmAtracoes}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+                    </StackLayout>
+                   
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Distância(Km) fora Deslocamento" >
+                        </Label>
+                        <Label Text="{Binding ItemResumo.KmCaminhados}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Distância(Km) Deslocamento" >
+                        </Label>
+                        <Label Text="{Binding ItemResumo.KmDeslocamento}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Distância(Km) percorrida outros" >
+                        </Label>
+                        <Label Text="{Binding ItemResumo.KmCaminhados}" HorizontalTextAlignment="Start"  FontAttributes="Bold"></Label>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+
+            <ActivityIndicator 
+            Grid.Row="0"
+            Grid.RowSpan="1"
+            Color="{StaticResource SpinnerColor}"
+            IsRunning="{Binding IsBusy}"  
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Center"
+            HorizontalOptions="Center">
+                <ActivityIndicator.WidthRequest>
+                    <OnPlatform x:TypeArguments="x:Double">
+                        <On Platform="iOS, Android" Value="100" />
+                    </OnPlatform>
+                </ActivityIndicator.WidthRequest>
+            </ActivityIndicator>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

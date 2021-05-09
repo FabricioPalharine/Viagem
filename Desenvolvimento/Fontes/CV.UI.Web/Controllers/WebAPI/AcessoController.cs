@@ -53,6 +53,12 @@ namespace CV.UI.Web.Controllers.WebAPI
             return itemResultado;
         }
 
+        [ActionName("RetornarChave")]
+        [HttpGet]
+        public  ItemLista RetornarChave()
+        {
+            return new ItemLista() { Codigo = Business.Library.UtilitarioBusiness.Descriptografa(System.Configuration.ConfigurationManager.AppSettings["ClientId"]),  Descricao = Business.Library.UtilitarioBusiness.Descriptografa(System.Configuration.ConfigurationManager.AppSettings["ChaveApi"]) };
+        }
     
         [ActionName("SelecionarViagem")]
         [Authorize]
@@ -66,6 +72,8 @@ namespace CV.UI.Web.Controllers.WebAPI
             {
                 token.IdentificadorViagem = itemLogin.IdentificadorViagem;
                 biz.JuntarAlbumCompartilhado(itemViagem, token.IdentificadorUsuario);
+                itemResultado.Codigo = token.IdentificadorUsuario;
+                
                 itemResultado.IdentificadorViagem = itemLogin.IdentificadorViagem;
                 itemResultado.NomeViagem = itemViagem.Nome;
                 itemResultado.PermiteEdicao = itemViagem.IdentificadorUsuario == token.IdentificadorUsuario || biz.ListarParticipanteViagem(d => d.IdentificadorUsuario == token.IdentificadorUsuario && d.IdentificadorViagem == itemLogin.IdentificadorViagem).Any();
@@ -112,7 +120,6 @@ namespace CV.UI.Web.Controllers.WebAPI
         }
 
         [ActionName("VerificaOnline")]
-        [Authorize]
         [HttpGet]
         public bool VerificaOnline()
         {

@@ -142,8 +142,6 @@
     <Compile Include="pFotoRefeicao.cs" />
     <Compile Include="Gasto.cs" />
     <Compile Include="pGasto.cs" />
-    <Compile Include="GastoCompra.cs" />
-    <Compile Include="pGastoCompra.cs" />
     <Compile Include="GastoHotel.cs" />
     <Compile Include="pGastoHotel.cs" />
     <Compile Include="GastoPosicao.cs" />

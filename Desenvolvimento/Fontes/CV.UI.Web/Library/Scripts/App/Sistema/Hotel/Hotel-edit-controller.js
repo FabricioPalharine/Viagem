@@ -155,7 +155,12 @@
 		                if (!item.DataExclusao)
 		                {
 		                    insertEvento = true;
-		                    var itemEvento = { IdentificadorUsuario: item.IdentificadorUsuario, DataEntrada: vm.itemHotel.DataEntrada, DataAtualizacao: moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss") };
+                            var itemEvento = { IdentificadorUsuario: item.IdentificadorUsuario, DataEntrada: vm.itemHotel.DataEntrada, DataAtualizacao: moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss") };
+                            if (navigator.geolocation)
+                            navigator.geolocation.getCurrentPosition(function (position) {
+                                itemEvento.LatitudeEntrada = position.coords.latitude;
+                                itemEvento.LongitudeEntrada = position.coords.longitude;
+                            });
 		                    vm.itemHotel.Eventos.push(itemEvento);
 		                }
 		            });
@@ -165,7 +170,12 @@
 		            angular.forEach(vm.itemHotel.Eventos, function (item) {
 		                if (!item.DataExclusao && !item.DataSaida) {
 		                    item.DataSaida = vm.itemHotel.DataSaidia;
-		                    item.DataAtualizacao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+                            item.DataAtualizacao = moment.utc(new Date()).format("YYYY-MM-DDTHH:mm:ss");
+                            if (navigator.geolocation)
+                                navigator.geolocation.getCurrentPosition(function (position) {
+                                    item.LatitudeSaida = position.coords.latitude;
+                                    item.LongitudeSaida = position.coords.longitude;
+                                });
 		                    listaEventosAjustados.push(item);
 		                }
 		            });
@@ -174,35 +184,37 @@
 		        angular.forEach(vm.itemHotel.Eventos, function (itemEvento) {
 		            if (itemEvento.Edicao)
 		                vm.CancelarEvento(itemEvento);
-		        });
+                });
 
-		        Hotel.save(vm.itemHotel, function (data) {
-		            vm.loading = false;
-		            if (data.Sucesso) {
-		                Error.showError('success', $translate.instant("Sucesso"), data.Mensagens[0].Mensagem, true);
-		                $scope.$parent.itemHotel.AjustarHotelSalvo(vm.itemOriginal, data.ItemRegistro);
-		                angular.forEach(listaEventosAjustados, function (item) {
-		                    SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'HE', item.Identificador, false);
+                setTimeout(function () {
 
-		                });
-		                if (insertEvento)
-		                {
-		                    Hotel.get({ id: data.IdentificadorRegistro }, function (data2) {
-		                        angular.forEach(data2.Eventos, function (item) {
-		                            SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'HE', item.Identificador, true);
+                    Hotel.save(vm.itemHotel, function (data) {
+                        vm.loading = false;
+                        if (data.Sucesso) {
+                            Error.showError('success', $translate.instant("Sucesso"), data.Mensagens[0].Mensagem, true);
+                            $scope.$parent.itemHotel.AjustarHotelSalvo(vm.itemOriginal, data.ItemRegistro);
+                            angular.forEach(listaEventosAjustados, function (item) {
+                                SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'HE', item.Identificador, false);
 
-		                        });
-		                    });
+                            });
+                            if (insertEvento) {
+                                Hotel.get({ id: data.IdentificadorRegistro }, function (data2) {
+                                    angular.forEach(data2.Eventos, function (item) {
+                                        SignalR.ViagemAtualizada(Auth.currentUser.IdentificadorViagem, 'HE', item.Identificador, true);
 
-		                }
-		            } else {
-		                vm.messages = data.Mensagens;
-		                vm.verificaCampoInvalido();
-		            }
-		        }, function (err) {
-		            vm.loading = false;
-		            Error.showError('error', 'Ops!', $translate.instant("ErroSalvar"), true);
-		        });
+                                    });
+                                });
+
+                            }
+                        } else {
+                            vm.messages = data.Mensagens;
+                            vm.verificaCampoInvalido();
+                        }
+                    }, function (err) {
+                        vm.loading = false;
+                        Error.showError('error', 'Ops!', $translate.instant("ErroSalvar"), true);
+                    });
+                }, 200);
 		    }
 		    vm.submitted = false;
 		};

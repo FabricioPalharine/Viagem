@@ -23,7 +23,6 @@ namespace CV.Model
         public string CompanhiaAerea { get; set; }
        
 
-        [NotNullValidator(MessageTemplateResourceName = "ViagemAerea_DataPrevista", MessageTemplateResourceType = typeof(MensagemModelo))]
         public DateTime? DataPrevista { get; set; }
 
         public Viagem ItemViagem { get; set; }

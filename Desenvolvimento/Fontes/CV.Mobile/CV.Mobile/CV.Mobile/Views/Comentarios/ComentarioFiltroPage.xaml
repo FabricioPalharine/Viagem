@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.Comentarios.ComentarioFiltroPage"             
+             xmlns:viewModelBase="clr-namespace:CV.Mobile.ViewModels.Base"
+             viewModelBase:ViewModelLocator.AutoWireViewModel="true" 
+               Shell.PresentationMode="ModalAnimated"             
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             xmlns:Controls="clr-namespace:CV.Mobile.Controls">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+
+                </Grid.RowDefinitions>
+
+                <ScrollView Grid.Row="1">
+                    <StackLayout >
+
+                        
+                        <StackLayout Spacing="1">
+                            <Label  Text="Data De:"  />
+                            <Controls:NullableDatePicker NullableDate="{Binding DataInicioDe, Mode=TwoWay}"   >
+                            </Controls:NullableDatePicker>
+                        </StackLayout>
+                        <StackLayout Spacing="1">
+                            <Label  Text="Data Até:"  />
+                            <Controls:NullableDatePicker NullableDate="{Binding DataInicioAte, Mode=TwoWay}"   >
+                            </Controls:NullableDatePicker>
+                        </StackLayout>
+
+                    </StackLayout>
+                </ScrollView>
+
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Button Text="Filtrar" Grid.Column="0" Margin="10,0,10,0" Command="{Binding FiltrarCommand}" ></Button>
+                    <Button Text="Voltar" Grid.Column="1" Margin="10,0,10,0" Command="{Binding VoltarCommand}" Style="{StaticResource BotaoInverso}" ></Button>
+                </Grid>
+
+                <ActivityIndicator 
+            Grid.Row="0"
+            Grid.RowSpan="3"
+            Color="{StaticResource SpinnerColor}"
+            IsRunning="{Binding IsBusy}"  
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Center"
+            HorizontalOptions="Center">
+                    <ActivityIndicator.WidthRequest>
+                        <OnPlatform x:TypeArguments="x:Double">
+                            <On Platform="iOS, Android" Value="100" />
+                        </OnPlatform>
+                    </ActivityIndicator.WidthRequest>
+                </ActivityIndicator>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

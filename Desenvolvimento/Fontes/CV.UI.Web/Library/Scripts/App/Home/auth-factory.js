@@ -18,8 +18,10 @@
         $rootScope.isLogged = false;
         AuthBase.currentUser = {};
         
-        AuthBase.apiKey = 'AIzaSyDrQ7UWqjZRnqcdVTdHwVEZHMJLtx3O_nA';
-        AuthBase.clientId = '997990659234-nb4rfquq8l9aakikqhpmer7p1uq7gp4n.apps.googleusercontent.com';
+        AuthBase.apiKey = '';
+        AuthBase.clientId = '';
+       
+
         AuthBase.scopes = 'profile https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/photoslibrary.sharing https://www.googleapis.com/auth/photoslibrary';
         AuthBase.auth2 = null;
        
@@ -100,11 +102,17 @@
         };
 
         AuthBase.init = function () {
-            SignalR.startHub();
-            gapi.load('client:auth2', AuthBase.initAuth);
+            $http.get('./api/Acesso/RetornarChave').success(function (data) {
+                AuthBase.apiKey = data.Descricao;
+                AuthBase.clientId = data.Codigo;
+                SignalR.startHub();
+                gapi.load('client:auth2', AuthBase.initAuth);
+            });
         };
 
         AuthBase.initAuth = function () {
+          
+            
             gapi.client.setApiKey(AuthBase.apiKey);
             gapi.auth2.init({
                 client_id: AuthBase.clientId,
@@ -121,30 +129,33 @@
 
 
             });
+            
         };
 
         AuthBase.CheckLoginValido = function (callback) {
+            $http.get('./api/Acesso/RetornarChave').success(function (data) {
+                AuthBase.apiKey = data.Descricao;
+                AuthBase.clientId = data.Codigo;
+                if (AuthBase.auth2 == null) {
+                    gapi.load('client:auth2', function () {
+                        gapi.client.setApiKey(AuthBase.apiKey);
+                        gapi.auth2.init({
+                            client_id: AuthBase.clientId,
+                            scope: AuthBase.scopes
+                        }).then(function () {
+                            AuthBase.auth2 = gapi.auth2.getAuthInstance();
 
-            if (AuthBase.auth2 == null) {
-                gapi.load('client:auth2',function()
-                {
-                    gapi.client.setApiKey(AuthBase.apiKey);
-                    gapi.auth2.init({
-                        client_id: AuthBase.clientId,
-                        scope: AuthBase.scopes
-                    }).then(function () {
-                        AuthBase.auth2 = gapi.auth2.getAuthInstance();
+                            // Listen for sign-in state changes.
+                            //AuthBase.auth2.isSignedIn.listen(AuthBase.updateSigninStatus);
+                            AuthBase.VerificarLoginValido(callback);
 
-                        // Listen for sign-in state changes.
-                        //AuthBase.auth2.isSignedIn.listen(AuthBase.updateSigninStatus);
-                        AuthBase.VerificarLoginValido(callback);
-
-                    })
-                });
-            }
-            else {
-                AuthBase.VerificarLoginValido(callback);
-            }
+                        })
+                    });
+                }
+                else {
+                    AuthBase.VerificarLoginValido(callback);
+                }
+            });
         };
 
         AuthBase.VerificarLoginValido = function (callback) {

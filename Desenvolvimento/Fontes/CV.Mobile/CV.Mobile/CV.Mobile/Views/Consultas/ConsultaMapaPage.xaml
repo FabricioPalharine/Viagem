@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.Consultas.ConsultaMapaPage"
+            Shell.NavBarIsVisible="True"
+             Title="Posições"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             xmlns:viewModelBase="clr-namespace:CV.Mobile.ViewModels.Base"
+             x:Name="ListagemPage"
+             xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+             xmlns:helper="clr-namespace:CV.Mobile.Helper"
+             xmlns:behaviors="clr-namespace:CV.Mobile.Behaviors"
+             xmlns:controls="clr-namespace:CV.Mobile.Controls"
+             viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+    <ContentPage.Behaviors>
+        <behaviors:PageEventToCommandBehavior
+							EventName="Appearing"
+							Command="{Binding PageAppearingCommand}" />
+    </ContentPage.Behaviors>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem   Command="{Binding FiltrarCommand}" >
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="{Static helper:IconFont.Filter}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <controls:CustomMap x:Name="mapa" MapType="Street" CustomPolylines="{Binding Linhas}" Grid.Row="1" Grid.RowSpan="1" CustomPins="{Binding Pontos}">
+
+                
+            </controls:CustomMap>            
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

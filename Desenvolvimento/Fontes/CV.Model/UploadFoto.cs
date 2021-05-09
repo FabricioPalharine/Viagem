@@ -28,6 +28,7 @@ namespace CV.Model
         public int? IdentificadorHotel { get; set; }
         public int? IdentificadorAtracao { get; set; }
         public int? IdentificadorItemCompra { get; set; }
+        public bool Video { get; set; }
 
     }
 

@@ -8,7 +8,8 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <script src="https://apis.google.com/js/client.js"></script>
-    <script src="https://maps.google.com/maps/api/js?key=AIzaSyDrQ7UWqjZRnqcdVTdHwVEZHMJLtx3O_nA &libraries=placeses,visualization,drawing,geometry,places"></script>
+    @Scripts.Render(string.Concat("https://maps.google.com/maps/api/js?key=",CV.Business.Library.UtilitarioBusiness.Descriptografa(System.Configuration.ConfigurationManager.AppSettings["ChaveApi"])," &libraries=placeses,visualization,drawing,geometry,places") )
+
 
 </head>
 <body class="hold-transition skin-blue-light sidebar-mini" ng-cloak>
@@ -33,15 +34,7 @@
                 <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button" ng-show="$root.isLogged && account.ViagemSelecionada()">
                     <span class="sr-only"></span>
                 </a>
-                <div class="navbar-custom-menu" style="margin-right:20px">
-                    <ul class="nav navbar-nav">
-                        <li>
-                            <a ui-sref="Rankings()">
-                                <i class="fa fa-bar-chart fa-fw"></i>
-                                <span class="hidden-xs">@TextosPaginas.Menu_Ranking</span>
-                            </a>
-                        </li>
-                    </ul>
+                <div class="navbar-custom-menu" style="margin-right:20px">                   
                     <ul class="nav navbar-nav" ng-show="$root.isLogged">
                         <li>
                             <a ui-sref="Amigo()">
@@ -142,39 +135,25 @@
                         <a href="javascript:void(0)"><i class="fa fa-gears fa-fw"></i><span>@TextosPaginas.Home_Controle</span><i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="nav nav-second-level treeview-menu">
                             <li><a ui-sref="AporteDinheiro()"><span>@TextosPaginas.Home_AporteDinheiro</span></a></li>
-                            <li><a ui-sref="Atracao()"><span>@TextosPaginas.Home_Atracao</span></a></li>
-                            <li><a ui-sref="CalendarioPrevisto()"><span>@TextosPaginas.Home_CalendarioPrevisto</span></a></li>
-                            <li><a ui-sref="Carro()"><span>@TextosPaginas.Home_Carro</span></a></li>
-                            <li><a ui-sref="CidadeGrupo()"><span>@TextosPaginas.Home_CidadeGrupo</span></a></li>
+                            <li><a ui-sref="Atracao()"><span>@TextosPaginas.Home_Atracao</span></a></li>                            
                             <li><a ui-sref="Comentario()"><span>@TextosPaginas.Home_Comentario</span></a></li>
                             <li><a ui-sref="CotacaoMoeda()"><span>@TextosPaginas.Home_CotacaoMoeda</span></a></li>
                             <li><a ui-sref="Foto()"><span>@TextosPaginas.Home_Foto</span></a></li>
                             <li><a ui-sref="Gasto()"><span>@TextosPaginas.Home_Gasto</span></a></li>
                             <li><a ui-sref="Hotel()"><span>@TextosPaginas.Home_Hotel</span></a></li>
-                            <li><a ui-sref="ListaCompra()"><span>@TextosPaginas.Home_ListaCompra</span></a></li>
-                            <li><a ui-sref="Loja()"><span>@TextosPaginas.Home_Loja</span></a></li>
                             <li><a ui-sref="Refeicao()"><span>@TextosPaginas.Home_Refeicao</span></a></li>
-                            <li><a ui-sref="VerificarSugestao()"><span>@TextosPaginas.Home_VerificarSugestao</span></a></li>
                             <li><a ui-sref="ViagemEdicao({ id: account.user.IdentificadorViagem})"><span>@TextosPaginas.Home_Viagem</span></a></li>
                             <li><a ui-sref="ViagemAerea()"><span>@TextosPaginas.Home_ViagemAerea</span></a></li>
                             <li ng-if="account.Aberto()"><a href="javascript:void(0)" ng-click="account.TrocarSituacaoViagem()"><span>@TextosPaginas.Home_FecharViagem </span></a></li>
                             <li ng-if="!account.Aberto()"><a href="javascript:void(0)" ng-click="account.TrocarSituacaoViagem()"><span>@TextosPaginas.Home_AbrirViagem </span></a></li>
                         </ul>
                     </li>
-                    <li class="treeview" ng-if="!account.PermiteEdicao()">
-                        <a href="javascript:void(0)"><i class="fa fa-comment-o fa-fw"></i><span>@TextosPaginas.Home_Sugestao</span><i class="fa fa-angle-left pull-right"></i></a>
-                        <ul class="nav nav-second-level treeview-menu">
-                            <li><a ui-sref="PedidoCompra()"><span>@TextosPaginas.Home_PedidoCompra</span></a></li>
-                            <li><a ui-sref="Sugestao()"><span>@TextosPaginas.Home_Sugestao</span></a></li>
-                        </ul>
-                    </li>
+                  
                     <li class="treeview">
                         <a href="javascript:void(0)"><i class="fa fa-bars fa-fw"></i><span>@TextosPaginas.Home_Consultas</span><i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="nav nav-second-level treeview-menu">
                             <li  ng-if="account.PermiteEdicao()"><a ui-sref="ConsultarExtratoMoeda()"><span>@TextosPaginas.Home_ExtratoMoeda</span></a></li>
                             <li ng-if="account.PermiteEdicao()"><a ui-sref="ConsultarAcertoConta()"><span>@TextosPaginas.Home_AcertoConta</span></a></li>
-                            <li ng-if="!account.PermiteEdicao()"><a ui-sref="CalendarioPrevisto()"><span>@TextosPaginas.Home_CalendarioPrevisto</span></a></li>
-
                             <li ng-if="account.VerCustos()"><a ui-sref="ConsultarRelatorioGasto()"><span>@TextosPaginas.Home_RelatorioGastos</span></a></li>
                             <li ><a ui-sref="ConsultarTimeline()"><span>@TextosPaginas.Home_Timeline</span></a></li>
                             <li><a ui-sref="ConsultarLocaisVisitados()"><span>@TextosPaginas.Home_LocaisVisitados</span></a></li>

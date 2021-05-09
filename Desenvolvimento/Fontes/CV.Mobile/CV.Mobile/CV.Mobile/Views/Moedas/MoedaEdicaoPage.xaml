@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.Moedas.MoedaEdicaoPage"
+             Shell.PresentationMode="ModalAnimated"
+             Title="Aquisição Moeda"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             xmlns:viewModelBase="clr-namespace:CV.Mobile.ViewModels.Base"
+             xmlns:behaviors="clr-namespace:CV.Mobile.Behaviors"
+             xmlns:controls="clr-namespace:CV.Mobile.Controls"
+             viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+
+            </Grid.RowDefinitions>
+            <StackLayout  HorizontalOptions="Start" VerticalOptions="Center">
+                <Label Text="Aquisição de Moeda"  Style="{StaticResource TituloLabelStyel}"></Label>
+            </StackLayout>
+
+            <Grid Grid.Row="1">
+
+                <ScrollView Grid.Row="0">
+                    <StackLayout>
+                        <StackLayout Spacing="1">
+                            <Label  Text="Moeda:"  />
+                            <Picker SelectedItem="{Binding Moeda.Value, Mode=TwoWay}" ItemsSource="{Binding Moedas}" ItemDisplayBinding="{Binding Descricao}" Title="Moeda"   >
+
+                                <Picker.Behaviors>
+                                    <behaviors:EventToCommandBehavior
+							EventName="SelectedIndexChanged"
+							Command="{Binding ValidarMoedaCommad}" />
+                                </Picker.Behaviors>
+                                <Picker.Triggers>
+                                    <DataTrigger 
+							TargetType="Picker"
+							Binding="{Binding Moeda.IsValid}"
+							Value="False">
+                                        <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                        <Setter Property="behaviors:LineColorBehavior.ApplyLineColor" Value="{Binding Moeda.IsValid, Converter={StaticResource InverseBoolConverter}}"  />
+
+                                    </DataTrigger>
+                                </Picker.Triggers>
+                            </Picker>
+                            <Label Text="{Binding Moeda.Errors, Converter={StaticResource FirstValidationErrorConverter}}" Style="{StaticResource ValidationErrorLabelStyle}" />
+                        </StackLayout>
+
+
+                        <StackLayout Spacing="1">
+                            <Label  Text="Data :"  />
+                            <DatePicker Date="{Binding DataAporte.Value, Mode=TwoWay}"  >
+
+                                <DatePicker.Behaviors>
+                                    <behaviors:EventToCommandBehavior
+							EventName="DateSelected"
+							Command="{Binding ValidarDataAporteCommad}" />
+                                </DatePicker.Behaviors>
+                                <DatePicker.Triggers>
+                                    <DataTrigger 
+							TargetType="DatePicker"
+							Binding="{Binding DataAporte.IsValid}"
+							Value="False">
+                                        <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                        <Setter Property="behaviors:LineColorBehavior.ApplyLineColor" Value="{Binding DataAporte.IsValid, Converter={StaticResource InverseBoolConverter}}"  />
+
+                                    </DataTrigger>
+                                </DatePicker.Triggers>
+                            </DatePicker>
+                            <Label Text="{Binding DataAporte.Errors, Converter={StaticResource FirstValidationErrorConverter}}" Style="{StaticResource ValidationErrorLabelStyle}" />
+                        </StackLayout>
+
+                        <StackLayout Grid.Row="1" Spacing="1"  HorizontalOptions="FillAndExpand" >
+                            <Label  Text="Valor"  />
+                            <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="0">
+
+                                <controls:DecimalNumberEntry DecimalPlaces="2" Value="{Binding Valor.Value, Mode=TwoWay}" Keyboard="Numeric" 
+                                                    HorizontalTextAlignment="End" HorizontalOptions="FillAndExpand" >
+
+                                    <controls:DecimalNumberEntry.Behaviors>
+                                        <behaviors:EventToCommandBehavior
+							EventName="ValueChanged"
+							Command="{Binding ValidarValorCommad}" />
+                                    </controls:DecimalNumberEntry.Behaviors>
+                                    <controls:DecimalNumberEntry.Triggers>
+                                        <DataTrigger 
+							TargetType="Entry"
+							Binding="{Binding Valor.IsValid}"
+							Value="False">
+                                            <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                            <Setter Property="behaviors:LineColorBehavior.ApplyLineColor" Value="{Binding Valor.IsValid, Converter={StaticResource InverseBoolConverter}}"  />
+
+                                        </DataTrigger>
+                                    </controls:DecimalNumberEntry.Triggers>
+                                </controls:DecimalNumberEntry>
+                            </StackLayout>
+                            <Label Text="{Binding Valor.Errors, Converter={StaticResource FirstValidationErrorConverter}}" Style="{StaticResource ValidationErrorLabelStyle}" />
+                        </StackLayout>
+
+
+                        <StackLayout Grid.Row="1" Spacing="1"  HorizontalOptions="FillAndExpand" >
+                            <Label  Text="Cotação"  />
+                            <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="0">
+
+                                <controls:DecimalNumberEntry DecimalPlaces="4" Value="{Binding Cotacao.Value, Mode=TwoWay}" Keyboard="Numeric" 
+                                                    HorizontalTextAlignment="End" HorizontalOptions="FillAndExpand" >
+
+                                    <controls:DecimalNumberEntry.Behaviors>
+                                        <behaviors:EventToCommandBehavior
+							EventName="ValueChanged"
+							Command="{Binding ValidarCotacaoCommad}" />
+                                    </controls:DecimalNumberEntry.Behaviors>
+                                    <controls:DecimalNumberEntry.Triggers>
+                                        <DataTrigger 
+							TargetType="Entry"
+							Binding="{Binding Cotacao.IsValid}"
+							Value="False">
+                                            <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                            <Setter Property="behaviors:LineColorBehavior.ApplyLineColor" Value="{Binding Cotacao.IsValid, Converter={StaticResource InverseBoolConverter}}"  />
+
+                                        </DataTrigger>
+                                    </controls:DecimalNumberEntry.Triggers>
+                                </controls:DecimalNumberEntry>
+                            </StackLayout>
+                            <Label Text="{Binding Cotacao.Errors, Converter={StaticResource FirstValidationErrorConverter}}" Style="{StaticResource ValidationErrorLabelStyle}" />
+                        </StackLayout>
+                        <StackLayout Spacing="1"  HorizontalOptions="FillAndExpand"   >
+                            <Label  Text="Baixar Moeda"  />
+                            <Switch IsToggled="{Binding BaixarMoeda}" >
+                                <Switch.Behaviors>
+                                    <behaviors:EventToCommandBehavior
+							EventName="Toggled"
+							Command="{Binding ValidarBaixarMoedaCommad}" />
+                                </Switch.Behaviors>
+                            </Switch>
+
+                        </StackLayout>
+                        <StackLayout IsVisible="{Binding BaixarMoeda}">
+                            <StackLayout Spacing="1">
+                                <Label  Text="Moeda Baixa:"  />
+                                <Picker SelectedItem="{Binding MoedaBaixa.Value, Mode=TwoWay}" ItemsSource="{Binding Moedas}" ItemDisplayBinding="{Binding Descricao}" Title="Moeda"   >
+
+                                    <Picker.Behaviors>
+                                        <behaviors:EventToCommandBehavior
+							EventName="SelectedIndexChanged"
+							Command="{Binding ValidarMoedaBaixaCommad}" />
+                                    </Picker.Behaviors>
+                                    <Picker.Triggers>
+                                        <DataTrigger 
+							TargetType="Picker"
+							Binding="{Binding MoedaBaixa.IsValid}"
+							Value="False">
+                                            <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                            <Setter Property="behaviors:LineColorBehavior.ApplyLineColor" Value="{Binding MoedaBaixa.IsValid, Converter={StaticResource InverseBoolConverter}}"  />
+
+                                        </DataTrigger>
+                                    </Picker.Triggers>
+                                </Picker>
+                                <Label Text="{Binding MoedaBaixa.Errors, Converter={StaticResource FirstValidationErrorConverter}}" Style="{StaticResource ValidationErrorLabelStyle}" />
+                            </StackLayout>
+
+                            <StackLayout Grid.Row="1" Spacing="1"  HorizontalOptions="FillAndExpand" >
+                                <Label  Text="Valor Baixar"  />
+                                <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="0">
+
+                                    <controls:DecimalNumberEntry DecimalPlaces="2" Value="{Binding ValorBaixa.Value, Mode=TwoWay}" Keyboard="Numeric" 
+                                                    HorizontalTextAlignment="End" HorizontalOptions="FillAndExpand" >
+
+                                        <controls:DecimalNumberEntry.Behaviors>
+                                            <behaviors:EventToCommandBehavior
+							EventName="ValueChanged"
+							Command="{Binding ValidarValorBaixaCommad}" />
+                                        </controls:DecimalNumberEntry.Behaviors>
+                                        <controls:DecimalNumberEntry.Triggers>
+                                            <DataTrigger 
+							TargetType="Entry"
+							Binding="{Binding ValorBaixa.IsValid}"
+							Value="False">
+                                                <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                                <Setter Property="behaviors:LineColorBehavior.ApplyLineColor" Value="{Binding ValorBaixa.IsValid, Converter={StaticResource InverseBoolConverter}}"  />
+
+                                            </DataTrigger>
+                                        </controls:DecimalNumberEntry.Triggers>
+                                    </controls:DecimalNumberEntry>
+                                </StackLayout>
+                                <Label Text="{Binding ValorBaixa.Errors, Converter={StaticResource FirstValidationErrorConverter}}" Style="{StaticResource ValidationErrorLabelStyle}" />
+                            </StackLayout>
+                        </StackLayout>
+                    </StackLayout>
+
+                   
+                </ScrollView>
+
+            </Grid>
+
+
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Text="Salvar" Grid.Column="0" Margin="10,0,10,0" Command="{Binding SalvarCommand}" ></Button>
+                <Button Text="Cancelar" Grid.Column="1" Margin="10,0,10,0" Command="{Binding CancelarCommand}" Style="{StaticResource BotaoInverso}" ></Button>
+            </Grid>
+
+            <ActivityIndicator 
+            Grid.Row="0"
+            Grid.RowSpan="3"
+            Color="{StaticResource SpinnerColor}"
+            IsRunning="{Binding IsBusy}"  
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Center"
+            HorizontalOptions="Center">
+                <ActivityIndicator.WidthRequest>
+                    <OnPlatform x:TypeArguments="x:Double">
+                        <On Platform="iOS, Android" Value="100" />
+                    </OnPlatform>
+                </ActivityIndicator.WidthRequest>
+            </ActivityIndicator>
+
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.Amigos.AmigoRequisicaoPage"
+             xmlns:viewModelBase="clr-namespace:CV.Mobile.ViewModels.Base"              
+             xmlns:behaviors="clr-namespace:CV.Mobile.Behaviors"
+             xmlns:helper="clr-namespace:CV.Mobile.Helper"
+              x:Name="ListagemPage"
+             viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+    <ContentView.Behaviors>
+        <behaviors:PageEventToCommandBehavior
+							EventName="PageVisibleChanged"
+							Command="{Binding PageAppearingCommand}" />
+    </ContentView.Behaviors>
+    <ContentView.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <ListView Grid.Row="0" VerticalOptions="FillAndExpand" SeparatorVisibility="Default" ItemsSource="{Binding ListaAmigos}"
+                    CachingStrategy="RecycleElement" HasUnevenRows="True" SelectionMode="None" 
+                    IsPullToRefreshEnabled="True"  RefreshCommand="{Binding RecarregarListaCommand}"               
+                    >
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell >
+                            <SwipeView >
+                                <SwipeView.RightItems >
+                                    <SwipeItem Text="Aprovar"      
+                                       BackgroundColor="{StaticResource CorSucesso}" 
+                                                           CommandParameter="{Binding .}"
+                                                           Command="{Binding Path=BindingContext.AprovarCommand, Source={x:Reference Name=ListagemPage}}"
+                                                           >
+                                        <SwipeItem.IconImageSource>
+                                            <FontImageSource Glyph="{Static helper:IconFont.ThumbUp}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+                                        </SwipeItem.IconImageSource>
+                                    </SwipeItem>
+                                    <SwipeItem Text="Reprovar"      
+                                       BackgroundColor="{StaticResource ErrorColor}" 
+                                                           CommandParameter="{Binding .}"
+                                                           Command="{Binding Path=BindingContext.ReprovarCommand, Source={x:Reference Name=ListagemPage}}"
+                                                           >
+                                        <SwipeItem.IconImageSource>
+                                            <FontImageSource Glyph="{Static helper:IconFont.ThumbDown}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+                                        </SwipeItem.IconImageSource>
+                                    </SwipeItem>
+                                </SwipeView.RightItems>
+                                <Grid ColumnSpacing="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                      
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackLayout HorizontalOptions="Fill" Grid.Row="0" Grid.Column="0" VerticalOptions="Center" Spacing="0" Padding="10,0,0,0" IsVisible="{Binding NomeUsuario, Converter={StaticResource StringNullOrEmptyBoolConverter}}">
+                                        <Label Text="{Binding NomeUsuario}"></Label>
+                                    </StackLayout>
+                                    <StackLayout HorizontalOptions="Fill" Grid.Row="1" Grid.Column="0" VerticalOptions="Center" Spacing="0" Padding="10,0,0,0">
+                                        <Label Text="{Binding EMailUsuario}"></Label>
+                                    </StackLayout>
+                                   
+                                </Grid>
+                            </SwipeView>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.Footer>
+                    <Label/>
+                </ListView.Footer>
+            </ListView>
+
+
+            <ActivityIndicator 
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Color="{StaticResource SpinnerColor}"
+            IsRunning="{Binding IsBusy}"  
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Center"
+            HorizontalOptions="Center">
+                <ActivityIndicator.WidthRequest>
+                    <OnPlatform x:TypeArguments="x:Double">
+                        <On Platform="iOS, Android" Value="100" />
+                    </OnPlatform>
+                </ActivityIndicator.WidthRequest>
+            </ActivityIndicator>
+
+
+        </Grid>
+    </ContentView.Content>
+</ContentView>

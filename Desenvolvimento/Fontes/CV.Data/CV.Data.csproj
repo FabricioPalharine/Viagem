@@ -109,8 +109,6 @@
     <Compile Include="Configuration\pFotoRefeicaoConfiguration.cs" />
     <Compile Include="Configuration\GastoConfiguration.cs" />
     <Compile Include="Configuration\pGastoConfiguration.cs" />
-    <Compile Include="Configuration\GastoCompraConfiguration.cs" />
-    <Compile Include="Configuration\pGastoCompraConfiguration.cs" />
     <Compile Include="Configuration\GastoHotelConfiguration.cs" />
     <Compile Include="Configuration\pGastoHotelConfiguration.cs" />
     <Compile Include="Configuration\GastoPosicaoConfiguration.cs" />

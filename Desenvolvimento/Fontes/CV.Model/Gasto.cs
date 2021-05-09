@@ -77,7 +77,6 @@ private void ValidarDescricao(Microsoft.Practices.EnterpriseLibrary.Validation.V
 
 			public IList<GastoHotel> Hoteis { get; set; }
 
-			public IList<GastoCompra> Compras { get; set; }
 
 			public IList<AluguelGasto> Alugueis { get; set; }
 

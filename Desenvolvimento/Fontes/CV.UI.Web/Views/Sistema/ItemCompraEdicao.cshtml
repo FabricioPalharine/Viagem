@@ -23,24 +23,11 @@
                 </div>
 
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <label>@TextosPaginas.ItemCompra_ListaCompra</label>
-                    <select ng-model="itemItemCompraEdit.itemListaCompra" class="form-control" ng-change="itemItemCompraEdit.TrocarItemCompra()"
-                             ng-options="(obj.Marca + ' - '  + obj.Descricao) for obj in itemItemCompraEdit.ListaItensCompra track by obj.Identificador">
-                        <option value="">@TextosPaginas.Selecione</option>
-                    </select>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6"  ng-class="{ 'has-error':itemItemCompraEdit.CamposInvalidos.Marca}">
-                    <label>@TextosPaginas.ItemCompra_Marca</label>
-                    <input type="text" class="form-control" ng-model="itemItemCompraEdit.itemItemCompra.Marca" maxlength="50" empty-to-null>
-
-                </div>
-                <div class="col-md-6"  ng-class="{ 'has-error':itemItemCompraEdit.CamposInvalidos.Descricao}">
+           
+            <div class="row">                
+                <div class="col-md-12"  ng-class="{ 'has-error':itemItemCompraEdit.CamposInvalidos.Descricao}">
                     <label>@TextosPaginas.ItemCompra_Descricao</label>
-                    <input type="text" class="form-control" ng-model="itemItemCompraEdit.itemItemCompra.Descricao" maxlength="50" empty-to-null>
+                    <input type="text" class="form-control" ng-model="itemItemCompraEdit.itemItemCompra.Descricao" maxlength="200" empty-to-null>
                 </div>
 
                 <div class="form-group col-md-6" ng-class="{ 'has-error':itemItemCompraEdit.CamposInvalidos.Valor}">
@@ -48,19 +35,10 @@
                     <input type="text" class="form-control" ng-model="itemItemCompraEdit.itemItemCompra.Valor" empty-to-null decimal-input="{digits:2, integerDigits:16}">
                 </div>
 
-                <div class="form-group col-md-6" >
-                    <label>@TextosPaginas.ItemCompra_Destinatario</label>
-                    <label><input type="checkbox" ng-model="itemItemCompraEdit.CadastradoAmigo">@TextosPaginas.ItemCompra_CadastradoAmigo</label>
-                    <select ng-if="itemItemCompraEdit.CadastradoAmigo" ng-model="itemItemCompraEdit.itemUsuario" class="form-control" ng-options="obj.Nome for obj in itemItemCompraEdit.ListaUsuario track by obj.Identificador">
-                        <option value="">@TextosPaginas.Selecione</option>
-                    </select>
-                    <input ng-if="!itemItemCompraEdit.CadastradoAmigo" type="text" class="form-control" ng-model="itemItemCompraEdit.itemItemCompra.Destinatario" maxlength="50" empty-to-null>
-
-                    </div>
-                </div>
-                <div class="form-group col-md-6" ng-class="{ 'has-error':itemItemCompraEdit.CamposInvalidos.Reembolsavel}" ng-if="itemItemCompraEdit.itemUsuario.Identificador || itemItemCompraEdit.itemItemCompra.Destinatario">
+               
+                <div class="form-group col-md-6" ng-class="{ 'has-error':itemItemCompraEdit.CamposInvalidos.Reembolsavel}" >
                     <label>@TextosPaginas.ItemCompra_Reembolsavel</label>
-                    <input type="checkbox" ng-model="itemGastoEdit.itemGasto.Especie" class="checkbox">
+                    <input type="checkbox" ng-model="itemGastoEdit.itemItemCompra.Reembolsavel" class="checkbox">
                 </div>
 
                 </div>

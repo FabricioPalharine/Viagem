@@ -157,18 +157,7 @@ namespace CV.Business
         private void ValidarRegrasExclusaoGasto(Gasto itemGravar)
         {
         }
-        private void ValidarRegrasNegocioGastoCompra(GastoCompra itemGravar)
-        {
-            if (IsValid())
-            {
-
-                ValidateService(itemGravar.ItemGasto);
-
-            }
-        }
-        private void ValidarRegrasExclusaoGastoCompra(GastoCompra itemGravar)
-        {
-        }
+      
         private void ValidarRegrasNegocioGastoHotel(GastoHotel itemGravar)
         {
         }
@@ -515,25 +504,7 @@ namespace CV.Business
             }
         }
 
-        public void SalvarGastoCompra_Completo(GastoCompra itemGravar)
-        {
-            LimparValidacao();
-            ValidateService(itemGravar);
-            ValidarRegrasNegocioGastoCompra(itemGravar);
-            if (IsValid())
-            {
-                using (ViagemRepository data = new ViagemRepository())
-                {
-                    data.SalvarGastoCompra_Completo(itemGravar);
-                    Message msg = new Message();
-                    msg.Description = new List<string>(new string[] { MensagemBusiness.RetornaMensagens("Viagem_SalvarGastoCompra_OK") });
-                    ServiceResult resultado = new ServiceResult();
-                    resultado.Success = true;
-                    resultado.Messages.Add(msg);
-                    serviceResult.Add(resultado);
-                }
-            }
-        }
+       
         #endregion
 
         public List<Usuario> ListarUsuario(Expression<Func<Usuario, bool>> predicate)
@@ -646,8 +617,8 @@ namespace CV.Business
                 WebClient client = new WebClient();
                 // creates the post data for the POST request
                 System.Collections.Specialized.NameValueCollection values = new System.Collections.Specialized.NameValueCollection();
-                values.Add("client_id", "997990659234-nb4rfquq8l9aakikqhpmer7p1uq7gp4n.apps.googleusercontent.com");
-                values.Add("client_secret", "oDVFqpJmcur_crTGx1CHvRQ5");
+                values.Add("client_id", Business.Library.UtilitarioBusiness.Descriptografa(System.Configuration.ConfigurationManager.AppSettings["ClientId"]));
+                values.Add("client_secret", Business.Library.UtilitarioBusiness.Descriptografa(System.Configuration.ConfigurationManager.AppSettings["ClientSecret"]));
                 values.Add("refresh_token", ItemUsuario.RefreshToken);
                 values.Add("grant_type", "refresh_token");
 
@@ -679,11 +650,7 @@ namespace CV.Business
 
             WebClient client = new WebClient();
 
-
-            string TokenInformation = client.DownloadString("https://www.googleapis.com/oauth2/v2/userinfo?access_token=" + itemToken.access_token);
-            //string TokenInformation = System.Text.Encoding.UTF8.GetString(response);
-            var userinfo = JsonConvert.DeserializeObject<dynamic>(TokenInformation);
-            PocoLogin itemLogin = new PocoLogin() { EMail = userinfo.email, Nome = userinfo.name, Codigo = userinfo.id };
+             PocoLogin itemLogin = new PocoLogin() { EMail = itemToken.EMail, Nome = itemToken.Nome, Codigo = itemToken.CodigoGoogle };
             var ItemUsuario = ListarUsuario(d => d.Codigo == itemLogin.Codigo).FirstOrDefault();
             ItemUsuario = CadastrarUsuario(itemLogin, new ViagemBusiness(), ItemUsuario, itemToken.access_token, itemToken.refresh_token, Convert.ToInt32(itemToken.expires_in));
             //VerificarAlbum(ItemUsuario);
@@ -696,7 +663,6 @@ namespace CV.Business
             itemResultado.AuthenticationToken = Texto;
             itemResultado.Email = itemLogin.EMail;
             itemResultado.Nome = itemLogin.Nome;
-            itemResultado.LinkFoto = userinfo.picture;
             itemResultado.CodigoGoogle = itemLogin.Codigo;
             itemResultado.Codigo = ItemUsuario.Identificador.GetValueOrDefault();
             return itemResultado;
@@ -713,15 +679,15 @@ namespace CV.Business
 
             // creates the post data for the POST request
             System.Collections.Specialized.NameValueCollection values = new System.Collections.Specialized.NameValueCollection();
-            values.Add("client_id", "997990659234-nb4rfquq8l9aakikqhpmer7p1uq7gp4n.apps.googleusercontent.com");
-            values.Add("client_secret", "oDVFqpJmcur_crTGx1CHvRQ5");
+            values.Add("client_id", Business.Library.UtilitarioBusiness.Descriptografa(System.Configuration.ConfigurationManager.AppSettings["ClientId"]));
+            values.Add("client_secret", Business.Library.UtilitarioBusiness.Descriptografa(System.Configuration.ConfigurationManager.AppSettings["ClientSecret"]));
             values.Add("redirect_uri", "postmessage");
             values.Add("code", itemLogin.CodigoValidacao);
             values.Add("grant_type", "authorization_code");
 
             try
             {
-            byte[] response = client.UploadValues("https://www.googleapis.com/oauth2/v4/token", values);
+            byte[] response = client.UploadValues("https://oauth2.googleapis.com/token", values);
 
             string TokenInformation = System.Text.Encoding.UTF8.GetString(response);
 
@@ -1152,7 +1118,7 @@ namespace CV.Business
         {
             ResultadoOperacao itemResultado = new ResultadoOperacao();
             Viagem itemViagem = SelecionarViagem(IdentificadoViagem);
-            itemResultado.ItemRegistro = CadastrarNovaFoto(itemViagem, itemUsuario, itemFoto, false);
+            itemResultado.ItemRegistro = CadastrarNovaFoto(itemViagem, itemUsuario, itemFoto, itemFoto.Video);
             return itemResultado;
         }
 
@@ -1444,69 +1410,69 @@ namespace CV.Business
         {
             int? IdentificadorCidade = null;
 
-            if (latitude.GetValueOrDefault(0) != 0 && longitude.GetValueOrDefault(0) != 0)
-            {
-                try
-                {
-                    NoKeepAlivesWebClient client = new NoKeepAlivesWebClient();
-                    client.Encoding = System.Text.Encoding.UTF8;
-                    string LocationInformation = client.DownloadString("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude.GetValueOrDefault(0).ToString("F6", System.Globalization.CultureInfo.GetCultureInfo("en-Us")) + "," + longitude.GetValueOrDefault(0).ToString("F6", System.Globalization.CultureInfo.GetCultureInfo("en-Us")) + "&key=AIzaSyDrQ7UWqjZRnqcdVTdHwVEZHMJLtx3O_nA ");
+            //if (latitude.GetValueOrDefault(0) != 0 && longitude.GetValueOrDefault(0) != 0)
+            //{
+            //    try
+            //    {
+            //        NoKeepAlivesWebClient client = new NoKeepAlivesWebClient();
+            //        client.Encoding = System.Text.Encoding.UTF8;
+            //        string LocationInformation = client.DownloadString("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude.GetValueOrDefault(0).ToString("F6", System.Globalization.CultureInfo.GetCultureInfo("en-Us")) + "," + longitude.GetValueOrDefault(0).ToString("F6", System.Globalization.CultureInfo.GetCultureInfo("en-Us")) + "&key= ");
 
-                    var locationinfo = JsonConvert.DeserializeObject<dynamic>(LocationInformation);
-                    if (locationinfo.status == "OK")
-                    {
-                        string Cidade = null;
-                        string Estado = string.Empty;
-                        string Pais = null;
-                        string SiglaPais = null;
-                        var entries = ((Newtonsoft.Json.Linq.JArray)locationinfo.results);
-                        foreach (var itemResult in entries)
-                        {
+            //        var locationinfo = JsonConvert.DeserializeObject<dynamic>(LocationInformation);
+            //        if (locationinfo.status == "OK")
+            //        {
+            //            string Cidade = null;
+            //            string Estado = string.Empty;
+            //            string Pais = null;
+            //            string SiglaPais = null;
+            //            var entries = ((Newtonsoft.Json.Linq.JArray)locationinfo.results);
+            //            foreach (var itemResult in entries)
+            //            {
 
-                            if (itemResult["types"].ToString().IndexOf("administrative_area_level_2", StringComparison.InvariantCultureIgnoreCase) >= 0
-                                || itemResult["types"].ToString().IndexOf("locality", StringComparison.InvariantCultureIgnoreCase) >= 0)
-                            {
-                                Cidade = itemResult["address_components"][0]["long_name"].ToString();
-                            }
-                            if (itemResult["types"].ToString().IndexOf("administrative_area_level_1", StringComparison.InvariantCultureIgnoreCase) >= 0)
-                            {
-                                Estado = itemResult["address_components"][0]["long_name"].ToString();
-                            }
-                            if (itemResult["types"].ToString().IndexOf("country", StringComparison.InvariantCultureIgnoreCase) >= 0)
-                            {
-                                Pais = itemResult["address_components"][0]["long_name"].ToString();
-                                SiglaPais = itemResult["address_components"][0]["short_name"].ToString();
-                            }
-                        }
-                        if (!string.IsNullOrEmpty(Cidade) && !string.IsNullOrEmpty(Pais))
-                        {
-                            Pais itemPais = ListarPais(d => d.Nome == Pais).FirstOrDefault();
-                            if (itemPais == null)
-                            {
-                                itemPais = new Model.Pais();
-                                itemPais.Nome = Pais;
-                                itemPais.Sigla = SiglaPais;
-                                SalvarPais(itemPais);
-                            }
-                            Cidade itemCidade = ListarCidade(d => d.IdentificadorPais == itemPais.Identificador && d.Nome == Cidade && d.Estado == Estado).FirstOrDefault();
-                            if (itemCidade == null)
-                            {
-                                itemCidade = new Model.Cidade();
-                                itemCidade.IdentificadorPais = itemPais.Identificador;
-                                itemCidade.Nome = Cidade;
-                                itemCidade.Estado = Estado;
-                                SalvarCidade(itemCidade);
-                            }
-                            IdentificadorCidade = itemCidade.Identificador;
+            //                if (itemResult["types"].ToString().IndexOf("administrative_area_level_2", StringComparison.InvariantCultureIgnoreCase) >= 0
+            //                    || itemResult["types"].ToString().IndexOf("locality", StringComparison.InvariantCultureIgnoreCase) >= 0)
+            //                {
+            //                    Cidade = itemResult["address_components"][0]["long_name"].ToString();
+            //                }
+            //                if (itemResult["types"].ToString().IndexOf("administrative_area_level_1", StringComparison.InvariantCultureIgnoreCase) >= 0)
+            //                {
+            //                    Estado = itemResult["address_components"][0]["long_name"].ToString();
+            //                }
+            //                if (itemResult["types"].ToString().IndexOf("country", StringComparison.InvariantCultureIgnoreCase) >= 0)
+            //                {
+            //                    Pais = itemResult["address_components"][0]["long_name"].ToString();
+            //                    SiglaPais = itemResult["address_components"][0]["short_name"].ToString();
+            //                }
+            //            }
+            //            if (!string.IsNullOrEmpty(Cidade) && !string.IsNullOrEmpty(Pais))
+            //            {
+            //                Pais itemPais = ListarPais(d => d.Nome == Pais).FirstOrDefault();
+            //                if (itemPais == null)
+            //                {
+            //                    itemPais = new Model.Pais();
+            //                    itemPais.Nome = Pais;
+            //                    itemPais.Sigla = SiglaPais;
+            //                    SalvarPais(itemPais);
+            //                }
+            //                Cidade itemCidade = ListarCidade(d => d.IdentificadorPais == itemPais.Identificador && d.Nome == Cidade && d.Estado == Estado).FirstOrDefault();
+            //                if (itemCidade == null)
+            //                {
+            //                    itemCidade = new Model.Cidade();
+            //                    itemCidade.IdentificadorPais = itemPais.Identificador;
+            //                    itemCidade.Nome = Cidade;
+            //                    itemCidade.Estado = Estado;
+            //                    SalvarCidade(itemCidade);
+            //                }
+            //                IdentificadorCidade = itemCidade.Identificador;
 
-                        }
-                    }
-                }
-                catch (Exception)
-                {
+            //            }
+            //        }
+            //    }
+            //    catch (Exception)
+            //    {
 
-                }
-            }
+            //    }
+            //}
             return IdentificadorCidade;
         }
 
@@ -1759,13 +1725,7 @@ namespace CV.Business
             }
         }
 
-        public List<Loja> ListarLoja(Expression<Func<Loja, bool>> predicate)
-        {
-            using (ViagemRepository repositorio = new ViagemRepository())
-            {
-                return repositorio.ListarLoja(predicate);
-            }
-        }
+      
 
         public List<Carro> ListarCarro(Expression<Func<Carro, bool>> predicate)
         {
@@ -1783,22 +1743,7 @@ namespace CV.Business
             }
         }
 
-        public List<GastoCompra> ListarGastoCompra(int? IdentificadorViagem, int? IdentificadorUsuario, Expression<Func<GastoCompra, bool>> predicate)
-        {
-            using (ViagemRepository repositorio = new ViagemRepository())
-            {
-                return repositorio.ListarGastoCompra(IdentificadorViagem,IdentificadorUsuario, predicate);
-            }
-        }
-
-        public List<GastoCompra> ListarGastoCompra( Expression<Func<GastoCompra, bool>> predicate)
-        {
-            using (ViagemRepository repositorio = new ViagemRepository())
-            {
-                return repositorio.ListarGastoCompra( predicate);
-            }
-        }
-
+        
 
         public List<ReabastecimentoGasto> ListarReabastecimentoGastos(Expression<Func<ReabastecimentoGasto, bool>> predicate)
         {
@@ -1830,13 +1775,7 @@ namespace CV.Business
             }
         }
 
-        public List<ItemCompra> ListarItemCompra(int? IdentificadorViagem, Expression<Func<ItemCompra, bool>> predicate)
-        {
-            using (ViagemRepository repositorio = new ViagemRepository())
-            {
-                return repositorio.ListarItemCompra(IdentificadorViagem, predicate);
-            }
-        }
+       
 
 
         public List<AluguelGasto> ListarAluguelGasto(int? IdentificadorViagem, Expression<Func<AluguelGasto, bool>> predicate)
@@ -2091,29 +2030,18 @@ namespace CV.Business
         public List<DeParaIdentificador> SincronizarDados(ClasseSincronizacao itemDados, int identificadorUsuario, int? identificadorViagem)
         {
             List<DeParaIdentificador> listaResultado = new List<DeParaIdentificador>();
-            SincronizarCotacoes(itemDados, identificadorViagem, listaResultado);
-            SincronizarListaCompra(itemDados, identificadorViagem, listaResultado);
-            SincronizarCalendariosPrevistos(itemDados, identificadorViagem, listaResultado);
             SincronizarComentarios(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
-            SincronizarSugestoes(itemDados, identificadorViagem, listaResultado);
             SincronizarAporteDinheiro(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
             SincronizarAtracoes(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
             SincronizarRefeicoes(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
-            SincronizarLojas(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
             SincronizarHoteis(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
-            SincronizarCarros(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
             SincronizarViagemAereas(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
-            SincronizarCarroDeslocamento(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
-            SincronizarReabastecimentos(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
             SincronizarHotelEvento(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
-            SincronizarGastoCompra(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
-            SincronizarItemCompra(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
             SincronizarGasto(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
             SincronizarGastoAtracao(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
             SincronizarGastoHotel(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
             SincronizarGastoRefeicao(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
             SincronizarGastoViagemAerea(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
-            SincronizarGastoCarro(itemDados, identificadorUsuario, identificadorViagem, listaResultado);
             SincronizarPosicoes(itemDados, identificadorUsuario, identificadorViagem);
             return listaResultado;
         }
@@ -2185,8 +2113,6 @@ namespace CV.Business
             foreach (var item in itemDados.GastosHotel)
             {
                 var itemBase = SelecionarGastoHotel(item.Identificador);
-                if (itemBase != null &&  itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
-                    continue;
                 if (item.DataExclusao.HasValue)
                 {
                     item.DataExclusao = DateTime.Now.ToUniversalTime();
@@ -2229,9 +2155,7 @@ namespace CV.Business
             foreach (var item in itemDados.GastosDeslocamento)
             {
                 var itemBase = SelecionarGastoViagemAerea(item.Identificador);
-                if (itemBase != null &&  itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
-                    continue;
-                if (item.DataExclusao.HasValue)
+               if (item.DataExclusao.HasValue)
                 {
                     item.DataExclusao = DateTime.Now.ToUniversalTime();
                 }
@@ -2273,8 +2197,6 @@ namespace CV.Business
             foreach (var item in itemDados.GastosRefeicao)
             {
                 var itemBase = SelecionarGastoRefeicao(item.Identificador);
-                if (itemBase != null &&  itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
-                    continue;
                 if (item.DataExclusao.HasValue)
                 {
                     item.DataExclusao = DateTime.Now.ToUniversalTime();
@@ -2317,8 +2239,6 @@ namespace CV.Business
             foreach (var item in itemDados.GastosAtracao)
             {
                 var itemBase = SelecionarGastoAtracao(item.Identificador);
-                if (itemBase != null &&  itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
-                    continue;
                 if (item.DataExclusao.HasValue)
                 {
                     item.DataExclusao = DateTime.Now.ToUniversalTime();
@@ -2360,10 +2280,7 @@ namespace CV.Business
             foreach (var itemGasto in itemDados.Gastos)
             {
                 var itemBase = SelecionarGasto(itemGasto.Identificador);
-                if (itemBase != null && itemBase.DataAtualizacao > itemGasto.DataAtualizacao || itemGasto.DataExclusao.HasValue)
-                    continue;
                 itemGasto.Reabastecimentos = new List<ReabastecimentoGasto>();
-                itemGasto.Compras = new List<GastoCompra>();
                 if (itemGasto.DataExclusao.HasValue)
                 {
                     itemGasto.DataExclusao = DateTime.Now.ToUniversalTime();
@@ -2382,9 +2299,6 @@ namespace CV.Business
 
 
                
-                itemGasto.Compras = ListarGastoCompra(d => d.IdentificadorGasto == itemGasto.Identificador);
-                itemGasto.Reabastecimentos = ListarReabastecimentoGastos(d => d.IdentificadorGasto == itemGasto.Identificador);
-
                 itemGasto.DataAtualizacao = DateTime.Now.ToUniversalTime();
                 DeParaIdentificador itemDePara = new DeParaIdentificador();
                 itemDePara.IdentificadorOrigem = itemGasto.Identificador;
@@ -2392,18 +2306,6 @@ namespace CV.Business
                 if (itemGasto.Identificador < 0)
                     itemGasto.Identificador = null;
 
-                foreach (var item in itemGasto.Alugueis.Where(d => !d.DataExclusao.HasValue))
-                {
-                    item.IdentificadorGasto = itemGasto.Identificador;
-                    item.DataAtualizacao = DateTime.Now.ToUniversalTime();
-                    if (item.IdentificadorCarro.HasValue && item.IdentificadorCarro < 0)
-                    {
-                        var ItemNovoCodigo = listaResultado.Where(d => d.IdentificadorOrigem == item.IdentificadorCarro && d.TipoObjeto == "C").FirstOrDefault();
-                        if (ItemNovoCodigo != null)
-                            item.IdentificadorCarro = ItemNovoCodigo.IdentificadorDetino;
-
-                    }
-                }
                 foreach (var item in itemGasto.Atracoes.Where(d => !d.DataExclusao.HasValue))
                 {
                     item.IdentificadorGasto = itemGasto.Identificador;
@@ -2470,12 +2372,7 @@ namespace CV.Business
                 listaResultado.Add(itemDePara);
 
                 var itemGastoBase = SelecionarGasto_Completo(itemGasto.Identificador);
-                foreach (var item in itemGastoBase.Alugueis.Where(d=>!d.DataExclusao.HasValue))
-                {
-                    var itemBaseTipo = itemGastoBase.Alugueis.Where(d => !d.DataExclusao.HasValue).Where(d => d.IdentificadorCarro == item.IdentificadorCarro).FirstOrDefault();
-                    if (itemBaseTipo != null)
-                        listaResultado.Add(new DeParaIdentificador() { IdentificadorDetino = itemBaseTipo.Identificador, IdentificadorOrigem = item.Identificador, TipoObjeto = "GC" });
-                }
+       
                 foreach (var item in itemGastoBase.Atracoes.Where(d => !d.DataExclusao.HasValue))
                 {
                     var itemBaseTipo = itemGastoBase.Atracoes.Where(d => !d.DataExclusao.HasValue).Where(d => d.IdentificadorAtracao == item.IdentificadorAtracao).FirstOrDefault();
@@ -2554,62 +2451,13 @@ namespace CV.Business
 
         }
 
-        private void SincronizarGastoCompra(ClasseSincronizacao itemDados, int identificadorUsuario, int? identificadorViagem, List<DeParaIdentificador> listaResultado)
-        {
-            foreach (var item in itemDados.Compras)
-            {
-                var itemBase = SelecionarGastoCompra(item.Identificador);
-                if (itemBase != null &&  itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
-                    continue;
-                if (item.DataExclusao.HasValue)
-                {
-                    item.DataExclusao = DateTime.Now.ToUniversalTime();
-                    item.ItemGasto.DataExclusao = DateTime.Now.ToUniversalTime();
-                    item.ItemGasto.Usuarios = new List<GastoDividido>();
-                }
-
-                if (item.IdentificadorLoja.HasValue && item.IdentificadorLoja < 0)
-                {
-                    var ItemNovoCodigo = listaResultado.Where(d => d.IdentificadorOrigem == item.IdentificadorLoja && d.TipoObjeto == "L").FirstOrDefault();
-                    if (ItemNovoCodigo != null)
-                        item.IdentificadorLoja = ItemNovoCodigo.IdentificadorDetino;
-
-                }
-                item.DataAtualizacao = DateTime.Now.ToUniversalTime();
-                item.ItemGasto.DataAtualizacao = DateTime.Now.ToUniversalTime();
-                DeParaIdentificador itemDePara = new DeParaIdentificador();
-                itemDePara.IdentificadorOrigem = item.Identificador;
-                itemDePara.TipoObjeto = "GL";
-                if (item.Identificador < 0)
-                    item.Identificador = null;
-                DeParaIdentificador itemDeParaGasto = new DeParaIdentificador();
-                itemDeParaGasto.IdentificadorOrigem = item.Identificador;
-                itemDeParaGasto.TipoObjeto = "G";
-                if (item.ItemGasto.Identificador < 0)
-                    item.ItemGasto.Identificador = null;
-
-
-
-                SalvarGastoCompra_Completo(item);
-
-                itemDePara.IdentificadorDetino = item.Identificador;
-                listaResultado.Add(itemDePara);
-
-                GastoCompra itemAtualizado = SelecionarGastoCompra(item.Identificador);
-                itemDeParaGasto.IdentificadorDetino = itemAtualizado.IdentificadorGasto;
-                listaResultado.Add(itemDeParaGasto);
-
-            }
-
-        }
+        
 
         private void SincronizarHotelEvento(ClasseSincronizacao itemDados, int identificadorUsuario, int? identificadorViagem, List<DeParaIdentificador> listaResultado)
         {
             foreach (var item in itemDados.EventosHotel)
             {
                 var itemBase = SelecionarHotelEvento(item.Identificador);
-                if (itemBase != null &&  itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
-                    continue;
                 if (item.DataExclusao.HasValue)
                 {
                     item.DataExclusao = DateTime.Now.ToUniversalTime();
@@ -2790,8 +2638,6 @@ namespace CV.Business
             foreach (var item in itemDados.Deslocamentos)
             {
                 var itemBase = SelecionarViagemAerea(item.Identificador);
-                if (itemBase != null && itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
-                    continue;
                   if (item.DataExclusao.HasValue)
                 {
                     item.DataExclusao = DateTime.Now.ToUniversalTime();
@@ -2925,8 +2771,6 @@ namespace CV.Business
             foreach (var item in itemDados.Hoteis)
             {
                 var itemBase = SelecionarHotel(item.Identificador);
-                if (itemBase != null && itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
-                    continue;
                 if (item.DataExclusao.HasValue)
                 {
                     item.DataExclusao = DateTime.Now.ToUniversalTime();
@@ -3022,8 +2866,6 @@ namespace CV.Business
             foreach (var item in itemDados.Refeicoes)
             {
                 var itemBase = SelecionarRefeicao(item.Identificador);
-                if (itemBase != null &&  itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
-                    continue;
   
                 if (item.DataExclusao.HasValue)
                 {
@@ -3078,8 +2920,7 @@ namespace CV.Business
             foreach (var item in itemDados.Atracoes)
             {
                 var itemBase = SelecionarAtracao(item.Identificador);
-                if (itemBase != null &&  itemBase.DataAtualizacao > item.DataAtualizacao || item.DataExclusao.HasValue)
-                    continue;
+               
 
                 if (item.DataExclusao.HasValue)
                 {
@@ -3145,9 +2986,7 @@ namespace CV.Business
             foreach (var itemAporteDinheiro in itemDados.AportesDinheiro)
             {
                 var itemAporteBase = SelecionarAporteDinheiro(itemAporteDinheiro.Identificador);
-                if (itemAporteBase != null &&  itemAporteBase.DataAtualizacao > itemAporteDinheiro.DataAtualizacao || itemAporteDinheiro.DataExclusao.HasValue)
-                    continue;
-
+              
                 if (itemAporteDinheiro.DataExclusao.HasValue)
                     itemAporteDinheiro.DataExclusao = DateTime.Now.ToUniversalTime();
                 itemAporteDinheiro.IdentificadorViagem = identificadorViagem;
@@ -3261,8 +3100,7 @@ namespace CV.Business
             foreach (var itemCP in itemDados.Comentarios)
             {
                 var itemAporteBase = SelecionarComentario( itemCP.Identificador);
-                if (itemAporteBase != null && itemAporteBase.DataAtualizacao > itemCP.DataAtualizacao || itemCP.DataExclusao.HasValue)
-                    continue;
+               
                 if (itemCP.DataExclusao.HasValue)
                     itemCP.DataExclusao = DateTime.Now.ToUniversalTime();
                 itemCP.IdentificadorViagem = identificadorViagem;

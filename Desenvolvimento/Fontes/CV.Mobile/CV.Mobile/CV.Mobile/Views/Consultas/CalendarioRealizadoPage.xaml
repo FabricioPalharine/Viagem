@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.Consultas.CalendarioRealizadoPage"
+            xmlns:viewModelBase="clr-namespace:CV.Mobile.ViewModels.Base"
+             xmlns:helper="clr-namespace:CV.Mobile.Helper"
+             viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+             x:Name="ListagemPage"      
+             Title="Calendário"
+             xmlns:behaviors="clr-namespace:CV.Mobile.Behaviors"
+             xmlns:controls="clr-namespace:Xamarin.Plugin.Calendar.Controls;assembly=Xamarin.Plugin.Calendar">
+    <ContentPage.Behaviors>
+        <behaviors:PageEventToCommandBehavior
+							EventName="Appearing"
+							Command="{Binding PageAppearingCommand}" />
+    </ContentPage.Behaviors>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem   Command="{Binding FiltrarCommand}" >
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="{Static helper:IconFont.Filter}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <controls:Calendar x:Name="Calendario" Culture="{Binding Cultura}"
+        Events="{Binding Eventos}" >
+                <controls:Calendar.EventTemplate>
+                    <DataTemplate>
+                        <StackLayout
+                Padding="15,0,0,0">
+                            <Label
+                    Text="{Binding Titulo}"
+                    FontAttributes="Bold"
+                    FontSize="Medium" />
+                            <Label
+                    Text="{Binding Nome}"
+                    FontSize="Small"
+                    LineBreakMode="WordWrap" />
+                            <StackLayout Orientation="Horizontal">
+                                <Label FontSize="Small" Text="{Binding DataInicio, StringFormat='{0:HH:mm}'}"></Label>
+                                <Label FontSize="Small" Text="{Binding DataFim, StringFormat=' - {0:HH:mm}'}" IsVisible="{Binding DataFimVisivel}"></Label>
+                            </StackLayout>
+                            <Label
+                    Text="{Binding Complemento}"
+                    FontSize="Small"
+                    LineBreakMode="WordWrap" IsVisible="{Binding Complemento, Converter={StaticResource StringNullOrEmptyBoolConverter}}" />
+                            
+                        </StackLayout>
+                        
+                    </DataTemplate>
+                </controls:Calendar.EventTemplate>
+            </controls:Calendar>
+
+            <ActivityIndicator 
+            Grid.Row="0"
+            Grid.RowSpan="1"
+            Color="{StaticResource SpinnerColor}"
+            IsRunning="{Binding IsBusy}"  
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Center"
+            HorizontalOptions="Center">
+                <ActivityIndicator.WidthRequest>
+                    <OnPlatform x:TypeArguments="x:Double">
+                        <On Platform="iOS, Android" Value="100" />
+                    </OnPlatform>
+                </ActivityIndicator.WidthRequest>
+            </ActivityIndicator>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

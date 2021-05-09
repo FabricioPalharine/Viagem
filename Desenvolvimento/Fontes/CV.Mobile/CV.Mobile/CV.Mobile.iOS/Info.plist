@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>UIDeviceFamily</key>
+	<array>
+		<integer>1</integer>
+		<integer>2</integer>
+	</array>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>MinimumOSVersion</key>
+	<string>8.0</string>
+	<key>CFBundleDisplayName</key>
+	<string>CV.Mobile</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.palharine.cv.mobile</string>
+	<key>CFBundleVersion</key>
+	<string>1.0</string>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>CFBundleName</key>
+	<string>CV.Mobile</string>
+	<key>XSAppIconAssets</key>
+	<string>Assets.xcassets/AppIcon.appiconset</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>Xamarin.Auth Google PAuth</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.997990659234-nf8a2ob032qi7v5nb9je3bhcg58g190q</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+		</dict>
+	</array>
+  <key>NSLocationWhenInUseUsageDescription</key>
+  <string>Favor liberar a utilização do GPS para marcarmos sua posição nos eventos</string>
+  <key>NSCameraUsageDescription</key>
+  <string>Favor liberar o uso da câmera para podermos tirar suas fotos</string>
+  <key>NSMicrophoneUsageDescription</key>
+  <string>Favor liberar o uso da câmera para podermos gravar seus vídeos</string>
+  <key>NSPhotoLibraryAddUsageDescription</key>
+  <string>Favor libera o aplicativo para gravarmos as suas mídias na galeria.</string>
+  <key>NSPhotoLibraryUsageDescription</key>
+  <string>Favor libera o aplicativo para acessarmos as suas mídias na galeria.</string>
+  
+</dict>
+</plist>

@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.Consultas.ConsultaFotoDetalhePage"
+             xmlns:viewModelBase="clr-namespace:CV.Mobile.ViewModels.Base"
+             viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+              xmlns:behaviors="clr-namespace:CV.Mobile.Behaviors"
+              xmlns:mm="clr-namespace:MediaManager.Forms;assembly=MediaManager.Forms"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+              xmlns:pinch="clr-namespace:Xamarin.Forms.PinchZoomImage;assembly=Xamarin.Forms.PinchZoomImage" 
+             ios:Page.UseSafeArea="true">
+    <ContentPage.Behaviors>
+        <behaviors:PageEventToCommandBehavior
+							EventName="Disappearing"
+							Command="{Binding PageDisappearingCommand}" />
+    </ContentPage.Behaviors>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+
+            </Grid.RowDefinitions>
+
+            <Grid IsVisible="{Binding Video}" Grid.Row="0" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <mm:VideoView Grid.Row="0" VerticalOptions="FillAndExpand" Source="{Binding VideoSource}" ShowControls="True" />
+            </Grid>
+            <Grid IsVisible="{Binding Video, Converter={StaticResource InverseBoolConverter}}" Grid.Row="0" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions >
+                
+                <pinch:PinchZoom  Grid.Row="0" VerticalOptions="Fill" HorizontalOptions="Fill">
+                    <pinch:PinchZoom.Content>             
+                        <ffimageloading:CachedImage HorizontalOptions="Center" VerticalOptions="Center"		
+	
+			Source="{Binding URL}">
+                        </ffimageloading:CachedImage>
+                    </pinch:PinchZoom.Content>
+                </pinch:PinchZoom>
+            </Grid>
+
+
+            <StackLayout Grid.Row="1" IsVisible="{Binding Comentario, Converter={StaticResource StringNullOrEmptyBoolConverter}}">
+                <StackLayout Spacing="1">
+                    <Label  Text="{Binding Comentario}"  />
+                </StackLayout>
+
+            </StackLayout>
+           
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

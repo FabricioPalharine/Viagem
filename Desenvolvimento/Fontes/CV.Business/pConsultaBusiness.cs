@@ -181,15 +181,7 @@ namespace CV.Business
             }
         }
 
-        public LocaisVisitados CarregarDetalhesLoja(int? IdentificadorViagem, DateTime? DataDe, DateTime? DataAte, string Nome, string CodigoGoogle)
-        {
-            LocaisVisitados itemRetorno = new LocaisVisitados();
-            using (ConsultaRepository data = new ConsultaRepository())
-            {
-                itemRetorno.Gastos = data.ConsultarComprasLoja(IdentificadorViagem, DataDe, DataAte, Nome, CodigoGoogle);
-            }
-            return itemRetorno;
-        }
+
 
         public List<PontoMapa> ListarPontosViagem(int? IdentificadorViagem, int? IdentificadorUsuario, DateTime? DataDe, DateTime? DataAte, string Tipo, int IdentificadorUsuarioLogado)
         {
@@ -251,7 +243,8 @@ namespace CV.Business
                 {
                     ResumoViagem itemResumo = new ResumoViagem();
                     var ListaIntervaloDeslocamento = data.CarregarResumoViagemAerea(itemResumo, IdentificadorViagem, IdentificadorUsuario, DataDe, DataAte);
-                    var ListaIntervaloCarro = data.CarregarResumoCarro(itemResumo, IdentificadorViagem, IdentificadorUsuario, DataDe, DataAte);
+                    var ListaIntervaloAtracao = data.CarregarResumoAtracao(itemResumo, IdentificadorViagem, IdentificadorUsuario, DataDe, DataAte);
+
                     var ListaPosicoes = data.ListarPosicao(IdentificadorViagem, IdentificadorUsuario, DataDe, DataAte);
                     Posicao itemPosicaoAnterior = null;
                     LinhaMapa itemLinha = new LinhaMapa();
@@ -272,7 +265,8 @@ namespace CV.Business
                                 lista.Add(itemLinha);
                             }
 
-                            if (!ListaIntervaloDeslocamento.Union(ListaIntervaloCarro).Where(d => d.Partida <= itemPosicao.DataLocal && d.Chegada >= itemPosicao.DataLocal).Any())
+                            if (!ListaIntervaloDeslocamento.Where(d => d.Partida <= itemPosicao.DataLocal && d.Chegada >= itemPosicao.DataLocal).Any() &&
+                                !ListaIntervaloAtracao.Where(d => d.Partida <= itemPosicao.DataLocal && d.Chegada >= itemPosicao.DataLocal).Any())
                             {
                                 if (itemLinha.Tipo != "N")
                                 {
@@ -283,17 +277,7 @@ namespace CV.Business
                                     lista.Add(itemLinha);
                                 }
                             }
-                            else if (ListaIntervaloCarro.Where(d => d.Partida <= itemPosicao.DataLocal && d.Chegada >= itemPosicao.DataLocal).Any())
-                            {
-                                if (itemLinha.Tipo != "C")
-                                {
-                                    itemLinha.Pontos.Add(new PontoMapa() { Latitude = itemPosicao.Latitude, Longitude = itemPosicao.Longitude });
-                                    itemLinha = new LinhaMapa();
-                                    itemLinha.Tipo = "C";
-                                    itemLinha.Pontos = new List<PontoMapa>();
-                                    lista.Add(itemLinha);
-                                }
-                            }
+
                             else if (ListaIntervaloDeslocamento.Where(d => d.Partida <= itemPosicao.DataLocal && d.Chegada >= itemPosicao.DataLocal).Any())
                             {
 
@@ -307,11 +291,23 @@ namespace CV.Business
                                     lista.Add(itemLinha);
                                 }
                             }
+                            else if (ListaIntervaloAtracao.Where(d => d.Partida <= itemPosicao.DataLocal && d.Chegada >= itemPosicao.DataLocal).Any())
+                            {
+
+                                if (itemLinha.Tipo != "A")
+                                {
+                                    itemLinha.Pontos.Add(new PontoMapa() { Latitude = itemPosicao.Latitude, Longitude = itemPosicao.Longitude });
+
+                                    itemLinha = new LinhaMapa();
+                                    itemLinha.Tipo = "A";
+                                    itemLinha.Pontos = new List<PontoMapa>();
+                                    lista.Add(itemLinha);
+                                }
+                            }
                         };
-                        if (itemPosicao.Velocidade != 0)
-                        {
-                            itemLinha.Pontos.Add(new PontoMapa() { Latitude = itemPosicao.Latitude, Longitude = itemPosicao.Longitude });
-                        }
+
+                        itemLinha.Pontos.Add(new PontoMapa() { Latitude = itemPosicao.Latitude, Longitude = itemPosicao.Longitude });
+
                         itemPosicaoAnterior = itemPosicao;
 
                     }
@@ -334,56 +330,43 @@ namespace CV.Business
             ResumoViagem itemResumo = new ResumoViagem();
             using (ConsultaRepository data = new ConsultaRepository())
             {
-                data.CarregarResumoAtracao(itemResumo, IdentificadorViagem, IdentificadorUsuario, DataDe, DataAte);
+                var ListaIntervaloAtracao = data.CarregarResumoAtracao(itemResumo, IdentificadorViagem, IdentificadorUsuario, DataDe, DataAte);
                 data.CarregarResumoHotel(itemResumo, IdentificadorViagem, IdentificadorUsuario, DataDe, DataAte);
                 data.CarregarResumoRefeicao(itemResumo, IdentificadorViagem, IdentificadorUsuario, DataDe, DataAte);
                 data.CarregarResumoCompra(itemResumo, IdentificadorViagem, IdentificadorUsuario, DataDe, DataAte);
                 data.CarregarResumoDiversos(itemResumo, IdentificadorViagem, IdentificadorUsuario, DataDe, DataAte);
                 var ListaIntervaloDeslocamento = data.CarregarResumoViagemAerea(itemResumo, IdentificadorViagem, IdentificadorUsuario, DataDe, DataAte);
-                var ListaIntervaloCarro = data.CarregarResumoCarro(itemResumo, IdentificadorViagem, IdentificadorUsuario, DataDe, DataAte);
                 var ListaPosicoes = data.ListarPosicao(IdentificadorViagem, IdentificadorUsuario, DataDe, DataAte);
                 itemResumo.KmDeslocamento = 0;
                 itemResumo.KmTotaisDeslocados = 0;
                 itemResumo.KmCaminhados = 0;
                 Posicao itemPosicaoAnterior = null;
-                int DistanciaCarro = 0;
 
-                bool Deslocando = false;
-                foreach (var itemPosicao in ListaPosicoes.OrderBy(d => d.DataLocal))
+
+                foreach (var itemPosicao in ListaPosicoes.OrderBy(d => d.DataGMT))
                 {
                     if (itemPosicaoAnterior != null)
                     {
                         int DistanciaPontos = Convert.ToInt32(CalcularDistanciaPontos(itemPosicao, itemPosicaoAnterior));
                         itemResumo.KmTotaisDeslocados += DistanciaPontos;
-                        if (!ListaIntervaloDeslocamento.Union(ListaIntervaloCarro).Where(d => d.Partida <= itemPosicao.DataLocal && d.Chegada >= itemPosicao.DataLocal).Any())
+                        if (!ListaIntervaloDeslocamento
+                            .Where(d => d.Partida <= itemPosicao.DataLocal && d.Chegada >= itemPosicao.DataLocal).Any()
+                            &&
+                            !ListaIntervaloAtracao
+                            .Where(d => d.Partida <= itemPosicao.DataLocal && d.Chegada >= itemPosicao.DataLocal).Any())
                         {
-                            if (Deslocando)
-                            {
-                                Deslocando = false;
-                                itemResumo.KmDeslocamento += DistanciaPontos;
-                            }
-                            if (itemPosicao.Velocidade < 5 && itemPosicao.Velocidade > 0 && itemPosicao.DataLocal.GetValueOrDefault().Subtract(itemPosicaoAnterior.DataLocal.GetValueOrDefault()).TotalSeconds < 120)
-                                itemResumo.KmCaminhados += DistanciaPontos;
-                            if (itemPosicao.Velocidade == 0)
-                                itemResumo.KmTotaisDeslocados -= DistanciaPontos;
-                        }
-                        else if (ListaIntervaloCarro.Where(d => d.Partida <= itemPosicao.DataLocal && d.Chegada >= itemPosicao.DataLocal).Any())
-                        {
-                            DistanciaCarro += DistanciaPontos;
-                            if (itemPosicao.Velocidade == 0)
-                                itemResumo.KmTotaisDeslocados -= DistanciaPontos;
-                        }
-                        else if (ListaIntervaloDeslocamento.Where(d => d.Partida <= itemPosicao.DataLocal && d.Chegada >= itemPosicao.DataLocal).Any())
-                        {
-                            Deslocando = true;
-                            itemResumo.KmDeslocamento += DistanciaPontos;
 
+                            itemResumo.KmCaminhados += DistanciaPontos;
                         }
+
+
                     }
                     itemPosicaoAnterior = itemPosicao;
                 }
                 itemResumo.KmTotaisDeslocados /= 1000;
                 itemResumo.KmCaminhados /= 1000;
+                itemResumo.KmAtracoes /= 1000;
+                itemResumo.KmDeslocamento /= 1000;
                 //foreach (var intervaloDeslocamento in ListaIntervaloDeslocamento)
                 //{
                 //    var PosicaoAnterior = ListaPosicoes.Where(d => d.DataLocal <= intervaloDeslocamento.Partida).OrderByDescending(d => d.DataLocal).FirstOrDefault();
@@ -450,7 +433,7 @@ namespace CV.Business
         {
             using (ConsultaRepository data = new ConsultaRepository())
             {
-                return data.ListarAvaliacoesRankings(IdentificadorViagem, IdentificadorUsuario, ApenasAmigos, IdentificadorAmigo, Tipo,  CodigoGoogle, Nome);
+                return data.ListarAvaliacoesRankings(IdentificadorViagem, IdentificadorUsuario, ApenasAmigos, IdentificadorAmigo, Tipo, CodigoGoogle, Nome);
             }
         }
     }

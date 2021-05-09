@@ -838,70 +838,7 @@ namespace CV.Data
             Context.Entry<Gasto>(itemExcluir).State = EntityState.Deleted;
             Context.SaveChanges();
         }
-        public GastoCompra SelecionarGastoCompra(int? Identificador)
-        {
-            IQueryable<GastoCompra> query = Context.GastoCompras
-.Include("ItemGasto").Include("ItemGasto.Usuarios").Include("ItemGasto.ItemUsuario").Include("ItensComprados").Include("ItensComprados.ItemUsuario").Include("ItensComprados.Fotos").Include("ItensComprados.Fotos.ItemFoto");
-            if (Identificador.HasValue)
-                query = query.Where(d => d.Identificador == Identificador);
-            return query.FirstOrDefault();
-        }
-        public IList<GastoCompra> ListarGastoCompra()
-        {
-            IQueryable<GastoCompra> query = Context.GastoCompras
-;
-            return query.ToList();
-        }
-        public void SalvarGastoCompra(GastoCompra itemGravar)
-        {
-            GastoCompra itemBase = Context.GastoCompras
-.Include("ItemGasto").Include("ItemGasto.Usuarios").Where(f => f.Identificador == itemGravar.Identificador).FirstOrDefault();
-            if (itemBase == null)
-            {
-                itemBase = Context.GastoCompras.Create();
-                Context.Entry<GastoCompra>(itemBase).State = System.Data.Entity.EntityState.Added;
-            }
-            AtualizarPropriedades<GastoCompra>(itemBase, itemGravar);
-            Gasto itemGasto = itemGravar.ItemGasto;
-            Gasto itemBaseGasto = null;
-            if (itemGasto != null)
-            {
-                itemBaseGasto = Context.Gastos.Where(f => f.Identificador == itemGasto.Identificador).FirstOrDefault();
-                if (itemBaseGasto == null)
-                {
-                    itemBaseGasto = Context.Gastos.Create();
-                    Context.Entry<Gasto>(itemBaseGasto).State = System.Data.Entity.EntityState.Added;
-                }
-                AtualizarPropriedades<Gasto>(itemBaseGasto, itemGasto);
-                itemBase.ItemGasto = itemBaseGasto;
-                foreach (GastoDividido itemGastoDividido in new List<GastoDividido>(itemBaseGasto.Usuarios))
-                {
-                    if (!itemGasto.Usuarios.Where(f => f.Identificador == itemGastoDividido.Identificador).Any())
-                    {
-                        Context.Entry<GastoDividido>(itemGastoDividido).State = EntityState.Deleted;
-                    }
-                }
-                foreach (GastoDividido itemGastoDividido in new List<GastoDividido>(itemGasto.Usuarios))
-                {
-                    GastoDividido itemBaseGastoDividido = !itemGastoDividido.Identificador.HasValue ? null : itemBaseGasto.Usuarios.Where(f => f.Identificador == itemGastoDividido.Identificador).FirstOrDefault();
-                    if (itemBaseGastoDividido == null)
-                    {
-                        itemBaseGastoDividido = Context.GastoDivididos.Create();
-                        itemBaseGasto.Usuarios.Add(itemBaseGastoDividido);
-                    }
-                    AtualizarPropriedades<GastoDividido>(itemBaseGastoDividido, itemGastoDividido);
-                }
-            }
-            Context.SaveChanges();
-            itemGravar.Identificador = itemBase.Identificador;
-        }
-        public void ExcluirGastoCompra(GastoCompra itemGravar)
-        {
-            GastoCompra itemExcluir = Context.GastoCompras
-        .Where(f => f.Identificador == itemGravar.Identificador).FirstOrDefault();
-            Context.Entry<GastoCompra>(itemExcluir).State = EntityState.Deleted;
-            Context.SaveChanges();
-        }
+
         public GastoHotel SelecionarGastoHotel(int? Identificador)
         {
             IQueryable<GastoHotel> query = Context.GastoHoteis
@@ -2029,6 +1966,7 @@ namespace CV.Data
         }
         public void SalvarGastoAtracao(GastoAtracao itemGravar)
         {
+
             GastoAtracao itemBase = Context.GastoAtracoes
             .Where(f => f.Identificador == itemGravar.Identificador).FirstOrDefault();
             if (itemBase == null)
@@ -2084,13 +2022,12 @@ namespace CV.Data
         public void SalvarGasto_Completo(Gasto itemGravar)
         {
             Gasto itemBase = Context.Gastos
-.Include("Alugueis").Include("Atracoes").Include("Compras").Include("Hoteis").Include("Refeicoes").Include("Usuarios").Include("ViagenAereas").Include("Reabastecimentos").Where(f => f.Identificador == itemGravar.Identificador).FirstOrDefault();
+.Include("Alugueis").Include("Atracoes").Include("Hoteis").Include("Refeicoes").Include("Usuarios").Include("ViagenAereas").Include("Reabastecimentos").Where(f => f.Identificador == itemGravar.Identificador).FirstOrDefault();
             if (itemBase == null)
             {
                 itemBase = Context.Gastos.Create();
                 itemBase.Alugueis = new List<AluguelGasto>();
                 itemBase.Atracoes = new List<GastoAtracao>();
-                itemBase.Compras = new List<GastoCompra>();
                 itemBase.Hoteis = new List<GastoHotel>();
                 itemBase.Refeicoes = new List<GastoRefeicao>();
                 itemBase.Usuarios = new List<GastoDividido>();
@@ -2133,23 +2070,7 @@ namespace CV.Data
                 }
                 AtualizarPropriedades<GastoAtracao>(itemBaseGastoAtracao, itemGastoAtracao);
             }
-            foreach (GastoCompra itemGastoCompra in new List<GastoCompra>(itemBase.Compras))
-            {
-                if (!itemGravar.Compras.Where(f => f.Identificador == itemGastoCompra.Identificador).Any())
-                {
-                    Context.Entry<GastoCompra>(itemGastoCompra).State = EntityState.Deleted;
-                }
-            }
-            foreach (GastoCompra itemGastoCompra in new List<GastoCompra>(itemGravar.Compras))
-            {
-                GastoCompra itemBaseGastoCompra = !itemGastoCompra.Identificador.HasValue ? null : itemBase.Compras.Where(f => f.Identificador == itemGastoCompra.Identificador).FirstOrDefault();
-                if (itemBaseGastoCompra == null)
-                {
-                    itemBaseGastoCompra = Context.GastoCompras.Create();
-                    itemBase.Compras.Add(itemBaseGastoCompra);
-                }
-                AtualizarPropriedades<GastoCompra>(itemBaseGastoCompra, itemGastoCompra);
-            }
+            
             foreach (GastoHotel itemGastoHotel in new List<GastoHotel>(itemBase.Hoteis))
             {
                 if (!itemGravar.Hoteis.Where(f => f.Identificador == itemGastoHotel.Identificador).Any())
@@ -2241,7 +2162,7 @@ namespace CV.Data
         public Gasto SelecionarGasto_Completo(int? Identificador)
         {
             IQueryable<Gasto> query = Context.Gastos
-.Include("Alugueis").Include("Atracoes").Include("Compras").Include("Hoteis").Include("Refeicoes").Include("Usuarios").Include("ViagenAereas").Include("Reabastecimentos");
+.Include("Alugueis").Include("Atracoes").Include("Hoteis").Include("Refeicoes").Include("Usuarios").Include("ViagenAereas").Include("Reabastecimentos");
             if (Identificador.HasValue)
                 query = query.Where(d => d.Identificador == Identificador);
             return query.FirstOrDefault();
@@ -2566,7 +2487,7 @@ namespace CV.Data
         public Loja SelecionarLoja_Completo(int? Identificador)
         {
             IQueryable<Loja> query = Context.Lojas
-.Include("Avaliacoes").Include("Compras").Include("Compras.ItensComprados").Include("Compras.ItensComprados.Fotos").Include("Compras.ItensComprados.Fotos.ItemFoto").Include("Compras.ItensComprados.ItemUsuario").Include("Compras.ItemGasto").Include("Compras.ItemGasto.ItemUsuario").Include("Compras.ItemGasto.Usuarios");
+.Include("Avaliacoes");
             if (Identificador.HasValue)
                 query = query.Where(d => d.Identificador == Identificador);
             return query.FirstOrDefault();
@@ -2574,12 +2495,11 @@ namespace CV.Data
         public void SalvarLoja_Completo(Loja itemGravar)
         {
             Loja itemBase = Context.Lojas
-.Include("Avaliacoes").Include("Compras").Include("Compras.ItemGasto").Include("Compras.ItensComprados").Include("Compras.ItensComprados.Fotos").Where(f => f.Identificador == itemGravar.Identificador).FirstOrDefault();
+.Include("Avaliacoes").Where(f => f.Identificador == itemGravar.Identificador).FirstOrDefault();
             if (itemBase == null)
             {
                 itemBase = Context.Lojas.Create();
                 itemBase.Avaliacoes = new List<AvaliacaoLoja>();
-                itemBase.Compras = new List<GastoCompra>();
                 Context.Entry<Loja>(itemBase).State = System.Data.Entity.EntityState.Added;
             }
             AtualizarPropriedades<Loja>(itemBase, itemGravar);
@@ -2600,153 +2520,10 @@ namespace CV.Data
                 }
                 AtualizarPropriedades<AvaliacaoLoja>(itemBaseAvaliacaoLoja, itemAvaliacaoLoja);
             }
-            foreach (GastoCompra itemGastoCompra in new List<GastoCompra>(itemBase.Compras))
-            {
-                if (!itemGravar.Compras.Where(f => f.Identificador == itemGastoCompra.Identificador).Any())
-                {
-                    foreach (ItemCompra itemItemCompra in new List<ItemCompra>(itemGastoCompra.ItensComprados))
-                    {
-                        foreach (FotoItemCompra itemFotoItemCompra in new List<FotoItemCompra>(itemItemCompra.Fotos))
-                        {
-                            Context.Entry<FotoItemCompra>(itemFotoItemCompra).State = EntityState.Deleted;
-                        }
-                        Context.Entry<ItemCompra>(itemItemCompra).State = EntityState.Deleted;
-                    }
-                    Context.Entry<GastoCompra>(itemGastoCompra).State = EntityState.Deleted;
-                }
-            }
-            foreach (GastoCompra itemGastoCompra in new List<GastoCompra>(itemGravar.Compras))
-            {
-                GastoCompra itemBaseGastoCompra = !itemGastoCompra.Identificador.HasValue ? null : itemBase.Compras.Where(f => f.Identificador == itemGastoCompra.Identificador).FirstOrDefault();
-                if (itemBaseGastoCompra == null)
-                {
-                    itemBaseGastoCompra = Context.GastoCompras.Create();
-                    itemBaseGastoCompra.ItensComprados = new List<ItemCompra>();
-                    itemBase.Compras.Add(itemBaseGastoCompra);
-                }
-                AtualizarPropriedades<GastoCompra>(itemBaseGastoCompra, itemGastoCompra);
-                Gasto itemGasto = itemGastoCompra.ItemGasto;
-                Gasto itemBaseGasto = null;
-                if (itemGasto != null)
-                {
-                    itemBaseGasto = Context.Gastos.Where(f => f.Identificador == itemGasto.Identificador).FirstOrDefault();
-                    if (itemBaseGasto == null)
-                    {
-                        itemBaseGasto = Context.Gastos.Create();
-                        Context.Entry<Gasto>(itemBaseGasto).State = System.Data.Entity.EntityState.Added;
-                    }
-                    AtualizarPropriedades<Gasto>(itemBaseGasto, itemGasto);
-                    itemBaseGastoCompra.ItemGasto = itemBaseGasto;
-                }
-                foreach (ItemCompra itemItemCompra in new List<ItemCompra>(itemBaseGastoCompra.ItensComprados))
-                {
-                    if (!itemGastoCompra.ItensComprados.Where(f => f.Identificador == itemItemCompra.Identificador).Any())
-                    {
-                        foreach (FotoItemCompra itemFotoItemCompra in new List<FotoItemCompra>(itemItemCompra.Fotos))
-                        {
-                            Context.Entry<FotoItemCompra>(itemFotoItemCompra).State = EntityState.Deleted;
-                        }
-                        Context.Entry<ItemCompra>(itemItemCompra).State = EntityState.Deleted;
-                    }
-                }
-                foreach (ItemCompra itemItemCompra in new List<ItemCompra>(itemGastoCompra.ItensComprados))
-                {
-                    ItemCompra itemBaseItemCompra = !itemItemCompra.Identificador.HasValue ? null : itemBaseGastoCompra.ItensComprados.Where(f => f.Identificador == itemItemCompra.Identificador).FirstOrDefault();
-                    if (itemBaseItemCompra == null)
-                    {
-                        itemBaseItemCompra = Context.ItemCompras.Create();
-                        itemBaseItemCompra.Fotos = new List<FotoItemCompra>();
-                        itemBaseGastoCompra.ItensComprados.Add(itemBaseItemCompra);
-                    }
-                    AtualizarPropriedades<ItemCompra>(itemBaseItemCompra, itemItemCompra);
-                    foreach (FotoItemCompra itemFotoItemCompra in new List<FotoItemCompra>(itemBaseItemCompra.Fotos))
-                    {
-                        if (!itemItemCompra.Fotos.Where(f => f.Identificador == itemFotoItemCompra.Identificador).Any())
-                        {
-                            Context.Entry<FotoItemCompra>(itemFotoItemCompra).State = EntityState.Deleted;
-                        }
-                    }
-                    foreach (FotoItemCompra itemFotoItemCompra in new List<FotoItemCompra>(itemItemCompra.Fotos))
-                    {
-                        FotoItemCompra itemBaseFotoItemCompra = !itemFotoItemCompra.Identificador.HasValue ? null : itemBaseItemCompra.Fotos.Where(f => f.Identificador == itemFotoItemCompra.Identificador).FirstOrDefault();
-                        if (itemBaseFotoItemCompra == null)
-                        {
-                            itemBaseFotoItemCompra = Context.FotoItemCompras.Create();
-                            itemBaseItemCompra.Fotos.Add(itemBaseFotoItemCompra);
-                        }
-                        AtualizarPropriedades<FotoItemCompra>(itemBaseFotoItemCompra, itemFotoItemCompra);
-                    }
-                }
-            }
-            Context.SaveChanges();
+           Context.SaveChanges();
             itemGravar.Identificador = itemBase.Identificador;
         }
-        public void SalvarGastoCompra_Item_Completo(GastoCompra itemGravar)
-        {
-            GastoCompra itemBase = Context.GastoCompras
-.Include("ItemGasto").Include("ItensComprados").Include("ItensComprados.Fotos").Where(f => f.Identificador == itemGravar.Identificador).FirstOrDefault();
-            if (itemBase == null)
-            {
-                itemBase = Context.GastoCompras.Create();
-                itemBase.ItensComprados = new List<ItemCompra>();
-                Context.Entry<GastoCompra>(itemBase).State = System.Data.Entity.EntityState.Added;
-            }
-            AtualizarPropriedades<GastoCompra>(itemBase, itemGravar);
-            Gasto itemGasto = itemGravar.ItemGasto;
-            Gasto itemBaseGasto = null;
-            if (itemGasto != null)
-            {
-                itemBaseGasto = Context.Gastos.Where(f => f.Identificador == itemGasto.Identificador).FirstOrDefault();
-                if (itemBaseGasto == null)
-                {
-                    itemBaseGasto = Context.Gastos.Create();
-                    Context.Entry<Gasto>(itemBaseGasto).State = System.Data.Entity.EntityState.Added;
-                }
-                AtualizarPropriedades<Gasto>(itemBaseGasto, itemGasto);
-                itemBase.ItemGasto = itemBaseGasto;
-            }
-            foreach (ItemCompra itemItemCompra in new List<ItemCompra>(itemBase.ItensComprados))
-            {
-                if (!itemGravar.ItensComprados.Where(f => f.Identificador == itemItemCompra.Identificador).Any())
-                {
-                    foreach (FotoItemCompra itemFotoItemCompra in new List<FotoItemCompra>(itemItemCompra.Fotos))
-                    {
-                        Context.Entry<FotoItemCompra>(itemFotoItemCompra).State = EntityState.Deleted;
-                    }
-                    Context.Entry<ItemCompra>(itemItemCompra).State = EntityState.Deleted;
-                }
-            }
-            foreach (ItemCompra itemItemCompra in new List<ItemCompra>(itemGravar.ItensComprados))
-            {
-                ItemCompra itemBaseItemCompra = !itemItemCompra.Identificador.HasValue ? null : itemBase.ItensComprados.Where(f => f.Identificador == itemItemCompra.Identificador).FirstOrDefault();
-                if (itemBaseItemCompra == null)
-                {
-                    itemBaseItemCompra = Context.ItemCompras.Create();
-                    itemBaseItemCompra.Fotos = new List<FotoItemCompra>();
-                    itemBase.ItensComprados.Add(itemBaseItemCompra);
-                }
-                AtualizarPropriedades<ItemCompra>(itemBaseItemCompra, itemItemCompra);
-                foreach (FotoItemCompra itemFotoItemCompra in new List<FotoItemCompra>(itemBaseItemCompra.Fotos))
-                {
-                    if (!itemItemCompra.Fotos.Where(f => f.Identificador == itemFotoItemCompra.Identificador).Any())
-                    {
-                        Context.Entry<FotoItemCompra>(itemFotoItemCompra).State = EntityState.Deleted;
-                    }
-                }
-                foreach (FotoItemCompra itemFotoItemCompra in new List<FotoItemCompra>(itemItemCompra.Fotos))
-                {
-                    FotoItemCompra itemBaseFotoItemCompra = !itemFotoItemCompra.Identificador.HasValue ? null : itemBaseItemCompra.Fotos.Where(f => f.Identificador == itemFotoItemCompra.Identificador).FirstOrDefault();
-                    if (itemBaseFotoItemCompra == null)
-                    {
-                        itemBaseFotoItemCompra = Context.FotoItemCompras.Create();
-                        itemBaseItemCompra.Fotos.Add(itemBaseFotoItemCompra);
-                    }
-                    AtualizarPropriedades<FotoItemCompra>(itemBaseFotoItemCompra, itemFotoItemCompra);
-                }
-            }
-            Context.SaveChanges();
-            itemGravar.Identificador = itemBase.Identificador;
-        }
+       
         public void SalvarCidadeGrupo_Lista(IList<CidadeGrupo> ListaSalvar)
         {
             foreach (CidadeGrupo itemGravar in ListaSalvar)

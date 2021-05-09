@@ -32,8 +32,6 @@ namespace CV.Model
 			[NotNullValidator(MessageTemplateResourceName="Posicao_DataGMT",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public DateTime? DataGMT { get; set; }
 
-			public decimal? Velocidade { get; set; }
-
 			public Usuario ItemUsuario { get; set; }
 
 			public Viagem ItemViagem { get; set; }

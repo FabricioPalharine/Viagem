@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.App"
+             xmlns:converters="clr-namespace:CV.Mobile.Converters;assembly=CV.Mobile"
+             xmlns:tabs="clr-namespace:Sharpnado.Presentation.Forms.CustomViews.Tabs;assembly=Sharpnado.Presentation.Forms"
+             xmlns:behaviors="clr-namespace:CV.Mobile.Behaviors">
+    <!--
+        Define global resources and styles here, that apply to all pages in your app.
+    -->
+    <Application.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Primary">#2196F3</Color>
+            <Color x:Key="SpinnerColor">#0084cb</Color>
+            <Color x:Key="CorDestaque">#0084cb</Color>
+            <Color x:Key="FundoTela">White</Color>
+            <Color x:Key="FundoDetalhe">#0084cb</Color>
+            <Color x:Key="FundoCabecalho">#F7F7F7</Color>
+            <Color x:Key="ErrorColor">#e74d3c</Color>
+            <Color x:Key="CorFonte">#aaaaaa</Color>
+            <Color x:Key="CorFonteAlerta">#444444</Color>
+            <Color x:Key="FundoEscuro">#014065</Color>
+            <Color x:Key="CorFonteAlertaTransparencia">#707070</Color>
+            <Color x:Key="CorSucesso">LightGreen</Color>
+
+            <OnPlatform x:Key="MaterialFontFamily" x:TypeArguments="x:String">
+                <On Platform="iOS" Value="Material Design Icons" />
+                <On Platform="Android" Value="materialdesignicons-webfont.ttf#Material Design Icons" />
+            </OnPlatform>
+            <OnPlatform x:TypeArguments="x:Double"
+                        x:Key="BaseButtonBorderRadius">
+                <On Platform="iOS" Value="6" />
+            </OnPlatform>
+
+            <OnPlatform x:TypeArguments="x:Double"
+                        x:Key="BaseButtonFontSize">
+                <On Platform="iOS" Value="18" />
+                <On Platform="Android" Value="16" />
+            </OnPlatform>
+
+            <OnPlatform x:TypeArguments="x:Double"
+                        x:Key="BaseFontSize">
+                <On Platform="iOS" Value="16" />
+                <On Platform="Android" Value="15" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="LittleSize"
+                        x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="11" />
+                <On Platform="Android, UWP, WinRT, WinPhone" Value="12" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="MidMediumSize"
+                        x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="12" />
+                <On Platform="Android, UWP, WinRT, WinPhone" Value="14" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="MediumSize"
+                        x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="14" />
+                <On Platform="Android, UWP, WinRT, WinPhone" Value="16" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="LargeSize"
+                        x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="16" />
+                <On Platform="Android, UWP, WinRT, WinPhone" Value="18" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="LargerSize"
+                        x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="18" />
+                <On Platform="Android, UWP, WinRT, WinPhone" Value="20" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="BigSize"
+                        x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="20" />
+                <On Platform="Android, UWP, WinRT, WinPhone" Value="24" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="ExtraBigSize"
+                        x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="24" />
+                <On Platform="Android, UWP, WinRT, WinPhone" Value="32" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="HugeSize"
+                        x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="32" />
+                <On Platform="Android, UWP, WinRT, WinPhone" Value="48" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="GiantSize"
+                        x:TypeArguments="x:Double">
+                <On Platform="iOS" Value="80" />
+                <On Platform="Android, UWP, WinRT, WinPhone" Value="100" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="PaddingPushButton" x:TypeArguments="Thickness">
+                <On Platform="iOS" Value="5,0,5,0"></On>
+                <On Platform="Android" Value="5,0,5,0"></On>
+            </OnPlatform>
+
+            <Style x:Key="IconeTituloLabelStyle"
+                   TargetType="{x:Type Label}">
+                <Setter Property="FontSize" Value="{StaticResource ExtraBigSize}"/>
+                <Setter Property="FontFamily" Value="{StaticResource MaterialFontFamily}"/>
+            </Style>
+            
+            <Style x:Key="IconeMenuLabelStyle"
+                   TargetType="{x:Type Label}">
+                <Setter Property="FontSize" Value="{StaticResource ExtraBigSize}"/>
+                <Setter Property="FontFamily" Value="{StaticResource MaterialFontFamily}"/>
+                <Setter Property="TextColor" Value="{StaticResource FundoTela}"/>
+            </Style>
+
+
+            <Style x:Key="IconeGridLabelStyle"
+                   TargetType="{x:Type Label}">
+                <Setter Property="FontSize" Value="{StaticResource BigSize}"/>
+                <Setter Property="FontFamily" Value="{StaticResource MaterialFontFamily}"/>
+                <Setter Property="TextColor" Value="{StaticResource Primary}"/>
+            </Style>
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
+            <converters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter" />
+            <converters:StringImageSourceConverter x:Key="StringImageSourceConverter" />
+            <converters:ItemTappedEventArgsConverter x:Key="ItemTappedEventArgsConverter" />
+            <converters:StringNullOrEmptyBoolConverter x:Key="StringNullOrEmptyBoolConverter" />
+            <converters:InverseCountToBoolConverter x:Key="InverseCountToBoolConverter" />
+            <converters:CountToBoolConverter x:Key="CountToBoolConverter" />
+            <converters:StringStyleResourceConverter x:Key="StringStyleResourceConverter" />
+            <converters:SVGReplaceMapConverter x:Key="SVGReplaceMapConverter"/>
+            <converters:MaiorZeroBoolConverter x:Key="MaiorZeroBoolConverter"/>
+            <converters:IntToBoolConverter x:Key="IntToBoolConverter"/>
+            <converters:SimNaoConverter x:Key="SimNaoConverter"/>
+            <converters:BoolTextoConverter x:Key="BoolTextoConverter"/>
+            <converters:BoolCheckImageConverter x:Key="BoolCheckImageConverter"/>
+
+
+            <Style TargetType="Entry" ApplyToDerivedTypes="True" CanCascade="True">
+                <Setter Property="TextColor" Value="{StaticResource CorFonte}"/>
+                <Setter Property="behaviors:LineColorBehavior.ApplyLineColor"
+                        Value="True" />
+                <Setter Property="behaviors:LineColorBehavior.LineColor"
+                        Value="{StaticResource CorDestaque}" />
+                <Style.Triggers>
+                    <Trigger TargetType="Entry"
+                             Property="IsFocused" 
+                             Value="True">
+                        <Setter Property="Opacity" Value="1" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+
+            <Style TargetType="Editor" ApplyToDerivedTypes="True" CanCascade="True">
+                <Setter Property="TextColor" Value="{StaticResource CorFonte}"/>
+                <Setter Property="behaviors:LineColorBehavior.ApplyLineColor"
+                        Value="True" />
+                <Setter Property="behaviors:LineColorBehavior.LineColor"
+                        Value="{StaticResource CorDestaque}" />
+                <Style.Triggers>
+                    <Trigger TargetType="Editor"
+                             Property="IsFocused" 
+                             Value="True">
+                        <Setter Property="Opacity" Value="1" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="DatePicker" ApplyToDerivedTypes="True" CanCascade="True">
+                <Setter Property="TextColor" Value="{StaticResource CorFonte}"/>
+                <Setter Property="behaviors:LineColorBehavior.ApplyLineColor"
+                        Value="True" />
+                <Setter Property="behaviors:LineColorBehavior.LineColor"
+                        Value="{StaticResource CorDestaque}" />
+                <Style.Triggers>
+                    <Trigger TargetType="DatePicker"
+                             Property="IsFocused" 
+                             Value="True">
+                        <Setter Property="Opacity" Value="1" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="TimePicker" ApplyToDerivedTypes="True" CanCascade="True">
+                <Setter Property="TextColor" Value="{StaticResource CorFonte}"/>
+                <Setter Property="behaviors:LineColorBehavior.ApplyLineColor"
+                        Value="True" />
+                <Setter Property="behaviors:LineColorBehavior.LineColor"
+                        Value="{StaticResource CorDestaque}" />
+                <Style.Triggers>
+                    <Trigger TargetType="TimePicker"
+                             Property="IsFocused" 
+                             Value="True">
+                        <Setter Property="Opacity" Value="1" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="Picker" ApplyToDerivedTypes="True" CanCascade="True">
+                <Setter Property="TextColor" Value="{StaticResource CorFonte}"/>
+                <Setter Property="behaviors:LineColorBehavior.ApplyLineColor"
+                        Value="True" />
+                <Setter Property="behaviors:LineColorBehavior.LineColor"
+                        Value="{StaticResource CorDestaque}" />
+                <Style.Triggers>
+                    <Trigger TargetType="Picker"
+                             Property="IsFocused" 
+                             Value="True">
+                        <Setter Property="Opacity" Value="1" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+
+            <Style x:Key="TabStyle" TargetType="tabs:UnderlinedTabItem">
+                <Setter Property="SelectedTabColor" Value="{StaticResource CorDestaque}" />
+                <Setter Property="LabelSize" Value="16" />
+                <Setter Property="BackgroundColor" Value="{StaticResource FundoTela}" />
+                <Setter Property="UnselectedLabelColor" Value="{StaticResource CorDestaque}" />
+
+            </Style>
+            
+            <Style x:Key="ValidationErrorLabelStyle"
+                   TargetType="{x:Type Label}">
+                <Setter Property="TextColor"
+                           Value="{StaticResource ErrorColor}" />
+                <Setter Property="FontSize"
+                           Value="{StaticResource LittleSize}" />
+            </Style>
+
+
+            <Style TargetType="Button" ApplyToDerivedTypes="True" CanCascade="True">
+                <Setter Property="FontSize" Value="{ StaticResource BaseButtonFontSize }" />
+                <Setter Property="CornerRadius" Value="20" />
+                <Setter Property="TextTransform" Value="None"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource CorDestaque}"></Setter>
+                <Setter Property="TextColor" Value="{StaticResource FundoTela}"></Setter>
+                <Setter Property="BorderColor"  Value="{StaticResource CorDestaque}"></Setter>
+
+            </Style>
+
+            <Style TargetType="ImageButton" ApplyToDerivedTypes="True" CanCascade="True">
+                <Setter Property="CornerRadius" Value="20" />
+                <Setter Property="BackgroundColor" Value="{StaticResource CorDestaque}"></Setter>
+                <Setter Property="BorderColor"  Value="{StaticResource CorDestaque}"></Setter>
+
+            </Style>
+
+            <Style x:Key="BotaoInverso" TargetType="{x:Type Button}">
+                <Setter Property="BackgroundColor" Value="{StaticResource FundoTela}"></Setter>
+                <Setter Property="TextColor" Value="{StaticResource CorDestaque}"></Setter>
+                <Setter Property="BorderWidth" Value="1"></Setter>
+            </Style>
+            
+            <Style x:Key="TituloLabelStyel"
+                   TargetType="{x:Type Label}">
+                <Setter Property="FontSize" Value="{StaticResource MediumSize}"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="TextColor" Value="{StaticResource CorDestaque}"></Setter>
+            </Style>
+        </ResourceDictionary>        
+    </Application.Resources>
+</Application>

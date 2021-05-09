@@ -1,0 +1,636 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="enumMoeda_AED" xml:space="preserve">
+    <value>DIRHAM/EMIR.ARABE</value>
+  </data>
+  <data name="enumMoeda_ALL" xml:space="preserve">
+    <value>LEK ALBANIA REP</value>
+  </data>
+  <data name="enumMoeda_AMD" xml:space="preserve">
+    <value>DRAM ARMENIA REP</value>
+  </data>
+  <data name="enumMoeda_ANG" xml:space="preserve">
+    <value>GUILDER ANTILHAS HOLANDESAS</value>
+  </data>
+  <data name="enumMoeda_AOA" xml:space="preserve">
+    <value>KWANZA/ANGOLA</value>
+  </data>
+  <data name="enumMoeda_ARS" xml:space="preserve">
+    <value>PESO ARGENTINO</value>
+  </data>
+  <data name="enumMoeda_AUD" xml:space="preserve">
+    <value>DOLAR AUSTRALIANO</value>
+  </data>
+  <data name="enumMoeda_AWG" xml:space="preserve">
+    <value>FLORIM/ARUBA</value>
+  </data>
+  <data name="enumMoeda_AZN" xml:space="preserve">
+    <value>MANAT ARZEBAIJAO</value>
+  </data>
+  <data name="enumMoeda_BAM" xml:space="preserve">
+    <value>MARCO CONV BOSNIA</value>
+  </data>
+  <data name="enumMoeda_BBD" xml:space="preserve">
+    <value>DOLAR/BARBADOS</value>
+  </data>
+  <data name="enumMoeda_BDT" xml:space="preserve">
+    <value>TACA/BANGLADESH</value>
+  </data>
+  <data name="enumMoeda_BGN" xml:space="preserve">
+    <value>LEV/BULGARIA, REP</value>
+  </data>
+  <data name="enumMoeda_BHD" xml:space="preserve">
+    <value>DINAR/BAHREIN</value>
+  </data>
+  <data name="enumMoeda_BIF" xml:space="preserve">
+    <value>FRANCO/BURUNDI</value>
+  </data>
+  <data name="enumMoeda_BMD" xml:space="preserve">
+    <value>DOLAR/BERMUDAS</value>
+  </data>
+  <data name="enumMoeda_BND" xml:space="preserve">
+    <value>DOLAR BRUNEI</value>
+  </data>
+  <data name="enumMoeda_BOB" xml:space="preserve">
+    <value>BOLIVIANO/BOLIVIA</value>
+  </data>
+  <data name="enumMoeda_BRL" xml:space="preserve">
+    <value>REAL BRASIL</value>
+  </data>
+  <data name="enumMoeda_BSD" xml:space="preserve">
+    <value>DOLAR/BAHAMAS</value>
+  </data>
+  <data name="enumMoeda_BTN" xml:space="preserve">
+    <value>NGULTRUM/BUTAO</value>
+  </data>
+  <data name="enumMoeda_BWP" xml:space="preserve">
+    <value>PULA/BOTSWANA</value>
+  </data>
+  <data name="enumMoeda_BYN" xml:space="preserve">
+    <value>RUBLO BELARUS</value>
+  </data>
+  <data name="enumMoeda_BZD" xml:space="preserve">
+    <value>DOLAR/BELIZE</value>
+  </data>
+  <data name="enumMoeda_CAD" xml:space="preserve">
+    <value>DOLAR CANADENSE</value>
+  </data>
+  <data name="enumMoeda_CDF" xml:space="preserve">
+    <value>FRANCO CONGOLES</value>
+  </data>
+  <data name="enumMoeda_CHF" xml:space="preserve">
+    <value>FRANCO SUICO</value>
+  </data>
+  <data name="enumMoeda_CLF" xml:space="preserve">
+    <value>UNIDADE DE FOMENTO DO CHILE</value>
+  </data>
+  <data name="enumMoeda_CLP" xml:space="preserve">
+    <value>PESO CHILE</value>
+  </data>
+  <data name="enumMoeda_CNH" xml:space="preserve">
+    <value>RENMINBI HONG KONG</value>
+  </data>
+  <data name="enumMoeda_CNY" xml:space="preserve">
+    <value>RENMIMBI IUAN</value>
+  </data>
+  <data name="enumMoeda_COP" xml:space="preserve">
+    <value>PESO/COLOMBIA</value>
+  </data>
+  <data name="enumMoeda_CRC" xml:space="preserve">
+    <value>COLON/COSTA RICA</value>
+  </data>
+  <data name="enumMoeda_CUP" xml:space="preserve">
+    <value>PESO/CUBA</value>
+  </data>
+  <data name="enumMoeda_CVE" xml:space="preserve">
+    <value>ESCUDO CABO VERDE</value>
+  </data>
+  <data name="enumMoeda_CZK" xml:space="preserve">
+    <value>COROA TCHECA</value>
+  </data>
+  <data name="enumMoeda_DJF" xml:space="preserve">
+    <value>FRANCO/DJIBUTI</value>
+  </data>
+  <data name="enumMoeda_DKK" xml:space="preserve">
+    <value>COROA DINAMARQUESA</value>
+  </data>
+  <data name="enumMoeda_DOP" xml:space="preserve">
+    <value>PESO/REP. DOMINIC</value>
+  </data>
+  <data name="enumMoeda_DZD" xml:space="preserve">
+    <value>DINAR ARGELINO</value>
+  </data>
+  <data name="enumMoeda_EGP" xml:space="preserve">
+    <value>LIBRA/EGITO</value>
+  </data>
+  <data name="enumMoeda_ERN" xml:space="preserve">
+    <value>NAKFA ERITREIA</value>
+  </data>
+  <data name="enumMoeda_ETB" xml:space="preserve">
+    <value>BIRR/ETIOPIA</value>
+  </data>
+  <data name="enumMoeda_EUR" xml:space="preserve">
+    <value>EURO</value>
+  </data>
+  <data name="enumMoeda_FJD" xml:space="preserve">
+    <value>DOLAR FIJI</value>
+  </data>
+  <data name="enumMoeda_FKP" xml:space="preserve">
+    <value>LIBRA/FALKLAND</value>
+  </data>
+  <data name="enumMoeda_GBP" xml:space="preserve">
+    <value>LIBRA ESTERLINA</value>
+  </data>
+  <data name="enumMoeda_GEL" xml:space="preserve">
+    <value>LARI GEORGIA</value>
+  </data>
+  <data name="enumMoeda_GHS" xml:space="preserve">
+    <value>CEDI GANA</value>
+  </data>
+  <data name="enumMoeda_GIP" xml:space="preserve">
+    <value>LIBRA/GIBRALTAR</value>
+  </data>
+  <data name="enumMoeda_GMD" xml:space="preserve">
+    <value>DALASI/GAMBIA</value>
+  </data>
+  <data name="enumMoeda_GNF" xml:space="preserve">
+    <value>FRANCO/GUINE</value>
+  </data>
+  <data name="enumMoeda_GTQ" xml:space="preserve">
+    <value>QUETZAL/GUATEMALA</value>
+  </data>
+  <data name="enumMoeda_GWP" xml:space="preserve">
+    <value>PESO/GUINE BISSAU</value>
+  </data>
+  <data name="enumMoeda_GYD" xml:space="preserve">
+    <value>DOLAR DA GUIANA</value>
+  </data>
+  <data name="enumMoeda_HKD" xml:space="preserve">
+    <value>DOLAR HONG KONG</value>
+  </data>
+  <data name="enumMoeda_HNL" xml:space="preserve">
+    <value>LEMPIRA/HONDURAS</value>
+  </data>
+  <data name="enumMoeda_HRK" xml:space="preserve">
+    <value>KUNA/CROACIA</value>
+  </data>
+  <data name="enumMoeda_HTG" xml:space="preserve">
+    <value>GOURDE/HAITI</value>
+  </data>
+  <data name="enumMoeda_HUF" xml:space="preserve">
+    <value>FORINT/HUNGRIA</value>
+  </data>
+  <data name="enumMoeda_IDR" xml:space="preserve">
+    <value>RUPIA/INDONESIA</value>
+  </data>
+  <data name="enumMoeda_ILS" xml:space="preserve">
+    <value>SHEKEL/ISRAEL</value>
+  </data>
+  <data name="enumMoeda_INR" xml:space="preserve">
+    <value>RUPIA/INDIA</value>
+  </data>
+  <data name="enumMoeda_IQD" xml:space="preserve">
+    <value>DINAR/IRAQUE</value>
+  </data>
+  <data name="enumMoeda_IRR" xml:space="preserve">
+    <value>RIAL/IRAN, REP</value>
+  </data>
+  <data name="enumMoeda_ISK" xml:space="preserve">
+    <value>COROA ISLND/ISLAN</value>
+  </data>
+  <data name="enumMoeda_JMD" xml:space="preserve">
+    <value>DOLAR/JAMAICA</value>
+  </data>
+  <data name="enumMoeda_JOD" xml:space="preserve">
+    <value>DINAR/JORDANIA</value>
+  </data>
+  <data name="enumMoeda_JPY" xml:space="preserve">
+    <value>IENE</value>
+  </data>
+  <data name="enumMoeda_KES" xml:space="preserve">
+    <value>XELIM/QUENIA</value>
+  </data>
+  <data name="enumMoeda_KGS" xml:space="preserve">
+    <value>SOM QUIRGUISTAO</value>
+  </data>
+  <data name="enumMoeda_KHR" xml:space="preserve">
+    <value>RIEL/CAMBOJA</value>
+  </data>
+  <data name="enumMoeda_KMF" xml:space="preserve">
+    <value>FRANCO/COMORES</value>
+  </data>
+  <data name="enumMoeda_KPW" xml:space="preserve">
+    <value>WON/COREIA NORTE</value>
+  </data>
+  <data name="enumMoeda_KRW" xml:space="preserve">
+    <value>WON COREIA SUL</value>
+  </data>
+  <data name="enumMoeda_KWD" xml:space="preserve">
+    <value>DINAR/KWAIT</value>
+  </data>
+  <data name="enumMoeda_KYD" xml:space="preserve">
+    <value>DOLAR CAYMAN</value>
+  </data>
+  <data name="enumMoeda_KZT" xml:space="preserve">
+    <value>TENGE CAZAQUISTAO</value>
+  </data>
+  <data name="enumMoeda_LAK" xml:space="preserve">
+    <value>QUIPE/LAOS, REP</value>
+  </data>
+  <data name="enumMoeda_LBP" xml:space="preserve">
+    <value>LIBRA/LIBANO</value>
+  </data>
+  <data name="enumMoeda_LKR" xml:space="preserve">
+    <value>RUPIA/SRI LANKA</value>
+  </data>
+  <data name="enumMoeda_LRD" xml:space="preserve">
+    <value>DOLAR LIBERIA</value>
+  </data>
+  <data name="enumMoeda_LSL" xml:space="preserve">
+    <value>LOTI/LESOTO</value>
+  </data>
+  <data name="enumMoeda_LYD" xml:space="preserve">
+    <value>DINAR/LIBIA</value>
+  </data>
+  <data name="enumMoeda_MAD" xml:space="preserve">
+    <value>DIRHAM/MARROCOS</value>
+  </data>
+  <data name="enumMoeda_MDL" xml:space="preserve">
+    <value>LEU/MOLDAVIA, REP</value>
+  </data>
+  <data name="enumMoeda_MGA" xml:space="preserve">
+    <value>ARIARY MADAGASCAR</value>
+  </data>
+  <data name="enumMoeda_MKD" xml:space="preserve">
+    <value>DINAR/MACEDONIA</value>
+  </data>
+  <data name="enumMoeda_MMK" xml:space="preserve">
+    <value>QUIATE/BIRMANIA</value>
+  </data>
+  <data name="enumMoeda_MNT" xml:space="preserve">
+    <value>TUGRIK/MONGOLIA</value>
+  </data>
+  <data name="enumMoeda_MOP" xml:space="preserve">
+    <value>PATACA/MACAU</value>
+  </data>
+  <data name="enumMoeda_MRO" xml:space="preserve">
+    <value>UGUIA MAURITANIA</value>
+  </data>
+  <data name="enumMoeda_MUR" xml:space="preserve">
+    <value>RUPIA/MAURICIO</value>
+  </data>
+  <data name="enumMoeda_MVR" xml:space="preserve">
+    <value>RUFIA/MALDIVAS</value>
+  </data>
+  <data name="enumMoeda_MWK" xml:space="preserve">
+    <value>QUACHA/MALAVI</value>
+  </data>
+  <data name="enumMoeda_MXN" xml:space="preserve">
+    <value>PESO/MEXICO</value>
+  </data>
+  <data name="enumMoeda_MYR" xml:space="preserve">
+    <value>RINGGIT/MALASIA</value>
+  </data>
+  <data name="enumMoeda_MZN" xml:space="preserve">
+    <value>NOVA METICAL/MOCA</value>
+  </data>
+  <data name="enumMoeda_NAD" xml:space="preserve">
+    <value>DOLAR DA NAMIBIA</value>
+  </data>
+  <data name="enumMoeda_NGN" xml:space="preserve">
+    <value>NAIRA/NIGERIA</value>
+  </data>
+  <data name="enumMoeda_NIO" xml:space="preserve">
+    <value>CORDOBA OURO</value>
+  </data>
+  <data name="enumMoeda_NOK" xml:space="preserve">
+    <value>COROA NORUEGUESA</value>
+  </data>
+  <data name="enumMoeda_NPR" xml:space="preserve">
+    <value>RUPIA/NEPAL</value>
+  </data>
+  <data name="enumMoeda_NZD" xml:space="preserve">
+    <value>DOLAR/NOVA ZELAND</value>
+  </data>
+  <data name="enumMoeda_OMR" xml:space="preserve">
+    <value>RIAL/OMA</value>
+  </data>
+  <data name="enumMoeda_PAB" xml:space="preserve">
+    <value>BALBOA/PANAMA</value>
+  </data>
+  <data name="enumMoeda_PEN" xml:space="preserve">
+    <value>NOVO SOL/PERU</value>
+  </data>
+  <data name="enumMoeda_PGK" xml:space="preserve">
+    <value>KINA/PAPUA N GUIN</value>
+  </data>
+  <data name="enumMoeda_PHP" xml:space="preserve">
+    <value>PESO/FILIPINAS</value>
+  </data>
+  <data name="enumMoeda_PKR" xml:space="preserve">
+    <value>RUPIA/PAQUISTAO</value>
+  </data>
+  <data name="enumMoeda_PLN" xml:space="preserve">
+    <value>ZLOTY/POLONIA</value>
+  </data>
+  <data name="enumMoeda_PYG" xml:space="preserve">
+    <value>GUARANI/PARAGUAI</value>
+  </data>
+  <data name="enumMoeda_QAR" xml:space="preserve">
+    <value>RIAL/CATAR</value>
+  </data>
+  <data name="enumMoeda_RON" xml:space="preserve">
+    <value>NOVO LEU/ROMENIA</value>
+  </data>
+  <data name="enumMoeda_RSD" xml:space="preserve">
+    <value>DINAR SERVIO SERVIA</value>
+  </data>
+  <data name="enumMoeda_RUB" xml:space="preserve">
+    <value>RUBLO/RUSSIA</value>
+  </data>
+  <data name="enumMoeda_RWF" xml:space="preserve">
+    <value>FRANCO/RUANDA</value>
+  </data>
+  <data name="enumMoeda_SAR" xml:space="preserve">
+    <value>RIAL/ARAB SAUDITA</value>
+  </data>
+  <data name="enumMoeda_SBD" xml:space="preserve">
+    <value>DOLAR IL SALOMAO</value>
+  </data>
+  <data name="enumMoeda_SCR" xml:space="preserve">
+    <value>RUPIA/SEYCHELES</value>
+  </data>
+  <data name="enumMoeda_SDG" xml:space="preserve">
+    <value>NOVA LIBRA SUDANESA</value>
+  </data>
+  <data name="enumMoeda_SDR" xml:space="preserve">
+    <value>DIREITO ESPECIAL</value>
+  </data>
+  <data name="enumMoeda_SEK" xml:space="preserve">
+    <value>COROA SUECA</value>
+  </data>
+  <data name="enumMoeda_SGD" xml:space="preserve">
+    <value>DOLAR CINGAPURA</value>
+  </data>
+  <data name="enumMoeda_SHP" xml:space="preserve">
+    <value>LIBRA/STA HELENA</value>
+  </data>
+  <data name="enumMoeda_SLL" xml:space="preserve">
+    <value>LEONE/SERRA LEOA</value>
+  </data>
+  <data name="enumMoeda_SOS" xml:space="preserve">
+    <value>XELIM/SOMALIA</value>
+  </data>
+  <data name="enumMoeda_SRD" xml:space="preserve">
+    <value>DOLAR/SURINAME</value>
+  </data>
+  <data name="enumMoeda_SSP" xml:space="preserve">
+    <value>LIBRA SUL SUDANESA</value>
+  </data>
+  <data name="enumMoeda_STD" xml:space="preserve">
+    <value>DOBRA S TOME PRIN</value>
+  </data>
+  <data name="enumMoeda_SVC" xml:space="preserve">
+    <value>COLON/EL SALVADOR</value>
+  </data>
+  <data name="enumMoeda_SYP" xml:space="preserve">
+    <value>LIBRA/SIRIA, REP</value>
+  </data>
+  <data name="enumMoeda_SZL" xml:space="preserve">
+    <value>LILANGENI/SUAZIL</value>
+  </data>
+  <data name="enumMoeda_THB" xml:space="preserve">
+    <value>BATH/TAILANDIA</value>
+  </data>
+  <data name="enumMoeda_TJS" xml:space="preserve">
+    <value>SOMONI TADJIQUISTAO</value>
+  </data>
+  <data name="enumMoeda_TMT" xml:space="preserve">
+    <value>NOVO MANAT TURCOM</value>
+  </data>
+  <data name="enumMoeda_TND" xml:space="preserve">
+    <value>DINAR/TUNISIA</value>
+  </data>
+  <data name="enumMoeda_TOP" xml:space="preserve">
+    <value>PAANGA/TONGA</value>
+  </data>
+  <data name="enumMoeda_TRY" xml:space="preserve">
+    <value>LIRA TURCA</value>
+  </data>
+  <data name="enumMoeda_TTD" xml:space="preserve">
+    <value>DOLAR/TRIN. TOBAG</value>
+  </data>
+  <data name="enumMoeda_TWD" xml:space="preserve">
+    <value>NOVO DOLAR/TAIWAN</value>
+  </data>
+  <data name="enumMoeda_TZS" xml:space="preserve">
+    <value>XELIM/TANZANIA</value>
+  </data>
+  <data name="enumMoeda_UAH" xml:space="preserve">
+    <value>HRYVNIA UCRANIA</value>
+  </data>
+  <data name="enumMoeda_UGX" xml:space="preserve">
+    <value>XELIM/UGANDA</value>
+  </data>
+  <data name="enumMoeda_USD" xml:space="preserve">
+    <value>DOLAR DOS EUA</value>
+  </data>
+  <data name="enumMoeda_UYU" xml:space="preserve">
+    <value>PESO/URUGUAIO</value>
+  </data>
+  <data name="enumMoeda_UZS" xml:space="preserve">
+    <value>SOM UZBEQUISTAO</value>
+  </data>
+  <data name="enumMoeda_VEF" xml:space="preserve">
+    <value>BOLIVAR VEN</value>
+  </data>
+  <data name="enumMoeda_VND" xml:space="preserve">
+    <value>DONGUE/VIETNAN</value>
+  </data>
+  <data name="enumMoeda_VUV" xml:space="preserve">
+    <value>VATU VANUATU</value>
+  </data>
+  <data name="enumMoeda_WST" xml:space="preserve">
+    <value>TALA SAMOA</value>
+  </data>
+  <data name="enumMoeda_XAF" xml:space="preserve">
+    <value>FRANCO CFA BEAC</value>
+  </data>
+  <data name="enumMoeda_XAU" xml:space="preserve">
+    <value>DOLAR OURO</value>
+  </data>
+  <data name="enumMoeda_XCD" xml:space="preserve">
+    <value>DOLAR CARIBE ORIENTAL</value>
+  </data>
+  <data name="enumMoeda_XEU" xml:space="preserve">
+    <value>UNID.MONET.EUROP.</value>
+  </data>
+  <data name="enumMoeda_XOF" xml:space="preserve">
+    <value>FRANCO CFA BCEAO</value>
+  </data>
+  <data name="enumMoeda_XPF" xml:space="preserve">
+    <value>FRANCO CFP</value>
+  </data>
+  <data name="enumMoeda_YER" xml:space="preserve">
+    <value>RIAL/IEMEN</value>
+  </data>
+  <data name="enumMoeda_ZAR" xml:space="preserve">
+    <value>RANDE/AFRICA SUL</value>
+  </data>
+  <data name="enumMoeda_ZMW" xml:space="preserve">
+    <value>QUACHA ZAMBIA</value>
+  </data>
+  <data name="enumMoeda_ZWL" xml:space="preserve">
+    <value>DOLAR ZIMBABUE</value>
+  </data>
+  <data name="enumTipoAcao_Alterar" xml:space="preserve">
+    <value>Alterar</value>
+  </data>
+  <data name="enumTipoAcao_Excluir" xml:space="preserve">
+    <value>Excluir</value>
+  </data>
+  <data name="enumTipoAcao_Incluir" xml:space="preserve">
+    <value>Incluir</value>
+  </data>
+  <data name="enumTipoAcao_Visualizar" xml:space="preserve">
+    <value>Visualizar</value>
+  </data>
+  <data name="enumTipoParada_Destino" xml:space="preserve">
+    <value>Destino</value>
+  </data>
+  <data name="enumTipoParada_Escala" xml:space="preserve">
+    <value>Escala</value>
+  </data>
+  <data name="enumTipoParada_Origem" xml:space="preserve">
+    <value>Origem</value>
+  </data>
+  <data name="enumTipoTransporte_Aereo" xml:space="preserve">
+    <value>Aéreo</value>
+  </data>
+  <data name="enumTipoTransporte_Ferroviario" xml:space="preserve">
+    <value>Ferroviário</value>
+  </data>
+  <data name="enumTipoTransporte_Fluvial" xml:space="preserve">
+    <value>Fluvial</value>
+  </data>
+  <data name="enumTipoTransporte_Rodoviario" xml:space="preserve">
+    <value>Rodoviário</value>
+  </data>
+</root>

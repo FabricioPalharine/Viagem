@@ -29,7 +29,6 @@ namespace CV.Model
         public List<Loja> Lojas { get; set; }
         public List<Carro> Carros { get; set; }
         public List<ViagemAerea> Deslocamentos { get; set; }
-        public List<GastoCompra> Compras { get; set; }
         public List<Reabastecimento> Reabastecimento { get; set; }
         public List<HotelEvento> EventosHotel { get; set; }
         public List<CarroDeslocamento> CarroDeslocamentos { get; set; }

@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms" 
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:local="clr-namespace:CV.Mobile.Views"
+       xmlns:local_viagem="clr-namespace:CV.Mobile.Views.Viagens"
+       xmlns:local_atracao="clr-namespace:CV.Mobile.Views.Atracoes"
+       xmlns:local_comentario="clr-namespace:CV.Mobile.Views.Comentarios"
+       xmlns:local_consultas="clr-namespace:CV.Mobile.Views.Consultas"
+       xmlns:local_deslocamento="clr-namespace:CV.Mobile.Views.Deslocamentos"
+       xmlns:local_gasto="clr-namespace:CV.Mobile.Views.Gastos"
+       xmlns:local_hotel="clr-namespace:CV.Mobile.Views.Hoteis"
+       xmlns:local_moeda="clr-namespace:CV.Mobile.Views.Moedas"
+       xmlns:local_refeicao="clr-namespace:CV.Mobile.Views.Refeicoes"       
+       Title="CV.Mobile"
+       x:Name="shellPage"
+       xmlns:viewModelBase="clr-namespace:CV.Mobile.ViewModels.Base"
+       xmlns:helper="clr-namespace:CV.Mobile.Helper"
+       xmlns:converter="clr-namespace:CV.Mobile.Converters"
+       viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+       x:Class="CV.Mobile.AppShellPage">
+
+    <!--
+        The overall app visual hierarchy is defined here, along with navigation.
+    
+        https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/
+    -->
+
+    <Shell.Resources>
+        <ResourceDictionary>
+            <Style x:Key="BaseStyle" TargetType="Element">
+                <Setter Property="Shell.BackgroundColor" Value="{StaticResource Primary}" />
+                <Setter Property="Shell.ForegroundColor" Value="White" />
+                <Setter Property="Shell.TitleColor" Value="White" />
+                <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
+                <Setter Property="Shell.UnselectedColor" Value="#95FFFFFF" />
+                <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource Primary}" />
+                <Setter Property="Shell.TabBarForegroundColor" Value="White"/>
+                <Setter Property="Shell.TabBarUnselectedColor" Value="#95FFFFFF"/>
+                <Setter Property="Shell.TabBarTitleColor" Value="White"/>
+            </Style>
+            <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
+            <Style TargetType="FlyoutItem" BasedOn="{StaticResource BaseStyle}" />
+
+            <!--
+            Default Styles for all Flyout Items
+            https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/flyout#flyoutitem-and-menuitem-style-classes
+            -->
+            <Style Class="FlyoutItemLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="White"></Setter>
+            </Style>
+            <Style Class="FlyoutItemLayoutStyle" TargetType="Layout" ApplyToDerivedTypes="True">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="{x:OnPlatform UWP=Transparent, iOS=White}" />
+                                    <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="{StaticResource Primary}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+
+            <!--
+            Custom Style you can apply to any Flyout Item
+            -->
+            <Style Class="MenuItemLayoutStyle" TargetType="Layout" ApplyToDerivedTypes="True">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="{StaticResource Primary}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+
+    </Shell.Resources>
+
+    <!-- 
+        When the Flyout is visible this defines the content to display in the flyout.
+        FlyoutDisplayOptions="AsMultipleItems" will create a separate flyout item for each child element    
+        https://docs.microsoft.com/dotnet/api/xamarin.forms.shellgroupitem.flyoutdisplayoptions?view=xamarin-forms
+    -->
+    <FlyoutItem Title="Home" >
+        <FlyoutItem.Icon>
+            <FontImageSource Glyph="{Static helper:IconFont.Home}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+        </FlyoutItem.Icon>
+        <ShellContent Route="HomePage" ContentTemplate="{DataTemplate local:HomePage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="Viagem" IsVisible="{Binding EdicaoDadoViagem}" >
+        <FlyoutItem.Icon>
+            <FontImageSource Glyph="{Static helper:IconFont.BagPersonal}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+        </FlyoutItem.Icon>
+        <ShellContent Route="ViagemEdicaoPage" ContentTemplate="{DataTemplate local_viagem:ViagemEdicaoPage}" />
+    </FlyoutItem>
+    <MenuItem Text="Fotos" StyleClass="MenuItemLayoutStyle" Command="{Binding FotosCommand}"  IsEnabled="{Binding EdicaoViagem}"  >
+        <MenuItem.IconImageSource>
+            <FontImageSource Glyph="{Static helper:IconFont.Camera}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+        </MenuItem.IconImageSource>
+    </MenuItem>
+    <FlyoutItem Title="Dinheiro" IsVisible="{Binding EdicaoViagem}" >
+        <FlyoutItem.Icon>
+            <FontImageSource Glyph="{Static helper:IconFont.WalletOutline}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+        </FlyoutItem.Icon>
+        <ShellContent Route="MoedaListaPage" ContentTemplate="{DataTemplate local_moeda:MoedaListaPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="Gastos" IsVisible="{Binding EdicaoViagem}" >
+        <FlyoutItem.Icon>
+            <FontImageSource Glyph="{Static helper:IconFont.CashMinus}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+        </FlyoutItem.Icon>
+        <ShellContent Route="GastoListaPage" ContentTemplate="{DataTemplate local_gasto:GastoListaPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="Atrações" IsVisible="{Binding EdicaoViagem}">
+        <FlyoutItem.Icon>
+            <FontImageSource Glyph="{Static helper:IconFont.StadiumVariant}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+        </FlyoutItem.Icon>
+        <ShellContent Route="AtracaoListaPage" ContentTemplate="{DataTemplate local_atracao:AtracaoListaPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="Hospedagens" IsVisible="{Binding EdicaoViagem}" >
+        <FlyoutItem.Icon>
+            <FontImageSource Glyph="{Static helper:IconFont.OfficeBuilding}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+        </FlyoutItem.Icon>
+        <ShellContent Route="HotelListaPage" ContentTemplate="{DataTemplate local_hotel:HotelListaPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="Refeições" IsVisible="{Binding EdicaoViagem}" >
+        <FlyoutItem.Icon>
+            <FontImageSource Glyph="{Static helper:IconFont.Food}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+        </FlyoutItem.Icon>
+        <ShellContent Route="RefeicaoListaPage" ContentTemplate="{DataTemplate local_refeicao:RefeicaoListaPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Deslocamentos" IsVisible="{Binding EdicaoViagem}" >
+        <FlyoutItem.Icon>
+            <FontImageSource Glyph="{Static helper:IconFont.AirplaneTakeoff}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+        </FlyoutItem.Icon>
+        <ShellContent Route="DeslocamentoListaPage" ContentTemplate="{DataTemplate local_deslocamento:DeslocamentoListaPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="Comentários" IsVisible="{Binding EdicaoViagem}" >
+        <FlyoutItem.Icon>
+            <FontImageSource Glyph="{Static helper:IconFont.Comment}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+        </FlyoutItem.Icon>
+        <ShellContent Route="ComentarioListaPage" ContentTemplate="{DataTemplate local_comentario:ComentarioListaPage}" />
+    </FlyoutItem>
+
+    <MenuItem Text="{Binding GPSIniciado, Converter={StaticResource BoolTextoConverter}, ConverterParameter=Iniciar GPS|Parar GPS} " IsEnabled="{Binding ViagemAberta}" StyleClass="MenuItemLayoutStyle" Command="{Binding TrocarGPSCommand}"  >
+
+    </MenuItem>
+    <MenuItem Text="{Binding ViagemAberta, Converter={StaticResource BoolTextoConverter}, ConverterParameter=Abrir Viagem|Fechar Viagem}"  IsEnabled="{Binding EdicaoViagem}" StyleClass="MenuItemLayoutStyle" Command="{Binding TrocarSituacaoCommand}" >
+    </MenuItem>
+
+    <MenuItem Text="Sincronizar" StyleClass="MenuItemLayoutStyle" Command="{Binding SincronizarCommand}"  IsEnabled="{Binding EdicaoViagem}">
+        <MenuItem.IconImageSource>
+            <FontImageSource Glyph="{Static helper:IconFont.SyncCircle}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+        </MenuItem.IconImageSource>
+    </MenuItem>
+
+    <FlyoutItem Title="Consultas"  FlyoutDisplayOptions="AsMultipleItems" IsVisible="{Binding ViagemSelecionada}"  >
+
+        <ShellContent Title="Acerto Conta"  Route="AcertoContaPage" IsVisible="{Binding EdicaoViagem}"              
+                      ContentTemplate="{DataTemplate local_consultas:AcertoContaPage}">
+            <ShellContent.Icon>
+                <FontImageSource Glyph="{Static helper:IconFont.BankTransfer}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+            </ShellContent.Icon>
+        </ShellContent>
+        <ShellContent Title="Extrato"  Route="ExtratoDinheiro" IsVisible="{Binding EdicaoViagem}"                             
+                      ContentTemplate="{DataTemplate local_consultas:ExtratoDinheiroPage}">
+            <ShellContent.Icon>
+                <FontImageSource Glyph="{Static helper:IconFont.CashCheck}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+            </ShellContent.Icon>
+        </ShellContent>
+        <ShellContent Title="Relatório Gastos"  Route="RelatorioGastoPage"  IsVisible="{Binding VisualizarGastos}"                            
+                      ContentTemplate="{DataTemplate local_consultas:RelatorioGastoPage}">
+            <ShellContent.Icon>
+                <FontImageSource Glyph="{Static helper:IconFont.Finance}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+            </ShellContent.Icon>
+        </ShellContent>
+        <ShellContent Title="Calendário"  Route="CalendarioRealizadoPage"                    
+                      ContentTemplate="{DataTemplate local_consultas:CalendarioRealizadoPage}">
+            <ShellContent.Icon>
+                <FontImageSource Glyph="{Static helper:IconFont.Calendar}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+            </ShellContent.Icon>
+        </ShellContent>
+        <ShellContent Title="Locais"  Route="LocaisPage"                    
+                      ContentTemplate="{DataTemplate local_consultas:LocaisPage}">
+            <ShellContent.Icon>
+                <FontImageSource Glyph="{Static helper:IconFont.MapMarker}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+            </ShellContent.Icon>
+        </ShellContent>
+        <ShellContent Title="Timeline"  Route="TimelinePage"                    
+                      ContentTemplate="{DataTemplate local_consultas:TimelinePage}">
+            <ShellContent.Icon>
+                <FontImageSource Glyph="{Static helper:IconFont.TimelineClockOutline}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+            </ShellContent.Icon>
+        </ShellContent>
+        <ShellContent Title="Fotos"  Route="GaleriaFotoPage"                    
+                      ContentTemplate="{DataTemplate local_consultas:GaleriaFotoPage}">
+            <ShellContent.Icon>
+                <FontImageSource Glyph="{Static helper:IconFont.ImageAlbum}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+            </ShellContent.Icon>
+        </ShellContent>
+        <ShellContent Title="Pontos Mapa"  Route="MapaConsultaPage"                    
+                      ContentTemplate="{DataTemplate local_consultas:ConsultaMapaPage}">
+            <ShellContent.Icon>
+                <FontImageSource Glyph="{Static helper:IconFont.MapClock}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+            </ShellContent.Icon>
+        </ShellContent>
+        <ShellContent Title="Resumo"  Route="ResumoPage"                    
+                      ContentTemplate="{DataTemplate local_consultas:ResumoPage}">
+            <ShellContent.Icon>
+                <FontImageSource Glyph="{Static helper:IconFont.ChartLineVariant}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+            </ShellContent.Icon>
+        </ShellContent>
+
+    </FlyoutItem>
+    <!-- When the Flyout is visible this will be a menu item you can tie a click behavior to  -->
+    <MenuItem Text="Logout" StyleClass="MenuItemLayoutStyle" Command="{Binding LogoutCommand}">
+    </MenuItem>
+    <!--
+        TabBar lets you define content that won't show up in a flyout menu. When this content is active
+        the flyout menu won't be available. This is useful for creating areas of the application where 
+        you don't want users to be able to navigate away from. If you would like to navigate to this 
+        content you can do so by calling 
+        await Shell.Current.GoToAsync("//LoginPage");
+    -->
+    <TabBar>
+        <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate local:LoginPage}" />
+    </TabBar>
+
+    <Shell.FlyoutHeaderTemplate>
+        <DataTemplate>
+            <StackLayout Orientation="Horizontal">
+                <Image Aspect="AspectFill" HeightRequest ="40" WidthRequest="40" Source="{Binding ItemUsuario.LinkFoto}"  />
+                <Label Text="{Binding ItemUsuario.Nome}" YAlign="Start" Font="Medium"  />
+            </StackLayout>
+        </DataTemplate>
+    </Shell.FlyoutHeaderTemplate>
+
+    <Shell.MenuItemTemplate>
+        <DataTemplate>
+            <Grid ColumnDefinitions="0.25*,0.75*" IsVisible="{Binding IsEnabled}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="32"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Image Source="{Binding Icon}" HorizontalOptions="Start"
+                       Margin="14,0,0,0"
+                       HeightRequest="24"/>
+                <Label Grid.Column="1" TextColor="{StaticResource Primary}" HeightRequest="24"
+                       Text="{Binding Text}"  Font="Medium"               
+                       VerticalTextAlignment="Center" />
+            </Grid>
+        </DataTemplate>
+    </Shell.MenuItemTemplate>
+
+    <!-- Optional Templates 
+    // These may be provided inline as below or as separate classes.
+
+    // This header appears at the top of the Flyout.
+    // https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/flyout#flyout-header
+    <Shell.FlyoutHeaderTemplate>
+        <DataTemplate>
+            <Grid>ContentHere</Grid>
+        </DataTemplate>
+    </Shell.FlyoutHeaderTemplate>
+
+    // ItemTemplate is for ShellItems as displayed in a Flyout
+    // https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/flyout#define-flyoutitem-appearance
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <ContentView>
+                Bindable Properties: Title, Icon
+            </ContentView>
+        </DataTemplate>
+    </Shell.ItemTemplate>
+
+    // MenuItemTemplate is for MenuItems as displayed in a Flyout
+    // https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/flyout#define-menuitem-appearance
+    <Shell.MenuItemTemplate>
+        <DataTemplate>
+            <ContentView>
+                Bindable Properties: Text, Icon
+            </ContentView>
+        </DataTemplate>
+    </Shell.MenuItemTemplate>
+
+    -->
+
+</Shell>

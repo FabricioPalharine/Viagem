@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.Amigos.AmigoListaPage"
+             xmlns:viewModelBase="clr-namespace:CV.Mobile.ViewModels.Base"
+             xmlns:behaviors="clr-namespace:CV.Mobile.Behaviors"
+             x:Name="ListagemPage"
+             viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+    <ContentView.Behaviors>
+        <behaviors:PageEventToCommandBehavior
+							EventName="PageVisibleChanged"
+							Command="{Binding PageAppearingCommand}" />
+    </ContentView.Behaviors>
+    <ContentView.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <ListView Grid.Row="0" VerticalOptions="FillAndExpand" SeparatorVisibility="Default" ItemsSource="{Binding ListaAmigos}"
+                    CachingStrategy="RecycleElement" HasUnevenRows="True" SelectionMode="None" 
+                    IsPullToRefreshEnabled="True"  RefreshCommand="{Binding RecarregarListaCommand}"               
+                    >
+              
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell >
+                            <Grid ColumnSpacing="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackLayout HorizontalOptions="Fill" Grid.Row="0" Grid.Column="0" VerticalOptions="Center" Spacing="0" Padding="10,0,0,0" IsVisible="{Binding Nome, Converter={StaticResource StringNullOrEmptyBoolConverter}}">
+                                    <Label Text="{Binding Nome}"></Label>
+                                </StackLayout>
+                                <StackLayout HorizontalOptions="Fill" Grid.Row="1" Grid.Column="0" VerticalOptions="Center" Spacing="0" Padding="10,0,0,0">
+                                    <Label Text="{Binding EMail}"></Label>
+                                </StackLayout>
+                                <Grid Grid.Row="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                                        <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout HorizontalOptions="Center" Orientation="Horizontal" Grid.Column="0">
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.TrocarSeguidoCommand, Source={x:Reference Name=ListagemPage}}"
+                                                                      CommandParameter="{Binding .}">
+                                            </TapGestureRecognizer>
+                                        </StackLayout.GestureRecognizers>
+                                        <Label Text="Seguido"></Label>
+                                        <Label Style="{StaticResource IconeGridLabelStyle}" Grid.Column="0" Text="{Binding Seguido, Converter={StaticResource BoolCheckImageConverter}}"/>
+
+                                    </StackLayout>
+                                    <StackLayout HorizontalOptions="Center" Orientation="Horizontal" Grid.Column="1">
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.TrocarSeguidorCommand, Source={x:Reference Name=ListagemPage}}"
+                                                                      CommandParameter="{Binding .}">
+                                            </TapGestureRecognizer>
+                                        </StackLayout.GestureRecognizers>
+                                        <Label Text="Seguidor"></Label>
+                                        <Label Style="{StaticResource IconeGridLabelStyle}" Grid.Column="0" Text="{Binding Seguidor, Converter={StaticResource BoolCheckImageConverter}}"/>
+
+                                        
+                                    </StackLayout>
+                                </Grid>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.Footer>
+                    <Label/>
+                </ListView.Footer>
+            </ListView>
+
+            <Button Text="Adicionar" Grid.Row="1" Margin="10,0,10,0" Command="{Binding AdicionarAmigoCommand}" ></Button>
+
+            <ActivityIndicator 
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Color="{StaticResource SpinnerColor}"
+            IsRunning="{Binding IsBusy}"  
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Center"
+            HorizontalOptions="Center">
+                <ActivityIndicator.WidthRequest>
+                    <OnPlatform x:TypeArguments="x:Double">
+                        <On Platform="iOS, Android" Value="100" />
+                    </OnPlatform>
+                </ActivityIndicator.WidthRequest>
+            </ActivityIndicator>
+
+
+        </Grid>
+    </ContentView.Content>
+</ContentView>

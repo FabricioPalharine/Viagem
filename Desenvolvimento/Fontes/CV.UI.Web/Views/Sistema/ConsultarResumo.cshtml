@@ -110,10 +110,7 @@
                             <b>@TextosPaginas.Resumo_NotaMedia</b><br />
                             {{itemExtratoMoeda.ItemResumo.NotaMediaAtracao | number:1}}&nbsp;
                         </div>
-                        <div class="col-md-3" ng-if="account.VerCustos()">
-                            <b>@TextosPaginas.Resumo_Gasto</b><br />
-                            {{itemExtratoMoeda.ItemResumo.TotalReaisAtracao | number:2}}&nbsp;
-                        </div>
+                       
                     </div>
                 </div>
             </div>
@@ -139,14 +136,7 @@
                             <b>@TextosPaginas.Resumo_NotaMedia</b><br />
                             {{itemExtratoMoeda.ItemResumo.NotaMediaHotel | number:1}}&nbsp;
                         </div>
-                        <div class="col-md-3" ng-if="account.VerCustos()">
-                            <b>@TextosPaginas.Resumo_Gasto</b><br />
-                            {{itemExtratoMoeda.ItemResumo.TotalReaisHospedagem | number:2}}&nbsp;
-                        </div>
-                        <div class="col-md-3" ng-if="account.VerCustos()">
-                            <b>@TextosPaginas.Resumo_PrecoDiaria</b><br />
-                            {{itemExtratoMoeda.ItemResumo.PrecoMediaNoite | number:2}}&nbsp;
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -169,10 +159,7 @@
                             <b>@TextosPaginas.Resumo_Gasto</b><br />
                             {{itemExtratoMoeda.ItemResumo.TotalReaisRefeicao | number:2}}&nbsp;
                         </div>
-                        <div class="col-md-3" ng-if="account.VerCustos()">
-                            <b>@TextosPaginas.Resumo_PrecoMedio</b><br />
-                            {{itemExtratoMoeda.ItemResumo.PrecoMediaRefeicao | number:2}}&nbsp;
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -201,56 +188,8 @@
                             {{itemExtratoMoeda.ItemResumo.ItensComprados}}&nbsp;
                         </div>
                         
-                        <div class="col-md-3" ng-if="account.VerCustos()">
-                            <b>@TextosPaginas.Resumo_Gasto</b><br />
-                            {{itemExtratoMoeda.ItemResumo.TotalReaisCompra | number:2}}&nbsp;
-                        </div>
+                       
                         
-                    </div>
-                </div>
-            </div>
-            <div class="panel">
-                <div class="panel-header">
-                    @TextosPaginas.Resumo_Carro
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <b>@TextosPaginas.Resumo_Utilizados</b><br />
-                            {{itemExtratoMoeda.ItemResumo.CarrosUtilizados}}&nbsp;
-                        </div>
-                        <div class="col-md-3">
-                            <b>@TextosPaginas.Resumo_Locadoras</b><br />
-                            {{itemExtratoMoeda.ItemResumo.LocadorasUtilizadas}}&nbsp;
-                        </div>
-                        <div class="col-md-3">
-                            <b>@TextosPaginas.Resumo_NotaMedia</b><br />
-                            {{itemExtratoMoeda.ItemResumo.NotaMediaAluguel | number:1}}&nbsp;
-                        </div>
-                        <div class="col-md-3">
-                            <b>@TextosPaginas.Resumo_TempoDeslocamento</b><br />
-                            {{itemExtratoMoeda.timeFunction( itemExtratoMoeda.ItemResumo.MinutosDeslocamentoCarro)}}&nbsp;
-                        </div>                      
-                        <div class="col-md-3">
-                            <b>@TextosPaginas.Resumo_Reabastecimento</b><br />
-                            {{itemExtratoMoeda.ItemResumo.NumeroReabastecimento}}&nbsp;
-                        </div>
-                        <div class="col-md-3">
-                            <b>@TextosPaginas.Resumo_Litros</b><br />
-                            {{itemExtratoMoeda.ItemResumo.LitrosReabastecidos| number:0}}&nbsp;
-                        </div>
-                        <div class="col-md-3" ng-if="account.VerCustos()">
-                            <b>@TextosPaginas.Resumo_Gasto</b><br />
-                            {{itemExtratoMoeda.ItemResumo.TotalReaisCarro | number:2}}&nbsp;
-                        </div>
-                        <div class="col-md-3" ng-if="account.VerCustos()">
-                            <b>@TextosPaginas.Resumo_GastoReabastecimento</b><br />
-                            {{itemExtratoMoeda.ItemResumo.TotalReaisReabastecimento | number:2}}&nbsp;
-                        </div>
-                        <div class="col-md-3" ng-if="account.VerCustos()">
-                            <b>@TextosPaginas.Resumo_ReaisKM</b><br />
-                            {{itemExtratoMoeda.ItemResumo.PrecoMedioKM | number:2}}&nbsp;
-                        </div>
                     </div>
                 </div>
             </div>
@@ -263,12 +202,8 @@
                         <div class="col-md-3">
                             <b>@TextosPaginas.Resumo_Numero</b><br />
                             {{itemExtratoMoeda.ItemResumo.DeslcamentosRealizados}}&nbsp;
-                        </div>
-      
-                        <div class="col-md-3">
-                            <b>@TextosPaginas.Resumo_NotaMedia</b><br />
-                            {{itemExtratoMoeda.ItemResumo.NotaMediaDeslocamento | number:1}}&nbsp;
-                        </div>
+                        </div>      
+                       
                         <div class="col-md-3">
                             <b>@TextosPaginas.Resumo_TempoDeslocamento</b><br />
                             {{itemExtratoMoeda.timeFunction( itemExtratoMoeda.ItemResumo.MinutosViajando)}}&nbsp;
@@ -277,12 +212,7 @@
                             <b>@TextosPaginas.Resumo_TempoAguardando</b><br />
                             {{itemExtratoMoeda.timeFunction( itemExtratoMoeda.ItemResumo.MinutosAguardando)}}&nbsp;
                         </div>
-                       
-                      
-                        <div class="col-md-3" ng-if="account.VerCustos()">
-                            <b>@TextosPaginas.Resumo_Gasto</b><br />
-                            {{itemExtratoMoeda.ItemResumo.TotalReaisDeslocamento | number:2}}&nbsp;
-                        </div>
+                                             
                         
                     </div>
                 </div>
@@ -305,10 +235,7 @@
                             <b>@TextosPaginas.Resumo_Videos</b><br />
                             {{itemExtratoMoeda.ItemResumo.VideosGravados}}&nbsp;
                         </div>
-                        <div class="col-md-3">
-                            <b>@TextosPaginas.Resumo_Cidade</b><br />
-                            {{itemExtratoMoeda.ItemResumo.CidadesRegistradas}}&nbsp;
-                        </div>
+                        
                     </div>
                 </div>
 

@@ -41,18 +41,14 @@
             <table class="table-condensed " style="width:100%; ">
                 <thead>
                     <tr>
-                        <th class="col-xs-2">
-                            @TextosPaginas.ItemCompra_Marca
-                        </th>
-                        <th class="col-xs-3">
+                        
+                        <th class="col-xs-6">
                             @TextosPaginas.ItemCompra_Item
                         </th>
                         <th class="col-xs-2">
                             @TextosPaginas.ItemCompra_Valor
                         </th>
-                        <th class="col-xs-3">
-                            @TextosPaginas.ItemCompra_Destinatario
-                        </th>                       
+                                            
                         <th class="col-xs-1">
 
                         </th>
@@ -62,23 +58,13 @@
                     </tr>
                 </thead>
                 <tr ng-repeat='itemCompra in itemCompraEdit.itemCompra.ItensComprados' ng-if="!itemCompra.DataExclusao">
-                    <td>
-                        {{itemCompra.Marca}}
-                    </td>
+                   
                     <td>
                         {{itemCompra.Descricao}}
                     </td>
                     <td>
                         {{itemCompra.Valor | number:'2'}}
-                    </td>
-                    <td>
-                        <div ng-if="itemCompra.IdentificadorUsuario">
-                            {{itemCompra.ItemUsuario.Nome}}
-                        </div>
-                        <div ng-if="!itemCompra.IdentificadorUsuario">
-                            {{itemCompra.Destinatario}}
-                        </div>
-                    </td>
+                    </td>                    
                     
                     <td>
                         <button type="button" class="btn btn-primary small" ng-click="itemCompraEdit.EditarCompra( itemCompra)"><span class="fa fa-pencil" aria-hidden="true"></span></button>

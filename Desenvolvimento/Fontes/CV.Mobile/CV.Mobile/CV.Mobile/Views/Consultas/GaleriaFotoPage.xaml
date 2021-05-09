@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.Consultas.GaleriaFotoPage"                 
+       xmlns:viewModelBase="clr-namespace:CV.Mobile.ViewModels.Base"
+             xmlns:helper="clr-namespace:CV.Mobile.Helper"
+             viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+             x:Name="ListagemPage"     
+             Title="Fotos"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:behaviors="clr-namespace:CV.Mobile.Behaviors"
+             xmlns:controls="clr-namespace:CV.Mobile.Controls">
+    <ContentPage.Behaviors>
+        <behaviors:PageEventToCommandBehavior
+							EventName="Appearing"
+							Command="{Binding PageAppearingCommand}" />
+    </ContentPage.Behaviors>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem   Command="{Binding FiltrarCommand}" >
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="{Static helper:IconFont.Filter}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <ScrollView Margin="0,20,0,20">
+                <controls:WrapLayout x:Name="wrapLayout" BindableLayout.ItemsSource="{Binding Dados}" >
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <ffimageloading:CachedImage HorizontalOptions="Center" VerticalOptions="Center"                                    
+                                    Source = "{Binding LinkThumbnail}">
+                                <ffimageloading:CachedImage.GestureRecognizers>
+                                    <TapGestureRecognizer
+                    Command="{Binding Path=BindingContext.AbrirImagemCommand,  Source={x:Reference ListagemPage}}"
+                    CommandParameter="{Binding .}" />
+                                </ffimageloading:CachedImage.GestureRecognizers>
+                            </ffimageloading:CachedImage>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </controls:WrapLayout>
+            </ScrollView>
+
+            <ActivityIndicator 
+            Grid.Row="0"
+            Grid.RowSpan="1"
+            Color="{StaticResource SpinnerColor}"
+            IsRunning="{Binding IsBusy}"  
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Center"
+            HorizontalOptions="Center">
+                <ActivityIndicator.WidthRequest>
+                    <OnPlatform x:TypeArguments="x:Double">
+                        <On Platform="iOS, Android" Value="100" />
+                    </OnPlatform>
+                </ActivityIndicator.WidthRequest>
+            </ActivityIndicator>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,402 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.Refeicoes.RefeicaoEdicaoPage"
+             Title="Refeição"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             xmlns:viewModelBase="clr-namespace:CV.Mobile.ViewModels.Base"
+             xmlns:behaviors="clr-namespace:CV.Mobile.Behaviors"
+             xmlns:controls="clr-namespace:CV.Mobile.Controls"
+             viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+             xmlns:contents="clr-namespace:CV.Mobile.Views.Contents"
+              x:Name="ListagemPage"  
+            xmlns:tabs="clr-namespace:Sharpnado.Presentation.Forms.CustomViews.Tabs;assembly=Sharpnado.Presentation.Forms"   
+             xmlns:helper="clr-namespace:CV.Mobile.Helper">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem   Command="{Binding SelecionarMapaCommand}" >
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="{Static helper:IconFont.MarkerCheck}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackLayout  HorizontalOptions="Start" VerticalOptions="Center">
+                <Label Text="Editar Refeição"  Style="{StaticResource TituloLabelStyel}"></Label>
+            </StackLayout>
+
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <tabs:TabHostView x:Name="TabHost"
+                      Grid.Row="0"
+                      SelectedIndex="{Binding TabSelecionada,Mode=TwoWay}">
+                    <tabs:TabHostView.Tabs>
+                        <contents:CustomTabTextItem Style="{StaticResource TabStyle}"
+                                Label="Dados" >
+                        </contents:CustomTabTextItem>
+                        <contents:CustomTabTextItem Style="{StaticResource TabStyle}" 
+                                Label="Avaliação" >
+                        </contents:CustomTabTextItem>
+                        <contents:CustomTabTextItem Style="{StaticResource TabStyle}" IsVisible="{Binding Identificador, Converter={StaticResource StringNullOrEmptyBoolConverter}}"
+                                Label="Custos" >
+                        </contents:CustomTabTextItem>
+
+                    </tabs:TabHostView.Tabs>
+                </tabs:TabHostView>
+                <ScrollView Grid.Row="1"  IsVisible="{Binding TabSelecionada, Converter={StaticResource IntToBoolConverter}, ConverterParameter=0 }">
+                    <StackLayout>
+                        <StackLayout Spacing="1">
+                            <Label  Text="Atração Pai:"  />
+                            <Picker SelectedItem="{Binding AtracaoPai.Value, Mode=TwoWay}" ItemsSource="{Binding Atracoes}" ItemDisplayBinding="{Binding Nome}" Title="Atração Pai"   >
+
+                               
+                                <Picker.Triggers>
+                                    <DataTrigger 
+							TargetType="Picker"
+							Binding="{Binding AtracaoPai.IsValid}"
+							Value="False">
+                                        <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                        <Setter Property="behaviors:LineColorBehavior.ApplyLineColor" Value="{Binding AtracaoPai.IsValid, Converter={StaticResource InverseBoolConverter}}"  />
+
+                                    </DataTrigger>
+                                </Picker.Triggers>
+                            </Picker>
+                            <Label Text="{Binding AtracaoPai.Errors, Converter={StaticResource FirstValidationErrorConverter}}" Style="{StaticResource ValidationErrorLabelStyle}" />
+                        </StackLayout>
+
+                        
+                        <StackLayout Spacing="1">
+                            <Label  Text="Nome:"  />
+                            <Entry Text="{Binding Nome.Value, Mode=TwoWay}" MaxLength="200" Keyboard="Default" >
+
+                                <Entry.Behaviors>
+                                    <behaviors:EventToCommandBehavior
+							EventName="TextChanged"
+							Command="{Binding ValidarNomeCommad}" />
+                                </Entry.Behaviors>
+                                <Entry.Triggers>
+                                    <DataTrigger 
+							TargetType="Entry"
+							Binding="{Binding Nome.IsValid}"
+							Value="False">
+                                        <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                        <Setter Property="behaviors:LineColorBehavior.ApplyLineColor" Value="{Binding Nome.IsValid, Converter={StaticResource InverseBoolConverter}}"  />
+
+                                    </DataTrigger>
+                                </Entry.Triggers>
+                            </Entry>
+                            <Label Text="{Binding Nome.Errors, Converter={StaticResource FirstValidationErrorConverter}}" Style="{StaticResource ValidationErrorLabelStyle}" />
+                        </StackLayout>
+                        
+                        
+                        
+
+                        <StackLayout Spacing="1">
+                            <Label  Text="Tipo:"  />
+                            <Entry Text="{Binding Tipo.Value, Mode=TwoWay}" MaxLength="200" Keyboard="Default" >
+
+                               
+                                <Entry.Triggers>
+                                    <DataTrigger 
+							TargetType="Entry"
+							Binding="{Binding Tipo.IsValid}"
+							Value="False">
+                                        <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                        <Setter Property="behaviors:LineColorBehavior.ApplyLineColor" Value="{Binding Tipo.IsValid, Converter={StaticResource InverseBoolConverter}}"  />
+
+                                    </DataTrigger>
+                                </Entry.Triggers>
+                            </Entry>
+                            <Label Text="{Binding Tipo.Errors, Converter={StaticResource FirstValidationErrorConverter}}" Style="{StaticResource ValidationErrorLabelStyle}" />
+                        </StackLayout>
+
+                        <StackLayout Spacing="1">
+                            <Label  Text="Pedido:"  />
+                            <Entry Text="{Binding Pedido.Value, Mode=TwoWay}" MaxLength="200" Keyboard="Default" >
+                              
+                                <Entry.Triggers>
+                                    <DataTrigger 
+							TargetType="Entry"
+							Binding="{Binding Pedido.IsValid}"
+							Value="False">
+                                        <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                        <Setter Property="behaviors:LineColorBehavior.ApplyLineColor" Value="{Binding Pedido.IsValid, Converter={StaticResource InverseBoolConverter}}"  />
+
+                                    </DataTrigger>
+                                </Entry.Triggers>
+                            </Entry>
+                            <Label Text="{Binding Pedido.Errors, Converter={StaticResource FirstValidationErrorConverter}}" Style="{StaticResource ValidationErrorLabelStyle}" />
+                        </StackLayout>
+                        
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                                <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <StackLayout Spacing="1" Grid.Column="0">
+                                <Label  Text="Data :"  />
+                                <DatePicker Date="{Binding DataInicio.Value, Mode=TwoWay}"  >
+
+                                    <DatePicker.Behaviors>
+                                        <behaviors:EventToCommandBehavior
+							EventName="DateSelected"
+							Command="{Binding ValidarDataInicioCommad}" />
+                                    </DatePicker.Behaviors>
+                                    <DatePicker.Triggers>
+                                        <DataTrigger 
+							TargetType="DatePicker"
+							Binding="{Binding DataInicio.IsValid}"
+							Value="False">
+                                            <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                            <Setter Property="behaviors:LineColorBehavior.ApplyLineColor" Value="{Binding DataInicio.IsValid, Converter={StaticResource InverseBoolConverter}}"  />
+
+                                        </DataTrigger>
+                                    </DatePicker.Triggers>
+                                </DatePicker>
+                                <Label Text="{Binding DataInicio.Errors, Converter={StaticResource FirstValidationErrorConverter}}" Style="{StaticResource ValidationErrorLabelStyle}" />
+                            </StackLayout>
+
+                            <StackLayout Spacing="1"  Grid.Column="1">
+                                <Label  Text="Hora :"  />
+                                <TimePicker Time="{Binding HoraInicio.Value, Mode=TwoWay}"   >
+
+
+                                    <TimePicker.Triggers>
+                                        <DataTrigger 
+							TargetType="TimePicker"
+							Binding="{Binding HoraInicio.IsValid}"
+							Value="False">
+                                            <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                            <Setter Property="behaviors:LineColorBehavior.ApplyLineColor" Value="{Binding HoraInicio.IsValid, Converter={StaticResource InverseBoolConverter}}"  />
+
+                                        </DataTrigger>
+                                    </TimePicker.Triggers>
+                                </TimePicker>
+                                <Label Text="{Binding HoraInicio.Errors, Converter={StaticResource FirstValidationErrorConverter}}" Style="{StaticResource ValidationErrorLabelStyle}" />
+                            </StackLayout >
+                        </Grid>
+                   
+                        <StackLayout Spacing="1"  HorizontalOptions="FillAndExpand" >
+                            <Label  Text="Refeição Concluída"  />
+                            <Switch IsToggled="{Binding VisitaConcluida}"  >
+                                <Switch.Behaviors>
+                                    <behaviors:EventToCommandBehavior
+							EventName="Toggled"
+							Command="{Binding TrocarVisitaConcluidaCommad}" />
+                                </Switch.Behaviors>
+                            </Switch>
+
+                        </StackLayout>
+
+                        <StackLayout Spacing="1" IsVisible="{Binding VisitaConcluida}">
+
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <StackLayout Spacing="1" Grid.Column="0">
+                                    <Label  Text="Data Partida:"  />
+                                    <DatePicker Date="{Binding DataFim.Value, Mode=TwoWay}"  >
+
+                                        <DatePicker.Behaviors>
+                                            <behaviors:EventToCommandBehavior
+							EventName="DateSelected"
+							Command="{Binding ValidarDataFimCommad}" />
+                                        </DatePicker.Behaviors>
+                                        <DatePicker.Triggers>
+                                            <DataTrigger 
+							TargetType="DatePicker"
+							Binding="{Binding DataFim.IsValid}"
+							Value="False">
+                                                <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                                <Setter Property="behaviors:LineColorBehavior.ApplyLineColor" Value="{Binding DataFim.IsValid, Converter={StaticResource InverseBoolConverter}}"  />
+
+                                            </DataTrigger>
+                                        </DatePicker.Triggers>
+                                    </DatePicker>
+                                    <Label Text="{Binding DataFim.Errors, Converter={StaticResource FirstValidationErrorConverter}}" Style="{StaticResource ValidationErrorLabelStyle}" />
+                                </StackLayout>
+
+                                <StackLayout Spacing="1"  Grid.Column="1">
+                                    <Label  Text="Hora Partida:"  />
+                                    <TimePicker Time="{Binding HoraFim.Value, Mode=TwoWay}"   >
+
+
+                                        <TimePicker.Triggers>
+                                            <DataTrigger 
+							TargetType="TimePicker"
+							Binding="{Binding HoraFim.IsValid}"
+							Value="False">
+                                                <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                                <Setter Property="behaviors:LineColorBehavior.ApplyLineColor" Value="{Binding HoraFim.IsValid, Converter={StaticResource InverseBoolConverter}}"  />
+
+                                            </DataTrigger>
+                                        </TimePicker.Triggers>
+                                    </TimePicker>
+                                    <Label Text="{Binding HoraFim.Errors, Converter={StaticResource FirstValidationErrorConverter}}" Style="{StaticResource ValidationErrorLabelStyle}" />
+                                </StackLayout >
+                            </Grid>
+
+
+                        </StackLayout>
+                    </StackLayout>
+
+                </ScrollView>
+
+                <StackLayout Grid.Row="1" IsVisible="{Binding TabSelecionada, Converter={StaticResource IntToBoolConverter}, ConverterParameter=1 }">
+                    <StackLayout Spacing="1">
+                        <Label  Text="Comentário:"  />
+                        <Editor Text="{Binding Comentario.Value, Mode=TwoWay}" AutoSize="TextChanges">
+                            <Editor.Keyboard>
+                                <Keyboard x:FactoryMethod="Create">
+                                    <x:Arguments>
+                                        <KeyboardFlags>Suggestions</KeyboardFlags>
+                                    </x:Arguments>
+                                </Keyboard>
+                            </Editor.Keyboard>
+                           
+                            <Editor.Triggers>
+                                <DataTrigger 
+							TargetType="Editor"
+							Binding="{Binding Comentario.IsValid}"
+							Value="False">
+                                    <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                    <Setter Property="behaviors:LineColorBehavior.ApplyLineColor" Value="{Binding Comentario.IsValid, Converter={StaticResource InverseBoolConverter}}"  />
+
+                                </DataTrigger>
+                            </Editor.Triggers>
+                        </Editor>
+                        <Label Text="{Binding Comentario.Errors, Converter={StaticResource FirstValidationErrorConverter}}" Style="{StaticResource ValidationErrorLabelStyle}" />
+                    </StackLayout>
+
+                    <StackLayout Spacing="1"  HorizontalOptions="FillAndExpand" >
+                        <Label  Text="Avaliar"  />
+                        <Switch IsToggled="{Binding Avaliar}"  >
+                        </Switch>
+                    </StackLayout>
+
+                    <StackLayout Spacing="1"  HorizontalOptions="FillAndExpand" IsVisible="{Binding Avaliar}" >
+                        <controls:RatingBar x:Name="customRattingBar" HorizontalOptions="Center"  ImageWidth="25" ImageHeight="25"   SelectedStarValue="{Binding Nota}">
+                            <controls:RatingBar.EmptyStarImage>
+                                <FontImageSource Glyph="{Static helper:IconFont.StarOutline}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorSucesso }"/>
+                            </controls:RatingBar.EmptyStarImage>
+                            <controls:RatingBar.FillStarImage>
+                                <FontImageSource Glyph="{Static helper:IconFont.Star}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorSucesso }"/>
+                            </controls:RatingBar.FillStarImage>
+                        </controls:RatingBar>
+
+                    </StackLayout>
+
+
+
+                </StackLayout>
+
+                <Grid Grid.Row="1"  IsVisible="{Binding TabSelecionada, Converter={StaticResource IntToBoolConverter}, ConverterParameter=2 }">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Button Text="Adicionar Gasto" Grid.Row="0" Margin="10,0,10,0" Command="{Binding AdicionarGastoCommand}" ></Button>
+
+                    <ListView Grid.Row="1" VerticalOptions="FillAndExpand" SeparatorVisibility="Default" ItemsSource="{Binding Gastos}"
+                    CachingStrategy="RecycleElement" HasUnevenRows="True" SelectionMode="None"         
+                    >
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell >
+                                    <SwipeView >
+                                        <SwipeView.RightItems >
+                                            <SwipeItem Text="Remover Gasto"      
+                                       BackgroundColor="{StaticResource ErrorColor}" 
+                                                           CommandParameter="{Binding .}"
+                                                           Command="{Binding Path=BindingContext.RemoverGastoCommand, Source={x:Reference Name=ListagemPage}}"
+                                                           >
+                                                <SwipeItem.IconImageSource>
+                                                    <FontImageSource Glyph="{Static helper:IconFont.CashMinus}"
+                       FontFamily="{DynamicResource MaterialFontFamily }" 
+                       Color="{StaticResource CorFonte }"/>
+                                                </SwipeItem.IconImageSource>
+                                            </SwipeItem>
+                                        </SwipeView.RightItems>
+                                        <Grid ColumnSpacing="0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <StackLayout HorizontalOptions="Fill" Grid.Row="0" Grid.Column="0" Orientation="Horizontal" VerticalOptions="Center" Spacing="0" Padding="10,0,0,0" >
+                                                <Label Text="{Binding Descricao}"></Label>
+                                            </StackLayout>
+                                            <StackLayout HorizontalOptions="Fill" Grid.Row="1" Grid.Column="0" Orientation="Horizontal" VerticalOptions="Center" Spacing="0" Padding="10,0,0,0" >
+                                                <Label Text="Data: "></Label>
+                                                <Label Text="{Binding Data, StringFormat='{0:dd/MM/yyyy HH:mm}'}"></Label>
+                                            </StackLayout>
+                                            <StackLayout HorizontalOptions="Fill" Grid.Row="2" Grid.Column="0" Orientation="Horizontal" VerticalOptions="Center" Spacing="0" Padding="10,0,0,0" >
+                                                <Label Text="{Binding SiglaAtracaoPai}"></Label>
+                                                <Label Text="{Binding Valor, StringFormat='{0:N2}'}"></Label>
+                                            </StackLayout>
+
+                                        </Grid>
+                                    </SwipeView>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <ListView.Footer>
+                            <Label/>
+                        </ListView.Footer>
+                    </ListView>
+
+
+                </Grid>
+            </Grid>
+
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Text="Salvar" Grid.Column="0" Margin="10,0,10,0" Command="{Binding SalvarCommand}" ></Button>
+                <Button Text="Cancelar" Grid.Column="1" Margin="10,0,10,0" Command="{Binding CancelarCommand}" Style="{StaticResource BotaoInverso}" ></Button>
+            </Grid>
+
+            <ActivityIndicator 
+            Grid.Row="0"
+            Grid.RowSpan="3"
+            Color="{StaticResource SpinnerColor}"
+            IsRunning="{Binding IsBusy}"  
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Center"
+            HorizontalOptions="Center">
+                <ActivityIndicator.WidthRequest>
+                    <OnPlatform x:TypeArguments="x:Double">
+                        <On Platform="iOS, Android" Value="100" />
+                    </OnPlatform>
+                </ActivityIndicator.WidthRequest>
+            </ActivityIndicator>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

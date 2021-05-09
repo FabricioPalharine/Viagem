@@ -26,7 +26,7 @@ namespace CV.Data.Configuration
 			this.Property(i => i.Valor).HasColumnName("VL_ITEM").HasPrecision(9,2);
 			this.Property(i => i.Reembolsavel).HasColumnName("FL_REEMBOLSAVEL");
 			this.Property(i => i.Destinatario).HasColumnName("NM_DESTINATARIO");
-			this.HasRequired(i => i.ItemGastoCompra).WithMany().HasForeignKey(d=>d.IdentificadorGastoCompra);
+			
 			this.HasMany(i => i.Fotos).WithRequired().HasForeignKey(d=>d.IdentificadorItemCompra);
 			this.HasOptional(i => i.ItemListaCompra).WithMany().HasForeignKey(d=>d.IdentificadorListaCompra);
 			this.Property(i => i.IdentificadorUsuario).HasColumnName("ID_USUARIO");

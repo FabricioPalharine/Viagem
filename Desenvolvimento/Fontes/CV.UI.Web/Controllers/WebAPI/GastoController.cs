@@ -43,8 +43,6 @@ namespace CV.UI.Web.Controllers.WebAPI
                 item.ItemGasto = null;
             foreach (var item in itemGasto.Atracoes)
                 item.ItemGasto = null;
-            foreach (var item in itemGasto.Compras)
-                item.ItemGasto = null;
             foreach (var item in itemGasto.Hoteis)
                 item.ItemGasto = null;
             foreach (var item in itemGasto.ViagenAereas)
@@ -76,8 +74,6 @@ namespace CV.UI.Web.Controllers.WebAPI
                     item.ItemGasto = null;
                 foreach (var item in itemGasto.Atracoes)
                     item.ItemGasto = null;
-                foreach (var item in itemGasto.Compras)
-                    item.ItemGasto = null;
                 foreach (var item in itemGasto.Hoteis)
                     item.ItemGasto = null;
                 foreach (var item in itemGasto.ViagenAereas)
@@ -100,8 +96,6 @@ namespace CV.UI.Web.Controllers.WebAPI
             foreach (var item in itemGasto.Alugueis.Where(d => !d.DataExclusao.HasValue))
                 item.DataExclusao = DateTime.Now.ToUniversalTime();
             foreach (var item in itemGasto.Atracoes.Where(d => !d.DataExclusao.HasValue))
-                item.DataExclusao = DateTime.Now.ToUniversalTime();
-            foreach (var item in itemGasto.Compras.Where(d => !d.DataExclusao.HasValue))
                 item.DataExclusao = DateTime.Now.ToUniversalTime();
             foreach (var item in itemGasto.Hoteis.Where(d => !d.DataExclusao.HasValue))
                 item.DataExclusao = DateTime.Now.ToUniversalTime();
@@ -290,16 +284,6 @@ namespace CV.UI.Web.Controllers.WebAPI
             return biz.SelecionarAluguelGasto(Identificador);
         }
 
-        [HttpGet]
-        [Authorize]
-        [ActionName("getGastoCompra")]
-        public GastoCompra getGastoCompra(int Identificador)
-        {
-            ViagemBusiness biz = new ViagemBusiness();
-            var item = biz.SelecionarGastoCompra(Identificador);
-            item.ItemGasto.Compras = null;
-            item.ItensComprados = null;
-            return item;
-        }
+      
     }
 }

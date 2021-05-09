@@ -88,7 +88,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             itemResultado.Sucesso = biz.IsValid();
             itemResultado.Mensagens = biz.RetornarMensagens.ToArray();
                if (itemResultado.Sucesso)
-                itemResultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = MensagemBusiness.RetornaMensagens("Viagem_ExcluirReabastecimento_OK") } };
+                itemResultado.Mensagens = new MensagemErro[] { new MensagemErro() { Mensagem = MensagemBusiness.RetornaMensagens("Viagem_ExcluirRefeicao_OK") } };
 
             return itemResultado;
         }

@@ -43,7 +43,8 @@
 	        if (itemBase.Identificador && !vm.itemRefeicao.Pedidos && !vm.loading) {
 	            vm.loading = true;
 	            Refeicao.get({ id: itemBase.Identificador }, function (data) {
-	                vm.itemRefeicao = data;
+                    vm.itemRefeicao = data;
+                    vm.RefeicaoConcluida = data.DataTermino != null;
 	                angular.forEach($scope.$parent.itemRefeicao.ListaParticipantes, function (c) {
 	                    var item = jQuery.extend({}, c);
 	                    item.Selecionado = vm.itemRefeicao.Pedidos && $.grep(vm.itemRefeicao.Pedidos, function (e) {
@@ -58,7 +59,7 @@
 	                    }).length > 0;
 	                    vm.ListaParticipante.push(item);
                     });
-                    vm.RefeicaoConcluida = item.DataTermino != null;
+                  
 	                vm.RecarregarFotos();
 	                vm.loading = false;
 	            });
@@ -464,7 +465,7 @@
         vm.AjustarHoraTermino = function () {
             if (vm.RefeicaoConcluida) {
                 vm.itemRefeicao.DataTermino = moment(new Date()).format("YYYY-MM-DDTHH:mm:ss");
-                vm.itemAtritemRefeicaoacao.strHoraTermino = moment(new Date()).format("HH:mm:ss");
+                vm.itemRefeicao.strHoraTermino = moment(new Date()).format("HH:mm:ss");
 
             }
             else {

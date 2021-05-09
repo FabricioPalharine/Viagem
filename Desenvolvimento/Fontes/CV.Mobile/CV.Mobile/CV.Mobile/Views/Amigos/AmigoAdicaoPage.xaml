@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.Amigos.AmigoAdicaoPage"
+             Shell.PresentationMode="ModalAnimated"
+             Title="Adicionar Amigo"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:behaviors="clr-namespace:CV.Mobile.Behaviors"
+             ios:Page.UseSafeArea="true"
+             xmlns:viewModelBase="clr-namespace:CV.Mobile.ViewModels.Base"
+             viewModelBase:ViewModelLocator.AutoWireViewModel="true">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+
+            </Grid.RowDefinitions>
+            <StackLayout  HorizontalOptions="Start" VerticalOptions="Center">
+                <Label Text="Cadastrar Amigo"  Style="{StaticResource TituloLabelStyel}"></Label>
+            </StackLayout>
+            <StackLayout Grid.Row="1">
+                <StackLayout Spacing="1">
+                    <Label  Text="E-mail:"  />
+                    <Entry Text="{Binding EMail.Value, Mode=TwoWay}" MaxLength="100" Keyboard="Email" >
+
+                        <Entry.Behaviors>
+                            <behaviors:EventToCommandBehavior
+							EventName="TextChanged"
+							Command="{Binding MailChangedCommand}" />                           
+                        </Entry.Behaviors>
+                        <Entry.Triggers>
+                            <DataTrigger 
+							TargetType="Entry"
+							Binding="{Binding EMail.IsValid}"
+							Value="False">
+                                <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                <Setter Property="behaviors:LineColorBehavior.ApplyLineColor" Value="{Binding EMail.IsValid, Converter={StaticResource InverseBoolConverter}}"  />
+
+                            </DataTrigger>
+                        </Entry.Triggers>
+                    </Entry>
+                    <Label Text="{Binding EMail.Errors, Converter={StaticResource FirstValidationErrorConverter}}" Style="{StaticResource ValidationErrorLabelStyle}" />
+                </StackLayout>
+                <StackLayout Grid.Row="1">
+                    <StackLayout Spacing="1">
+                        <Label  Text="Nome:"  />
+                        <Entry Text="{Binding ItemAmigo.Nome, Mode=OneWay}" MaxLength="100" IsEnabled="False" ></Entry>
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Spacing="10">
+                    <Label Text="Permitir Visualizar Minhas Viagens (Seguidor)"  />
+                    <Switch IsToggled="{Binding Seguidor}"></Switch>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Spacing="10">
+                    <Label Text="Requisitar Permissão para Visualizar as suas Viagens(Seguido)"  />
+                    <Switch IsToggled="{Binding Seguido}"></Switch>
+                </StackLayout>
+            </StackLayout>
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Text="Salvar" Grid.Column="0" Margin="10,0,10,0" Command="{Binding SalvarCommand}" ></Button>
+                <Button Text="Cancelar" Grid.Column="1" Margin="10,0,10,0" Command="{Binding CancelarCommand}" Style="{StaticResource BotaoInverso}" ></Button>
+            </Grid>
+
+            <ActivityIndicator 
+            Grid.Row="0"
+            Grid.RowSpan="3"
+            Color="{StaticResource SpinnerColor}"
+            IsRunning="{Binding IsBusy}"  
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Center"
+            HorizontalOptions="Center">
+                <ActivityIndicator.WidthRequest>
+                    <OnPlatform x:TypeArguments="x:Double">
+                        <On Platform="iOS, Android" Value="100" />
+                    </OnPlatform>
+                </ActivityIndicator.WidthRequest>
+            </ActivityIndicator>
+
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

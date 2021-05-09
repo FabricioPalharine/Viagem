@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CV.Mobile.Views.Amigos.AmigosPage"
+             xmlns:viewModelBase="clr-namespace:CV.Mobile.ViewModels.Base"
+             viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+             xmlns:tabs="clr-namespace:Sharpnado.Presentation.Forms.CustomViews.Tabs;assembly=Sharpnado.Presentation.Forms"
+             xmlns:contents="clr-namespace:CV.Mobile.Views.Contents"
+             x:Name="ListagemPage"
+             xmlns:local_amigos="clr-namespace:CV.Mobile.Views.Amigos"
+             >
+    <ContentPage.Content>
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <tabs:TabHostView x:Name="TabHost"
+                      Grid.Row="0"
+                      SelectedIndex="{Binding IndiceTabSelecionada,Mode=TwoWay}">
+                <tabs:TabHostView.Tabs>
+                    <contents:CustomTabTextItem Style="{StaticResource TabStyle}"
+                                Label="Meus Amigos" >
+                    </contents:CustomTabTextItem>
+                    <contents:CustomTabTextItem Style="{StaticResource TabStyle}"
+                                Label="Requisições Pendentes" >
+                    </contents:CustomTabTextItem>
+
+                </tabs:TabHostView.Tabs>
+            </tabs:TabHostView>
+
+
+            <Grid Grid.Row="1" IsVisible="{Binding IndiceTabSelecionada, Converter={StaticResource IntToBoolConverter}, ConverterParameter=0 }">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <local_amigos:AmigoListaPage Visivel="{Binding Path=BindingContext.IndiceTabSelecionada, Source={x:Reference Name=ListagemPage}, Converter={StaticResource IntToBoolConverter}, ConverterParameter=0 }"></local_amigos:AmigoListaPage>
+            </Grid>
+            <Grid Grid.Row="1" IsVisible="{Binding IndiceTabSelecionada, Converter={StaticResource IntToBoolConverter}, ConverterParameter=1 }">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <local_amigos:AmigoRequisicaoPage  Visivel="{Binding Path=BindingContext.IndiceTabSelecionada, Source={x:Reference Name=ListagemPage}, Converter={StaticResource IntToBoolConverter}, ConverterParameter=1 }"></local_amigos:AmigoRequisicaoPage>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

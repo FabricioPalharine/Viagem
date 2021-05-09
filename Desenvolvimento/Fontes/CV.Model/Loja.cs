@@ -44,7 +44,6 @@ private void ValidarNome(Microsoft.Practices.EnterpriseLibrary.Validation.Valida
 
 			public string CodigoPlace { get; set; }
 
-			public IList<GastoCompra> Compras { get; set; }
 
 			public Viagem ItemViagem { get; set; }
 
@@ -60,7 +59,16 @@ private void ValidarNome(Microsoft.Practices.EnterpriseLibrary.Validation.Valida
 
 			public int? IdentificadorCidade { get; set; }
 
-			public Cidade ItemCidade { get; set; }
+        [NotNullValidator(MessageTemplateResourceName = "Loja_Data", MessageTemplateResourceType = typeof(MensagemModelo))]
+        public DateTime? Data { get; set; }
+
+        [NotNullValidator(MessageTemplateResourceName = "Loja_Valor", MessageTemplateResourceType = typeof(MensagemModelo))]
+        public decimal? Valor { get; set; }
+
+        [NotNullValidator(MessageTemplateResourceName = "Loja_Moeda", MessageTemplateResourceType = typeof(MensagemModelo))]
+        public int? Moeda { get; set; }
+
+        public Cidade ItemCidade { get; set; }
 		 public Loja Clone()
 		{
 			 return (Loja) this.MemberwiseClone();

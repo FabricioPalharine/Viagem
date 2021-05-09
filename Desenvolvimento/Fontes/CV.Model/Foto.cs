@@ -34,22 +34,7 @@ namespace CV.Model
 			public DateTime? Data { get; set; }
 
 			public string LinkThumbnail { get; set; }
-			[SelfValidation]
-private void ValidarLinkThumbnail(Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResults results)
-{
- if (LinkThumbnail == null)
-  {
-      Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult result =
-            new Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult(Resource.MensagemModelo.Foto_LinkThumbnail, this, "LinkThumbnail", null, null);
-      results.AddResult(result);
-  }
-  else if (LinkThumbnail.Length > 500)
-  {
-      Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult result =
-            new Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult(Resource.MensagemModelo.Foto_LinkThumbnail_Tamanho, this, "LinkThumbnail", null, null);
-      results.AddResult(result);
-  }
-}
+
 
 			public string LinkFoto { get; set; }
 			[SelfValidation]
@@ -61,12 +46,7 @@ private void ValidarLinkFoto(Microsoft.Practices.EnterpriseLibrary.Validation.Va
             new Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult(Resource.MensagemModelo.Foto_LinkFoto, this, "LinkFoto", null, null);
       results.AddResult(result);
   }
-  else if (LinkFoto.Length > 500)
-  {
-      Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult result =
-            new Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult(Resource.MensagemModelo.Foto_LinkFoto_Tamanho, this, "LinkFoto", null, null);
-      results.AddResult(result);
-  }
+  
 }
 
 			public string CodigoFoto { get; set; }
