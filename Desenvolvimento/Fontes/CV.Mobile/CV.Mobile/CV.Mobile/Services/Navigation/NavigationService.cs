@@ -29,7 +29,7 @@ namespace CV.Mobile.Services.Navigation
             
                 await Shell.Current.GoToAsync(Caminho);
                 //await Task.Delay(500);
-                if (Caminho != "..")
+                if (Caminho != ".." && Shell.Current.CurrentPage != null)
                     await (Shell.Current.CurrentPage.BindingContext as BaseViewModel).InitializeAsync(item);
            
         }

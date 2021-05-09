@@ -35,7 +35,7 @@ namespace CV.Mobile.iOS
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException; ;
             TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
-
+            Sharpnado.Presentation.Forms.iOS.SharpnadoInitializer.Initialize();
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

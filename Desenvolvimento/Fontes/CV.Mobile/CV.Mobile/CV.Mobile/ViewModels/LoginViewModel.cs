@@ -210,6 +210,7 @@ namespace CV.Mobile.ViewModels
 							UsuarioLogado itemUsuario = await _apiService.LogarUsuario(token);
 							if (itemUsuario != null && !string.IsNullOrEmpty(itemUsuario.CodigoGoogle))
 							{
+								itemUsuario.LinkFoto = user.Picture;
 								if (account == null)
 								{
 									e.Account.Username = itemUsuario.CodigoGoogle;

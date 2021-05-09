@@ -47,16 +47,30 @@
 			<string>Editor</string>
 		</dict>
 	</array>
-  <key>NSLocationWhenInUseUsageDescription</key>
-  <string>Favor liberar a utilização do GPS para marcarmos sua posição nos eventos</string>
-  <key>NSCameraUsageDescription</key>
-  <string>Favor liberar o uso da câmera para podermos tirar suas fotos</string>
-  <key>NSMicrophoneUsageDescription</key>
-  <string>Favor liberar o uso da câmera para podermos gravar seus vídeos</string>
-  <key>NSPhotoLibraryAddUsageDescription</key>
-  <string>Favor libera o aplicativo para gravarmos as suas mídias na galeria.</string>
-  <key>NSPhotoLibraryUsageDescription</key>
-  <string>Favor libera o aplicativo para acessarmos as suas mídias na galeria.</string>
-  
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Favor liberar a utilização do GPS para marcarmos sua posição nos eventos</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Favor liberar o uso da câmera para podermos tirar suas fotos</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Favor liberar o uso da câmera para podermos gravar seus vídeos</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Favor libera o aplicativo para gravarmos as suas mídias na galeria.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Favor libera o aplicativo para acessarmos as suas mídias na galeria.</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>materialdesignicons-webfont.ttf</string>
+	</array>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>MKDirectionsRequest</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.apple.maps.directionsrequest</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

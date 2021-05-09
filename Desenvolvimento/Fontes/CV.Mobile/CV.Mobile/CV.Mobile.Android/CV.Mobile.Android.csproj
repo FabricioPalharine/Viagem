@@ -16,7 +16,6 @@
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
-    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
     <TargetFrameworkVersion>v10.0</TargetFrameworkVersion>
     <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
     <AndroidUseAapt2>true</AndroidUseAapt2>
@@ -140,7 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CV.Mobile\CV.Mobile.csproj">
-      <Project>{53351F06-7C8A-4F7F-9C5F-78D2FE2A0568}</Project>
+      <Project>{82B43B43-A0B1-4DE2-A250-572BF0C9761F}</Project>
       <Name>CV.Mobile</Name>
     </ProjectReference>
   </ItemGroup>

@@ -18,14 +18,14 @@
             <ToolbarItem.IconImageSource>
                 <FontImageSource Glyph="{Static helper:IconFont.Filter}"
                        FontFamily="{DynamicResource MaterialFontFamily }" 
-                       Color="{StaticResource CorFonte }"/>
+                       Color="{StaticResource FundoTela }"/>
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
         <ToolbarItem   Command="{Binding IncluirCommand}" >
             <ToolbarItem.IconImageSource>
                 <FontImageSource Glyph="{Static helper:IconFont.Plus}"
                        FontFamily="{DynamicResource MaterialFontFamily }" 
-                       Color="{StaticResource CorFonte }"/>
+                       Color="{StaticResource FundoTela }"/>
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
     </ContentPage.ToolbarItems>

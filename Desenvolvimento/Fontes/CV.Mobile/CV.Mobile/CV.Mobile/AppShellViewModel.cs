@@ -3,12 +3,16 @@ using CV.Mobile.Models;
 using CV.Mobile.Resources;
 using CV.Mobile.Services.Api;
 using CV.Mobile.Services.Data;
+using CV.Mobile.Services.Fotos;
+using CV.Mobile.Services.GoogleToken;
 using CV.Mobile.Services.GPS;
+using CV.Mobile.Services.Settings;
 using CV.Mobile.Services.Sincronizacao;
 using CV.Mobile.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,27 +28,40 @@ namespace CV.Mobile
         private UsuarioLogado _itemUsuario = null;
         private bool _EdicaoViagem = false;
         private bool _VisualizarGastos = false;
-        private bool _GPSIniciado = false;
-        private bool _ViagemAberta = false;
+        private bool? _GPSIniciado = null;
+        private bool? _ViagemAberta = null;
         private bool _EdicaoDadoViagem = false;
         private bool _ViagemCarregada = false;
+        private bool? _exibirGPS = null;
+        private bool? _editarViagem = null;
 
         private readonly IDataService _dataService;
         private readonly IApiService _apiService;
         private readonly IDatabase _database;
         private readonly IGPSService _gps;
         private readonly ISincronizacao _sincronizacao;
+        private readonly ISettingsService _settingsService;
+        private readonly IFoto _foto;
+        private readonly IAccountSevice _accountSevice;
 
-        public AppShellViewModel(IDataService dataService, IApiService apiService, IDatabase database, IGPSService gPSService, ISincronizacao sincronizacao)
+        public AppShellViewModel(IDataService dataService, IApiService apiService, IDatabase database, IGPSService gPSService, ISincronizacao sincronizacao,
+            ISettingsService settingsService, IFoto foto, IAccountSevice accountSevice)
         {
             _dataService = dataService;
             _apiService = apiService;
             _database = database;
             _gps = gPSService;
             _sincronizacao = sincronizacao;
+            _settingsService = settingsService;
+            _accountSevice = accountSevice;
+            _foto = foto;
             MessagingCenter.Unsubscribe<ViewModels.Viagens.ViagemListaViewModel, Viagem>(this, MessageKeys.SelecionarViagem);
             MessagingCenter.Unsubscribe<ViewModels.Viagens.ViagemEdicaoViewModel, Viagem>(this, MessageKeys.SelecionarViagem);
             MessagingCenter.Subscribe<ViewModels.Viagens.ViagemListaViewModel, Viagem>(this, MessageKeys.SelecionarViagem, async (sender, arg) =>
+            {
+                await TrocarViagem(arg);
+            });
+            MessagingCenter.Subscribe<ViewModels.Viagens.ViagemCriacaoViewModel, Viagem>(this, MessageKeys.SelecionarViagem, async (sender, arg) =>
             {
                 await TrocarViagem(arg);
             });
@@ -96,10 +113,10 @@ namespace CV.Mobile
         {
             GlobalSetting.Instance.ViagemSelecionado = item;
             GlobalSetting.Instance.UsuarioLogado = usuarioLogado;
-            EdicaoViagem = EdicaoDadoViagem = ViagemSelecionada = VisualizarGastos = GPSIniciado = ViagemAberta = true;
+            EdicaoViagem = EdicaoDadoViagem = ViagemSelecionada = VisualizarGastos   = true;
             if (!usuarioLogado.IdentificadorViagem.HasValue)
             {
-                EdicaoViagem = EdicaoDadoViagem = ViagemSelecionada = VisualizarGastos = GPSIniciado = ViagemAberta = false;
+                EdicaoViagem = EdicaoDadoViagem = ViagemSelecionada = VisualizarGastos   = false;
             }
             else
             {
@@ -113,17 +130,18 @@ namespace CV.Mobile
                     GPSIniciado = usuarioLogado.PermiteEdicao && usuarioLogado.Aberto && item.ControlaPosicaoGPS;
                 }
                 else
-                {
-                    GPSIniciado = false;
+                { 
+                    
                     ViagemAberta = false;
                     VisualizarGastos = usuarioLogado.VerCustos;
-                    if (Funcoes.AcessoInternet)
-                    {
-                        GlobalSetting.Instance.AmigosViagem = new ObservableRangeCollection<Usuario>(await _apiService.CarregarParticipantesAmigo());
-                    }
+                    
 
                 }
-                if (GPSIniciado)
+                if (Funcoes.AcessoInternet)
+                {
+                    GlobalSetting.Instance.AmigosViagem = new ObservableRangeCollection<Usuario>(await _apiService.CarregarParticipantesAmigo());
+                }
+                if (GPSIniciado.GetValueOrDefault())
                     await _gps.IniciarGPS();
                 ViagemCarregada = true;
             }
@@ -150,7 +168,15 @@ namespace CV.Mobile
                 if (Online)
                 {
                     if (!_itemUsuario.IdentificadorViagem.HasValue || _itemUsuario.IdentificadorViagem != itemViagem.Identificador)
-                        ItemUsuario = await _apiService.SelecionarViagem(itemViagem.Identificador);
+                    {
+                        var itemUsuario = await _apiService.SelecionarViagem(itemViagem.Identificador);
+                        ItemUsuario.IdentificadorViagem = itemUsuario.IdentificadorViagem;
+                        ItemUsuario.Aberto = itemUsuario.Aberto;
+                        ItemUsuario.AuthenticationToken = itemUsuario.AuthenticationToken;
+                        ItemUsuario.NomeViagem = itemUsuario.NomeViagem;
+                        ItemUsuario.PermiteEdicao = itemUsuario.PermiteEdicao;
+                        ItemUsuario.VerCustos = itemUsuario.VerCustos;
+                    }
                     var viagemRemota = await _apiService.CarregarViagem(itemViagem.Identificador.GetValueOrDefault());
                     if (viagemRemota != null)     
                         _dataService.SincronizarParticipanteViagem(viagemRemota);
@@ -165,6 +191,11 @@ namespace CV.Mobile
                 }
 
                 await SelecionarViagem(ItemUsuario, itemViagem); ;
+            }
+            else
+            {
+                EdicaoViagem = EdicaoDadoViagem = ViagemSelecionada = VisualizarGastos   = false;
+
             }
         }
 
@@ -184,6 +215,14 @@ namespace CV.Mobile
                 SetProperty(ref _ViagemSelecionada, value);
             }
         }
+
+        public bool? EditarViagem
+        {
+            get { return _editarViagem; }
+            set { SetProperty(ref _editarViagem, value); }
+        }
+
+       
         public bool EdicaoViagem
         {
             get
@@ -224,7 +263,7 @@ namespace CV.Mobile
             }
         }
 
-        public bool GPSIniciado
+        public bool? GPSIniciado
         {
             get
             {
@@ -236,7 +275,7 @@ namespace CV.Mobile
             }
         }
 
-        public bool ViagemAberta
+        public bool? ViagemAberta
         {
             get
             {
@@ -259,16 +298,16 @@ namespace CV.Mobile
 
         public ICommand TrocarGPSCommand => new Command(async () =>
         {
-            if (ViagemAberta && EdicaoViagem)
+            if (ViagemAberta.GetValueOrDefault() && EdicaoViagem)
             {
-                if (GPSIniciado)
+                if (GPSIniciado.GetValueOrDefault())
                 {
                     await _gps.PararGPS();
                 }
                 else
                     await _gps.IniciarGPS();
                 GPSIniciado = !GPSIniciado;
-                GlobalSetting.Instance.ViagemSelecionado.ControlaPosicaoGPS = GPSIniciado;
+                GlobalSetting.Instance.ViagemSelecionado.ControlaPosicaoGPS = GPSIniciado.GetValueOrDefault();
                 await _database.SalvarViagemAsync(GlobalSetting.Instance.ViagemSelecionado);
             }
         });
@@ -276,7 +315,7 @@ namespace CV.Mobile
         {
             if ( EdicaoViagem)
             {
-                if (ViagemAberta)
+                if (ViagemAberta.GetValueOrDefault())
                 {
                     await _gps.PararGPS();
                     GPSIniciado = false;
@@ -286,8 +325,8 @@ namespace CV.Mobile
 
                 ViagemAberta = !ViagemAberta;
                 
-                GlobalSetting.Instance.ViagemSelecionado.Aberto = ViagemAberta;
-                GlobalSetting.Instance.ViagemSelecionado.ControlaPosicaoGPS = GPSIniciado;
+                GlobalSetting.Instance.ViagemSelecionado.Aberto = ViagemAberta.GetValueOrDefault();
+                GlobalSetting.Instance.ViagemSelecionado.ControlaPosicaoGPS = GPSIniciado.GetValueOrDefault();
                 if (Funcoes.AcessoInternet)
                 {
                     await _apiService.SalvarViagemSimples(GlobalSetting.Instance.ViagemSelecionado);
@@ -329,11 +368,46 @@ namespace CV.Mobile
                     itemUpload.DataArquivo = DateTime.Now;
                     itemUpload.file = file;
                     itemUpload.CaminhoLocal = file.FullPath;
-                    await NavigationService.TrocarPaginaShell("ComentarioFotoPage", itemUpload);
+                    SalvarFoto(itemUpload);
                 }
 
             }
         });
+
+        private async void SalvarFoto(UploadFoto itemUpload)
+        {
+            
+                string configuracao = itemUpload.Video ? _settingsService.ModoVideo : _settingsService.ModoImagem;
+                //imagemUpload.Comentario = Texto.Value;
+                if (Funcoes.AcessoInternet && (configuracao == "1" || (configuracao == "2" && Funcoes.AcessoRede)))
+                {
+                    UploadFoto(itemUpload);
+                }
+                else
+                {
+                    await _database.SalvarUploadFoto(itemUpload);
+                }
+                
+
+            }
+
+        private async void UploadFoto(UploadFoto itemUpload)
+        {
+            var usuario = (await SecureStorageAccountStore.FindAccountsForServiceAsync(GlobalSetting.AppName)).FirstOrDefault();
+            await _accountSevice.AtualizarToken();
+
+            var stream = await itemUpload.file.OpenReadAsync();
+            using (var newStream = new MemoryStream())
+            {
+                await stream.CopyToAsync(newStream);
+                byte[] DadosFoto = newStream.ToArray();
+
+                await _foto.SubirFoto(usuario.Properties["access_token"], GlobalSetting.Instance.ViagemSelecionado.CodigoAlbum, DadosFoto, itemUpload);
+                await _apiService.SubirImagem(itemUpload);
+
+            }
+        }
+    
 
         private async Task AtualizarPosicao(UploadFoto itemUpload)
         {
@@ -346,3 +420,4 @@ namespace CV.Mobile
         }
     }
 }
+

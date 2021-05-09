@@ -13,11 +13,12 @@ namespace CV.Mobile.Converters
         {
             if (!(value is bool) || parameter == null)
             {
-                throw new InvalidOperationException("The target must be a boolean");
+                return string.Empty;
             }
             string[] parametros = System.Convert.ToString(parameter).Split('|');
-
+            if (parametros.Length > 1)
             return (bool)value ? parametros[1] : parametros[0];
+            return (bool)value ? parametros[0] : string.Empty;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

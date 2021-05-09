@@ -17,7 +17,7 @@
             <ToolbarItem.IconImageSource>
                 <FontImageSource Glyph="{Static helper:IconFont.MapCheck}"
                        FontFamily="{DynamicResource MaterialFontFamily }" 
-                       Color="{StaticResource CorFonte }"/>
+                       Color="{StaticResource FundoTela }"/>
 
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
@@ -25,7 +25,7 @@
             <ToolbarItem.IconImageSource>
                 <FontImageSource Glyph="{Static helper:IconFont.CloseBox}"
                        FontFamily="{DynamicResource MaterialFontFamily }" 
-                       Color="{StaticResource CorFonte }"/>
+                       Color="{StaticResource FundoTela }"/>
 
             </ToolbarItem.IconImageSource>
         </ToolbarItem>

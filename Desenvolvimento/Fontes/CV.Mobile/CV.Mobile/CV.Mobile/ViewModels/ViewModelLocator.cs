@@ -109,6 +109,7 @@ namespace CV.Mobile.ViewModels.Base
             _container.Register<Refeicoes.RefeicaoFiltroViewModel>();
             _container.Register<Refeicoes.RefeicaoListaViewModel>();
             _container.Register<Viagens.ViagemEdicaoViewModel>();
+            _container.Register<Viagens.ViagemCriacaoViewModel>();
             _container.Register<Viagens.ViagemFiltroViewModel>();
             _container.Register<Viagens.ViagemListaViewModel>();
             _container.Register<Consultas.ConsultaFotoDetalheViewModel>();
