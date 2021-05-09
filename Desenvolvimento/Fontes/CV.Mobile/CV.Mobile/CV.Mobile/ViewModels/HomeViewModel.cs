@@ -27,7 +27,7 @@ namespace CV.Mobile.ViewModels
 
         public ICommand CriarViagemCommand => new Command(async () =>
         {
-            string Caminho = "///ViagemEdicaoPage?NovaViagem=True";
+            string Caminho = "/ViagemCriacaoPage";
             await NavigationService.TrocarPaginaShell(Caminho, null);
 
 

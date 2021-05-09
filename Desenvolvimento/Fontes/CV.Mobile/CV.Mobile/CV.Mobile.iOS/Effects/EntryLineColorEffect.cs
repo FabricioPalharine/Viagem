@@ -62,11 +62,14 @@ namespace CV.Mobile.iOS.Effects
 
         private void UpdateLineColor()
         {
-            UITextField textField = control as UITextField;
-            BorderLineLayer lineLayer = control.Layer.Sublayers.OfType<BorderLineLayer>()
-                                                             .FirstOrDefault();
 
-            
+            if (control != null)
+            {
+                UITextField textField = control as UITextField;
+                BorderLineLayer lineLayer = control.Layer.Sublayers.OfType<BorderLineLayer>()
+                                                                 .FirstOrDefault();
+
+
                 if (lineLayer == null)
                 {
                     lineLayer = new BorderLineLayer();
@@ -79,11 +82,11 @@ namespace CV.Mobile.iOS.Effects
 
                 lineLayer.Frame = new CGRect(0f, Control.Frame.Height - 1f, Control.Bounds.Width, 1f);
                 lineLayer.BorderColor = LineColorBehavior.GetLineColor(Element).ToCGColor();
-                
+
                 if (textField != null)
                     control.TintColor = textField.TextColor;
 
-            
+            }
         }
 
         private class BorderLineLayer : CALayer

@@ -17,6 +17,8 @@
        xmlns:helper="clr-namespace:CV.Mobile.Helper"
        xmlns:converter="clr-namespace:CV.Mobile.Converters"
        viewModelBase:ViewModelLocator.AutoWireViewModel="true"
+       BackgroundColor="White"
+       FlyoutBackgroundColor="White"       
        x:Class="CV.Mobile.AppShellPage">
 
     <!--
@@ -97,7 +99,7 @@
         <FlyoutItem.Icon>
             <FontImageSource Glyph="{Static helper:IconFont.Home}"
                        FontFamily="{DynamicResource MaterialFontFamily }" 
-                       Color="{StaticResource CorFonte }"/>
+                       Color="{StaticResource CorDestaque }"/>
         </FlyoutItem.Icon>
         <ShellContent Route="HomePage" ContentTemplate="{DataTemplate local:HomePage}" />
     </FlyoutItem>
@@ -105,22 +107,22 @@
         <FlyoutItem.Icon>
             <FontImageSource Glyph="{Static helper:IconFont.BagPersonal}"
                        FontFamily="{DynamicResource MaterialFontFamily }" 
-                       Color="{StaticResource CorFonte }"/>
+                       Color="{StaticResource CorDestaque }"/>
         </FlyoutItem.Icon>
         <ShellContent Route="ViagemEdicaoPage" ContentTemplate="{DataTemplate local_viagem:ViagemEdicaoPage}" />
     </FlyoutItem>
-    <MenuItem Text="Fotos" StyleClass="MenuItemLayoutStyle" Command="{Binding FotosCommand}"  IsEnabled="{Binding EdicaoViagem}"  >
+    <MenuItem  Text="{Binding EdicaoViagem, ConverterParameter='Fotos', Converter={StaticResource BoolTextoConverter}}" StyleClass="MenuItemLayoutStyle" Command="{Binding FotosCommand}"   >
         <MenuItem.IconImageSource>
             <FontImageSource Glyph="{Static helper:IconFont.Camera}"
                        FontFamily="{DynamicResource MaterialFontFamily }" 
-                       Color="{StaticResource CorFonte }"/>
+                       Color="{StaticResource CorDestaque }"/>
         </MenuItem.IconImageSource>
     </MenuItem>
     <FlyoutItem Title="Dinheiro" IsVisible="{Binding EdicaoViagem}" >
         <FlyoutItem.Icon>
             <FontImageSource Glyph="{Static helper:IconFont.WalletOutline}"
                        FontFamily="{DynamicResource MaterialFontFamily }" 
-                       Color="{StaticResource CorFonte }"/>
+                       Color="{StaticResource CorDestaque }"/>
         </FlyoutItem.Icon>
         <ShellContent Route="MoedaListaPage" ContentTemplate="{DataTemplate local_moeda:MoedaListaPage}" />
     </FlyoutItem>
@@ -128,7 +130,7 @@
         <FlyoutItem.Icon>
             <FontImageSource Glyph="{Static helper:IconFont.CashMinus}"
                        FontFamily="{DynamicResource MaterialFontFamily }" 
-                       Color="{StaticResource CorFonte }"/>
+                       Color="{StaticResource CorDestaque }"/>
         </FlyoutItem.Icon>
         <ShellContent Route="GastoListaPage" ContentTemplate="{DataTemplate local_gasto:GastoListaPage}" />
     </FlyoutItem>
@@ -136,7 +138,7 @@
         <FlyoutItem.Icon>
             <FontImageSource Glyph="{Static helper:IconFont.StadiumVariant}"
                        FontFamily="{DynamicResource MaterialFontFamily }" 
-                       Color="{StaticResource CorFonte }"/>
+                       Color="{StaticResource CorDestaque }"/>
         </FlyoutItem.Icon>
         <ShellContent Route="AtracaoListaPage" ContentTemplate="{DataTemplate local_atracao:AtracaoListaPage}" />
     </FlyoutItem>
@@ -144,7 +146,7 @@
         <FlyoutItem.Icon>
             <FontImageSource Glyph="{Static helper:IconFont.OfficeBuilding}"
                        FontFamily="{DynamicResource MaterialFontFamily }" 
-                       Color="{StaticResource CorFonte }"/>
+                       Color="{StaticResource CorDestaque }"/>
         </FlyoutItem.Icon>
         <ShellContent Route="HotelListaPage" ContentTemplate="{DataTemplate local_hotel:HotelListaPage}" />
     </FlyoutItem>
@@ -152,7 +154,7 @@
         <FlyoutItem.Icon>
             <FontImageSource Glyph="{Static helper:IconFont.Food}"
                        FontFamily="{DynamicResource MaterialFontFamily }" 
-                       Color="{StaticResource CorFonte }"/>
+                       Color="{StaticResource CorDestaque }"/>
         </FlyoutItem.Icon>
         <ShellContent Route="RefeicaoListaPage" ContentTemplate="{DataTemplate local_refeicao:RefeicaoListaPage}" />
     </FlyoutItem>
@@ -161,7 +163,7 @@
         <FlyoutItem.Icon>
             <FontImageSource Glyph="{Static helper:IconFont.AirplaneTakeoff}"
                        FontFamily="{DynamicResource MaterialFontFamily }" 
-                       Color="{StaticResource CorFonte }"/>
+                       Color="{StaticResource CorDestaque }"/>
         </FlyoutItem.Icon>
         <ShellContent Route="DeslocamentoListaPage" ContentTemplate="{DataTemplate local_deslocamento:DeslocamentoListaPage}" />
     </FlyoutItem>
@@ -169,98 +171,115 @@
         <FlyoutItem.Icon>
             <FontImageSource Glyph="{Static helper:IconFont.Comment}"
                        FontFamily="{DynamicResource MaterialFontFamily }" 
-                       Color="{StaticResource CorFonte }"/>
+                       Color="{StaticResource CorDestaque }"/>
         </FlyoutItem.Icon>
         <ShellContent Route="ComentarioListaPage" ContentTemplate="{DataTemplate local_comentario:ComentarioListaPage}" />
     </FlyoutItem>
 
-    <MenuItem Text="{Binding GPSIniciado, Converter={StaticResource BoolTextoConverter}, ConverterParameter=Iniciar GPS|Parar GPS} " IsEnabled="{Binding ViagemAberta}" StyleClass="MenuItemLayoutStyle" Command="{Binding TrocarGPSCommand}"  >
+    <MenuItem Text="{Binding GPSIniciado, Converter={StaticResource BoolTextoConverter}, ConverterParameter=Iniciar GPS|Parar GPS} "  StyleClass="MenuItemLayoutStyle" Command="{Binding TrocarGPSCommand}"  >
 
     </MenuItem>
-    <MenuItem Text="{Binding ViagemAberta, Converter={StaticResource BoolTextoConverter}, ConverterParameter=Abrir Viagem|Fechar Viagem}"  IsEnabled="{Binding EdicaoViagem}" StyleClass="MenuItemLayoutStyle" Command="{Binding TrocarSituacaoCommand}" >
+    <MenuItem Text="{Binding ViagemAberta, Converter={StaticResource BoolTextoConverter}, ConverterParameter=Abrir Viagem|Fechar Viagem}"  StyleClass="MenuItemLayoutStyle" Command="{Binding TrocarSituacaoCommand}" >
     </MenuItem>
 
-    <MenuItem Text="Sincronizar" StyleClass="MenuItemLayoutStyle" Command="{Binding SincronizarCommand}"  IsEnabled="{Binding EdicaoViagem}">
+    <MenuItem Text="{Binding EdicaoViagem, ConverterParameter='Sincronizar', Converter={StaticResource BoolTextoConverter}}" StyleClass="MenuItemLayoutStyle" Command="{Binding SincronizarCommand}" >
         <MenuItem.IconImageSource>
             <FontImageSource Glyph="{Static helper:IconFont.SyncCircle}"
                        FontFamily="{DynamicResource MaterialFontFamily }" 
-                       Color="{StaticResource CorFonte }"/>
+                       Color="{StaticResource CorDestaque }"/>
         </MenuItem.IconImageSource>
     </MenuItem>
 
-    <FlyoutItem Title="Consultas"  FlyoutDisplayOptions="AsMultipleItems" IsVisible="{Binding ViagemSelecionada}"  >
-
-        <ShellContent Title="Acerto Conta"  Route="AcertoContaPage" IsVisible="{Binding EdicaoViagem}"              
-                      ContentTemplate="{DataTemplate local_consultas:AcertoContaPage}">
-            <ShellContent.Icon>
+    <FlyoutItem Title="Acerto Conta"   IsVisible="{Binding ViagemSelecionada}"  >
+        <FlyoutItem.Icon>
                 <FontImageSource Glyph="{Static helper:IconFont.BankTransfer}"
                        FontFamily="{DynamicResource MaterialFontFamily }" 
-                       Color="{StaticResource CorFonte }"/>
-            </ShellContent.Icon>
+                       Color="{StaticResource CorDestaque }"/>
+            </FlyoutItem.Icon>
+        <ShellContent  Route="AcertoContaPage" IsVisible="{Binding EdicaoViagem}"              
+                      ContentTemplate="{DataTemplate local_consultas:AcertoContaPage}">
+            
         </ShellContent>
-        <ShellContent Title="Extrato"  Route="ExtratoDinheiro" IsVisible="{Binding EdicaoViagem}"                             
-                      ContentTemplate="{DataTemplate local_consultas:ExtratoDinheiroPage}">
-            <ShellContent.Icon>
+    </FlyoutItem>
+    <FlyoutItem IsVisible="{Binding ViagemSelecionada}" Title="Extrato">
+        <FlyoutItem.Icon>
                 <FontImageSource Glyph="{Static helper:IconFont.CashCheck}"
                        FontFamily="{DynamicResource MaterialFontFamily }" 
-                       Color="{StaticResource CorFonte }"/>
-            </ShellContent.Icon>
-        </ShellContent>
-        <ShellContent Title="Relatório Gastos"  Route="RelatorioGastoPage"  IsVisible="{Binding VisualizarGastos}"                            
-                      ContentTemplate="{DataTemplate local_consultas:RelatorioGastoPage}">
-            <ShellContent.Icon>
+                       Color="{StaticResource CorDestaque }"/>
+            </FlyoutItem.Icon>
+        <ShellContent   Route="ExtratoDinheiro" IsVisible="{Binding EdicaoViagem}"                             
+                      ContentTemplate="{DataTemplate local_consultas:ExtratoDinheiroPage}">
+            
+        </ShellContent> </FlyoutItem>
+    <FlyoutItem IsVisible="{Binding ViagemSelecionada}" Title="Relatório Gastos"  >
+        <FlyoutItem.Icon>
                 <FontImageSource Glyph="{Static helper:IconFont.Finance}"
                        FontFamily="{DynamicResource MaterialFontFamily }" 
-                       Color="{StaticResource CorFonte }"/>
-            </ShellContent.Icon>
-        </ShellContent>
-        <ShellContent Title="Calendário"  Route="CalendarioRealizadoPage"                    
-                      ContentTemplate="{DataTemplate local_consultas:CalendarioRealizadoPage}">
-            <ShellContent.Icon>
+                       Color="{StaticResource CorDestaque }"/>
+            </FlyoutItem.Icon>
+        <ShellContent Route="RelatorioGastoPage"  IsVisible="{Binding VisualizarGastos}"                            
+                      ContentTemplate="{DataTemplate local_consultas:RelatorioGastoPage}">
+            
+        </ShellContent> </FlyoutItem>
+    <FlyoutItem IsVisible="{Binding ViagemSelecionada}"  Title="Calendário">
+        <FlyoutItem.Icon>
                 <FontImageSource Glyph="{Static helper:IconFont.Calendar}"
                        FontFamily="{DynamicResource MaterialFontFamily }" 
-                       Color="{StaticResource CorFonte }"/>
-            </ShellContent.Icon>
-        </ShellContent>
-        <ShellContent Title="Locais"  Route="LocaisPage"                    
-                      ContentTemplate="{DataTemplate local_consultas:LocaisPage}">
-            <ShellContent.Icon>
+                       Color="{StaticResource CorDestaque }"/>
+            </FlyoutItem.Icon>
+        <ShellContent  Route="CalendarioRealizadoPage"                    
+                      ContentTemplate="{DataTemplate local_consultas:CalendarioRealizadoPage}">
+            
+        </ShellContent> </FlyoutItem>
+    <FlyoutItem IsVisible="{Binding ViagemSelecionada}" Title="Locais">
+         <FlyoutItem.Icon>
                 <FontImageSource Glyph="{Static helper:IconFont.MapMarker}"
                        FontFamily="{DynamicResource MaterialFontFamily }" 
-                       Color="{StaticResource CorFonte }"/>
-            </ShellContent.Icon>
-        </ShellContent>
-        <ShellContent Title="Timeline"  Route="TimelinePage"                    
-                      ContentTemplate="{DataTemplate local_consultas:TimelinePage}">
-            <ShellContent.Icon>
+                       Color="{StaticResource CorDestaque }"/>
+            </FlyoutItem.Icon>
+        <ShellContent   Route="LocaisPage"                    
+                      ContentTemplate="{DataTemplate local_consultas:LocaisPage}">
+           
+        </ShellContent> </FlyoutItem>
+    <FlyoutItem IsVisible="{Binding ViagemSelecionada}" Title="Timeline">
+        <FlyoutItem.Icon>
                 <FontImageSource Glyph="{Static helper:IconFont.TimelineClockOutline}"
                        FontFamily="{DynamicResource MaterialFontFamily }" 
-                       Color="{StaticResource CorFonte }"/>
-            </ShellContent.Icon>
-        </ShellContent>
-        <ShellContent Title="Fotos"  Route="GaleriaFotoPage"                    
-                      ContentTemplate="{DataTemplate local_consultas:GaleriaFotoPage}">
-            <ShellContent.Icon>
+                       Color="{StaticResource CorDestaque }"/>
+            </FlyoutItem.Icon>
+        <ShellContent   Route="TimelinePage"                    
+                      ContentTemplate="{DataTemplate local_consultas:TimelinePage}">
+            
+        </ShellContent> </FlyoutItem>
+    <FlyoutItem IsVisible="{Binding ViagemSelecionada}" Title="Galeria"  >
+        <FlyoutItem.Icon>
                 <FontImageSource Glyph="{Static helper:IconFont.ImageAlbum}"
                        FontFamily="{DynamicResource MaterialFontFamily }" 
-                       Color="{StaticResource CorFonte }"/>
-            </ShellContent.Icon>
-        </ShellContent>
-        <ShellContent Title="Pontos Mapa"  Route="MapaConsultaPage"                    
-                      ContentTemplate="{DataTemplate local_consultas:ConsultaMapaPage}">
-            <ShellContent.Icon>
+                       Color="{StaticResource CorDestaque }"/>
+            </FlyoutItem.Icon>
+        <ShellContent Route="GaleriaFotoPage"                    
+                      ContentTemplate="{DataTemplate local_consultas:GaleriaFotoPage}">
+            
+        </ShellContent> </FlyoutItem>
+    <FlyoutItem IsVisible="{Binding ViagemSelecionada}" Title="Pontos Mapa">
+        <FlyoutItem.Icon>
                 <FontImageSource Glyph="{Static helper:IconFont.MapClock}"
                        FontFamily="{DynamicResource MaterialFontFamily }" 
-                       Color="{StaticResource CorFonte }"/>
-            </ShellContent.Icon>
-        </ShellContent>
-        <ShellContent Title="Resumo"  Route="ResumoPage"                    
-                      ContentTemplate="{DataTemplate local_consultas:ResumoPage}">
-            <ShellContent.Icon>
+                       Color="{StaticResource CorDestaque }"/>
+            </FlyoutItem.Icon>
+        <ShellContent   Route="MapaConsultaPage"                    
+                      ContentTemplate="{DataTemplate local_consultas:ConsultaMapaPage}">
+            
+        </ShellContent> </FlyoutItem>
+    <FlyoutItem IsVisible="{Binding ViagemSelecionada}" Title="Resumo" >
+        <FlyoutItem.Icon>
                 <FontImageSource Glyph="{Static helper:IconFont.ChartLineVariant}"
                        FontFamily="{DynamicResource MaterialFontFamily }" 
-                       Color="{StaticResource CorFonte }"/>
-            </ShellContent.Icon>
+                       Color="{StaticResource CorDestaque }"/>
+            </FlyoutItem.Icon>
+        <ShellContent  Route="ResumoPage"                    
+                      ContentTemplate="{DataTemplate local_consultas:ResumoPage}">
+            
         </ShellContent>
 
     </FlyoutItem>
@@ -280,16 +299,17 @@
 
     <Shell.FlyoutHeaderTemplate>
         <DataTemplate>
-            <StackLayout Orientation="Horizontal">
+            <StackLayout Orientation="Horizontal" BackgroundColor="White" HeightRequest="50">
                 <Image Aspect="AspectFill" HeightRequest ="40" WidthRequest="40" Source="{Binding ItemUsuario.LinkFoto}"  />
-                <Label Text="{Binding ItemUsuario.Nome}" YAlign="Start" Font="Medium"  />
+                <Label Text="{Binding ItemUsuario.Nome}" YAlign="Start" Font="Medium" TextColor="{StaticResource CorDestaque}" VerticalTextAlignment="Center"  />
+
             </StackLayout>
         </DataTemplate>
     </Shell.FlyoutHeaderTemplate>
 
     <Shell.MenuItemTemplate>
         <DataTemplate>
-            <Grid ColumnDefinitions="0.25*,0.75*" IsVisible="{Binding IsEnabled}">
+            <Grid ColumnDefinitions="50,*" IsVisible="{Binding Text, Converter={StaticResource StringNullOrEmptyBoolConverter}}" BackgroundColor="White">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="32"></RowDefinition>
                 </Grid.RowDefinitions>
@@ -297,7 +317,7 @@
                        Margin="14,0,0,0"
                        HeightRequest="24"/>
                 <Label Grid.Column="1" TextColor="{StaticResource Primary}" HeightRequest="24"
-                       Text="{Binding Text}"  Font="Medium"               
+                       Text="{Binding Text}"  Font="Medium" HorizontalTextAlignment="Start"              
                        VerticalTextAlignment="Center" />
             </Grid>
         </DataTemplate>

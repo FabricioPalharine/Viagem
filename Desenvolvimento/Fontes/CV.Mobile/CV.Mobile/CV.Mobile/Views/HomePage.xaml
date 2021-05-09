@@ -14,7 +14,7 @@
                 <RowDefinition Height="0.25*"></RowDefinition>
                 <RowDefinition Height="0.25*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Frame Grid.Row="0" Grid.Column="0" CornerRadius="10" BackgroundColor="{StaticResource Primary}" Margin="20,0,20,0" HorizontalOptions="FillAndExpand" VerticalOptions="Center"   HasShadow="True" Padding="0" >
+            <Frame Grid.Row="0" Grid.Column="0" CornerRadius="10" BackgroundColor="{StaticResource Primary}" Margin="20,0,20,0" HorizontalOptions="FillAndExpand" VerticalOptions="Center"   HasShadow="False" Padding="0" >
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding CriarViagemCommand}"/>
                 </Frame.GestureRecognizers>
@@ -26,7 +26,7 @@
                 </StackLayout>
             </Frame>
 
-            <Frame Grid.Row="1" Grid.Column="0" CornerRadius="10" BackgroundColor="{StaticResource Primary}" Margin="20,0,20,0" HorizontalOptions="FillAndExpand" VerticalOptions="Center"   HasShadow="True" Padding="0" >
+            <Frame Grid.Row="1" Grid.Column="0" CornerRadius="10" BackgroundColor="{StaticResource Primary}" Margin="20,0,20,0" HorizontalOptions="FillAndExpand" VerticalOptions="Center"   HasShadow="False" Padding="0" >
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding SelecionarViagemCommand}"/>
                 </Frame.GestureRecognizers>
@@ -37,7 +37,7 @@
                   
                 </StackLayout>
             </Frame>
-            <Frame Grid.Row="2" Grid.Column="0" CornerRadius="10" BackgroundColor="{StaticResource Primary}" Margin="20,0,20,0" HorizontalOptions="FillAndExpand" VerticalOptions="Center"   HasShadow="True" Padding="0" >
+            <Frame Grid.Row="2" Grid.Column="0" CornerRadius="10" BackgroundColor="{StaticResource Primary}" Margin="20,0,20,0" HorizontalOptions="FillAndExpand" VerticalOptions="Center"   HasShadow="False" Padding="0" >
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding ConfiguracoesCommand}"/>
                 </Frame.GestureRecognizers>
@@ -48,7 +48,7 @@
 
                 </StackLayout>
             </Frame>
-            <Frame Grid.Row="3" Grid.Column="0" CornerRadius="10" BackgroundColor="{StaticResource Primary}" Margin="20,0,20,0" HorizontalOptions="FillAndExpand" VerticalOptions="Center"   HasShadow="True" Padding="0" >
+            <Frame Grid.Row="3" Grid.Column="0" CornerRadius="10" BackgroundColor="{StaticResource Primary}" Margin="20,0,20,0" HorizontalOptions="FillAndExpand" VerticalOptions="Center"   HasShadow="False" Padding="0" >
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding AmigosCommand}"/>
                 </Frame.GestureRecognizers>

@@ -61,7 +61,7 @@ namespace CV.Mobile
             Routing.RegisterRoute(nameof(ConsultaMapaFiltroPage), typeof(ConsultaMapaFiltroPage));
 
             Routing.RegisterRoute(nameof(ComentarioFotoPage), typeof(ComentarioFotoPage));
-
+            Routing.RegisterRoute(nameof(ViagemCriacaoPage), typeof(ViagemCriacaoPage));
             Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
             Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
 

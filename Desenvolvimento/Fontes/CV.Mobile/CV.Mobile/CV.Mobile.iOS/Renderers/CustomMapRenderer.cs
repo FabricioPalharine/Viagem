@@ -23,6 +23,8 @@ namespace CV.Mobile.iOS.Renderers
     public class CustomMapRenderer : MapRenderer
     {
         private bool _isLoaded;
+        private const string AnnotationIdentifier = "TKCustomAnnotation";
+        private const string AnnotationIdentifierDefaultPin = "TKCustomAnnotationDefaultPin";
 
         //UIView customPinView;
         IEnumerable<CustomPin> customPins;
@@ -36,7 +38,7 @@ namespace CV.Mobile.iOS.Renderers
             {
                 e.OldElement.PropertyChanged -= OnMapPropertyChanged;
                 this.nativeMap.MapLoaded -= MapLoaded;
-
+                this.nativeMap.GetViewForAnnotation = null;
                 nativeMap = Control as MKMapView;
             }
 
@@ -45,6 +47,7 @@ namespace CV.Mobile.iOS.Renderers
                 formsMap = (CustomMap)e.NewElement;
                 nativeMap = Control as MKMapView;
                 customPins = formsMap.CustomPins;
+                this.nativeMap.GetViewForAnnotation = this.GetViewForAnnotation;
                 this.nativeMap.MapLoaded += MapLoaded;
 
             }
@@ -135,6 +138,47 @@ namespace CV.Mobile.iOS.Renderers
                 this.UpdatePins(false);
             }
         }
+        public new MKAnnotationView GetViewForAnnotation(MKMapView mapView, IMKAnnotation annotation)
+        {
+            var customAnnotation = annotation as TKCustomMapAnnotation;
+
+            if (customAnnotation == null) return null;
+
+            MKAnnotationView annotationView;
+            if (customAnnotation.CustomPin.ImageSource != null)
+                annotationView = mapView.DequeueReusableAnnotation(AnnotationIdentifier);
+            else
+                annotationView = mapView.DequeueReusableAnnotation(AnnotationIdentifierDefaultPin);
+
+            if (annotationView == null)
+            {
+                if (customAnnotation.CustomPin.ImageSource != null)
+                {
+                    annotationView = new MKAnnotationView(customAnnotation, AnnotationIdentifier);
+                    //annotationView.Layer.AnchorPoint = new CGPoint(customAnnotation.CustomPin.Anchor.X, customAnnotation.CustomPin.Anchor.Y);
+                }
+                else
+                    annotationView = new MKPinAnnotationView(customAnnotation, AnnotationIdentifierDefaultPin);
+            }
+            else
+            {
+                annotationView.Annotation = customAnnotation;
+            }
+            //annotationView.CanShowCallout = customAnnotation.CustomPin.ShowCallout;
+           
+            //this.SetAnnotationViewVisibility(annotationView, customAnnotation.CustomPin);
+            this.UpdateImage(annotationView, customAnnotation.CustomPin);
+            
+            return annotationView;
+        }
+
+        private void SetAnnotationViewVisibility(MKAnnotationView annotationView, CustomPin pin)
+        {
+           // annotationView.Hidden = !pin.IsVisible;
+           // annotationView.UserInteractionEnabled = pin.IsVisible;
+           // annotationView.Enabled = pin.IsVisible;
+        }
+
 
         private void OnPinPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -249,6 +293,14 @@ namespace CV.Mobile.iOS.Renderers
         public TKCustomMapAnnotation(CustomPin pin)
         {
             this._formsPin = pin;
+        }
+
+        public override string Title
+        {
+            get
+            {
+                return this._formsPin.Label;
+            }
         }
     }
 
