@@ -33,7 +33,7 @@ namespace CV.Data.Configuration
             this.HasMany(i => i.Atracoes).WithOptional().HasForeignKey(d=>d.IdentificadorAtracaoPai);
 			this.HasMany(i => i.Avaliacoes).WithRequired().HasForeignKey(d=>d.IdentificadorAtracao);
 			this.HasMany(i => i.Fotos).WithRequired().HasForeignKey(d=>d.IdentificadorAtracao);
-			this.HasRequired(i => i.ItemCidade).WithMany().HasForeignKey(d=>d.IdentificadorCidade);
+			this.HasOptional(i => i.ItemCidade).WithMany().HasForeignKey(d=>d.IdentificadorCidade);
 			this.HasOptional(i => i.ItemViagem).WithMany().HasForeignKey(d=>d.IdentificadorViagem);
 			this.HasOptional(i => i.ItemAtracaoPai).WithMany().HasForeignKey(d=>d.IdentificadorAtracaoPai);
 			this.Property(i => i.DataAtualizacao).HasColumnName("DT_ATUALIZACAO");

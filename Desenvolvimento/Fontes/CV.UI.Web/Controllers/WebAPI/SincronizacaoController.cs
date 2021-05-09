@@ -42,7 +42,7 @@ namespace CV.UI.Web.Controllers.WebAPI
             foreach (var item in itemSincronizar.Gastos.SelectMany(d => d.ViagenAereas))
                 item.ItemGasto = null;
 
-            itemSincronizar.Atracoes = biz.ListarAtracao_Completo(d => d.Avaliacoes.Where(f=>f.IdentificadorUsuario == token.IdentificadorUsuario).Any() && d.IdentificadorViagem == token.IdentificadorViagem && (d.DataAtualizacao >= json.DataInicioDe || d.DataExclusao >= json.DataInicioDe)).ToList();
+            itemSincronizar.Atracoes = biz.ListarAtracao_Completo(d => d.Avaliacoes.Where(f=>f.IdentificadorUsuario == token.IdentificadorUsuario).Any() && d.IdentificadorViagem == token.IdentificadorViagem).ToList();
             foreach (var item in itemSincronizar.Atracoes.SelectMany(d => d.Avaliacoes))
                 item.ItemAtracao = null;
             foreach (var item in itemSincronizar.Atracoes)
