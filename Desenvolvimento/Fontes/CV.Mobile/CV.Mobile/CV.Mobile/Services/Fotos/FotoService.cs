@@ -126,6 +126,7 @@ namespace CV.Mobile.Services.Fotos
             {
                 using (MemoryStream ms = new MemoryStream(DadosFoto))
                 {
+                    CodigoAlbum = await RetornarAlbum(_httpClient);
                     string Uri = String.Concat("https://photoslibrary.googleapis.com/v1/uploads");
 
                     System.Net.Http.StreamContent content = new StreamContent(ms);
@@ -166,6 +167,21 @@ namespace CV.Mobile.Services.Fotos
                     }
                 }
             }
+        }
+
+        private async Task<string> RetornarAlbum(HttpClient httpClient)
+        {
+            string Uri = String.Concat($"https://photoslibrary.googleapis.com/v1/sharedAlbums/{GlobalSetting.Instance.ViagemSelecionado.ShareToken}");
+            var response = await httpClient.GetAsync(Uri);
+
+            var resultado = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                var resultsAlbum = await Task.Run(() => JsonConvert.DeserializeObject<SharedAlbum>(resultado));
+                return resultsAlbum.id;
+
+            }
+            return GlobalSetting.Instance.ViagemSelecionado.CodigoAlbum;
         }
 
         private async Task UpdateMediaData(HttpClient _httpClient, string id, UploadFoto itemFoto)
