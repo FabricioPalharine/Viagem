@@ -35,19 +35,8 @@ namespace CV.Model
 
 			public string LinkThumbnail { get; set; }
 
-
+            public string NomeArquivo { get; set; }
 			public string LinkFoto { get; set; }
-			[SelfValidation]
-private void ValidarLinkFoto(Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResults results)
-{
- if (LinkFoto == null)
-  {
-      Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult result =
-            new Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult(Resource.MensagemModelo.Foto_LinkFoto, this, "LinkFoto", null, null);
-      results.AddResult(result);
-  }
-  
-}
 
 			public string CodigoFoto { get; set; }
 			[SelfValidation]
@@ -98,6 +87,7 @@ private void ValidarTipoArquivo(Microsoft.Practices.EnterpriseLibrary.Validation
 
 			public IList<FotoAtracao> Atracoes { get; set; }
 
+        public IList<FotoUsuario> FotoUsuarios { get; set; }
 			public Usuario ItemUsuario { get; set; }
 
 			public Viagem ItemViagem { get; set; }

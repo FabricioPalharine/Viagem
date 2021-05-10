@@ -45,6 +45,7 @@ namespace CV.Mobile.ViewModels.Consultas
 
                     criterioBusca.IdentificadorParticipante = obj.IdentificadorParticipante;
                     criterioBusca.DataInicioAte = obj.DataInicioAte;
+                    criterioBusca.DataInicioDe = null;
                     await CarregarLista();
 
                 });

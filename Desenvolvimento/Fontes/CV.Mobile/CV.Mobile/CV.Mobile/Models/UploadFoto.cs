@@ -35,6 +35,7 @@ namespace CV.Mobile.Models
 
         public bool Video { get; set; }
         public string NomeArquivo { get; set; }
+        public string NomeArquivoGoogle { get; set; }
 
         [Ignore]
         public FileResult file { get; set; }

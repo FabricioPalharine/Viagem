@@ -183,5 +183,7 @@ namespace CV.Mobile.Models
             }
         }
 
+        public string Pedido { get; set; }
+
     }
 }

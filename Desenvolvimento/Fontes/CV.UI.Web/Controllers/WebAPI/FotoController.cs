@@ -105,6 +105,17 @@ namespace CV.UI.Web.Controllers.WebAPI
         }
 
         [Authorize]
+        [ActionName("AdicionarFotosUsuarios")]
+        public ResultadoOperacao AdicionarFotosUsuarios(List<FotoUsuario> fotoUsuarios)
+        {
+            foreach (var item in fotoUsuarios)
+                item.IdentificadorUsuario = token.IdentificadorUsuario;
+            ViagemBusiness biz = new ViagemBusiness();
+            biz.AdicionarFotosUsuarios(fotoUsuarios);
+            return new ResultadoOperacao() { Sucesso = true };
+        }
+
+        [Authorize]
         [ActionName("SubirImagemDireto")]
         public ResultadoOperacao SubirImagemDireto(UploadFoto itemFoto)
         {

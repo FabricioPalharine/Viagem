@@ -11,6 +11,12 @@ namespace CV.Mobile.Models
 
     }
 
+    public class MediaItemResult
+    {
+        public List<MediaItem> mediaItems { get; set; }
+        public string nextPageToken { get; set; }
+    }
+
     public class NewMediaItemResult
     {
         public string uploadToken { get; set; }

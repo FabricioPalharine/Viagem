@@ -12,5 +12,6 @@ namespace CV.Mobile.Services.Fotos
         Task UpdateMediaData(List<Foto> itemFoto);
         Task UpdateMediaData(List<PontoMapa> itemFoto);
         Task UpdateMediaData( List<Timeline> itemFoto);
+        Task AssociarAlbum(string AccessCode, string ShareCode);
     }
 }

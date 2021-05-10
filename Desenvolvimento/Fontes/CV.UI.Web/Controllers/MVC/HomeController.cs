@@ -13,9 +13,19 @@ namespace CV.UI.Web.Controllers.MVC
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
-            if (!Request.RawUrl.Contains("Index") && !Request.RawUrl.EndsWith("/"))
+            if (!Request.RawUrl.Contains("Index") && !Request.RawUrl.Contains("PoliticaPrivacidade") && !Request.RawUrl.Contains("TermosServico") && !Request.RawUrl.EndsWith("/"))
                 return RedirectToAction("Index", "Home");
             return View();
+        }
+
+        public ActionResult PoliticaPrivacidade()
+        {
+            return PartialView();
+        }
+
+        public ActionResult TermosServico()
+        {
+            return PartialView();
         }
 
         public ActionResult Dashboard()

@@ -654,6 +654,8 @@
     <Content Include="Views\Sistema\ConsultarPontosMapa.cshtml" />
     <Content Include="Views\Sistema\ConsultarResumo.cshtml" />
     <Content Include="Views\Sistema\ConsultarRankings.cshtml" />
+    <Content Include="Views\Home\PoliticaPrivacidade.cshtml" />
+    <Content Include="Views\Home\TermosServico.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

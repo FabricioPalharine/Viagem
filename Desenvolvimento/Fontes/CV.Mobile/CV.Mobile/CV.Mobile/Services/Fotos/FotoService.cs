@@ -30,87 +30,82 @@ namespace CV.Mobile.Services.Fotos
             return httpClient;
         }
 
-        public async Task UpdateMediaData( List<Foto> itemFoto)
+        public async Task UpdateMediaData(List<Foto> itemFoto)
         {
-            var usuario = (await SecureStorageAccountStore.FindAccountsForServiceAsync(GlobalSetting.AppName)).FirstOrDefault();
-            string AccessId = usuario.Properties["access_token"];
-            using (var _httpClient = CreateHttpClient(AccessId))
+            var mediaItens = await RetornarFotosAlbum();
+            foreach (var foto in itemFoto.ToList())
             {
-                string Uri = $"https://photoslibrary.googleapis.com/v1/mediaItems:batchGet?{string.Join("&", itemFoto.Select(d => string.Concat("mediaItemIds=", d.CodigoFoto)))}";
-
-                var response = await _httpClient.GetAsync(Uri);
-
-                var resultado = await response.Content.ReadAsStringAsync();
-                if (response.IsSuccessStatusCode)
+                var itemMedia = mediaItens.Where(d => d.filename == foto.NomeArquivo).FirstOrDefault();
+                if (itemMedia != null)
                 {
-                    var results = await Task.Run(() => JsonConvert.DeserializeObject<ResultadoCriacaoFoto>(resultado));
-                    foreach (var item in itemFoto)
-                    {
-                        var result = results.mediaItemResults.Where(d => d.mediaItem.id == item.CodigoFoto).Select(d => d.mediaItem).FirstOrDefault();
-                        if (result != null)
-                        {
-                            item.LinkFoto = result.baseUrl + (item.Video ? "=dv" : "=d");
-                            item.LinkThumbnail = $"{result.baseUrl}=w240-h120";
-                        }
-                    }
+                    foto.LinkFoto = itemMedia.baseUrl + (foto.Video ? "=dv" : "=d");
+                    foto.LinkThumbnail = $"{itemMedia.baseUrl}=w360-h240";
+
                 }
+
             }
         }
 
-
-        public async Task UpdateMediaData(List<PontoMapa> itemFoto)
+        private async Task<List<MediaItem>> RetornarFotosAlbum()
         {
+            List<MediaItem> lista = new List<MediaItem>();
             var usuario = (await SecureStorageAccountStore.FindAccountsForServiceAsync(GlobalSetting.AppName)).FirstOrDefault();
             string AccessId = usuario.Properties["access_token"];
-
             using (var _httpClient = CreateHttpClient(AccessId))
             {
-                string Uri = $"https://photoslibrary.googleapis.com/v1/mediaItems:batchGet?{string.Join("&", itemFoto.Select(d => string.Concat("mediaItemIds=", d.GoogleId)))}";
-
-                var response = await _httpClient.GetAsync(Uri);
+                string Uri = String.Concat("https://photoslibrary.googleapis.com/v1/mediaItems:search");
+                var corpo = new { albumId = GlobalSetting.Instance.ViagemSelecionado.CodigoAlbum, pageSize = 100 };
+                var content = new StringContent(JsonConvert.SerializeObject(corpo));
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                var response = await _httpClient.PostAsync(Uri, content);
 
                 var resultado = await response.Content.ReadAsStringAsync();
                 if (response.IsSuccessStatusCode)
                 {
-                    var results = await Task.Run(() => JsonConvert.DeserializeObject<ResultadoCriacaoFoto>(resultado));
-                    foreach (var item in itemFoto)
+                    MediaItemResult result;
+                    do
                     {
-                        var result = results.mediaItemResults.Where(d => d.mediaItem.id == item.GoogleId).Select(d => d.mediaItem).FirstOrDefault();
-                        if (result != null)
+                        result = await Task.Run(() => JsonConvert.DeserializeObject<MediaItemResult>(resultado));
+                        lista.AddRange(result.mediaItems);
+                        if (!string.IsNullOrEmpty(result.nextPageToken))
                         {
-                            item.UrlTumbnail = $"{result.baseUrl}=w60-h40";
+                            var corpo2 = new { albumId = GlobalSetting.Instance.ViagemSelecionado.CodigoAlbum, pageSize = 100, pageToken = result.nextPageToken };
+                            content = new StringContent(JsonConvert.SerializeObject(corpo2));
+                            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                            response = await _httpClient.PostAsync(Uri, content);
                         }
-                    }
+
+                    } while (!string.IsNullOrEmpty(result.nextPageToken) && response.IsSuccessStatusCode);
                 }
             }
+            return lista;
+        }
+
+        public async Task UpdateMediaData(List<PontoMapa> itemFoto)
+        {
+            var mediaItens = await RetornarFotosAlbum();
+            foreach (var foto in itemFoto.ToList())
+            {
+                var itemMedia = mediaItens.Where(d => d.filename == foto.NomeArquivo).FirstOrDefault();
+                if (itemMedia != null)
+                {
+
+                    foto.UrlTumbnail = $"{itemMedia.baseUrl}=w60-h40";
+                }
+            }
+            
         }
 
         public async Task UpdateMediaData(List<Timeline> itemFoto)
         {
-            var usuario = (await SecureStorageAccountStore.FindAccountsForServiceAsync(GlobalSetting.AppName)).FirstOrDefault();
-            string AccessId = usuario.Properties["access_token"];
-
-            using (var _httpClient = CreateHttpClient(AccessId))
+            var mediaItens = await RetornarFotosAlbum();
+            foreach (var item in itemFoto.ToList())
             {
-                string Uri = $"https://photoslibrary.googleapis.com/v1/mediaItems:batchGet?{string.Join("&", itemFoto.Select(d => string.Concat("mediaItemIds=", d.GoogleId)))}";
-
-                var response = await _httpClient.GetAsync(Uri);
-
-                var resultado = await response.Content.ReadAsStringAsync();
-                if (response.IsSuccessStatusCode)
+                var itemMedia = mediaItens.Where(d => d.filename == item.Pedido).FirstOrDefault();
+                if (itemMedia != null)
                 {
-                    var results = await Task.Run(() => JsonConvert.DeserializeObject<ResultadoCriacaoFoto>(resultado));
-                    foreach (var item in itemFoto)
-                    {
-                        
-                            var result = results.mediaItemResults.Where(d => d.mediaItem.id == item.GoogleId).Select(d => d.mediaItem).FirstOrDefault();
-                            if (result != null)
-                            {
-                                item.Url = result.baseUrl + (item.LinhaVideo ? "=dv" : "=d");
-                                item.UrlThumbnail = $"{result.baseUrl}=w360-h240";
-                            }
-                        
-                    }
+                    item.Url = itemMedia.baseUrl + (item.LinhaVideo ? "=dv" : "=d");
+                    item.UrlThumbnail = $"{itemMedia.baseUrl}=w360-h240";
                 }
             }
         }
@@ -129,13 +124,13 @@ namespace CV.Mobile.Services.Fotos
                     content.Headers.Add("X-Goog-Upload-File-Name", itemFoto.NomeArquivo);
                     content.Headers.Add("X-Goog-Upload-Protocol", "raw");
                     var response = await _httpClient.PostAsync(Uri, content);
-
+                    itemFoto.NomeArquivoGoogle = string.Concat(Guid.NewGuid(), Path.GetExtension(itemFoto.CaminhoLocal));
                     var resultado = await response.Content.ReadAsStringAsync();
                     if (response.IsSuccessStatusCode)
                     {
                         string UPLOAD_TOKEN = resultado;
                         List<object> dados = new List<object>();
-                        dados.Add(new { description = "", simpleMediaItem = new { uploadToken = UPLOAD_TOKEN } });
+                        dados.Add(new { description = "", simpleMediaItem = new { uploadToken = UPLOAD_TOKEN, fileName = itemFoto.NomeArquivoGoogle } });
                         var albumData = new { albumId = CodigoAlbum, newMediaItems = dados.ToArray() };
                         Uri = String.Concat("https://photoslibrary.googleapis.com/v1/mediaItems:batchCreate");
 
@@ -154,7 +149,7 @@ namespace CV.Mobile.Services.Fotos
                             {
                                 itemFoto.LinkGoogle = itemFoto.Thumbnail = item.mediaItem.productUrl;
                                 itemFoto.CodigoGoogle = item.mediaItem.id;
-                                await UpdateMediaData(_httpClient, item.mediaItem.id,itemFoto);
+                                await UpdateMediaData(_httpClient, item.mediaItem.id, itemFoto);
                             }
                         }
 
@@ -173,8 +168,33 @@ namespace CV.Mobile.Services.Fotos
             if (response.IsSuccessStatusCode)
             {
                 MediaItem result = await Task.Run(() => JsonConvert.DeserializeObject<MediaItem>(resultado));
-                itemFoto.LinkGoogle = result.baseUrl + (itemFoto.Video?"=dv":"=d");
+                itemFoto.LinkGoogle = result.baseUrl + (itemFoto.Video ? "=dv" : "=d");
                 itemFoto.Thumbnail = $"{result.baseUrl}=w360-h240";
+            }
+        }
+
+        public async Task AssociarAlbum(string AccessCode, string ShareCode)
+        {
+            using (var _httpClient = CreateHttpClient(AccessCode))
+            {
+                string Uri = String.Concat($"https://photoslibrary.googleapis.com/v1/sharedAlbums/{ShareCode}");
+                var response = await _httpClient.GetAsync(Uri);
+
+                var resultado = await response.Content.ReadAsStringAsync();
+                if (response.IsSuccessStatusCode)
+                {
+                    var results = await Task.Run(() => JsonConvert.DeserializeObject<SharedAlbum>(resultado));
+                    if (results.shareInfo.isJoinable && !results.shareInfo.isJoined)
+                    {
+                        Uri = String.Concat("https://photoslibrary.googleapis.com/v1/sharedAlbums:join");
+                        var corpo = new { shareToken = ShareCode };
+                        var content = new StringContent(JsonConvert.SerializeObject(corpo));
+                        content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                        response = await _httpClient.PostAsync(Uri, content);
+                        resultado = await response.Content.ReadAsStringAsync();
+                    }
+
+                }
             }
         }
     }

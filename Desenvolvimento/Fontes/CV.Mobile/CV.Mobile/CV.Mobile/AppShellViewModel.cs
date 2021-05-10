@@ -32,8 +32,6 @@ namespace CV.Mobile
         private bool? _ViagemAberta = null;
         private bool _EdicaoDadoViagem = false;
         private bool _ViagemCarregada = false;
-        private bool? _exibirGPS = null;
-        private bool? _editarViagem = null;
 
         private readonly IDataService _dataService;
         private readonly IApiService _apiService;
@@ -84,6 +82,10 @@ namespace CV.Mobile
                 itemViagem.VejoGastos = DadosViagem.VerCustos;
                 itemViagem.Edicao = DadosViagem.PermiteEdicao;
                 itemViagem.Aberto = DadosViagem.Aberto;
+                var usuario = (await SecureStorageAccountStore.FindAccountsForServiceAsync(GlobalSetting.AppName)).FirstOrDefault();
+               
+                await _database.SalvarViagemAsync(itemViagem);
+                await _foto.AssociarAlbum(usuario.Properties["access_token"], viagem.ShareToken);
                 if (itemViagem.Edicao && itemViagem.Aberto)
                 {
                     ControleSincronizacao itemCS = new ControleSincronizacao();
@@ -91,7 +93,7 @@ namespace CV.Mobile
                     itemCS.SincronizadoEnvio = false;
                     itemCS.UltimaDataEnvio = DateTime.Now.ToUniversalTime();
                     itemCS.UltimaDataRecepcao = new DateTime(1900, 01, 01);
-                    await _database.SalvarControleSincronizacao(itemCS);
+                    //await _database.SalvarControleSincronizacao(itemCS);
                     await _database.SalvarViagemAsync(itemViagem);
                     _dataService.SincronizarParticipanteViagem(itemViagem);
                     //ConectarViagem(itemViagem.Identificador.GetValueOrDefault(), itemViagem.Edicao);
@@ -104,6 +106,7 @@ namespace CV.Mobile
                     }
                     catch { }
                 }
+
                 await SelecionarViagem(DadosViagem, itemViagem);
 
             }
@@ -130,11 +133,8 @@ namespace CV.Mobile
                     GPSIniciado = usuarioLogado.PermiteEdicao && usuarioLogado.Aberto && item.ControlaPosicaoGPS;
                 }
                 else
-                { 
-                    
-                    ViagemAberta = false;
-                    VisualizarGastos = usuarioLogado.VerCustos;
-                    
+                {                     
+                    VisualizarGastos = usuarioLogado.VerCustos;                   
 
                 }
                 if (Funcoes.AcessoInternet)
@@ -156,13 +156,14 @@ namespace CV.Mobile
             Viagem itemViagem = await _database.GetViagemAtualAsync();
             if (itemViagem != null)
             {
-                if (itemViagem.Edicao)
+                /*if (itemViagem.Edicao)
                 {
                     var itemCS = await _database.GetControleSincronizacaoAsync();
                     itemCS.SincronizadoEnvio = false;
                     await _database.SalvarControleSincronizacao(itemCS);
                     //var itemUltimaPosicao = await _database.RetornarUltimaPosicao();
-                }
+                }*/
+                
                 bool Online = Funcoes.AcessoInternet &&
                     await _apiService.VerificarOnLine();
                 if (Online)
@@ -216,11 +217,7 @@ namespace CV.Mobile
             }
         }
 
-        public bool? EditarViagem
-        {
-            get { return _editarViagem; }
-            set { SetProperty(ref _editarViagem, value); }
-        }
+     
 
        
         public bool EdicaoViagem

@@ -58,6 +58,7 @@
     <Compile Include="Dominio\enumMoeda.cs" />
     <Compile Include="Dominio\enumStatusListaCompra.cs" />
     <Compile Include="Dominio\enumTipoTransporte.cs" />
+    <Compile Include="FotoUsuario.cs" />
     <Compile Include="pCalendarioRealizado.cs" />
     <Compile Include="pConsultaRankings.cs" />
     <Compile Include="pLinhaMapa.cs" />

@@ -105,7 +105,7 @@ namespace CV.Mobile.ViewModels.Consultas
 
                 if (criterioBusca.Tipo == "F")
                 {
-                    var pontosFoto = lista.Where(d => !string.IsNullOrEmpty(d.GoogleId)).ToList();
+                    var pontosFoto = lista.Where(d => !string.IsNullOrEmpty(d.NomeArquivo)).ToList();
                     if (pontosFoto.Any())
                     {
                         await _foto.UpdateMediaData(pontosFoto);

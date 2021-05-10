@@ -133,5 +133,6 @@ namespace CV.Mobile.Services.Api
         Task<Foto> CarregarFoto(int? Identificador);
         Task<List<PontoMapa>> ListarPontosViagem(CriterioBusca criterioBusca);
         Task<List<LinhaMapa>> ListarLinhasViagem(CriterioBusca criterioBusca);
+        Task<ResultadoOperacao> AdicionarFotosUsuarios(List<FotoUsuario> itemUpload);
     }
 }

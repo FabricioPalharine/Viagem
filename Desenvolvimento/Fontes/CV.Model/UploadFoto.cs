@@ -29,7 +29,7 @@ namespace CV.Model
         public int? IdentificadorAtracao { get; set; }
         public int? IdentificadorItemCompra { get; set; }
         public bool Video { get; set; }
-
+        public string NomeArquivoGoogle { get; set; }
     }
 
 }

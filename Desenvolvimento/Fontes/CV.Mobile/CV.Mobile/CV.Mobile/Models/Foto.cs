@@ -158,6 +158,11 @@ namespace CV.Mobile.Models
             }
         }
 
+        public string NomeArquivo
+        {
+            get;set;
+        }
+
         public string LinkControle
         {
             get

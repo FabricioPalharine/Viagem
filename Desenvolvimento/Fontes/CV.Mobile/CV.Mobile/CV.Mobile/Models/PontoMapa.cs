@@ -17,7 +17,7 @@ namespace CV.Mobile.Models
         public string GoogleId { get; set; }
         public string UrlTumbnail { get; set; }
         public string Url { get; set; }
-
+        public string NomeArquivo { get; set; }
         public string Periodo
         {
             get

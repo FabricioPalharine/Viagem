@@ -268,7 +268,7 @@ namespace CV.Data
                     queryFoto = queryFoto.Where(d => d.Identificador == Identificador);
                 queryResultado = queryResultado.Union(
     queryFoto
-    .Select(d => new { Identificador = d.Identificador, Data = d.Data, Tipo = d.Video.Value ? "Video" : "Foto", Latitude = d.Latitude, Longitude = d.Longitude, Texto = "", Url = d.LinkThumbnail, Comentario = d.Comentario, IdentificadorUsuario = d.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = d.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = "", GoogleId =  d.CodigoFoto }));
+    .Select(d => new { Identificador = d.Identificador, Data = d.Data, Tipo = d.Video.Value ? "Video" : "Foto", Latitude = d.Latitude, Longitude = d.Longitude, Texto = "", Url = d.LinkThumbnail, Comentario = d.Comentario, IdentificadorUsuario = d.IdentificadorUsuario, Nota = new Nullable<int>(), NomeUsuario = d.ItemUsuario.Nome, ComentarioUsuario = "", Pedido = d.NomeArquivo, GoogleId = d.FotoUsuarios.Where(f=>f.IdentificadorUsuario == IdentificadorUsuarioConsulta).Select(f=>f.CodigoGoogle).FirstOrDefault() }));
 
 
             }
@@ -345,6 +345,7 @@ namespace CV.Data
                     Tipo = d.Key.Tipo,
                     Url = d.Key.Url,
                     GoogleId = d.Key.GoogleId,
+                    Pedido=d.Select(f=>f.Pedido).FirstOrDefault(),
                     Usuarios = d.Select(e => new UsuarioConsulta() { Comentario = e.ComentarioUsuario, Identificador = e.IdentificadorUsuario, Nome = e.NomeUsuario, Nota = e.Nota, Pedido = e.Pedido })
                 })
                 .OrderByDescending(d => d.Data)
@@ -497,7 +498,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
 
         }
 
-        public List<Foto> ConsultarFotosAtracao(int? IdentificadorViagem, DateTime? DataDe, DateTime? DataAte, string Nome, string CodigoGoogle)
+        public List<Foto> ConsultarFotosAtracao(int? IdentificadorViagem, DateTime? DataDe, DateTime? DataAte, string Nome, string CodigoGoogle, int? IdentificadorUsuario)
         {
             var queryAtracao = this.Context.Atracoes.Where(d => d.IdentificadorViagem == IdentificadorViagem).Where(e => !e.DataExclusao.HasValue);
             if (!string.IsNullOrWhiteSpace(CodigoGoogle))
@@ -519,7 +520,18 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
             if (DataAte.HasValue)
                 QueryFoto = QueryFoto.Where(d => d.Data < DataAte);
 
-            return QueryFoto.Where(d => d.Atracoes.Where(e => !e.DataExclusao.HasValue).Where(e => queryAtracao.Where(f => f.Identificador == e.IdentificadorAtracao).Any()).Any()).ToList();
+            var fotos = QueryFoto.Where(d => d.Atracoes.Where(e => !e.DataExclusao.HasValue).Where(e => queryAtracao.Where(f => f.Identificador == e.IdentificadorAtracao).Any()).Any()).ToList();
+            PreencherCodigoGoogle(QueryFoto, fotos, IdentificadorUsuario);
+            return fotos;
+
+
+        }
+
+        public void PreencherCodigoGoogle(IQueryable<Foto> query, List<Foto> fotos, int? IdentificadorUsuario)
+        {
+          //  var fotosUsuario = this.Context.FotoUsuarios.Where(d => d.IdentificadorUsuario == IdentificadorUsuario)
+    //.Where(d => query.Where(g => d.IdentificadorFoto == g.Identificador).Any()).ToList();
+            //fotos.Join(fotosUsuario, d => d.Identificador, d => d.IdentificadorFoto, (f, u) => new { f, u }).ToList().ForEach(f => f.f.CodigoFoto = f.u.CodigoGoogle);
 
         }
 
@@ -564,7 +576,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
             Select(d => new RelatorioGastos() { Data = d.Data.Value, Descricao = d.Descricao, NomeUsuario = d.ItemUsuario.Nome, Moeda = d.Moeda, Valor = d.Valor.Value }).ToList();
         }
 
-        public List<Foto> ConsultarFotosHotel(int? IdentificadorViagem, DateTime? DataDe, DateTime? DataAte, string Nome, string CodigoGoogle)
+        public List<Foto> ConsultarFotosHotel(int? IdentificadorViagem, DateTime? DataDe, DateTime? DataAte, string Nome, string CodigoGoogle, int? IdentificadorUsuario)
         {
             var queryAtracao = this.Context.Hoteis.Where(d => d.IdentificadorViagem == IdentificadorViagem).Where(e => !e.DataExclusao.HasValue);
             if (!string.IsNullOrWhiteSpace(CodigoGoogle))
@@ -586,7 +598,9 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
             if (DataAte.HasValue)
                 QueryFoto = QueryFoto.Where(d => d.Data < DataAte);
 
-            return QueryFoto.Where(d => d.Hoteis.Where(e => !e.DataExclusao.HasValue).Where(e => queryAtracao.Where(f => f.Identificador == e.IdentificadorHotel).Any()).Any()).ToList();
+            var fotos = QueryFoto.Where(d => d.Hoteis.Where(e => !e.DataExclusao.HasValue).Where(e => queryAtracao.Where(f => f.Identificador == e.IdentificadorHotel).Any()).Any()).ToList();
+            PreencherCodigoGoogle(QueryFoto, fotos, IdentificadorUsuario);
+            return fotos;
 
         }
 
@@ -630,7 +644,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
             Select(d => new RelatorioGastos() { Data = d.Data.Value, Descricao = d.Descricao, NomeUsuario = d.ItemUsuario.Nome, Moeda = d.Moeda, Valor = d.Valor.Value }).ToList();
         }
 
-        public List<Foto> ConsultarFotosRefeicao(int? IdentificadorViagem, DateTime? DataDe, DateTime? DataAte, string Nome, string CodigoGoogle)
+        public List<Foto> ConsultarFotosRefeicao(int? IdentificadorViagem, DateTime? DataDe, DateTime? DataAte, string Nome, string CodigoGoogle, int? IdentificadorUsuario)
         {
             var queryAtracao = this.Context.Refeicoes.Where(d => d.IdentificadorViagem == IdentificadorViagem).Where(e => !e.DataExclusao.HasValue);
             if (!string.IsNullOrWhiteSpace(CodigoGoogle))
@@ -652,16 +666,18 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
             if (DataAte.HasValue)
                 QueryFoto = QueryFoto.Where(d => d.Data < DataAte);
 
-            return QueryFoto.Where(d => d.Refeicoes.Where(e => !e.DataExclusao.HasValue).Where(e => queryAtracao.Where(f => f.Identificador == e.IdentificadorRefeicao).Any()).Any()).ToList();
+            var fotos = QueryFoto.Where(d => d.Refeicoes.Where(e => !e.DataExclusao.HasValue).Where(e => queryAtracao.Where(f => f.Identificador == e.IdentificadorRefeicao).Any()).Any()).ToList();
+            PreencherCodigoGoogle(QueryFoto, fotos, IdentificadorUsuario);
+            return fotos;
 
         }
 
-       
 
-        public List<PontoMapa> ListarPontosViagem(int? IdentificadorViagem, int? IdentificadorUsuario, DateTime? DataDe, DateTime? DataAte, string Tipo)
+
+        public List<PontoMapa> ListarPontosViagem(int? IdentificadorViagem, int? IdentificadorUsuario, DateTime? DataDe, DateTime? DataAte, string Tipo, int? IdentificadorUsuarioLogado)
         {
             IQueryable<PontoMapa> queryFinal = this.Context.Viagemes.Where(d => d.Identificador == -1)
-                .Select(d => new PontoMapa() { DataFim = null, DataInicio = null, Latitude = 0, Longitude = 0, Nome = null, Tipo = "P", Url = null, UrlTumbnail = null, GoogleId = null });
+                .Select(d => new PontoMapa() { DataFim = null, DataInicio = null, Latitude = 0, Longitude = 0, Nome = null, Tipo = "P", Url = null, UrlTumbnail = null, GoogleId = null, NomeArquivo=null });
             if (string.IsNullOrEmpty(Tipo) || Tipo == "A")
             {
                 var queryAtracao = this.Context.AvaliacaoAtracoes.Where(d => d.IdentificadorUsuario == IdentificadorUsuario)
@@ -671,7 +687,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                     queryAtracao = queryAtracao.Where(d => d.ItemAtracao.Chegada >= DataDe || (d.ItemAtracao.Partida.HasValue && d.ItemAtracao.Partida >= DataDe));
                 if (DataAte.HasValue)
                     queryAtracao = queryAtracao.Where(d => d.ItemAtracao.Chegada < DataAte && (!d.ItemAtracao.Partida.HasValue || d.ItemAtracao.Partida < DataAte));
-                queryFinal = queryFinal.Union(queryAtracao.Select(d => new PontoMapa() { DataFim = d.ItemAtracao.Partida, DataInicio = d.ItemAtracao.Chegada, Latitude = d.ItemAtracao.Latitude, Longitude = d.ItemAtracao.Longitude, Nome = d.ItemAtracao.Nome, Tipo = "A", Url = null, UrlTumbnail = null, GoogleId = null }));
+                queryFinal = queryFinal.Union(queryAtracao.Select(d => new PontoMapa() { DataFim = d.ItemAtracao.Partida, DataInicio = d.ItemAtracao.Chegada, Latitude = d.ItemAtracao.Latitude, Longitude = d.ItemAtracao.Longitude, Nome = d.ItemAtracao.Nome, Tipo = "A", Url = null, UrlTumbnail = null, GoogleId = null, NomeArquivo=null }));
             }
             if (string.IsNullOrEmpty(Tipo) || Tipo == "H")
             {
@@ -682,7 +698,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                     queryHotel = queryHotel.Where(d => d.ItemHotel.DataEntrada >= DataDe || (d.ItemHotel.DataSaidia.HasValue && d.ItemHotel.DataSaidia >= DataDe));
                 if (DataAte.HasValue)
                     queryHotel = queryHotel.Where(d => d.ItemHotel.DataEntrada < DataAte && (!d.ItemHotel.DataSaidia.HasValue || d.ItemHotel.DataSaidia < DataAte));
-                queryFinal = queryFinal.Union(queryHotel.Select(d => new PontoMapa() { DataFim = d.ItemHotel.DataSaidia, DataInicio = d.ItemHotel.DataEntrada, Latitude = d.ItemHotel.Latitude, Longitude = d.ItemHotel.Longitude, Nome = d.ItemHotel.Nome, Tipo = "H", Url = null, UrlTumbnail = null, GoogleId = null }));
+                queryFinal = queryFinal.Union(queryHotel.Select(d => new PontoMapa() { DataFim = d.ItemHotel.DataSaidia, DataInicio = d.ItemHotel.DataEntrada, Latitude = d.ItemHotel.Latitude, Longitude = d.ItemHotel.Longitude, Nome = d.ItemHotel.Nome, Tipo = "H", Url = null, UrlTumbnail = null, GoogleId = null, NomeArquivo=null }));
             }
             if (string.IsNullOrEmpty(Tipo) || Tipo == "R")
             {
@@ -693,7 +709,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                     queryRefeicao = queryRefeicao.Where(d => d.ItemRefeicao.Data >= DataDe);
                 if (DataAte.HasValue)
                     queryRefeicao = queryRefeicao.Where(d => d.ItemRefeicao.Data < DataAte);
-                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.ItemRefeicao.Data, Latitude = d.ItemRefeicao.Latitude, Longitude = d.ItemRefeicao.Longitude, Nome = d.ItemRefeicao.Nome, Tipo = "R", Url = null, UrlTumbnail = null, GoogleId = null }));
+                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.ItemRefeicao.Data, Latitude = d.ItemRefeicao.Latitude, Longitude = d.ItemRefeicao.Longitude, Nome = d.ItemRefeicao.Nome, Tipo = "R", Url = null, UrlTumbnail = null, GoogleId = null, NomeArquivo = null }));
             }
            
             if (string.IsNullOrEmpty(Tipo) || Tipo == "P")
@@ -706,7 +722,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                     queryRefeicao = queryRefeicao.Where(d => d.DataChegada >= DataDe || (d.DataPartida.HasValue && d.DataPartida >= DataDe));
                 if (DataAte.HasValue)
                     queryRefeicao = queryRefeicao.Where(d => d.DataChegada < DataAte && (!d.DataPartida.HasValue || d.DataPartida < DataAte));
-                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = d.DataPartida, DataInicio = d.DataChegada, Latitude = d.Latitude, Longitude = d.Longitude, Nome = d.Aeroporto, Tipo = "P", Url = null, UrlTumbnail = null, GoogleId = null }));
+                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = d.DataPartida, DataInicio = d.DataChegada, Latitude = d.Latitude, Longitude = d.Longitude, Nome = d.Aeroporto, Tipo = "P", Url = null, UrlTumbnail = null, GoogleId = null , NomeArquivo=null}));
             }
             //if (string.IsNullOrEmpty(Tipo) || Tipo == "G")
             //{
@@ -731,7 +747,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                     queryRefeicao = queryRefeicao.Where(d => d.Data >= DataDe);
                 if (DataAte.HasValue)
                     queryRefeicao = queryRefeicao.Where(d => d.Data < DataAte);
-                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.Data, Latitude = d.Latitude, Longitude = d.Longitude, Nome = d.Texto, Tipo = "T", Url = null, UrlTumbnail = null, GoogleId = null }));
+                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.Data, Latitude = d.Latitude, Longitude = d.Longitude, Nome = d.Texto, Tipo = "T", Url = null, UrlTumbnail = null, GoogleId = null, NomeArquivo=null }));
             }
             if (string.IsNullOrEmpty(Tipo) || Tipo == "F" || Tipo == "V")
             {
@@ -745,7 +761,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                     queryRefeicao = queryRefeicao.Where(d => d.Data >= DataDe);
                 if (DataAte.HasValue)
                     queryRefeicao = queryRefeicao.Where(d => d.Data < DataAte);
-                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.Data, Latitude = d.Latitude, Longitude = d.Longitude, Nome = d.Comentario, Tipo = d.Video.Value ? "V" : "F", Url = d.LinkFoto, UrlTumbnail = d.LinkThumbnail, GoogleId = d.Video.Value ? null : d.CodigoFoto }));
+                queryFinal = queryFinal.Union(queryRefeicao.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.Data, Latitude = d.Latitude, Longitude = d.Longitude, Nome = d.Comentario, Tipo = d.Video.Value ? "V" : "F", Url = d.LinkFoto, UrlTumbnail = d.LinkThumbnail, GoogleId = d.Video.Value ? null : d.FotoUsuarios.Where(f=>f.IdentificadorUsuario == IdentificadorUsuarioLogado).Select(g=>g.CodigoGoogle).FirstOrDefault(), NomeArquivo = d.Video == true? null: d.NomeArquivo }));
             }
             if (string.IsNullOrEmpty(Tipo) || Tipo == "U")
             {
@@ -758,7 +774,7 @@ Where(e => e.IdentificadorViagem == IdentificadorViagem).Where(e => e.Identifica
                 if (DataAte.HasValue)
                     queryUltimoPonto = queryUltimoPonto.Where(d => d.DataLocal < DataAte);
                 queryUltimoPonto = queryUltimoPonto.OrderByDescending(d => d.DataLocal).Take(1);
-                queryFinal = queryFinal.Union(queryUltimoPonto.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.DataGMT, Latitude = d.Latitude, Longitude = d.Longitude, Nome = "Última Posição", Tipo = "U", Url = null, UrlTumbnail = null, GoogleId = null }));
+                queryFinal = queryFinal.Union(queryUltimoPonto.Select(d => new PontoMapa() { DataFim = null, DataInicio = d.DataGMT, Latitude = d.Latitude, Longitude = d.Longitude, Nome = "Última Posição", Tipo = "U", Url = null, UrlTumbnail = null, GoogleId = null, NomeArquivo=null }));
 
             }
 

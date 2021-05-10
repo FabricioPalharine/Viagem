@@ -44,44 +44,7 @@ namespace CV.Business
             using (ConsultaRepository data = new ConsultaRepository())
             {
                 var lista = data.CarregarTimeline(IdentificadorViagem, IdentificadorUsuarioConsulta, IdentificadorUsuarioEvento, DataMaxima, DataMinima, NumeroRegistros, Tipo, Identificador);
-                if (lista.Where(d => !string.IsNullOrEmpty(d.GoogleId)).Any())
-                {
-                    ViagemBusiness bizViagem = new ViagemBusiness();
-                    Usuario itemUsuario = bizViagem.SelecionarUsuario(IdentificadorUsuario);
-                    bizViagem.AtualizarTokenUsuario(itemUsuario);
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://photoslibrary.googleapis.com/v1/mediaItems:batchGet?" + string.Join("&", lista.Where(d => !string.IsNullOrEmpty(d.GoogleId)).Select(d => "mediaItemIds=" + d.GoogleId).ToArray()));
-                    request.Method = "GET";
-                    request.ContentType = "application/json";
-                    request.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + itemUsuario.Token);
-
-
-                    try
-                    {
-                        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                        StreamReader responseReader = new StreamReader(response.GetResponseStream());
-
-                        string responseStr = responseReader.ReadToEnd();
-                        if (response.StatusCode == HttpStatusCode.OK)
-                        {
-                            dynamic resultado = JObject.Parse(responseStr);
-                            Newtonsoft.Json.Linq.JArray obj = resultado.mediaItemResults;
-                            foreach (dynamic itemObj in obj.ToArray())
-                            {
-                                string Id = itemObj.mediaItem.id;
-                                string BaseUrl = itemObj.mediaItem.baseUrl;
-                                var itemFoto = lista.Where(d => d.GoogleId == Id).FirstOrDefault();
-                                itemFoto.Url = BaseUrl;
-                            }
-                        }
-                    }
-                    catch (WebException ex)
-                    {
-                        StreamReader responseReader = new StreamReader(ex.Response.GetResponseStream());
-                        string responseStr = responseReader.ReadToEnd();
-
-
-                    }
-                }
+                
 
                 return lista;
             }
@@ -103,8 +66,8 @@ namespace CV.Business
                 itemRetorno.LocaisFilho = data.CarregarLocaisVisitados(IdentificadorViagem, DataDe, DataAte, Nome, CodigoGoogle);
                 itemRetorno.Detalhes = data.CarregarDetalhesAtracaoVisitada(IdentificadorViagem, DataDe, DataAte, Nome, CodigoGoogle);
                 itemRetorno.Gastos = data.ConsultarGastosAtracao(IdentificadorViagem, DataDe, DataAte, Nome, CodigoGoogle);
-                itemRetorno.Fotos = data.ConsultarFotosAtracao(IdentificadorViagem, DataDe, DataAte, Nome, CodigoGoogle);
-                AjustarLinkFotos(itemRetorno.Fotos, IdentificadorUsuarioLogado);
+                itemRetorno.Fotos = data.ConsultarFotosAtracao(IdentificadorViagem, DataDe, DataAte, Nome, CodigoGoogle,IdentificadorUsuarioLogado);
+                //AjustarLinkFotos(itemRetorno.Fotos, IdentificadorUsuarioLogado);
             }
             return itemRetorno;
         }
@@ -116,8 +79,8 @@ namespace CV.Business
             {
                 itemRetorno.Detalhes = data.CarregarDetalhesHotelHospedado(IdentificadorViagem, DataDe, DataAte, Nome, CodigoGoogle);
                 itemRetorno.Gastos = data.ConsultarGastosHotel(IdentificadorViagem, DataDe, DataAte, Nome, CodigoGoogle);
-                itemRetorno.Fotos = data.ConsultarFotosHotel(IdentificadorViagem, DataDe, DataAte, Nome, CodigoGoogle);
-                AjustarLinkFotos(itemRetorno.Fotos, IdentificadorUsuarioLogado);
+                itemRetorno.Fotos = data.ConsultarFotosHotel(IdentificadorViagem, DataDe, DataAte, Nome, CodigoGoogle,IdentificadorUsuarioLogado);
+                //AjustarLinkFotos(itemRetorno.Fotos, IdentificadorUsuarioLogado);
 
             }
             return itemRetorno;
@@ -130,8 +93,8 @@ namespace CV.Business
             {
                 itemRetorno.Detalhes = data.CarregarDetalhesRestaurante(IdentificadorViagem, DataDe, DataAte, Nome, CodigoGoogle);
                 itemRetorno.Gastos = data.ConsultarGastosRefeicao(IdentificadorViagem, DataDe, DataAte, Nome, CodigoGoogle);
-                itemRetorno.Fotos = data.ConsultarFotosRefeicao(IdentificadorViagem, DataDe, DataAte, Nome, CodigoGoogle);
-                AjustarLinkFotos(itemRetorno.Fotos, IdentificadorUsuarioLogado);
+                itemRetorno.Fotos = data.ConsultarFotosRefeicao(IdentificadorViagem, DataDe, DataAte, Nome, CodigoGoogle,IdentificadorUsuarioLogado);
+               // AjustarLinkFotos(itemRetorno.Fotos, IdentificadorUsuarioLogado);
 
             }
             return itemRetorno;
@@ -139,7 +102,7 @@ namespace CV.Business
 
         private void AjustarLinkFotos(List<Foto> lista, int identificadorUsuarioLogado)
         {
-            if (lista.Where(d => !string.IsNullOrEmpty(d.CodigoFoto) && !d.Video.GetValueOrDefault()).Any())
+            /*if (lista.Where(d => !string.IsNullOrEmpty(d.CodigoFoto) && !d.Video.GetValueOrDefault()).Any())
             {
                 ViagemBusiness bizViagem = new ViagemBusiness();
                 Usuario itemUsuario = bizViagem.SelecionarUsuario(identificadorUsuarioLogado);
@@ -178,7 +141,7 @@ namespace CV.Business
 
 
                 }
-            }
+            }*/
         }
 
 
@@ -187,48 +150,10 @@ namespace CV.Business
         {
             using (ConsultaRepository data = new ConsultaRepository())
             {
-                var lista = data.ListarPontosViagem(IdentificadorViagem, IdentificadorUsuario, DataDe, DataAte, Tipo);
+                var lista = data.ListarPontosViagem(IdentificadorViagem, IdentificadorUsuario, DataDe, DataAte, Tipo,IdentificadorUsuarioLogado);
 
-                if (lista.Where(d => !string.IsNullOrEmpty(d.GoogleId)).Any())
-                {
-                    ViagemBusiness bizViagem = new ViagemBusiness();
-                    Usuario itemUsuario = bizViagem.SelecionarUsuario(IdentificadorUsuarioLogado);
-                    bizViagem.AtualizarTokenUsuario(itemUsuario);
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://photoslibrary.googleapis.com/v1/mediaItems:batchGet?" + string.Join("&", lista.Where(d => !string.IsNullOrEmpty(d.GoogleId)).Select(d => "mediaItemIds=" + d.GoogleId).ToArray()));
-                    request.Method = "GET";
-                    request.ContentType = "application/json";
-                    request.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + itemUsuario.Token);
-
-
-                    try
-                    {
-                        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                        StreamReader responseReader = new StreamReader(response.GetResponseStream());
-
-                        string responseStr = responseReader.ReadToEnd();
-                        if (response.StatusCode == HttpStatusCode.OK)
-                        {
-                            dynamic resultado = JObject.Parse(responseStr);
-                            Newtonsoft.Json.Linq.JArray obj = resultado.mediaItemResults;
-                            foreach (dynamic itemObj in obj.ToArray())
-                            {
-                                string Id = itemObj.mediaItem.id;
-                                string BaseUrl = itemObj.mediaItem.baseUrl;
-                                var itemFoto = lista.Where(d => d.GoogleId == Id).FirstOrDefault();
-                                itemFoto.Url = BaseUrl;
-                                itemFoto.UrlTumbnail = BaseUrl + "=w128-h80-c";
-
-                            }
-                        }
-                    }
-                    catch (WebException ex)
-                    {
-                        StreamReader responseReader = new StreamReader(ex.Response.GetResponseStream());
-                        string responseStr = responseReader.ReadToEnd();
-
-
-                    }
-                }
+               
+                
 
                 return lista;
             }

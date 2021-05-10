@@ -68,7 +68,9 @@ using CV.Model;
 		public DbSet<GastoDividido> GastoDivididos { get; set; }
 		public DbSet<CarroDeslocamento> CarroDeslocamentos { get; set; }
 		public DbSet<CarroDeslocamentoUsuario> CarroDeslocamentoUsuarios { get; set; }
-		protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        public DbSet<FotoUsuario> FotoUsuarios { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
 
 			Database.SetInitializer<EntityContext>(null);
@@ -121,7 +123,9 @@ using CV.Model;
 			modelBuilder.Configurations.Add(new GastoDivididoConfiguration());
 			modelBuilder.Configurations.Add(new CarroDeslocamentoConfiguration());
 			modelBuilder.Configurations.Add(new CarroDeslocamentoUsuarioConfiguration());
-			base.OnModelCreating(modelBuilder);
+            modelBuilder.Configurations.Add(new FotoUsuarioConfiguration());
+
+            base.OnModelCreating(modelBuilder);
 		}		
 	}
 }

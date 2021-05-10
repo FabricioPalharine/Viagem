@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\FotoUsuarioConfiguration.cs" />
     <Compile Include="MensagensData.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -1683,6 +1683,21 @@ namespace CV.Mobile.Services.Api
             return itemResultado;
         }
 
+        public async Task<ResultadoOperacao> AdicionarFotosUsuarios(List<FotoUsuario> itemUpload)
+        {
+            ResultadoOperacao itemResultado = null;
+            var uri = UriHelper.CombineUri(GlobalSetting.Instance.BaseEndpoint, $"Api/Foto/AdicionarFotosUsuarios");
+            try
+            {
+                itemResultado = await _requestProvider.PostAsync<List<FotoUsuario>, ResultadoOperacao>(uri, itemUpload, GlobalSetting.Instance.AuthToken);
+
+            }
+            catch (Exception ex)
+            {
+                await ExibirMensagemErro(ex);
+            }
+            return itemResultado;
+        }
         public async Task<ResultadoOperacao> SubirVideo(UploadFoto itemUpload)
         {
             ResultadoOperacao itemResultado = null;

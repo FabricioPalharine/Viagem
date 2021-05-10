@@ -576,7 +576,7 @@ namespace CV.Data
         }
 
         public List<Foto> ListarFotos(int? IdentificadorFoto, int IdentificadorViagem, DateTime? DataDe, DateTime? DataAte, string Comentario, List<int?> IdentificadorAtracao,
-            List<int?> IdentificadorHotel, List<int?> IdentificadorRefeicao, int? IdentificadorCidade, int Skip, int Count)
+            List<int?> IdentificadorHotel, List<int?> IdentificadorRefeicao, int? IdentificadorCidade, int Skip, int Count, int? IdentificadorUsuario)
         {
             IQueryable<Foto> query = this.Context.Fotos.Include("Atracoes").Include("Atracoes.ItemAtracao")
                 .Include("Hoteis").Include("Hoteis.ItemHotel")
@@ -604,7 +604,12 @@ namespace CV.Data
                 query = query.Where(d => d.IdentificadorCidade == IdentificadorCidade || this.Context.CidadeGrupos.Where(e => e.IdentificadorCidadeFilha == d.IdentificadorCidade).Where(f => f.IdentificadorViagem == IdentificadorViagem).Where(e => e.IdentificadorCidadePai == IdentificadorCidade).Any());
             query = query.OrderBy(d => d.DataAtualizacao);
             query = query.Skip(Skip).Take(Count);
-            return query.ToList();
+            var fotos = query.ToList();
+            //var fotosUsuario = this.Context.FotoUsuarios.Where(d => d.IdentificadorUsuario == IdentificadorUsuario)
+            //    .Where(d => query.Where(g => d.IdentificadorFoto == g.Identificador).Any()).ToList();
+            //fotos.Join(fotosUsuario, d => d.Identificador, d => d.IdentificadorFoto, (f, u) => new { f, u}).ToList().ForEach(f=>f.f.CodigoFoto = f.u.CodigoGoogle);
+
+            return fotos;
         }
 
         public bool ExistirFoto(int IdentificadorViagem, bool Video, string GoogleId )

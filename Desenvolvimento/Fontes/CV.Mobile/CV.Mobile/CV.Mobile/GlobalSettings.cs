@@ -21,7 +21,7 @@ namespace CV.Mobile
         public static string AndroidClientId = "997990659234-i02c3j8naujeq9880no2rnu1o4r5hoav.apps.googleusercontent.com";
 
         // These values do not need changing 
-        public static string Scope = "https://www.googleapis.com/auth/userinfo.email profile https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/photoslibrary https://www.googleapis.com/auth/photoslibrary.sharing";
+        public static string Scope = "https://www.googleapis.com/auth/userinfo.email profile https://www.googleapis.com/auth/photoslibrary https://www.googleapis.com/auth/photoslibrary.sharing";
         public static string AuthorizeUrl = "https://accounts.google.com/o/oauth2/auth";
         public static string AccessTokenUrl = "https://www.googleapis.com/oauth2/v4/token";
         public static string UserInfoUrl = "https://www.googleapis.com/oauth2/v2/userinfo";

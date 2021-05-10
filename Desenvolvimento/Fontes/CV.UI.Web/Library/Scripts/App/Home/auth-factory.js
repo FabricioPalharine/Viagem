@@ -22,7 +22,7 @@
         AuthBase.clientId = '';
        
 
-        AuthBase.scopes = 'profile https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/photoslibrary.sharing https://www.googleapis.com/auth/photoslibrary';
+        AuthBase.scopes = 'profile https://www.googleapis.com/auth/photoslibrary.sharing https://www.googleapis.com/auth/photoslibrary';
         AuthBase.auth2 = null;
        
 

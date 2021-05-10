@@ -28,7 +28,7 @@ namespace CV.Data.Configuration
 			this.Property(i => i.Data).HasColumnName("DT_FOTO");
 			this.Property(i => i.LinkThumbnail).HasColumnName("DS_LINK_THUMBNAIL");
 			this.Property(i => i.LinkFoto).HasColumnName("DS_LINK_FOTO");
-			this.Property(i => i.CodigoFoto).HasColumnName("CD_CODIGO_DRIVE");
+			//this.Property(i => i.CodigoFoto).HasColumnName("CD_CODIGO_DRIVE");
 			this.Property(i => i.Video).HasColumnName("FL_VIDEO");
 			this.Property(i => i.TipoArquivo).HasColumnName("CD_TIPO_ARQUIVO");
 			this.HasOptional(i => i.ItemCidade).WithMany().HasForeignKey(d=>d.IdentificadorCidade);
@@ -40,6 +40,9 @@ namespace CV.Data.Configuration
 			this.HasRequired(i => i.ItemViagem).WithMany().HasForeignKey(d=>d.IdentificadorViagem);
 			this.Property(i => i.DataAtualizacao).HasColumnName("DT_ATUALIZACAO");
 			this.Property(i => i.DataExclusao).HasColumnName("DT_EXCLUSAO");
+            this.Property(d => d.NomeArquivo).HasColumnName("NM_ARQUIVO");
+            this.Ignore(d => d.CodigoFoto);
+            this.HasMany(d => d.FotoUsuarios).WithOptional(d => d.ItemFoto).HasForeignKey(d => d.IdentificadorFoto);
 		MapearCamposManualmente();
 		}
 	}

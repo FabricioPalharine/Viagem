@@ -16,6 +16,7 @@ namespace CV.Model
         public decimal? Latitude { get; set; }
         public decimal? Longitude { get; set; }
         public string GoogleId { get; set; }
+        public string Pedido { get; set; }
 
         public int? Identificador { get; set; }
         public IEnumerable<UsuarioConsulta> Usuarios { get; set; }

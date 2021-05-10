@@ -1,0 +1,10 @@
+﻿CREATE TABLE [dbo].[FotoUsuario]
+(
+	[ID_FOTO_USUARIO] INT NOT NULL IDENTITY(1,1),
+	[ID_FOTO]		  INT NOT NULL,
+	[ID_USUARIO]	  INT NOT NULL,
+	CD_GOOGLE		VARCHAR(200) NOT NULL,
+	CONSTRAINT PK_FotoUsuario Primary Key (ID_FOTO_USUARIO),
+	CONSTRAINT FK_FotoUsuario1 Foreign Key (ID_FOTO) References dbo.Foto(ID_FOTO),
+	CONSTRAINT FK_FotoUsuario2 Foreign Key (ID_USUARIO) References dbo.Usuario(ID_USUARIO),
+)

@@ -1793,7 +1793,7 @@ namespace CV.Data
         public void SalvarFoto_Completa(Foto itemGravar)
         {
             Foto itemBase = Context.Fotos
-.Include("Atracoes").Include("Hoteis").Include("Refeicoes").Include("ItensCompra").Where(f => f.Identificador == itemGravar.Identificador).FirstOrDefault();
+.Include("Atracoes").Include("Hoteis").Include("Refeicoes").Include("ItensCompra").Include("FotoUsuarios").Where(f => f.Identificador == itemGravar.Identificador).FirstOrDefault();
             if (itemBase == null)
             {
                 itemBase = Context.Fotos.Create();
@@ -1801,6 +1801,7 @@ namespace CV.Data
                 itemBase.Hoteis = new List<FotoHotel>();
                 itemBase.Refeicoes = new List<FotoRefeicao>();
                 itemBase.ItensCompra = new List<FotoItemCompra>();
+                itemBase.FotoUsuarios = new List<FotoUsuario>();
                 Context.Entry<Foto>(itemBase).State = System.Data.Entity.EntityState.Added;
             }
             AtualizarPropriedades<Foto>(itemBase, itemGravar);
@@ -1872,9 +1873,28 @@ namespace CV.Data
                 }
                 AtualizarPropriedades<FotoItemCompra>(itemBaseFotoItemCompra, itemFotoItemCompra);
             }
+            
             Context.SaveChanges();
             itemGravar.Identificador = itemBase.Identificador;
         }
+
+        public void AdicionarFotosUsuarios(List<FotoUsuario> fotoUsuarios)
+        {
+            foreach(var item in fotoUsuarios)
+            {
+                if (!Context.FotoUsuarios.Where(d => d.IdentificadorUsuario == item.IdentificadorUsuario).Where(d => d.IdentificadorFoto == item.IdentificadorFoto).Any())
+                {
+                    var itemBase = Context.FotoUsuarios.Create();
+                    Context.Entry<FotoUsuario>(itemBase).State = System.Data.Entity.EntityState.Added;
+                    AtualizarPropriedades<FotoUsuario>(itemBase, item);
+
+                }
+
+            }
+            Context.SaveChanges();
+
+        }
+
         public void SalvarAtracao_Completo(Atracao itemGravar)
         {
             Atracao itemBase = Context.Atracoes

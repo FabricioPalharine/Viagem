@@ -1263,12 +1263,12 @@ namespace CV.Business
             itemGravarFoto.Comentario = itemFoto.Comentario;
             itemGravarFoto.IdentificadorUsuario = itemUsuario.Identificador;
             itemGravarFoto.ItensCompra = new List<FotoItemCompra>();
-
+            itemGravarFoto.NomeArquivo = itemFoto.NomeArquivoGoogle;
             itemGravarFoto.Refeicoes = new List<FotoRefeicao>();
             itemGravarFoto.TipoArquivo = itemFoto.ImageMime;
             itemGravarFoto.Video = Video;
-            itemGravarFoto.LinkFoto = itemFoto.LinkGoogle;
-            itemGravarFoto.LinkThumbnail = itemFoto.Thumbnail;
+            //itemGravarFoto.LinkFoto = itemFoto.LinkGoogle;
+            //itemGravarFoto.LinkThumbnail = itemFoto.Thumbnail;
 
             if (itemFoto.Latitude.HasValue && itemFoto.Longitude.HasValue)
             {
@@ -1282,6 +1282,8 @@ namespace CV.Business
             {
                 itemGravarFoto.IdentificadorCidade = RetornarCidadeGeocoding(itemGravarFoto.Latitude, itemGravarFoto.Longitude);
             }
+            itemGravarFoto.FotoUsuarios = new List<FotoUsuario>();
+            //itemGravarFoto.FotoUsuarios.Add(new FotoUsuario() { IdentificadorUsuario = itemUsuario.Identificador, CodigoGoogle = itemFoto.CodigoGoogle });
             DetectarAssociacoesFoto(itemUsuario.Identificador, itemViagem.Identificador, itemGravarFoto, itemFoto);
             SalvarFoto_Completa(itemGravarFoto);
             itemGravarFoto = SelecionarFoto_Completa(itemGravarFoto.Identificador);
@@ -1289,8 +1291,17 @@ namespace CV.Business
             itemGravarFoto.Hoteis.ToList().ForEach(d => { d.ItemFoto = null; d.ItemHotel.Fotos = null; });
             itemGravarFoto.ItensCompra.ToList().ForEach(d => { d.ItemFoto = null; d.ItemItemCompra.Fotos = null; });
             itemGravarFoto.Refeicoes.ToList().ForEach(d => { d.ItemFoto = null; d.ItemRefeicao.Fotos = null; });
+            //itemGravarFoto.FotoUsuarios.ToList().ForEach(d => { d.ItemFoto = null; });
 
             return itemGravarFoto;
+        }
+
+        public void AdicionarFotosUsuarios(List<FotoUsuario> fotoUsuarios)
+        {
+            using (ViagemRepository data = new ViagemRepository())
+            {
+                data.AdicionarFotosUsuarios(fotoUsuarios);
+            }
         }
 
         private void LocalizarPosicaoFoto(int? IdentificadorUsuario, int? IdentificadorViagem, DateTime? data, Foto itemGravarFoto)
@@ -1481,10 +1492,10 @@ namespace CV.Business
         {
             using (ViagemRepository repositorio = new ViagemRepository())
             {
-                var lista = repositorio.ListarFotos(IdentificadorFoto, IdentificadorViagem, DataDe, DataAte, Comentario, IdentificadorAtracao, IdentificadorHotel, IdentificadorRefeicao, IdentificadorCidade, Skip, Count);
+                var lista = repositorio.ListarFotos(IdentificadorFoto, IdentificadorViagem, DataDe, DataAte, Comentario, IdentificadorAtracao, IdentificadorHotel, IdentificadorRefeicao, IdentificadorCidade, Skip, Count,IdentificadorUsuario);
                 if (lista.Any())
                 {
-
+                    /*
                     Usuario itemUsuario = SelecionarUsuario(IdentificadorUsuario);
                     AtualizarTokenUsuario(itemUsuario);
                     HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://photoslibrary.googleapis.com/v1/mediaItems:batchGet?" + string.Join("&",lista.Where(d=>!d.Video.GetValueOrDefault()).Select(d=> "mediaItemIds=" + d.CodigoFoto).ToArray()));
@@ -1519,7 +1530,7 @@ namespace CV.Business
                         string responseStr = responseReader.ReadToEnd();
 
 
-                    }
+                    }*/
 
                     foreach (var itemFoto in lista)
                     {
