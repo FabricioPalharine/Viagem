@@ -39,22 +39,7 @@ namespace CV.Model
 			public string LinkFoto { get; set; }
 
 			public string CodigoFoto { get; set; }
-			[SelfValidation]
-private void ValidarCodigoFoto(Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResults results)
-{
- if (CodigoFoto == null)
-  {
-      Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult result =
-            new Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult(Resource.MensagemModelo.Foto_CodigoFoto, this, "CodigoFoto", null, null);
-      results.AddResult(result);
-  }
-  else if (CodigoFoto.Length > 500)
-  {
-      Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult result =
-            new Microsoft.Practices.EnterpriseLibrary.Validation.ValidationResult(Resource.MensagemModelo.Foto_CodigoFoto_Tamanho, this, "CodigoFoto", null, null);
-      results.AddResult(result);
-  }
-}
+			
 
 			[NotNullValidator(MessageTemplateResourceName="Foto_Video",MessageTemplateResourceType=typeof(MensagemModelo))]
 			public bool? Video { get; set; }

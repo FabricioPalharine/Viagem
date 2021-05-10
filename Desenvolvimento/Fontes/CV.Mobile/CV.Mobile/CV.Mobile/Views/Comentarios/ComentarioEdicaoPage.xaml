@@ -15,7 +15,7 @@
             <ToolbarItem.IconImageSource>
                 <FontImageSource Glyph="{Static helper:IconFont.MarkerCheck}"
                        FontFamily="{DynamicResource MaterialFontFamily }" 
-                       Color="{StaticResource CorFonte }"/>
+                       Color="{StaticResource FundoTela }"/>
 
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
