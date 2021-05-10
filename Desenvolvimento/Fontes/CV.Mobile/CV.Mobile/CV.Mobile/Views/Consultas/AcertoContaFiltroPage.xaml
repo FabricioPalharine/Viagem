@@ -4,7 +4,7 @@
              x:Class="CV.Mobile.Views.Consultas.AcertoContaFiltroPage"    
               xmlns:viewModelBase="clr-namespace:CV.Mobile.ViewModels.Base"
              viewModelBase:ViewModelLocator.AutoWireViewModel="true"
-              Shell.PresentationMode="ModalAnimated"             
+              Shell.PresentationMode="Animated"             
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              ios:Page.UseSafeArea="true"
              xmlns:Controls="clr-namespace:CV.Mobile.Controls"
