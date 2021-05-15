@@ -34,7 +34,7 @@ namespace CV.Mobile.ViewModels.Consultas
         {
             _apiService = apiService;
             _foto = foto;
-            criterioBusca.DataInicioDe = GlobalSetting.Instance.ViagemSelecionado.DataInicio;
+            criterioBusca.DataInicioDe = GlobalSetting.Instance.ViagemSelecionado.DataInicio.GetValueOrDefault().Date;
             _settingsService = settingsService;
         }
 
