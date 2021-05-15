@@ -206,7 +206,7 @@ namespace CV.Mobile.ViewModels.Viagens
                     {
                         Viagem = await _apiService.CarregarViagem(GlobalSetting.Instance.UsuarioLogado.IdentificadorViagem);
                         AmigosVerCustos = new ObservableCollection<Usuario>(Viagem.UsuariosGastos.Select(d => d.ItemUsuario));
-                        Amigos = new ObservableCollection<Usuario>(Viagem.Participantes.Select(d => d.ItemUsuario));
+                        Participantes = new ObservableCollection<Usuario>(Viagem.Participantes.Select(d => d.ItemUsuario));
                         IdentificadorUsuarioPrincipal = Viagem.IdentificadorUsuario.GetValueOrDefault();
                         Nome.Value = Viagem.Nome;
                         Moeda.Value = Moedas.Where(d => d.Codigo == Viagem.Moeda.ToString()).FirstOrDefault();
@@ -218,7 +218,8 @@ namespace CV.Mobile.ViewModels.Viagens
                         //ViagemPublica = Viagem.Aberto;
 
                     }
-                    Participantes.Insert(0, await _apiService.CarregarUsuario(IdentificadorUsuarioPrincipal));
+                    else
+                        Participantes.Insert(0, await _apiService.CarregarUsuario(IdentificadorUsuarioPrincipal));
 
 
                 }

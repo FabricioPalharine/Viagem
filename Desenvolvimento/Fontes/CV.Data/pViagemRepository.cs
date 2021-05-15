@@ -537,7 +537,8 @@ namespace CV.Data
             IQueryable<Usuario> Query = this.Context.Usuarios;
             IQueryable<Amigo> QueryAmigo = this.Context.Amigos.Where(d => d.IdentificadorUsuario == identificadorUsuario);
             Query = Query.Where(d => QueryAmigo.Where(e => e.IdentificadorAmigo == d.Identificador).Any());
-            return Query.ToList();
+            var lista= Query.ToList();
+            return lista;
         }
 
         public List<Usuario> ListarUsuarioAmigoComigo(int identificadorUsuario)

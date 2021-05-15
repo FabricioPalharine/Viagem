@@ -39,9 +39,11 @@ namespace CV.UI.Web.Controllers.WebAPI
         {
             ViagemBusiness biz = new ViagemBusiness();
             Viagem itemViagem = biz.SelecionarViagem(id);
-            itemViagem.UsuariosGastos.ToList().ForEach(d => d.ItemViagem = null);
-            itemViagem.Participantes.ToList().ForEach(d => d.ItemViagem = null);
-
+            if (itemViagem != null)
+            {
+                itemViagem.UsuariosGastos.ToList().ForEach(d => d.ItemViagem = null);
+                itemViagem.Participantes.ToList().ForEach(d => d.ItemViagem = null);
+            }
             return itemViagem;
         }
         [Authorize]
