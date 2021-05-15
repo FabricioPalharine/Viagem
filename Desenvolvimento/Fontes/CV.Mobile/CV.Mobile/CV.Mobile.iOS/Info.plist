@@ -23,7 +23,7 @@
 	<key>MinimumOSVersion</key>
 	<string>8.0</string>
 	<key>CFBundleDisplayName</key>
-	<string>CV.Mobile</string>
+	<string>Curtindo uma Viagem</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.palharine.cv.mobile</string>
 	<key>CFBundleVersion</key>
