@@ -32,7 +32,7 @@ namespace CV.Mobile
         private bool? _ViagemAberta = null;
         private bool _EdicaoDadoViagem = false;
         private bool _ViagemCarregada = false;
-
+        private bool _processando = false;
         private readonly IDataService _dataService;
         private readonly IApiService _apiService;
         private readonly IDatabase _database;
@@ -114,36 +114,47 @@ namespace CV.Mobile
 
         private async Task SelecionarViagem(UsuarioLogado usuarioLogado, Viagem item)
         {
-            GlobalSetting.Instance.ViagemSelecionado = item;
-            GlobalSetting.Instance.UsuarioLogado = usuarioLogado;
-            EdicaoViagem = EdicaoDadoViagem = ViagemSelecionada = VisualizarGastos   = true;
-            if (!usuarioLogado.IdentificadorViagem.HasValue)
+            Processando = true;
+            try
             {
-                EdicaoViagem = EdicaoDadoViagem = ViagemSelecionada = VisualizarGastos   = false;
-            }
-            else
-            {
-                ViagemSelecionada = true;
-                EdicaoViagem = usuarioLogado.PermiteEdicao;
-                EdicaoDadoViagem = usuarioLogado.Codigo == item.IdentificadorUsuario;
-                if (EdicaoViagem)
+                GlobalSetting.Instance.ViagemSelecionado = item;
+                GlobalSetting.Instance.UsuarioLogado = usuarioLogado;
+                EdicaoViagem = EdicaoDadoViagem = ViagemSelecionada = VisualizarGastos = true;
+                if (!usuarioLogado.IdentificadorViagem.HasValue)
                 {
-                    VisualizarGastos = true;
-                    ViagemAberta = usuarioLogado.Aberto;
-                    GPSIniciado = usuarioLogado.PermiteEdicao && usuarioLogado.Aberto && item.ControlaPosicaoGPS;
+                    EdicaoViagem = false;
+                    EdicaoDadoViagem = false;
+                    ViagemSelecionada = false;
+                    VisualizarGastos = false;
                 }
                 else
-                {                     
-                    VisualizarGastos = usuarioLogado.VerCustos;                   
-
-                }
-                if (Funcoes.AcessoInternet)
                 {
-                    GlobalSetting.Instance.AmigosViagem = new ObservableRangeCollection<Usuario>(await _apiService.CarregarParticipantesAmigo());
+                    ViagemSelecionada = true;
+                    EdicaoViagem = usuarioLogado.PermiteEdicao;
+                    EdicaoDadoViagem = usuarioLogado.Codigo == item.IdentificadorUsuario;
+                    if (EdicaoViagem)
+                    {
+                        VisualizarGastos = true;
+                        ViagemAberta = usuarioLogado.Aberto;
+                        GPSIniciado = usuarioLogado.PermiteEdicao && usuarioLogado.Aberto && item.ControlaPosicaoGPS;
+                    }
+                    else
+                    {
+                        VisualizarGastos = usuarioLogado.VerCustos;
+
+                    }
+                    if (Funcoes.AcessoInternet)
+                    {
+                        GlobalSetting.Instance.AmigosViagem = new ObservableRangeCollection<Usuario>(await _apiService.CarregarParticipantesAmigo());
+                    }
+                    if (GPSIniciado.GetValueOrDefault())
+                        await _gps.IniciarGPS();
+                    ViagemCarregada = true;
                 }
-                if (GPSIniciado.GetValueOrDefault())
-                    await _gps.IniciarGPS();
-                ViagemCarregada = true;
+            }
+            finally
+            {
+                Processando = false;
             }
         }
 
@@ -217,9 +228,19 @@ namespace CV.Mobile
             }
         }
 
-     
+        public bool Processando
+        {
+            get
+            {
+                return _processando;
+            }
+            set
+            {
+                SetProperty(ref _processando, value);
+            }
+        }
 
-       
+
         public bool EdicaoViagem
         {
             get
