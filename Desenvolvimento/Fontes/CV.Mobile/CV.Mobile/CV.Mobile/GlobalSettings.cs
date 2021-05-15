@@ -11,7 +11,7 @@ namespace CV.Mobile
     {
         public const string AzureTag = "Azure";
         public const string MockTag = "Mock";
-        public const string DefaultEndpoint = "http://192.168.15.2:8090/"; 
+        public const string DefaultEndpoint = "http://sites.architettura.com.br/CV/"; 
 
         public static string AppName = "CurtindoUmaViagem";
 
