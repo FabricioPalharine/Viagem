@@ -110,6 +110,7 @@
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\FileHelper.cs" />
+    <Compile Include="Services\LocationConsent.cs" />
     <Compile Include="Services\StatusBarStyleManager.cs" />
   </ItemGroup>
   <ItemGroup>

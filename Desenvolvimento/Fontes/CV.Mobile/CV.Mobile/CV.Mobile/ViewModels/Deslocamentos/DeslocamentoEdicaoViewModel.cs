@@ -548,41 +548,48 @@ namespace CV.Mobile.ViewModels.Deslocamentos
 
         private async Task SalvarRegistro()
         {
-            ResultadoOperacao Resultado = new ResultadoOperacao();
-            bool SalvaExecucao = false;
-            if (Funcoes.VerificarConsultaInternet(_settingsService.AcompanhamentoOnline))
+            try
             {
-                var id = deslocamento.Id;
-                Resultado = await _apiService.SalvarViagemAerea(deslocamento);
-                if (Resultado != null)
+                ResultadoOperacao Resultado = new ResultadoOperacao();
+                bool SalvaExecucao = false;
+                if (Funcoes.VerificarConsultaInternet(_settingsService.AcompanhamentoOnline))
                 {
-                    SalvaExecucao = true;
-                    if (Resultado.Sucesso)
+                    var id = deslocamento.Id;
+                    var identificador = deslocamento.Identificador;
+                    Resultado = await _apiService.SalvarViagemAerea(deslocamento);
+                    if (Resultado != null)
                     {
-                        deslocamento = await _apiService.CarregarViagemAerea(Resultado.IdentificadorRegistro);
-                        deslocamento.Id = id;
-                        await _dataService.SalvarViagemAereaReplicada(deslocamento);
+                        SalvaExecucao = true;
+                        if (Resultado.Sucesso)
+                        {
+                            deslocamento = await _apiService.CarregarViagemAerea(Resultado.IdentificadorRegistro);
+                            deslocamento.Id = id;
+                            await _dataService.SalvarViagemAereaReplicada(deslocamento, identificador);
+                        }
                     }
+
                 }
-
-            }
-            if (!SalvaExecucao)
-            {
-                Resultado = await _dataService.SalvarViagemAerea(deslocamento);
+                if (!SalvaExecucao)
+                {
+                    Resultado = await _dataService.SalvarViagemAerea(deslocamento);
+                    if (Resultado.Sucesso)
+                        deslocamento = await _dataService.CarregarViagemAerea(deslocamento.Identificador);
+                }
                 if (Resultado.Sucesso)
-                    deslocamento = await _dataService.CarregarViagemAerea(deslocamento.Identificador);
+                {
+                    Identificador = deslocamento.Identificador;
+                    Paradas = new ObservableCollection<ViagemAereaAeroporto>(deslocamento.Aeroportos.Where(d => !d.DataExclusao.HasValue).Where(d => d.TipoPonto == (int)enumTipoParada.Escala).OrderByDescending(d => d.DataChegada));
+                    Rodando = VisitaIniciada && !Paradas.Where(d => !d.DataPartida.HasValue).Any() && !VisitaConcluida;
+                    MessagingCenter.Send<DeslocamentoEdicaoViewModel, ViagemAerea>(this, MessageKeys.SalvarDeslocamento, deslocamento);
+
+                }
+                if (Resultado != null)
+                    await base.ExibirResultado(Resultado, false);
             }
-            if (Resultado.Sucesso)
+            catch(Exception ex)
             {
-                Identificador = deslocamento.Identificador;
-                Paradas = new ObservableCollection<ViagemAereaAeroporto>(deslocamento.Aeroportos.Where(d => !d.DataExclusao.HasValue).Where(d => d.TipoPonto == (int)enumTipoParada.Escala).OrderByDescending(d => d.DataChegada));
-                Rodando = VisitaIniciada && !Paradas.Where(d => !d.DataPartida.HasValue).Any() && !VisitaConcluida;
-                MessagingCenter.Send<DeslocamentoEdicaoViewModel, ViagemAerea>(this, MessageKeys.SalvarDeslocamento, deslocamento);
 
             }
-            if (Resultado != null)
-                await base.ExibirResultado(Resultado, false);
-
         }
 
         public ICommand CancelarCommand => new Command(async () =>

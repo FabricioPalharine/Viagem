@@ -577,7 +577,11 @@ namespace CV.Mobile.Services.Data
                 {
                     var itemBanco = await Database.RetornarViagemAerea(identificador);
                     if (itemBanco == null || itemBanco.DataAtualizacao < itemLista.DataAtualizacao)
-                        await SalvarViagemAereaReplicada(itemLista);
+                    {
+                        if (itemBanco != null)
+                        itemLista.Id = itemBanco.Id;
+                        await SalvarViagemAereaReplicada(itemLista, itemBanco?.Identificador);
+                    }
                 }
             }
         }
@@ -4146,15 +4150,19 @@ namespace CV.Mobile.Services.Data
             return itemResultado;
         }
 
-        public async Task SalvarViagemAereaReplicada(ViagemAerea itemViagemAerea)
+        public async Task SalvarViagemAereaReplicada(ViagemAerea itemViagemAerea, int? Identificador)
         {
-            var itemViagemAereaBase = await this.CarregarViagemAerea(itemViagemAerea.Identificador);
-            if (itemViagemAereaBase != null)
-                itemViagemAerea.Id = itemViagemAereaBase.Id;
-            foreach (var itemAvaliacao in itemViagemAereaBase.Avaliacoes.ToList())
-                await Database.ExcluirAvaliacaoAerea(itemAvaliacao);
-            foreach (var itemAvaliacao in itemViagemAereaBase.Aeroportos.ToList())
-                await Database.ExcluirViagemAereaAeroporto(itemAvaliacao);
+            if (Identificador.HasValue)
+            {
+                var itemViagemAereaBase = await this.CarregarViagemAerea(Identificador);
+                if (itemViagemAereaBase != null)
+                {
+                    foreach (var itemAvaliacao in itemViagemAereaBase.Avaliacoes.ToList())
+                        await Database.ExcluirAvaliacaoAerea(itemAvaliacao);
+                    foreach (var itemAvaliacao in itemViagemAereaBase.Aeroportos.ToList())
+                        await Database.ExcluirViagemAereaAeroporto(itemAvaliacao);
+                }
+            }
             await SalvarViagemAerea(itemViagemAerea);
             
         }

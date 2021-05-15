@@ -49,6 +49,10 @@
 	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Favor liberar a utilização do GPS para marcarmos sua posição nos eventos</string>
+  <key>NSLocationAlwaysUsageDescription</key>
+  <string>Favor liberar a utilização do GPS para marcarmos sua posição nos eventos</string>
+  <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+  <string>Favor liberar a utilização do GPS para marcarmos sua posição nos eventos</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Favor liberar o uso da câmera para podermos tirar suas fotos</string>
 	<key>NSMicrophoneUsageDescription</key>

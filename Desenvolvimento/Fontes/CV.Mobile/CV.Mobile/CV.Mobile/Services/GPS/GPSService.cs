@@ -2,6 +2,7 @@
 using CV.Mobile.Models;
 using CV.Mobile.Services.Api;
 using CV.Mobile.Services.Data;
+using CV.Mobile.Services.PlatformSpecifcs;
 using CV.Mobile.Services.Settings;
 using Plugin.Geolocator;
 using Plugin.Geolocator.Abstractions;
@@ -21,22 +22,23 @@ namespace CV.Mobile.Services.GPS
         private IApiService _apiService;
         private IDatabase _database;
         private bool GPSAtivo = false;
-
+        private readonly ILocationConsent _locationConsent;
         public GPSService (ISettingsService settingsService, IApiService apiService, IDatabase database)
         {
             CrossGeolocator.Current.DesiredAccuracy = 2;
+            _locationConsent = DependencyService.Get<ILocationConsent>();
             _settingsService = settingsService;
             _apiService = apiService;
             _database = database;
            
         }
 
-        public Task IniciarGPS()
+        public async Task IniciarGPS()
         {
             if (CrossGeolocator.IsSupported && CrossGeolocator.Current.IsGeolocationEnabled && !GPSAtivo)
             {
                 GPSAtivo = true;
-
+                await _locationConsent.GetLocationConsent();
                 Device.StartTimer(TimeSpan.FromSeconds(10), () =>
                 {
                     AtualizarPosicao();
@@ -45,7 +47,7 @@ namespace CV.Mobile.Services.GPS
 
                 });
             }
-            return Task.FromResult(true);
+           // return Task.FromResult(true);
         }
 
         public Task PararGPS()
@@ -74,6 +76,7 @@ namespace CV.Mobile.Services.GPS
                 try
                 {
                     var posicao = await CrossGeolocator.Current.GetLastKnownLocationAsync();
+                    if (posicao != null)
                     await AtualizarPosicao(posicao);
                 }
                 finally

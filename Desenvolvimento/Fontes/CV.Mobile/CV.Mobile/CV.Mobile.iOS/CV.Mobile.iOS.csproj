@@ -74,7 +74,9 @@
     <Compile Include="Renderers\DecimalNumberEntryRenderer.cs" />
     <Compile Include="Renderers\NullableDatePickerRenderer.cs" />
     <Compile Include="Services\FileHelper.cs" />
+    <Compile Include="Services\LocationConsent.cs" />
     <Compile Include="Services\StatusBarStyleManager.cs" />
+    <Compile Include="LocationManager.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />

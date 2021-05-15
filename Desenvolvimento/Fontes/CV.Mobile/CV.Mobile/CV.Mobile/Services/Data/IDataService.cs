@@ -65,7 +65,7 @@ namespace CV.Mobile.Services.Data
         Task<ViagemAerea> CarregarViagemAerea(int? Identificador);
         Task ExcluirViagemAerea(int? Identificador, bool Sincronizado);
         Task<ResultadoOperacao> SalvarViagemAerea(ViagemAerea itemViagemAerea);
-        Task SalvarViagemAereaReplicada(ViagemAerea itemViagemAerea);
+        Task SalvarViagemAereaReplicada(ViagemAerea itemViagemAerea, int? Identificador);
         Task<ClasseSincronizacao> CarregarDadosEnvioSincronizar();
     }
 }
